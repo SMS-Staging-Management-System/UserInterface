@@ -1,0 +1,183 @@
+// @import 'components/pokemon/pokemon-card/pokemon-card.scss';
+
+// variables can be declared and later reused
+$revature-orange: #f26925;
+
+// mixins are reusable styles that can be included in other places
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+#main-content-container {
+  @include flex-col;
+  width: 100%;
+  align-items: center
+}
+
+.rev-btn {
+  background-color: $revature-orange;
+  border-color: $revature-orange;
+  color: black;
+  &:hover {
+    background-color: white;
+    border-color: $revature-orange;
+    color: $revature-orange;
+  }
+  &:active {
+    background-color: $revature-orange;
+    color: black;
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+  }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+  }
+}
+
+
+
+/*****************************
+  NAV
+*****************************/
+
+.nav-dropdown {
+  background-color: unset;
+  border: unset;
+  color: black;
+  &:hover {
+    background-color: unset;
+    border: unset;
+    color: black;
+  }
+  &:active {
+    background-color: unset !important;
+    border: unset !important;
+    color: black !important;
+  }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+  }
+}
+
+.rev-logo {
+  width: auto;
+  height: 2em;
+  margin-right: 2em;
+}
+
+.margin-nav {
+  margin-right: 2em
+}
+
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+  color: rgba(0,0,0,.7);
+}
+
+.navbar-expand-md .navbar-nav .nav-link {
+  padding-right: .75rem !important;
+  padding-left: .75rem !important;
+}
+
+.bg-light {
+  background-color: #ffffff !important;
+}
+
+.app-nav {
+  border-bottom: 1px solid #ffffff !important;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
+  -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
+  box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
+}
+
+#examples-dropdown {
+  cursor: pointer;
+}
+
+/*****************************
+  Clicker
+*****************************/
+.blue {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+
+
+/*****************************
+  Canvas
+*****************************/
+#my-canvas {
+  border: solid 1px black;
+  top:10%;
+  left:10%;
+}
+
+.canvas-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/*****************************
+  TIC TAC TOE
+*****************************/
+.tic-tac-col {
+  border: 1px solid black;
+  font-size: 4em;
+  text-align: center;
+  min-height: 2em ;
+  cursor: pointer;
+  border-radius: 0.1em;
+
+  &:hover {
+    box-shadow: inset 0px 0px 0.5em 0px $revature-orange;
+  }
+}
+#tic-tac-board {
+  width: 75%;
+  margin: 0.5em;
+}
+
+.not-allowed-cursor {
+  cursor: not-allowed;
+}
