@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { Provider } from 'react-redux';
 import { store } from './Store';
 import clickerContainer from './components/clicker/clicker.container';
+import {RegisterComponent } from './components/register/register.component';
 
 
 class App extends React.Component {
@@ -20,6 +21,7 @@ class App extends React.Component {
               <Switch>
                 <Route path="/home" component={HomeComponent} />
                 <Route path="/clicker" component={clickerContainer} />
+                <Route path="/register" component={RegisterComponent}/>
                 <Route component={HomeComponent} />
               </Switch>
             </div>
