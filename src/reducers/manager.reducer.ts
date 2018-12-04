@@ -3,7 +3,8 @@ import { IManagerState } from '.';
 
 const initialState: IManagerState = {
   classes:  [],
-  checkIns: [] // checkin objects
+  checkIns: [], // checkin objects
+  checkInsFilter: []
 }
 
 export const managerReducer = (state = initialState, action: any) => {

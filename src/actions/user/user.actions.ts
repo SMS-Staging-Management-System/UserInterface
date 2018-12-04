@@ -1,6 +1,7 @@
-import axios from 'axios';
-import { environment } from '../../environment';
 import { RegisterDto } from '../../model/Register.model';
+import * as axiosClients from '../../axiosClients/axiosClient';
+import * as userClient from '../../axiosClients/userClients/userClients';
+
 /**
  * userTypes
  */
@@ -16,33 +17,22 @@ export const userTypes = {
  * @param token 
  */
 export const tokenVerify = (token: string) => {
-  axios.get(`${environment}/cohorts/verify?token=${token}`)
-  .then(response => {
-    // dispatch({
-    //   type: userTypes.COHORT_TOKEN_VERIFY,
-    //   payload: {
-    //     registerToken: response.data.result // TODO token pass
-    //   }
-    // });
-  })
-  .catch(error => {
-    // TODO error message
-  });
+  userClient.verifyRegisterToken(token);
 }
 
-export const register = (registerDto: RegisterDto, token: string) => {
+export const register = (registerDto: RegisterDto, token: string) => (dispatch) => {
   if( registerDto.password !== registerDto.confirmPassword ) {
     // TODO tell user to enter matching passwords
   } else {
-    axios.post(`${environment}/users?token=${token}`, registerDto)
+    userClient.register(registerDto, token)
     .then(response => {
-      // TODO snackbar
-      // dispatch({
-      //   type: snackbar.SNACKBAR_ADD,
-      //   payload: {
-      //     message: "Register successful"
-      //   }
-      // });
+      dispatch({
+        type: userTypes.LOGIN,
+        payload: {
+          login: true,
+          user: response.data.result.user
+        }
+      });
     })
     .catch(error => {
       // TODO error message
@@ -55,37 +45,35 @@ export const register = (registerDto: RegisterDto, token: string) => {
  * @param username 
  * @param password 
  */
-export const login = (username: string, password: string) => {
-  let user:object = {
-    "username": username,
-    "password": password
-  }
-  axios.get(`${environment}/users`, user)
+export const login = (username: string, password: string) => (dispatch) => {
+  userClient.login(username, password)
   .then(response => {
-    localStorage.setItem('REVATURE_SMS_JWT', response.data.result.auth);
-    // dispatch({
-    //   type: userTypes.LOGIN,
-    //   payload: {
-    //     oldBounties: response.data.result
-    //   }
-    // });
+    axiosClients.addJwtToHeader(response.data.result.auth);
+    dispatch({
+      type: userTypes.LOGIN,
+      payload: {
+        login: true,
+        user: response.data.result.user
+      }
+    });
   })
   .catch(error => {
     // TODO error message
   });
+  
 }
 
 /**
  * Log a user out and delete jwt token from local store
  */
-export const logout = () => {
+export const logout = () => (dispatch) => {
   localStorage.removeItem('REVATURE_SMS_JWT');
-  // dispatch({
-  //   type: userTypes.LOGOUT,
-  //   payload: {
-  //     login: false
-  //   }
-  // });
+  dispatch({
+    type: userTypes.LOGOUT,
+    payload: {
+      login: false
+    }
+  });
 
   // dispatch({
   //   type: snackbar.SNACKBAR_ADD,
@@ -93,4 +81,24 @@ export const logout = () => {
   //     message: "Logged out"
   //   }
   // });
+}
+
+
+export const setup = () => (dispatch) => {
+  if(localStorage.getItem('REVATURE_SMS_JWT')) {
+    userClient.getUserFromJwt()
+    .then(response => {
+      axiosClients.addJwtToHeader(response.data.result.auth)
+      dispatch({
+        type: userTypes.LOGIN,
+        payload: {
+          login: true,
+          user:  response.data.result.user
+        }
+      });
+    })
+    .catch(error => {
+      localStorage.removeItem('REVATURE_SMS_JWT');
+    })
+  }
 }

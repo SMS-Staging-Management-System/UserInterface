@@ -21,7 +21,8 @@ export const userReducer = (state = initialState, action: any) => {
     case userTypes.LOGIN:
       return {
         ...state,
-        login: action.payload.login
+        login:  action.payload.login,
+        user:   action.payload.user
       }
     case userTypes.LOGOUT:
       return {
