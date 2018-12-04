@@ -190,3 +190,12 @@ Manager Content
   border-color: #222;
   border-style: solid;
 }
+
+.check-in-rows {
+  display: flex;
+  align-content: space-between;
+}
+
+.check-in-columns {
+  padding-left: 10%
+}
