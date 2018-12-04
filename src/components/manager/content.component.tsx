@@ -19,7 +19,8 @@ public getTime = () => {
     return (
       <div className="manager-content">
         <div>
-            <h1>Revature SMS</h1>
+            <h1>Revature Staging Management System</h1>
+            <h4>Manager Dashboard</h4>
            {this.getTime()}
         </div>
         <div>

@@ -4,6 +4,7 @@ import * as React from 'react';
   *The check-in table
 */
 
+// this fake data for the check-in table
 const FAKE_CHECK_IN_DATA = [
   {
     cohort: "Blake 1810",
