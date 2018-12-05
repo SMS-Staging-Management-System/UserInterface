@@ -1,6 +1,6 @@
 import * as React from 'react';
 import time from '../../include/time';
-import { ContainerComponent } from './container.component';
+import { ContainerComponent } from './manager.container';
 /**
  * The manager content
  */
@@ -17,12 +17,13 @@ public getTime = () => {
 }
   public render() {
     return (
-      <div className="manager-content">
+      <div className="manager-content shadow-lg p-3 mb-5 bg-white rounded">
         <div>
-            <h1>Revature Staging Management System</h1>
+          <h1>Revature Staging Management System</h1>
             <h4>Manager Dashboard</h4>
-           {this.getTime()}
+            {this.getTime()}
         </div>
+        <hr/>
         <div>
           {/* Table holder */}
           <ContainerComponent/>

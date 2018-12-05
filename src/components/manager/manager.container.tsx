@@ -11,7 +11,7 @@ export class ContainerComponent extends React.Component <{},{}> {
     return (
         <>
         <nav>
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
+          <div className="nav nav-tabs manager-container" id="nav-tab" role="tablist">
             <a className="nav-item nav-link active" id="nav-contact-tab" data-toggle="tab" href="#check-in" role="tab" aria-controls="check-in" aria-selected="true" aria-hidden="false">Check-In</a>
             <a className="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#cohort" role="tab" aria-controls="nav-profile" aria-selected="false">Cohort</a>
           </div>
@@ -24,10 +24,10 @@ export class ContainerComponent extends React.Component <{},{}> {
               <CheckInTableComponent/>
             </div>
           </div>
-        <div className="tab-pane fade" id="cohort" role="tabpanel"      aria-labelledby="nav-profile-tab">
-          <div>
-            {/* cohort table component*/}
-          </div>
+          <div className="tab-pane fade" id="cohort" role="tabpanel"      aria-labelledby="nav-profile-tab">
+            <div>
+              {/* cohort table component*/}
+            </div>
           </div>
         </div>
       </>

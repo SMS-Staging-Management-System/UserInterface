@@ -7,7 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { Provider } from 'react-redux';
 import { store } from './Store';
 import clickerContainer from './components/clicker/clicker.container';
-import ManagerContentComponent from './components/manager/content.component';
+import ManagerContentComponent from './components/manager/manager-content.component';
 
 
 class App extends React.Component {
