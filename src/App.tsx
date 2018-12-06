@@ -1,6 +1,7 @@
 import * as React from 'react';
 import './include/bootstrap';
 import './App.css';
+import './Associate.css';
 import AppNav from './components/nav/nav.component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HomeComponent } from './components/home/home.component';

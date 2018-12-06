@@ -15,15 +15,15 @@ export class AssociateCheckIn extends React.Component {
 
   public render() {
     return (
-      <div>
+      <div id="rowboxthing2">
         {/* here users will input their whatevers for dah chicken */}
-        <div>
-          <h4>Check In</h4>
+        <div id="headerRow">
+          <h4 id="headerField">Check In</h4>
           <Clock/>
         </div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item flex-row-sb">
-              <input type="text" placeholder="Description"></input>
+              <input type="text" placeholder="Description" ></input>
             </li>
           </ul>
           <div className="modal-footer">
