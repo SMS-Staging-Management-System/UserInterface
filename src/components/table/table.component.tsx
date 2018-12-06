@@ -1,23 +1,37 @@
 import * as React from 'react';
 import CheckInRowComponent from '.././manager/checkin/checkin-in-row.component';
 import CheckInHeaderComponent from '../manager/checkin/check-in-header.component';
+import CohortHeaderComponent from '../manager/cohort/cohort-header.component';
+import CohortRowComponent from '../manager/cohort/cohort-row.component';
+import { Table } from 'reactstrap';
+
 /*
   *The check-in table
 */
 
-export class TableComponent extends React.Component<{}> {
+interface IProps{
+  type: string;
+}
+
+export class TableComponent extends React.Component<IProps, {}> {
+
+  
 
   public render() {
+    console.log(this.props.type);
     return (
       <>
-        <table className="table table-hover">
-          <CheckInHeaderComponent/>
+        <Table className="table table-hover table-bordered">
+          {this.props.type === "checkIn"
+          ? <CheckInHeaderComponent/> 
+          : <CohortHeaderComponent/>}
           <tbody>
-           <CheckInRowComponent/>
+          {this.props.type === "checkIn"
+          ? <CheckInRowComponent/> 
+          : <CohortRowComponent/>}
           </tbody>
-        </table>
+        </Table>
       </>
-
     );
   }
 }
