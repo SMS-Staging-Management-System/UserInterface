@@ -2,8 +2,8 @@ import { managerTypes } from '../actions/manager/manager.actions';
 import { IManagerState } from '.';
 
 const initialState: IManagerState = {
-  cohorts:  [],
   checkIns: [],
+  cohorts:  [],
   currentCheckIns: []
 }
 
@@ -14,14 +14,14 @@ export const managerReducer = (state = initialState, action: any) => {
       checkIns += action.payload.checkIns;
       return {
         ...state,
-        checkIns: checkIns
+        checkIns
       }
     case managerTypes.ADD_COHORTS:
       let cohorts = state.cohorts;
       cohorts += action.payload.cohorts;
       return {
         ...state,
-        cohorts: cohorts
+        cohorts
       }
     case managerTypes.FILTER_CHECK_IN_LIST:
       return {

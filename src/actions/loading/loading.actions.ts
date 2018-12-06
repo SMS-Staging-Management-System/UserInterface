@@ -6,11 +6,11 @@ export const loadingTypes = {
  * Set the loading screen status
  * @param isLoading
  */
-export const isLoading = (isLoading: boolean) => (dispatch) => {
+export const isLoading = (status: boolean) => (dispatch) => {
   dispatch({
-    type: loadingTypes.IS_LOADING,
     payload: {
-      isLoading: isLoading
-    }
+      isLoading: status
+    },
+    type: loadingTypes.IS_LOADING
   });
 }

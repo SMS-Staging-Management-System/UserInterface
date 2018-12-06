@@ -4,9 +4,9 @@ export const snackbarTypes = {
 
 export const addMessage = (pMessage) => (dispatch) => {
   dispatch({
-    type: snackbarTypes.SNACKBAR_ADD,
     payload: {
       message: pMessage
-    }
+    },
+    type: snackbarTypes.SNACKBAR_ADD
   });
 }

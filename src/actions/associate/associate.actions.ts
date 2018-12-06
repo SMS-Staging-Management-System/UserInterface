@@ -1,11 +1,11 @@
 import * as axiosClients from '../../axiosClients/axiosClient';
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
-import { CheckIn } from '../../model/CheckIn.model';
+import { ICheckIn } from '../../model/CheckIn.model';
 
 export const associateTypes = {
+  CHECK_IN_PAGE_CHANGE: 'CHECK_IN_PAGE_CHANGE',
   INIT: 'INIT',
-  SUBMIT_CHECK_IN: 'SUBMIT_CHECK_IN',
-  CHECK_IN_PAGE_CHANGE: 'CHECK_IN_PAGE_CHANGE'
+  SUBMIT_CHECK_IN: 'SUBMIT_CHECK_IN'
 }
 
 /**
@@ -16,17 +16,18 @@ export const associateInit = () => (dispatch) => {
     checkInClient.getAssociateCheckIns()
     .then(response => {
       localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
-      let checkInList = response.data.result.checkIns.map(checkIn => {
-        return <CheckIn> checkIn;
+      const checkInList = response.data.result.checkIns.map(checkIn => {
+        return checkIn as ICheckIn;
       })
       dispatch({
-        type: associateTypes.INIT,
         payload: {
           checkIns: checkInList
-        }
+        },
+        type: associateTypes.INIT
       });
     })
     .catch(error => {
+      console.log("error");
     })
   }
 }
@@ -36,10 +37,14 @@ export const associateInit = () => (dispatch) => {
  * @param description 
  */
 export const submitCheckIn = (description: string) => {
-  let body = {
+  const body = {
     "description": description
   }
   checkInClient.submitCheckIn(body)
-  .then(response => {})
-  .catch(error => {});
+  .then(response => {
+    console.log("error");
+  })
+  .catch(error => {
+    console.log("error");
+  });
 }

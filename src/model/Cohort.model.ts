@@ -1,7 +1,7 @@
-import { User } from "./User.model";
+import { IUser } from "./User.model";
 
-export interface Cohort {
+export interface ICohort {
   cohortId: number;
   name:     string;
-  userList: Array<User>;
+  userList: IUser[];
 }

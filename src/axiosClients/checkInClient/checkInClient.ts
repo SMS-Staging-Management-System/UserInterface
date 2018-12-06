@@ -1,5 +1,5 @@
 import { createClient } from '../axiosClient';
-import { environment } from '../environment';
+import environment from '../environment';
 
 export const checkInClient = createClient();
 

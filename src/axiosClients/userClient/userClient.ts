@@ -6,9 +6,10 @@ export const userClient = createClient();
 export const verifyRegisterToken = (token: string) => {
   userClient.get(`/cohorts/verify?token=${token}`)
   .then(response => {
- 
+    console.log("error");
   })
   .catch(error => {
+    console.log("error");
     // TODO error message
   });
 }
@@ -24,6 +25,7 @@ export const login = (username: string, password: string) => {
   //   "password": password
   // }
   // return userClient.get(`/users`, user);
+  console.log("error");
 }
 
 export const getUserFromCognito = () => {

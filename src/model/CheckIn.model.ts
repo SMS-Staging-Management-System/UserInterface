@@ -1,4 +1,4 @@
-export interface CheckIn {
+export interface ICheckIn {
   checkInId:   number;
   userId:      number;
   submitTime:  number;

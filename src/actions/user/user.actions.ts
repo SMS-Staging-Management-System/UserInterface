@@ -1,16 +1,15 @@
 import { RegisterDto } from '../../model/Register.model';
-import * as axiosClients from '../../axiosClients/axiosClient';
 import * as userClient from '../../axiosClients/userClient/userClient';
-import { User } from 'src/model/User.model';
+import { IUser } from 'src/model/User.model';
 
 /**
  * userTypes
  */
 export const userTypes = {
   COHORT_TOKEN_VERIFY: 'COHORT_TOKEN_VERIFY',
-  REGISTER:     'REGISTER',
   LOGIN:        'LOGIN',
-  LOGOUT:       'LOGOUT'
+  LOGOUT:       'LOGOUT',
+  REGISTER:     'REGISTER'
 }
 
 /**
@@ -26,8 +25,12 @@ export const register = (registerDto: RegisterDto, token: string) => (dispatch) 
     // TODO tell user to enter matching passwords
   } else {
     userClient.register(registerDto, token)
-    .then(response => {})
-    .catch(error => {});
+    .then(response => {
+      console.log("error");
+    })
+    .catch(error => {
+      console.log("error");
+    });
   }
 }
 
@@ -46,10 +49,10 @@ export const login = (username: string, password: string) => (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('REVATURE_SMS_COGNITO');
   dispatch({
-    type: userTypes.LOGOUT,
     payload: {
       login: false
-    }
+    },
+    type: userTypes.LOGOUT
   });
 }
 
@@ -61,11 +64,11 @@ export const setup = () => (dispatch) => {
     userClient.getUserFromCognito()
     .then(response => {
       dispatch({
-        type: userTypes.LOGIN,
         payload: {
           login: true,
-          user:  <User> response.data.result.user
-        }
+          user:  response.data.result.user as IUser
+        },
+        type: userTypes.LOGIN
       });
     })
     .catch(error => {
