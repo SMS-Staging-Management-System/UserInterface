@@ -6,11 +6,7 @@ import { ContainerComponent } from './manager.container';
  */
 
 export class ManagerContentComponent extends React.Component<{}> {
-
-  constructor(props: any) {
-    super(props);
-  }
-
+  
 public getTime = () => {
         const d: number = Date.now();
         return <p>{time(d)}</p>;

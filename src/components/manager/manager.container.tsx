@@ -4,8 +4,6 @@ import TableComponent from '../table/table.component';
 /*
   *The container for the check-in and cohort tables
 */
-
-
 export class ContainerComponent extends React.Component <{},{}> {
 
   public render() {
