@@ -2,18 +2,31 @@ import { managerTypes } from '../actions/manager/manager.actions';
 import { IManagerState } from '.';
 
 const initialState: IManagerState = {
-  classes:  [],
-  checkIns: [], // checkin objects
-  checkInsFilter: []
+  cohorts:  [],
+  checkIns: [],
+  currentCheckIns: []
 }
 
 export const managerReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case managerTypes.INIT:
+    case managerTypes.ADD_CHECK_INS:
+      let checkIns = state.checkIns;
+      checkIns += action.payload.checkIns;
       return {
         ...state,
-        classes:  action.payload.classes,
-        checkIns: action.payload.checkIns
+        checkIns: checkIns
+      }
+    case managerTypes.ADD_COHORTS:
+      let cohorts = state.cohorts;
+      cohorts += action.payload.cohorts;
+      return {
+        ...state,
+        cohorts: cohorts
+      }
+    case managerTypes.FILTER_CHECK_IN_LIST:
+      return {
+        ...state,
+        currentCheckIns: action.payload.currentCheckIns
       }
   }
   return state;

@@ -1,24 +1,28 @@
 import * as axiosClients from '../../axiosClients/axiosClient';
-import * as checkInClient from '../../axiosClients/checkInClients/checkInClients';
+import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
+import { CheckIn } from '../../model/CheckIn.model';
 
 export const associateTypes = {
   INIT: 'INIT',
-  SUBMIT_CHECK_IN: 'SUBMIT_CHECK_IN'
+  SUBMIT_CHECK_IN: 'SUBMIT_CHECK_IN',
+  CHECK_IN_PAGE_CHANGE: 'CHECK_IN_PAGE_CHANGE'
 }
 
 /**
- * Set up associate list of past check-ins
+ * Set up associate past check-ins list
  */
 export const associateInit = () => (dispatch) => {
-  if(localStorage.getItem('REVATURE_SMS_JWT')) {
-    axiosClients.addJwtToHeader(localStorage.getItem('REVATURE_SMS_JWT'));
-    checkInClient.associateGetCheckIns()
+  if(axiosClients.addCognitoToHeader()) {
+    checkInClient.getAssociateCheckIns()
     .then(response => {
-      localStorage.setItem('REVATURE_SMS_JWT', response.data.result.auth);
+      localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
+      let checkInList = response.data.result.checkIns.map(checkIn => {
+        return <CheckIn> checkIn;
+      })
       dispatch({
         type: associateTypes.INIT,
         payload: {
-          checkIns: response.data.result.checkIns
+          checkIns: checkInList
         }
       });
     })
@@ -35,24 +39,7 @@ export const submitCheckIn = (description: string) => {
   let body = {
     "description": description
   }
-
   checkInClient.submitCheckIn(body)
-  .then(response => {
-    // TODO snackbar
-    // dispatch({
-    //   type: snackbar.SNACKBAR_ADD,
-    //   payload: {
-    //     message: "Check in submitted"
-    //   }
-    // });
-  })
-  .catch(error => {
-    // TODO snackbar
-    // dispatch({
-    //   type: snackbar.SNACKBAR_ADD,
-    //   payload: {
-    //     message: "Unable to submit check in"
-    //   }
-    // });
-  })
+  .then(response => {})
+  .catch(error => {});
 }

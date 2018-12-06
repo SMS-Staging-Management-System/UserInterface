@@ -3,17 +3,11 @@ import { IUserState } from '.';
 
 const initialState: IUserState = {
   login: false,
-  user:  null, // User object
-  registerToken: ''
+  user:  null,
 }
 
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case userTypes.COHORT_TOKEN_VERIFY:
-      return {
-        ...state,
-        registerToken: action.payload.registerToken
-      }
     case userTypes.REGISTER:
       return {
         ...state,
@@ -28,8 +22,7 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         login: false,
-        user:  null,
-        registerToken: ''
+        user:  null
       }
   }
   return state;

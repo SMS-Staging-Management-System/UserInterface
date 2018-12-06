@@ -2,7 +2,8 @@ import { associateTypes } from '../actions/associate/associate.actions';
 import { IAssociateState } from '.';
 
 const initialState: IAssociateState = {
-  checkIns: [] // checkin objects
+  checkIns: [], // checkin objects
+  currentCheckIns: []
 }
 
 export const associateReducer = (state = initialState, action: any) => {

@@ -1,6 +1,7 @@
 import { RegisterDto } from '../../model/Register.model';
 import * as axiosClients from '../../axiosClients/axiosClient';
-import * as userClient from '../../axiosClients/userClients/userClients';
+import * as userClient from '../../axiosClients/userClient/userClient';
+import { User } from 'src/model/User.model';
 
 /**
  * userTypes
@@ -25,18 +26,8 @@ export const register = (registerDto: RegisterDto, token: string) => (dispatch) 
     // TODO tell user to enter matching passwords
   } else {
     userClient.register(registerDto, token)
-    .then(response => {
-      dispatch({
-        type: userTypes.LOGIN,
-        payload: {
-          login: true,
-          user: response.data.result.user
-        }
-      });
-    })
-    .catch(error => {
-      // TODO error message
-    });
+    .then(response => {})
+    .catch(error => {});
   }
 }
 
@@ -46,59 +37,39 @@ export const register = (registerDto: RegisterDto, token: string) => (dispatch) 
  * @param password 
  */
 export const login = (username: string, password: string) => (dispatch) => {
-  userClient.login(username, password)
-  .then(response => {
-    axiosClients.addJwtToHeader(response.data.result.auth);
-    dispatch({
-      type: userTypes.LOGIN,
-      payload: {
-        login: true,
-        user: response.data.result.user
-      }
-    });
-  })
-  .catch(error => {
-    // TODO error message
-  });
-  
+  // TODO user cognito
 }
 
 /**
  * Log a user out and delete jwt token from local store
  */
 export const logout = () => (dispatch) => {
-  localStorage.removeItem('REVATURE_SMS_JWT');
+  localStorage.removeItem('REVATURE_SMS_COGNITO');
   dispatch({
     type: userTypes.LOGOUT,
     payload: {
       login: false
     }
   });
-
-  // dispatch({
-  //   type: snackbar.SNACKBAR_ADD,
-  //   payload: {
-  //     message: "Logged out"
-  //   }
-  // });
 }
 
-
+/**
+ * Log user in automatically if the cognito token is still in storage
+ */
 export const setup = () => (dispatch) => {
-  if(localStorage.getItem('REVATURE_SMS_JWT')) {
-    userClient.getUserFromJwt()
+  if(localStorage.getItem('REVATURE_SMS_COGNITO')) {
+    userClient.getUserFromCognito()
     .then(response => {
-      axiosClients.addJwtToHeader(response.data.result.auth)
       dispatch({
         type: userTypes.LOGIN,
         payload: {
           login: true,
-          user:  response.data.result.user
+          user:  <User> response.data.result.user
         }
       });
     })
     .catch(error => {
-      localStorage.removeItem('REVATURE_SMS_JWT');
+      localStorage.removeItem('REVATURE_SMS_COGNITO');
     })
   }
 }
