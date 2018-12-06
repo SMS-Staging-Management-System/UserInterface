@@ -32,14 +32,19 @@
 }
 
 
-
 .rememberDiv {
   margin:auto;
   display: flex;
   justify-content: center;
   // margin-left:  15%;
-  margin-top: 100px;
+   margin-top: 20px;
   border-bottom:solid rgb(245, 139, 0) 4px;
+}
+
+.resetDiv {
+  margin:auto;
+  display: flex;
+  justify-content: center;
 }
 #h6-rem {
   margin-left: -100%;
@@ -57,36 +62,59 @@
 }
 
 #titleHead{
-  margin-left: 9%;
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
 #forgotBut{
   color: blue;
   margin-top: 30px;
   border: none;
+  text-align: center;
   background-color: transparent;
   -webkit-transition: 1s;
           transition: 1s;
 }
 
-#passBut {
+#passBut, #confPassBut {
   opacity: 0;
   position: absolute;
   margin-top: 45px;
   border: none;
-  background-color: transparent;
+  background-color: white;
   margin-left: -22%;
   -webkit-transition: 3s;
           transition: 3s;
 }
 
+#invalidCredHead {
+  color: red;
+  text-align: center;
+  padding-top: 10px;
+}
 
-#userBut {
+
+#userBut, #newPassBut {
   border: none;
-  background-color: transparent;
+  background-color: white;
   margin-left: -22%;
   -webkit-transition: 1s;
           transition: 1s;
+  
+}
+
+#newPassBut {
+  margin-top: 21%;
+}
+
+#userBut{
+  margin-top: 18%;
+}
+
+#user, #pass {
+  padding-right: 50px;
 }
 
 
