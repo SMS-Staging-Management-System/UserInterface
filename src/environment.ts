@@ -1,9 +1,9 @@
 const dev = {
-  context: "http://localhost:8080/"
+  context: process.env.REACT_APP_DEVELOPMENT_SERVER_ADDRESS
 };
 
 const prod = {
-  context: "http://ec2-18-218-165-41.us-east-2.compute.amazonaws.com:8080/"
+  context: process.env.REACT_APP_PRODUCTION_SERVER_ADDRESS
 };
 
-export const environment = process.env.NODE_ENV === "production" ? prod : dev;
+export const environment = process.env.REACT_APP_DEVELOPMENT_SERVER_ADDRESS === "production" ? prod : dev;
