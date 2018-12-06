@@ -1,116 +1,92 @@
 import * as React from 'react';
+import { AssociateRow } from '../../components/associatecontext/associaterow.component';
 import { AssociateCheckIn } from '../../components/associatecontext/associatecheckin.component';
 
-export class AssociateContext extends React.Component {
-  // testing values here
-  constructor(props) {
-    super(props);
-    this.state = {
-      testfield1: 'test',
-      testfield2: 'test',
-      testfield3: 'test',
-      testfield4: 'test'
-    };
-  }
-  // end test values
+interface IProps {
+  nothing: string;
+}
 
-  public render() {
+interface IState {
+  isCheckingIn: boolean;
+}
+
+export class AssociateContext extends React.Component<IProps, IState>{
+
+  state: IState = {
+    isCheckingIn: false
+  }
+
+  constructor(props: any) {
+    super(props);
+    this.handleCheckInClick = this.handleCheckInClick.bind(this);
+    this.handleSubmitClick = this.handleSubmitClick.bind(this);
+  }
+
+
+  handleCheckInClick() {
+    this.setState({isCheckingIn: true});
+  }
+
+  handleSubmitClick() {
+    this.setState({isCheckingIn: false});
+  }
+
+  render() {
+    const { isCheckingIn } = this.state;
+    let button;
+
+  // components to switch to
+    
+  function Update(props) {
+    return <AssociateCheckIn/>;
+  }
+  
+  function CheckIn(props) {
+    return <AssociateRow/>;
+  }
+
+  // our switch
+
+  function Switch(props) {
+    // const isCheckingIn = props.isCheckingIn;
+    if (isCheckingIn) {
+      return <Update />;
+    }
+    return <CheckIn />;
+  }
+
+  // buttons used to control switching
+
+  function UpdateButton(props) {
+    return (
+      <button type="button" className="btn btn-danger" onClick={props.onClick}>
+        Submit
+      </button>
+    );
+  }
+  
+  function CheckInButton(props) {
+    return (
+      <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={props.onClick}>
+        Submit Check In
+      </button>
+    );
+  }
+
+  // switch logic
+    if (isCheckingIn) {
+      button = <UpdateButton onClick={this.handleSubmitClick} />;
+    } else {
+      button = <CheckInButton onClick={this.handleCheckInClick} />;
+    }
+
     return (
       <div>
-        {/* Chech-In, Chechneya, or chicken depending on how hungry you are */}
         <div>
-          <AssociateCheckIn/>
-        </div>
-        <div id="rowboxthing">
-          <div id="accordion">
-
-            <div className="card">
-              <div className="card-header" id="headingOne">
-                <h5 className="mb-0">
-                <div className="container" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                  <div className="row">
-                    <div className="col-sm">
-                      first
-                    </div>
-                    <div className="col-sm">
-                      last
-                    </div>
-                    <div className="col-sm">
-                      date
-                    </div>
-                    <div className="col-sm">
-                     cohort
-                    </div>
-                  </div>
-                </div>
-                </h5>
-              </div>
-
-              <div id="collapseOne" className="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="card-header" id="headingTwo">
-                <h5 className="mb-0">
-                <div className="container" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  <div className="row">
-                    <div className="col-sm">
-                      first
-                    </div>
-                    <div className="col-sm">
-                      last
-                    </div>
-                    <div className="col-sm">
-                      date
-                    </div>
-                    <div className="col-sm">
-                     cohort
-                    </div>
-                  </div>
-                </div>
-                </h5>
-              </div>
-              <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="card-header" id="headingThree">
-                <h5 className="mb-0">
-                <div className="container" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <div className="row">
-                    <div className="col-sm">
-                      first
-                    </div>
-                    <div className="col-sm">
-                      last
-                    </div>
-                    <div className="col-sm">
-                      date
-                    </div>
-                    <div className="col-sm">
-                     cohort
-                    </div>
-                  </div>
-                </div>
-                </h5>
-              </div>
-              <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                <div className="card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-              </div>
-            </div>
+          {button}
+          <Switch isLoggedIn={isCheckingIn} />
+          
           </div>
-        </div>
-        {/* End Chechneya */}
       </div>
       
     );
