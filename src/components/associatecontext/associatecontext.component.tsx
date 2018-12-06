@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AssociateCheckIn } from '../../components/associatecontext/associatecheckin.component';
 
 export class AssociateContext extends React.Component {
   // testing values here
@@ -17,6 +18,9 @@ export class AssociateContext extends React.Component {
     return (
       <div>
         {/* Chech-In, Chechneya, or chicken depending on how hungry you are */}
+        <div>
+          <AssociateCheckIn/>
+        </div>
         <div id="rowboxthing">
           <div id="accordion">
 
