@@ -4,18 +4,16 @@ import { ContainerComponent } from './manager.container';
 /**
  * The manager content
  */
+export class ManagerContentComponent extends React.Component {
 
-export class ManagerContentComponent extends React.Component<{}> {
-  
-public getTime = () => {
-        const d: number = Date.now();
-        return <p>{time(d)}</p>;
-}
+  public getTime = () => {
+    const d: number = Date.now();
+    return <p>{time(d)}</p>;
+  }
   public render() {
     return (
       <div className="manager-content shadow-lg p-3 mb-5 bg-white rounded">
         <div>
-          <h1>Revature Staging Management System</h1>
             <h4>Manager Dashboard</h4>
             {this.getTime()}
         </div>

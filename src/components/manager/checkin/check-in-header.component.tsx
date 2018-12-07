@@ -1,10 +1,7 @@
 import * as React from 'react';
-
 /*
   *The check-in header component
 */
-
-
 export class CheckInHeaderComponent extends React.Component<{}> {
 
   public render() {
@@ -24,5 +21,4 @@ export class CheckInHeaderComponent extends React.Component<{}> {
     );
   }
 }
-
 export default CheckInHeaderComponent

@@ -6,7 +6,7 @@ import CohortRowComponent from '../manager/cohort/cohort-row.component';
 import { Table } from 'reactstrap';
 
 /*
-  *The check-in table
+  *The managers tables
 */
 
 interface IProps{

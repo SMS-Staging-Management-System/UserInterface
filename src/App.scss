@@ -204,14 +204,8 @@ Manager Content
 ******************************************************/
 .manager-content {
   width: 90%;
-  
 }
-
-.check-in-rows {
+.page-numbers {
   display: flex;
-  align-content: space-between;
-}
-
-.check-in-columns {
-  padding-left: 10%
+  justify-content: flex-end;
 }
