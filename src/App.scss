@@ -160,6 +160,16 @@ body {
   -moz-osx-font-smoothing: grayscale;  
 }
 
+/************************************
+          App.ts
+************************************/
+#root {
+  height: 100vh;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100vw; 
+}
+
 .App {
   text-align: center;
 }
@@ -192,8 +202,6 @@ body {
 
 #main-content-container {
   @include flex-col;
-  display: flex;
-  flex-direction: column;
   flex-grow: 1;
   align-items: center;
   justify-content: center;
