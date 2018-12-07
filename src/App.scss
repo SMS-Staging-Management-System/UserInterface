@@ -12,14 +12,10 @@
 /************************************
           login.component.tsx
 ************************************/
-.centered {
-  // position: fixed;
-  // top: 50%;
-  // left: 50%;
-  // margin-top: -50px;
-  // margin-left: -100px;
+.top-lev-div{
+  zoom: 1.5;
+  -moz-transform: scale(1.5);
 }
-
 .frontDiv {
   z-index: 3;
   position: absolute;
@@ -119,7 +115,7 @@
 }
 
 #userBut{
-  margin-top: 18%;
+  margin-top: 18.5%;
 }
 
 #user, #pass {

@@ -209,7 +209,7 @@ export class LoginComponent extends React.Component<any, IState> {
 
         return (
             <>
-                <div className="centered shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
+                <div className="shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
                     {!this.state.isFirstSignin &&
                         <>
                             <h4 id="titleHead">Sign in to SMS</h4>
