@@ -60,7 +60,6 @@ export class CheckInRowComponent extends React.Component<IProps, IState> {
       modal: false
     })
   }
-
   public render() {
     // create index for pagination
     const LAST_INDEX = (this.props.pageNumber * 5) - 1
@@ -87,7 +86,7 @@ export class CheckInRowComponent extends React.Component<IProps, IState> {
            return(<></>)
           }
          })}
-         {/* See what associates are up to */}
+         {/* See what associates are up doing */}
          {this.state.modal === false &&
            <DailyTasksComponent
             description={this.state.description}
