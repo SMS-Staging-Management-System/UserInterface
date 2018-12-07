@@ -10,13 +10,14 @@ import clickerContainer from './components/clicker/clicker.container';
 import ManagerContentComponent from './components/manager/manager-content.component';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent } from './components/register/register.component';
+import Loading from './components/loading/loading.component';
 
 class App extends React.Component {
   public render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <div>
+          <>
             <AppNav />
             <div id="main-content-container">
               <Switch>
@@ -27,7 +28,8 @@ class App extends React.Component {
                 <Route component={HomeComponent} />
               </Switch>
             </div>
-          </div>
+            <Loading />
+          </>
         </BrowserRouter>
       </Provider>
     );

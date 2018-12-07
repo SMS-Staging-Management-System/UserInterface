@@ -1,4 +1,13 @@
 // @import 'components/pokemon/pokemon-card/pokemon-card.scss';
+/************************************
+          App.ts
+************************************/
+#root {
+  height: 100vh;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100vw;
+}
 
 /************************************
 register.component.tsx
@@ -9,12 +18,20 @@ register.component.tsx
 /************************************
           login.component.tsx
 ************************************/
-.centered {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -50px;
-  margin-left: -100px;
+@media (min-width: 1200px) { 
+  .top-lev-div{
+    zoom: 1.5;
+    -moz-transform: scale(1.5);
+  } 
+
+}
+
+@media (max-width: 1199.99px) { 
+  .top-lev-div{
+    zoom: 1.0;
+    -moz-transform: scale(1.0);
+  } 
+
 }
 
 .frontDiv {
@@ -37,13 +54,11 @@ register.component.tsx
   width: 250px;
 }
 
-
 .rememberDiv {
   margin:auto;
   display: flex;
   justify-content: center;
-  // margin-left:  15%;
-   margin-top: 20px;
+  margin-top: 20px;
   border-bottom:solid rgb(245, 139, 0) 4px;
 }
 
@@ -52,13 +67,14 @@ register.component.tsx
   display: flex;
   justify-content: center;
 }
+
 #h6-rem {
   margin-left: -100%;
   white-space: nowrap;
   font-size: 15px;
 }
+
 .rememberSpan {
-  
   display: inline;
   float: none;
 }
@@ -101,14 +117,12 @@ register.component.tsx
   padding-top: 10px;
 }
 
-
 #userBut, #newPassBut {
   border: none;
   background-color: white;
   margin-left: -22%;
   -webkit-transition: 1s;
           transition: 1s;
-  
 }
 
 #newPassBut {
@@ -116,7 +130,7 @@ register.component.tsx
 }
 
 #userBut{
-  margin-top: 18%;
+  margin-top: 18.5%;
 }
 
 #user, #pass {
@@ -157,6 +171,16 @@ body {
   -moz-osx-font-smoothing: grayscale;  
 }
 
+/************************************
+          App.ts
+************************************/
+#root {
+  height: 100vh;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100vw; 
+}
+
 .App {
   text-align: center;
 }
@@ -189,8 +213,9 @@ body {
 
 #main-content-container {
   @include flex-col;
-  width: 100%;
-  align-items: center
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .rev-btn {
@@ -263,7 +288,6 @@ body {
 
 .app-nav {
   border-bottom: 1px solid #ffffff !important;
-  margin-bottom: 20px;
   -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
@@ -337,4 +361,19 @@ Manager Content
 .page-display {
   display: flex;
   justify-content: space-evenly;
+}
+
+/*******************************************
+  loading.component.tsx
+*******************************************/
+#loading-screen {
+  align-items: center;
+  background-color: white;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 999;
 }
