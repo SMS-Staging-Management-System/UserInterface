@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CheckInRowComponent from '.././manager/checkin/checkin-in-row.component';
 import CheckInHeaderComponent from '../manager/checkin/check-in-header.component';
-import CohortHeaderComponent from '../manager/cohort/cohort-header.component';
+import CohortHeaderComponent from '../manager/cohort/cohort-table-header.component';
 import CohortRowComponent from '../manager/cohort/cohort-row.component';
 import { Table } from 'reactstrap';
 /*
