@@ -60,8 +60,7 @@ export class CheckInRowComponent extends React.Component<{}, IState> {
     return (
       <>
         {/* Map data from database into the check-in table */}
-
-        {FAKE_CHECK_IN_DATA.map(user =>
+        {FAKE_CHECK_IN_DATA.map((user,index) =>
           <tr id={`row-${user.userId}`}key={user.userId} onClick={() => this.getName(user.firstName)}
           onMouseOver={() => this.tasks(user.userId, user.description)} onMouseLeave={()=> this.hide()}>
             <td>{user.userId}</td>
