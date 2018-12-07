@@ -12,10 +12,22 @@
 /************************************
           login.component.tsx
 ************************************/
-.top-lev-div{
-  zoom: 1.5;
-  -moz-transform: scale(1.5);
+@media (min-width: 1200px) { 
+  .top-lev-div{
+    zoom: 1.5;
+    -moz-transform: scale(1.5);
+  } 
+
 }
+
+@media (max-width: 1199.99px) { 
+  .top-lev-div{
+    zoom: 1.0;
+    -moz-transform: scale(1.0);
+  } 
+
+}
+
 .frontDiv {
   z-index: 3;
   position: absolute;
