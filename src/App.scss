@@ -1,14 +1,23 @@
 // @import 'components/pokemon/pokemon-card/pokemon-card.scss';
+/************************************
+          App.ts
+************************************/
+#root {
+  height: 100vh;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100vw;
+}
 
 /************************************
           login.component.tsx
 ************************************/
 .centered {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -50px;
-  margin-left: -100px;
+  // position: fixed;
+  // top: 50%;
+  // left: 50%;
+  // margin-top: -50px;
+  // margin-left: -100px;
 }
 
 .frontDiv {
@@ -183,8 +192,11 @@ body {
 
 #main-content-container {
   @include flex-col;
-  width: 100%;
-  align-items: center
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .rev-btn {
@@ -257,7 +269,6 @@ body {
 
 .app-nav {
   border-bottom: 1px solid #ffffff !important;
-  margin-bottom: 20px;
   -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);

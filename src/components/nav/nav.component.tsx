@@ -40,7 +40,7 @@ class AppNav extends React.PureComponent<any, {}, {}> {
               <li className="nav-item active">
                 <Link to="/nested" className="unset-anchor nav-link">Nested</Link>
               </li>
-              {props.clicks}
+              {this.props.clicks}
             </ul>
           </div>
         </nav>
