@@ -12,12 +12,20 @@
 /************************************
           login.component.tsx
 ************************************/
-.centered {
-  // position: fixed;
-  // top: 50%;
-  // left: 50%;
-  // margin-top: -50px;
-  // margin-left: -100px;
+@media (min-width: 1200px) { 
+  .top-lev-div{
+    zoom: 1.5;
+    -moz-transform: scale(1.5);
+  } 
+
+}
+
+@media (max-width: 1199.99px) { 
+  .top-lev-div{
+    zoom: 1.0;
+    -moz-transform: scale(1.0);
+  } 
+
 }
 
 .frontDiv {
@@ -116,7 +124,7 @@
 }
 
 #userBut{
-  margin-top: 18%;
+  margin-top: 18.5%;
 }
 
 #user, #pass {
@@ -157,6 +165,16 @@ body {
   -moz-osx-font-smoothing: grayscale;  
 }
 
+/************************************
+          App.ts
+************************************/
+#root {
+  height: 100vh;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100vw; 
+}
+
 .App {
   text-align: center;
 }
@@ -189,8 +207,6 @@ body {
 
 #main-content-container {
   @include flex-col;
-  display: flex;
-  flex-direction: column;
   flex-grow: 1;
   align-items: center;
   justify-content: center;

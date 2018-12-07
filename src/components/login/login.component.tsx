@@ -206,7 +206,6 @@ export class LoginComponent extends React.Component<any, IState> {
   }
 
   public render() {
-
     return (
       <>
         <div className="centered shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
