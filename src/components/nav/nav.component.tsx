@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 
 class AppNav extends React.PureComponent<any, {}, {}> {
   public render() {
-    const props = this.props;
     return (
       <div>
         <nav className="app-nav navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">

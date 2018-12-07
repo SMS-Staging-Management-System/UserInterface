@@ -127,11 +127,28 @@ $revature-orange: #f26925;
   flex-direction: column;
 }
 
+/* @include transition(all,2s,ease-out); */
+@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
+  -webkit-transition: $what $time $how;
+  -moz-transition:    $what $time $how;
+  -ms-transition:     $what $time $how;
+  -o-transition:      $what $time $how;
+  transition:         $what $time $how;
+}
+
 
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  background: #eb7c15; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #f8d6b6, #acc5c9);
+  background: -webkit-linear-gradient(right, #e7d6c7, #8bdde7);
+  background: -moz-linear-gradient(right, #e2d0be, #eaf1f1);
+  background: -o-linear-gradient(right, #eec5a0, #e1e9eb);
+  background: linear-gradient(to left, #f3a55d, #e1e7e7);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;  
 }
 
 .App {
@@ -298,4 +315,15 @@ body {
 
 .not-allowed-cursor {
   cursor: not-allowed;
+}
+
+/*****************************************************
+Manager Content
+******************************************************/
+.manager-content {
+  width: 90%;
+}
+.page-numbers {
+  display: flex;
+  justify-content: flex-end;
 }

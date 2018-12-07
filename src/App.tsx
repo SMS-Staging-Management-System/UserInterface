@@ -7,9 +7,9 @@ import { HomeComponent } from './components/home/home.component';
 import { Provider } from 'react-redux';
 import { store } from './Store';
 import clickerContainer from './components/clicker/clicker.container';
+import ManagerContentComponent from './components/manager/manager-content.component';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent } from './components/register/register.component';
-
 
 class App extends React.Component {
   public render() {
@@ -20,7 +20,7 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                <Route path="/home" component={HomeComponent} />
+                <Route path="/home" component={ManagerContentComponent} />
                 <Route path="/clicker" component={clickerContainer} />
                 <Route path="/login" component={LoginComponent} />
                 <Route path="/register" component={RegisterComponent}/>
