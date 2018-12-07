@@ -27,20 +27,8 @@ class AppNav extends React.PureComponent<any, {}, {}> {
                 <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
               </li>
               <li className="nav-item active">
-                <Link to="/register" className="unset-anchor nav-link">First</Link>
+                <Link to="/register" className="unset-anchor nav-link">Register</Link>
               </li>
-              <li className="nav-item active dropdown">
-                <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
-                <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                  <div className="dropdown-item"><Link to="/movies" className="unset-anchor nav-link active">Movies</Link></div>
-                  <div className="dropdown-item"><Link to="/clicker" className="unset-anchor nav-link active">Clicker Game</Link></div>
-                  <div className="dropdown-item"><Link to="/tic-tac-toe" className="unset-anchor nav-link active">Tic Tac Toe Game</Link></div>
-                </div>
-              </li>
-              <li className="nav-item active">
-                <Link to="/nested" className="unset-anchor nav-link">Nested</Link>
-              </li>
-              {/* {props.clicks} */}
             </ul>
           </div>
         </nav>

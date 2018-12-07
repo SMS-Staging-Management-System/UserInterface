@@ -1,11 +1,12 @@
 import * as React from 'react';
-import CheckInRowComponent from '.././manager/checkin/checkin-in-row.component';
 import CheckInHeaderComponent from '../manager/checkin/check-in-header.component';
 import CohortHeaderComponent from '../manager/cohort/cohort-table-header.component';
 import CohortRowComponent from '../manager/cohort/cohort-row.component';
 import { Table } from 'reactstrap';
+import Paginate from '../manager/pagination.component';
+
 /*
-  *The managers tables
+  *The shared table component
 */
 
 interface IProps{
@@ -20,11 +21,11 @@ export class TableComponent extends React.Component<IProps, {}> {
       <>
         <Table className="table table-hover table-bordered">
           {this.props.type === "checkIn"
-          ? <CheckInHeaderComponent/> 
+          ? <CheckInHeaderComponent/>
           : <CohortHeaderComponent/>}
           <tbody>
           {this.props.type === "checkIn"
-          ? <CheckInRowComponent/> 
+          ? <Paginate/>
           : <CohortRowComponent/>}
           </tbody>
         </Table>

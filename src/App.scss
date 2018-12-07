@@ -1,6 +1,12 @@
 // @import 'components/pokemon/pokemon-card/pokemon-card.scss';
 
 /************************************
+register.component.tsx
+************************************/
+.reg-form{
+  
+}
+/************************************
           login.component.tsx
 ************************************/
 .centered {
@@ -326,4 +332,9 @@ Manager Content
 .page-numbers {
   display: flex;
   justify-content: flex-end;
+}
+
+.page-display {
+  display: flex;
+  justify-content: space-evenly;
 }
