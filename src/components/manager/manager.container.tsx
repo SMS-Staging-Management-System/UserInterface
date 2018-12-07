@@ -1,11 +1,11 @@
 import * as React from 'react';
 import TableComponent from '../table/table.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
-
 /*
   *The container for the check-in and cohort tables
+  currently attempting to paginate check-in data,
+  add a date range picker, and filter by late check-in, cohort, default (most recent), etc.
 */
-
 
 export class ContainerComponent extends React.Component <{},{}> {
 
@@ -26,13 +26,15 @@ export class ContainerComponent extends React.Component <{},{}> {
               <TableComponent type="checkIn" />
             </div>
           </div>
-          <div className="tab-pane fade d-flex" id="cohort" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <div className="flex-grow-1">
+          <div className="tab-pane fade container-fluid " id="cohort" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <div className="row">
+            <div className="col-6">
               {/* cohort table component*/}
               <TableComponent type="cohort"/>
             </div>
-            <div className="flex-grow-1">
+            <div className="col-6">
               <CohortAssociatesComponent />
+            </div>
             </div>
           </div>
         </div>

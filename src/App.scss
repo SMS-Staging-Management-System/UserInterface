@@ -1,5 +1,123 @@
 // @import 'components/pokemon/pokemon-card/pokemon-card.scss';
 
+/************************************
+          login.component.tsx
+************************************/
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
+
+.frontDiv {
+  z-index: 3;
+  position: absolute;
+}
+
+.behindDiv {
+  z-index: 2;
+
+}
+
+.box input {
+  margin-left:0;
+  -webkit-transition: 1s;
+          transition: 1s;
+}
+
+.txt-bx{
+  width: 250px;
+}
+
+
+.rememberDiv {
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  // margin-left:  15%;
+   margin-top: 20px;
+  border-bottom:solid rgb(245, 139, 0) 4px;
+}
+
+.resetDiv {
+  margin:auto;
+  display: flex;
+  justify-content: center;
+}
+#h6-rem {
+  margin-left: -100%;
+  white-space: nowrap;
+  font-size: 15px;
+}
+.rememberSpan {
+  
+  display: inline;
+  float: none;
+}
+
+#rememberCheck {
+  display: inline;
+}
+
+#titleHead{
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+#forgotBut{
+  color: blue;
+  margin-top: 30px;
+  border: none;
+  text-align: center;
+  background-color: transparent;
+  -webkit-transition: 1s;
+          transition: 1s;
+}
+
+#passBut, #confPassBut {
+  opacity: 0;
+  position: absolute;
+  margin-top: 45px;
+  border: none;
+  background-color: white;
+  margin-left: -22%;
+  -webkit-transition: 3s;
+          transition: 3s;
+}
+
+#invalidCredHead {
+  color: red;
+  text-align: center;
+  padding-top: 10px;
+}
+
+
+#userBut, #newPassBut {
+  border: none;
+  background-color: white;
+  margin-left: -22%;
+  -webkit-transition: 1s;
+          transition: 1s;
+  
+}
+
+#newPassBut {
+  margin-top: 21%;
+}
+
+#userBut{
+  margin-top: 18%;
+}
+
+#user, #pass {
+  padding-right: 50px;
+}
+
+
 // variables can be declared and later reused
 $revature-orange: #f26925;
 
@@ -204,14 +322,8 @@ Manager Content
 ******************************************************/
 .manager-content {
   width: 90%;
-  
 }
-
-.check-in-rows {
+.page-numbers {
   display: flex;
-  align-content: space-between;
-}
-
-.check-in-columns {
-  padding-left: 10%
+  justify-content: flex-end;
 }
