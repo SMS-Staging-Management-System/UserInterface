@@ -4,7 +4,7 @@ import * as React from "react";
  *The cohort header component
  */
 
-export class CohortHeaderComponent extends React.Component<{}> {
+export class CohortTableHeaderComponent extends React.Component<{}> {
   public render() {
     return (
       <>
@@ -18,4 +18,4 @@ export class CohortHeaderComponent extends React.Component<{}> {
   }
 }
 
-export default CohortHeaderComponent;
+export default CohortTableHeaderComponent;

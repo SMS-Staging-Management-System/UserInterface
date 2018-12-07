@@ -10,6 +10,12 @@
 }
 
 /************************************
+register.component.tsx
+************************************/
+.reg-form{
+  
+}
+/************************************
           login.component.tsx
 ************************************/
 @media (min-width: 1200px) { 
@@ -352,6 +358,10 @@ Manager Content
   justify-content: flex-end;
 }
 
+.page-display {
+  display: flex;
+  justify-content: space-evenly;
+}
 
 /*******************************************
   loading.component.tsx
