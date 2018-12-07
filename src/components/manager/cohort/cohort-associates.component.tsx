@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Table } from "reactstrap";
-import { Collapse, Button, CardBody, Card } from 'reactstrap';
 
 /*
  *The cohort associates component
@@ -28,32 +27,11 @@ const FAKE_ASSOCIATE_DATA = [
   }
 ];
 
-interface IState{
-  toggle: () => void;
-  collapse: boolean;
-}
-export class CohortAssociatesComponent extends React.Component<{}, IState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapse: false,
-      toggle: this.toggle
-    };
-  }
-
-  public toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  }
-
+export class CohortAssociatesComponent extends React.Component<{}> {
   public render() {
     return (
       <>
-              <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
-        <Collapse isOpen={this.state.collapse}>
-          <Card>
-            <CardBody>
-            Heading
-            <Table className="table table-hover table-bordered">
+        <Table className="table table-hover table-bordered">
           <thead>
             <tr>
               <th scope="col">ID</th>
@@ -75,10 +53,6 @@ export class CohortAssociatesComponent extends React.Component<{}, IState> {
             })}
           </tbody>
         </Table>
-            </CardBody>
-          </Card>
-        </Collapse>
-        
       </>
     );
   }
