@@ -2,7 +2,7 @@ import { loadingTypes } from '../actions/loading/loading.actions';
 import { ILoadingState } from '.';
 
 const initialState: ILoadingState = {
-  isLoading: false
+  isLoading: true
 }
 
 export const loadingReducer = (state = initialState, action: any) => {

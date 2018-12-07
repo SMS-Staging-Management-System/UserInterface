@@ -40,13 +40,11 @@
   width: 250px;
 }
 
-
 .rememberDiv {
   margin:auto;
   display: flex;
   justify-content: center;
-  // margin-left:  15%;
-   margin-top: 20px;
+  margin-top: 20px;
   border-bottom:solid rgb(245, 139, 0) 4px;
 }
 
@@ -55,13 +53,14 @@
   display: flex;
   justify-content: center;
 }
+
 #h6-rem {
   margin-left: -100%;
   white-space: nowrap;
   font-size: 15px;
 }
+
 .rememberSpan {
-  
   display: inline;
   float: none;
 }
@@ -104,14 +103,12 @@
   padding-top: 10px;
 }
 
-
 #userBut, #newPassBut {
   border: none;
   background-color: white;
   margin-left: -22%;
   -webkit-transition: 1s;
           transition: 1s;
-  
 }
 
 #newPassBut {
@@ -337,4 +334,20 @@ Manager Content
 .page-numbers {
   display: flex;
   justify-content: flex-end;
+}
+
+
+/*******************************************
+  loading.component.tsx
+*******************************************/
+#loading-screen {
+  align-items: center;
+  background-color: white;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 999;
 }

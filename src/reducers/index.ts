@@ -39,6 +39,7 @@ export interface ILoadingState {
 export interface IState {
   associate: IAssociateState,
   clicker:  IClickerState,
+  loading:  ILoadingState,
   manager:  IManagerState,
   snackbar: ISnackarState,
   user:     IUserState
