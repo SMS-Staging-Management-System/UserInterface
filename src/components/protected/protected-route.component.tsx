@@ -1,14 +1,24 @@
 import * as React from "react";
-import { Route, Redirect } from "react-router-dom";
+import {Redirect, Route} from 'react-router';
 import { connect } from "react-redux";
 
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
+/*
+ *The protected route component
+ */
+
+// TODO: make ProtectedRoute type safe
+// export interface ProtectedRouteProps extends RouteProps {
+//   isAuthenticated: boolean;
+//   authenticationPath: string;
+// }
+
+export const ProtectedRoute = ({ component: Component, ...rest }: any) => {
 
   return (
     <Route
       {...rest}
       render={props => {
-        if (rest.loggedIn) {
+        if (rest.login) {
           return <Component {...props} />;
         } else {
           return (
@@ -27,12 +37,8 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.loggedIn.loggedIn
+    login: state.user.login
   };
 };
 
-const mapDispatchToProps = dispatch => {
-
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProtectedRoute);
+export default connect(mapStateToProps)(ProtectedRoute);
