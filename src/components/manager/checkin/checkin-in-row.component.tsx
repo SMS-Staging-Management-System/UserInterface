@@ -70,8 +70,12 @@ export class CheckInRowComponent extends React.Component<{}, IState> {
             <td>{user.cohort}</td>
             <td>{user.time}</td>
           </tr>
-         )}
-         {/* See what associates are up to */}
+
+         )} else {
+           return(<></>)
+          }
+         })}
+         {/* See what associates are up doing */}
          {this.state.modal === false &&
            <DailyTasksComponent
             description={this.state.description}
