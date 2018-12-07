@@ -10,8 +10,7 @@ export class ManagerContentComponent extends React.Component {
     return (
       <div className="manager-content shadow-lg p-3 mb-5 bg-white rounded">
         <div>
-            <h4>SMS Manager Dashboard</h4>
-            <h5><ClockComponent/></h5>
+            <h4>SMS Manager Dashboard - <ClockComponent/></h4>
         </div>
         <hr/>
         <div>

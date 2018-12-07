@@ -42,7 +42,9 @@ class Paginate extends React.Component<{},IState>{
       <CheckInRowComponent
       pageNumber={this.state.currentPage}/>
       {/* Display changes in page in real-time */}
-      <p>Page: {this.state.currentPage}/{TOTAL_PAGES}</p>
+      <div className="page-display">
+      <span>Page: {this.state.currentPage}/{TOTAL_PAGES}</span>
+      <span>
       {/* Conditionally render pagination numbers by every five associates \
           the first item is an element that allows you to go to the previous page*/}
         <Pagination aria-label="check-in navigation">
@@ -65,6 +67,8 @@ class Paginate extends React.Component<{},IState>{
             </PaginationLink>
           </PaginationItem>
         </Pagination>
+        </span>
+        </div>
       </>
     );
   }
