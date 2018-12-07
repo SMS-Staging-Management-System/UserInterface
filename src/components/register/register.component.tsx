@@ -51,7 +51,7 @@ export class RegisterComponent extends React.PureComponent<any, {}, {}>{
    public render(){
       return(
          <>
-           <div className="reg-form shadow-lg p-3 mb-5 bg-white rounded">
+           <div className="reg-form">
               <form>
                  <div className="card mt-2">
                      <div className="card-header text-center"> 

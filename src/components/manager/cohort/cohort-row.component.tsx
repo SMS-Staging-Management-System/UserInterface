@@ -35,13 +35,6 @@ const FAKE_COHORT_DATA = [
 ];
 
 export class CohortRowComponent extends React.Component<{}> {
-
-  public handleClick = () => {
-    // const cohort = document.getElementById("cohort-associates") as HTMLElement;
-
-    // cohort.style.width = "400px";
-  }
-
   public render() {
     let firstRow = 1;
     return (
@@ -49,7 +42,7 @@ export class CohortRowComponent extends React.Component<{}> {
         {FAKE_COHORT_DATA.map(user => {
           firstRow++;
           return (
-          <tr id={`row-${user.userId}`} key={user.userId} onClick={() => this.handleClick()}>
+          <tr id={`row-${user.userId}`} key={user.userId}>
             <td>1810 <Button>+</Button></td>
             {firstRow === 1 && <td rowSpan={3}></td>}
           </tr>
