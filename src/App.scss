@@ -352,6 +352,16 @@ Manager Content
   justify-content: flex-end;
 }
 
+.page-display {
+  position: absolute;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.page-count{
+  padding-right: 10px;
+}
 
 /*******************************************
   loading.component.tsx
