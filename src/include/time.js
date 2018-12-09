@@ -13,7 +13,7 @@ function time(unixTimestamp){
     let day =  date.getDate();
     
     // Will display time in 10:30:23 format
-    let formattedTime = `${hours}:${minutes.substr(-2)}`;
+    let formattedTime = `${hours}:${minutes.substr(-2)}:${seconds.substr(-2)}`;
     let formatDate = `${month+1}/${day}/${year}`
     let formattedDate = `${formatDate} - ${formattedTime}`
     if(unixTimestamp > 0){

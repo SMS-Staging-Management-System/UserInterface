@@ -12,7 +12,11 @@ export interface IState {
   description: string
   userId: number
 }
-export class CheckInRowComponent extends React.Component<{}, IState> {
+
+interface IProps {
+  pageNumber: number
+}
+export class CheckInRowComponent extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +27,7 @@ export class CheckInRowComponent extends React.Component<{}, IState> {
       userId: 1
     };
   }
-
+  // get name to pass name to the comment component
   public getName = (name:string) => {
     this.setState({
       ...this.state,
@@ -32,7 +36,7 @@ export class CheckInRowComponent extends React.Component<{}, IState> {
       popover: !this.state.popover
     });
   }
-
+  // get associate's daily tasks to pass to popover
   public tasks = (id:number, dailyTasks:string) => {
     this.setState({
       ...this.state,
@@ -41,7 +45,7 @@ export class CheckInRowComponent extends React.Component<{}, IState> {
       userId: id
     })
   }
-
+  // hide associates tasks on new mouseover
   public hide = () => {
     this.setState({
       ...this.state,
@@ -49,7 +53,7 @@ export class CheckInRowComponent extends React.Component<{}, IState> {
       userId: 1
     })
   }
-
+  // disable modal on cancel or submit
   public modalOff = () => {
     this.setState({
       ...this.state,
@@ -57,20 +61,27 @@ export class CheckInRowComponent extends React.Component<{}, IState> {
     })
   }
   public render() {
+    // create index for pagination
+    const LAST_INDEX = (this.props.pageNumber * 5) - 1
+    const FIRST_INDEX = LAST_INDEX - 4
     return (
       <>
         {/* Map data from database into the check-in table */}
-
-        {FAKE_CHECK_IN_DATA.map(user =>
-          <tr id={`row-${user.userId}`}key={user.userId} onClick={() => this.getName(user.firstName)}
-          onMouseOver={() => this.tasks(user.userId, user.description)} onMouseLeave={()=> this.hide()}>
-            <td>{user.userId}</td>
+        {FAKE_CHECK_IN_DATA.map((user,index) =>
+         {
+           if(index >= FIRST_INDEX && index <= LAST_INDEX){
+             return ( 
+          <tr id={`row-${user.userId}`}
+          key={user.userId} 
+          onClick={() => this.getName(user.firstName)}
+          onMouseOver={() => this.tasks(user.userId, user.description)} 
+          onMouseLeave={()=> this.hide()}>
+            <td >{user.userId}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
             <td>{user.cohort}</td>
             <td>{user.time}</td>
           </tr>
-
          )} else {
            return(<></>)
           }

@@ -1,15 +1,15 @@
 import * as React from 'react';
-import '../include/bootstrap';
+import '../../../include/bootstrap';
 
 /**
  * Header Cohort Popup
  */
-export class CohortHeaderComponent extends React.PureComponent<any, {}, {}>{
+export class CohortTableHeaderComponent extends React.PureComponent<any, {}, {}>{
 
 	public render(){
 		return(
 			<>
-				<div className="col-md-6">
+				{/* <div className="col-md-6">
 					<div className="card">
 						<div className="card-header">
 							<h5 className="card-title">Cohort Invitee Email</h5>
@@ -27,8 +27,10 @@ export class CohortHeaderComponent extends React.PureComponent<any, {}, {}>{
 							</form>
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</>
 		)
 	}
 }
+
+export default CohortTableHeaderComponent
