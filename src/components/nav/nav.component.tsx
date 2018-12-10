@@ -42,34 +42,34 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
   public render() {
     return (
       <Navbar color="light" light expand="md">
-      <NavbarBrand>
-        <Link to="/" className="unset-anchor">
-          <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
-        </Link>
-      </NavbarBrand>
-      <NavbarToggler onClick={this.toggle} />
-      <Collapse isOpen={this.state.isOpen} navbar>
-        <Nav className="ml-auto" navbar>
-          {
-            this.props.user &&
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                {this.props.user.email}
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem className="cursor-hover">
-                  Profile
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem className="cursor-hover" onClick={() => this.props.logout()}>
-                  Logout
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          }
-        </Nav>
-      </Collapse>
-    </Navbar>
+        <NavbarBrand>
+          <Link to="/" className="unset-anchor">
+            <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
+          </Link>
+        </NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            {
+              this.props.user &&
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  {this.props.user.email}
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem className="cursor-hover">
+                    Profile
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem className="cursor-hover" onClick={() => this.props.logout()}>
+                    Logout
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            }
+          </Nav>
+        </Collapse>
+      </Navbar>
     );
   }
 }
