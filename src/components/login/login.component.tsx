@@ -16,7 +16,8 @@ interface IComponentState {
 }
 
 interface IComponentProps {
-  login: (username: string, password: string) => {void}
+  login: (username: string, password: string) => {void},
+  setup: () => {void}
 }
 
 export class LoginComponent extends React.Component<IComponentProps, IComponentState> {
@@ -42,7 +43,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
       username
 
     })
-
   }
 
   public updatePassword = (e: any) => {
@@ -68,8 +68,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
   }
 
   public onSuccess = (result: awsCognito.CognitoUserSession) => {
-    const token = result.getIdToken().getJwtToken();
-    localStorage.setItem('token', token);
+
     // console.log(userPool.getCurrentUser());
     // console.log(result.getIdToken().decodePayload())
     // const idtok: any = result.getIdToken();
@@ -77,7 +76,9 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
     // navigate pages now that we have successfully logged in
     console.log("NAVIGATE TO NEW PAGE")
-    // this.props.history.push('/success'); 
+
+    // Call setup whenevr yo are ready for the app to go away from login page
+    this.props.setup();
   }
 
   public onFailure = (err: any) => {
@@ -197,6 +198,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
 const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {
-  userActions
+  ...userActions
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
