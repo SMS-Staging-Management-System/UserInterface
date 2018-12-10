@@ -1,19 +1,20 @@
 import { userTypes } from '../actions/user/user.actions';
 import { IUserState } from '.';
 
+const FAKE_USER = { "email": "a@mail.com",
+                    "firstname": "Blake",
+                    "lastname": "Kruppa",
+                    "role" :  "manager",
+                    "userId": 1}
 const initialState: IUserState = {
-  login: false,
-  user:  null, // User object
-  registerToken: ''
+  cogUser: {},
+  isFirstSignin: false,
+  login: true,
+  user:  FAKE_USER
 }
 
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case userTypes.COHORT_TOKEN_VERIFY:
-      return {
-        ...state,
-        registerToken: action.payload.registerToken
-      }
     case userTypes.REGISTER:
       return {
         ...state,
@@ -21,14 +22,24 @@ export const userReducer = (state = initialState, action: any) => {
     case userTypes.LOGIN:
       return {
         ...state,
-        login: action.payload.login
+        login:  action.payload.login,
+        user:   action.payload.user
       }
     case userTypes.LOGOUT:
       return {
         ...state,
         login: false,
-        user:  null,
-        registerToken: ''
+        user:  null
+      }
+    case userTypes.COGNITO_SIGN_IN:
+      return {
+        ...state,
+        cogUser: action.payload.cogUser
+      }
+    case userTypes.FIRST_SIGN_IN:
+      return {
+        ...state,
+        isFirstSignin: true
       }
   }
   return state;

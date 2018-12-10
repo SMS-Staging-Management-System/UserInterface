@@ -3,36 +3,57 @@ import { clickerReducer } from './clicker.reducer';
 import { userReducer } from './user.reducer';
 import { associateReducer } from './associate.reducer';
 import { managerReducer } from './manager.reducer';
+import { snackbarReducer } from './snackbar.reducer';
+import { loadingReducer } from './loading.reducer';
+import { ICheckIn } from 'src/model/CheckIn.model';
+import { ICohort } from 'src/model/Cohort.model';
+import { IUser } from '../model/User.model';
 
 export interface IClickerState {
   clicks: number
 }
 
 export interface IUserState {
+  cogUser: {},
+  isFirstSignin: boolean,
   login: boolean,
-  user : null,// User object
-  registerToken: ''
+  user:  IUser
 }
 
 export interface IManagerState {
-  classes:  [] // Class objects, which have user objects
-  checkIns: [] // CheckIn objects
+  cohorts: ICohort[], // Class objects, which have user objects
+  checkIns: ICheckIn[], // CheckIn objects
+  currentCheckIns: ICheckIn[],
+  currentCohort: ICohort
 }
 
 export interface IAssociateState {
-  checkIns: [] // CheckIn objects
+  checkIns: ICheckIn[], // CheckIn objects
+  currentCheckIns: ICheckIn[]
+}
+
+export interface ISnackarState {
+  message: string // CheckIn objects
+}
+
+export interface ILoadingState {
+  isLoading: boolean
 }
 
 export interface IState {
+  associate: IAssociateState,
   clicker:  IClickerState,
-  user:     IUserState,
-  associate:IAssociateState,
-  manager:  IManagerState
+  loading:  ILoadingState,
+  manager:  IManagerState,
+  snackbar: ISnackarState,
+  user:     IUserState
 }
 
 export const state = combineReducers<IState>({
-  clicker:    clickerReducer,
-  user:       userReducer,
   associate:  associateReducer,
-  manager:    managerReducer
+  clicker:  clickerReducer,
+  loading:  loadingReducer,
+  manager:  managerReducer,
+  snackbar: snackbarReducer,
+  user:     userReducer
 })
