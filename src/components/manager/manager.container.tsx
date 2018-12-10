@@ -3,7 +3,7 @@ import * as React from 'react';
 import {ManagerCheckinTableComponent} from '../table/manager-checkin-table.component';
 import CohortTableComponent from '../table/cohortTable.component';
 import AssociateTableComponent from '../table/associateTable.component';
-
+import ManagerCheckinFilter from '../table/manager-checkin-filter.component';
 /*
   *The container for the check-in and cohort tables
   currently attempting to paginate check-in data,
@@ -25,6 +25,7 @@ export class ContainerComponent extends React.Component {
         <div className="tab-content" id="nav-tabContent">
           <div className="tab-pane fade active show" id="check-in" role="tabpanel" >
             <div >
+              <ManagerCheckinFilter/>
               <ManagerCheckinTableComponent 
               type="manager"/>
             </div>
