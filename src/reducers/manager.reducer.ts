@@ -29,6 +29,11 @@ export const managerReducer = (state = initialState, action: any) => {
         ...state,
         currentCheckIns: action.payload.currentCheckIns
       }
+    case managerTypes.SELECT_COHORT:
+      return {
+        ...state,
+        currentCohort: action.payload.currentCohort
+      }
   }
   return state;
 }

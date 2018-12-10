@@ -1,8 +1,11 @@
 import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
 import { ResetFirstPasswordComponent } from '../resetFirstPassword/ResetFirstPassword.component';
+import * as userActions from '../../actions/user/user.actions';
 
-interface IState {
+interface IComponentState {
   cogUser: object,
   username: string,
   password: string,
@@ -10,10 +13,13 @@ interface IState {
   newPassword: string,
   isFirstSignin,
   incorrectUserPass
-
 }
 
-export class LoginComponent extends React.Component<any, IState> {
+interface IComponentProps {
+  login: (username: string, password: string) => {void}
+}
+
+export class LoginComponent extends React.Component<IComponentProps, IComponentState> {
 
   constructor(props: any) {
     super(props);
@@ -94,75 +100,9 @@ export class LoginComponent extends React.Component<any, IState> {
   public submit = (e: any) => {
     e.preventDefault();
     const { username, password } = this.state; // destructuring
-    const credentials = { username, password };
-
-    const authenticationData = {
-      Password: credentials.password,
-      Username: credentials.username,
-    };
-    const authenticationDetails = new awsCognito.AuthenticationDetails(authenticationData);
-    const poolData = {
-      ClientId: '49f1foekljhlqn185fme63hi0s', // Your client id here
-      UserPoolId: 'us-west-2_8b6WpHm1z', // Your user pool id here
-		};
-    const userPool = new awsCognito.CognitoUserPool(poolData);
-    const userData = {
-      Pool: userPool,
-      Username: credentials.username,
-    };
-    const cognitoUser = new awsCognito.CognitoUser(userData);
-    // todo: update cognito user
-    //  this.props.updateCognitoUser(cognitoUser);
-    cognitoUser.authenticateUser(authenticationDetails, {
-      newPasswordRequired: (userAttributes, requiredAttributes) => {
-        // todo: set the first Signin on the state so that it shows the form to set new password
-        this.setState({
-          ...this.state,
-          cogUser: cognitoUser,
-          isFirstSignin: true
-        })
-        // this.props.setFirstSignin(true);
-      },
-      onFailure: this.onFailure,
-      onSuccess: this.onSuccess,
-
-
-    });
+    this.props.login(username, password);
   }
 
-  public submitNewPassword = () => {
-    const { password, confirmationPassword } = this.state;
-    if (password !== confirmationPassword) {
-      // remove alert and do something better for feedback
-      alert('passwords do not match');
-      return;
-    }
-    if (password) {
-
-      const user: awsCognito.CognitoUser = this.props.cognito.user;
-      user.confirmPassword(password, password, {
-        onFailure: (error: Error) => {
-          console.log(error)
-          // todo: remove alerts
-          //   alert('invalid code');
-          //   this.props.resetState();
-        },
-        onSuccess: () => {
-          this.props.resetState();
-        }
-      });
-      return;
-    } else {
-      const user: awsCognito.CognitoUser = this.props.cognito.user;
-      user.getUserAttributes((attributes) => {
-        user.completeNewPasswordChallenge(password, attributes, {
-          onFailure: this.onFailure,
-          onSuccess: this.onSuccess,
-        })
-      })
-
-    }
-  }
   public handlePassChange(event) {
     this.setState({
       ...this.state,
@@ -255,3 +195,8 @@ export class LoginComponent extends React.Component<any, IState> {
   }
 }
 
+const mapStateToProps = (state: IState) => (state.user)
+const mapDispatchToProps = {
+  userActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
