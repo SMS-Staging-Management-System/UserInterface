@@ -48,7 +48,7 @@ export class CohortAssociatesComponent extends React.Component<{}, IState> {
   public render() {
     return (
       <>
-              <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
+        <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>Toggle</Button>
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
@@ -78,7 +78,6 @@ export class CohortAssociatesComponent extends React.Component<{}, IState> {
             </CardBody>
           </Card>
         </Collapse>
-        
       </>
     );
   }

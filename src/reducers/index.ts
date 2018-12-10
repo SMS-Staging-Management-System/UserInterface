@@ -21,7 +21,8 @@ export interface IUserState {
 export interface IManagerState {
   cohorts: ICohort[], // Class objects, which have user objects
   checkIns: ICheckIn[], // CheckIn objects
-  currentCheckIns: ICheckIn[]
+  currentCheckIns: ICheckIn[],
+  currentCohort: null
 }
 
 export interface IAssociateState {

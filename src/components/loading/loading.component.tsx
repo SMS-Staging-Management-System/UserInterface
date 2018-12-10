@@ -19,7 +19,6 @@ export class LoadingComponent extends React.Component<IStateProps> {
           this.props.isLoading &&
           <div id="loading-screen" >
             <img src={require('../../assets/LoadingLogo.gif')} alt="loading revature"/>
-            {/* <img src={require('../../assets/LoadingCircle.gif')} alt="loading circle"/> */}
           </div>
         }
       </>

@@ -15,12 +15,15 @@ import { IState } from '../../reducers';
 import { connect } from 'react-redux';
 import { IUser } from '../../model/User.model';
 
+import * as userActions from '../../actions/user/user.actions';
+
 interface IComponentState {
   isOpen: boolean
 }
 interface IComponentProps {
   login: boolean,
-  user:  IUser
+  user:  IUser,
+  logout: () => {void}
 }
 class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> {
   constructor(props) {
@@ -54,11 +57,11 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
                 {this.props.user.email}
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
+                <DropdownItem className="cursor-hover">
                   Profile
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
+                <DropdownItem className="cursor-hover" onClick={() => this.props.logout()}>
                   Logout
                 </DropdownItem>
               </DropdownMenu>
@@ -72,4 +75,7 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
 }
 
 const mapStateToProps = (state: IState) => (state.user)
-export default connect(mapStateToProps)(AppNav);
+const mapDispatchToProps = {
+  logout: userActions.logout
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AppNav);

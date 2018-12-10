@@ -4,7 +4,8 @@ import { IManagerState } from '.';
 const initialState: IManagerState = {
   checkIns: [],
   cohorts:  [],
-  currentCheckIns: []
+  currentCheckIns: [],
+  currentCohort: null
 }
 
 export const managerReducer = (state = initialState, action: any) => {
