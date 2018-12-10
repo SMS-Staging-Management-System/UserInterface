@@ -43,7 +43,6 @@ export const register = (registerDto: RegisterDto, token: string) => (dispatch) 
  * @param password 
  */
 export const login = (username: string, password: string) => (dispatch) => {
-  console.log("CHOCOLATE")
   const authenticationData = {
     Password: password,
     Username: username,
@@ -75,6 +74,7 @@ export const login = (username: string, password: string) => (dispatch) => {
     },
     onSuccess: (result: awsCognito.CognitoUserSession) => {
       localStorage.setItem('REVATURE_SMS_COGNITO', result.getIdToken().getJwtToken());
+      console.log(`TOKEN HERE: ${result.getIdToken().getJwtToken()}`)
       dispatch({
         payload: {
           cogUser: cognitoUser
@@ -125,3 +125,29 @@ export const setup = () => (dispatch) => {
     })
   }
 }
+
+// export const updateUser = ( firstname: string, 
+//                             lastname: string, 
+//                             mobile: string, 
+//                             timezone: string, 
+//                             city: string, 
+//                             state: string, 
+//                             zip: string) => (dispatch) => {
+
+  
+//   if(localStorage.getItem('REVATURE_SMS_COGNITO')) {
+//     userClient.patchUser()
+//     .then(response => {
+//       dispatch({
+//         payload: {
+//           login: true,
+//           user:  response.data.result.user as IUser
+//         },
+//         type: userTypes.USER_INIT
+//       });
+//     })
+//     .catch(error => {
+//       localStorage.removeItem('REVATURE_SMS_COGNITO');
+//     })
+//   }
+// }

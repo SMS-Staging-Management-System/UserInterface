@@ -24,7 +24,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
   constructor(props: any) {
     super(props);
-    console.log(props);
     this.state = {
       cogUser: {},
       confirmationPassword: '',
