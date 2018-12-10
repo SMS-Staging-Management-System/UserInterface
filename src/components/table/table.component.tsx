@@ -18,7 +18,6 @@ export class TableComponent extends React.Component<IProps, {}> {
   
 
   public render() {
-    console.log(this.props.type);
     return (
       <>
         <Table className="table table-hover table-bordered">
@@ -28,8 +27,9 @@ export class TableComponent extends React.Component<IProps, {}> {
           <tbody>
           {this.props.type === "checkIn"
           ? <Paginate/>
-          : <CohortRowComponent/>}
+          : <CohortRowComponent/>} 
           </tbody>
+          {/* distinctly different naming convention between Paginate ad cohortrow */}
         </Table>
       </>
     );
