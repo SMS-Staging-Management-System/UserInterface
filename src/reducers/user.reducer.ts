@@ -7,8 +7,10 @@ const FAKE_USER = { "email": "a@mail.com",
                     "role" :  "manager",
                     "userId": 1}
 const initialState: IUserState = {
+  cogUser: {},
+  isFirstSignin: false,
   login: true,
-  user:  FAKE_USER,
+  user:  FAKE_USER
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -28,6 +30,16 @@ export const userReducer = (state = initialState, action: any) => {
         ...state,
         login: false,
         user:  null
+      }
+    case userTypes.COGNITO_SIGN_IN:
+      return {
+        ...state,
+        cogUser: action.payload.cogUser
+      }
+    case userTypes.FIRST_SIGN_IN:
+      return {
+        ...state,
+        isFirstSignin: true
       }
   }
   return state;

@@ -7,7 +7,8 @@ import { ICohort } from '../../model/Cohort.model';
 export const managerTypes = {
   ADD_CHECK_INS:  'ADD_CHECK_INS',
   ADD_COHORTS:    'ADD_COHORTS',
-  FILTER_CHECK_IN_LIST: 'FILTER_CHECK_IN_LIST'
+  FILTER_CHECK_IN_LIST: 'FILTER_CHECK_IN_LIST',
+  SELECT_COHORT: 'SELECT_COHORT'
 }
 
 /**
@@ -128,5 +129,18 @@ export const filterCheckInByCohortId = (cohortId: number, checkInList: ICheckIn[
       currentCheckIns: filterList
     },
     type: managerTypes.FILTER_CHECK_IN_LIST
+  });
+}
+
+/**
+ * Set the current select cohort to be render
+ * @param sCohort 
+ */
+export const selectCohort = (sCohort: ICohort) => dispatch => {
+  dispatch({
+    payload: {
+      currentCohort: sCohort
+    },
+    type: managerTypes.SELECT_COHORT
   });
 }
