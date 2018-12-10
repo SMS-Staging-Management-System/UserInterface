@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import CohortAssociatesComponent from './cohort/cohort-associates.component';
-import {CheckinTableComponent} from '../table/checkinTable.component';
+import {ManagerCheckinTableComponent} from '../table/manager-checkin-table.component';
 import CohortTableComponent from '../table/cohortTable.component';
 import AssociateTableComponent from '../table/associateTable.component';
 
@@ -25,7 +25,7 @@ export class ContainerComponent extends React.Component {
         <div className="tab-content" id="nav-tabContent">
           <div className="tab-pane fade active show" id="check-in" role="tabpanel" >
             <div >
-              <CheckinTableComponent 
+              <ManagerCheckinTableComponent 
               type="manager"/>
             </div>
           </div>

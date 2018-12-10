@@ -9,7 +9,7 @@ interface IProps {
   userId: number
 }
 
-export class DailyTasksComponent extends React.Component<IProps> {
+export class ManagerDailyTasksComponent extends React.Component<IProps> {
 
   public render() {
     return (
@@ -25,4 +25,4 @@ export class DailyTasksComponent extends React.Component<IProps> {
   }
 }
 
-export default DailyTasksComponent
+export default ManagerDailyTasksComponent

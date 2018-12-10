@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import {FAKE_CHECK_IN_DATA} from '../../include/fake';
-import CheckInRowComponent from './checkin/checkin-in-row.component';
+import CheckInRowManagerComponent from './checkin/checkin-in-row-manager.component';
 
 interface IState {
   currentPage: number
 }
-class CheckinPaginationComponent extends React.Component<{},IState>{
+class CheckinPaginationManagerComponent extends React.Component<{},IState>{
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +39,7 @@ class CheckinPaginationComponent extends React.Component<{},IState>{
     return (
       <>
       {/* Inject CheckInRowComponent and share page number with it as props */}
-      <CheckInRowComponent
+      <CheckInRowManagerComponent
       pageNumber={this.state.currentPage}/>
       {/* Display changes in page in real-time */}
       <div className="page-display">
@@ -74,4 +74,4 @@ class CheckinPaginationComponent extends React.Component<{},IState>{
   }
 }
 
-export default CheckinPaginationComponent
+export default CheckinPaginationManagerComponent
