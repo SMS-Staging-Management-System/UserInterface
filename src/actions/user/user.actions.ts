@@ -43,6 +43,7 @@ export const register = (registerDto: RegisterDto, token: string) => (dispatch) 
  * @param password 
  */
 export const login = (username: string, password: string) => (dispatch) => {
+  console.log("CHOCOLATE")
   const authenticationData = {
     Password: password,
     Username: username,
@@ -101,6 +102,13 @@ export const logout = () => (dispatch) => {
  * Log user in automatically if the cognito token is still in storage
  */
 export const setup = () => (dispatch) => {
+  dispatch({
+    payload: {
+      login: true,
+      user:  null
+    },
+    type: userTypes.USER_INIT
+  });
   if(localStorage.getItem('REVATURE_SMS_COGNITO')) {
     userClient.getUserFromCognito()
     .then(response => {
@@ -109,7 +117,7 @@ export const setup = () => (dispatch) => {
           login: true,
           user:  response.data.result.user as IUser
         },
-        type: userTypes.LOGIN
+        type: userTypes.USER_INIT
       });
     })
     .catch(error => {
