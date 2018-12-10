@@ -1,5 +1,6 @@
 import { createClient } from '../axiosClient';
 import { RegisterDto } from '../../model/Register.model';
+import { IUser } from 'src/model/User.model';
 
 export const userClient = createClient();
 
@@ -38,6 +39,6 @@ export const getUserFromCognito = () => {
 /**
  * Return promise to get user info from server
  */
-export const patchUser = () => {
-  return userClient.patch(`/users`);
+export const patchUser = (user: IUser) => {
+  return userClient.patch(`/users`, user);
 }

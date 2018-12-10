@@ -47,19 +47,20 @@ export const login = (username: string, password: string) => (dispatch) => {
     Password: password,
     Username: username,
   };
+
   const authenticationDetails = new awsCognito.AuthenticationDetails(authenticationData);
   const poolData = {
     ClientId: process.env.REACT_APP_COGNITO_CLIENT_ID, 
     UserPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
   };
+
   const userPool = new awsCognito.CognitoUserPool(poolData);
   const userData = {
     Pool: userPool,
     Username: username,
   };
+
   const cognitoUser = new awsCognito.CognitoUser(userData);
-  // todo: update cognito user
-  //  this.props.updateCognitoUser(cognitoUser);
   cognitoUser.authenticateUser(authenticationDetails, {
     newPasswordRequired: (userAttributes, requiredAttributes) => {
       dispatch({
@@ -102,13 +103,6 @@ export const logout = () => (dispatch) => {
  * Log user in automatically if the cognito token is still in storage
  */
 export const setup = () => (dispatch) => {
-  dispatch({
-    payload: {
-      login: true,
-      user:  null
-    },
-    type: userTypes.USER_INIT
-  });
   if(localStorage.getItem('REVATURE_SMS_COGNITO')) {
     userClient.getUserFromCognito()
     .then(response => {
@@ -126,28 +120,14 @@ export const setup = () => (dispatch) => {
   }
 }
 
-// export const updateUser = ( firstname: string, 
-//                             lastname: string, 
-//                             mobile: string, 
-//                             timezone: string, 
-//                             city: string, 
-//                             state: string, 
-//                             zip: string) => (dispatch) => {
-
-  
-//   if(localStorage.getItem('REVATURE_SMS_COGNITO')) {
-//     userClient.patchUser()
-//     .then(response => {
-//       dispatch({
-//         payload: {
-//           login: true,
-//           user:  response.data.result.user as IUser
-//         },
-//         type: userTypes.USER_INIT
-//       });
-//     })
-//     .catch(error => {
-//       localStorage.removeItem('REVATURE_SMS_COGNITO');
-//     })
-//   }
-// }
+export const updateUser = (user: IUser) => (dispatch) => {
+  if(localStorage.getItem('REVATURE_SMS_COGNITO')) {
+    userClient.patchUser(user)
+    .then(response => {
+      // TODO message
+    })
+    .catch(error => {
+      localStorage.removeItem('REVATURE_SMS_COGNITO');
+    })
+  }
+}

@@ -1,11 +1,17 @@
 import { userTypes } from '../actions/user/user.actions';
 import { IUserState } from '.';
 
-const FAKE_USER = { "email": "a@mail.com",
-                    "firstname": "Blake",
-                    "lastname": "Kruppa",
-                    "role" :  "manager",
-                    "userId": 1}
+const FAKE_USER = { "city":       "Arlington",
+                    "email":      "a@mail.com",
+                    "firstname":  "Blake",
+                    "lastname":   "Kruppa",
+                    "mobile":     "714-123-1234",
+                    "role" :      "manager",
+                    "state":      "California", 
+                    "timezone":   "+2", 
+                    "userId":     1,
+                    "zip":        "76013"}
+
 const initialState: IUserState = {
   cogUser: {},
   isFirstSignin: false,
