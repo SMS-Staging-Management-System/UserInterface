@@ -10,6 +10,7 @@ import clickerContainer from './components/clicker/clicker.container';
 import ManagerContentComponent from './components/manager/manager-content.component';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent } from './components/register/register.component';
+import {UserProfileComponent} from './components/userProfile/userProfile.component';
 
 class App extends React.Component {
   public render() {
@@ -24,6 +25,7 @@ class App extends React.Component {
                 <Route path="/clicker" component={clickerContainer} />
                 <Route path="/login" component={LoginComponent} />
                 <Route path="/register" component={RegisterComponent}/>
+                <Route path="/user" component={UserProfileComponent}/>
                 <Route component={HomeComponent} />
               </Switch>
             </div>

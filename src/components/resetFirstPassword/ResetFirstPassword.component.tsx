@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
+import {withRouter} from 'react-router';
 
 interface IState {
     username: string,
@@ -11,7 +12,7 @@ interface IState {
 
 }
 
-export class ResetFirstPasswordComponent extends React.Component<any, IState> {
+class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
     constructor(props: any) {
         super(props);
@@ -36,7 +37,7 @@ export class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
         // navigate pages now that we have successfully logged in
         console.log("NAVIGATE TO NEW PAGE")
-        // this.props.history.push('/success'); 
+        this.props.history.push('/register'); 
     }
 
     public onFailure = (err: any) => {
@@ -68,7 +69,7 @@ export class ResetFirstPasswordComponent extends React.Component<any, IState> {
             cognitoUser.updateAttributes([], (err, result) => console.log);
 
             // Get these details and call
-            cognitoUser.completeNewPasswordChallenge(password, [], this);
+            cognitoUser.completeNewPasswordChallenge(password, cognitoUser.getUserAttributes, this);
             // const user: awsCognito.CognitoUser = this.props.cognitUser;
             // user.updateAttributes([], (err, result) => console.log);
             // user.confirmPassword(this.props.code, password, {
@@ -140,7 +141,7 @@ export class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
         return (
             <>
-                <div className="centered shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
+                <div className="shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
                     <>
                         <h4 id="titleHead">Reset Password</h4>
                         <form className="form-inline" onSubmit={this.moveTextBox}>
@@ -169,4 +170,6 @@ export class ResetFirstPasswordComponent extends React.Component<any, IState> {
         );
     }
 }
+
+export default withRouter(ResetFirstPasswordComponent)
 

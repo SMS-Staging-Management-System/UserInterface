@@ -169,6 +169,69 @@ body {
 }
 
 /************************************
+          userProfile.component.tsx
+************************************/
+
+#profilePic {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 128px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 50%;
+}
+
+.profLabels {
+
+  margin-left: 10%;
+}
+
+.prof-inputs {
+  max-width: 300px;
+  margin-right: 40%;
+}
+
+.centered {
+  margin: auto; 
+  max-width: 500px;
+}
+
+.over-card {
+  width: 475px;
+}
+
+#sel2 {
+  max-width: 430px;
+}
+
+#sel1{
+  display: block;
+}
+
+
+
+/************************************
+          register.component.tsx
+************************************/
+
+.reg-inputs{
+  background: transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom-color: #eb7c15;
+  border-width: 3px;
+}
+
+.reg-inputs:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/************************************
           App.ts
 ************************************/
 #root {
@@ -218,7 +281,7 @@ body {
 .rev-btn {
   background-color: $revature-orange;
   border-color: $revature-orange;
-  color: black;
+  color: white;
   &:hover {
     background-color: white;
     border-color: $revature-orange;

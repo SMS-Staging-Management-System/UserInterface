@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
-import { ResetFirstPasswordComponent } from '../resetFirstPassword/ResetFirstPassword.component';
+import  ResetFirstPasswordComponent  from '../resetFirstPassword/ResetFirstPassword.component';
 
 interface IState {
     cogUser: object,
@@ -28,6 +28,7 @@ export class LoginComponent extends React.Component<any, IState> {
             username: '',
         }
     }
+    
 
     public updateUsername = (e: any) => {
         const username = e.target.value;
@@ -209,8 +210,9 @@ export class LoginComponent extends React.Component<any, IState> {
 
         return (
             <>
+            {!this.state.isFirstSignin &&
                 <div className="shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
-                    {!this.state.isFirstSignin &&
+                    
                         <>
                             <h4 id="titleHead">Sign in to SMS</h4>
                             <form className="form-inline" onSubmit={this.moveTextBox}>
@@ -244,13 +246,16 @@ export class LoginComponent extends React.Component<any, IState> {
                                 <button id="forgotBut">Forgot Username or Password</button>
                             </div>
                         </>
-                    }
-                    {this.state.isFirstSignin &&
+                    
+                   
+                </div>
+                        }
+                {this.state.isFirstSignin &&
                         <ResetFirstPasswordComponent
                             cognitUser={this.state.cogUser}
-                            code={this.state.password} />
+                            code={this.state.password} 
+                           />
                     }
-                </div>
             </>
         );
     }

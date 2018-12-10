@@ -29,6 +29,9 @@ class AppNav extends React.PureComponent<any, {}, {}> {
               <li className="nav-item active">
                 <Link to="/register" className="unset-anchor nav-link">First</Link>
               </li>
+              <li className="nav-item active">
+                <Link to="/user" className="unset-anchor nav-link">User Profile</Link>
+              </li>
               <li className="nav-item active dropdown">
                 <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
                 <div className="dropdown-menu" aria-labelledby="examples-dropdown">
