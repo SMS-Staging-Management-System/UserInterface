@@ -1,4 +1,5 @@
 import { RegisterDto } from '../../model/Register.model';
+import * as awsCognito from 'amazon-cognito-identity-js';
 import * as userClient from '../../axiosClients/userClient/userClient';
 import { IUser } from 'src/model/User.model';
 
@@ -6,10 +7,12 @@ import { IUser } from 'src/model/User.model';
  * userTypes
  */
 export const userTypes = {
-  COHORT_TOKEN_VERIFY: 'COHORT_TOKEN_VERIFY',
+  COGNITO_SIGN_IN: 'COGNITO_SIGN_IN',
+  FIRST_SIGN_IN:'FIRST_SIGN_IN',
   LOGIN:        'LOGIN',
   LOGOUT:       'LOGOUT',
-  REGISTER:     'REGISTER'
+  REGISTER:     'REGISTER',
+  USER_INIT:    'USER_INIT'
 }
 
 /**
@@ -40,14 +43,51 @@ export const register = (registerDto: RegisterDto, token: string) => (dispatch) 
  * @param password 
  */
 export const login = (username: string, password: string) => (dispatch) => {
-  // TODO user cognito
+  const authenticationData = {
+    Password: password,
+    Username: username,
+  };
+  const authenticationDetails = new awsCognito.AuthenticationDetails(authenticationData);
+  const poolData = {
+    ClientId: process.env.REACT_APP_COGNITO_CLIENT_ID, 
+    UserPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+  };
+  const userPool = new awsCognito.CognitoUserPool(poolData);
+  const userData = {
+    Pool: userPool,
+    Username: username,
+  };
+  const cognitoUser = new awsCognito.CognitoUser(userData);
+  // todo: update cognito user
+  //  this.props.updateCognitoUser(cognitoUser);
+  cognitoUser.authenticateUser(authenticationDetails, {
+    newPasswordRequired: (userAttributes, requiredAttributes) => {
+      dispatch({
+        payload: {
+          isFirstSignin: true
+        },
+        type: userTypes.FIRST_SIGN_IN
+      });
+    },
+    onFailure: (error) => {
+      console.log(error);
+    },
+    onSuccess: (result: awsCognito.CognitoUserSession) => {
+      localStorage.setItem('REVATURE_SMS_COGNITO', result.getIdToken().getJwtToken());
+      dispatch({
+        payload: {
+          cogUser: cognitoUser
+        },
+        type: userTypes.COGNITO_SIGN_IN
+      });
+    }
+  });
 }
 
 /**
  * Log a user out and delete jwt token from local store
  */
 export const logout = () => (dispatch) => {
-  console.log("logout")
   localStorage.removeItem('REVATURE_SMS_COGNITO');
   dispatch({
     payload: {

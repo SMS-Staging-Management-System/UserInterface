@@ -10,7 +10,7 @@ import CohortAssociatesComponent from './cohort/cohort-associates.component';
   add a date range picker, and filter by late check-in, cohort, default (most recent), etc.
 */
 
-export class ContainerComponent extends React.Component <{},{}> {
+export class ContainerComponent extends React.Component {
 
   public render() {
     return (
@@ -25,7 +25,8 @@ export class ContainerComponent extends React.Component <{},{}> {
         <div className="tab-content" id="nav-tabContent">
           <div className="tab-pane fade active show" id="check-in" role="tabpanel" >
             <div >
-              <CheckinTableComponent type="manager"/>
+              <CheckinTableComponent 
+                type="manager" />
             </div>
           </div>
           <div className="tab-pane fade container-fluid" id="cohort" role="tabpanel" aria-labelledby="nav-profile-tab">

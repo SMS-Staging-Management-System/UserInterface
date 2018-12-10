@@ -1,39 +1,15 @@
 import * as React from "react";
+import { ICohort } from "src/model/Cohort.model";
 
 /**
  * The class row
  */
 
-// this fake data for the cohort table
-const FAKE_COHORT_DATA = [
-  {
-    cohort: "Blake 1810",
-    description: "I am working on my portfolio today",
-    firstName: "Nigel",
-    lastName: "Christian",
-    time: "12/4/2018 @ 0900",
-    userId: 1
-  },
-  {
-    cohort: "Blake 1810",
-    description: "I am taking the OCA today",
-    firstName: "Andrew",
-    lastName: "Wilson",
-    time: "12/4/2018 @ 0900",
-    userId: 2
-  },
-  {
-    cohort: "Blake 1810",
-    description:
-      "I am working on an internal Revature project for staging today",
-    firstName: "Calvin",
-    lastName: "Vo",
-    time: "12/4/2018 @ 0900",
-    userId: 3
-  }
-];
+interface IProps {
+  cohort: ICohort
+}
 
-export class CohortRowComponent extends React.Component<{}> {
+export class CohortRowComponent extends React.Component<IProps> {
 
   public handleClick = () => {
     // const cohort = document.getElementById("cohort-associates") as HTMLElement;
@@ -44,13 +20,11 @@ export class CohortRowComponent extends React.Component<{}> {
   public render() {
     return (
       <>
-        {FAKE_COHORT_DATA.map(user => {
-          return (
-          <tr id={`row-${user.userId}`} key={user.userId} onClick={() => this.handleClick()}>
-            <td>1810 </td>
-            <td>4</td>
+          <tr id={`row-${this.props.cohort.cohortId}`} onClick={() => this.handleClick()}>
+            <td>{this.props.cohort.name}</td>
+            <td>{this.props.cohort.userList.length}</td>
           </tr>
-        )})}
+        
       </>
     );
   }

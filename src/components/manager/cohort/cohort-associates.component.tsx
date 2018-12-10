@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Collapse, Button, CardBody, Card } from "reactstrap";
-import { AssociateTableComponent } from "src/components/table/associateTable.component";
+import AssociateTableComponent from "src/components/table/associateTable.component";
 
 /*
  *The cohort associates component
