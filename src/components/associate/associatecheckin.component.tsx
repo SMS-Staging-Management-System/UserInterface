@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Clock } from '../../components/clock/clock.component';
+import { ClockComponent } from '../../components/clock/clock.component';
 
-export class AssociateCheckIn extends React.Component {
+export class AssociateCheckInSubmit extends React.Component {
 
   constructor(props: any) {
     super(props);
@@ -14,7 +14,7 @@ export class AssociateCheckIn extends React.Component {
         {/* here users will input their whatevers for dah chicken */}
         <div id="headerRow">
           <h4 id="headerField">Check In</h4>
-          <Clock/>
+          <ClockComponent/>
         </div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item flex-row-sb">

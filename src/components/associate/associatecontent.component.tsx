@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { AssociateRow } from '../../components/associatecontext/associaterow.component';
-import { AssociateCheckIn } from '../../components/associatecontext/associatecheckin.component';
+import AssociateTable from './associatetable.component';
+import { AssociateCheckInSubmit } from './associatecheckin.component';
+
 interface IState {
   isCheckingIn: boolean;
 }
 
 export class AssociateContext extends React.Component<IState>{
-
   state: IState = {
     isCheckingIn: false
   }
@@ -22,28 +22,29 @@ export class AssociateContext extends React.Component<IState>{
     this.setState({isCheckingIn: true});
   }
 
-  handleSubmitClick() {
+  handleSubmitClick = () => {
     this.setState({isCheckingIn: false});
   }
 
+  
   render() {
     const { isCheckingIn } = this.state;
     let button;
 
   // components to switch to
     
-  function Update(props) {
-    return <AssociateCheckIn/>;
-  }
-  
+  function Update (props)  {
+    return <AssociateCheckInSubmit/>;
+  };
+
   function CheckIn(props) {
     // replace with table
-    return <AssociateRow/>;
-  }
+    return <AssociateTable type={'associate'}/>;
+  };
 
-  // our switch
+  // the mighty switch
 
-  function Switch(props) {
+  function Switch (props) {
     if (isCheckingIn) {
       return <Update />;
     }
@@ -52,7 +53,7 @@ export class AssociateContext extends React.Component<IState>{
 
   // buttons used to control switching
 
-  function UpdateButton(props) {
+  function UpdateButton (props) {
     return (
       <div id="btn-right"> 
         <button type="button"  className="btn btn-danger" onClick={props.onClick}>
@@ -62,7 +63,7 @@ export class AssociateContext extends React.Component<IState>{
     );
   }
   
-  function CheckInButton(props) {
+  function CheckInButton (props) {
     return (
       <div id="btn-right">
         <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={props.onClick}>

@@ -8,7 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { Provider } from 'react-redux';
 import { store } from './Store';
 import clickerContainer from './components/clicker/clicker.container';
-import { AssociateContext } from './components/associatecontext/associatecontext.component';
+import { AssociateContext } from './components/associate/associatecontent.component';
 
 
 class App extends React.Component {
