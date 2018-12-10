@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Button} from 'reactstrap';
 
 /**
  * The class row
@@ -43,15 +42,13 @@ export class CohortRowComponent extends React.Component<{}> {
   }
 
   public render() {
-    let firstRow = 1;
     return (
       <>
         {FAKE_COHORT_DATA.map(user => {
-          firstRow++;
           return (
           <tr id={`row-${user.userId}`} key={user.userId} onClick={() => this.handleClick()}>
-            <td>1810 <Button>+</Button></td>
-            {firstRow === 1 && <td rowSpan={3}></td>}
+            <td>1810 </td>
+            <td>4</td>
           </tr>
         )})}
       </>

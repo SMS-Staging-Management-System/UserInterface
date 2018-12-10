@@ -2,7 +2,7 @@ import * as React from 'react';
 // import CohortAssociatesComponent from './cohort/cohort-associates.component';
 import CheckinTableComponent from '../table/checkinTable.component';
 import CohortTableComponent from '../table/cohortTable.component';
-import AssociateTableComponent from '../table/associateTable.component';
+import CohortAssociatesComponent from './cohort/cohort-associates.component';
 
 /*
   *The container for the check-in and cohort tables
@@ -25,16 +25,16 @@ export class ContainerComponent extends React.Component <{},{}> {
         <div className="tab-content" id="nav-tabContent">
           <div className="tab-pane fade active show" id="check-in" role="tabpanel" >
             <div >
-              <CheckinTableComponent />
+              <CheckinTableComponent type="manager"/>
             </div>
           </div>
           <div className="tab-pane fade container-fluid" id="cohort" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <div className="row col-6">
-              <div className="flex-grow-1">
+            <div className="row">
+              <div className="col-6">
                 <CohortTableComponent />
               </div>
-              <div className="flex-grow-1">
-                <AssociateTableComponent />
+              <div className="col-6">
+                <CohortAssociatesComponent />
               </div>
             </div>
           </div>
