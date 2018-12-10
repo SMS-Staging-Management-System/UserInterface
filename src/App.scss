@@ -1,19 +1,185 @@
-// @import 'components/pokemon/pokemon-card/pokemon-card.scss';
-
 // variables can be declared and later reused
 $revature-orange: #f26925;
 
 // mixins are reusable styles that can be included in other places
+/************************************
+  Mixins
+************************************/
 @mixin flex-col {
   display: flex;
   flex-direction: column;
 }
 
+/* @include transition(all,2s,ease-out); */
+@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
+  -webkit-transition: $what $time $how;
+  -moz-transition:    $what $time $how;
+  -ms-transition:     $what $time $how;
+  -o-transition:      $what $time $how;
+  transition:         $what $time $how;
+}
+
+/************************************
+  Commonly use classes
+************************************/
+.cursor-hover:hover {
+  cursor: pointer;
+}
+
+/************************************
+          App.ts
+************************************/
+#root {
+  height: 100vh;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+/************************************
+          login.component.tsx
+************************************/
+@media (min-width: 1200px) { 
+  .top-lev-div{
+    zoom: 1.5;
+    -moz-transform: scale(1.5);
+  } 
+
+}
+
+@media (max-width: 1199.99px) { 
+  .top-lev-div{
+    zoom: 1.0;
+    -moz-transform: scale(1.0);
+  } 
+
+}
+
+.frontDiv {
+  z-index: 3;
+  position: absolute;
+}
+
+.behindDiv {
+  z-index: 2;
+
+}
+
+.box input {
+  margin-left:0;
+  -webkit-transition: 1s;
+          transition: 1s;
+}
+
+.txt-bx{
+  width: 250px;
+}
+
+.rememberDiv {
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  border-bottom:solid rgb(245, 139, 0) 4px;
+}
+
+.resetDiv {
+  margin:auto;
+  display: flex;
+  justify-content: center;
+}
+
+#h6-rem {
+  margin-left: -100%;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.rememberSpan {
+  display: inline;
+  float: none;
+}
+
+#rememberCheck {
+  display: inline;
+}
+
+#titleHead{
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+#forgotBut{
+  color: blue;
+  margin-top: 30px;
+  border: none;
+  text-align: center;
+  background-color: transparent;
+  -webkit-transition: 1s;
+          transition: 1s;
+}
+
+#passBut, #confPassBut {
+  opacity: 0;
+  position: absolute;
+  margin-top: 45px;
+  border: none;
+  background-color: white;
+  margin-left: -22%;
+  -webkit-transition: 3s;
+          transition: 3s;
+}
+
+#invalidCredHead {
+  color: red;
+  text-align: center;
+  padding-top: 10px;
+}
+
+#userBut, #newPassBut {
+  border: none;
+  background-color: white;
+  margin-left: -22%;
+  -webkit-transition: 1s;
+          transition: 1s;
+}
+
+#newPassBut {
+  margin-top: 21%;
+}
+
+#userBut{
+  margin-top: 18.5%;
+}
+
+#user, #pass {
+  padding-right: 50px;
+}
 
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  background: #eb7c15; /* fallback for old browsers */
+  background: -webkit-linear-gradient(right, #f8d6b6, #acc5c9);
+  background: -webkit-linear-gradient(right, #e7d6c7, #8bdde7);
+  background: -moz-linear-gradient(right, #e2d0be, #eaf1f1);
+  background: -o-linear-gradient(right, #eec5a0, #e1e9eb);
+  background: linear-gradient(to left, #f3a55d, #e1e7e7);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;  
+}
+
+/************************************
+          App.ts
+************************************/
+#root {
+  height: 100vh;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100vw; 
 }
 
 .App {
@@ -48,8 +214,9 @@ body {
 
 #main-content-container {
   @include flex-col;
-  width: 100%;
-  align-items: center
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .rev-btn {
@@ -122,7 +289,6 @@ body {
 
 .app-nav {
   border-bottom: 1px solid #ffffff !important;
-  margin-bottom: 20px;
   -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
@@ -180,4 +346,41 @@ body {
 
 .not-allowed-cursor {
   cursor: not-allowed;
+}
+
+/*****************************************************
+Manager Content
+******************************************************/
+.manager-content {
+  width: 90%;
+}
+.page-numbers {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.page-display {
+  position: absolute;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.page-count{
+  padding-right: 10px;
+}
+
+/*******************************************
+  loading.component.tsx
+*******************************************/
+#loading-screen {
+  align-items: center;
+  background-color: white;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  position: fixed;
+  width: 100vw;
+  z-index: 999;
 }
