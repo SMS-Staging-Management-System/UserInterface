@@ -28,7 +28,9 @@ interface IState {
   public render() {
     return (
      <>
-     {this.state.time}
+     <p id="clock">
+       {this.state.time}
+     </p>
      </>
     );
   }
