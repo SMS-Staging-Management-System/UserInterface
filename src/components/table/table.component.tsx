@@ -3,7 +3,7 @@ import CheckInHeaderComponent from '../manager/checkin/check-in-header.component
 import CohortTableHeaderComponent from '../../components/manager/cohort/cohort-table-header-component';
 import CohortRowComponent from '../manager/cohort/cohort-row.component';
 import { Table } from 'reactstrap';
-import Paginate from '../manager/pagination.component';
+import Paginate from '../manager/checkin-pagination.component';
 
 /*
   *The managers tables
