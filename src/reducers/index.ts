@@ -7,6 +7,7 @@ import { snackbarReducer } from './snackbar.reducer';
 import { loadingReducer } from './loading.reducer';
 import { ICheckIn } from 'src/model/CheckIn.model';
 import { ICohort } from 'src/model/Cohort.model';
+import { IUser } from '../model/User.model';
 
 export interface IClickerState {
   clicks: number
@@ -14,13 +15,14 @@ export interface IClickerState {
 
 export interface IUserState {
   login: boolean,
-  user: null
+  user:  IUser
 }
 
 export interface IManagerState {
   cohorts: ICohort[], // Class objects, which have user objects
   checkIns: ICheckIn[], // CheckIn objects
-  currentCheckIns: ICheckIn[]
+  currentCheckIns: ICheckIn[],
+  currentCohort: null
 }
 
 export interface IAssociateState {

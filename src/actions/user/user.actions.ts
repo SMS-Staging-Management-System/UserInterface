@@ -47,6 +47,7 @@ export const login = (username: string, password: string) => (dispatch) => {
  * Log a user out and delete jwt token from local store
  */
 export const logout = () => (dispatch) => {
+  console.log("logout")
   localStorage.removeItem('REVATURE_SMS_COGNITO');
   dispatch({
     payload: {

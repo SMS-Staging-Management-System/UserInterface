@@ -9,16 +9,16 @@ interface IStateProps {
 /**
  * The loading screen the user can enjoy while waiting for resoures
  */
-export class Loading extends React.Component<IStateProps> {
+export class LoadingComponent extends React.Component<IStateProps> {
 
   public render() {
+    console.log(this.props.isLoading)
     return (
       <>
         {
           this.props.isLoading &&
           <div id="loading-screen" >
             <img src={require('../../assets/LoadingLogo.gif')} alt="loading revature"/>
-            {/* <img src={require('../../assets/LoadingCircle.gif')} alt="loading circle"/> */}
           </div>
         }
       </>
@@ -28,4 +28,4 @@ export class Loading extends React.Component<IStateProps> {
 
 const mapStateToProps = (state: IState) => (state.loading)
 const mapDispatchToProps = {}
-export default connect(mapStateToProps, mapDispatchToProps)(Loading)
+export default connect(mapStateToProps, mapDispatchToProps)(LoadingComponent)

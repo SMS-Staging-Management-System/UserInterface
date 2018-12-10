@@ -1,4 +1,31 @@
-// @import 'components/pokemon/pokemon-card/pokemon-card.scss';
+// variables can be declared and later reused
+$revature-orange: #f26925;
+
+// mixins are reusable styles that can be included in other places
+/************************************
+  Mixins
+************************************/
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* @include transition(all,2s,ease-out); */
+@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
+  -webkit-transition: $what $time $how;
+  -moz-transition:    $what $time $how;
+  -ms-transition:     $what $time $how;
+  -o-transition:      $what $time $how;
+  transition:         $what $time $how;
+}
+
+/************************************
+  Commonly use classes
+************************************/
+.cursor-hover:hover {
+  cursor: pointer;
+}
+
 /************************************
           App.ts
 ************************************/
@@ -130,26 +157,6 @@
 #user, #pass {
   padding-right: 50px;
 }
-
-
-// variables can be declared and later reused
-$revature-orange: #f26925;
-
-// mixins are reusable styles that can be included in other places
-@mixin flex-col {
-  display: flex;
-  flex-direction: column;
-}
-
-/* @include transition(all,2s,ease-out); */
-@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
-  -webkit-transition: $what $time $how;
-  -moz-transition:    $what $time $how;
-  -ms-transition:     $what $time $how;
-  -o-transition:      $what $time $how;
-  transition:         $what $time $how;
-}
-
 
 body {
   margin: 0;
