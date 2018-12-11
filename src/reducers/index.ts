@@ -3,7 +3,6 @@ import { clickerReducer } from './clicker.reducer';
 import { userReducer } from './user.reducer';
 import { associateReducer } from './associate.reducer';
 import { managerReducer } from './manager.reducer';
-import { snackbarReducer } from './snackbar.reducer';
 import { loadingReducer } from './loading.reducer';
 import { ICheckIn } from 'src/model/CheckIn.model';
 import { ICohort } from 'src/model/Cohort.model';
@@ -32,15 +31,7 @@ export interface IAssociateState {
   currentCheckIns: ICheckIn[]
 }
 
-export interface ISnackarState {
-  message: string // CheckIn objects
-}
-
 export interface ILoadingState {
-  isLoading: boolean
-}
-
-export interface IToast {
   isLoading: boolean
 }
 
@@ -49,7 +40,6 @@ export interface IState {
   clicker:  IClickerState,
   loading:  ILoadingState,
   manager:  IManagerState,
-  snackbar: ISnackarState,
   user:     IUserState
 }
 
@@ -58,6 +48,5 @@ export const state = combineReducers<IState>({
   clicker:  clickerReducer,
   loading:  loadingReducer,
   manager:  managerReducer,
-  snackbar: snackbarReducer,
   user:     userReducer
 })

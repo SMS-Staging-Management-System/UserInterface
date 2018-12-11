@@ -1,5 +1,6 @@
 import { userTypes } from '../actions/user/user.actions';
 import { IUserState } from '.';
+import { toast } from "react-toastify";
 
 const FAKE_USER = { "city":       "Arlington",
                     "email":      "a@mail.com",
@@ -22,16 +23,19 @@ const initialState: IUserState = {
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case userTypes.REGISTER:
+      toast.success("Register successful");
       return {
         ...state,
       }
     case userTypes.LOGIN:
+      toast.success("Login");
       return {
         ...state,
         login:  action.payload.login,
         user:   action.payload.user
       }
     case userTypes.LOGOUT:
+      toast.success("Log out");
       return {
         ...state,
         login: false,

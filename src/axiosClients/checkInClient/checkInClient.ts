@@ -1,20 +1,19 @@
 import { createClient } from '../axiosClient';
-import environment from '../environment';
 
 export const checkInClient = createClient();
 
 export const getAssociateCheckIns = () => {
-  return checkInClient.get(`${environment}/checkins`)
+  return checkInClient.get(`/checkins`)
 }
 
 export const submitCheckIn = (body: object) => {
-  return checkInClient.post(`${environment}/checkins`, body);
+  return checkInClient.post(`/checkins`, body);
 }
 
 export const getManagerCheckInToday = () => {
-  return checkInClient.post(`${environment}/checkins/today`);
+  return checkInClient.post(`/checkins/today`);
 }
 
 export const postManagerComment = (body: object, checkInId: number) => {
-  return checkInClient.patch(`${environment}/checkins/${checkInId}`, body);
+  return checkInClient.patch(`/checkins/${checkInId}`, body);
 }

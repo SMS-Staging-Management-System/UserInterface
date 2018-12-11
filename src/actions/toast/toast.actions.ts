@@ -6,10 +6,10 @@ export const toastTypes = {
  * Pop up a new toast
  * @param toast 
  */
-export const addToast = (toast: string) => (dispatch) => {
+export const addToast = (message: string) => (dispatch) => {
   dispatch({
     payload: {
-      toast: toast
+      toast: message
     },
     type: toastTypes.ADD_TOAST
   });

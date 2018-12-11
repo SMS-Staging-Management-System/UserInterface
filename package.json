@@ -17,6 +17,7 @@
     "eject": "react-scripts-ts eject"
   },
   "dependencies": {
+    "@types/react-toastify": "^4.0.1",
     "amazon-cognito-identity-js": "^3.0.4",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
