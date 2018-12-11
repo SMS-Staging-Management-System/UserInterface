@@ -5,26 +5,32 @@ import { ICohort } from "src/model/Cohort.model";
  * The class row
  */
 
-interface IProps {
-  cohort: ICohort
+interface IPropsComponent {
+  cohort: ICohort,
+  selectCohort: (sCohort: ICohort) => (dispatch: any) => void,
+  changeSelected: (selected: number) => void,
+  selected: boolean
 }
 
-export class CohortRowComponent extends React.Component<IProps> {
+export class CohortRowComponent extends React.Component<IPropsComponent> {
+  constructor(props) {
+    super(props);
+
+  }
 
   public handleClick = () => {
-    // const cohort = document.getElementById("cohort-associates") as HTMLElement;
+    this.props.changeSelected(this.props.cohort.cohortId);
 
-    // cohort.style.width = "400px";
+    this.props.selectCohort(this.props.cohort);
   }
 
   public render() {
     return (
       <>
-          <tr id={`row-${this.props.cohort.cohortId}`} onClick={() => this.handleClick()}>
+          <tr className={this.props.selected ? "orange" : ""} id={`cohort-row-${this.props.cohort.cohortId}`} onClick={() => this.handleClick()}>
             <td>{this.props.cohort.name}</td>
             <td>{this.props.cohort.userList.length}</td>
           </tr>
-        
       </>
     );
   }

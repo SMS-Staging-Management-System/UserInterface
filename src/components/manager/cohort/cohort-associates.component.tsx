@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Collapse, Button, CardBody, Card } from "reactstrap";
+import { Collapse, Button } from "reactstrap";
 import AssociateTableComponent from "src/components/table/associateTable.component";
 
 /*
@@ -34,14 +34,14 @@ export class CohortAssociatesComponent extends React.Component<{}, IState> {
           Toggle
         </Button>
         <Collapse isOpen={this.state.collapse}>
-          <Card>
-            <CardBody>
-              Heading
-
+          {/* <Card>
+            <CardBody> */}
+              
+              <Button className="my-2">+ (Add associate)</Button>
               <AssociateTableComponent />
               
-            </CardBody>
-          </Card>
+            {/* </CardBody>
+          </Card> */}
         </Collapse>
       </>
     );

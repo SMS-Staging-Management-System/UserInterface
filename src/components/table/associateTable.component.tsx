@@ -18,7 +18,7 @@ export class AssociateTableComponent extends React.Component<IProps> {
   public render() {
     return (
       <>
-        <Table className="table table-hover table-bordered">
+        <Table className="table table-bordered">
         <AssociatesTableHeaderComponent />
 
           <tbody>

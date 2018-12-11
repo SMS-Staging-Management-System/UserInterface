@@ -3,6 +3,7 @@ import * as React from 'react';
 import CheckinTableComponent from '../table/checkinTable.component';
 import CohortTableComponent from '../table/cohortTable.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
+import { Button } from "reactstrap";
 
 /*
   *The container for the check-in and cohort tables
@@ -30,11 +31,14 @@ export class ContainerComponent extends React.Component {
             </div>
           </div>
           <div className="tab-pane fade container-fluid" id="cohort" role="tabpanel" aria-labelledby="nav-profile-tab">
-            <div className="row">
-              <div className="col-6">
+            <div className="row mt-2">
+              <div className="col-3 pl-0">
+              <div className="mb-2">
+                <Button>+ (Add Cohort)</Button>
+              </div>
                 <CohortTableComponent />
               </div>
-              <div className="col-6">
+              <div className="col-9 pr-0">
                 <CohortAssociatesComponent />
               </div>
             </div>
