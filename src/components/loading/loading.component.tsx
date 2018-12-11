@@ -12,7 +12,6 @@ interface IStateProps {
 export class LoadingComponent extends React.Component<IStateProps> {
 
   public render() {
-    console.log(this.props.isLoading)
     return (
       <>
         {
