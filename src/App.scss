@@ -1,6 +1,7 @@
 
 // variables can be declared and later reused
 $revature-orange: #f26925;
+$drew-orange: #f3a55d;
 
 // mixins are reusable styles that can be included in other places
 /************************************
@@ -473,4 +474,10 @@ Manager Content
   position: fixed;
   width: 100vw;
   z-index: 999;
+}
+/*******************************************
+  associates-row.component.tsx
+*******************************************/
+.associate-row {
+  background-color: $drew-orange;
 }

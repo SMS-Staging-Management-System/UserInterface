@@ -8,25 +8,40 @@ const FAKE_COHORTS = [
 	"name"	: "1810",
 	"userList": [
 		{
+      "city"  :     "Arlington",
       "email"	: "Blake@Revature",
       "firstname"	: "Blake",
       "lastname"	: "Blake",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 1
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 1,
+      "zip":      "76013"
     },
     {
+      "city"  :     "Arlington",
       "email"	: "Calvin@Revature",
       "firstname"	: "Calvin",
       "lastname"	: "Calvin",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 2
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 2,
+      "zip":      "76013"
     },
     {
+      "city"  :     "Arlington",
       "email"	: "Drew@Revature",
       "firstname"	: "Drew",
       "lastname"	: "Drew",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 3
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 3,
+      "zip":      "76013"
     }
     
 	]
@@ -36,18 +51,28 @@ const FAKE_COHORTS = [
 	"name"	: "5000",
 	"userList": [
 		{
+      "city"  :     "Arlington",
       "email"	: "James@Revature",
       "firstname"	: "James",
       "lastname"	: "James",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 1
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 1,
+      "zip":      "76013"
     },
     {
+      "city"  :     "Arlington",
       "email"	: "Nigel@Revature",
       "firstname"	: "Nigel",
       "lastname"	: "Nigel",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 2
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 2,
+      "zip":      "76013"
     }
     
 	]
@@ -59,29 +84,44 @@ const FAKE_CURRENT_COHORT = {
 	"name"	: "1810",
 	"userList": [
 		{
+      "city"  :     "Arlington",
       "email"	: "Blake@Revature",
       "firstname"	: "Blake",
       "lastname"	: "Blake",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 1
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 1,
+      "zip":      "76013"
     },
     {
+      "city"  :     "Arlington",
       "email"	: "Calvin@Revature",
       "firstname"	: "Calvin",
       "lastname"	: "Calvin",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 2
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 2,
+      "zip":      "76013"
     },
     {
-      "email"	: "Drew@Revature",
+      "city"  :     "Arlington",
+      "email"	:     "Drew@Revature",
       "firstname"	: "Drew",
       "lastname"	: "Drew",
+      "mobile"    : "12312313",
       "role"		: "associate",
-      "userId"	: 3
+      "state":      "Texas", 
+      "timezone":  "-2",
+      "userId"	: 3,
+      "zip":      "76013"
     }
     
 	]
-} 
+}
 
 const initialState: IManagerState = {
   checkIns: [],

@@ -2,8 +2,7 @@ import * as React from 'react';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
 import { IUser } from 'src/model/User.model';
-import ManagerContentComponent from '../manager/manager-content.component';
-import { AssociateContent } from '../associate/associatecontent.component';
+import { ManagerContentComponent } from '../manager/manager-content.component';
 
 interface IStateProps {
   login: boolean,
@@ -19,7 +18,7 @@ export class DashboardComponent extends React.Component<IStateProps> {
     if(this.props.user.role) {
       return <ManagerContentComponent />  
     } else if(this.props.user.role === 'associate') {
-      return <AssociateContent isCheckingIn={false}/> 
+      return <></> // <AssociateContentComponent />
     } else {
       return <></>
     }
