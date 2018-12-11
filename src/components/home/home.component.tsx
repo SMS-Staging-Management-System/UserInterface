@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
-import { LoginComponent } from '../login/login.component';
+import LoginComponent from '../login/login.component';
 import { IUser } from 'src/model/User.model';
 import DashboardComponent from '../dashboard/dashboard.component';
 
@@ -16,7 +16,6 @@ interface IStateProps {
 export class HomeComponent extends React.Component<IStateProps> {
 
   public render() {
-    console.log(this.props.login)
     return (
       <>  
         { !this.props.login   ?

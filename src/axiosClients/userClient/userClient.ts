@@ -1,33 +1,31 @@
-import { createClient } from '../axiosClient';
+import { axiosClient } from '../axiosClient';
 import { RegisterDto } from '../../model/Register.model';
+import { IUser } from 'src/model/User.model';
 
-export const userClient = createClient();
-
-export const verifyRegisterToken = (token: string) => {
-  userClient.get(`/cohorts/verify?token=${token}`)
-  .then(response => {
-    console.log("error");
-  })
-  .catch(error => {
-    console.log("error");
-    // TODO error message
-  });
-}
-
-export const register = (registerDto: RegisterDto, token: string) => {
-  return userClient.post(`/users?token=${token}`, registerDto);
+/**
+ * 
+ * @param registerDto Return promise to register user
+ * @param token 
+ */
+export const register = (registerDto: RegisterDto) => {
+  return axiosClient.post(`/users`, registerDto);
 }
 
 export const login = (username: string, password: string) => {
-  // TODO use cognito
-  // let user:object = {
-  //   "username": username,
-  //   "password": password
-  // }
-  // return userClient.get(`/users`, user);
+  // using cognito login now
   console.log("error");
 }
 
+/**
+ * Return promise to get user info from server
+ */
 export const getUserFromCognito = () => {
-  return userClient.get(`/users/info`);
+  return axiosClient.get(`/users/info`);
+}
+
+/**
+ * Return promise to get user info from server
+ */
+export const patchUser = (user: IUser) => {
+  return axiosClient.patch(`/users`, user);
 }

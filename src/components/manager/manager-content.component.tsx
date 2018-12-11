@@ -36,11 +36,11 @@ export class ManagerContentComponent extends React.Component<{},IState> {
          modal = {this.state.modal}
          modalOff = {this.modalOff}/>
         <div className="mt-3">
+        <div>
             <h4>SMS Manager Dashboard <ClockComponent/></h4>
         </div>
         <hr/>
         <div>
-          
           <ContainerComponent/>
         </div>
       </div>

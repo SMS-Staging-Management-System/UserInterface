@@ -10,12 +10,12 @@ interface IProps {
   toggle: (name:string) => void
   modalOff: () => void
 }
-export class CommentComponent extends React.Component<IProps, {}> {
+export class ManagerCommentComponent extends React.Component<IProps, {}> {
   public render() {
     return (
       <>
         <div>
-        <Modal isOpen={this.props.modal} className="Button">
+        <Modal isOpen={this.props.modal} className="manager-comments">
           <ModalHeader>Leave a comment for {this.props.firstName}</ModalHeader>
           <ModalBody>
           <InputGroup>
@@ -24,7 +24,7 @@ export class CommentComponent extends React.Component<IProps, {}> {
           </InputGroup>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.props.modalOff}>Submit</Button>{' '}
+            <Button className="rev-btn" onClick={this.props.modalOff}>Submit</Button>
             <Button color="secondary" onClick={this.props.modalOff}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -35,4 +35,4 @@ export class CommentComponent extends React.Component<IProps, {}> {
   }
 }
 
-export default CommentComponent
+export default ManagerCommentComponent
