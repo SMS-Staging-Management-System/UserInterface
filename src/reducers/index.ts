@@ -14,6 +14,8 @@ export interface IClickerState {
 }
 
 export interface IUserState {
+  cogUser: any,
+  isFirstSignin: boolean,
   login: boolean,
   user:  IUser
 }
@@ -22,7 +24,7 @@ export interface IManagerState {
   cohorts: ICohort[], // Class objects, which have user objects
   checkIns: ICheckIn[], // CheckIn objects
   currentCheckIns: ICheckIn[],
-  currentCohort: null
+  currentCohort: ICohort
 }
 
 export interface IAssociateState {

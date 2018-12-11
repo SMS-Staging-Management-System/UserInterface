@@ -51,7 +51,7 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             {
-              this.props.user &&
+              this.props.user && this.props.login &&
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   {this.props.user.email}
@@ -76,6 +76,6 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
 
 const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {
-  logout: userActions.logout
+  ...userActions
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AppNav);

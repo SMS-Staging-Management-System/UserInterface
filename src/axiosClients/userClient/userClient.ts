@@ -14,20 +14,30 @@ export const verifyRegisterToken = (token: string) => {
   });
 }
 
+/**
+ * 
+ * @param registerDto Return promise to register user
+ * @param token 
+ */
 export const register = (registerDto: RegisterDto, token: string) => {
   return userClient.post(`/users?token=${token}`, registerDto);
 }
 
 export const login = (username: string, password: string) => {
-  // TODO use cognito
-  // let user:object = {
-  //   "username": username,
-  //   "password": password
-  // }
-  // return userClient.get(`/users`, user);
+  // using cognito login now
   console.log("error");
 }
 
+/**
+ * Return promise to get user info from server
+ */
 export const getUserFromCognito = () => {
   return userClient.get(`/users/info`);
+}
+
+/**
+ * Return promise to get user info from server
+ */
+export const patchUser = () => {
+  return userClient.patch(`/users`);
 }

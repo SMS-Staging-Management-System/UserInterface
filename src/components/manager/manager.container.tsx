@@ -27,7 +27,7 @@ export class ContainerComponent extends React.Component {
             <div >
               <ManagerCheckinFilter/>
               <ManagerCheckinTableComponent 
-              type="manager"/>
+                type="manager"/>
             </div>
           </div>
           <div className="tab-pane fade container-fluid" id="cohort" role="tabpanel" aria-labelledby="nav-profile-tab">
