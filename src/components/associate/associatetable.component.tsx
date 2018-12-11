@@ -20,7 +20,7 @@ export class AssociateTable extends React.Component<IProps, {}> {
     const sRows = this.renderRows();
     return (
       <>
-        <Table className="table table-hover table-bordered">
+        <Table className="table table-hover table-bordered" id="rowboxthing">
           <AssociateHeader/> 
           <tbody>
             {sRows}

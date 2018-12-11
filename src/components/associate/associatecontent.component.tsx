@@ -6,7 +6,7 @@ interface IState {
   isCheckingIn: boolean;
 }
 
-export class AssociateContext extends React.Component<IState>{
+export class AssociateContent extends React.Component<IState>{
   state: IState = {
     isCheckingIn: false
   }

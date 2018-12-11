@@ -68,7 +68,7 @@ export class AssociateRow extends React.Component<IProps, IState> {
             onClick={() => this.getName(user.firstName)}
             onMouseOver={() => this.tasks(user.userId, user.description)} 
             onMouseLeave={()=> this.hide()}>
-                <td >{user.userId}</td>
+                <td>{user.userId}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.cohort}</td>

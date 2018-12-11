@@ -16,8 +16,8 @@ export class AssociateCheckInSubmit extends React.Component {
           <h4 id="headerField">Check In</h4>
           <ClockComponent/>
         </div>
-          <ul className="list-group list-group-flush">
-            <li className="list-group-item flex-row-sb">
+          <ul className="list-group list-group-flush bg-transparent">
+            <li className="list-group-item flex-row-sb bg-transparent">
               <textarea id="textarea" placeholder="Description" ></textarea>
             </li>
           </ul>
