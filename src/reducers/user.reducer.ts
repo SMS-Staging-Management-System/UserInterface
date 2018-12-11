@@ -13,7 +13,7 @@ const FAKE_USER = { "city":       "Arlington",
                     "zip":        "76013"}
 
 const initialState: IUserState = {
-  cogUser: {},
+  cogUser: null,
   isFirstSignin: false,
   login: true,
   user:  FAKE_USER

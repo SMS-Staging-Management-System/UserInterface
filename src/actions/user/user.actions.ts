@@ -61,6 +61,8 @@ export const login = (username: string, password: string) => (dispatch) => {
   };
 
   const cognitoUser = new awsCognito.CognitoUser(userData);
+  // todo: update cognito user
+  //  this.props.updateCognitoUser(cognitoUser);
   cognitoUser.authenticateUser(authenticationDetails, {
     newPasswordRequired: (userAttributes, requiredAttributes) => {
       dispatch({
@@ -69,6 +71,12 @@ export const login = (username: string, password: string) => (dispatch) => {
         },
         type: userTypes.FIRST_SIGN_IN
       });
+      dispatch({
+        payload: {
+          cogUser: cognitoUser
+        },
+        type: userTypes.COGNITO_SIGN_IN
+      });
     },
     onFailure: (error) => {
       console.log(error);
@@ -76,6 +84,7 @@ export const login = (username: string, password: string) => (dispatch) => {
     onSuccess: (result: awsCognito.CognitoUserSession) => {
       localStorage.setItem('REVATURE_SMS_COGNITO', result.getIdToken().getJwtToken());
       console.log(`TOKEN HERE: ${result.getIdToken().getJwtToken()}`)
+      console.log("User Action Cog: "+ cognitoUser)
       dispatch({
         payload: {
           cogUser: cognitoUser
