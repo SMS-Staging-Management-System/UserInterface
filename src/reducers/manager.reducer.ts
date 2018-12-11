@@ -1,5 +1,6 @@
 import { managerTypes } from '../actions/manager/manager.actions';
 import { IManagerState } from '.';
+import { toast } from "react-toastify";
 
 const initialState: IManagerState = {
   checkIns: [],
@@ -20,6 +21,7 @@ export const managerReducer = (state = initialState, action: any) => {
     case managerTypes.ADD_COHORTS:
       let cohorts = state.cohorts;
       cohorts += action.payload.cohorts;
+      toast.success("Cohort added");
       return {
         ...state,
         cohorts

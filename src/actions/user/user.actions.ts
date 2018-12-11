@@ -1,7 +1,10 @@
 import { RegisterDto } from '../../model/Register.model';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import * as userClient from '../../axiosClients/userClient/userClient';
+import { toast } from "react-toastify";
+import { loadingTypes } from '../loading/loading.actions';
 import { IUser } from 'src/model/User.model';
+import { environment } from '../../environment';
 
 /**
  * userTypes
@@ -15,24 +18,16 @@ export const userTypes = {
   USER_INIT:    'USER_INIT'
 }
 
-/**
- * Verify with the server the uri token belong to an available cohort
- * @param token 
- */
-export const tokenVerify = (token: string) => {
-  userClient.verifyRegisterToken(token);
-}
-
 export const register = (registerDto: RegisterDto, token: string) => (dispatch) => {
   if( registerDto.password !== registerDto.confirmPassword ) {
-    // TODO tell user to enter matching passwords
+    toast.warn("Password confirmation does not match")
   } else {
-    userClient.register(registerDto, token)
+    userClient.register(registerDto)
     .then(response => {
       console.log("error");
     })
     .catch(error => {
-      console.log("error");
+      toast.warn("Server unable to register user")      
     });
   }
 }
@@ -43,6 +38,18 @@ export const register = (registerDto: RegisterDto, token: string) => (dispatch) 
  * @param password 
  */
 export const login = (username: string, password: string) => (dispatch) => {
+  dispatch({
+    payload: {
+      isLoading: true
+    },
+    type: loadingTypes.IS_LOADING
+  });
+  dispatch({
+    payload: {
+      isLoading: true
+    },
+    type: loadingTypes.IS_LOADING
+  });
   const authenticationData = {
     Password: password,
     Username: username,
@@ -50,8 +57,8 @@ export const login = (username: string, password: string) => (dispatch) => {
 
   const authenticationDetails = new awsCognito.AuthenticationDetails(authenticationData);
   const poolData = {
-    ClientId: process.env.REACT_APP_COGNITO_CLIENT_ID, 
-    UserPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+    ClientId:   environment.cognitoClientId, 
+    UserPoolId: environment.cognitoUserPoolId,
   };
 
   const userPool = new awsCognito.CognitoUserPool(poolData);
@@ -92,6 +99,18 @@ export const login = (username: string, password: string) => (dispatch) => {
         type: userTypes.COGNITO_SIGN_IN
       });
     }
+  });
+  dispatch({
+    payload: {
+      isLoading: false
+    },
+    type: loadingTypes.IS_LOADING
+  });
+  dispatch({
+    payload: {
+      isLoading: false
+    },
+    type: loadingTypes.IS_LOADING
   });
 }
 

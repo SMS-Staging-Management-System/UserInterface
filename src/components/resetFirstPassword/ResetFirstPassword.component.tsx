@@ -3,28 +3,27 @@ import * as awsCognito from 'amazon-cognito-identity-js';
 import {withRouter} from 'react-router';
 
 interface IState {
-    username: string,
-    password: string,
-    confirmationPassword: string,
-    newPassword: string,
-    isFirstSignin,
-    passwordMatch
+  username: string,
+  password: string,
+  confirmationPassword: string,
+  newPassword: string,
+  isFirstSignin,
+  passwordMatch
 
 }
 
 class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
-    constructor(props: any) {
-        super(props);
-        console.log(props);
-        this.state = {
-            confirmationPassword: '',
-            isFirstSignin: false,
-            newPassword: '',
-            password: '',
-            passwordMatch: false,
-            username: '',
-        }
+  constructor(props: any) {
+    super(props);
+    console.log(props);
+    this.state = {
+      confirmationPassword: '',
+      isFirstSignin: false,
+      newPassword: '',
+      password: '',
+      passwordMatch: false,
+      username: '',
     }
 
     public onSuccess = (result: awsCognito.CognitoUserSession) => {
@@ -37,22 +36,48 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
         // navigate pages now that we have successfully logged in
         console.log("NAVIGATE TO NEW PAGE")
-        this.props.history.push('/register'); 
+        this.props.history.push('/register');
     }
+  }
 
-    public onFailure = (err: any) => {
-        console.log(err);
-        if (err.code === 'UserNotFoundException' || err.code === 'NotAuthorizedException') {
-            // todo: add error message to state
-            //   this.props.updateError('Invalid Credentials, try again.');
-        } else if (err.code === 'PasswordResetRequiredException') {
-            // todo: ensure reset password works
-            //   this.props.resetPassword(this.props.password);
-        } else {
-            // todo: update the states error message instead
-            //   this.props.updateError('Unable to login at this time, please try again later');
-        }
+  public submitNewPassword = (e: any) => {
+    e.preventDefault()
+    const { password, confirmationPassword } = this.state;
+    if (password !== confirmationPassword) {
+      this.setState({
+        ...this.state,
+        passwordMatch: true
+      })
+      return;
     }
+    if (this.props.code) {
+      const cognitoUser: awsCognito.CognitoUser = this.props.cognitUser;
+      cognitoUser.updateAttributes([], (err, result) => console.log);
+
+      // Get these details and call
+      cognitoUser.completeNewPasswordChallenge(password, [], this);
+      // const user: awsCognito.CognitoUser = this.props.cognitUser;
+      // user.updateAttributes([], (err, result) => console.log);
+      // user.confirmPassword(this.props.code, password, {
+      //   onFailure: (error: Error) => {
+      //     console.log(error)
+      //     // todo: remove alerts
+      //     //   alert('invalid code');
+      //     //   this.props.resetState();
+      //   },
+      //   onSuccess: () => {
+      //     this.props.resetState();
+      //   }
+      // });
+      return;
+    } else {
+      const user: awsCognito.CognitoUser = this.props.cognito.user;
+      user.getUserAttributes((attributes) => {
+        user.completeNewPasswordChallenge(password, attributes, {
+          onFailure: this.onFailure,
+          onSuccess: this.onSuccess,
+        })
+      })
 
     public submitNewPassword = (e: any) => {
         e.preventDefault()
@@ -95,46 +120,45 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
         }
     }
-    public handlePassChange(event) {
-        this.setState({
-            ...this.state,
-            password: event.target.value
-        })
+  }
+  public handlePassChange(event) {
+    this.setState({
+      ...this.state,
+      password: event.target.value
+    })
+  }
+
+  public handleChange(event) {
+    const confPassBox = (document.getElementById('conf-pass') as HTMLElement);
+    const newPassBtn = (document.getElementById("newPassBut") as HTMLElement);
+    const confPassBtn = (document.getElementById("confPassBut") as HTMLElement);
+    // console.log(event.target.value)
+    if (event.target.value === "") {
+      newPassBtn.style.opacity = "1";
+      confPassBtn.style.opacity = "0";
+      confPassBox.style.marginTop = "0";
     }
+    this.setState({
+      ...this.state,
+      confirmationPassword: event.target.value
+    })
+  }
 
-    public handleChange(event) {
-        const confPassBox = (document.getElementById('conf-pass') as HTMLElement);
-        const newPassBtn = (document.getElementById("newPassBut") as HTMLElement);
-        const confPassBtn = (document.getElementById("confPassBut") as HTMLElement);
-        // console.log(event.target.value)
-        if (event.target.value === "") {
-            newPassBtn.style.opacity = "1";
-            confPassBtn.style.opacity = "0";
-            confPassBox.style.marginTop = "0";
-        }
-        this.setState({
-            ...this.state,
-            confirmationPassword: event.target.value
-        })
+  public moveTextBox = (e: any) => {
+    e.preventDefault();
+    const moveConfPassBox = (document.getElementById('conf-pass') as HTMLElement);
+    const newPassBtn = (document.getElementById("newPassBut") as HTMLElement);
+    const confPassBtn = (document.getElementById("confPassBut") as HTMLElement);
+    const userText = (document.getElementById("new-pass") as HTMLInputElement);
+    if (userText.value === "") {
+      newPassBtn.style.opacity = "1";
+      confPassBtn.style.opacity = "0";
+      moveConfPassBox.style.marginTop = "0";
     }
-
-    public moveTextBox = (e: any) => {
-        e.preventDefault();
-        const moveConfPassBox = (document.getElementById('conf-pass') as HTMLElement);
-        const newPassBtn = (document.getElementById("newPassBut") as HTMLElement);
-        const confPassBtn = (document.getElementById("confPassBut") as HTMLElement);
-        const userText = (document.getElementById("new-pass") as HTMLInputElement);
-        if (userText.value === "") {
-            newPassBtn.style.opacity = "1";
-            confPassBtn.style.opacity = "0";
-            moveConfPassBox.style.marginTop = "0";
-        }
-        else {
-            moveConfPassBox.style.marginTop = "35px";
-            newPassBtn.style.opacity = "0";
-            confPassBtn.style.opacity = "1";
-        }
-
+    else {
+      moveConfPassBox.style.marginTop = "35px";
+      newPassBtn.style.opacity = "0";
+      confPassBtn.style.opacity = "1";
     }
 
     public render() {
@@ -171,4 +195,3 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
 }
 
 export default withRouter(ResetFirstPasswordComponent)
-

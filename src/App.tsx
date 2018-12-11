@@ -3,10 +3,12 @@ import './include/bootstrap';
 import './App.css';
 import AppNav from './components/nav/nav.component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import HomeComponent from './components/home/home.component';
 import { Provider } from 'react-redux';
 import { store } from './Store';
-import Loading from './components/loading/loading.component';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import HomeComponent from './components/home/home.component';
+import LoadingComponent from './components/loading/loading.component';
 
 class App extends React.Component {
   public render() {
@@ -20,7 +22,8 @@ class App extends React.Component {
                 <Route component={HomeComponent} />
               </Switch>
             </div>
-            <Loading />
+            <ToastContainer autoClose={2000} />
+            <LoadingComponent />
           </>
         </BrowserRouter>
       </Provider>
