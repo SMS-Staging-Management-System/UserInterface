@@ -1,8 +1,5 @@
-import { createClient } from '../axiosClient';
-import environment from '../environment';
-
-export const cohortClient = createClient();
+import { axiosClient } from '../axiosClient';
 
 export const getManagerCohorts = () => {
-  return cohortClient.get(`${environment}/cohorts`)
+  return axiosClient.get(`/cohorts`)
 }

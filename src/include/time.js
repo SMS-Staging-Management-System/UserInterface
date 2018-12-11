@@ -1,3 +1,5 @@
+import { format } from "path";
+
 export default 
 function time(unixTimestamp){
 
@@ -11,13 +13,16 @@ function time(unixTimestamp){
     let year =  date.getFullYear();
     let month = date.getMonth();
     let day =  date.getDate();
-    
     // Will display time in 10:30:23 format
     let formattedTime = `${hours}:${minutes.substr(-2)}:${seconds.substr(-2)}`;
     let formatDate = `${month+1}/${day}/${year}`
-    let formattedDate = `${formatDate} - ${formattedTime}`
-    if(unixTimestamp > 0){
-        return formattedDate;
+    let formattedDateAM = `${formatDate} - ${formattedTime} AM`
+    let formattedDatePM = `${formatDate} - ${formattedTime} PM`
+    if(unixTimestamp > 0 && hours < 12){
+        return formattedDateAM;
+    }
+    else if(unixTimestamp > 0 && hours >= 12){
+        return formattedDatePM
     } else {
         return ''
     }

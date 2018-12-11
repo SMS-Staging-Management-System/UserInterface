@@ -14,7 +14,6 @@
     "no-console": false,
     "jsx-no-bind": false,
     "jsx-boolean-value": false,
-    "member-access": false,
-    "member-ordering": false
+    "no-unused-expression": false
   }
 }

@@ -1,3 +1,4 @@
+
 // variables can be declared and later reused
 $revature-orange: #f26925;
 
@@ -124,10 +125,10 @@ $revature-orange: #f26925;
 #passBut, #confPassBut {
   opacity: 0;
   position: absolute;
-  margin-top: 45px;
+  margin-top: 43px;
   border: none;
-  background-color: white;
-  margin-left: -22%;
+  background-color: transparent;
+  margin-left: -40px;
   -webkit-transition: 3s;
           transition: 3s;
 }
@@ -140,18 +141,18 @@ $revature-orange: #f26925;
 
 #userBut, #newPassBut {
   border: none;
-  background-color: white;
-  margin-left: -22%;
+  background-color: transparent;
+  margin-left: -40px;
   -webkit-transition: 1s;
           transition: 1s;
 }
 
 #newPassBut {
-  margin-top: 21%;
+  margin-top: 47px;
 }
 
 #userBut{
-  margin-top: 18.5%;
+  margin-top: 47px;
 }
 
 #user, #pass {
@@ -169,7 +170,71 @@ body {
   background: linear-gradient(to left, #f3a55d, #e1e7e7);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;  
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/************************************
+          userProfile.component.tsx
+************************************/
+
+#profilePic {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 128px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  border-radius: 50%;
+}
+
+.profLabels {
+
+  margin-left: 10%;
+}
+
+.prof-inputs {
+  max-width: 300px;
+  margin-right: 40%;
+}
+
+.centered {
+ 
+  max-width: 500px;
+}
+
+.over-card {
+  width: 475px;
+}
+
+#sel2 {
+  max-width: 430px;
+}
+
+#sel1{
+  display: block;
+}
+
+
+
+/************************************
+          register.component.tsx
+************************************/
+
+.reg-inputs{
+  background: transparent;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom-color: #eb7c15;
+  border-width: 3px;
+}
+
+.reg-inputs:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 /************************************
@@ -222,7 +287,7 @@ body {
 .rev-btn {
   background-color: $revature-orange;
   border-color: $revature-orange;
-  color: black;
+  color: white;
   &:hover {
     background-color: white;
     border-color: $revature-orange;
@@ -352,8 +417,11 @@ body {
 Manager Content
 ******************************************************/
 .manager-content {
+  position: absolute;
+  top: 100px;
   width: 90%;
 }
+
 .page-numbers {
   display: flex;
   justify-content: flex-end;
@@ -370,6 +438,28 @@ Manager Content
   padding-right: 10px;
 }
 
+.table{
+  font-size: 16px;
+}
+
+.checkin-table-header {
+  text-align: center;
+  background-color: #fad2ac;
+}
+
+.daily-tasks-header{
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  background-color: #f3a55d;
+}
+.daily-tasks{
+  font-size: 16px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color:#f0cdad;
+}
 /*******************************************
   loading.component.tsx
 *******************************************/
