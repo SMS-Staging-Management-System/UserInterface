@@ -10,6 +10,7 @@ export interface IState {
   modal: boolean
   firstName: string
   description: string
+  managerComment: string
   userId: number
 }
 
@@ -22,6 +23,7 @@ export class CheckInRowManagerComponent extends React.Component<IProps, IState> 
     this.state = {
       description: '',
       firstName: '',
+      managerComment: '',
       modal: false,
       popover: false,
       userId: 1
@@ -37,10 +39,11 @@ export class CheckInRowManagerComponent extends React.Component<IProps, IState> 
     });
   }
   // get associate's daily tasks to pass to popover
-  public tasks = (id:number, dailyTasks:string) => {
+  public tasks = (id:number, dailyTasks:string, comment:string) => {
     this.setState({
       ...this.state,
       description: dailyTasks,
+      managerComment: comment,
       popover: true,
       userId: id
     })
@@ -76,8 +79,12 @@ export class CheckInRowManagerComponent extends React.Component<IProps, IState> 
           id={`row-${user.userId}`}  // set unique user ids for each row
           key={user.userId}  // using user id for the key as well
           onClick={() => this.getName(user.firstName)} // activate comment modal
-          onMouseOver={() => this.tasks(user.userId, user.description)} // activate daily tasks
-          onMouseLeave={()=> this.hide()}> 
+          onMouseOver={() => this.tasks(user.userId, user.description,user.managerComment)} // activate daily tasks
+          onMouseLeave={()=> this.hide()}
+          // adding support for mobile device to show daily tasks and manager comments
+          onTouchStart={() => this.tasks(user.userId, user.description,user.managerComment)}
+          onTouchCancel={()=> this.hide()}
+          > 
             <td >{user.userId}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
@@ -91,6 +98,7 @@ export class CheckInRowManagerComponent extends React.Component<IProps, IState> 
          {/* See what associates are up doing */}
          {this.state.modal === false &&
            <ManagerDailyTasksComponent
+            comment={this.state.managerComment}
             description={this.state.description}
             userId={this.state.userId}
             show={this.state.popover}/>

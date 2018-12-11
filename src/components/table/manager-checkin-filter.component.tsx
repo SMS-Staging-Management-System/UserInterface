@@ -9,9 +9,9 @@ export default function ManagerCheckinFilterComponent () {
       </DropdownToggle>
       <DropdownMenu>
         <DropdownItem header>Filter Check-ins </DropdownItem>
-        <DropdownItem>Current Check-ins</DropdownItem>
+        <DropdownItem>On-time</DropdownItem>
         <DropdownItem divider />
-        <DropdownItem>Historical Check-ins</DropdownItem>
+        <DropdownItem>Late</DropdownItem>
       </DropdownMenu>
     </UncontrolledDropdown>
   );
