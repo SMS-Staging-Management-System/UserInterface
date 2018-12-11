@@ -10,5 +10,4 @@ export class PokemonSprite {
       this.url = url;
     }
   }
-
 }
