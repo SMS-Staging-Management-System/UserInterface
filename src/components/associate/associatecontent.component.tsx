@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AssociateTable from './associatetable.component';
-import { AssociateCheckInSubmit } from './associatecheckin.component';
-
+import AssociateCheckInSubmit from './associatecheckin.component';
+import ClockComponent from '../clock/clock.component';
 interface IState {
   isCheckingIn: boolean;
 }
@@ -34,11 +34,10 @@ export class AssociateContent extends React.Component<IState>{
   // components to switch to
     
   function Update (props)  {
-    return <AssociateCheckInSubmit/>;
+    return <AssociateCheckInSubmit />;
   };
 
   function CheckIn(props) {
-    // replace with table
     return <AssociateTable type={'associate'}/>;
   };
 
@@ -65,10 +64,12 @@ export class AssociateContent extends React.Component<IState>{
   
   function CheckInButton (props) {
     return (
+      <div id="associatecontent">
       <div id="btn-right">
         <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={props.onClick}>
           Submit Check In
         </button>
+      </div>
       </div>
     );
   }
@@ -82,11 +83,14 @@ export class AssociateContent extends React.Component<IState>{
 
     return (
       <div>
-        <div>
+        
+        <div id="associatecontent">
+          <h4 id="associatecontentheader">Associate Dashboard <ClockComponent/></h4>
           {button}
+        </div>
+        <div>
           <Switch isLoggedIn={isCheckingIn} />
-          
-          </div>
+        </div>
       </div>
       
     );

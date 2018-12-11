@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { store } from './Store';
 import Loading from './components/loading/loading.component';
 import { AssociateContent } from './components/associate/associatecontent.component';
+// import ManagerContentComponent from './components/manager/manager-content.component';
 
 class App extends React.Component {
   public render() {
