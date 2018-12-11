@@ -1,6 +1,6 @@
 import * as React from 'react';
-import CommentComponent from './comment.component';
-import DailyTasksComponent from './daily-tasks-component';
+import ManagerCommentComponent from './manager-comment.component';
+import ManagerDailyTasksComponent from './manager-daily-tasks-component';
 import {FAKE_CHECK_IN_DATA} from '../../../include/fake';
 /*
   *The check-in row component
@@ -16,7 +16,7 @@ export interface IState {
 interface IProps {
   pageNumber: number
 }
-export class CheckInRowComponent extends React.Component<IProps, IState> {
+export class CheckInRowManagerComponent extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,20 +62,22 @@ export class CheckInRowComponent extends React.Component<IProps, IState> {
   }
   public render() {
     // create index for pagination
-    const LAST_INDEX = (this.props.pageNumber * 5) - 1
-    const FIRST_INDEX = LAST_INDEX - 4
+    const LAST_INDEX = (this.props.pageNumber * 10) - 1
+    const FIRST_INDEX = LAST_INDEX - 9
     return (
       <>
         {/* Map data from database into the check-in table */}
         {FAKE_CHECK_IN_DATA.map((user,index) =>
-         {
+         { // only display data based on index algorithm
            if(index >= FIRST_INDEX && index <= LAST_INDEX){
-             return ( 
-          <tr id={`row-${user.userId}`}
-          key={user.userId} 
-          onClick={() => this.getName(user.firstName)}
-          onMouseOver={() => this.tasks(user.userId, user.description)} 
-          onMouseLeave={()=> this.hide()}>
+             return (
+          // checkin row logic
+          <tr
+          id={`row-${user.userId}`}  // set unique user ids for each row
+          key={user.userId}  // using user id for the key as well
+          onClick={() => this.getName(user.firstName)} // activate comment modal
+          onMouseOver={() => this.tasks(user.userId, user.description)} // activate daily tasks
+          onMouseLeave={()=> this.hide()}> 
             <td >{user.userId}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
@@ -88,13 +90,13 @@ export class CheckInRowComponent extends React.Component<IProps, IState> {
          })}
          {/* See what associates are up doing */}
          {this.state.modal === false &&
-           <DailyTasksComponent
+           <ManagerDailyTasksComponent
             description={this.state.description}
             userId={this.state.userId}
             show={this.state.popover}/>
          }
           {/* Modal for manager comments */}
-          <CommentComponent
+          <ManagerCommentComponent
             toggle = {this.getName}
             modal = {this.state.modal}
             firstName={this.state.firstName}
@@ -104,4 +106,4 @@ export class CheckInRowComponent extends React.Component<IProps, IState> {
   }
 }
 
-export default CheckInRowComponent
+export default CheckInRowManagerComponent

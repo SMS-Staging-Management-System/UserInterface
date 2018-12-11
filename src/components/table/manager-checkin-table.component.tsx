@@ -1,7 +1,8 @@
 import * as React from 'react';
-import CheckInHeaderComponent from '../manager/checkin/check-in-header.component';
+import CheckInHeaderManagerComponent from '../manager/checkin/check-in-header-manager.component';
 import { Table } from 'reactstrap';
-import Paginate from '../manager/pagination.component';
+import CheckinPaginationManagerComponent from '../manager/manager-checkin-pagination.component';
+
 
 interface IProps {
   type: string;
@@ -9,11 +10,11 @@ interface IProps {
 /**
  * The table to render a list of check in
  */
-export class CheckinTableComponent extends React.Component<IProps, {}> {
+export class ManagerCheckinTableComponent extends React.Component<IProps> {
 
   public renderRows = () => {
     if(this.props.type === 'manager') {
-      return <Paginate/>
+      return <CheckinPaginationManagerComponent/>
     } else if(this.props.type === 'associate') {
       // Return your associate rows here
       return <></>
@@ -25,8 +26,8 @@ export class CheckinTableComponent extends React.Component<IProps, {}> {
     const sRows = this.renderRows();
     return (
       <>
-        <Table className="table table-hover table-bordered">
-          <CheckInHeaderComponent/> 
+        <Table className="table table-hover table-bordered table-sm">
+          <CheckInHeaderManagerComponent/> 
           <tbody>
             {sRows}
           </tbody>
@@ -36,4 +37,4 @@ export class CheckinTableComponent extends React.Component<IProps, {}> {
   }
 }
 
-export default CheckinTableComponent
+export default ManagerCheckinTableComponent
