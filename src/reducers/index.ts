@@ -40,6 +40,10 @@ export interface ILoadingState {
   isLoading: boolean
 }
 
+export interface IToast {
+  isLoading: boolean
+}
+
 export interface IState {
   associate: IAssociateState,
   clicker:  IClickerState,
