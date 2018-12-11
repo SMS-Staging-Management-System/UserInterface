@@ -61,34 +61,34 @@ export class RegisterComponent extends React.PureComponent<any, {}, {}>{
                         <div className="form-group row">
                            <div className="col"> 
                               <label> First Name *</label>
-                              <input type="text" className="form-control" placeholder="" required
+                              <input type="text" className="form-control reg-inputs" placeholder="" required
                               onChange={ e => this.firstnameChange(e) }
                               />
                            </div>
                            <div className="col">
                               <label> Last Name *</label>
-                              <input type ="text" className="form-control" placeholder="" required
+                              <input type ="text" className="form-control reg-inputs" placeholder="" required
                               onChange={ e => this.lastnameChange(e) }/>
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Email *</label>
-                               <input type ="email" className="form-control" placeholder="" required
+                               <input type ="email" className="form-control reg-inputs" placeholder="" required
                                 onChange={ e => this.emailChange(e)}/>
                            </div>   
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Password *</label>
-                               <input type ="password" className="form-control" placeholder="" required
+                               <input type ="password" className="form-control reg-inputs" placeholder="" required
                                onChange={ e => this.passwordConfirmChange(e) }/>
                            </div>   
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Confirm password *</label>
-                               <input type ="password" className="form-control" placeholder="" required
+                               <input type ="password" className="form-control reg-inputs" placeholder="" required
                                onChange={ e => this.passwordChange(e) }/>
                            </div>   
                         </div>
