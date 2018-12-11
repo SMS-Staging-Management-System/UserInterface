@@ -169,7 +169,8 @@ body {
   background: linear-gradient(to left, #f3a55d, #e1e7e7);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;  
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /************************************
@@ -222,7 +223,7 @@ body {
 .rev-btn {
   background-color: $revature-orange;
   border-color: $revature-orange;
-  color: black;
+  color: white;
   &:hover {
     background-color: white;
     border-color: $revature-orange;
@@ -352,8 +353,11 @@ body {
 Manager Content
 ******************************************************/
 .manager-content {
+  position: absolute;
+  top: 100px;
   width: 90%;
 }
+
 .page-numbers {
   display: flex;
   justify-content: flex-end;
