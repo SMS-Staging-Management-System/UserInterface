@@ -1,8 +1,8 @@
 import * as React from 'react';
 // import CohortAssociatesComponent from './cohort/cohort-associates.component';
 import {ManagerCheckinTableComponent} from '../table/manager-checkin-table.component';
-import CohortTableComponent from '../table/cohortTable.component';
-import AssociateTableComponent from '../table/associateTable.component';
+import CohortTableComponent from '../table/cohort-table.component';
+import AssociateTableComponent from '../table/associate-table.component';
 import ManagerCheckinFilter from '../table/manager-checkin-filter.component';
 /*
   *The container for the check-in and cohort tables

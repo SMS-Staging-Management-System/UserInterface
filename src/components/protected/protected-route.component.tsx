@@ -12,7 +12,7 @@ import { connect } from "react-redux";
 //   authenticationPath: string;
 // }
 
-export const ProtectedRoute = ({ component: Component, ...rest }: any) => {
+export const ProtectedRouteComponent = ({ component: Component, ...rest }: any) => {
 
   return (
     <Route
@@ -41,4 +41,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ProtectedRoute);
+export default connect(mapStateToProps)(ProtectedRouteComponent);

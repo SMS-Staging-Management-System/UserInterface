@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './include/bootstrap';
 import './App.css';
-import AppNav from './components/nav/nav.component';
+import NavComponent from './components/nav/nav.component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomeComponent from './components/home/home.component';
 import { Provider } from 'react-redux';
@@ -14,7 +14,7 @@ class App extends React.Component {
       <Provider store={store}>
         <BrowserRouter>
           <>
-            <AppNav />
+            <NavComponent />
             <div id="main-content-container">
               <Switch>
                 <Route component={HomeComponent} />

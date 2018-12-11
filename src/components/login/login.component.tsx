@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
-import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPassword.component';
+import ResetFirstPasswordComponent from '../resetFirstPassword/reset-first-password.component';
 import * as userActions from '../../actions/user/user.actions';
 
 interface IComponentState {

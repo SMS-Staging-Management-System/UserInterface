@@ -25,7 +25,7 @@ interface IComponentProps {
   user:  IUser,
   logout: () => {void}
 }
-class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> {
+class NavComponent extends React.PureComponent<IComponentProps, IComponentState, any> {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,4 +78,4 @@ const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {
   ...userActions
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AppNav);
+export default connect(mapStateToProps, mapDispatchToProps)(NavComponent);
