@@ -13,7 +13,7 @@ export interface IClickerState {
 }
 
 export interface IUserState {
-  cogUser: {},
+  cogUser: any,
   isFirstSignin: boolean,
   login: boolean,
   user:  IUser

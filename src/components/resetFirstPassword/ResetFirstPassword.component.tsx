@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as awsCognito from 'amazon-cognito-identity-js';
+import {withRouter} from 'react-router';
 
 interface IState {
   username: string,
@@ -11,7 +12,7 @@ interface IState {
 
 }
 
-export class ResetFirstPasswordComponent extends React.Component<any, IState> {
+class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
   constructor(props: any) {
     super(props);
@@ -24,32 +25,18 @@ export class ResetFirstPasswordComponent extends React.Component<any, IState> {
       passwordMatch: false,
       username: '',
     }
-  }
 
-  public onSuccess = (result: awsCognito.CognitoUserSession) => {
-    const token = result.getIdToken().getJwtToken();
-    localStorage.setItem('token', token);
-    // console.log(userPool.getCurrentUser());
-    // console.log(result.getIdToken().decodePayload())
-    // const idtok: any = result.getIdToken();
-    // console.log(idtok.payload['cognito:groups']) //payload has the user info on it
+    public onSuccess = (result: awsCognito.CognitoUserSession) => {
+        const token = result.getIdToken().getJwtToken();
+        localStorage.setItem('token', token);
+        // console.log(userPool.getCurrentUser());
+        // console.log(result.getIdToken().decodePayload())
+        // const idtok: any = result.getIdToken();
+        // console.log(idtok.payload['cognito:groups']) //payload has the user info on it
 
-    // navigate pages now that we have successfully logged in
-    console.log("NAVIGATE TO NEW PAGE")
-    // this.props.history.push('/success'); 
-  }
-
-  public onFailure = (err: any) => {
-    console.log(err);
-    if (err.code === 'UserNotFoundException' || err.code === 'NotAuthorizedException') {
-      // todo: add error message to state
-      //   this.props.updateError('Invalid Credentials, try again.');
-    } else if (err.code === 'PasswordResetRequiredException') {
-      // todo: ensure reset password works
-      //   this.props.resetPassword(this.props.password);
-    } else {
-      // todo: update the states error message instead
-      //   this.props.updateError('Unable to login at this time, please try again later');
+        // navigate pages now that we have successfully logged in
+        console.log("NAVIGATE TO NEW PAGE")
+        this.props.history.push('/register');
     }
   }
 
@@ -92,6 +79,46 @@ export class ResetFirstPasswordComponent extends React.Component<any, IState> {
         })
       })
 
+    public submitNewPassword = (e: any) => {
+        e.preventDefault()
+        const { password, confirmationPassword } = this.state;
+        if (password !== confirmationPassword) {
+            this.setState({
+                ...this.state,
+                passwordMatch: true
+            })
+            return;
+        }
+        if (this.props.code) {
+            const cognitoUser: awsCognito.CognitoUser = this.props.cognitUser;
+            cognitoUser.updateAttributes([], (err, result) => console.log);
+
+            // Get these details and call
+            cognitoUser.completeNewPasswordChallenge(password, cognitoUser.getUserAttributes, this);
+            // const user: awsCognito.CognitoUser = this.props.cognitUser;
+            // user.updateAttributes([], (err, result) => console.log);
+            // user.confirmPassword(this.props.code, password, {
+            //     onFailure: (error: Error) => {
+            //         console.log(error)
+            //         // todo: remove alerts
+            //         //   alert('invalid code');
+            //         //   this.props.resetState();
+            //     },
+            //     onSuccess: () => {
+            //         this.props.resetState();
+            //     }
+            // });
+            return;
+        } else {
+            const user: awsCognito.CognitoUser = this.props.cognito.user;
+            user.getUserAttributes((attributes) => {
+                user.completeNewPasswordChallenge(password, attributes, {
+                    onFailure: this.onFailure,
+                    onSuccess: this.onSuccess,
+                })
+            })
+
+        }
     }
   }
   public handlePassChange(event) {
@@ -134,38 +161,37 @@ export class ResetFirstPasswordComponent extends React.Component<any, IState> {
       confPassBtn.style.opacity = "1";
     }
 
-  }
+    public render() {
+        return (
+            <>
+                <div className="shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
+                    <>
+                        <h4 id="titleHead">Reset Password</h4>
+                        <form className="form-inline" onSubmit={this.moveTextBox}>
+                            <div className="frontDiv">
 
-  public render() {
+                                <input id="new-pass" type="password" className="form-control txt-bx" placeholder="New Password" onChange={this.handleChange.bind(this)} />
+                                <button id="newPassBut"><h6 className="text-muted">Go</h6></button>
+                            </div>
+                        </form>
+                        <form className="form-inline shift" onSubmit={this.submitNewPassword}>
+                            <div className="behindDiv">
+                                <div className="box">
+                                    <input type="password" className="form-control txt-bx" id="conf-pass" placeholder="Confirm Password" onChange={this.handlePassChange.bind(this)} />
+                                    <button id="confPassBut"><h6 className="text-muted">Go</h6></button>
+                                </div>
+                            </div>
+                        </form>
+                        {this.state.passwordMatch &&
+                            <h6 id="invalidCredHead">Password fields do not match</h6>
+                        }
 
-    return (
-      <>
-        <div className="centered shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
-          <>
-            <h4 id="titleHead">Reset Password</h4>
-            <form className="form-inline" onSubmit={this.moveTextBox}>
-              <div className="frontDiv">
+                    </>
 
-                <input id="new-pass" type="password" className="form-control txt-bx" placeholder="New Password" onChange={this.handleChange.bind(this)} />
-                <button id="newPassBut"><h6 className="text-muted">Go</h6></button>
-              </div>
-            </form>
-            <form className="form-inline shift" onSubmit={this.submitNewPassword}>
-              <div className="behindDiv">
-                <div className="box">
-                  <input type="password" className="form-control txt-bx" id="conf-pass" placeholder="Confirm Password" onChange={this.handlePassChange.bind(this)} />
-                  <button id="confPassBut"><h6 className="text-muted">Go</h6></button>
                 </div>
-              </div>
-            </form>
-            {this.state.passwordMatch &&
-              <h6 id="invalidCredHead">Password fields do not match</h6>
-            }
-
-          </>
-
-        </div>
-      </>
-    );
-  }
+            </>
+        );
+    }
 }
+
+export default withRouter(ResetFirstPasswordComponent)

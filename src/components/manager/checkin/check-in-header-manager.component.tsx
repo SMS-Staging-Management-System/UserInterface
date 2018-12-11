@@ -2,12 +2,12 @@ import * as React from 'react';
 /*
   *The check-in header component
 */
-export class CheckInHeaderComponent extends React.Component<{}> {
+export class CheckInHeaderManagerComponent extends React.Component<{}> {
 
   public render() {
     return (
       <>
-      <thead>
+      <thead className="checkin-table-header">
             <tr>
               <th scope="col">User ID</th>
               <th scope="col">First Name</th>
@@ -21,4 +21,4 @@ export class CheckInHeaderComponent extends React.Component<{}> {
     );
   }
 }
-export default CheckInHeaderComponent
+export default CheckInHeaderManagerComponent

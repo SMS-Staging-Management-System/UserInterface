@@ -13,19 +13,24 @@ interface IState {
         time: ''
       };
   }
-   public setTime = () => {
+
+  public setTime = () => {
     const d = Date.now()
       this.setState({
         time: time(d)
       })
   }
+  public componentDidMount(){
+    setInterval(()=>{
+      this.setTime()
+    },1000)
+  }
   public render() {
-      setInterval(()=>{
-          this.setTime()
-      },1000)
     return (
      <>
-     {this.state.time}
+     <p id="clock">
+       {this.state.time}
+     </p>
      </>
     );
   }
