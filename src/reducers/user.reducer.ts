@@ -7,7 +7,7 @@ const FAKE_USER = { "email": "a@mail.com",
                     "role" :  "manager",
                     "userId": 1}
 const initialState: IUserState = {
-  cogUser: {},
+  cogUser: null,
   isFirstSignin: false,
   login: true,
   user:  FAKE_USER
