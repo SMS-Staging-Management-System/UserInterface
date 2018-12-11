@@ -1,10 +1,9 @@
 import * as React from 'react';
 // import CohortAssociatesComponent from './cohort/cohort-associates.component';
-import CheckinTableComponent from '../table/checkinTable.component';
+import {ManagerCheckinTableComponent} from '../table/manager-checkin-table.component';
 import CohortTableComponent from '../table/cohortTable.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
 import { Button } from "reactstrap";
-
 /*
   *The container for the check-in and cohort tables
   currently attempting to paginate check-in data,
@@ -26,8 +25,9 @@ export class ContainerComponent extends React.Component {
         <div className="tab-content" id="nav-tabContent">
           <div className="tab-pane fade active show" id="check-in" role="tabpanel" >
             <div >
-              <CheckinTableComponent 
-                type="manager" />
+              <ManagerCheckinFilter/>
+              <ManagerCheckinTableComponent 
+                type="manager"/>
             </div>
           </div>
           <div className="tab-pane fade container-fluid" id="cohort" role="tabpanel" aria-labelledby="nav-profile-tab">

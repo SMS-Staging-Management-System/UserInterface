@@ -16,7 +16,6 @@ interface IStateProps {
 export class HomeComponent extends React.Component<IStateProps> {
 
   public render() {
-    console.log(this.props.login)
     return (
       <>  
         { !this.props.login   ?
