@@ -7,7 +7,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Christian",
       managerComment: "Please submit your portfolio by COB!",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 1
     }, {
       cohort: "Blake 1810",
@@ -16,7 +16,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Wilson",
       managerComment: "Good Luck!",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 2
     }, {
       cohort: "Blake 1810",
@@ -25,7 +25,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Vo",
       managerComment: "",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 3
     }, {
       cohort: "Blake 1810",
@@ -34,7 +34,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "For",
       managerComment: "",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 4
     }, {
       cohort: "Blake 1810",
@@ -43,7 +43,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Vo",
       managerComment: "",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 5
     }, {
       cohort: "Blake 1810",
@@ -52,7 +52,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Dula",
       managerComment: "Code like a boss!",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 6
     }, {
       cohort: "Blake 1810",
@@ -61,7 +61,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Yusef",
       managerComment: "Please submit your portfolio by COB!",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 7
     }, {
       cohort: "Blake 1810",
@@ -70,7 +70,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Ta",
       managerComment: "",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 8
     }, {
       cohort: "Blake 1810",
@@ -79,7 +79,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Appleseed",
       managerComment: "Please submit your portfolio by COB!",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 9
     }, {
       cohort: "Blake 1810",
@@ -88,7 +88,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Doe",
       managerComment: "",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 10
     }, {
       cohort: "Blake 1810",
@@ -97,7 +97,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Carter",
       managerComment: "Code like a boss!",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 11
     },{
       cohort: "Blake 1810",
@@ -106,7 +106,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Stine",
       managerComment: "",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 12
     },{
       cohort: "Blake 1810",
@@ -115,7 +115,7 @@ export const FAKE_CHECK_IN_DATA = [
       lastName: "Bode",
       managerComment: "Please don't! Get to work!",
       managerEmail: "staging-manager@revature.portal",
-      time: '12/4/2018 @ 0900',
+      time: '12/4/2018 @ 0900 AM',
       userId: 13
     },
   ];

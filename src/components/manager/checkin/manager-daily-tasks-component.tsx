@@ -21,7 +21,7 @@ export class ManagerDailyTasksComponent extends React.Component<IProps> {
           </PopoverHeader>
           <PopoverBody className="daily-tasks">{this.props.description}</PopoverBody>
         </Popover>
-        <Popover placement="bottom" isOpen={this.props.show} target={`row-${this.props.userId}`}>
+        <Popover placement="left" isOpen={this.props.show} target={`row-${this.props.userId}`}>
           <PopoverHeader className="daily-tasks-header">
           <strong>Manager Comment</strong>
           </PopoverHeader>

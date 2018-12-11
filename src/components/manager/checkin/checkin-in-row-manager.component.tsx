@@ -80,7 +80,11 @@ export class CheckInRowManagerComponent extends React.Component<IProps, IState> 
           key={user.userId}  // using user id for the key as well
           onClick={() => this.getName(user.firstName)} // activate comment modal
           onMouseOver={() => this.tasks(user.userId, user.description,user.managerComment)} // activate daily tasks
-          onMouseLeave={()=> this.hide()}> 
+          onMouseLeave={()=> this.hide()}
+          // adding support for mobile device to show daily tasks and manager comments
+          onTouchStart={() => this.tasks(user.userId, user.description,user.managerComment)}
+          onTouchCancel={()=> this.hide()}
+          > 
             <td >{user.userId}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
