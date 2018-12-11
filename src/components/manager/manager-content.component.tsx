@@ -32,12 +32,11 @@ export class ManagerContentComponent extends React.Component<{},IState> {
       <div className="manager-content col-12 shadow-lg p-3 mb-5 bg-white rounded">
         <button className="btn btn-danger" onClick={this.modalOn}>New Cohort</button>
         <CreateNewModalComponent
-         toggle = {this.modalOn}
-         modal = {this.state.modal}
-         modalOff = {this.modalOff}/>
-        <div className="mt-3">
+          toggle = {this.modalOn}
+          modal = {this.state.modal}
+          modalOff = {this.modalOff}/>
         <div>
-            <h4>SMS Manager Dashboard <ClockComponent/></h4>
+          <h4>SMS Manager Dashboard <ClockComponent/></h4>
         </div>
         <hr/>
         <div>
