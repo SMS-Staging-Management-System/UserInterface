@@ -18,19 +18,11 @@ export const userTypes = {
   USER_INIT:    'USER_INIT'
 }
 
-/**
- * Verify with the server the uri token belong to an available cohort
- * @param token 
- */
-export const tokenVerify = (token: string) => {
-  userClient.verifyRegisterToken(token);
-}
-
 export const register = (registerDto: RegisterDto, token: string) => (dispatch) => {
   if( registerDto.password !== registerDto.confirmPassword ) {
     toast.warn("Password confirmation does not match")
   } else {
-    userClient.register(registerDto, token)
+    userClient.register(registerDto)
     .then(response => {
       console.log("error");
     })

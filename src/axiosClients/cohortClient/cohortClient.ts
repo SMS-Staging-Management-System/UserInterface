@@ -1,7 +1,5 @@
-import { createClient } from '../axiosClient';
-
-export const cohortClient = createClient();
+import { axiosClient } from '../axiosClient';
 
 export const getManagerCohorts = () => {
-  return cohortClient.get(`/cohorts`)
+  return axiosClient.get(`/cohorts`)
 }

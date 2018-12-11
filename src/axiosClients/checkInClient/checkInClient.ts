@@ -1,19 +1,17 @@
-import { createClient } from '../axiosClient';
-
-export const checkInClient = createClient();
+import { axiosClient } from '../axiosClient';
 
 export const getAssociateCheckIns = () => {
-  return checkInClient.get(`/checkins`)
+  return axiosClient.get(`/checkins`)
 }
 
 export const submitCheckIn = (body: object) => {
-  return checkInClient.post(`/checkins`, body);
+  return axiosClient.post(`/checkins`, body);
 }
 
 export const getManagerCheckInToday = () => {
-  return checkInClient.post(`/checkins/today`);
+  return axiosClient.post(`/checkins/today`);
 }
 
 export const postManagerComment = (body: object, checkInId: number) => {
-  return checkInClient.patch(`/checkins/${checkInId}`, body);
+  return axiosClient.patch(`/checkins/${checkInId}`, body);
 }
