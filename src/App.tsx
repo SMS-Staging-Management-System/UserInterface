@@ -7,8 +7,10 @@ import { Provider } from 'react-redux';
 import { store } from './Store';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import HomeComponent from './components/home/home.component';
+// import HomeComponent from './components/home/home.component';
 import LoadingComponent from './components/loading/loading.component';
+import { AssociateContent } from './components/associate/associatecontent.component';
+
 
 class App extends React.Component {
   public render() {
@@ -19,7 +21,7 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                <Route component={HomeComponent} />
+                <Route component={AssociateContent} />
               </Switch>
             </div>
             <ToastContainer autoClose={2000} />
