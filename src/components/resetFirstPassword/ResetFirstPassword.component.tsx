@@ -47,8 +47,7 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
     // console.log(idtok.payload['cognito:groups']) //payload has the user info on it
 
     // navigate pages now that we have successfully logged in
-    console.log("NAVIGATE TO NEW PAGE")
-    this.props.history.push('/register');
+    this.props.setup();
   }
 
   public submitNewPassword = (e: any) => {
@@ -67,6 +66,7 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
       // Get these details and call
       cognitoUser.completeNewPasswordChallenge(password, [], this);
+      console.log(cognitoUser);
       // const user: awsCognito.CognitoUser = this.props.cognitUser;
       // user.updateAttributes([], (err, result) => console.log);
       // user.confirmPassword(this.props.code, password, {

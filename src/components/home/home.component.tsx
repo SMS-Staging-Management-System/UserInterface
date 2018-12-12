@@ -6,7 +6,7 @@ import { IUser } from 'src/model/User.model';
 import DashboardComponent from '../dashboard/dashboard.component';
 
 interface IStateProps {
-  login: boolean,
+  isLogin: boolean,
   user:  IUser
 }
 
@@ -18,7 +18,7 @@ export class HomeComponent extends React.Component<IStateProps> {
   public render() {
     return (
       <>  
-        { !this.props.login   ?
+        { !this.props.isLogin   ?
           <LoginComponent />  :
           <DashboardComponent />
         }

@@ -127,7 +127,8 @@ const initialState: IManagerState = {
   checkIns: [],
   cohorts:  FAKE_COHORTS,
   currentCheckIns: [],
-  currentCohort: FAKE_CURRENT_COHORT
+  currentCohort: FAKE_CURRENT_COHORT,
+  isShowCohort: false
 }
 
 export const managerReducer = (state = initialState, action: any) => {
@@ -150,12 +151,17 @@ export const managerReducer = (state = initialState, action: any) => {
     case managerTypes.FILTER_CHECK_IN_LIST:
       return {
         ...state,
-        currentCheckIns: action.payload.currentCheckIns
+        checkIns: action.payload.checkIns
       }
     case managerTypes.SELECT_COHORT:
       return {
         ...state,
-        currentCohort: action.payload.currentCohort
+        cohorts: action.payload.cohorts
+      }
+    case managerTypes.SELECT_COHORT:
+      return {
+        ...state,
+        isShowCohort: action.payload.isShowCohort
       }
   }
   return state;

@@ -5,8 +5,8 @@ import { IUser } from 'src/model/User.model';
 import { ManagerContentComponent } from '../manager/manager-content.component';
 
 interface IStateProps {
-  login: boolean,
-  user:  IUser
+  user:   IUser,
+  role:   string
 }
 
 /**
@@ -15,9 +15,9 @@ interface IStateProps {
 export class DashboardComponent extends React.Component<IStateProps> {
 
   public renderRoleContent = () => {
-    if(this.props.user.role) {
+    if(this.props.role === 'manager') {
       return <ManagerContentComponent />  
-    } else if(this.props.user.role === 'associate') {
+    } else if(this.props.role === 'associate') {
       return <></> // <AssociateContentComponent />
     } else {
       return <></>

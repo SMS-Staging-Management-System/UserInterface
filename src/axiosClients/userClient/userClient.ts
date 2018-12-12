@@ -11,15 +11,17 @@ export const register = (registerDto: RegisterDto) => {
   return axiosClient.post(`/users`, registerDto);
 }
 
-export const login = (username: string, password: string) => {
-  // using cognito login now
-  console.log("error");
+/**
+ * Get the current login user with the jwt token from cognito
+ */
+export const getUserByJwtToken = () => {
+  return axiosClient.get(`/users`);
 }
 
 /**
  * Return promise to get user info from server
  */
-export const getUserFromCognito = () => {
+export const getUserFromCognitoJwt = () => {
   return axiosClient.get(`/users/info`);
 }
 

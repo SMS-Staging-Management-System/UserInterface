@@ -13,22 +13,24 @@ export interface IClickerState {
 }
 
 export interface IUserState {
-  cogUser: any,
+  cogUser:  any,
   isFirstSignin: boolean,
-  login: boolean,
-  user:  IUser
+  isLogin:  boolean,
+  user:     IUser,
+  role:     string
 }
 
 export interface IManagerState {
-  cohorts: ICohort[], // Class objects, which have user objects
-  checkIns: ICheckIn[], // CheckIn objects
-  currentCheckIns: ICheckIn[],
-  currentCohort: ICohort
+  cohorts:          ICohort[],
+  checkIns:         ICheckIn[],
+  currentCheckIns:  ICheckIn[],
+  currentCohort:    ICohort,
+  isShowCohort:     boolean
 }
 
 export interface IAssociateState {
-  checkIns: ICheckIn[], // CheckIn objects
-  currentCheckIns: ICheckIn[]
+  checkIns:         ICheckIn[],
+  currentCheckIns:  ICheckIn[]
 }
 
 export interface ILoadingState {
