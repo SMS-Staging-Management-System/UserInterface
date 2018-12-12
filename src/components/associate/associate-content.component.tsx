@@ -1,12 +1,12 @@
 import * as React from 'react';
-import AssociateTable from './associatetable.component';
-import AssociateCheckInSubmit from './associatecheckin.component';
+import AssociateTable from './associate-table.component';
+import AssociateCheckInSubmit from './associate-checkin.component';
 import ClockComponent from '../clock/clock.component';
 interface IState {
   isCheckingIn: boolean;
 }
 
-export class AssociateContent extends React.Component<{}, IState>{
+export class AssociateContentComponent extends React.Component<{}, IState>{
   
   public state: IState = {
     isCheckingIn: false

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AssociateDailyTasksComponent from './associatedailytaskscomponent';
+import AssociateDailyTasksComponent from './associate-dailytaskscomponent';
 import {FAKE_CHECK_IN_DATA} from '../../include/fake';
 
 export interface IState {

@@ -16,7 +16,7 @@ const FAKE_USER = { "city":       "Arlington",
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
-  login: false,
+  login: true,
   user:  FAKE_USER
 }
 

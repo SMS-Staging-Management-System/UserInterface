@@ -3,6 +3,7 @@ import { IState } from '../../reducers';
 import { connect } from 'react-redux';
 import { IUser } from 'src/model/User.model';
 import { ManagerContentComponent } from '../manager/manager-content.component';
+import { AssociateContentComponent } from '../associate/associate-content.component';
 
 interface IStateProps {
   login: boolean,
@@ -15,10 +16,10 @@ interface IStateProps {
 export class DashboardComponent extends React.Component<IStateProps> {
 
   public renderRoleContent = () => {
-    if(this.props.user.role) {
+    if(this.props.user.role === 'manager') {
       return <ManagerContentComponent />  
     } else if(this.props.user.role === 'associate') {
-      return <></> // <AssociateContentComponent />
+      return <AssociateContentComponent />
     } else {
       return <></>
     }

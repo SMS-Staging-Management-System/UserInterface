@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import {FAKE_CHECK_IN_DATA} from '../../include/fake';
-import AssociateRow from './associaterow.component';
+import AssociateRow from './associate-row.component';
 
 interface IState {
   currentPage: number

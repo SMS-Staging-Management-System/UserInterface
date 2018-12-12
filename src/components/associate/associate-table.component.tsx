@@ -1,7 +1,7 @@
 import * as React from 'react';
-import AssociateHeader from './associateheader.component';
+import AssociateHeader from './associate-header.component';
 import { Table } from 'reactstrap';
-import AssociateCheckInPagination from './associatecheckinpagination.component';
+import AssociateCheckInPagination from './associate-checkinpagination.component';
 
 interface IProps {
   type: string;
