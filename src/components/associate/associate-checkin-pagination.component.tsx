@@ -42,7 +42,7 @@ class AssociateCheckInPagination extends React.Component<{}, IState>{
         <AssociateRow
           pageNumber={this.state.currentPage} />
         {/* Display changes in page in real-time */}
-        <div className="page-display">
+        <div>
           <span className="page-count">Page: {this.state.currentPage}/{TOTAL_PAGES} </span>
           <span>
             {/* Conditionally render pagination numbers by every five associates \

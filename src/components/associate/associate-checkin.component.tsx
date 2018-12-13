@@ -31,14 +31,13 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
         <form>
           <ul className="list-group list-group-flush bg-transparent">
             <li className="list-group-item flex-row-sb bg-transparent">
-              <textarea id="textarea" placeholder="Description" onChange={this.handleChange} />
+              <textarea id="text-area" placeholder="Description" onChange={this.handleChange} />
             </li>
           </ul>
         </form>
         <div className="modal-footer">
           <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.handleSubmit}>Check In</button>
         </div>
-        {/* end chicken request */}
       </div>
 
     );
