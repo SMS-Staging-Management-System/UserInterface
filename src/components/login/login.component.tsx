@@ -17,7 +17,7 @@ interface IComponentState {
 
 interface IComponentProps {
 	cognitoLogin: (username: string, password: string) => { void },
-	setup: () => { void },
+	initUser: () => { void },
 	isFirstSignin: boolean,
 	cogUser: any
 }
@@ -79,7 +79,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 		console.log("NAVIGATE TO NEW PAGE")
 
 		// Call setup whenevr yo are ready for the app to go away from login page
-		this.props.setup();
+		this.props.initUser();
 	}
 
 	public onFailure = (err: any) => {
@@ -185,20 +185,15 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 							<div className="row resetDiv">
 								<button id="forgotBut">Forgot Username or Password</button>
 							</div>
-
-
-
 						</div>
-					   
 					</>
-				
 				}
 				
 				{this.props.isFirstSignin &&
 					<ResetFirstPasswordComponent
 						cognitUser={this.props.cogUser}
 						code={this.state.password}
-						setup={this.props.setup} />
+						setup={this.props.initUser} />
 				}
 			</>
 		);

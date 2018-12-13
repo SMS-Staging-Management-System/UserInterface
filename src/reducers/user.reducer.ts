@@ -16,8 +16,8 @@ const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
   isLogin: false,
-  role:  '',
-  user:  FAKE_USER
+  roles:  [],
+  user:   FAKE_USER
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -43,8 +43,11 @@ export const userReducer = (state = initialState, action: any) => {
       toast.success("Log out");
       return {
         ...state,
+        cogUser: null,
+        isFirstSignin: false,
         isLogin: false,
-        user:  null
+        roles:  [],
+        user:   null
       }
     case userTypes.COGNITO_SIGN_IN:
       return {

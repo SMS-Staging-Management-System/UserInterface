@@ -17,7 +17,7 @@ export interface IUserState {
   isFirstSignin: boolean,
   isLogin:  boolean,
   user:     IUser,
-  role:     string
+  roles:    string[]
 }
 
 export interface IManagerState {

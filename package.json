@@ -19,6 +19,7 @@
   "dependencies": {
     "@types/react-toastify": "^4.0.1",
     "amazon-cognito-identity-js": "^3.0.4",
+    "aws-sdk": "^2.375.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
     "jquery": "^3.3.1",
@@ -43,6 +44,7 @@
     "tether": "^1.4.4"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/enzyme": "^3.1.13",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "^23.0.0",
