@@ -40,26 +40,6 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
     const { isCheckingIn } = this.state;
     let button;
 
-  // components to switch to leave in render until fully tranistioned
-    
-  // function Update (props)  {
-  //   return <AssociateCheckInSubmit />;
-  // };
-
-  // function CheckIn(props) {
-  //   return <AssociateTable type={'associate'}/>;
-  // };
-
-  // the mighty switch
-
-  // function Switch (props) {
-  //   if (isCheckingIn) {
-  //     return <Update />;
-  //   }
-  //   return <CheckIn />;
-  // }
-
-  // buttons used to control switching
 
   function UpdateButton (props) {
     return (
