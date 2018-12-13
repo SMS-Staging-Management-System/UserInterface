@@ -148,8 +148,17 @@ $drew-orange: #f3a55d;
           transition: 1s;
 }
 
+
+#pass, #conf-pass{
+  opacity: 0;
+}
+
+#confPassBut {
+  margin-bottom: 20px;
+}
+
 #newPassBut {
-  margin-top: 47px;
+  margin-top: 35px;
 }
 
 #userBut{
@@ -159,6 +168,8 @@ $drew-orange: #f3a55d;
 #user, #pass {
   padding-right: 50px;
 }
+
+
 
 body {
   margin: 0;

@@ -70,6 +70,8 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
     public onSuccess = (result: awsCognito.CognitoUserSession) => {
 
+        
+
         // console.log(userPool.getCurrentUser());
         // console.log(result.getIdToken().decodePayload())
         // const idtok: any = result.getIdToken();
@@ -120,8 +122,10 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
         if (event.target.value === "") {
             usrBtn.style.opacity = "1";
             passBtn.style.opacity = "0";
+            movePassBox.style.opacity = "0";
             movePassBox.style.marginTop = "0";
         }
+        
         this.setState({
             ...this.state,
             username: event.target.value
@@ -135,12 +139,14 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
         const passBtn = (document.getElementById("passBut") as HTMLElement);
         const userText = (document.getElementById("user") as HTMLInputElement);
         if (userText.value === "") {
+            movePassBox.style.opacity = "0";
             usrBtn.style.opacity = "1";
             passBtn.style.opacity = "0";
             movePassBox.style.marginTop = "0";
         }
         else {
             movePassBox.style.marginTop = "35px";
+            movePassBox.style.opacity = "1";
             usrBtn.style.opacity = "0";
             passBtn.style.opacity = "1";
         }

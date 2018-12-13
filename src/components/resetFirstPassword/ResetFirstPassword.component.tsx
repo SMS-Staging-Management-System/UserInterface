@@ -107,6 +107,7 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
       newPassBtn.style.opacity = "1";
       confPassBtn.style.opacity = "0";
       confPassBox.style.marginTop = "0";
+      confPassBox.style.opacity = "0";
     }
     this.setState({
       ...this.state,
@@ -124,11 +125,13 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
       newPassBtn.style.opacity = "1";
       confPassBtn.style.opacity = "0";
       moveConfPassBox.style.marginTop = "0";
+      moveConfPassBox.style.opacity = "0";
     }
     else {
       moveConfPassBox.style.marginTop = "35px";
       newPassBtn.style.opacity = "0";
       confPassBtn.style.opacity = "1";
+      moveConfPassBox.style.opacity = "1";
     }
   }
 
