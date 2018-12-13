@@ -2,15 +2,39 @@ import * as React from 'react';
 import {ManagerCheckinTableComponent} from '../table/manager-checkin-table.component';
 import CohortTableComponent from '../table/cohortTable.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
-import { Button } from "reactstrap";
 import ManagerCheckinFilterComponent from '../table/manager-checkin-filter.component';
-/*
-  *The container for the check-in and cohort tables
-  currently attempting to paginate check-in data,
-  add a date range picker, and filter by late check-in, cohort, default (most recent), etc.
-*/
+import {CreateNewModalComponent} from './cohort/cohort-create-modal.component';
+import { Button } from "reactstrap";
 
-export class ContainerComponent extends React.Component {
+
+export interface IState {
+  modal: boolean
+}
+
+/**
+ * The container for the check-in and cohort tables
+ */
+export class ContainerComponent extends React.Component<{},IState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    };
+  }
+
+  public modalOn = () => {
+    this.setState({
+      ...this.state,
+      modal: true
+    })
+  }
+
+  public modalOff = () => {
+    this.setState({
+      ...this.state,
+      modal: false
+    })
+  }
 
   public render() {
     return (
@@ -33,7 +57,13 @@ export class ContainerComponent extends React.Component {
             <div className="row mt-2">
               <div className="col-3 pl-0">
               <div className="mb-2">
-                <Button>+ (Add Cohort)</Button>
+                <Button 
+                  color="primary" 
+                  className="btn btn-danger" 
+                  onClick={this.modalOn}
+                  >New Cohort
+                </Button>
+              <div>
               </div>
                 <CohortTableComponent />
               </div>
@@ -41,6 +71,11 @@ export class ContainerComponent extends React.Component {
                 <CohortAssociatesComponent />
               </div>
             </div>
+          </div>
+          <CreateNewModalComponent
+            toggle = {this.modalOn}
+            modal = {this.state.modal}
+            modalOff = {this.modalOff}/>
           </div>
         </div>
       </>

@@ -47,8 +47,7 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
     // console.log(idtok.payload['cognito:groups']) //payload has the user info on it
 
     // navigate pages now that we have successfully logged in
-    console.log("NAVIGATE TO NEW PAGE")
-    this.props.history.push('/register');
+    this.props.setup();
   }
 
   public submitNewPassword = (e: any) => {
@@ -67,6 +66,7 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
 
       // Get these details and call
       cognitoUser.completeNewPasswordChallenge(password, [], this);
+      console.log(cognitoUser);
       // const user: awsCognito.CognitoUser = this.props.cognitUser;
       // user.updateAttributes([], (err, result) => console.log);
       // user.confirmPassword(this.props.code, password, {
@@ -107,6 +107,7 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
       newPassBtn.style.opacity = "1";
       confPassBtn.style.opacity = "0";
       confPassBox.style.marginTop = "0";
+      confPassBox.style.opacity = "0";
     }
     this.setState({
       ...this.state,
@@ -124,11 +125,13 @@ class ResetFirstPasswordComponent extends React.Component<any, IState> {
       newPassBtn.style.opacity = "1";
       confPassBtn.style.opacity = "0";
       moveConfPassBox.style.marginTop = "0";
+      moveConfPassBox.style.opacity = "0";
     }
     else {
       moveConfPassBox.style.marginTop = "35px";
       newPassBtn.style.opacity = "0";
       confPassBtn.style.opacity = "1";
+      moveConfPassBox.style.opacity = "1";
     }
   }
 

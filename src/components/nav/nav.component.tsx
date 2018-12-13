@@ -21,7 +21,7 @@ interface IComponentState {
   isOpen: boolean
 }
 interface IComponentProps {
-  login: boolean,
+  isLogin: boolean,
   user:  IUser,
   logout: () => {void}
 }
@@ -38,21 +38,10 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
       isOpen: !this.state.isOpen
     });
   }
-  
-  public render() {
-    return (
-      <Navbar color="light" light expand="md">
-        <NavbarBrand>
-          <Link to="/" className="unset-anchor">
-            <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
-          </Link>
-        </NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            {
-              this.props.user && this.props.login &&
-              <UncontrolledDropdown nav inNavbar>
+
+  public renderCollapse = () => {
+    if(this.props.isLogin && (this.props.user !== null)) {
+      return	<UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   {this.props.user.email}
                 </DropdownToggle>
@@ -66,7 +55,24 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-            }
+    } else {
+      return <></>
+    }
+  }
+  
+  public render() {
+    const sRenderCollapse = this.renderCollapse();
+    return (
+      <Navbar color="light" light expand="md">
+        <NavbarBrand>
+          <Link to="/" className="unset-anchor">
+            <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
+          </Link>
+        </NavbarBrand>
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
+          <Nav className="ml-auto" navbar>
+            {sRenderCollapse}
           </Nav>
         </Collapse>
       </Navbar>

@@ -6,20 +6,20 @@ import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPasswor
 import * as userActions from '../../actions/user/user.actions';
 
 interface IComponentState {
-    cogUser: object,
-    username: string,
-    password: string,
-    confirmationPassword: string,
-    newPassword: string,
-    isFirstSignin,
-    incorrectUserPass
+	cogUser: object,
+	username: string,
+	password: string,
+	confirmationPassword: string,
+	newPassword: string,
+	isFirstSignin,
+	incorrectUserPass
 }
 
 interface IComponentProps {
-    login: (username: string, password: string) => { void },
-    setup: () => { void },
-    isFirstSignin: boolean,
-    cogUser: any
+	cognitoLogin: (username: string, password: string) => { void },
+	initUser: () => { void },
+	isFirstSignin: boolean,
+	cogUser: any
 }
 
 export class LoginComponent extends React.Component<IComponentProps, IComponentState> {
@@ -70,6 +70,8 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
     public onSuccess = (result: awsCognito.CognitoUserSession) => {
 
+        
+
         // console.log(userPool.getCurrentUser());
         // console.log(result.getIdToken().decodePayload())
         // const idtok: any = result.getIdToken();
@@ -79,7 +81,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
         console.log("NAVIGATE TO NEW PAGE")
 
         // Call setup whenevr yo are ready for the app to go away from login page
-        this.props.setup();
+        this.props.initUser();
     }
 
     public onFailure = (err: any) => {
@@ -102,7 +104,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
     public submit = (e: any) => {
         e.preventDefault();
         const { username, password } = this.state; // destructuring
-        this.props.login(username, password);
+        this.props.cognitoLogin(username, password);
     }
 
     public handlePassChange(event) {
@@ -120,8 +122,10 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
         if (event.target.value === "") {
             usrBtn.style.opacity = "1";
             passBtn.style.opacity = "0";
+            movePassBox.style.opacity = "0";
             movePassBox.style.marginTop = "0";
         }
+        
         this.setState({
             ...this.state,
             username: event.target.value
@@ -135,12 +139,14 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
         const passBtn = (document.getElementById("passBut") as HTMLElement);
         const userText = (document.getElementById("user") as HTMLInputElement);
         if (userText.value === "") {
+            movePassBox.style.opacity = "0";
             usrBtn.style.opacity = "1";
             passBtn.style.opacity = "0";
             movePassBox.style.marginTop = "0";
         }
         else {
             movePassBox.style.marginTop = "35px";
+            movePassBox.style.opacity = "1";
             usrBtn.style.opacity = "0";
             passBtn.style.opacity = "1";
         }
@@ -198,7 +204,8 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
                 {this.props.isFirstSignin &&
                     <ResetFirstPasswordComponent
                         cognitUser={this.props.cogUser}
-                        code={this.state.password} />
+						code={this.state.password}
+						setup={this.props.initUser} />
                 }
             </>
         );
@@ -207,6 +214,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
 const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {
-    ...userActions
+	...userActions
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)
