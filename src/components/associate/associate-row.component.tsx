@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AssociateDailyTasksComponent from './associate-dailytaskscomponent';
+import AssociateDailyTasksComponent from './associate-daily-tasks.component';
 import {FAKE_CHECK_IN_DATA} from '../../include/fake';
 
 export interface IState {
@@ -54,8 +54,8 @@ export class AssociateRow extends React.Component<IProps, IState> {
 
     public render() {
     // create index for pagination
-    const LAST_INDEX = (this.props.pageNumber * 5) - 1
-    const FIRST_INDEX = LAST_INDEX - 4
+    const LAST_INDEX = (this.props.pageNumber * 10) - 1
+    const FIRST_INDEX = LAST_INDEX - 9
         return (
             <>
             {/* Map data from database into the check-in table */}

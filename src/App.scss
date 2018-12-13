@@ -491,13 +491,19 @@ Manager Content
     width: 300px;
 }
 
+#associatecontenttop {
+  position: absolute;
+  top: 100px;
+}
+
 #associatecontentheader {
   padding: 8px;
   display: flex;
-  justify-content: start;
 }
 
 #associatecontent {
+  display: flex;
+  justify-content: space-between;
   background-color: white;
 }
 

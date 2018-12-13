@@ -35,7 +35,7 @@ class AssociateCheckInPagination extends React.Component<{},IState>{
 
   public render() {
     // create the final page number based on 5 check-ins per page
-    const TOTAL_PAGES = Math.ceil(FAKE_CHECK_IN_DATA.length/5);
+    const TOTAL_PAGES = Math.ceil(FAKE_CHECK_IN_DATA.length/10);
     return (
       <>
       {/* Inject CheckInRowComponent and share page number with it as props */}
@@ -53,10 +53,10 @@ class AssociateCheckInPagination extends React.Component<{},IState>{
            </PaginationItem>
         {/* Use the index from the array of check-ins to create page numbers */}
         {FAKE_CHECK_IN_DATA.map((data,index)=> 
-        index % 5 === 0 && index > 0 &&
-          <PaginationItem key={index} onClick={()=>this.changePage(index/5)}>
+        index % 10 === 0 && index > 0 &&
+          <PaginationItem key={index} onClick={()=>this.changePage(index/10)}>
             <PaginationLink >
-              {index / 5}
+              {index / 10}
             </PaginationLink>
           </PaginationItem>
         )}

@@ -14,12 +14,10 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
 
   constructor(props: any) {
     super(props);
-    this.handleCheckInClick = this.handleCheckInClick.bind(this);
-    this.handleSubmitClick = this.handleSubmitClick.bind(this);
   }
 
 
-  public handleCheckInClick() {
+  public handleCheckInClick = () => {
     this.setState({isCheckingIn: true});
   }
 
@@ -71,13 +69,13 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
     }
 
     return (
-      <div>
+      <div id="associatecontenttop">
     
         <div id="associatecontent">
             <h4  id="associatecontentheader">Associate Dashboard <ClockComponent/></h4>
-            <span>
+            <div>
             <a id="associatebutton">{button}</a>
-            </span>
+            </div>
         </div>
         <div className="d-flex justify-content-end">
           <this.Switch isLoggedIn={isCheckingIn} />
