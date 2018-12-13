@@ -7,7 +7,7 @@ interface IState {
 }
 
 export class AssociateContentComponent extends React.Component<{}, IState>{
-  
+
   public state: IState = {
     isCheckingIn: false
   }
@@ -18,11 +18,11 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
 
 
   public handleCheckInClick = () => {
-    this.setState({isCheckingIn: true});
+    this.setState({ isCheckingIn: true });
   }
 
   public handleSubmitClick = () => {
-    this.setState({isCheckingIn: false});
+    this.setState({ isCheckingIn: false });
   }
 
   // new switch logic
@@ -30,38 +30,38 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
   public Switch = (props) => {
     if (this.state.isCheckingIn) {
       return <AssociateCheckInSubmit />
-    } 
-      return <AssociateTable type={'associate'}/> 
+    }
+    return <AssociateTable type={'associate'} />
   };
-  
+
   public render() {
     const { isCheckingIn } = this.state;
     let button;
 
 
-  function UpdateButton (props) {
-    return (
-      <div id="btn-right"> 
-        <button type="button"  className="btn btn-danger" onClick={props.onClick}>
-          Return
+    function UpdateButton(props) {
+      return (
+        <div id="btn-right">
+          <button type="button" className="btn btn-danger" onClick={props.onClick}>
+            Return
         </button>
-      </div>
-    );
-  }
-  
-  function CheckInButton (props) {
-    return (
-      <div id="associatecontent">
-      <div id="btn-right">
-        <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={props.onClick}>
-          Submit Check In
-        </button>
-      </div>
-      </div>
-    );
-  }
+        </div>
+      );
+    }
 
-  // switch logic
+    function CheckInButton(props) {
+      return (
+        <div id="associate-content">
+          <div id="btn-right">
+            <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={props.onClick}>
+              Submit Check In
+        </button>
+          </div>
+        </div>
+      );
+    }
+
+    // switch logic
     if (isCheckingIn) {
       button = <UpdateButton onClick={this.handleSubmitClick} />;
     } else {
@@ -69,19 +69,19 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
     }
 
     return (
-      <div id="associatecontenttop">
-    
-        <div id="associatecontent">
-            <h4  id="associatecontentheader">Associate Dashboard <ClockComponent/></h4>
-            <div>
-            <a id="associatebutton">{button}</a>
-            </div>
+      <div id="associate-content-top">
+
+        <div id="associate-content">
+          <h4 id="associate-content-header">Associate Dashboard <ClockComponent /></h4>
+          <div>
+            <a id="associate-button">{button}</a>
+          </div>
         </div>
         <div className="d-flex justify-content-end">
           <this.Switch isLoggedIn={isCheckingIn} />
         </div>
       </div>
-      
+
     );
   }
 }

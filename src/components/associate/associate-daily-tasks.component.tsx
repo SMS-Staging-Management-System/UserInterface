@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Popover, PopoverHeader, PopoverBody } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 interface IProps {
   description: string
   show: boolean

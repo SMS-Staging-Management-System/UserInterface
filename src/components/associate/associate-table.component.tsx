@@ -13,15 +13,15 @@ export class AssociateTable extends React.Component<IProps, {}> {
 
   // config for assocaite stuff
   public renderRows = () => {
-      return <AssociateCheckInPagination/>
+    return <AssociateCheckInPagination />
   }
 
   public render() {
     const sRows = this.renderRows();
     return (
       <>
-        <Table className="table table-hover table-bordered" id="associaterowboxthing">
-          <AssociateHeader/> 
+        <Table className="table table-hover table-bordered" id="associate-row-container">
+          <AssociateHeader />
           <tbody>
             {sRows}
           </tbody>
