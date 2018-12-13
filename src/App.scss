@@ -486,6 +486,38 @@ Manager Content
   width: 100vw;
   z-index: 999;
 }
+
+/*******************************************
+  cohort-create-modal.component.tsx
+*******************************************/
+.flex-btw {
+  justify-content: space-between
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn-cohort {
+  border: 1px solid #f26925;
+  color: white;
+  background-color: #f26925;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
 /*******************************************
   associates-row.component.tsx
 *******************************************/
