@@ -13,8 +13,6 @@ export interface IState {
 
 /**
  * The container for the check-in and cohort tables
- * currently attempting to paginate check-in data,
- * add a date range picker, and filter by late check-in, cohort, default (most recent), etc.
  */
 export class ContainerComponent extends React.Component<{},IState> {
   constructor(props) {
