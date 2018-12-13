@@ -76,7 +76,7 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
     const mapContent = this.state.fileContent.map((user, index) => {
       return(
         <tr key={index}>
-        {/* <th scope="row">{index}</th> */}
+        <th scope="row">{index}</th>
         <td>{user.firstname}</td>
         <td>{user.lastName}</td>
         <td>{user.email}</td>
@@ -98,7 +98,7 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
         <div>
         <Modal isOpen={this.props.modal} className="manager-comments">
           <ModalHeader>Create New Cohort</ModalHeader>
-          <ModalBody className="">
+          <ModalBody>
             <Row form>
               <Col md={6}>
                 <FormGroup>
@@ -107,19 +107,14 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
                 </FormGroup>
               </Col>
             </Row>
-            <div className="upload-btn-wrapper">
-              <button className="btn-cohort"> Upload File</button>
+            <div>
               <input type="file" onChange={(e) => this.handleChange(e.target.files)} />
-              <div>
-               <small> .csv files only</small>
-              </div>
-             
             </div>
             <div className="mt-3">
               <Table bordered className="table table-sm">
-                <thead className="checkin-table-header">
+                <thead>
                   <tr>
-                    {/* <th>#</th> */}
+                    <th>#</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
@@ -134,9 +129,9 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
               </Table>
             </div> 
           </ModalBody>
-          <ModalFooter className="flex-btw">
-            <Button className="rev-btn " onClick={this.props.modalOff}>Submit</Button>
-            <Button className=""color="secondary" onClick={this.props.modalOff}>Cancel</Button>
+          <ModalFooter>
+            <Button className="rev-btn" onClick={this.props.modalOff}>Submit</Button>
+            <Button color="secondary" onClick={this.props.modalOff}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div> 
