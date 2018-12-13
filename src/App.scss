@@ -148,8 +148,17 @@ $drew-orange: #f3a55d;
           transition: 1s;
 }
 
+
+#pass, #conf-pass{
+  opacity: 0;
+}
+
+#confPassBut {
+  margin-bottom: 20px;
+}
+
 #newPassBut {
-  margin-top: 47px;
+  margin-top: 35px;
 }
 
 #userBut{
@@ -159,6 +168,8 @@ $drew-orange: #f3a55d;
 #user, #pass {
   padding-right: 50px;
 }
+
+
 
 body {
   margin: 0;
@@ -475,6 +486,38 @@ Manager Content
   width: 100vw;
   z-index: 999;
 }
+
+/*******************************************
+  cohort-create-modal.component.tsx
+*******************************************/
+.flex-btw {
+  justify-content: space-between
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn-cohort {
+  border: 1px solid #f26925;
+  color: white;
+  background-color: #f26925;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
 /*******************************************
   associates-row.component.tsx
 *******************************************/

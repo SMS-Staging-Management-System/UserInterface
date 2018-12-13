@@ -1,9 +1,6 @@
 version: 0.1
-environment_variables:
-  plaintext:
-    S3_BUCKET: 'rev-sms-dev-ui'
 phases:
-  install:
+  install: 
     commands:
       - echo Installing source NPM dependencies...
       - npm install

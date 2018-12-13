@@ -7,8 +7,8 @@ const dev = {
 
 const prod = {
   awsRegion:          'us-west-2',
-  cognitoClientId:    '49f1foekljhlqn185fme63hi0s',
-  cognitoUserPoolId:  'us-west-2_8b6WpHm1z',
+  cognitoClientId:    'n09bpbndlp78jrbv6rbar4d13',
+  cognitoUserPoolId:  'us-east-1_xavxFp1nr',
   smsContext:         'znc.anorexicseal.com:8765'
 };
 
