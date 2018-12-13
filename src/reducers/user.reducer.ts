@@ -7,7 +7,7 @@ const FAKE_USER = { "city":       "Arlington",
                     "firstname":  "Blake",
                     "lastname":   "Kruppa",
                     "mobile":     "714-123-1234",
-                    "role" :      "manager",
+                    "role" :      "associate",
                     "state":      "California", 
                     "timezone":   "+2", 
                     "userId":     1,
@@ -16,7 +16,7 @@ const FAKE_USER = { "city":       "Arlington",
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
-  login: true,
+  login: false,
   user:  FAKE_USER
 }
 
