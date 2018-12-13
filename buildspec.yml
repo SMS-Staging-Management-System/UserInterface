@@ -1,7 +1,4 @@
 version: 0.1
-environment_variables:
-  plaintext:
-    S3_BUCKET: 'rev-sms-dev-ui'
 phases:
   install:
     commands:
