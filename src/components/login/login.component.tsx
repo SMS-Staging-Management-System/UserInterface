@@ -6,20 +6,20 @@ import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPasswor
 import * as userActions from '../../actions/user/user.actions';
 
 interface IComponentState {
-    cogUser: object,
-    username: string,
-    password: string,
-    confirmationPassword: string,
-    newPassword: string,
-    isFirstSignin,
-    incorrectUserPass
+	cogUser: object,
+	username: string,
+	password: string,
+	confirmationPassword: string,
+	newPassword: string,
+	isFirstSignin,
+	incorrectUserPass
 }
 
 interface IComponentProps {
-    login: (username: string, password: string) => { void },
-    setup: () => { void },
-    isFirstSignin: boolean,
-    cogUser: any
+	cognitoLogin: (username: string, password: string) => { void },
+	initUser: () => { void },
+	isFirstSignin: boolean,
+	cogUser: any
 }
 
 export class LoginComponent extends React.Component<IComponentProps, IComponentState> {
@@ -204,7 +204,8 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
                 {this.props.isFirstSignin &&
                     <ResetFirstPasswordComponent
                         cognitUser={this.props.cogUser}
-                        code={this.state.password} />
+                        code={this.state.password}
+                        setup={this.props.initUser}/>
                 }
             </>
         );
@@ -213,6 +214,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
 const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {
-    ...userActions
+	...userActions
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)

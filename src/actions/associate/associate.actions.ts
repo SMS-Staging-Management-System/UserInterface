@@ -9,11 +9,11 @@ export const associateTypes = {
 }
 
 /**
- * Set up associate past check-ins list
+ * Get associate checkins
  */
-export const associateInit = () => (dispatch) => {
+export const associateInit = (userId: number) => (dispatch) => {
   if(axiosClients.addCognitoToHeader()) {
-    checkInClient.getAssociateCheckIns()
+    checkInClient.getCheckInByUserId(userId)
     .then(response => {
       localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
       const checkInList = response.data.result.checkIns.map(checkIn => {
@@ -40,7 +40,7 @@ export const submitCheckIn = (description: string) => {
   const body = {
     "description": description
   }
-  checkInClient.submitCheckIn(body)
+  checkInClient.postCheckIn(body)
   .then(response => {
     console.log("error");
   })
