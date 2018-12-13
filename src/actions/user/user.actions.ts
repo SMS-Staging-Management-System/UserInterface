@@ -1,4 +1,3 @@
-import { RegisterDto } from '../../model/Register.model';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import * as AWS from 'aws-sdk';
 import * as userClient from '../../axiosClients/userClient/userClient';
@@ -7,6 +6,7 @@ import { toast } from "react-toastify";
 import { loadingTypes } from '../loading/loading.actions';
 import { IUser } from 'src/model/User.model';
 import { environment } from '../../environment';
+import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 
 /**
  * userTypes
@@ -132,18 +132,14 @@ export const initUser = () => dispatch => {
  * @param registerDto 
  * @param token 
  */
-export const register = (registerDto: RegisterDto, token: string) => (dispatch) => {
-  if( registerDto.password !== registerDto.confirmPassword ) {
-    toast.warn("Password confirmation does not match")
-  } else {
-    userClient.register(registerDto)
-    .then(response => {
-      console.log("error");
-    })
-    .catch(error => {
-      toast.warn("Server unable to register user")      
-    });
-  }
+export const register = (user: IUserCreateDto) => (dispatch) => {
+  userClient.postUser(user)
+  .then(response => {
+    console.log("error");
+  })
+  .catch(error => {
+    toast.warn("Server unable to register user")      
+  });
 }
 
 /**
