@@ -1,4 +1,3 @@
-import * as axiosClients from '../../axiosClients/axiosClient';
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import { ICheckIn } from '../../model/CheckIn.model';
 
@@ -12,24 +11,22 @@ export const associateTypes = {
  * Get associate checkins
  */
 export const associateInit = (userId: number) => (dispatch) => {
-  if(axiosClients.addCognitoToHeader()) {
-    checkInClient.getCheckInByUserId(userId)
-    .then(response => {
-      localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
-      const checkInList = response.data.result.checkIns.map(checkIn => {
-        return checkIn as ICheckIn;
-      })
-      dispatch({
-        payload: {
-          checkIns: checkInList
-        },
-        type: associateTypes.INIT
-      });
+  checkInClient.getCheckInByUserId(userId)
+  .then(response => {
+    localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
+    const checkInList = response.data.result.checkIns.map(checkIn => {
+      return checkIn as ICheckIn;
     })
-    .catch(error => {
-      console.log("error");
-    })
-  }
+    dispatch({
+      payload: {
+        checkIns: checkInList
+      },
+      type: associateTypes.INIT
+    });
+  })
+  .catch(error => {
+    console.log("error");
+  })
 }
 
 /**

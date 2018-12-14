@@ -40,7 +40,7 @@ export const userReducer = (state = initialState, action: any) => {
         role: action.payload.role
       }
     case userTypes.LOGOUT:
-      toast.success("Log out");
+      toast.success("Logged out");
       return {
         ...state,
         cogUser: null,
@@ -50,13 +50,17 @@ export const userReducer = (state = initialState, action: any) => {
         user:   null
       }
     case userTypes.COGNITO_SIGN_IN:
+      toast.success("Welcome back");
       return {
         ...state,
-        cogUser: action.payload.cogUser
+        cogUser:  action.payload.cogUser,
+        isLogin:  action.payload.isLogin,
+        roles:    action.payload.roles
       }
     case userTypes.FIRST_SIGN_IN:
       return {
         ...state,
+        cogUser:  action.payload.cogUser,
         isFirstSignin: true
       }
   }
