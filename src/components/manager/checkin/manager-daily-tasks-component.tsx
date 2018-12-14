@@ -16,15 +16,24 @@ export class ManagerDailyTasksComponent extends React.Component<IProps> {
     return (
       <>
         <Popover placement="top" isOpen={this.props.show} target={`row-${this.props.userId}`}>
+        <PopoverHeader className="daily-tasks-header">
+            <strong>Comments</strong>
+          </PopoverHeader>
+          <PopoverBody className="daily-tasks"><div><strong>Associate:</strong></div>{this.props.description}</PopoverBody>
+          <hr id="pop-hr"></hr>
+          <PopoverBody className="daily-tasks"><div><strong>Manager:</strong></div>{this.props.comment}</PopoverBody>
+        </Popover>
+
+        {/* <Popover placement="top" isOpen={this.props.show} target={`row-${this.props.userId}`}>
           <PopoverHeader className="daily-tasks-header">
-          <strong>Check-in Comment</strong>
+            <strong>Check-in Comment</strong>
           </PopoverHeader>
           <PopoverBody className="daily-tasks">{this.props.description}</PopoverBody>
           <PopoverHeader className="daily-tasks-header">
-          <strong>Manager Comment</strong>
+            <strong>Manager Comment</strong>
           </PopoverHeader>
           <PopoverBody className="daily-tasks">{this.props.comment}</PopoverBody>
-        </Popover>
+        </Popover> */}
       </>
     );
   }

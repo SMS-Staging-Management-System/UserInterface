@@ -7,7 +7,6 @@ const FAKE_USER = { "city":       "Arlington",
                     "firstname":  "Blake",
                     "lastname":   "Kruppa",
                     "mobile":     "714-123-1234",
-                    "role" :      "associate",
                     "state":      "California", 
                     "timezone":   "+2", 
                     "userId":     1,
@@ -16,12 +15,19 @@ const FAKE_USER = { "city":       "Arlington",
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
-  login: false,
-  user:  FAKE_USER
+  isLogin: false,
+  page:   'home',
+  roles:  [],
+  user:   FAKE_USER
 }
 
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
+    case userTypes.CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.payload.page
+      }
     case userTypes.REGISTER:
       toast.success("Register successful");
       return {
@@ -31,24 +37,36 @@ export const userReducer = (state = initialState, action: any) => {
       toast.success("Login");
       return {
         ...state,
-        login:  action.payload.login,
+        isLogin:  action.payload.isLogin,
         user:   action.payload.user
       }
-    case userTypes.LOGOUT:
-      toast.success("Log out");
+    case userTypes.SET_ROLE:
       return {
         ...state,
-        login: false,
-        user:  null
+        role: action.payload.role
+      }
+    case userTypes.LOGOUT:
+      toast.success("Logged out");
+      return {
+        ...state,
+        cogUser: null,
+        isFirstSignin: false,
+        isLogin: false,
+        roles:  [],
+        user:   null
       }
     case userTypes.COGNITO_SIGN_IN:
+      toast.success("Welcome back");
       return {
         ...state,
-        cogUser: action.payload.cogUser
+        cogUser:  action.payload.cogUser,
+        isLogin:  action.payload.isLogin,
+        roles:    action.payload.roles
       }
     case userTypes.FIRST_SIGN_IN:
       return {
         ...state,
+        cogUser:  action.payload.cogUser,
         isFirstSignin: true
       }
   }
