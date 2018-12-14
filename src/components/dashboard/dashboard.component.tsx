@@ -16,6 +16,7 @@ interface IStateProps {
 export class DashboardComponent extends React.Component<IStateProps> {
 
   public renderRoleContent = () => {
+    console.log(this.props)
     if(this.props.roles.includes("admin")) {
       return <ManagerContentComponent />  
     } else {

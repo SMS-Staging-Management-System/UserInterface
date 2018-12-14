@@ -25,7 +25,7 @@ export const userTypes = {
  */
 export const cognitoLogin = (username: string, password: string) => (dispatch) => {
   isLoading(true);
-  userHelpers.cognitoLogin(username, password);
+  userHelpers.cognitoLogin(username, password)(dispatch);
   isLoading(false);  
 }
 
