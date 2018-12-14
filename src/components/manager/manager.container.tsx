@@ -42,6 +42,15 @@ export class ContainerComponent extends React.Component {
               </div>
             </div>
           </div>
+<<<<<<< Updated upstream
+=======
+          <CreateNewModalComponent
+            toggle = {this.modalOn}
+            modal = {this.state.modal}
+            modalOff = {this.modalOff}
+            />
+          </div>
+>>>>>>> Stashed changes
         </div>
       </>
     );

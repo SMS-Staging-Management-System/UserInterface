@@ -16,8 +16,14 @@ const FAKE_USER = { "city":       "Arlington",
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
+<<<<<<< Updated upstream
   login: false,
   user:  FAKE_USER
+=======
+  isLogin: true,
+  roles:  ["admin"],
+  user:   FAKE_USER
+>>>>>>> Stashed changes
 }
 
 export const userReducer = (state = initialState, action: any) => {
