@@ -9,7 +9,8 @@ import * as userHelpers from './user.helpers';
  * userTypes
  */
 export const userTypes = {
-  COGNITO_SIGN_IN: 'COGNITO_SIGN_IN',
+  CHANGE_PAGE:      'CHANGE_PAGE',
+  COGNITO_SIGN_IN:  'COGNITO_SIGN_IN',
   FIRST_SIGN_IN:'FIRST_SIGN_IN',
   LOGIN:        'LOGIN',
   LOGOUT:       'LOGOUT',
@@ -83,4 +84,13 @@ export const logout = () => (dispatch) => {
     });
     toast.success("Log out");
   }
+}
+
+export const changePage = (page: string) => dispatch => {
+  dispatch({
+    payload: {
+      page
+    },
+    type: userTypes.CHANGE_PAGE
+  });
 }

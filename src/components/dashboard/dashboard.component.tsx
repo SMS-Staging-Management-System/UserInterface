@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { IUser } from 'src/model/User.model';
 import { ManagerContentComponent } from '../manager/manager-content.component';
 import { AssociateContentComponent } from '../associate/associate-content.component';
+import { UserProfileComponent } from '../userProfile/userProfile.component';
 
 interface IStateProps {
   user:   IUser,
+  page:   string,
   roles:  string[]
 }
 
@@ -16,11 +18,16 @@ interface IStateProps {
 export class DashboardComponent extends React.Component<IStateProps> {
 
   public renderRoleContent = () => {
-    console.log(this.props)
-    if(this.props.roles.includes("admin")) {
-      return <ManagerContentComponent />  
+    if(this.props.page === 'home') {
+      if(this.props.roles.includes('admin')) {
+        return <ManagerContentComponent />  
+      } else {
+        return <AssociateContentComponent />
+      }
+    } else if (this.props.page === 'profile') {
+      return <UserProfileComponent />
     } else {
-      return <AssociateContentComponent />
+      return <></>
     }
   }
 

@@ -17,7 +17,7 @@ export const initUser = (dispatch) => {
   .then(response => {
     dispatch({
       payload: {
-        user:  response.data.result as IUser
+        user:  response.data as IUser
       },
       type: userTypes.USER_INIT
     });

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -23,6 +22,7 @@ interface IComponentState {
 interface IComponentProps {
   isLogin: boolean,
   user:  IUser,
+  changePage: (page: string) => {void},
   logout: () => {void}
 }
 class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> {
@@ -46,7 +46,9 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
                   {this.props.user.email}
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem className="cursor-hover">
+                  <DropdownItem 
+                    className="cursor-hover"
+                    onClick={() => this.props.changePage('profile')}>
                     Profile
                   </DropdownItem>
                   <DropdownItem divider />
@@ -64,10 +66,10 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
     const sRenderCollapse = this.renderCollapse();
     return (
       <Navbar color="light" light expand="md">
-        <NavbarBrand>
-          <Link to="/" className="unset-anchor">
+        <NavbarBrand
+          onClick={() => this.props.changePage('home')}
+          >
             <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
-          </Link>
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>

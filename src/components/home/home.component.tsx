@@ -21,7 +21,6 @@ export class HomeComponent extends React.Component<any, IComponentProps> {
   }
 
   public render() {
-    console.log(this.props.isLogin)
     return (
       <>  
         { !this.props.isLogin   ?

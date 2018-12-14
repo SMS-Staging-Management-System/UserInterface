@@ -73,7 +73,6 @@ export class UserProfileComponent extends React.Component<any, IState>{
          zip: this.state.zipcode
       }
       console.log(user)
-      // store user in state store for axios call
    }
 
    public zipChange = (e) => {

@@ -23,7 +23,6 @@ export const postUser = (user: IUserCreateDto) => {
   return axiosClient.post(`/users`, user);
 }
 
-
 /**
  * Return promise to get user info from server
  */

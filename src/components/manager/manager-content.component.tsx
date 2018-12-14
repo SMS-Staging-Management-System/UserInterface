@@ -1,8 +1,15 @@
 import * as React from 'react';
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
 import { ContainerComponent } from './manager.container';
 import ClockComponent from '../../components/clock/clock.component';
+import * as managerActions from '../../actions/manager/manager.actions';
 
 export class ManagerContentComponent extends React.Component {
+
+  public componentDidMount() {
+    // managerActions.getCheckIn();
+  }
 
   public render() {
     return (
@@ -18,4 +25,9 @@ export class ManagerContentComponent extends React.Component {
     );
   }
 }
-export default ManagerContentComponent;
+
+const mapStateToProps = (state: IState) => (state.user)
+const mapDispatchToProps = {
+  ...managerActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ManagerContentComponent)
