@@ -3,6 +3,7 @@ import * as cohortClient from '../../axiosClients/cohortClient/cohortClient';
 import { toast } from "react-toastify";
 import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
+import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 
 export const managerTypes = {
   ADD_CHECK_INS:    'ADD_CHECK_INS',
@@ -54,8 +55,14 @@ export const managerInit = () => (dispatch) => {
  * @param cohortName 
  * @param emailList 
  */
-export const postCohort = (cohortName: string, emailList: string[]) => dispatch => {
-  return 1;
+export const postCohort = (cohortName: string, cohortDescription: string, users: IUserCreateDto[]) => dispatch => {
+  cohortClient.postCohort(cohortName, cohortDescription, users)
+  .then(response => {
+    toast.success("Cohort created")
+  })
+  .catch(error => {
+    toast.success("Unable to create cohort or some users")
+  })
 }
 
 /**
@@ -106,7 +113,6 @@ export const getCheckIn = (fromDate: Date, toDate: Date) => dispatch => {
  * @param toDate 
  */
 export const getCheckInByUserId = (userId: number, fromDate: Date, toDate: Date) => (dispatch) => {
-  
   checkInClient.getCheckInByUserId(userId, fromDate, toDate)
   .then(response => {
     const checkinList = response.data.result.map(checkin => {

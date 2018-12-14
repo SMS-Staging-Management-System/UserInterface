@@ -4,14 +4,13 @@ import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from
 export default function ManagerCheckinFilterComponent () {
   return (
     <UncontrolledDropdown>
-      <DropdownToggle caret>
-        Data Filter
+      <DropdownToggle caret className="selected-cohort">
+        Cohort 1
       </DropdownToggle>
       <DropdownMenu>
-        <DropdownItem header>Filter Check-ins </DropdownItem>
-        <DropdownItem>On-time</DropdownItem>
-        <DropdownItem divider />
-        <DropdownItem>Late</DropdownItem>
+        <DropdownItem className="cohort-option">Cohort 1</DropdownItem>
+        <DropdownItem className="cohort-option">Cohort 2</DropdownItem>
+        <DropdownItem className="cohort-option">Cogort 3</DropdownItem>
       </DropdownMenu>
     </UncontrolledDropdown>
   );
