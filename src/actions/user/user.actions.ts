@@ -76,8 +76,6 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
         type: userTypes.COGNITO_SIGN_IN
       });
 
-      setLoading(true)(dispatch);
-
       initUser()(dispatch)
 
       // Reset token once every 50 minutes
@@ -93,12 +91,7 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
  * Get current login user info from the server
  */
 export const initUser = () => dispatch => {
-  dispatch({
-    payload: {
-      isLoading: true
-    },
-    type: loadingTypes.IS_LOADING
-  });
+  setLoading(true)(dispatch);
 
   userClient.getUserFromCognitoJwt()
   .then(response => {
@@ -114,12 +107,8 @@ export const initUser = () => dispatch => {
   .catch(error => {
     toast.warn("Jose server");
   })
-  dispatch({
-    payload: {
-      isLoading: false
-    },
-    type: loadingTypes.IS_LOADING
-  });
+  
+  setLoading(false)(dispatch);
 
   // Reset token once every 50 minutes
   window.setInterval(

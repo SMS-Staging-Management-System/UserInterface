@@ -18,10 +18,8 @@ export class DashboardComponent extends React.Component<IStateProps> {
   public renderRoleContent = () => {
     if(this.props.roles.includes("admin")) {
       return <ManagerContentComponent />  
-    } else if(this.props.roles.includes("associate")) {
-      return <></> // <AssociateContentComponent />
     } else {
-      return <></>
+      return <AssociateContentComponent />
     }
   }
 
