@@ -163,12 +163,14 @@ export const getCheckInByCohortId = ( cohortId:     number,
  * @param sCohort 
  */
 export const selectCohort = (sCohort: ICohort) => dispatch => {
-  dispatch({
-    payload: {
-      currentCohort: sCohort
-    },
-    type: managerTypes.SELECT_COHORT
-  });
+  setTimeout(() => {
+    dispatch({
+      payload: {
+        currentCohort: sCohort
+      },
+      type: managerTypes.SELECT_COHORT
+    });
+  }, 500);
   dispatch({
     payload: {
       isShowCohort: false

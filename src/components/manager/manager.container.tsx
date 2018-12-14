@@ -8,7 +8,8 @@ import { Button } from "reactstrap";
 
 
 export interface IState {
-  modal: boolean
+  modal: boolean,
+  collapse: boolean
 }
 
 /**
@@ -18,8 +19,16 @@ export class ContainerComponent extends React.Component<{},IState> {
   constructor(props) {
     super(props);
     this.state = {
+      collapse: true,
       modal: false
     };
+  }
+
+  public toggle = () => {
+    this.setState({ 
+      ...this.state,
+      collapse: !this.state.collapse 
+    });
   }
 
   public modalOn = () => {
@@ -65,12 +74,13 @@ export class ContainerComponent extends React.Component<{},IState> {
                 </Button>
               <div>
               </div>
-                <CohortTableComponent />
+                <CohortTableComponent toggle={this.toggle}/>
               </div>
+              </div>
+
               <div className="col-9 pr-0">
-                <CohortAssociatesComponent />
+                <CohortAssociatesComponent collapse={this.state.collapse}/>
               </div>
-            </div>
           </div>
           <CreateNewModalComponent
             toggle = {this.modalOn}
