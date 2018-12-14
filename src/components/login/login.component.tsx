@@ -69,17 +69,12 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
     }
 
     public onSuccess = (result: awsCognito.CognitoUserSession) => {
-
-        
-
         // console.log(userPool.getCurrentUser());
         // console.log(result.getIdToken().decodePayload())
         // const idtok: any = result.getIdToken();
         // console.log(idtok.payload['cognito:groups']) //payload has the user info on it
 
         // navigate pages now that we have successfully logged in
-        console.log("NAVIGATE TO NEW PAGE")
-
         // Call setup whenevr yo are ready for the app to go away from login page
         this.props.initUser();
     }
@@ -118,7 +113,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
         const movePassBox = (document.getElementById('pass') as HTMLElement);
         const usrBtn = (document.getElementById("userBut") as HTMLElement);
         const passBtn = (document.getElementById("passBut") as HTMLElement);
-        // console.log(event.target.value)
+
         if (event.target.value === "") {
             usrBtn.style.opacity = "1";
             passBtn.style.opacity = "0";
@@ -154,7 +149,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
     }
 
     public render() {
-        console.log(this.props.cogUser);
         return (
             <>
                 {!this.props.isFirstSignin &&
