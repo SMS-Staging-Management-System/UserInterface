@@ -2,41 +2,18 @@ import * as React from 'react';
 import '../../include/bootstrap';
 import '../../App.css';
 import profSrc from "../../assets/interns.png"
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
+import { IUser } from 'src/model/User.model';
 
 /**
  * User Profile Component.
  */
-interface IState {
-   city: string,
-   email: string,
-   firstname: string,
-   lastname: string,
-   password: string,
-   phone: string,
-   newPassword: string,
-   role: string,
-   selectState: string,
-   selectTz: string,
-   states: any,
-   tzs: any,
-   userId: number,
-   zipcode: string
-}
 
-interface IUser {
-   email: string,
-   fname: string,
-   lname: string,
-   phone: string,
-   tz: string,
-   city: string,
-   state: string,
-   role: string,
-   userId: number,
-   zip: string
-}
 
-export class UserProfileComponent extends React.Component<any, IState>{
+
+
+export class UserProfileComponent extends React.Component<any, {}>{
 
    constructor(props: any) {
       super(props);
@@ -58,23 +35,6 @@ export class UserProfileComponent extends React.Component<any, IState>{
       }
    }
 
-   public subUser = (e) => {
-      e.preventDefault()
-      const user: IUser = {
-         city: this.state.city,
-         email: this.state.email,
-         fname: this.state.firstname,
-         lname: this.state.lastname,
-         phone: this.state.phone,
-         role: this.state.role,
-         state: this.state.selectState,
-         tz: this.state.selectTz,
-         userId: this.state.userId,
-         zip: this.state.zipcode
-      }
-      console.log(user)
-      // store user in state store for axios call
-   }
 
    public zipChange = (e) => {
       this.setState({
@@ -298,7 +258,7 @@ export class UserProfileComponent extends React.Component<any, IState>{
                         <div className="form-group row">
                            <div className="col">
                               <label> Time Zone *</label>
-                              {this.state.tzs}
+                              {this.timeZoneBuilder}
                            </div>
                         </div>
                         <div className="form-group row">
@@ -310,7 +270,7 @@ export class UserProfileComponent extends React.Component<any, IState>{
                         <div className="form-group row">
                            <div className="col">
                               <label> State *</label>
-                              {this.state.states}
+                              {this.stateBuilder}
                            </div>
                         </div>
                         <div className="form-group row">
@@ -321,7 +281,7 @@ export class UserProfileComponent extends React.Component<any, IState>{
                         </div>
                      </div>
                      <div className="card-footer col-xs-12 text-center" id="reg-form-footer">
-                        <button type="submit" className="btn rev-btn submit-but" onClick={this.subUser}> Update </button>
+                        <button type="submit" className="btn rev-btn submit-but" > Update </button>
                      </div>
                   </div>
                </form>
@@ -330,3 +290,7 @@ export class UserProfileComponent extends React.Component<any, IState>{
       );
    }
 }
+
+const mapStateToProps = (state: IState) => (state.user)
+const mapDispatchToProps = {}
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfileComponent)
