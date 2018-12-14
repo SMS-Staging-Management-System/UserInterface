@@ -7,7 +7,6 @@ const FAKE_USER = { "city":       "Arlington",
                     "firstname":  "Blake",
                     "lastname":   "Kruppa",
                     "mobile":     "714-123-1234",
-                    "role" :      "associate",
                     "state":      "California", 
                     "timezone":   "+2", 
                     "userId":     1,
@@ -16,8 +15,9 @@ const FAKE_USER = { "city":       "Arlington",
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
-  login: true,
-  user:  FAKE_USER
+  isLogin: false,
+  roles:  [],
+  user:   FAKE_USER
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -31,15 +31,23 @@ export const userReducer = (state = initialState, action: any) => {
       toast.success("Login");
       return {
         ...state,
-        login:  action.payload.login,
+        isLogin:  action.payload.isLogin,
         user:   action.payload.user
+      }
+    case userTypes.SET_ROLE:
+      return {
+        ...state,
+        role: action.payload.role
       }
     case userTypes.LOGOUT:
       toast.success("Log out");
       return {
         ...state,
-        login: false,
-        user:  null
+        cogUser: null,
+        isFirstSignin: false,
+        isLogin: false,
+        roles:  [],
+        user:   null
       }
     case userTypes.COGNITO_SIGN_IN:
       return {

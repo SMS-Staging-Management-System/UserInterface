@@ -1,27 +1,28 @@
 import { axiosClient } from '../axiosClient';
-import { RegisterDto } from '../../model/Register.model';
 import { IUser } from 'src/model/User.model';
+import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 
 /**
- * 
- * @param registerDto Return promise to register user
- * @param token 
+ * Get the current login user with the jwt token from cognito
  */
-export const register = (registerDto: RegisterDto) => {
-  return axiosClient.post(`/users`, registerDto);
-}
-
-export const login = (username: string, password: string) => {
-  // using cognito login now
-  console.log("error");
+export const getUserByJwtToken = () => {
+  return axiosClient.get(`/users`);
 }
 
 /**
  * Return promise to get user info from server
  */
-export const getUserFromCognito = () => {
+export const getUserFromCognitoJwt = () => {
   return axiosClient.get(`/users/info`);
 }
+
+/**
+ * Return promise to create a user
+ */
+export const postUser = (user: IUserCreateDto) => {
+  return axiosClient.post(`/users`, user);
+}
+
 
 /**
  * Return promise to get user info from server
