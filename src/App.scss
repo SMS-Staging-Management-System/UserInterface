@@ -375,6 +375,33 @@ body {
   cursor: pointer;
 }
 
+
+#nav-tab .nav-t {
+  text-transform: capitalize;
+  
+	color: $drew-orange;
+	transition: background-color .2s, color .2s;
+	
+  &:hover,
+  &:focus
+	{
+		background-color: $drew-orange;
+		color: #fff;
+  }
+ 
+}
+
+#nav-tab a.active{
+  background-color: $drew-orange;
+  border-bottom: $drew-orange;
+	color: #fff;
+}
+
+#nav-tab {
+  border-bottom: 1px solid $drew-orange;
+}
+
+
 /*****************************
   Clicker
 *****************************/
@@ -434,6 +461,52 @@ Manager Content
   width: 90%;
 }
 
+.selected-cohort{
+  background-color: $drew-orange;
+  color: white;
+  &:hover{
+    background-color: white;
+    color: $drew-orange;
+  }
+  &:active{
+    background-color: white;
+    color: $drew-orange;
+  }
+  &:focus{
+    background-color: white;
+    color: $drew-orange;
+  }
+
+}
+
+.filter-div{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: -13px;
+}
+
+.cohort-option{
+  background-color: white;
+  color: $drew-orange;
+  &:hover{
+    background-color: $drew-orange;
+    color: white;
+  }
+}
+
+.comment-addon {
+  background-color: $drew-orange;
+  color: white;
+}
+
+.pagination-link {
+  color: white;
+  background-color: $drew-orange;
+  &:hover{
+    background-color: white;
+    color: $drew-orange;
+  }
+}
 .page-numbers {
   display: flex;
   justify-content: flex-end;
@@ -456,7 +529,8 @@ Manager Content
 
 .checkin-table-header {
   text-align: center;
-  background-color: #fad2ac;
+  background-color: $drew-orange;
+  color: white;
 }
 
 .daily-tasks-header{
@@ -472,6 +546,27 @@ Manager Content
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color:#f0cdad;
 }
+
+#hr-tag {
+  background-color: $drew-orange;
+  margin-bottom: -1px;
+}
+
+#pop-hr{
+  margin-bottom: -5px;
+  margin-top: -5px;
+}
+
+#man-search {
+  border: 1px solid $drew-orange;
+  border-radius: 10px;
+  padding-left: 5px;
+  &::placeholder{
+    text-align: center
+  }
+}
+
+
 /*******************************************
   loading.component.tsx
 *******************************************/

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { InputGroup, InputGroupAddon, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Input, InputGroupText } from 'reactstrap';
 /*
   *The manager's comment component
 */
@@ -11,15 +11,16 @@ interface IProps {
   modalOff: () => void
 }
 export class ManagerCommentComponent extends React.Component<IProps, {}> {
+  
   public render() {
     return (
       <>
         <div>
-        <Modal isOpen={this.props.modal} className="manager-comments">
+        <Modal on isOpen={this.props.modal} className="manager-comments">
           <ModalHeader>Leave a comment for {this.props.firstName}</ModalHeader>
           <ModalBody>
           <InputGroup>
-            <InputGroupAddon addonType="prepend">Comment: </InputGroupAddon>
+            <InputGroupAddon addonType="prepend"><InputGroupText className="comment-addon">Comment:</InputGroupText></InputGroupAddon>
             <Input placeholder="note to associate" />
           </InputGroup>
           </ModalBody>

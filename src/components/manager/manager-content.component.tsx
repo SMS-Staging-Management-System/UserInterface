@@ -10,7 +10,7 @@ export class ManagerContentComponent extends React.Component {
        <div>
           <h4>SMS Manager Dashboard <ClockComponent/></h4>
         </div>
-        <hr/>
+       <hr id="hr-tag"></hr>
         <div>
           <ContainerComponent/>
         </div>
