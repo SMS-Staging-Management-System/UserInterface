@@ -65,8 +65,12 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
   public render() {
     const sRenderCollapse = this.renderCollapse();
     return (
-      <Navbar color="light" light expand="md">
+      <Navbar 
+        className="flex-package"
+        color="light" 
+        light expand="md">
         <NavbarBrand
+          className="cursor-hover"
           onClick={() => this.props.changePage('home')}
           >
             <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
