@@ -28,6 +28,11 @@ $drew-orange: #f3a55d;
   cursor: pointer;
 }
 
+.flex-package {
+  display:    flex;
+  flex-shrink: 0;
+}
+
 /************************************
           App.ts
 ************************************/
@@ -292,8 +297,10 @@ body {
 #main-content-container {
   @include flex-col;
   flex-grow: 1;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  padding: 5vh 5vw;
 }
 
 .rev-btn {
@@ -616,33 +623,52 @@ Manager Content
 /*******************************************
   associates-row.component.tsx
 *******************************************/
+#associate-content-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 #associate-row-container {
   display: block;
   padding: 16px;
-  margin-right: 0;
-  margin-left: 0;
-  width: 1100px;
+  margin: 0;
+  width: 100%;
   background-color: white;
-}
-
-#associate-header {
-    width: 300px;
-}
-
-#associate-content-top {
-  position: absolute;
-  top: 100px;
-}
-
-#associate-content-header {
-  padding: 8px;
-  display: flex;
 }
 
 #associate-content {
   display: flex;
   justify-content: space-between;
   background-color: white;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+#associate-header {
+  width: 300px;
+}
+
+#clock {
+  margin: 0;
+}
+
+#associate-content-title {
+  display: flex;
+  margin: auto 1em;
+}
+
+#associate-content-header {
+  margin: auto 1em;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+#associate-content-main {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 #associate-button {
@@ -677,8 +703,8 @@ Manager Content
 }
 
 #btn-right {
-  text-align: right;
-  padding: 8px;
+  position: relative;
+  margin: 0.5em 1em;
 }
 
 #text-area{
