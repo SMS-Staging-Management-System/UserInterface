@@ -69,6 +69,7 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
     },
     onSuccess: (result: awsCognito.CognitoUserSession) => {
       const roles = result.getIdToken().payload['cognito:groups'];
+      
       // Set cognito jwt to header
       axiosClient.addCognitoToHeader(result.getIdToken().getJwtToken());
       dispatch({
@@ -84,7 +85,7 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
 
       // Reset token once every 50 minutes
       window.setInterval(
-        refreshCognitoSession()
+        () => refreshCognitoSession()(dispatch)
       , 3000000);
       }
   });

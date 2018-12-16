@@ -18,11 +18,19 @@ interface IStateProps {
 export class DashboardComponent extends React.Component<IStateProps> {
 
   public renderRoleContent = () => {
+    console.log(this.props.roles)
     if(this.props.page === 'home') {
-      if(this.props.roles.includes('admin')) {
-        return <ManagerContentComponent />  
-      } else {
+      if(this.props.roles === undefined) {
         return <AssociateContentComponent />
+      }
+      else if(this.props.roles.includes('admin')) {
+        return <ManagerContentComponent />  
+      } 
+      else if(this.props.roles.includes('staging-manager')) {
+        return <ManagerContentComponent />  
+      } 
+      else {
+        return <></>
       }
     } else if (this.props.page === 'profile') {
       return <UserProfileComponent />

@@ -124,9 +124,9 @@ const FAKE_CURRENT_COHORT = {
 }
 
 const initialState: IManagerState = {
-  checkIns: [],
-  cohorts:  FAKE_COHORTS,
-  currentCheckIns: [],
+  associates: [],
+  checkIns:   [],
+  cohorts:    FAKE_COHORTS,
   currentCohort: FAKE_CURRENT_COHORT,
   isShowCohort: false
 }

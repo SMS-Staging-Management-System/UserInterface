@@ -88,8 +88,8 @@ export const submitCheckInComment = (comment: string, checkInId: number) => {
  * @param ?toDate 
  * @param ?checkInList 
  */
-export const getCheckIn = (fromDate: Date, toDate: Date) => dispatch => {
-  checkInClient.getCheckIn(fromDate, toDate)
+export const getAllCheckIn = (fromDate: number, toDate: number) => dispatch => {
+  checkInClient.getAllCheckIn(fromDate, toDate)
   .then(response => {
     const checkinList = response.data.result.map(checkin => {
       return checkin as ICheckIn;
@@ -112,7 +112,7 @@ export const getCheckIn = (fromDate: Date, toDate: Date) => dispatch => {
  * @param fromDate 
  * @param toDate 
  */
-export const getCheckInByUserId = (userId: number, fromDate: Date, toDate: Date) => (dispatch) => {
+export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => (dispatch) => {
   checkInClient.getCheckInByUserId(userId, fromDate, toDate)
   .then(response => {
     const checkinList = response.data.result.map(checkin => {
@@ -137,8 +137,8 @@ export const getCheckInByUserId = (userId: number, fromDate: Date, toDate: Date)
  * @param cohortList 
  */
 export const getCheckInByCohortId = ( cohortId:     number,
-                                      fromDate:     Date, 
-                                      toDate:       Date
+                                      fromDate:     number, 
+                                      toDate:       number
                                       ) => dispatch => {
 
   checkInClient.getCheckInByCohortId(cohortId, fromDate, toDate)
@@ -182,5 +182,22 @@ export const selectCohort = (sCohort: ICohort) => dispatch => {
       },
       type: managerTypes.SET_SHOW_COHORT
     });
-  }, 700);
+  }, 50);
+}
+
+/**
+ * Get a list of check ins to be render base on criterias
+ * @param cohortId 
+ * @param userId 
+ * @param fromDate 
+ * @param toDate 
+ */
+export const managerGetCheckIns = (cohortId: number, userId: number, fromDate: number, toDate:   number) => dispatch => {
+  if(userId === 0) {
+    if(cohortId === 0) {
+      getAllCheckIn(fromDate, toDate)(dispatch);
+    } else {
+      getCheckInByCohortId(cohortId, fromDate, toDate)(dispatch);
+    }
+  }
 }
