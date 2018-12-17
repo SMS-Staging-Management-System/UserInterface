@@ -20,9 +20,9 @@ export const managerReducer = (state = initialState, action: any) => {
         ...state,
         checkIns
       }
-    case managerTypes.ADD_COHORTS:
+    case managerTypes.ADD_COHORT:
       let cohorts = state.cohorts;
-      cohorts += action.payload.cohorts;
+      cohorts += action.payload.cohort;
       toast.success("Cohort added");
       return {
         ...state,
