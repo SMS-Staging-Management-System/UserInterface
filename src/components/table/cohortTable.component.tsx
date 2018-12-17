@@ -36,7 +36,7 @@ export class CohortTableComponent extends React.Component<IProps, IStateComponen
   public render() {
     return (
       <>
-        <Table bordered hover>
+        <Table bordered hover className="man-table">
           <CohortTableHeaderComponent/>
           <tbody>
 
