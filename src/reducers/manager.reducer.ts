@@ -35,9 +35,9 @@ export const managerReducer = (state = initialState, action: any) => {
     case managerTypes.SET_COHORT_LIST:
       return {
         ...state,
-        cohorts: action.payload.cohorts
+        currentCohort: action.payload.currentCohort
       }
-    case managerTypes.SELECT_COHORT:
+    case managerTypes.SET_SHOW_COHORT:
       return {
         ...state,
         cohorts: action.payload.cohorts
