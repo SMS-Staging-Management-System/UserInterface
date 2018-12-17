@@ -5,12 +5,13 @@ import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { IUser } from 'src/model/User.model';
+import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
 
 export const managerTypes = {
   ADD_CHECK_INS:    'ADD_CHECK_INS',
   ADD_COHORT:       'ADD_COHORT',
   SELECT_COHORT:    'SELECT_COHORT',
-  SET_CHECK_IN_COMMENT: "SET_CHECK_IN_COMMENT",
+  SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
   SET_CHECK_IN_LIST:  'SET_CHECK_IN_LIST',
   SET_COHORT_LIST:    'SET_COHORT_LIST',
   SET_SHOW_COHORT:  'SET_SHOW_COHORT',
@@ -20,21 +21,10 @@ export const managerTypes = {
  * Set up manager list of classes and check-ins
  */
 export const managerInit = () => (dispatch) => {
-  checkInClient.getManagerCheckInToday()
-  .then(response => {
-    const checkInList = response.data.map(checkIn => {
-      return checkIn as ICheckIn;
-    })
-    dispatch({
-      payload: {
-        checkIns:  checkInList
-      },
-      type: managerTypes.SET_CHECK_IN_LIST
-    });
-  })
-  .catch(error => {
-    console.log(error);
-  })
+  const fromDate = getTodayStart();
+  const toDate = getTodayEnd();
+
+  getAllCheckIn(fromDate, toDate);
 
   cohortClient.getManagerCohorts()
   .then(response => {
@@ -85,14 +75,14 @@ export const managerPostComment = (comment: string, checkInId: number) => {
 
 /**
  * Set the current list of render check ins
- * @param fromDate 
+ * @param ?fromDate 
  * @param ?toDate 
  * @param ?checkInList 
  */
 export const getAllCheckIn = (fromDate: number, toDate: number) => dispatch => {
   checkInClient.getAllCheckIn(fromDate, toDate)
   .then(response => {
-    const checkinList = response.data.result.map(checkin => {
+    const checkinList = response.data.map(checkin => {
       return checkin as ICheckIn;
     })
     dispatch({
@@ -116,7 +106,7 @@ export const getAllCheckIn = (fromDate: number, toDate: number) => dispatch => {
 export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => (dispatch) => {
   checkInClient.getCheckInByUserId(userId, fromDate, toDate)
   .then(response => {
-    const checkinList = response.data.result.map(checkin => {
+    const checkinList = response.data.map(checkin => {
       return checkin as ICheckIn;
     })
     dispatch({
@@ -144,7 +134,7 @@ export const getCheckInByCohortId = ( cohortId:     number,
 
   checkInClient.getCheckInByCohortId(cohortId, fromDate, toDate)
   .then(response => {
-    const checkinList = response.data.result.map(checkin => {
+    const checkinList = response.data.map(checkin => {
       return checkin as ICheckIn;
     })
     dispatch({
@@ -202,6 +192,8 @@ export const managerGetCheckIns = (cohortId: number, userId: number, fromDate: n
     } else {
       getCheckInByCohortId(cohortId, fromDate, toDate)(dispatch);
     }
+  } else {
+    getCheckInByUserId(userId, fromDate, toDate);
   }
 }
 
