@@ -14,11 +14,11 @@ export interface IProps {
   modal: boolean
   toggle: (name: string) => void
   modalOff: () => void
-  managerPostCohort: () => void
+  managerPostCohort: (cohortName: string, cohortDescription: string, userList: IUserCreateDto[]) => void
 }
 
 interface IComponentState {
-  cohortEmail: any
+  cohortName: any
   cohortDescription: any
   fileReader: any
   fileContent: any
@@ -32,15 +32,12 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
 
     this.state = {
       cohortDescription: '',
-      cohortEmail: '',
+      cohortName: '',
       displayTable: false,
       fileContent: [],
       fileReader: {
       },
     }
-
-    this.handleChange = this.handleChange.bind(this);
-
   }
 
   public handleFileRead = (e) => {
@@ -65,35 +62,28 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
       ...this.state,
       displayTable: true,
       fileContent: userArray,
-
     })
   }
 
   public handleSubmit = (e: any) => {
-
     const listOfUsers = this.state.fileContent.map((user) => {
       return user as IUserCreateDto
     });
 
-    listOfUsers.push(this.state.cohortEmail);
+    listOfUsers.push(this.state.cohortName);
     listOfUsers.push(this.state.cohortDescription);
 
-    console.log(listOfUsers);
-    // this.props.managerPostCohort(this.state)
-
+    this.props.managerPostCohort(this.state.cohortName, this.state.cohortDescription, listOfUsers);
   }
-  public handleCohortEmail = (e: any) => {
-    this.setState({
-      ...this.state,
-      cohortEmail: e.target.value
 
+  public handlecohortName = (e: any) => {
+    this.setState({
+      cohortName: e.target.value
     });
   }
   public handleCohortDescription = (e: any) => {
     this.setState({
-      ...this.state,
       cohortDescription: e.target.value
-
     });
   }
 
@@ -110,7 +100,6 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
   }
 
   public tableDrawer = () => {
-
     const mapContent = this.state.fileContent.map((user, index) => {
       return (
         <tr key={index}>
@@ -125,13 +114,10 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
     return mapContent;
   }
 
-
   public render() {
-
     const renderTable = this.tableDrawer();
 
     return (
-
       <>
         <div>
           <Modal isOpen={this.props.modal} className="manager-comments">
@@ -142,8 +128,8 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
                   <FormGroup>
                     <Label for="cohort-name">Cohort Name</Label>
                     <Input type="text" name="cohort-name" id="cohort-name" placeholder="Name"
-                      value={this.state.cohortEmail}
-                      onChange={this.handleCohortEmail.bind(this)} />
+                      value={this.state.cohortName}
+                      onChange={this.handlecohortName.bind(this)} />
                   </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -160,9 +146,8 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
                 <button className="btn-cohort"> Upload File</button>
                 <input type="file" onChange={(e) => this.handleChange(e.target.files)} />
                 <div>
-                  <small> .csv files only</small>
+                  <small> .csv files </small>
                 </div>
-
               </div>
               <div className="mt-3">
                 <Table bordered className="table table-sm">
@@ -190,7 +175,6 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
           </Modal>
         </div>
       </>
-
     );
   }
 }
