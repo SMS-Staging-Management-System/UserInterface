@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { IState } from '../../reducers/index';
+import ManagerCommentComponent from './manager-comment.component';
+import ManagerDailyTasksComponent from './manager-daily-tasks-component';
+import { IState } from '../../../reducers/index';
 import { connect } from 'react-redux';
-import * as associateActions from '../../actions/associate/associate.actions'
-import { ICheckIn } from '../../model/CheckIn.model';
-import time from '../../include/time';
-import AssociateDailyTasksComponent from './associate-daily-tasks.component';
+import * as managerActions from '../../../actions/manager/manager.actions';
+import { ICheckIn } from '../../../model/CheckIn.model';
+import time from '../../../include/time'
 
 /*
   *The check-in row component
@@ -22,7 +23,7 @@ interface IProps {
   pageNumber: number,
   checkIns: ICheckIn[]
 }
-export class AssociateRowComponent extends React.Component<IProps, IComponentState> {
+export class CheckInRowManagerComponent extends React.Component<IProps, IComponentState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -110,19 +111,26 @@ export class AssociateRowComponent extends React.Component<IProps, IComponentSta
         {rows}
         { this.state.modal === false && 
           this.state.checkinId !== null &&
-          <AssociateDailyTasksComponent
-            comment={this.state.description}
+          <ManagerDailyTasksComponent
+            comment={this.state.managerComment}
             description={this.state.description}
             checkinId={this.state.checkinId}
             show={this.state.popover} />
         }
+        {/* Modal for manager comments */}
+        <ManagerCommentComponent
+          checkinId={this.state.checkinId}
+          toggle={this.getName}
+          modal={this.state.modal}
+          firstName={this.state.firstName}
+          modalOff={this.modalOff} />
       </>
     );
   }
 }
 
-const mapStateToProps = (state: IState) => (state.associate)
+const mapStateToProps = (state: IState) => (state.manager)
 const mapDispatchToProps = {
-  ...associateActions
+  ...managerActions
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AssociateRowComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(CheckInRowManagerComponent)

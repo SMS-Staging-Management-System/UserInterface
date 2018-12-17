@@ -17,13 +17,15 @@ export interface IUserState {
   isFirstSignin: boolean,
   isLogin:  boolean,
   user:     IUser,
+  page:     string,
   roles:    string[]
 }
 
 export interface IManagerState {
+  associates:       IUser[],
   cohorts:          ICohort[],
+  comment:          string,
   checkIns:         ICheckIn[],
-  currentCheckIns:  ICheckIn[],
   currentCohort:    ICohort,
   isShowCohort:     boolean
 }

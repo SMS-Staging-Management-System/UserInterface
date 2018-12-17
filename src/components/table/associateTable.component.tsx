@@ -20,9 +20,13 @@ export class AssociateTableComponent extends React.Component<IProps> {
       <>
         <Table className="table table-bordered">
         <AssociatesTableHeaderComponent />
-
           <tbody>
-            {this.props.currentCohort.userList.map(user => <AssociatesRowComponent key={user.userId} user={user}/>)}
+            {
+              this.props.currentCohort ?
+                this.props.currentCohort.userList.map(user => 
+                  <AssociatesRowComponent key={user.userId} user={user}/>)
+                : <></>
+            }
           </tbody>
         </Table>
       </>
