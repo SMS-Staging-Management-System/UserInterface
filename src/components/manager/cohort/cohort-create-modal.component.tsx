@@ -124,7 +124,7 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
             <ModalHeader>Create New Cohort</ModalHeader>
             <ModalBody className="">
               <Row form>
-                <Col md={6}>
+                <Col xs={12}>
                   <FormGroup>
                     <Label for="cohort-name">Cohort Name</Label>
                     <Input type="text" name="cohort-name" id="cohort-name" placeholder="Name"
@@ -132,7 +132,7 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
                       onChange={this.handlecohortName.bind(this)} />
                   </FormGroup>
                 </Col>
-                <Col md={6}>
+                <Col xs={12}>
                   <FormGroup>
                     <Label for="cohort-description">Cohort Description</Label>
                     <Input type="textarea" name="cohort-description" id="cohort-description"
