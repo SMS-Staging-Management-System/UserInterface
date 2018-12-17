@@ -40,6 +40,7 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
   }
 
   public renderCollapse = () => {
+    console.log(this.props)
     if(this.props.isLogin && (this.props.user !== null)) {
       return	<UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>

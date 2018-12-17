@@ -59,6 +59,11 @@ export const userReducer = (state = initialState, action: any) => {
         cogUser:  action.payload.cogUser,
         isFirstSignin: true
       }
+    case userTypes.USER_INIT:
+      return {
+        ...state,
+        user:  action.payload.user
+      }
   }
   return state;
 }

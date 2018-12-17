@@ -15,6 +15,7 @@ export const initUser = (dispatch) => {
   
   userClient.getUserFromCognitoJwt()
   .then(response => {
+    console.log(response)
     dispatch({
       payload: {
         user:  response.data as IUser
