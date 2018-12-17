@@ -2,133 +2,12 @@ import { managerTypes } from '../actions/manager/manager.actions';
 import { IManagerState } from '.';
 import { toast } from "react-toastify";
 
-const FAKE_COHORTS = [
-  {
-  "cohortId"	: 1,
-	"name"	: "1810",
-	"userList": [
-		{
-      "city"  :     "Arlington",
-      "email"	: "Blake@Revature",
-      "firstname"	: "Blake",
-      "lastname"	: "Blake",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 1,
-      "zip":      "76013"
-    },
-    {
-      "city"  :     "Arlington",
-      "email"	: "Calvin@Revature",
-      "firstname"	: "Calvin",
-      "lastname"	: "Calvin",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 2,
-      "zip":      "76013"
-    },
-    {
-      "city"  :     "Arlington",
-      "email"	: "Drew@Revature",
-      "firstname"	: "Drew",
-      "lastname"	: "Drew",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 3,
-      "zip":      "76013"
-    }
-    
-	]
-},
-{
-  "cohortId"	: 2,
-	"name"	: "5000",
-	"userList": [
-		{
-      "city"  :     "Arlington",
-      "email"	: "James@Revature",
-      "firstname"	: "James",
-      "lastname"	: "James",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 1,
-      "zip":      "76013"
-    },
-    {
-      "city"  :     "Arlington",
-      "email"	: "Nigel@Revature",
-      "firstname"	: "Nigel",
-      "lastname"	: "Nigel",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 2,
-      "zip":      "76013"
-    }
-    
-	]
-}
-]
-
-const FAKE_CURRENT_COHORT = {
-  "cohortId"	: 1,
-	"name"	: "1810",
-	"userList": [
-		{
-      "city"  :     "Arlington",
-      "email"	: "Blake@Revature",
-      "firstname"	: "Blake",
-      "lastname"	: "Blake",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 1,
-      "zip":      "76013"
-    },
-    {
-      "city"  :     "Arlington",
-      "email"	: "Calvin@Revature",
-      "firstname"	: "Calvin",
-      "lastname"	: "Calvin",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 2,
-      "zip":      "76013"
-    },
-    {
-      "city"  :     "Arlington",
-      "email"	:     "Drew@Revature",
-      "firstname"	: "Drew",
-      "lastname"	: "Drew",
-      "mobile"    : "12312313",
-      "role"		: "associate",
-      "state":      "Texas", 
-      "timezone":  "-2",
-      "userId"	: 3,
-      "zip":      "76013"
-    }
-    
-	]
-}
-
 const initialState: IManagerState = {
   associates: [],
   checkIns:   [],
-  cohorts:    FAKE_COHORTS,
-  currentCohort: FAKE_CURRENT_COHORT,
-  isShowCohort: false
+  cohorts:    [],
+  currentCohort:  null,
+  isShowCohort:   false
 }
 
 export const managerReducer = (state = initialState, action: any) => {
@@ -148,17 +27,22 @@ export const managerReducer = (state = initialState, action: any) => {
         ...state,
         cohorts
       }
-    case managerTypes.FILTER_CHECK_IN_LIST:
+    case managerTypes.SET_CHECK_IN_LIST:
       return {
         ...state,
         checkIns: action.payload.checkIns
+      }
+    case managerTypes.SET_COHORT_LIST:
+      return {
+        ...state,
+        cohorts: action.payload.cohorts
       }
     case managerTypes.SELECT_COHORT:
       return {
         ...state,
         cohorts: action.payload.cohorts
       }
-    case managerTypes.SELECT_COHORT:
+    case managerTypes.SET_SHOW_COHORT:
       return {
         ...state,
         isShowCohort: action.payload.isShowCohort

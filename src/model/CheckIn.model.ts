@@ -1,7 +1,9 @@
 export interface ICheckIn {
-  checkInId:   number;
-  userId:      number;
-  submitTime:  number;
-  description: string;
-  managerComments: string;
+  checkinId:    number;
+  userId:       number;
+  firstName:    string;
+  lastName:     string;
+  dateSubmitted:        number;
+  checkinDescription:   string;
+  managerComments:      string;
 }
