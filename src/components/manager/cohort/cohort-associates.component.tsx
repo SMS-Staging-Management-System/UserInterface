@@ -19,7 +19,7 @@ export class CohortAssociatesComponent extends React.Component<IProps> {
   public render() {
     return (
       <>
-        <Button className="my-2">Add Associate</Button>
+        <Button className="mb-2">Add Associate</Button>
 
         <Collapse isOpen={this.props.collapse}>
           {/* <Card>
