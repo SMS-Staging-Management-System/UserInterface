@@ -6,6 +6,7 @@ const initialState: IManagerState = {
   associates: [],
   checkIns:   [],
   cohorts:    [],
+  comment:    '',
   currentCohort:  null,
   isShowCohort:   false
 }
@@ -27,6 +28,11 @@ export const managerReducer = (state = initialState, action: any) => {
         ...state,
         cohorts
       }
+    case managerTypes.SET_CHECK_IN_COMMENT:
+      return {
+        ...state,
+        comment: action.payload.comment
+      }
     case managerTypes.SET_CHECK_IN_LIST:
       return {
         ...state,
@@ -35,12 +41,13 @@ export const managerReducer = (state = initialState, action: any) => {
     case managerTypes.SET_COHORT_LIST:
       return {
         ...state,
+        cohorts: action.payload.cohorts,
         currentCohort: action.payload.currentCohort
       }
-    case managerTypes.SET_SHOW_COHORT:
+    case managerTypes.SELECT_COHORT:
       return {
         ...state,
-        cohorts: action.payload.cohorts
+        currentCohort: action.payload.currentCohort
       }
     case managerTypes.SET_SHOW_COHORT:
       return {

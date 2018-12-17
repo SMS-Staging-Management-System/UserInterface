@@ -10,9 +10,10 @@ export const managerTypes = {
   ADD_CHECK_INS:    'ADD_CHECK_INS',
   ADD_COHORT:       'ADD_COHORT',
   SELECT_COHORT:    'SELECT_COHORT',
+  SET_CHECK_IN_COMMENT: "SET_CHECK_IN_COMMENT",
   SET_CHECK_IN_LIST:  'SET_CHECK_IN_LIST',
   SET_COHORT_LIST:    'SET_COHORT_LIST',
-  SET_SHOW_COHORT:  'SET_SHOW_COHORT'
+  SET_SHOW_COHORT:  'SET_SHOW_COHORT',
 }
 
 /**
@@ -21,7 +22,6 @@ export const managerTypes = {
 export const managerInit = () => (dispatch) => {
   checkInClient.getManagerCheckInToday()
   .then(response => {
-    console.log(response)
     const checkInList = response.data.map(checkIn => {
       return checkIn as ICheckIn;
     })
