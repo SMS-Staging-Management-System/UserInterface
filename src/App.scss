@@ -466,6 +466,53 @@ Manager Content
   width: 100%;
 }
 
+.sel-box{
+  float: left;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.filter-button{
+  transition: box-shadow 0.5s;
+  background: none;
+  border: none;
+  color: $drew-orange;
+  font: inherit;
+  max-height: 40px;
+ // margin: 0.5em;
+ // padding: 1em 2em;;
+  cursor: pointer;
+  &:hover, &:focus {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+  }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--hover); }
+}
+
+.div-filter {
+  margin-top: 5px;
+}
+
+.filter-wrapper {
+  padding-top: 20px;
+}
+
+.head-divider{
+  padding-left: 10px;
+  padding-right: 10px;
+  color: $drew-orange;
+}
+.v-center{
+  margin: 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 .selected-cohort{
   background-color: $drew-orange;
   color: white;
@@ -482,6 +529,10 @@ Manager Content
     color: $drew-orange;
   }
 
+}
+
+.sel-elem{
+  max-width: 200px;
 }
 
 .filter-div{
