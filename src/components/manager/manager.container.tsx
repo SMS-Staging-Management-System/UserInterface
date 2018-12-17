@@ -3,7 +3,7 @@ import { ManagerCheckinTableComponent } from '../table/manager-checkin-table.com
 import CohortTableComponent from '../table/cohortTable.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
 import ManagerCheckinFilterComponent from '../table/manager-checkin-filter.component';
-import { CreateNewModalComponent } from './cohort/cohort-create-modal.component';
+import CreateNewModalComponent from './cohort/cohort-create-modal.component';
 import { Button, Input } from "reactstrap";
 
 
@@ -25,9 +25,9 @@ export class ContainerComponent extends React.Component<{}, IState> {
   }
 
   public toggle = () => {
-    this.setState({ 
+    this.setState({
       ...this.state,
-      collapse: !this.state.collapse 
+      collapse: !this.state.collapse
     });
   }
 
@@ -87,20 +87,20 @@ export class ContainerComponent extends React.Component<{}, IState> {
                     onClick={this.modalOn}
                   >New Cohort
                 </Button>
-              </div>
-              <div>
-                <CohortTableComponent toggle={this.toggle}/>
-              </div>
+                </div>
+                <div>
+                  <CohortTableComponent toggle={this.toggle} />
+                </div>
               </div>
 
               <div className="col-9 pr-0">
-                <CohortAssociatesComponent collapse={this.state.collapse}/>
+                <CohortAssociatesComponent collapse={this.state.collapse} />
               </div>
-          </div>
-          <CreateNewModalComponent
-            toggle = {this.modalOn}
-            modal = {this.state.modal}
-            modalOff = {this.modalOff}/>
+            </div>
+            <CreateNewModalComponent
+              toggle={this.modalOn}
+              modal={this.state.modal}
+              modalOff={this.modalOff} />
           </div>
         </div>
       </>
