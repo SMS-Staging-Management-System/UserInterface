@@ -54,7 +54,7 @@ export class CohortRowComponent extends React.Component<
     return (
       <>
         <tr
-          className={"cursor-hover " + (this.props.selected ? "orange" : "")}
+          className={"cursor-hover " + (this.props.selected ? "cohort-row-selected" : "")}
           id={`cohort-row-${this.props.cohort.cohortId}`}
           onClick={() => this.handleClick()}
         >
