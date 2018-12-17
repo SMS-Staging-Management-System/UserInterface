@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -23,6 +22,7 @@ interface IComponentState {
 interface IComponentProps {
   isLogin: boolean,
   user:  IUser,
+  changePage: (page: string) => {void},
   logout: () => {void}
 }
 class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> {
@@ -40,13 +40,16 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
   }
 
   public renderCollapse = () => {
+    console.log(this.props)
     if(this.props.isLogin && (this.props.user !== null)) {
       return	<UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   {this.props.user.email}
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem className="cursor-hover">
+                  <DropdownItem 
+                    className="cursor-hover"
+                    onClick={() => this.props.changePage('profile')}>
                     Profile
                   </DropdownItem>
                   <DropdownItem divider />
@@ -63,11 +66,15 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
   public render() {
     const sRenderCollapse = this.renderCollapse();
     return (
-      <Navbar color="light" light expand="md">
-        <NavbarBrand>
-          <Link to="/" className="unset-anchor">
+      <Navbar 
+        className="flex-package"
+        color="light" 
+        light expand="md">
+        <NavbarBrand
+          className="cursor-hover"
+          onClick={() => this.props.changePage('home')}
+          >
             <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
-          </Link>
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>

@@ -1,36 +1,41 @@
 import * as React from 'react';
 import ManagerCommentComponent from './manager-comment.component';
 import ManagerDailyTasksComponent from './manager-daily-tasks-component';
-import {FAKE_CHECK_IN_DATA} from '../../../include/fake';
+import { IState } from '../../../reducers/index';
+import { connect } from 'react-redux';
+import * as managerActions from '../../../actions/manager/manager.actions';
+import { ICheckIn } from '../../../model/CheckIn.model';
+
 /*
   *The check-in row component
 */
-export interface IState {
+export interface IComponentState {
   popover: boolean
   modal: boolean
   firstName: string
   description: string
   managerComment: string
-  userId: number
+  checkinId: number
 }
 
 interface IProps {
-  pageNumber: number
+  pageNumber: number,
+  checkIns: ICheckIn[]
 }
-export class CheckInRowManagerComponent extends React.Component<IProps, IState> {
+export class CheckInRowManagerComponent extends React.Component<IProps, IComponentState> {
   constructor(props) {
     super(props);
     this.state = {
+      checkinId: null,
       description: '',
       firstName: '',
       managerComment: '',
       modal: false,
-      popover: false,
-      userId: 1
+      popover: false
     };
   }
   // get name to pass name to the comment component
-  public getName = (name:string) => {
+  public getName = (name: string) => {
     this.setState({
       ...this.state,
       firstName: name,
@@ -39,23 +44,24 @@ export class CheckInRowManagerComponent extends React.Component<IProps, IState> 
     });
   }
   // get associate's daily tasks to pass to popover
-  public tasks = (id:number, dailyTasks:string, comment:string) => {
+  public tasks = (id: number, dailyTasks: string, comment: string) => {
     this.setState({
       ...this.state,
+      checkinId: id,
       description: dailyTasks,
       managerComment: comment,
-      popover: true,
-      userId: id
+      popover: true
     })
   }
   // hide associates tasks on new mouseover
   public hide = () => {
     this.setState({
       ...this.state,
-      popover: false,
-      userId: 1
+      checkinId: null,
+      popover: false
     })
   }
+
   // disable modal on cancel or submit
   public modalOff = () => {
     this.setState({
@@ -63,55 +69,65 @@ export class CheckInRowManagerComponent extends React.Component<IProps, IState> 
       modal: false
     })
   }
-  public render() {
-    // create index for pagination
-    const LAST_INDEX = (this.props.pageNumber * 10) - 1
-    const FIRST_INDEX = LAST_INDEX - 9
-    return (
-      <>
-        {/* Map data from database into the check-in table */}
-        {FAKE_CHECK_IN_DATA.map((user,index) =>
-         { // only display data based on index algorithm
-           if(index >= FIRST_INDEX && index <= LAST_INDEX){
-             return (
-          // checkin row logic
-          <tr
-          id={`row-${user.userId}`}  // set unique user ids for each row
-          key={user.userId}  // using user id for the key as well
-          onClick={() => this.getName(user.firstName)} // activate comment modal
-          onMouseOver={() => this.tasks(user.userId, user.description,user.managerComment)} // activate daily tasks
-          onMouseLeave={()=> this.hide()}
-          // adding support for mobile device to show daily tasks and manager comments
-          onTouchStart={() => this.tasks(user.userId, user.description,user.managerComment)}
-          onTouchCancel={()=> this.hide()}
-          > 
+
+  public renderRows = () => {
+    const LAST_INDEX = (this.props.pageNumber * 10) - 1;
+    const FIRST_INDEX = LAST_INDEX - 9;
+
+    if (this.props.checkIns.length !== 0) {
+      return this.props.checkIns.map((user, index) => {
+        if (index >= FIRST_INDEX && index <= LAST_INDEX) {
+          return <tr
+            id={`row-${user.userId}`}  // set unique user ids for each row
+            key={user.userId}  // using user id for the key as well
+            onClick={() => this.getName(user.firstName)} // activate comment modal
+            onMouseOver={() => this.tasks(user.userId, user.checkinDescription, user.managerComments)} // activate daily tasks
+            onMouseLeave={() => this.hide()}
+            // adding support for mobile device to show daily tasks and manager comments
+            onTouchStart={() => this.tasks(user.userId, user.checkinDescription, user.managerComments)}
+            onTouchCancel={() => this.hide()}
+          >
             <td >{user.userId}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
-            <td>{user.cohort}</td>
-            <td>{user.time}</td>
+            <td>{user.dateSubmitted}</td>
           </tr>
-         )} else {
-           return(<></>)
-          }
-         })}
-         {/* See what associates are up doing */}
-         {this.state.modal === false &&
-           <ManagerDailyTasksComponent
+        } else {
+          return <></>
+        }
+      })
+    } else {
+      return <></>
+    }
+  }
+
+  public render() {
+    const rows = this.renderRows();
+
+    return (
+      <>
+        {rows}
+        { this.state.modal === false && 
+          this.state.checkinId !== null &&
+          <ManagerDailyTasksComponent
             comment={this.state.managerComment}
             description={this.state.description}
-            userId={this.state.userId}
-            show={this.state.popover}/>
-         }
-          {/* Modal for manager comments */}
-          <ManagerCommentComponent
-            toggle = {this.getName}
-            modal = {this.state.modal}
-            firstName={this.state.firstName}
-            modalOff = {this.modalOff}/>
+            userId={this.state.checkinId}
+            show={this.state.popover} />
+        }
+        {/* Modal for manager comments */}
+        <ManagerCommentComponent
+          toggle={this.getName}
+          modal={this.state.modal}
+          firstName={this.state.firstName}
+          modalOff={this.modalOff} />
       </>
     );
   }
 }
 
-export default CheckInRowManagerComponent
+const mapStateToProps = (state: IState) => (state.manager)
+const mapDispatchToProps = {
+  ...managerActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CheckInRowManagerComponent)

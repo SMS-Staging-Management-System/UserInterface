@@ -58,7 +58,7 @@ export class CohortRowComponent extends React.Component<
           id={`cohort-row-${this.props.cohort.cohortId}`}
           onClick={() => this.handleClick()}
         >
-          <td>{this.props.cohort.name}</td>
+          <td>{this.props.cohort.cohortName}</td>
           <td>{this.props.cohort.userList.length}</td>
         </tr>
       </>

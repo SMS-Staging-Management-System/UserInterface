@@ -4,12 +4,14 @@ import { toast } from "react-toastify";
 import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
+import { IUser } from 'src/model/User.model';
 
 export const managerTypes = {
   ADD_CHECK_INS:    'ADD_CHECK_INS',
   ADD_COHORTS:      'ADD_COHORTS',
-  FILTER_CHECK_IN_LIST: 'FILTER_CHECK_IN_LIST',
   SELECT_COHORT:    'SELECT_COHORT',
+  SET_CHECK_IN_LIST:  'SET_CHECK_IN_LIST',
+  SET_COHORT_LIST:    'SET_COHORT_LIST',
   SET_SHOW_COHORT:  'SET_SHOW_COHORT'
 }
 
@@ -19,14 +21,14 @@ export const managerTypes = {
 export const managerInit = () => (dispatch) => {
   checkInClient.getManagerCheckInToday()
   .then(response => {
-    const checkInList = response.data.result.map(checkIn => {
+    const checkInList = response.data.map(checkIn => {
       return checkIn as ICheckIn;
     })
     dispatch({
       payload: {
         checkIns:  checkInList
       },
-      type: managerTypes.ADD_CHECK_INS
+      type: managerTypes.SET_CHECK_IN_LIST
     });
   })
   .catch(error => {
@@ -35,18 +37,27 @@ export const managerInit = () => (dispatch) => {
 
   cohortClient.getManagerCohorts()
   .then(response => {
-    const cohortList = response.data.result.map(cohort => {
-      return cohort as ICohort;
+    const cohortList = response.data.map(cohort => {
+      return  cohortClient.getUsersByCohortId(cohort.cohortId)
+      .then(cohortResponse => {
+        cohort.userList = cohortResponse.data.map(user => user as IUser);
+        return cohort as ICohort;
+      })
     })
-    dispatch({
-      payload: {
-        cohorts:  cohortList
-      },
-      type: managerTypes.ADD_COHORTS
-    });
+
+    Promise.all(cohortList)
+    .then(cohorts => {
+      console.log(cohorts)
+      dispatch({
+        payload: {
+          cohorts
+        },
+        type: managerTypes.SET_COHORT_LIST
+      })
+    })
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 }
 
@@ -88,8 +99,8 @@ export const submitCheckInComment = (comment: string, checkInId: number) => {
  * @param ?toDate 
  * @param ?checkInList 
  */
-export const getCheckIn = (fromDate: Date, toDate: Date) => dispatch => {
-  checkInClient.getCheckIn(fromDate, toDate)
+export const getAllCheckIn = (fromDate: number, toDate: number) => dispatch => {
+  checkInClient.getAllCheckIn(fromDate, toDate)
   .then(response => {
     const checkinList = response.data.result.map(checkin => {
       return checkin as ICheckIn;
@@ -98,7 +109,7 @@ export const getCheckIn = (fromDate: Date, toDate: Date) => dispatch => {
       payload: {
         checkIns:  checkinList
       },
-      type: managerTypes.FILTER_CHECK_IN_LIST
+      type: managerTypes.SET_CHECK_IN_LIST
     });
   })
   .catch(error => {
@@ -112,7 +123,7 @@ export const getCheckIn = (fromDate: Date, toDate: Date) => dispatch => {
  * @param fromDate 
  * @param toDate 
  */
-export const getCheckInByUserId = (userId: number, fromDate: Date, toDate: Date) => (dispatch) => {
+export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => (dispatch) => {
   checkInClient.getCheckInByUserId(userId, fromDate, toDate)
   .then(response => {
     const checkinList = response.data.result.map(checkin => {
@@ -122,7 +133,7 @@ export const getCheckInByUserId = (userId: number, fromDate: Date, toDate: Date)
       payload: {
         checkIns:  checkinList
       },
-      type: managerTypes.FILTER_CHECK_IN_LIST
+      type: managerTypes.SET_CHECK_IN_LIST
     });
   })
   .catch(error => {
@@ -137,8 +148,8 @@ export const getCheckInByUserId = (userId: number, fromDate: Date, toDate: Date)
  * @param cohortList 
  */
 export const getCheckInByCohortId = ( cohortId:     number,
-                                      fromDate:     Date, 
-                                      toDate:       Date
+                                      fromDate:     number, 
+                                      toDate:       number
                                       ) => dispatch => {
 
   checkInClient.getCheckInByCohortId(cohortId, fromDate, toDate)
@@ -150,7 +161,7 @@ export const getCheckInByCohortId = ( cohortId:     number,
       payload: {
         checkIns:  checkinList
       },
-      type: managerTypes.FILTER_CHECK_IN_LIST
+      type: managerTypes.SET_CHECK_IN_LIST
     });
   })
   .catch(error => {
@@ -184,5 +195,22 @@ export const selectCohort = (sCohort: ICohort) => dispatch => {
       },
       type: managerTypes.SET_SHOW_COHORT
     });
-  }, 700);
+  }, 50);
+}
+
+/**
+ * Get a list of check ins to be render base on criterias
+ * @param cohortId 
+ * @param userId 
+ * @param fromDate 
+ * @param toDate 
+ */
+export const managerGetCheckIns = (cohortId: number, userId: number, fromDate: number, toDate:   number) => dispatch => {
+  if(userId === 0) {
+    if(cohortId === 0) {
+      getAllCheckIn(fromDate, toDate)(dispatch);
+    } else {
+      getCheckInByCohortId(cohortId, fromDate, toDate)(dispatch);
+    }
+  }
 }
