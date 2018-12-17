@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {FormGroup, Input, Label} from 'reactstrap';
 import {Row, Col, Table} from 'reactstrap';
+import {IUserCreateDto} from '../../../model/UserCreateDto.model';
 
 
 /*
@@ -14,6 +15,8 @@ export interface IProps {
 }
 
 interface IState {
+  cohortEmail: any
+  cohortDescription: any
   fileReader: any
   fileContent: any
   displayTable: boolean
@@ -24,11 +27,12 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
     super(props);
 
     this.state = {
+        cohortDescription: '',
+        cohortEmail: '',
         displayTable: false,
         fileContent:[],
         fileReader: {
-      }
-      
+      }, 
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -48,7 +52,6 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
         firstname: newElement[0],
         lastName: newElement[1], 
       }
-
       userArray.push(userObj);
 
     });
@@ -61,13 +64,42 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
     })
   }
 
+  public handleSubmit = (e:any) => {
+
+    const listOfUsers = this.state.fileContent.map((user) => {
+        return user as IUserCreateDto
+    });
+
+    listOfUsers.push(this.state.cohortEmail);
+    listOfUsers.push(this.state.cohortDescription);
+
+    console.log(listOfUsers);
+    
+  }
+  public handleCohortEmail = (e:any) => {
+    this.setState({
+      ...this.state,
+      cohortEmail: e.target.value
+      
+    });
+  }
+  public handleCohortDescription = (e:any) => {
+    this.setState({
+      ...this.state,
+      cohortDescription: e.target.value
+      
+    });
+  }
+
   public handleChange = (selectorFiles:FileList)=>{
     const fileReader1 = new FileReader();
     fileReader1.onload = this.handleFileRead;
+    
     this.setState({
       ...this.state,
       fileReader: fileReader1
     });
+    
     fileReader1.readAsText(selectorFiles[0]);
   } 
 
@@ -102,8 +134,19 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
             <Row form>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="exampleEmail">Cohort Name</Label>
-                  <Input type="email" name="email" id="exampleEmail" placeholder="Name" />
+                  <Label for="cohort-name">Cohort Name</Label>
+                  <Input type="text" name="cohort-name" id="cohort-name" placeholder="Name"
+                   value={this.state.cohortEmail} 
+                   onChange={this.handleCohortEmail.bind(this)}/>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="cohort-description">Cohort Description</Label>
+                  <Input type="textarea" name="cohort-description" id="cohort-description" 
+                      value={this.state.cohortDescription} 
+                      onChange={this.handleCohortDescription.bind(this)}
+                  />  
                 </FormGroup>
               </Col>
             </Row>
@@ -135,7 +178,7 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
             </div> 
           </ModalBody>
           <ModalFooter className="flex-btw">
-            <Button className="rev-btn " onClick={this.props.modalOff}>Submit</Button>
+            <Button className="rev-btn " onClick={this.handleSubmit}>Submit</Button>
             <Button className=""color="secondary" onClick={this.props.modalOff}>Cancel</Button>
           </ModalFooter>
         </Modal>
