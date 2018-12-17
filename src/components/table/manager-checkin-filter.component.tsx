@@ -1,17 +1,30 @@
 import * as React from 'react';
-import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
-export default function ManagerCheckinFilterComponent () {
+
+export default function ManagerCheckinFilterComponent() {
   return (
-    <UncontrolledDropdown>
-      <DropdownToggle caret className="selected-cohort">
-        Cohort 1
-      </DropdownToggle>
-      <DropdownMenu>
-        <DropdownItem className="cohort-option">Cohort 1</DropdownItem>
-        <DropdownItem className="cohort-option">Cohort 2</DropdownItem>
-        <DropdownItem className="cohort-option">Cogort 3</DropdownItem>
-      </DropdownMenu>
-    </UncontrolledDropdown>
+
+    <>
+      <div className="form-group">
+        <select className="form-control" id="sel1">
+          <option>All</option>
+          <option>Cohort 2</option>
+          <option>Cohort 3</option>
+          <option>Cohort 4</option>
+        </select>
+      </div>
+    </>
+
+
+    // <UncontrolledDropdown>
+    //   <DropdownToggle caret className="selected-cohort">
+    //     Cohort 1
+    //   </DropdownToggle>
+    //   <DropdownMenu>
+    //     <DropdownItem className="cohort-option">Cohort 1</DropdownItem>
+    //     <DropdownItem classNameN="cohort-option">Cohort 2</DropdownItem>
+    //     <DropdownItem className="cohort-option">Cohort 3</DropdownItem>
+    //   </DropdownMenu>
+    // </UncontrolledDropdown>
   );
 }

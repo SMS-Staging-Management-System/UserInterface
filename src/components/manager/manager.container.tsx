@@ -4,7 +4,7 @@ import CohortTableComponent from '../table/cohortTable.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
 import ManagerCheckinFilterComponent from '../table/manager-checkin-filter.component';
 import { CreateNewModalComponent } from './cohort/cohort-create-modal.component';
-import { Button, Input } from "reactstrap";
+import { Button } from "reactstrap";
 
 
 export interface IState {
@@ -48,23 +48,22 @@ export class ContainerComponent extends React.Component<{}, IState> {
         {/* tab contents */}
         <div className="tab-content" id="nav-tabContent">
           <div className="tab-pane fade active show" id="check-in" role="tabpanel" >
-            <div >
+            <div className="div-filter">
+              <ManagerCheckinFilterComponent />
 
-              <div className="d-flex justify-content-start filter-div">
-                <div className="col">
+                {/* <div className="col">
                   <ManagerCheckinFilterComponent />
                 </div>
                 <div className="col">
                   <form>
                     <input id="man-search" type="text" name="firstname" placeholder="Search" />
-                    {/* <input type="submit" value="Submit" /> */}
+                    {/* <input type="submit" value="Submit" /> *
                   </form>
                 </div>
                 <div className="col">
                   Today |  Week  |  <Input type="date" name="date" className="start-date" placeholder="date placeholder" />  to <Input type="date" name="date" className="end-date" placeholder="date placeholder" />
-                </div>
+                </div> */}
 
-              </div>
               <ManagerCheckinTableComponent />
             </div>
           </div>

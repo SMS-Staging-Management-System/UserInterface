@@ -461,6 +461,10 @@ Manager Content
   width: 90%;
 }
 
+.div-filter {
+  margin-top: 5px;
+}
+
 .selected-cohort{
   background-color: $drew-orange;
   color: white;
@@ -477,6 +481,10 @@ Manager Content
     color: $drew-orange;
   }
 
+}
+
+#sel1{
+  max-width: 200px;
 }
 
 .filter-div{
