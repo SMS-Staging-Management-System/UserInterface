@@ -34,7 +34,19 @@ export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate:
 }
 
 export const getManagerCheckInToday = () => {
-  return axiosClient.get(`/checkins`);
+  const fromDate = new Date();
+  fromDate.setUTCHours(0,0,0,0);
+  
+  const toDate = new Date();
+  toDate.setUTCHours(11,59,59,59);
+
+  const params = {
+    fromDate,
+    toDate
+  }
+  return axiosClient.get(`/checkins/cohorts/users`, {
+    params
+  });
 }
 
 export const postCheckIn = (body: object) => {

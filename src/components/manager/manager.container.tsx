@@ -3,12 +3,13 @@ import { ManagerCheckinTableComponent } from '../table/manager-checkin-table.com
 import CohortTableComponent from '../table/cohortTable.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
 import {ManagerCheckinFilterComponent} from '../table/manager-checkin-filter.component';
-import { CreateNewModalComponent } from './cohort/cohort-create-modal.component';
+import CreateNewModalComponent from './cohort/cohort-create-modal.component';
 import { Button } from "reactstrap";
 
 
 export interface IState {
-  modal: boolean
+  modal: boolean,
+  collapse: boolean
 }
 
 /**
@@ -18,8 +19,16 @@ export class ContainerComponent extends React.Component<{}, IState> {
   constructor(props) {
     super(props);
     this.state = {
+      collapse: true,
       modal: false
     };
+  }
+
+  public toggle = () => {
+    this.setState({
+      ...this.state,
+      collapse: !this.state.collapse
+    });
   }
 
   public modalOn = () => {
@@ -77,13 +86,14 @@ export class ContainerComponent extends React.Component<{}, IState> {
                     onClick={this.modalOn}
                   >New Cohort
                 </Button>
-                  <div>
-                  </div>
-                  <CohortTableComponent />
                 </div>
-                <div className="col-9 pr-0">
-                  <CohortAssociatesComponent />
+                <div>
+                  <CohortTableComponent toggle={this.toggle} />
                 </div>
+              </div>
+
+              <div className="col-9 pr-0">
+                <CohortAssociatesComponent collapse={this.state.collapse} />
               </div>
             </div>
             <CreateNewModalComponent

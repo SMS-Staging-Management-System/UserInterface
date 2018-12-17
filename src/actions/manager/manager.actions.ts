@@ -8,11 +8,12 @@ import { IUser } from 'src/model/User.model';
 
 export const managerTypes = {
   ADD_CHECK_INS:    'ADD_CHECK_INS',
-  ADD_COHORTS:      'ADD_COHORTS',
+  ADD_COHORT:       'ADD_COHORT',
   SELECT_COHORT:    'SELECT_COHORT',
+  SET_CHECK_IN_COMMENT: "SET_CHECK_IN_COMMENT",
   SET_CHECK_IN_LIST:  'SET_CHECK_IN_LIST',
   SET_COHORT_LIST:    'SET_COHORT_LIST',
-  SET_SHOW_COHORT:  'SET_SHOW_COHORT'
+  SET_SHOW_COHORT:  'SET_SHOW_COHORT',
 }
 
 /**
@@ -32,13 +33,13 @@ export const managerInit = () => (dispatch) => {
     });
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 
   cohortClient.getManagerCohorts()
   .then(response => {
     const cohortList = response.data.map(cohort => {
-      return  cohortClient.getUsersByCohortId(cohort.cohortId)
+      return cohortClient.getUsersByCohortId(cohort.cohortId)
       .then(cohortResponse => {
         cohort.userList = cohortResponse.data.map(user => user as IUser);
         return cohort as ICohort;
@@ -47,10 +48,14 @@ export const managerInit = () => (dispatch) => {
 
     Promise.all(cohortList)
     .then(cohorts => {
-      console.log(cohorts)
+      let currentCohort = null;
+      if(cohortList.length !== 0) {
+        currentCohort = cohorts[0];
+      }
       dispatch({
         payload: {
-          cohorts
+          cohorts,
+          currentCohort
         },
         type: managerTypes.SET_COHORT_LIST
       })
@@ -62,25 +67,10 @@ export const managerInit = () => (dispatch) => {
 }
 
 /**
- * Manager post a new cohort
- * @param cohortName 
- * @param emailList 
- */
-export const postCohort = (cohortName: string, cohortDescription: string, users: IUserCreateDto[]) => dispatch => {
-  cohortClient.postCohort(cohortName, cohortDescription, users)
-  .then(response => {
-    toast.success("Cohort created")
-  })
-  .catch(error => {
-    toast.success("Unable to create cohort or some users")
-  })
-}
-
-/**
  * Update a check in with a comment
  * @param comment 
  */
-export const submitCheckInComment = (comment: string, checkInId: number) => {
+export const managerPostComment = (comment: string, checkInId: number) => {
   const body = {
     "comments": comment
   }
@@ -137,7 +127,7 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
     });
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 }
 
@@ -174,12 +164,14 @@ export const getCheckInByCohortId = ( cohortId:     number,
  * @param sCohort 
  */
 export const selectCohort = (sCohort: ICohort) => dispatch => {
-  dispatch({
-    payload: {
-      currentCohort: sCohort
-    },
-    type: managerTypes.SELECT_COHORT
-  });
+  setTimeout(() => {
+    dispatch({
+      payload: {
+        currentCohort: sCohort
+      },
+      type: managerTypes.SELECT_COHORT
+    });
+  }, 500);
   dispatch({
     payload: {
       isShowCohort: false
@@ -211,4 +203,27 @@ export const managerGetCheckIns = (cohortId: number, userId: number, fromDate: n
       getCheckInByCohortId(cohortId, fromDate, toDate)(dispatch);
     }
   }
+}
+
+/**
+ * Create a new cohort
+ * @param cohortName 
+ * @param cohortDescription 
+ * @param userLists 
+ */
+export const managerPostCohort = (cohortName: string, cohortDescription: string, userList: IUserCreateDto[]) => dispatch => {
+  cohortClient.postCohort(cohortName, cohortDescription, userList)
+  .then(response => {
+    const cohort = response.data as ICohort;
+    cohortClient.getUsersByCohortId(cohort.cohortId)
+    .then(cohortResponse => {
+      cohort.userList = cohortResponse.data.map(user => user as IUser);
+      dispatch({
+        payload: {
+          cohort
+        },
+        type: managerTypes.ADD_COHORT
+      });
+    })
+  })
 }

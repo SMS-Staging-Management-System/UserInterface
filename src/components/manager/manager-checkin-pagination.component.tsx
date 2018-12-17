@@ -3,7 +3,7 @@ import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { IState } from '../../reducers/index';
 import { connect } from 'react-redux';
 import * as managerActions from '../../actions/manager/manager.actions';
-import CheckInRowManagerComponent from './checkin/checkin-in-row-manager.component';
+import CheckInRowManagerComponent from './checkin/checkin-row-manager.component';
 import { ICheckIn } from 'src/model/CheckIn.model';
 
 interface IComponentState {
