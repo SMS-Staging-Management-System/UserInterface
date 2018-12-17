@@ -2,19 +2,11 @@ import axios from 'axios';
 import { environment }  from '../environment';
 const smsContext = environment.smsContext;
 
-const AUTHORIZATION_HEADER = 'Authorization';
-const CONGNITO_TOKEN  = 'REVATURE_SMS_COGNITO';
+const AUTHORIZATION_HEADER = 'Authentication';
 
-export const addCognitoToHeader = (token?: any) => {
-  if(token) {
-    localStorage.setItem(CONGNITO_TOKEN , token); 
-    return addTokenToHeaders(token);
-  } else if(localStorage.getItem(CONGNITO_TOKEN)) {
-    const sToken = localStorage.getItem(CONGNITO_TOKEN );
-    return addTokenToHeaders(sToken);
-  } else {
-    return false;
-  }
+export const addCognitoToHeader = (token: any) => {
+  axiosClient.defaults.headers.common[AUTHORIZATION_HEADER] = token;
+  return true;
 }
 
 export const axiosClient = axios.create({
@@ -23,8 +15,3 @@ export const axiosClient = axios.create({
     'Content-Type': 'application/json'
   }
 });
-
-function addTokenToHeaders(token: string) {
-  axiosClient.defaults.headers.common[AUTHORIZATION_HEADER] = 'Bearer ' + token;
-  return true;
-}

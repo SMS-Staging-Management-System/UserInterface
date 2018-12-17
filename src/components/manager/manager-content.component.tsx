@@ -1,44 +1,27 @@
 import * as React from 'react';
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
 import { ContainerComponent } from './manager.container';
 import ClockComponent from '../../components/clock/clock.component';
-import CreateNewModalComponent from './cohort/cohort-create-modal.component'
+import * as managerActions from '../../actions/manager/manager.actions';
 
-export interface IState {
-  modal: boolean
-}
-export class ManagerContentComponent extends React.Component<{},IState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false
-    };
+// interface IComponentProps {
+//   managerInit: () => { void }
+// }
+
+export class ManagerContentComponent extends React.Component<any, any, any> {
+
+  public componentDidMount() {
+    this.props.managerInit();
   }
 
-  public modalOn = () => {
-    this.setState({
-      ...this.state,
-      modal: true
-    })
-  }
-
-  public modalOff = () => {
-    this.setState({
-      ...this.state,
-      modal: false
-    })
-  }
   public render() {
     return (
       <div className="manager-content col-12 shadow-lg p-3 mb-5 bg-white rounded">
-        <button className="btn btn-danger" onClick={this.modalOn}>New Cohort</button>
-        <CreateNewModalComponent
-          toggle = {this.modalOn}
-          modal = {this.state.modal}
-          modalOff = {this.modalOff}/>
-        <div>
+       <div>
           <h4>SMS Manager Dashboard <ClockComponent/></h4>
         </div>
-        <hr/>
+       <hr id="hr-tag"></hr>
         <div>
           <ContainerComponent/>
         </div>
@@ -46,4 +29,9 @@ export class ManagerContentComponent extends React.Component<{},IState> {
     );
   }
 }
-export default ManagerContentComponent;
+
+const mapStateToProps = (state: IState) => (state.manager)
+const mapDispatchToProps = {
+  ...managerActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ManagerContentComponent)

@@ -28,6 +28,11 @@ $drew-orange: #f3a55d;
   cursor: pointer;
 }
 
+.flex-package {
+  display:    flex;
+  flex-shrink: 0;
+}
+
 /************************************
           App.ts
 ************************************/
@@ -148,8 +153,17 @@ $drew-orange: #f3a55d;
           transition: 1s;
 }
 
+
+#pass, #conf-pass{
+  opacity: 0;
+}
+
+#confPassBut {
+  margin-bottom: 20px;
+}
+
 #newPassBut {
-  margin-top: 47px;
+  margin-top: 35px;
 }
 
 #userBut{
@@ -159,6 +173,8 @@ $drew-orange: #f3a55d;
 #user, #pass {
   padding-right: 50px;
 }
+
+
 
 body {
   margin: 0;
@@ -281,8 +297,10 @@ body {
 #main-content-container {
   @include flex-col;
   flex-grow: 1;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  padding: 5vh 5vw;
 }
 
 .rev-btn {
@@ -364,6 +382,33 @@ body {
   cursor: pointer;
 }
 
+
+#nav-tab .nav-t {
+  text-transform: capitalize;
+  
+	color: $drew-orange;
+	transition: background-color .2s, color .2s;
+	
+  &:hover,
+  &:focus
+	{
+		background-color: $drew-orange;
+		color: #fff;
+  }
+ 
+}
+
+#nav-tab a.active{
+  background-color: $drew-orange;
+  border-bottom: $drew-orange;
+	color: #fff;
+}
+
+#nav-tab {
+  border-bottom: 1px solid $drew-orange;
+}
+
+
 /*****************************
   Clicker
 *****************************/
@@ -418,11 +463,55 @@ body {
 Manager Content
 ******************************************************/
 .manager-content {
-  position: absolute;
-  top: 100px;
-  width: 90%;
+  width: 100%;
 }
 
+.selected-cohort{
+  background-color: $drew-orange;
+  color: white;
+  &:hover{
+    background-color: white;
+    color: $drew-orange;
+  }
+  &:active{
+    background-color: white;
+    color: $drew-orange;
+  }
+  &:focus{
+    background-color: white;
+    color: $drew-orange;
+  }
+
+}
+
+.filter-div{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: -13px;
+}
+
+.cohort-option{
+  background-color: white;
+  color: $drew-orange;
+  &:hover{
+    background-color: $drew-orange;
+    color: white;
+  }
+}
+
+.comment-addon {
+  background-color: $drew-orange;
+  color: white;
+}
+
+.pagination-link {
+  color: white;
+  background-color: $drew-orange;
+  &:hover{
+    background-color: white;
+    color: $drew-orange;
+  }
+}
 .page-numbers {
   display: flex;
   justify-content: flex-end;
@@ -445,7 +534,8 @@ Manager Content
 
 .checkin-table-header {
   text-align: center;
-  background-color: #fad2ac;
+  background-color: $drew-orange;
+  color: white;
 }
 
 .daily-tasks-header{
@@ -461,6 +551,27 @@ Manager Content
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color:#f0cdad;
 }
+
+#hr-tag {
+  background-color: $drew-orange;
+  margin-bottom: -1px;
+}
+
+#pop-hr{
+  margin-bottom: -5px;
+  margin-top: -5px;
+}
+
+#man-search {
+  border: 1px solid $drew-orange;
+  border-radius: 10px;
+  padding-left: 5px;
+  &::placeholder{
+    text-align: center
+  }
+}
+
+
 /*******************************************
   loading.component.tsx
 *******************************************/
@@ -510,6 +621,96 @@ Manager Content
 /*******************************************
   associates-row.component.tsx
 *******************************************/
-.associate-row {
-  background-color: $drew-orange;
+#associate-content-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#associate-row-container {
+  display: block;
+  padding: 16px;
+  margin: 0;
+  width: 100%;
+  background-color: white;
+}
+
+#associate-content {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+
+#associate-header {
+  width: 300px;
+}
+
+#clock {
+  margin: 0;
+}
+
+#associate-content-title {
+  display: flex;
+  margin: auto 1em;
+}
+
+#associate-content-header {
+  margin: auto 1em;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+#associate-content-main {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+#associate-button {
+    display: flex;
+    justify-content: end;
+    
+}
+
+#checkin-center {
+    text-align: center;
+    
+}
+
+#header-row {
+  display: flex;
+}
+
+#heade-field {
+  margin: 8px;
+}
+
+#row{
+  margin: auto;
+}
+
+.rowsize {
+  padding:8px;
+}
+
+#row-color {
+  background-color: none;
+}
+
+#btn-right {
+  position: relative;
+  margin: 0.5em 1em;
+}
+
+#text-area{
+  width: 800px;
+}
+
+#fields{
+  padding: 0px 4px 0px 4px;
+  margin: 4px;
+  width: 800px;
 }

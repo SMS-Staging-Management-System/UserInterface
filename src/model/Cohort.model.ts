@@ -2,6 +2,7 @@ import { IUser } from "./User.model";
 
 export interface ICohort {
   cohortId: number;
-  name:     string;
+  cohortName:     string;
+  cohortDescription: string;
   userList: IUser[];
 }

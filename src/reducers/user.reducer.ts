@@ -2,32 +2,22 @@ import { userTypes } from '../actions/user/user.actions';
 import { IUserState } from '.';
 import { toast } from "react-toastify";
 
-const FAKE_USER = { "city":       "Arlington",
-                    "email":      "a@mail.com",
-                    "firstname":  "Blake",
-                    "lastname":   "Kruppa",
-                    "mobile":     "714-123-1234",
-                    "role" :      "associate",
-                    "state":      "California", 
-                    "timezone":   "+2", 
-                    "userId":     1,
-                    "zip":        "76013"}
-
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
-<<<<<<< Updated upstream
-  login: false,
-  user:  FAKE_USER
-=======
-  isLogin: true,
-  roles:  ["admin"],
-  user:   FAKE_USER
->>>>>>> Stashed changes
+  isLogin: false,
+  page:   'home',
+  roles:  [],
+  user:   null
 }
 
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
+    case userTypes.CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.payload.page
+      }
     case userTypes.REGISTER:
       toast.success("Register successful");
       return {
@@ -37,25 +27,42 @@ export const userReducer = (state = initialState, action: any) => {
       toast.success("Login");
       return {
         ...state,
-        login:  action.payload.login,
+        isLogin:  action.payload.isLogin,
         user:   action.payload.user
       }
-    case userTypes.LOGOUT:
-      toast.success("Log out");
+    case userTypes.SET_ROLE:
       return {
         ...state,
-        login: false,
-        user:  null
+        roles: action.payload.roles
+      }
+    case userTypes.LOGOUT:
+      toast.success("Logged out");
+      return {
+        ...state,
+        cogUser: null,
+        isFirstSignin: false,
+        isLogin: false,
+        roles:  [],
+        user:   null
       }
     case userTypes.COGNITO_SIGN_IN:
+      toast.success("Welcome back");
       return {
         ...state,
-        cogUser: action.payload.cogUser
+        cogUser:  action.payload.cogUser,
+        isLogin:  action.payload.isLogin,
+        roles:    action.payload.roles
       }
     case userTypes.FIRST_SIGN_IN:
       return {
         ...state,
+        cogUser:  action.payload.cogUser,
         isFirstSignin: true
+      }
+    case userTypes.USER_INIT:
+      return {
+        ...state,
+        user:  action.payload.user
       }
   }
   return state;
