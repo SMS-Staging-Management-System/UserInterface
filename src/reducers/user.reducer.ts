@@ -2,23 +2,13 @@ import { userTypes } from '../actions/user/user.actions';
 import { IUserState } from '.';
 import { toast } from "react-toastify";
 
-const FAKE_USER = { "city":       "Arlington",
-                    "email":      "a@mail.com",
-                    "firstname":  "Blake",
-                    "lastname":   "Kruppa",
-                    "mobile":     "714-123-1234",
-                    "state":      "California", 
-                    "timezone":   "+2", 
-                    "userId":     1,
-                    "zip":        "76013"}
-
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
   isLogin: false,
   page:   'home',
   roles:  [],
-  user:   FAKE_USER
+  user:   null
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -43,7 +33,7 @@ export const userReducer = (state = initialState, action: any) => {
     case userTypes.SET_ROLE:
       return {
         ...state,
-        role: action.payload.role
+        roles: action.payload.roles
       }
     case userTypes.LOGOUT:
       toast.success("Logged out");

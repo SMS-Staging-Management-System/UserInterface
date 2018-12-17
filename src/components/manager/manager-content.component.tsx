@@ -5,10 +5,14 @@ import { ContainerComponent } from './manager.container';
 import ClockComponent from '../../components/clock/clock.component';
 import * as managerActions from '../../actions/manager/manager.actions';
 
-export class ManagerContentComponent extends React.Component {
+// interface IComponentProps {
+//   managerInit: () => { void }
+// }
+
+export class ManagerContentComponent extends React.Component<any, any, any> {
 
   public componentDidMount() {
-    // managerActions.getCheckIn();
+    this.props.managerInit();
   }
 
   public render() {
@@ -26,7 +30,7 @@ export class ManagerContentComponent extends React.Component {
   }
 }
 
-const mapStateToProps = (state: IState) => (state.user)
+const mapStateToProps = (state: IState) => (state.manager)
 const mapDispatchToProps = {
   ...managerActions
 }
