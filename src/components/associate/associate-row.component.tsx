@@ -62,7 +62,7 @@ export class AssociateRow extends React.Component<IProps, IState> {
                 {FAKE_CHECK_IN_DATA.map((user, index) => {
                     if (index >= FIRST_INDEX && index <= LAST_INDEX) {
                         return (
-                            <tr id={`row-${user.userId}`}
+                            <tr id={`row-${user.checkinId}`}
                                 key={user.userId}
                                 onClick={() => this.getName(user.firstName)}
                                 onMouseOver={() => this.tasks(user.userId, user.description)}

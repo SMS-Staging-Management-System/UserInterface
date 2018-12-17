@@ -1,17 +1,37 @@
 import * as React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { InputGroup, InputGroupAddon, Input, InputGroupText } from 'reactstrap';
+import { IState } from '../../../reducers/index';
+import { connect } from 'react-redux';
+import * as managerActions from '../../../actions/manager/manager.actions';
+
 /*
   *The manager's comment component
 */
 interface IProps {
+  checkinId: number
   firstName: string
   modal: boolean
   toggle: (name:string) => void
   modalOff: () => void
 }
-export class ManagerCommentComponent extends React.Component<IProps, {}> {
-  
+
+interface IComponentState {
+  comment: string
+}
+export class ManagerCommentComponent extends React.Component<IProps, IComponentState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      comment: ''
+    }
+  }
+  // get comment form input and pass to manager actions to submit
+  public getComment = (event) => {
+    this.setState({
+      comment: event.target.value
+    })
+  }
   public render() {
     return (
       <>
@@ -20,12 +40,16 @@ export class ManagerCommentComponent extends React.Component<IProps, {}> {
           <ModalHeader>Leave a comment for {this.props.firstName}</ModalHeader>
           <ModalBody>
           <InputGroup>
-            <InputGroupAddon addonType="prepend"><InputGroupText className="comment-addon">Comment:</InputGroupText></InputGroupAddon>
-            <Input placeholder="note to associate" />
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText className="comment-addon">
+                Comment:
+              </InputGroupText>
+            </InputGroupAddon>
+            <Input placeholder="note to associate" onChange={()=>this.getComment}/>
           </InputGroup>
           </ModalBody>
           <ModalFooter>
-            <Button className="rev-btn" onClick={this.props.modalOff}>Submit</Button>
+            <Button className="rev-btn" onClick={managerActions.submitCheckInComment(this.state.comment,this.props.checkinId)}>Submit</Button>
             <Button color="secondary" onClick={this.props.modalOff}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -35,5 +59,8 @@ export class ManagerCommentComponent extends React.Component<IProps, {}> {
     );
   }
 }
-
-export default ManagerCommentComponent
+const mapStateToProps = (state: IState) => (state.manager)
+const mapDispatchToProps = {
+  ...managerActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ManagerCommentComponent)
