@@ -87,8 +87,8 @@ export class ContainerComponent extends React.Component<{}, IState> {
                     onClick={this.modalOn}
                   >New Cohort
                 </Button>
-              <div>
               </div>
+              <div>
                 <CohortTableComponent toggle={this.toggle}/>
               </div>
               </div>
