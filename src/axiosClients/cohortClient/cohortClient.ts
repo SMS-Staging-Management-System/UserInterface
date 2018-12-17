@@ -7,8 +7,8 @@ export const getManagerCohorts = () => {
 
 export const postCohort = (cohortName: string, cohortDescription: string, users: IUserCreateDto[]) => {
   const body = {
-    cohortName,
     cohortDescription,
+    cohortName,
     users
   }
   return axiosClient.post(`/cohorts`, body)

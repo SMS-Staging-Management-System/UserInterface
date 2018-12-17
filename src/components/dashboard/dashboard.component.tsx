@@ -3,7 +3,7 @@ import { IState } from '../../reducers';
 import { connect } from 'react-redux';
 import { IUser } from 'src/model/User.model';
 import { ManagerContentComponent } from '../manager/manager-content.component';
-import { AssociateContentComponent } from '../associate/associate-content.component';
+// import { AssociateContentComponent } from '../associate/associate-content.component';
 
 interface IStateProps {
   user:   IUser,
