@@ -34,7 +34,7 @@ export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate:
 }
 
 export const getManagerCheckInToday = () => {
-  return axiosClient.get(`/checkins`);
+  return axiosClient.get(`/checkins/today`);
 }
 
 export const postCheckIn = (body: object) => {

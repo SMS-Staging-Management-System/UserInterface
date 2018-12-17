@@ -21,6 +21,7 @@ export const managerTypes = {
 export const managerInit = () => (dispatch) => {
   checkInClient.getManagerCheckInToday()
   .then(response => {
+    console.log(response)
     const checkInList = response.data.map(checkIn => {
       return checkIn as ICheckIn;
     })
@@ -32,7 +33,7 @@ export const managerInit = () => (dispatch) => {
     });
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 
   cohortClient.getManagerCohorts()
@@ -47,10 +48,14 @@ export const managerInit = () => (dispatch) => {
 
     Promise.all(cohortList)
     .then(cohorts => {
-      console.log(cohorts)
+      let currentCohort = null;
+      if(cohortList.length !== 0) {
+        currentCohort = cohorts[0];
+      }
       dispatch({
         payload: {
-          cohorts
+          cohorts,
+          currentCohort
         },
         type: managerTypes.SET_COHORT_LIST
       })
@@ -137,7 +142,7 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
     });
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 }
 
