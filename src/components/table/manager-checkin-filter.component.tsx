@@ -141,8 +141,6 @@ export class ManagerCheckinFilterComponent extends React.Component<{}, IState> {
           </div>
         </div>
       </>
-
-
     );
   }
 }
