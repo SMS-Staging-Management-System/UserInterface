@@ -5,9 +5,9 @@ import { toast } from "react-toastify";
 const initialState: IUserState = {
   cogUser: null,
   isFirstSignin: false,
-  isLogin: false,
+  isLogin: true,
   page:   'home',
-  roles:  [],
+  roles:  ['admin'],
   user:   null
 }
 

@@ -39,9 +39,7 @@ export class CohortTableComponent extends React.Component<IProps, IStateComponen
         <Table bordered hover>
           <CohortTableHeaderComponent/>
           <tbody>
-
             {this.props.cohorts.map(cohort => <CohortRowComponent key={cohort.cohortId} changeSelected={this.changeSelected} selected={(this.state.selected === cohort.cohortId) ? true : false} cohort={cohort} selectCohort={this.props.selectCohort} /> )}
-
           </tbody>
         </Table>
       </>

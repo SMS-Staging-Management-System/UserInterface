@@ -4,7 +4,6 @@ import {FormGroup, Input, Label} from 'reactstrap';
 import {Row, Col, Table} from 'reactstrap';
 import {IUserCreateDto} from '../../../model/UserCreateDto.model';
 
-
 /*
 * The New Cohort Create
 */
@@ -118,14 +117,12 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
 
     return mapContent;
   }
-  
 
   public render() {
 
     const renderTable = this.tableDrawer();
 
     return (
-      
       <>
         <div>
         <Modal isOpen={this.props.modal} className="manager-comments">
@@ -184,7 +181,6 @@ export class CreateNewModalComponent extends React.Component<IProps,IState> {
         </Modal>
       </div> 
       </>
-
     );
   }
 }

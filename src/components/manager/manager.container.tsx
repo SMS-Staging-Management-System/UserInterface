@@ -3,6 +3,7 @@ import { ManagerCheckinTableComponent } from '../table/manager-checkin-table.com
 import CohortTableComponent from '../table/cohortTable.component';
 import CohortAssociatesComponent from './cohort/cohort-associates.component';
 import ManagerCheckinFilterComponent from '../table/manager-checkin-filter.component';
+import ManagerMangeUsersComponenet from './manager-manage-users.component';
 import { CreateNewModalComponent } from './cohort/cohort-create-modal.component';
 import { Button, Input } from "reactstrap";
 
@@ -43,6 +44,7 @@ export class ContainerComponent extends React.Component<{}, IState> {
           <div className="nav nav-tabs manager-container" id="nav-tab" role="tablist">
             <a className="nav-item nav-link active nav-t" id="nav-contact-tab" data-toggle="tab" href="#check-in" role="tab" aria-controls="check-in" aria-selected="true" aria-hidden="false">Check-In</a>
             <a className="nav-item nav-link nav-t" id="nav-profile-tab" data-toggle="tab" href="#cohort" role="tab" aria-controls="nav-profile" aria-selected="false">Cohort</a>
+            <a className="nav-item nav-link nav-t" id="nav-manage-users-tab" data-toggle="tab" href="#manage-users" role="tab" aria-controls="nav-manage-users" aria-selected="false">Users</a>
           </div>
         </nav>
         {/* tab contents */}
@@ -91,6 +93,9 @@ export class ContainerComponent extends React.Component<{}, IState> {
               toggle={this.modalOn}
               modal={this.state.modal}
               modalOff={this.modalOff} />
+          </div>
+          <div className="tab-pane fade container-fluid " id="manage-users" role="tabpanel" aria-labelledby="nav-manage-users-tab">
+              <ManagerMangeUsersComponenet/>
           </div>
         </div>
       </>
