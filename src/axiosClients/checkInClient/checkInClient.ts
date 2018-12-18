@@ -8,8 +8,8 @@ export const getAllCheckIn = (fromDate?: number, toDate?: number) => {
 
   if(fromDate && toDate) {
     params = {
-      fromDate: fromDate.toString(),
-      toDate: toDate.toString()
+      fromDate: 0,
+      toDate: 1545145895377
     }
   }
   return axiosClient.get(`/checkins/range`, params);
@@ -55,8 +55,8 @@ export const getManagerCheckInToday = () => {
 
   return axiosClient.get(`/checkins/cohorts`, {
     params : {
-      fromDate: 0,
-      toDate: 1545145895377
+      fromDate: '0',
+      toDate: '1545145895377'
     }
   });
 }
