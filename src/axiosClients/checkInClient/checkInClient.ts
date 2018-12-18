@@ -2,7 +2,7 @@ import { axiosClient } from '../axiosClient';
 
 export const getManagerCheckIn = (fromDate: number, toDate: number) => {
   const params = {
-    fromDate: 0,
+    fromDate,
     toDate
   }
   return axiosClient.get(`/checkins/range`, {params});

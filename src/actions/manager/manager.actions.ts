@@ -14,15 +14,16 @@ export const managerTypes = {
   SELECT_COHORT: 'SELECT_COHORT',
   SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
   SET_CHECK_IN_LIST: 'SET_CHECK_IN_LIST',
-  SET_COHORT_LIST: 'SET_COHORT_LIST'
+  SET_COHORT_LIST: 'SET_COHORT_LIST',
+  SET_TRAINERS: 'SET_TRAINERS'
 }
 
 /**
  * Set up manager list of classes and check-ins
  */
 export const managerInit = () => (dispatch) => {
+  getManagerCohorts()(dispatch)
   getManagerCheckIn(getTodayStart(), getTodayEnd())(dispatch);
-  getManagerCohorts()(dispatch);
 }
 
 /**
@@ -30,6 +31,7 @@ export const managerInit = () => (dispatch) => {
  * @param comment 
  */
 export const managerPostComment = (comment: string, checkInId: number) => {
+  console.log("AASDFA")
   const body = {
     "comments": comment
   }

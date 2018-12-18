@@ -3,11 +3,14 @@ import { IUserState } from '.';
 import { toast } from "react-toastify";
 
 const initialState: IUserState = {
+  admins:  [],
   cogUser: null,
   isFirstSignin: false,
   isLogin: false,
   page:   'home',
-  roles:  [],
+  roles:    [],
+  stagings: [],
+  trainers: [],
   user:   null
 }
 
@@ -63,6 +66,21 @@ export const userReducer = (state = initialState, action: any) => {
       return {
         ...state,
         user:  action.payload.user
+      }
+    case userTypes.SET_TRAINERS:
+      return {
+        ...state,
+        trainers:  action.payload.trainers
+      }
+    case userTypes.SET_STAGINGS:
+      return {
+        ...state,
+        stagings:  action.payload.stagings
+      }
+    case userTypes.SET_ADMINS:
+      return {
+        ...state,
+        admins:  action.payload.admins
       }
   }
   return state;

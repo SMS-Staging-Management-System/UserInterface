@@ -35,6 +35,7 @@ export class ManagerCommentComponent extends React.Component<IProps, IComponentS
   }
 
   public handlePostComment = () => {
+    console.log("thing")
     this.props.managerPostComment(this.state.comment, this.props.checkinId);
     this.props.modalOff();
   }
