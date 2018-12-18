@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { IUser } from 'src/model/User.model';
 import ManagerContentComponent from '../manager/manager-content.component';
 import { AssociateContentComponent } from '../associate/associate-content.component';
+import { Route } from 'react-router';
+import { withRouter } from 'react-router-dom';
 // import { UserProfileComponent } from '../userProfile/userProfile.component';
 
 interface IStateProps {
   user: IUser,
-  page: string,
-  roles: string[]
+  roles: string[],
+  match: any
 }
 
 /**
@@ -20,13 +22,13 @@ export class DashboardComponent extends React.Component<IStateProps> {
   public renderRoleContent = () => {
     // if (this.props.page === 'home') {
       if (this.props.roles === undefined) {
-        return <AssociateContentComponent />
+        return <Route path={this.props.match.url} component={AssociateContentComponent} />
       }
       else if (this.props.roles.includes('admin')) {
-        return <ManagerContentComponent />
+        return <Route path={this.props.match.url} component={ManagerContentComponent} />
       }
       else if (this.props.roles.includes('staging-manager')) {
-        return <ManagerContentComponent />
+        return <Route path={this.props.match.url} component={ManagerContentComponent} />
       }
       else {
         return <></>
@@ -50,4 +52,4 @@ export class DashboardComponent extends React.Component<IStateProps> {
 
 const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {}
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardComponent)
+export default withRouter<any>(connect(mapStateToProps, mapDispatchToProps)(DashboardComponent))

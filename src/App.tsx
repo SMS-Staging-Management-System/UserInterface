@@ -23,7 +23,7 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                <ProtectedRoute exact path="/dashboard" component={DashboardComponent} />
+                <ProtectedRoute path="/dashboard" component={DashboardComponent} />
                 <ProtectedRoute exact path="/profile" component={UserProfileComponent} />
                 <Route exact path="/sign-in" component={LoginComponent} />
                 <Route component={PageNotFoundComponent} />

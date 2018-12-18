@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { IUser } from '../../model/User.model';
 
 import * as userActions from '../../actions/user/user.actions';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { History } from 'history';
 
 interface IComponentState {
@@ -61,11 +61,12 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
           {
             this.props.user &&
             <>
-              <DropdownItem
-                className="cursor-hover"
-                onClick={() => this.props.history.push('profile')}>
+              <Link
+                to="/profile"
+                className="cursor-hover">
+                
                 Profile
-              </DropdownItem>
+              </Link>
               <DropdownItem divider />
             </>
           }

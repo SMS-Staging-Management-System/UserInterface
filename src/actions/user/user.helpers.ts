@@ -82,7 +82,7 @@ export const cognitoLogin = (username: string, password: string, history: Histor
         type: userTypes.COGNITO_SIGN_IN
       });
 
-      history.push("/dashboard");
+      history.push("/dashboard/check-ins");
 
       initUser(dispatch)
 

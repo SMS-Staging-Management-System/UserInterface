@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
-import { ContainerComponent } from './manager.container';
+import ContainerComponent from './manager.container';
 import ClockComponent from '../../components/clock/clock.component';
 import * as managerActions from '../../actions/manager/manager.actions';
+import { Route } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 // interface IComponentProps {
 //   managerInit: () => { void }
@@ -23,7 +25,7 @@ export class ManagerContentComponent extends React.Component<any, any, any> {
         </div>
        <hr id="hr-tag"></hr>
         <div>
-          <ContainerComponent/>
+        <Route path={this.props.match.url} component={ContainerComponent} />
         </div>
       </div>
     );
@@ -34,4 +36,4 @@ const mapStateToProps = (state: IState) => (state.manager)
 const mapDispatchToProps = {
   ...managerActions
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ManagerContentComponent)
+export default withRouter<any>(connect(mapStateToProps, mapDispatchToProps)(ManagerContentComponent))
