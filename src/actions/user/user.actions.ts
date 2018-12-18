@@ -16,7 +16,10 @@ export const userTypes = {
   LOGIN:        'LOGIN',
   LOGOUT:       'LOGOUT',
   REGISTER:     'REGISTER',
+  SET_ADMINS:   'SET_ADMINS',
   SET_ROLE:     'SET_ROLE',
+  SET_STAGINGS: 'SET_STAGINGS',
+  SET_TRAINERS: 'SET_TRAINERS',
   USER_INIT:    'USER_INIT'
 }
 
@@ -47,7 +50,7 @@ export const register = (user: IUserCreateDto) => (dispatch) => {
 }
 
 /**
- * 
+ * Set up user data
  */
 export const setup = () => dispatch => {
   // Get user info from server if session is valid

@@ -7,7 +7,8 @@ const initialState: IManagerState = {
   checkIns:   [],
   cohorts:    [],
   comment:    '',
-  currentCohort:  null
+  currentCohort:  null,
+  trainers:   []
 }
 
 export const managerReducer = (state = initialState, action: any) => {
@@ -47,6 +48,11 @@ export const managerReducer = (state = initialState, action: any) => {
       return {
         ...state,
         currentCohort: action.payload.currentCohort
+      }
+    case managerTypes.SET_TRAINERS:
+      return {
+        ...state,
+        trainers: action.payload.trainers
       }
   }
   return state;

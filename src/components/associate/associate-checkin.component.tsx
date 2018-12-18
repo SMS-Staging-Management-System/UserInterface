@@ -44,7 +44,7 @@ export class AssociateCheckInSubmit extends React.Component<{}, IComponentState,
           </ul>
         </form>
         <div className="modal-footer">
-          <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={()=>associateActions.submitCheckIn(this.state.description)}>Check In</button>
+          <button type="button" className="btn btn-danger" data-dismiss="modal" >Check In</button>
         </div>
       </div>
 

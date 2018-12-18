@@ -14,47 +14,45 @@ export const managerTypes = {
   SELECT_COHORT: 'SELECT_COHORT',
   SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
   SET_CHECK_IN_LIST: 'SET_CHECK_IN_LIST',
-  SET_COHORT_LIST: 'SET_COHORT_LIST'
+  SET_COHORT_LIST: 'SET_COHORT_LIST',
+  SET_TRAINERS: 'SET_TRAINERS'
 }
 
 /**
  * Set up manager list of classes and check-ins
  */
 export const managerInit = () => (dispatch) => {
-  const fromDate = getTodayStart();
-  const toDate = getTodayEnd();
-
-  getAllCheckIn(fromDate, toDate)(dispatch);
-  getManagerCohorts()(dispatch);
+  getManagerCohorts()(dispatch)
+  getManagerCheckIn(getTodayStart(), getTodayEnd())(dispatch);
 }
 
 /**
  * Update a check in with a comment
  * @param comment 
  */
-export const managerPostComment = (comment: string, checkInId: number) => {
+export const managerPostComment = (managerComments: string, checkinId: number) => {
   const body = {
-    "comments": comment
+    checkinId,
+    managerComments
   }
-  checkInClient.postManagerComment(body, checkInId)
+  checkInClient.postManagerComment(body, checkinId)
     .then(response => {
       toast.success("Comment submitted")
     })
     .catch(error => {
-      console.log("error");
+      toast.warn("Unable to submit comment")      
     })
 }
 
 /**
- * Set the current list of render check ins
- * @param ?fromDate 
- * @param ?toDate 
- * @param ?checkInList 
+ * Get a list of manager's check ins
+ * @param fromDate 
+ * @param toDate  
  */
-export const getAllCheckIn = (fromDate: number, toDate: number) => dispatch => {
-  checkInClient.getAllCheckIn(fromDate, toDate)
+export const getManagerCheckIn = (fromDate: number, toDate: number) => dispatch => {
+  checkInClient.getManagerCheckIn(fromDate, toDate)
     .then(response => {
-      const checkinList = response.data.map(checkin => {
+      const checkinList = response.data.models.map(checkin => {
         return checkin as ICheckIn;
       })
       dispatch({
@@ -165,16 +163,16 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
 
 export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
   cohortClient.postUser(user)
-  .then(response => {
-    cohortClient.addUserToCohort(cohortId, response.data.userId)
-    .then( resp => {
-      toast.success("Successfully add user to cohort")
+    .then(response => {
+      cohortClient.addUserToCohort(cohortId, response.data.userId)
+        .then(resp => {
+          toast.success("Successfully add user to cohort")
+        })
+        .catch(err => {
+          toast.warn("Created user but unable to add to cohort")
+        })
     })
-    .catch( err => {
-      toast.warn("Created user but unable to add to cohort")
+    .catch(error => {
+      toast.warn("Unable to create user")
     })
-  })
-  .catch( error => {
-    toast.warn("CUnable to create user")
-  })
 }
