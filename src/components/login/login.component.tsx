@@ -4,6 +4,7 @@ import { IState } from '../../reducers';
 import { connect } from 'react-redux';
 import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPassword.component';
 import * as userActions from '../../actions/user/user.actions';
+import { History } from 'history';
 
 interface IComponentState {
 	cogUser: object,
@@ -16,10 +17,11 @@ interface IComponentState {
 }
 
 interface IComponentProps {
-	cognitoLogin: (username: string, password: string) => { void },
+	cognitoLogin: (username: string, password: string, history: History) => { void },
 	initUser: () => { void },
 	isFirstSignin: boolean,
-	cogUser: any
+	cogUser: any,
+	history: History
 }
 
 export class LoginComponent extends React.Component<IComponentProps, IComponentState> {
@@ -99,7 +101,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 	public submit = (e: any) => {
 		e.preventDefault();
 		const { username, password } = this.state; // destructuring
-		this.props.cognitoLogin(username, password);
+		this.props.cognitoLogin(username, password, this.props.history);
 	}
 
 	public handlePassChange(event) {

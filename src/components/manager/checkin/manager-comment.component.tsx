@@ -49,7 +49,7 @@ export class ManagerCommentComponent extends React.Component<IProps, IComponentS
           </InputGroup>
           </ModalBody>
           <ModalFooter>
-            <Button className="rev-btn" onClick={managerActions.submitCheckInComment(this.state.comment,this.props.checkinId)}>Submit</Button>
+            <Button className="rev-btn" >Submit</Button>
             <Button color="secondary" onClick={this.props.modalOff}>Cancel</Button>
           </ModalFooter>
         </Modal>

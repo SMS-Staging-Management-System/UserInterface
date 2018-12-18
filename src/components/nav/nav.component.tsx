@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 import { IUser } from '../../model/User.model';
 
 import * as userActions from '../../actions/user/user.actions';
+import { withRouter } from 'react-router-dom';
+import { History } from 'history';
 
 interface IComponentState {
   isOpen: boolean
@@ -24,7 +26,9 @@ interface IComponentProps {
   isLogin: boolean,
   user: IUser,
   changePage: (page: string) => { void },
-  logout: () => { void }
+  logout: () => { void },
+  history: History,
+  setup: () => { void }
 }
 class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> {
   constructor(props) {
@@ -32,6 +36,10 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
     this.state = {
       isOpen: false
     };
+  }
+
+  public componentDidMount() {
+    this.props.setup();
   }
 
   public toggle = () => {
@@ -55,7 +63,7 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
             <>
               <DropdownItem
                 className="cursor-hover"
-                onClick={() => this.props.changePage('profile')}>
+                onClick={() => this.props.history.push('profile')}>
                 Profile
               </DropdownItem>
               <DropdownItem divider />
@@ -80,7 +88,7 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
         light expand="md">
         <NavbarBrand
           className="cursor-hover"
-          onClick={() => this.props.changePage('home')}
+          onClick={() => this.props.history.push("/dashboard")}
         >
           <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
         </NavbarBrand>
@@ -99,4 +107,4 @@ const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {
   ...userActions
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AppNav);
+export default withRouter<any>(connect(mapStateToProps, mapDispatchToProps)(AppNav));

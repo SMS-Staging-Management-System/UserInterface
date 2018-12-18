@@ -4,6 +4,7 @@ import { IUser } from 'src/model/User.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { isLoading } from  '../loading/loading.actions';
 import * as userHelpers from './user.helpers';
+import { History } from 'history';
 
 /**
  * userTypes
@@ -24,9 +25,9 @@ export const userTypes = {
  * @param username 
  * @param password 
  */
-export const cognitoLogin = (username: string, password: string) => (dispatch) => {
+export const cognitoLogin = (username: string, password: string, history: History) => (dispatch) => {
   isLoading(true);
-  userHelpers.cognitoLogin(username, password)(dispatch);
+  userHelpers.cognitoLogin(username, password, history)(dispatch);
   isLoading(false);  
 }
 
@@ -86,11 +87,11 @@ export const logout = () => (dispatch) => {
   }
 }
 
-export const changePage = (page: string) => dispatch => {
-  dispatch({
-    payload: {
-      page
-    },
-    type: userTypes.CHANGE_PAGE
-  });
-}
+// export const changePage = (page: string) => dispatch => {
+//   dispatch({
+//     payload: {
+//       page
+//     },
+//     type: userTypes.CHANGE_PAGE
+//   });
+// }
