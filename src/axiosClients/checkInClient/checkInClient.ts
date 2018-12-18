@@ -1,40 +1,27 @@
 import { axiosClient } from '../axiosClient';
-import { getTodayTimeRange } from 'src/include/utcUtil';
 
-export const getAllCheckIn = (fromDate?: number, toDate?: number) => {
-  let params = {};
-  fromDate.toString();
-  toDate.toString();
-
-  if(fromDate && toDate) {
-    params = {
-      fromDate: fromDate.toString(),
-      toDate: toDate.toString()
-    }
+export const getManagerCheckIn = (fromDate: number, toDate: number) => {
+  const params = {
+    fromDate: 0,
+    toDate
   }
-  return axiosClient.get(`/checkins/range`, params);
+  return axiosClient.get(`/checkins/range`, {params});
 }
 
-export const getCheckInByUserId = (userId: number, fromDate?: number, toDate?: number) => {
-  let params = {};
-  if(fromDate && toDate) {
-    params = {
-      fromDate,
-      toDate
-    }
+export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => {
+  const params = {
+    fromDate,
+    toDate
   }
-  return axiosClient.get(`/checkins/associates/${userId}`, params);
+  return axiosClient.get(`/checkins/associates/${userId}`, {params});
 }
 
 export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate: number) => {
-  let params = {};
-  if(fromDate && toDate) {
-    params = {
-      fromDate,
-      toDate
-    }
+  const params = {
+    fromDate,
+    toDate
   }
-  return axiosClient.get(`/checkins/cohorts/${cohortId}`, params);
+  return axiosClient.get(`/checkins/cohorts/${cohortId}`, {params});
 }
 
 export const getCheckInByUserEmail = (email: number, fromDate: number, toDate: number) => {
@@ -47,15 +34,16 @@ export const getCheckInByUserEmail = (email: number, fromDate: number, toDate: n
   // }
   // axiosClient.get(`/users/email/${email}`)
   // .then(response => {
-    
+
   // })
 }
 
-export const getManagerCheckInToday = () => {
-  const params = getTodayTimeRange();
-  return axiosClient.get(`/checkins/cohorts`, {
-    params
-  });
+export const getAssociateCheckIn = (userId: number, fromDate: number, toDate: number) => {
+  const params = {
+    fromDate,
+    toDate
+  }
+  return axiosClient.get(`/checkins/associates/${userId}`, {params})
 }
 
 export const postCheckIn = (body: object) => {

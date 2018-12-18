@@ -1,5 +1,6 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import { ICheckIn } from '../../model/CheckIn.model';
+import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
 
 export const associateTypes = {
   CHECK_IN_PAGE_CHANGE: 'CHECK_IN_PAGE_CHANGE',
@@ -10,14 +11,8 @@ export const associateTypes = {
 /**
  * Get associate checkins
  */
-export const associateInit = (userId: number) => (dispatch) => {
-  const fromDate = new Date();
-  fromDate.setUTCHours(0,0,0,0);
-  
-  const toDate = new Date();
-  toDate.setUTCHours(11,59,59,59);
-  
-  checkInClient.getCheckInByUserId(userId)
+export const associateInit = (userId: number) => (dispatch) => {  
+  checkInClient.getCheckInByUserId(userId, getTodayStart(), getTodayEnd())
   .then(response => {
     const checkInList = response.data.result.checkIns.map(checkIn => {
       return checkIn as ICheckIn;
