@@ -13,17 +13,15 @@ import { NumberOfBytesType } from 'aws-sdk/clients/kms';
 interface IState {
   cohort: string,
   endDate: NumberOfBytesType,
-  startDate: number,
-  user: any
+  startDate: number
 }
 export class ManagerCheckinFilterComponent extends React.Component<{}, IState> {
   constructor(props) {
     super(props)
     this.state = {
       cohort: '',
-      endDate: null,
-      startDate: null,
-      user: ''
+      endDate: new Date().setHours(0,0,0,0) - 86379000,
+      startDate: new Date().setHours(0,0,0,0)
     }
   }
 
@@ -86,17 +84,6 @@ export class ManagerCheckinFilterComponent extends React.Component<{}, IState> {
                 <option>Cohort 2</option>
                 <option>Cohort 3</option>
                 <option>Cohort 4</option>
-              </select>
-            </div>
-            <div className="form-group sel-box">
-              <h1 className="head-divider">|</h1>
-            </div>
-            <div className="form-group sel-box" >
-              <select className="form-control sel-elem" >
-                <option>All</option>
-                <option>Associate 1</option>
-                <option>Associate 2</option>
-                <option>Associate 3</option>
               </select>
             </div>
             <div className="form-group sel-box">
