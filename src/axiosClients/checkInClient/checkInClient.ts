@@ -1,5 +1,5 @@
 import { axiosClient } from '../axiosClient';
-import { getTodayTimeRange } from 'src/include/utcUtil';
+// import { getTodayTimeRange } from 'src/include/utcUtil';
 
 export const getAllCheckIn = (fromDate?: number, toDate?: number) => {
   let params = {};
@@ -35,9 +35,12 @@ export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate:
 }
 
 export const getManagerCheckInToday = () => {
-  const params = getTodayTimeRange();
+
   return axiosClient.get(`/checkins/cohorts`, {
-    params
+    params : {
+      fromDate: 0,
+      toDate: 1545145895377
+    }
   });
 }
 

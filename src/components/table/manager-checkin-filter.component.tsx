@@ -8,40 +8,67 @@ import MomentLocaleUtils, {
 } from 'react-day-picker/moment';
 
 import 'moment/locale/it';
+import { NumberOfBytesType } from 'aws-sdk/clients/kms';
 
-export class ManagerCheckinFilterComponent extends React.Component {
-  constructor(props){
+interface IState {
+  cohort: string,
+  endDate: NumberOfBytesType,
+  startDate: number,
+  user: any
+}
+export class ManagerCheckinFilterComponent extends React.Component<{}, IState> {
+  constructor(props) {
     super(props)
-    this.state={
+    this.state = {
       cohort: '',
-      endDate: '',
-      startDate: '',
+      endDate: null,
+      startDate: null,
       user: ''
     }
   }
 
-  public getTodayFilter(){
+  public getStartDate = (selectedDay, modifiers, dayPickerInput) => {
+    const input = dayPickerInput.getInput();
+    this.setState({
+      startDate: new Date(input.value).getTime()
+    })
+    
+  }
+
+  public getEndDate = (selectedDay, modifiers, dayPickerInput) => {
+    const input = dayPickerInput.getInput();
+    this.setState({
+      endDate: new Date(input.value).getTime()
+    })
+  }
+
+  public getTodayFilter = () => {
     const currentDate = new Date();
-    currentDate.setHours(0,0,0,0);
+    currentDate.setHours(0, 0, 0, 0);
 
     const endDate = new Date();
-    endDate.setHours(0,0,0,0);
+    endDate.setHours(0, 0, 0, 0);
     let endDateMilli = endDate.getTime()
-    endDateMilli = endDateMilli + 86379000; 
+    endDateMilli = endDateMilli + 86379000;
 
     this.setState({
       endDate: endDateMilli,
       startDate: currentDate.getTime(),
     })
 
+    //  console.log("start day: "+ currentDate.toString() + "  end of day: " + endDateMilli.toString())
 
   }
-  // public getWeekFilter(){
-    
-  // }
-  // public getCustomDateFilter(){
-
-  // }
+  public getWeekFilter = () => {
+    console.log("here")
+    let lastWeek = new Date();
+    lastWeek = new Date(lastWeek.setDate(lastWeek.getDate() - 7))
+    const currentDate = new Date();
+    console.log("today: " + currentDate.toString() + "  1 week ago: " + lastWeek.toString())
+  }
+  public getCustomDateFilter = () => {
+    console.log()
+  }
 
   public render() {
     const day = MomentLocaleUtils;
@@ -82,13 +109,14 @@ export class ManagerCheckinFilterComponent extends React.Component {
               <h1 className="head-divider">|</h1>
             </div>
             <div className="form-group sel-box">
-              <h4 className="head-divider"><button type="button" className="filter-button">Week</button></h4>
+              <h4 className="head-divider"><button onClick={this.getWeekFilter} type="button" className="filter-button">Week</button></h4>
             </div>
             <div className="form-group sel-box">
               <h1 className="head-divider">|</h1>
             </div>
             <div className="form-group sel-box">
               <DayPickerInput
+                onDayChange={this.getStartDate}
                 formatDate={formatDate}
                 format="LL"
                 parseDate={parseDate}
@@ -100,6 +128,7 @@ export class ManagerCheckinFilterComponent extends React.Component {
             </div>
             <div className="form-group sel-box">
               <DayPickerInput
+                onDayChange={this.getEndDate}
                 formatDate={formatDate}
                 format="LL"
                 parseDate={parseDate}
@@ -107,7 +136,7 @@ export class ManagerCheckinFilterComponent extends React.Component {
               />
             </div>
             <div className="form-group sel-box">
-              <h4 className="head-divider"><button type="button" className="filter-button">Go</button></h4>
+              <h4 className="head-divider"><button onClick={this.getCustomDateFilter} type="button" className="filter-button">Go</button></h4>
             </div>
           </div>
         </div>

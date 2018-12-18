@@ -24,7 +24,7 @@ export const managerInit = () => (dispatch) => {
   const fromDate = getTodayStart();
   const toDate = getTodayEnd();
 
-  getAllCheckIn(fromDate, toDate);
+  getAllCheckIn(fromDate, toDate)(dispatch);
 
   cohortClient.getManagerCohorts()
   .then(response => {
