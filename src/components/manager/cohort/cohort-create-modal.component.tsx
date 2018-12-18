@@ -70,9 +70,6 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
       return user as IUserCreateDto
     });
 
-    listOfUsers.push(this.state.cohortName);
-    listOfUsers.push(this.state.cohortDescription);
-
     this.props.managerPostCohort(this.state.cohortName, this.state.cohortDescription, listOfUsers);
   }
 

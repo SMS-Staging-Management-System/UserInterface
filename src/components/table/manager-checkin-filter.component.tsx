@@ -112,8 +112,6 @@ export class ManagerCheckinFilterComponent extends React.Component {
           </div>
         </div>
       </>
-
-
     );
   }
 }
