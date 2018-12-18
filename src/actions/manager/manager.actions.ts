@@ -30,17 +30,17 @@ export const managerInit = () => (dispatch) => {
  * Update a check in with a comment
  * @param comment 
  */
-export const managerPostComment = (comment: string, checkInId: number) => {
-  console.log("AASDFA")
+export const managerPostComment = (managerComments: string, checkinId: number) => {
   const body = {
-    "comments": comment
+    checkinId,
+    managerComments
   }
-  checkInClient.postManagerComment(body, checkInId)
+  checkInClient.postManagerComment(body, checkinId)
     .then(response => {
       toast.success("Comment submitted")
     })
     .catch(error => {
-      console.log("error");
+      toast.warn("Unable to submit comment")      
     })
 }
 

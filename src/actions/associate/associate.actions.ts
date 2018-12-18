@@ -1,6 +1,7 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import { ICheckIn } from '../../model/CheckIn.model';
 import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
+import { toast } from 'react-toastify';
 
 export const associateTypes = {
   CHECK_IN_PAGE_CHANGE: 'CHECK_IN_PAGE_CHANGE',
@@ -33,15 +34,16 @@ export const associateInit = (userId: number) => (dispatch) => {
  * Associate submit a new check in
  * @param description 
  */
-export const submitCheckIn = (description: string) => {
+export const submitCheckIn = (checkinDescription: string, userId: number) => {
   const body = {
-    "description": description
+    checkinDescription,
+    userId
   }
   checkInClient.postCheckIn(body)
   .then(response => {
-    console.log("error");
+    toast.success("Check in submitted")
   })
   .catch(error => {
-    console.log("error");
+    toast.warn("Unable to submit check in")    
   });
 }
