@@ -1,12 +1,19 @@
 import * as React from 'react';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
-import { FAKE_CHECK_IN_DATA } from '../../include/fake';
 import AssociateRow from './associate-row.component';
+import { IState } from '../../reducers/index';
+import { connect } from 'react-redux';
+import * as associateActions from '../../actions/associate/associate.actions';
+import { ICheckIn } from 'src/model/CheckIn.model';
 
-interface IState {
+interface IComponentState {
   currentPage: number
 }
-class AssociateCheckInPagination extends React.Component<{}, IState>{
+
+interface IComponentProps {
+  checkIns: ICheckIn[]
+}
+class AssociateCheckInPagination extends React.Component<IComponentProps, IComponentState>{
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +42,7 @@ class AssociateCheckInPagination extends React.Component<{}, IState>{
 
   public render() {
     // create the final page number based on 5 check-ins per page
-    const TOTAL_PAGES = Math.ceil(FAKE_CHECK_IN_DATA.length / 10);
+    const TOTAL_PAGES = Math.ceil(this.props.checkIns.length / 10);
     return (
       <>
         {/* Inject CheckInRowComponent and share page number with it as props */}
@@ -52,7 +59,7 @@ class AssociateCheckInPagination extends React.Component<{}, IState>{
                 <PaginationLink previous />
               </PaginationItem>
               {/* Use the index from the array of check-ins to create page numbers */}
-              {FAKE_CHECK_IN_DATA.map((data, index) =>
+              {this.props.checkIns.map((data, index) =>
                 index % 10 === 0 && index > 0 &&
                 <PaginationItem key={index} onClick={() => this.changePage(index / 10)}>
                   <PaginationLink >
@@ -74,4 +81,8 @@ class AssociateCheckInPagination extends React.Component<{}, IState>{
   }
 }
 
-export default AssociateCheckInPagination 
+const mapStateToProps = (state: IState) => (state.associate)
+const mapDispatchToProps = {
+  ...associateActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AssociateCheckInPagination) 

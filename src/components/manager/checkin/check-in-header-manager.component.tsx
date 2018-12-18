@@ -12,7 +12,7 @@ export class CheckInHeaderManagerComponent extends React.Component<{}> {
           <th scope="col">User ID</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
-            <th scope="col">Cohort</th>
+            <th scope="col">Email</th>
             <th scope="col">Check-in Time</th>
           </tr>
         </thead>

@@ -1,5 +1,12 @@
 import * as React from 'react';
-export class AssociateCheckInSubmit extends React.Component<{}> {
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
+import * as associateActions from  '../../actions/associate/associate.actions';
+
+interface IComponentState {
+  description: string
+}
+export class AssociateCheckInSubmit extends React.Component<{}, IComponentState, any> {
 
   constructor(props: any) {
     super(props);
@@ -15,11 +22,12 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
     console.log(event.target.value)
   }
 
-  public handleSubmit = (event) => {
-    ;
-    console.log('Check in successful');
-    event.preventDefault();
-  }
+  // public handleSubmit = (event) => {
+  //   ;
+  //   console.log('Check in successful');
+
+  //   event.preventDefault();
+  // }
 
   public render() {
     return (
@@ -36,7 +44,7 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
           </ul>
         </form>
         <div className="modal-footer">
-          <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.handleSubmit}>Check In</button>
+          <button type="button" className="btn btn-danger" data-dismiss="modal" >Check In</button>
         </div>
       </div>
 
@@ -44,4 +52,9 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
   }
 }
 
-export default AssociateCheckInSubmit
+const mapStateToProps = (state: IState) => (state.associate)
+const mapDispatchToProps = {
+  ...associateActions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssociateCheckInSubmit);

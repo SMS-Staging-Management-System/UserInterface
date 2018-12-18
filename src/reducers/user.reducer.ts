@@ -2,23 +2,16 @@ import { userTypes } from '../actions/user/user.actions';
 import { IUserState } from '.';
 import { toast } from "react-toastify";
 
-const FAKE_USER = { "city":       "Arlington",
-                    "email":      "a@mail.com",
-                    "firstname":  "Blake",
-                    "lastname":   "Kruppa",
-                    "mobile":     "714-123-1234",
-                    "state":      "California", 
-                    "timezone":   "+2", 
-                    "userId":     1,
-                    "zip":        "76013"}
-
 const initialState: IUserState = {
+  admins:  [],
   cogUser: null,
   isFirstSignin: false,
   isLogin: false,
   page:   'home',
-  roles:  [],
-  user:   FAKE_USER
+  roles:    [],
+  stagings: [],
+  trainers: [],
+  user:   null
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -68,6 +61,26 @@ export const userReducer = (state = initialState, action: any) => {
         ...state,
         cogUser:  action.payload.cogUser,
         isFirstSignin: true
+      }
+    case userTypes.USER_INIT:
+      return {
+        ...state,
+        user:  action.payload.user
+      }
+    case userTypes.SET_TRAINERS:
+      return {
+        ...state,
+        trainers:  action.payload.trainers
+      }
+    case userTypes.SET_STAGINGS:
+      return {
+        ...state,
+        stagings:  action.payload.stagings
+      }
+    case userTypes.SET_ADMINS:
+      return {
+        ...state,
+        admins:  action.payload.admins
       }
   }
   return state;

@@ -1,40 +1,49 @@
 import { axiosClient } from '../axiosClient';
 
-export const getAllCheckIn = (fromDate?: number, toDate?: number) => {
-  let params = {};
-  if(fromDate && toDate) {
-    params = {
-      fromDate,
-      toDate
-    }
+export const getManagerCheckIn = (fromDate: number, toDate: number) => {
+  const params = {
+    fromDate,
+    toDate
   }
-  return axiosClient.get(`/checkins`, params);
+  return axiosClient.get(`/checkins/range`, {params});
 }
 
-export const getCheckInByUserId = (userId: number, fromDate?: number, toDate?: number) => {
-  let params = {};
-  if(fromDate && toDate) {
-    params = {
-      fromDate,
-      toDate
-    }
+export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => {
+  const params = {
+    fromDate,
+    toDate
   }
-  return axiosClient.get(`/checkins/users/${userId}`, params);
+  return axiosClient.get(`/checkins/associates/${userId}`, {params});
 }
 
 export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate: number) => {
-  let params = {};
-  if(fromDate && toDate) {
-    params = {
-      fromDate,
-      toDate
-    }
+  const params = {
+    fromDate,
+    toDate
   }
-  return axiosClient.get(`/checkins/cohorts/${cohortId}`, params);
+  return axiosClient.get(`/checkins/cohorts/${cohortId}`, {params});
 }
 
-export const getManagerCheckInToday = () => {
-  return axiosClient.post(`/checkins/today`);
+export const getCheckInByUserEmail = (email: number, fromDate: number, toDate: number) => {
+  // let params = {};
+  // if(fromDate && toDate) {
+  //   params = {
+  //     fromDate,
+  //     toDate
+  //   }
+  // }
+  // axiosClient.get(`/users/email/${email}`)
+  // .then(response => {
+
+  // })
+}
+
+export const getAssociateCheckIn = (userId: number, fromDate: number, toDate: number) => {
+  const params = {
+    fromDate,
+    toDate
+  }
+  return axiosClient.get(`/checkins/associates/${userId}`, {params})
 }
 
 export const postCheckIn = (body: object) => {

@@ -2,14 +2,14 @@ import * as React from 'react';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
 import { IUser } from 'src/model/User.model';
-import { ManagerContentComponent } from '../manager/manager-content.component';
+import ManagerContentComponent from '../manager/manager-content.component';
 import { AssociateContentComponent } from '../associate/associate-content.component';
 import { UserProfileComponent } from '../userProfile/userProfile.component';
 
 interface IStateProps {
-  user:   IUser,
-  page:   string,
-  roles:  string[]
+  user: IUser,
+  page: string,
+  roles: string[]
 }
 
 /**
@@ -18,17 +18,16 @@ interface IStateProps {
 export class DashboardComponent extends React.Component<IStateProps> {
 
   public renderRoleContent = () => {
-    console.log(this.props.roles)
-    if(this.props.page === 'home') {
-      if(this.props.roles === undefined) {
+    if (this.props.page === 'home') {
+      if (this.props.roles === undefined) {
         return <AssociateContentComponent />
       }
-      else if(this.props.roles.includes('admin')) {
-        return <ManagerContentComponent />  
-      } 
-      else if(this.props.roles.includes('staging-manager')) {
-        return <ManagerContentComponent />  
-      } 
+      else if (this.props.roles.includes('admin')) {
+        return <ManagerContentComponent />
+      }
+      else if (this.props.roles.includes('staging-manager')) {
+        return <ManagerContentComponent />
+      }
       else {
         return <></>
       }
@@ -42,7 +41,7 @@ export class DashboardComponent extends React.Component<IStateProps> {
   public render() {
     const sContent = this.renderRoleContent();
     return (
-      <>  
+      <>
         {sContent}
       </>
     );
