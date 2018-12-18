@@ -12,8 +12,9 @@ interface IProps {
   checkinId: number
   firstName: string
   modal: boolean
-  toggle: (name:string) => void
+  toggle: (name: string) => void
   modalOff: () => void
+  managerPostComment: (comment: string, checkinId: number) => void
 }
 
 interface IComponentState {
@@ -26,12 +27,18 @@ export class ManagerCommentComponent extends React.Component<IProps, IComponentS
       comment: ''
     }
   }
-  // get comment form input and pass to manager actions to submit
+
   public getComment = (event) => {
     this.setState({
       comment: event.target.value
     })
   }
+
+  public handlePostComment = () => {
+    this.props.managerPostComment(this.state.comment, this.props.checkinId);
+    this.props.modalOff();
+  }
+
   public render() {
     return (
       <>
@@ -49,13 +56,12 @@ export class ManagerCommentComponent extends React.Component<IProps, IComponentS
           </InputGroup>
           </ModalBody>
           <ModalFooter>
-            <Button className="rev-btn" >Submit</Button>
+            <Button className="rev-btn" onClick={this.handlePostComment}>Submit</Button>
             <Button color="secondary" onClick={this.props.modalOff}>Cancel</Button>
           </ModalFooter>
         </Modal>
       </div> 
       </>
-
     );
   }
 }

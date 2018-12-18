@@ -26,8 +26,7 @@ export interface IManagerState {
   cohorts:          ICohort[],
   comment:          string,
   checkIns:         ICheckIn[],
-  currentCohort:    ICohort,
-  isShowCohort:     boolean
+  currentCohort:    ICohort
 }
 
 export interface IAssociateState {

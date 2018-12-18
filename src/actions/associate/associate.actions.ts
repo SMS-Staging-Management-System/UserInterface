@@ -11,9 +11,14 @@ export const associateTypes = {
  * Get associate checkins
  */
 export const associateInit = (userId: number) => (dispatch) => {
+  const fromDate = new Date();
+  fromDate.setUTCHours(0,0,0,0);
+  
+  const toDate = new Date();
+  toDate.setUTCHours(11,59,59,59);
+  
   checkInClient.getCheckInByUserId(userId)
   .then(response => {
-    localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
     const checkInList = response.data.result.checkIns.map(checkIn => {
       return checkIn as ICheckIn;
     })

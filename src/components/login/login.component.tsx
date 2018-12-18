@@ -113,14 +113,20 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
 	public handleChange(event) {
 		const movePassBox = (document.getElementById('pass') as HTMLElement);
-		const usrBtn = (document.getElementById("userBut") as HTMLElement);
+		// const usrBtn = (document.getElementById("userBut") as HTMLElement);
 		const passBtn = (document.getElementById("passBut") as HTMLElement);
 
 		if (event.target.value === "") {
-			usrBtn.style.opacity = "1";
+			// usrBtn.style.opacity = "1";
 			passBtn.style.opacity = "0";
 			movePassBox.style.opacity = "0";
 			movePassBox.style.marginTop = "0";
+		}
+		else {
+			movePassBox.style.marginTop = "35px";
+			movePassBox.style.opacity = "1";
+			// usrBtn.style.opacity = "0";
+			passBtn.style.opacity = "1";
 		}
 		
 		this.setState({
@@ -132,19 +138,19 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 	public moveTextBox = (e: any) => {
 		e.preventDefault();
 		const movePassBox = (document.getElementById('pass') as HTMLElement);
-		const usrBtn = (document.getElementById("userBut") as HTMLElement);
+		// const usrBtn = (document.getElementById("userBut") as HTMLElement);
 		const passBtn = (document.getElementById("passBut") as HTMLElement);
 		const userText = (document.getElementById("user") as HTMLInputElement);
 		if (userText.value === "") {
 			movePassBox.style.opacity = "0";
-			usrBtn.style.opacity = "1";
+			// usrBtn.style.opacity = "1";
 			passBtn.style.opacity = "0";
 			movePassBox.style.marginTop = "0";
 		}
 		else {
 			movePassBox.style.marginTop = "35px";
 			movePassBox.style.opacity = "1";
-			usrBtn.style.opacity = "0";
+			// usrBtn.style.opacity = "0";
 			passBtn.style.opacity = "1";
 		}
 
@@ -161,7 +167,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 							<form className="form-inline" onSubmit={this.moveTextBox}>
 								<div className="frontDiv">
 									<input id="user" type="text" className="form-control txt-bx" placeholder="Username" onChange={this.handleChange.bind(this)} />
-									<button id="userBut"><h6 className="text-muted">Go</h6></button>
 								</div>
 							</form>
 							<form className="form-inline shift" onSubmit={this.submit}>
