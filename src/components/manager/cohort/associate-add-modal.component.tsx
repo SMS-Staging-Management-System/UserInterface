@@ -8,7 +8,7 @@ import * as managerActions from '../../../actions/manager/manager.actions';
 import { ICohort } from 'src/model/Cohort.model';
 
 /*
-* The modal to add an associate to a cohort
+* The modal to add a single associate to a cohort
 */
 
 export interface IProps {
