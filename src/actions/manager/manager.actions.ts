@@ -183,6 +183,10 @@ export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) 
     })
 }
 
+export const deleteCognitoGroup = (email: string, role: string) => dispatch => {
+  // Stuff will go in here, don't complain
+}
+
 export const getAllUsers = () => dispatch => {
   userClient.getAllUsers()
   .then(response => {

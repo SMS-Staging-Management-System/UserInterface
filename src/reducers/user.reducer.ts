@@ -3,14 +3,23 @@ import { IUserState } from '.';
 import { toast } from "react-toastify";
 
 const initialState: IUserState = {
-  admins:  [],
+  admins:  [{
+    'email': 'revatureEmp@revature.com',
+    'firstName': "Calvin",
+    'lastName': 'Vo'
+    }],
+  associates: [],
   cogUser: null,
   isFirstSignin: false,
-  isLogin: false,
+  isLogin: true,
   page:   'home',
   roles:    [],
   stagings: [],
-  trainers: [],
+  trainers: [{
+    'email': 'revatureEmp@revature.com',
+    'firstName': "Calvin",
+    'lastName': 'Vo'
+    }],
   user:   null
 }
 
