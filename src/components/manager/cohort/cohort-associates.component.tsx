@@ -3,7 +3,7 @@ import { Collapse, Button } from "reactstrap";
 import AssociateTableComponent from "src/components/table/associateTable.component";
 
 /*
- *The cohort associates component
+ *The Cohort Associates component
  */
 
 interface IProps {
