@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import { IState } from 'src/reducers';
 // import { IUser } from 'src/model/User.model';
 import {Button, FormGroup, Input, Label, Col, Row} from 'reactstrap';
+import * as managerActions from '../../actions/manager/manager.actions';
 
 
 interface IComponentState {
+   email: string
    isCheckedAssociate: any
    isCheckedStageMan: any
    isCheckedTrainer: any
@@ -29,11 +31,16 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
       super(props);
 
       this.state={
+         email: '',
          isCheckedAssociate: false,
          isCheckedStageMan: false,
          isCheckedTrainer: false,
          roleSelected: 'ADMIN'
       }
+   }
+
+   public handleSubmit = () => {
+
    }
 
    public handleTabClickAssoc = ()=>{
@@ -69,6 +76,13 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
          isCheckedAssociate: value
       });
    }
+
+   public handleEmailChange = (e: any) => {
+      this.setState({
+         email: e.target.value
+      })
+   }
+
    public handleRoleCheckboxTrain = (e: any) =>{
       const target = e.target;
       const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -159,7 +173,7 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
                                  <Label > Email </Label> 
                               </Col>
                               <Col xs={10}> 
-                                 <Input type="email"> </Input>
+                                 <Input onChange={this.handleEmailChange} type="email"> </Input>
                               </Col>
                            </Row>
                         </FormGroup>
@@ -197,7 +211,7 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
                         </Row>
                      </div>
                      <div className="modal-footer">
-                        <Button type="button" color="success">Submit</Button>
+                        <Button onClick={this.handleSubmit} type="button" color="success">Submit</Button>
                      {/* <Button type="button" color = "danger"data-dismiss="modal">Close</Button> */}
                      </div>
                   </div>
@@ -224,5 +238,7 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
 }
 
 const mapStateToProps = (state: IState) => state.manager
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+   ...managerActions
+}
 export default connect(mapStateToProps, mapDispatchToProps)(ManageUsersTabComponenet)

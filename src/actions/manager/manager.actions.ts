@@ -1,6 +1,7 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import * as cohortClient from '../../axiosClients/cohortClient/cohortClient';
 import * as userClient from '../../axiosClients/userClient/userClient';
+import * as blakeClient from '../../axiosClients/blakeClient/blakeClient';
 import { toast } from "react-toastify";
 import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
@@ -8,6 +9,7 @@ import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { IUser } from 'src/model/User.model';
 import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
 import { getManagerCohorts, sortCheckInByDate } from './manager.helpers';
+import { blakeClient } from 'src/axiosClients/axiosClient';
 
 export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
@@ -183,8 +185,18 @@ export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) 
     })
 }
 
+export const addCognitoGroup = (email: string, role: string) => dispatch => {
+  blakeClient.addUserGroup(email, role)
+  .then(response => {
+    toast.success("User is added to group")
+  })
+}
+
 export const deleteCognitoGroup = (email: string, role: string) => dispatch => {
-  // Stuff will go in here, don't complain
+  blakeClient.deleteUserGroup(email, role)
+  .then(response => {
+    toast.success("User is removed from group")
+  })
 }
 
 export const getAllUsers = () => dispatch => {
