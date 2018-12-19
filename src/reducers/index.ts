@@ -24,9 +24,9 @@ export interface IUserState {
 export interface IManagerState {
   associates:       IUser[],
   cohorts:          ICohort[],
+  comment:          string,
   checkIns:         ICheckIn[],
-  currentCohort:    ICohort,
-  isShowCohort:     boolean
+  currentCohort:    ICohort
 }
 
 export interface IAssociateState {

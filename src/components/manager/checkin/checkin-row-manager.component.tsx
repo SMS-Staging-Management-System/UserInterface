@@ -5,6 +5,7 @@ import { IState } from '../../../reducers/index';
 import { connect } from 'react-redux';
 import * as managerActions from '../../../actions/manager/manager.actions';
 import { ICheckIn } from '../../../model/CheckIn.model';
+import time from '../../../include/time'
 
 /*
   *The check-in row component
@@ -79,7 +80,7 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
         if (index >= FIRST_INDEX && index <= LAST_INDEX) {
           return <tr
             id={`row-${user.userId}`}  // set unique user ids for each row
-            key={user.userId}  // using user id for the key as well
+            key={user.checkinId}  // using user id for the key as well
             onClick={() => this.getName(user.firstName)} // activate comment modal
             onMouseOver={() => this.tasks(user.userId, user.checkinDescription, user.managerComments)} // activate daily tasks
             onMouseLeave={() => this.hide()}
@@ -90,7 +91,8 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
             <td >{user.userId}</td>
             <td>{user.firstName}</td>
             <td>{user.lastName}</td>
-            <td>{user.dateSubmitted}</td>
+            <td>{user.email}</td>
+            <td>{time(user.dateSubmitted)}</td>
           </tr>
         } else {
           return <></>
@@ -112,11 +114,12 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
           <ManagerDailyTasksComponent
             comment={this.state.managerComment}
             description={this.state.description}
-            userId={this.state.checkinId}
+            checkinId={this.state.checkinId}
             show={this.state.popover} />
         }
         {/* Modal for manager comments */}
         <ManagerCommentComponent
+          checkinId={this.state.checkinId}
           toggle={this.getName}
           modal={this.state.modal}
           firstName={this.state.firstName}

@@ -2,35 +2,65 @@ import * as React from "react";
 import { ICohort } from "src/model/Cohort.model";
 
 /**
- * The class row
+ * The cohort row
  */
 
-interface IPropsComponent {
-  cohort: ICohort,
-  selectCohort: (sCohort: ICohort) => (dispatch: any) => void,
-  changeSelected: (selected: number) => void,
-  selected: boolean
+interface IStateComponent {
+  isChanging: boolean;
 }
 
-export class CohortRowComponent extends React.Component<IPropsComponent> {
+interface IPropsComponent {
+  cohort: ICohort;
+  selectCohort: (sCohort: ICohort) => (dispatch: any) => void;
+  changeSelected: (selected: number) => void;
+  selected: boolean;
+  toggle: () => void;
+}
+
+export class CohortRowComponent extends React.Component<
+  IPropsComponent,
+  IStateComponent
+> {
   constructor(props) {
     super(props);
-
+    this.state = {
+      isChanging: false
+    };
   }
 
   public handleClick = () => {
-    this.props.changeSelected(this.props.cohort.cohortId);
+    if (this.state.isChanging === false) {
+      this.setState({
+        ...this.state,
+        isChanging: true
+      })
+      this.props.changeSelected(this.props.cohort.cohortId);
 
-    this.props.selectCohort(this.props.cohort);
-  }
+      this.props.selectCohort(this.props.cohort);
+
+      this.props.toggle();
+
+      setTimeout(() => {
+        this.props.toggle();
+        this.setState({
+          ...this.state,
+          isChanging: false
+        })
+      }, 500);
+    }
+  };
 
   public render() {
     return (
       <>
-          <tr className={this.props.selected ? "orange" : ""} id={`cohort-row-${this.props.cohort.cohortId}`} onClick={() => this.handleClick()}>
-            <td>{this.props.cohort.cohortName}</td>
-            <td>{this.props.cohort.userList.length}</td>
-          </tr>
+        <tr
+          className={"cursor-hover " + (this.props.selected ? "cohort-row-selected" : "")}
+          id={`cohort-row-${this.props.cohort.cohortId}`}
+          onClick={() => this.handleClick()}
+        >
+          <td>{this.props.cohort.cohortName}</td>
+          <td>{this.props.cohort.userList.length}</td>
+        </tr>
       </>
     );
   }

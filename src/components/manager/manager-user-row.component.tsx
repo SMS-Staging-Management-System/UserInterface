@@ -1,14 +1,15 @@
 import * as React from 'react';
 // import { IUser } from "src/model/User.model";
+import {FormGroup, Input} from 'reactstrap';
 
-interface IState {
+interface IComponentState {
    cChecked: any
 }
-// interface IProps {
-//    user: IUser
-//  }
+interface IProps {
+   Data: any
+ }
 
-export class ManagerUserRowComponent extends React.Component <{}, IState> {
+export class ManagerUserRowComponent extends React.Component <IProps, IComponentState > {
    constructor(props){
       super(props);
 
@@ -31,15 +32,23 @@ export class ManagerUserRowComponent extends React.Component <{}, IState> {
 
    public render() {
 
-     // let rowId=0;
       return(
          <>
-            <tr>
-               <td>Minasie</td>
-               <td>Yosief </td>
-               <td>misu@misu.edu</td>
-               <td>Assoicate</td>
-               <td> 
+            <tr >
+               <td>{this.props.Data.firstName}</td>
+               <td>{this.props.Data.lastName}</td>
+               <td>{this.props.Data.email}</td>
+               <td>
+               <FormGroup>
+                  <Input type="select" name="select" id="exampleSelect">
+                    
+                     <option>Associate</option>
+                     <option>Staging Manager</option>
+                     <option>Trainer</option>
+                  </Input>
+               </FormGroup>
+               </td>
+               <td className="flex-center"> 
                   <div>
                      <label className="switch">
                         <input type="checkbox"

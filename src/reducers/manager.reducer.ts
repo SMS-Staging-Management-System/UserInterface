@@ -6,8 +6,8 @@ const initialState: IManagerState = {
   associates: [],
   checkIns:   [],
   cohorts:    [],
-  currentCohort:  null,
-  isShowCohort:   false
+  comment:    '',
+  currentCohort:  null
 }
 
 export const managerReducer = (state = initialState, action: any) => {
@@ -19,13 +19,18 @@ export const managerReducer = (state = initialState, action: any) => {
         ...state,
         checkIns
       }
-    case managerTypes.ADD_COHORTS:
+    case managerTypes.ADD_COHORT:
       let cohorts = state.cohorts;
-      cohorts += action.payload.cohorts;
+      cohorts += action.payload.cohort;
       toast.success("Cohort added");
       return {
         ...state,
         cohorts
+      }
+    case managerTypes.SET_CHECK_IN_COMMENT:
+      return {
+        ...state,
+        comment: action.payload.comment
       }
     case managerTypes.SET_CHECK_IN_LIST:
       return {
@@ -35,17 +40,13 @@ export const managerReducer = (state = initialState, action: any) => {
     case managerTypes.SET_COHORT_LIST:
       return {
         ...state,
-        cohorts: action.payload.cohorts
+        cohorts: action.payload.cohorts,
+        currentCohort: action.payload.currentCohort
       }
     case managerTypes.SELECT_COHORT:
       return {
         ...state,
-        cohorts: action.payload.cohorts
-      }
-    case managerTypes.SET_SHOW_COHORT:
-      return {
-        ...state,
-        isShowCohort: action.payload.isShowCohort
+        currentCohort: action.payload.currentCohort
       }
   }
   return state;
