@@ -2,11 +2,18 @@ import * as React from 'react';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
 import * as associateActions from  '../../actions/associate/associate.actions';
+import { IUser } from 'src/model/User.model';
 
 interface IComponentState {
   description: string
 }
-export class AssociateCheckInSubmit extends React.Component<{}, IComponentState, any> {
+
+interface IComponentProps {
+  user: IUser,
+  associate: IState,
+  handleSubmitClick: () => void
+}
+export class AssociateCheckInSubmit extends React.Component<IComponentProps, IComponentState> {
 
   constructor(props: any) {
     super(props);
@@ -15,6 +22,8 @@ export class AssociateCheckInSubmit extends React.Component<{}, IComponentState,
     }
   }
 
+  // this.props.user.userId;
+
   public handleChange = (event) => {
     this.setState({
       description: event.target.value
@@ -22,12 +31,10 @@ export class AssociateCheckInSubmit extends React.Component<{}, IComponentState,
     console.log(event.target.value)
   }
 
-  // public handleSubmit = (event) => {
-  //   ;
-  //   console.log('Check in successful');
-
-  //   event.preventDefault();
-  // }
+  public handleSubmitCheckIn = () => {
+    associateActions.submitCheckIn(this.state.description, this.props.user.userId);
+    this.props.handleSubmitClick();
+  }
 
   public render() {
     return (
@@ -44,7 +51,7 @@ export class AssociateCheckInSubmit extends React.Component<{}, IComponentState,
           </ul>
         </form>
         <div className="modal-footer">
-          <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={()=>associateActions.submitCheckIn(this.state.description)}>Check In</button>
+          <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.handleSubmitCheckIn}>Check In</button>
         </div>
       </div>
 
@@ -52,7 +59,7 @@ export class AssociateCheckInSubmit extends React.Component<{}, IComponentState,
   }
 }
 
-const mapStateToProps = (state: IState) => (state.associate)
+const mapStateToProps = (state: IState) => (state.user)
 const mapDispatchToProps = {
   ...associateActions
 }

@@ -13,8 +13,8 @@ export const associateTypes = {
 export const associateInit = (userId: number) => (dispatch) => {
   checkInClient.getCheckInByUserId(userId)
   .then(response => {
-    localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
-    const checkInList = response.data.result.checkIns.map(checkIn => {
+    console.log(response.data);
+    const checkInList = response.data.models.map(checkIn => {
       return checkIn as ICheckIn;
     })
     dispatch({
@@ -25,7 +25,7 @@ export const associateInit = (userId: number) => (dispatch) => {
     });
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 }
 
@@ -33,13 +33,14 @@ export const associateInit = (userId: number) => (dispatch) => {
  * Associate submit a new check in
  * @param description 
  */
-export const submitCheckIn = (description: string) => {
+export const submitCheckIn = (description: string, userId: number) => {
   const body = {
-    "description": description
+    "checkinDescription": description,
+    "userId": userId
   }
   checkInClient.postCheckIn(body)
   .then(response => {
-    console.log("error");
+    console.log("success: " + JSON.stringify(response.data));
   })
   .catch(error => {
     console.log("error");

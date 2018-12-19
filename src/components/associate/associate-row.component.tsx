@@ -75,23 +75,22 @@ export class AssociateRowComponent extends React.Component<IProps, IComponentSta
     const FIRST_INDEX = LAST_INDEX - 9;
 
     if (this.props.checkIns.length !== 0) {
-      return this.props.checkIns.map((user, index) => {
+      return this.props.checkIns.map((checkIn, index) => {
         if (index >= FIRST_INDEX && index <= LAST_INDEX) {
-          return <tr
-            id={`row-${user.userId}`}  // set unique user ids for each row
-            key={user.checkinId}  // using user id for the key as well
-            onClick={() => this.getName(user.firstName)} // activate comment modal
-            onMouseOver={() => this.tasks(user.userId, user.checkinDescription, user.managerComments)} // activate daily tasks
+          return <tr className ="associate-row-table-class"
+            id={`row-${checkIn.checkinId}`}  // set unique user ids for each row
+            key={checkIn.checkinId}  // using user id for the key as well
+            onClick={() => this.getName(checkIn.firstName)} // activate comment modal
+            onMouseOver={() => this.tasks(checkIn.checkinId, checkIn.checkinDescription, checkIn.managerComments)} // activate daily tasks
             onMouseLeave={() => this.hide()}
             // adding support for mobile device to show daily tasks and manager comments
-            onTouchStart={() => this.tasks(user.userId, user.checkinDescription, user.managerComments)}
+            onTouchStart={() => this.tasks(checkIn.checkinId, checkIn.checkinDescription, checkIn.managerComments)}
             onTouchCancel={() => this.hide()}
           >
-            <td >{user.userId}</td>
-            <td>{user.firstName}</td>
-            <td>{user.lastName}</td>
-            <td>{user.email}</td>
-            <td>{time(user.dateSubmitted)}</td>
+            <td className="associate-row-target" >{checkIn.checkinId}</td>
+            <td className="associate-row-target" >{checkIn.checkinDescription}</td>
+            <td className="associate-row-target" >{checkIn.managerComments}</td>
+            <td className="associate-row-target" >{time(checkIn.dateSubmitted)}</td>
           </tr>
         } else {
           return <></>
@@ -111,7 +110,7 @@ export class AssociateRowComponent extends React.Component<IProps, IComponentSta
         { this.state.modal === false && 
           this.state.checkinId !== null &&
           <AssociateDailyTasksComponent
-            comment={this.state.description}
+            comment={this.state.managerComment}
             description={this.state.description}
             checkinId={this.state.checkinId}
             show={this.state.popover} />
