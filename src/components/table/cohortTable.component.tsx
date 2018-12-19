@@ -45,7 +45,7 @@ export class CohortTableComponent extends React.Component<
           <tbody>
             {this.props.cohorts.map(cohort => (
               <CohortRowComponent
-                key={cohort.cohortId}
+                key={"cohort-row-" + cohort.cohortId}
                 toggle={this.props.toggle}
                 changeSelected={this.changeSelected}
                 selected={

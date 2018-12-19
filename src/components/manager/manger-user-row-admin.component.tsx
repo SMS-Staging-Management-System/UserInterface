@@ -1,6 +1,4 @@
 import * as React from 'react';
-// import { IUser } from "src/model/User.model";
-// import {FormGroup, Input} from 'reactstrap';
 
 interface IComponentState {
    cChecked: any
@@ -14,7 +12,7 @@ export class ManagerUserRowAdminComponent extends React.Component <IProps, IComp
       super(props);
 
       this.state = {
-         cChecked: false
+         cChecked: true
       }
    }
 
@@ -22,7 +20,7 @@ export class ManagerUserRowAdminComponent extends React.Component <IProps, IComp
       
       const target = e.target;
       const value = target.type === 'checkbox' ? target.checked : target.value;
-      // const name = target.name;
+      
       this.setState({
          ...this.state,
          cChecked: value

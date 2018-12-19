@@ -4,6 +4,7 @@ import ManagerUserRowComponent from '../manager/manager-user-row.component'
 import ManagerUserRowAdminComponent from '../manager/manger-user-row-admin.component';
 import { connect } from 'react-redux';
 import { IState } from 'src/reducers';
+import { IUser } from 'src/model/User.model';
 
 
 interface IComponentState {
@@ -12,15 +13,15 @@ interface IComponentState {
 
 interface IComponentProps {
    roles: any
+   user: IUser
+   admins: any[]
+   trainers: any[]
+   stagings: any[]
+   associates: any[]
 }
 
 export class ManageUsersTabComponenet extends React.Component <IComponentProps, IComponentState> {
    
-   // {this.state.displayTable &&
-   //    <tbody>
-   //      {renderTable}
-   //    </tbody>
-   //  }
    constructor(props){
       super(props);
 
@@ -79,126 +80,126 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
    }
 
    public renderTabTable = () =>{
-      
+      // this.props.trainerList
       // const isAdmin = this.props.roles.includes("admin");
       
-      const FAKE_DATA_ASSOCIATE = [
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Minasie",
-            'lastName': 'Hagos',
-            'role': 'Associate'
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Kayle",
-            'lastName': 'Ford',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Jose",
-            'lastName': 'Periz',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Calvin",
-            'lastName': 'Vo',
-            'role': 'Associate'
-         }
-      ]
+      // const FAKE_DATA_ASSOCIATE = [
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Minasie",
+      //       'lastName': 'Hagos',
+      //       'role': 'Associate'
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Kayle",
+      //       'lastName': 'Ford',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Jose",
+      //       'lastName': 'Periz',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Calvin",
+      //       'lastName': 'Vo',
+      //       'role': 'Associate'
+      //    }
+      // ]
 
-      const FAKE_DATA_STAGE_MAN = [
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Kurisu",
-            'lastName': 'Hagos',
-            'role': 'Associate'
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Kayle",
-            'lastName': 'Ford',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Jose",
-            'lastName': 'Periz',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Calvin",
-            'lastName': 'Vo',
-            'role': 'Associate'
-         }
-      ]
+      // const FAKE_DATA_STAGE_MAN = [
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Kurisu",
+      //       'lastName': 'Hagos',
+      //       'role': 'Associate'
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Kayle",
+      //       'lastName': 'Ford',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Jose",
+      //       'lastName': 'Periz',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Calvin",
+      //       'lastName': 'Vo',
+      //       'role': 'Associate'
+      //    }
+      // ]
 
-      const FAKE_DATA_TRAINER = [
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Minasie",
-            'lastName': 'Hagos',
-            'role': 'Associate'
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Kayle",
-            'lastName': 'Ford',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Jose",
-            'lastName': 'Periz',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Calvin",
-            'lastName': 'Vo',
-            'role': 'Associate'
-         }
-      ]
+      // const FAKE_DATA_TRAINER = [
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Minasie",
+      //       'lastName': 'Hagos',
+      //       'role': 'Associate'
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Kayle",
+      //       'lastName': 'Ford',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Jose",
+      //       'lastName': 'Periz',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Calvin",
+      //       'lastName': 'Vo',
+      //       'role': 'Associate'
+      //    }
+      // ]
 
-      const FAKE_DATA_ADMIN= [
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Minasie",
-            'lastName': 'Hagos',
-            'role': 'Associate'
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Kayle",
-            'lastName': 'Ford',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Jose",
-            'lastName': 'Periz',
-            'role': 'Associate' 
-         },
-         {
-            'email': 'revatureEmp@revature.com',
-            'firstName': "Calvin",
-            'lastName': 'Vo',
-            'role': 'Associate'
-         }
-      ]
+      // const FAKE_DATA_ADMIN= [
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Minasie",
+      //       'lastName': 'Hagos',
+      //       'role': 'Associate'
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Kayle",
+      //       'lastName': 'Ford',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Jose",
+      //       'lastName': 'Periz',
+      //       'role': 'Associate' 
+      //    },
+      //    {
+      //       'email': 'revatureEmp@revature.com',
+      //       'firstName': "Calvin",
+      //       'lastName': 'Vo',
+      //       'role': 'Associate'
+      //    }
+      // ]
       
 
       if(this.state.roleSelected ==='ADMIN'){
-         return <> {FAKE_DATA_ADMIN.map((Data, index) => <ManagerUserRowAdminComponent Data={Data} key={index}/>)} </>
+         return <> {this.props.admins.map((Data, index) => <ManagerUserRowAdminComponent Data={Data} key={index}/>)} </>
       }else if(this.state.roleSelected === 'ASSOCIATE') {
-         return <> {FAKE_DATA_ASSOCIATE.map((Data, index) => <ManagerUserRowComponent Data={Data} key={index}/>)} </>
+         return <> {this.props.associates.map((Data, index) => <ManagerUserRowComponent  Data={Data} key={index}/>)} </>
       }else if(this.state.roleSelected === 'STAGING_MANAGER') {
-         return <> {FAKE_DATA_STAGE_MAN.map((Data, index) => <ManagerUserRowComponent Data={Data} key={index}/>)} </>
+         return <> {this.props.stagings.map((Data, index) => <ManagerUserRowComponent  Data={Data} key={index}/>)} </>
       }else if(this.state.roleSelected === 'TRAINER') {
-         return <> {FAKE_DATA_TRAINER.map((Data, index) => <ManagerUserRowComponent Data={Data} key={index}/>)} </>
+         return <> {this.props.trainers.map((Data, index) => <ManagerUserRowComponent  Data={Data} key={index}/>)} </>
       } else{
          return (
             <></>
@@ -241,6 +242,6 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
    }
 }
 
-const mapStateToProps = (state: IState) => (state.user)
+const mapStateToProps = (state: IState) => state.user
 const mapDispatchToProps = {}
 export default connect(mapStateToProps, mapDispatchToProps)(ManageUsersTabComponenet)

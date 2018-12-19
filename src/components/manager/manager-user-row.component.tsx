@@ -1,12 +1,15 @@
 import * as React from 'react';
 // import { IUser } from "src/model/User.model";
-import {FormGroup, Input} from 'reactstrap';
+import {Button} from 'reactstrap';
 
 interface IComponentState {
-   cChecked: any
+   cChecked: any,
+   
+
 }
 interface IProps {
-   Data: any
+   Data: any,
+   
  }
 
 export class ManagerUserRowComponent extends React.Component <IProps, IComponentState > {
@@ -14,20 +17,28 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
       super(props);
 
       this.state = {
-         cChecked: false
+         cChecked: false,
+        
       }
    }
 
    public handleToggle = (e: any) => {
-      
       const target = e.target;
       const value = target.type === 'checkbox' ? target.checked : target.value;
-      // const name = target.name;
       this.setState({
          ...this.state,
-         cChecked: value
+         cChecked: value  
+       });
+       
+   }
+   public removeRole = () =>{
+      this.setState({
+         ...this.state,
          
        });
+       console.log("I have Removed!");
+       // Throw an Action.
+       // To remove from list of Roles.
    }
 
    public render() {
@@ -39,14 +50,8 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
                <td>{this.props.Data.lastName}</td>
                <td>{this.props.Data.email}</td>
                <td>
-               <FormGroup>
-                  <Input type="select" name="select" id="exampleSelect">
-                    
-                     <option>Associate</option>
-                     <option>Staging Manager</option>
-                     <option>Trainer</option>
-                  </Input>
-               </FormGroup>
+               <Button size="sm" color="danger"
+                  onClick={this.removeRole}> Remove </Button>
                </td>
                <td className="flex-center"> 
                   <div>
