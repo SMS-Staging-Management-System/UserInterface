@@ -8,6 +8,7 @@ import { userTypes } from './user.actions';
 import { IUser } from 'src/model/User.model';
 import { isLoading } from  '../loading/loading.actions';
 import { History } from 'history';
+import { managerTypes } from '../manager/manager.actions';
   
 /**
  * Get current login user info from the server
@@ -71,9 +72,12 @@ export const cognitoLogin = (username: string, password: string, history: Histor
     },
     onSuccess: (result: awsCognito.CognitoUserSession) => {
       const roles = result.getIdToken().payload['cognito:groups'];
+      if(roles !== undefined) {
+        getCognitoManagements()(dispatch);
+      }
+      
       // Set cognito jwt to header
       axiosClient.addCognitoToHeader(result.getIdToken().getJwtToken());
-      getCognitoManagements()(dispatch);
 
       dispatch({
         payload: {
@@ -115,7 +119,10 @@ export const refreshCognitoSession = () => (dispatch) => {
       }
       if(session) {
         const roles = session.getIdToken().payload['cognito:groups'];
-        
+        if(roles !== undefined) {
+          getCognitoManagements()(dispatch);
+        }
+
         // Set redux cognito data
         dispatch({
           payload: {
@@ -128,7 +135,6 @@ export const refreshCognitoSession = () => (dispatch) => {
 
         // Put jwt into axios client
         axiosClient.addCognitoToHeader(session.getIdToken().getJwtToken());
-        getCognitoManagements()(dispatch);
         const refreshToken = session.getRefreshToken();
         const awsCreds: any = AWS.config.credentials;
 
@@ -184,13 +190,35 @@ export const getCurrentCognitoUser = () => {
 }
 
 export const getCognitoManagements = () => dispatch => {
-  console.log("HELLO")
-  const bad: any = window;
-  bad.blake = blakeClient;
-  
   blakeClient.findUsersByRole('admin')
   .then(response => {
-    console.log(response)
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(list => {
+        const admins = list.filter( (el) => {
+          return el !== "";
+        });
+        dispatch({
+          payload: {
+            admins
+          },
+          type: managerTypes.SET_ADMINS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })
   .catch(error => {
     console.log(error)
@@ -198,11 +226,63 @@ export const getCognitoManagements = () => dispatch => {
 
   blakeClient.findUsersByRole('staging-manager')  
   .then(response => {
-    console.log(response)
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(list => {
+        const stagings = list.filter( (el) => {
+          return el !== "";
+        });
+        dispatch({
+          payload: {
+            stagings
+          },
+          type: managerTypes.SET_STAGINGS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })
 
-  blakeClient.findUsersByRole('trainers')  
+  blakeClient.findUsersByRole('trainer')  
   .then(response => {
-    console.log(response)
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(list => {
+        const trainers = list.filter( (el) => {
+          return el !== "";
+        });
+        dispatch({
+          payload: {
+            trainers
+          },
+          type: managerTypes.SET_TRAINERS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })
 }

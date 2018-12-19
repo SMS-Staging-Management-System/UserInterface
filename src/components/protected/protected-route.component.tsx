@@ -25,26 +25,9 @@ export const checkSession = () => {
   const userPool = new awsCognito.CognitoUserPool(poolData);
   const cognitoUser = userPool.getCurrentUser();
 
-console.log(cognitoUser);
   if (cognitoUser !== null) {
-    // Get user session
-    // cognitoUser.getSession((getSessionError, session) => {
-      return true;
-  //     if (getSessionError) {
-  //       console.log("a");
-  //       return false;
-  //     }
-  //     if (session) {
-  //       return true;
-  //     }
-  //     console.log("b");
-  //     return false;
-  //   })
-  //   console.log("c")
-  //   return false;
-  }
-  else {
-    console.log("d")
+    return true;
+  } else {
     return false;
   }
 }
@@ -53,14 +36,10 @@ console.log(cognitoUser);
 
 
 export const ProtectedRoute = ({ component: Component, ...rest }: any) => {
-
-  
-
   return (
     <Route
       {...rest}
       render={props => {
-        console.log(checkSession());
         if (checkSession()) {
           return <Component {...props} />;
         } else {
