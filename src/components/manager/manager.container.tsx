@@ -68,31 +68,7 @@ export class ContainerComponent extends React.Component<IProps, IState> {
             Cohort
             </a>
             <a className="nav-item nav-link nav-t" id="nav-manage-users-tab" data-toggle="tab" href="#manage-users" role="tab" aria-controls="nav-manage-users" aria-selected="false">Users</a>
-            {/* <Link
-              to="/dashboard/check-ins"
-              className="nav-item nav-link active nav-t"
-              id="nav-contact-tab"
-              data-toggle="tab"
-              href="#check-in"
-              role="tab"
-              aria-controls="check-in"
-              aria-selected="true"
-              aria-hidden="false"
-            >
-              Check-In
-            </Link>
-            <Link
-              to="/dashboard/cohorts"
-              className="nav-item nav-link nav-t"
-              id="nav-profile-tab"
-              data-toggle="tab"
-              href="#cohort"
-              role="tab"
-              aria-controls="nav-profile"
-              aria-selected="false"
-            >
-              Cohort
-            </Link> */}
+            
           </div>
         </nav>
         {/* tab contents */}
@@ -107,20 +83,6 @@ export class ContainerComponent extends React.Component<IProps, IState> {
                 path="/dashboard/check-ins"
                 component={ManagerCheckinFilterComponent}
               />
-              {/* <ManagerCheckinFilterComponent/> */}
-
-              {/* <div className="col">
-                  <ManagerCheckinFilterComponent />
-                </div>
-                <div className="col">
-                  <form>
-                    <input id="man-search" type="text" name="firstname" placeholder="Search" />
-                    {/* <input type="submit" value="Submit" /> *
-                  </form>
-                </div>
-                <div className="col">
-                  Today |  Week  |  <Input type="date" name="date" className="start-date" placeholder="date placeholder" />  to <Input type="date" name="date" className="end-date" placeholder="date placeholder" />
-                </div> */}
 
               <Route
                 path="/dashboard/check-ins"
