@@ -1,6 +1,7 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import * as cohortClient from '../../axiosClients/cohortClient/cohortClient';
 import * as userClient from '../../axiosClients/userClient/userClient';
+import * as blakeClient from '../../axiosClients/blakeClient/blakeClient';
 import { toast } from "react-toastify";
 import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
@@ -13,11 +14,13 @@ export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
   ADD_COHORT: 'ADD_COHORT',
   SELECT_COHORT: 'SELECT_COHORT',
+  SET_ADMINS: 'SET_ADMINS',
   SET_ASSOCIATE_CHECK_IN_LIST: 'SET_ASSOCIATE_CHECK_IN_LIST',
   SET_ASSOCIATE_LIST: 'SET_ASSOCIATE_LIST',
   SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
   SET_CHECK_IN_LIST: 'SET_CHECK_IN_LIST',
   SET_COHORT_LIST: 'SET_COHORT_LIST',
+  SET_STAGINGS: 'SET_STAGINGS',
   SET_TRAINERS: 'SET_TRAINERS'
 }
 
@@ -165,7 +168,7 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
     })
 }
 
-export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
+export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
   cohortClient.postUser(user)
     .then(response => {
       cohortClient.addUserToCohort(cohortId, response.data.userId)
@@ -179,6 +182,20 @@ export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) 
     .catch(error => {
       toast.warn("Unable to create user")
     })
+}
+
+export const addCognitoGroup = (email: string, role: string) => dispatch => {
+  blakeClient.addUserGroup(email, role)
+  .then(response => {
+    toast.success("User is added to group")
+  })
+}
+
+export const deleteCognitoGroup = (email: string, role: string) => dispatch => {
+  blakeClient.deleteUserGroup(email, role)
+  .then(response => {
+    toast.success("User is removed from group")
+  })
 }
 
 export const getAllUsers = () => dispatch => {

@@ -3,17 +3,33 @@ import { Button } from 'reactstrap';
 import AssociateTable from './associate-table.component';
 import AssociateCheckInSubmit from './associate-checkin.component';
 import ClockComponent from '../clock/clock.component';
-interface IState {
-	isCheckingIn: boolean;
+import { IState } from '../../reducers/index';
+import { connect } from 'react-redux';
+import * as associateActions from '../../actions/associate/associate.actions'
+import { IUser } from 'src/model/User.model';
+interface IComponentState {
+	isCheckingIn: boolean
+	isInit: boolean
 }
 
-export class AssociateContentComponent extends React.Component<{}, IState>{
+interface IComponentProps {
+	user: IUser
+	associateInit: (userId: number) => void
+}
+
+
+export class AssociateContentComponent extends React.Component< IComponentProps, IComponentState>{
 	
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			isCheckingIn: false
+			isCheckingIn: false,
+			isInit: false
 		}
+	}
+
+	public componentDidMount() {
+		//
 	}
 
 	public handleCheckInClick = () => {
@@ -26,7 +42,7 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
 
 	public Switch = (props) => {
 		if (this.state.isCheckingIn) {
-			return <AssociateCheckInSubmit />
+			return <AssociateCheckInSubmit handleSubmitClick={this.handleSubmitClick.bind(this)} />
 		}
 		return <AssociateTable />
 	};
@@ -54,6 +70,13 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
 		);
 	}
 
+	public initAssociate = () => {
+		this.props.associateInit(this.props.user.userId);
+		this.setState({
+			isInit: true
+		})
+	}
+
 	public render() {
 		const { isCheckingIn } = this.state;
 		let button;
@@ -65,8 +88,14 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
 			button = <this.CheckInButton onClick={this.handleCheckInClick} />;
 		}
 
+		if(this.props.user && !this.state.isInit) {
+			this.initAssociate();
+		}
+		
+
 		return (
-			<div id="associate-content-wrapper">
+			
+			<div className="container-fluid" id="associate-content-wrapper">
 				<div id="associate-content">
 					<div id="associate-content-header">
 						<h4 
@@ -84,3 +113,9 @@ export class AssociateContentComponent extends React.Component<{}, IState>{
 		);
 	}
 }
+
+const mapStateToProps = (state: IState) => state.user
+const mapDispatchToProps = {
+  ...associateActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AssociateContentComponent)

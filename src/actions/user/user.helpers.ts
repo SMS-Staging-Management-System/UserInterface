@@ -8,6 +8,7 @@ import { userTypes } from './user.actions';
 import { IUser } from 'src/model/User.model';
 import { isLoading } from  '../loading/loading.actions';
 import { History } from 'history';
+import { managerTypes } from '../manager/manager.actions';
   
 /**
  * Get current login user info from the server
@@ -204,12 +205,15 @@ export const getCognitoManagements = () => dispatch => {
     })
 
     Promise.all(userList)
-      .then(admins => {
+      .then(list => {
+        const admins = list.filter( (el) => {
+          return el !== "";
+        });
         dispatch({
           payload: {
             admins
           },
-          type: userTypes.SET_ADMINS
+          type: managerTypes.SET_ADMINS
         })
       })
       .catch(error => {
@@ -235,12 +239,15 @@ export const getCognitoManagements = () => dispatch => {
     })
 
     Promise.all(userList)
-      .then(stagings => {
+      .then(list => {
+        const stagings = list.filter( (el) => {
+          return el !== "";
+        });
         dispatch({
           payload: {
             stagings
           },
-          type: userTypes.SET_STAGINGS
+          type: managerTypes.SET_STAGINGS
         })
       })
       .catch(error => {
@@ -263,12 +270,15 @@ export const getCognitoManagements = () => dispatch => {
     })
 
     Promise.all(userList)
-      .then(trainers => {
+      .then(list => {
+        const trainers = list.filter( (el) => {
+          return el !== "";
+        });
         dispatch({
           payload: {
             trainers
           },
-          type: userTypes.SET_TRAINERS
+          type: managerTypes.SET_TRAINERS
         })
       })
       .catch(error => {

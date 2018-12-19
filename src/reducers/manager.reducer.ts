@@ -3,12 +3,14 @@ import { IManagerState } from '.';
 import { toast } from "react-toastify";
 
 const initialState: IManagerState = {
+  admins:  [],
   associateCheckIns: [],
   associates: [],
   checkIns:   [],
   cohorts:    [],
   comment:    '',
   currentCohort:  null,
+  stagings: [],
   trainers:   []
 }
 
@@ -64,6 +66,16 @@ export const managerReducer = (state = initialState, action: any) => {
       return {
         ...state,
         trainers: action.payload.trainers
+      }
+    case managerTypes.SET_STAGINGS:
+      return {
+        ...state,
+        stagings:  action.payload.stagings
+      }
+    case managerTypes.SET_ADMINS:
+      return {
+        ...state,
+        admins:  action.payload.admins
       }
   }
   return state;
