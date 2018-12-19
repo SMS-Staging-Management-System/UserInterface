@@ -9,7 +9,7 @@ export class AssociatesTableHeaderComponent extends React.PureComponent<any, {},
 	public render(){
 		return(
 			<>
-			<thead className="checkin-table-header">
+			<thead>
 			  <tr>
 				<th scope="col">ID</th>
 				<th scope="col">First Name</th>
