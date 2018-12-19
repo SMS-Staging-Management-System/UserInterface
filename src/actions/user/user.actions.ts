@@ -1,6 +1,5 @@
 import * as userClient from '../../axiosClients/userClient/userClient';
 import { toast } from "react-toastify";
-import { IUser } from 'src/model/User.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { isLoading } from  '../loading/loading.actions';
 import * as userHelpers from './user.helpers';
@@ -63,9 +62,10 @@ export const setup = () => dispatch => {
  * Update user info
  * @param user 
  */
-export const updateUser = (user: IUser) => (dispatch) => {
+export const updateUser = (user) => (dispatch) => {
   userClient.patchUser(user)
   .then(response => {
+    console.log(response)
     toast.success("Info updated")
   })
   .catch(error => {

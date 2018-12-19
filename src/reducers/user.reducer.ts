@@ -11,7 +11,17 @@ const initialState: IUserState = {
   roles:    [],
   stagings: [],
   trainers: [],
-  user:   null
+  user:   {
+    city: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    state: '',
+    timezone: '',
+    userId: undefined,
+    zip: ''
+  }
 }
 
 export const userReducer = (state = initialState, action: any) => {
