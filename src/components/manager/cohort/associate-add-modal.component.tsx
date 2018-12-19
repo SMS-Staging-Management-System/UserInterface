@@ -17,6 +17,7 @@ export interface IProps {
   modalOff: () => void
   selected: number
   cohorts: ICohort[]
+  managerPostUserToCohort: (cohortId: number, email: string) => void
 }
 
 interface IComponentState {
@@ -50,6 +51,11 @@ export class CreateNewAddAssociateModalComponent extends React.Component<IProps,
     }
   }
 
+  public handleSubmit = () => {
+      this.props.managerPostUserToCohort(this.props.selected, this.state.associateEmail);
+      this.props.modalOff();
+  }
+
   public render() {
     return (
       <>
@@ -72,7 +78,7 @@ export class CreateNewAddAssociateModalComponent extends React.Component<IProps,
 
               </ModalBody>
               <ModalFooter className="flex-btw">
-              <Button className="rev-btn " >Submit</Button>
+              <Button className="rev-btn" onClick={this.handleSubmit} >Submit</Button>
               <Button className="" color="secondary" onClick={this.props.modalOff}>Cancel</Button>
             </ModalFooter>
           </Modal>
