@@ -13,11 +13,12 @@ export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
   ADD_COHORT: 'ADD_COHORT',
   SELECT_COHORT: 'SELECT_COHORT',
+  SET_ASSOCIATE_CHECK_IN_LIST: 'SET_ASSOCIATE_CHECK_IN_LIST',
+  SET_ASSOCIATE_LIST: 'SET_ASSOCIATE_LIST',
   SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
   SET_CHECK_IN_LIST: 'SET_CHECK_IN_LIST',
   SET_COHORT_LIST: 'SET_COHORT_LIST',
-  SET_TRAINERS: 'SET_TRAINERS',
-  SET_ASSOCIATE_LIST: 'SET_ASSOCIATE_LIST'
+  SET_TRAINERS: 'SET_TRAINERS'
 }
 
 /**
@@ -88,9 +89,9 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
       sortCheckInByDate(checkinList);
       dispatch({
         payload: {
-          checkIns: checkinList
+          associateCheckIns: checkinList
         },
-        type: managerTypes.SET_CHECK_IN_LIST
+        type: managerTypes.SET_ASSOCIATE_CHECK_IN_LIST
       });
     })
     .catch(error => {

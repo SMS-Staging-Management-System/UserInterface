@@ -26,6 +26,7 @@ export interface IUserState {
 
 export interface IManagerState {
   associates:       IUser[],
+  associateCheckIns:ICheckIn[],
   cohorts:          ICohort[],
   comment:          string,
   checkIns:         ICheckIn[],

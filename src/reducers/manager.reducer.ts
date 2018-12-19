@@ -3,6 +3,7 @@ import { IManagerState } from '.';
 import { toast } from "react-toastify";
 
 const initialState: IManagerState = {
+  associateCheckIns: [],
   associates: [],
   checkIns:   [],
   cohorts:    [],
@@ -37,6 +38,11 @@ export const managerReducer = (state = initialState, action: any) => {
       return {
         ...state,
         checkIns: action.payload.checkIns
+      }
+    case managerTypes.SET_ASSOCIATE_CHECK_IN_LIST:
+      return {
+        ...state,
+        associateCheckIns: action.payload.associateCheckIns
       }
     case managerTypes.SET_COHORT_LIST:
       return {
