@@ -9,7 +9,7 @@ export class CheckInHeaderManagerComponent extends React.Component<{}> {
       <>
       <thead className="checkin-table-header">
         <tr>
-          <th scope="col">User ID</th>
+          <th scope="col">Check in Id</th>
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>

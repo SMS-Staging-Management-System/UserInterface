@@ -185,11 +185,10 @@ export const getCurrentCognitoUser = () => {
 
 export const getCognitoManagements = () => dispatch => {
   console.log("HELLO")
-  const bad: any = window;
-  bad.blake = blakeClient;
-  
   blakeClient.findUsersByRole('admin')
   .then(response => {
+  console.log("HELLO")
+
     console.log(response)
   })
   .catch(error => {
@@ -201,7 +200,7 @@ export const getCognitoManagements = () => dispatch => {
     console.log(response)
   })
 
-  blakeClient.findUsersByRole('trainers')  
+  blakeClient.findUsersByRole('trainer')  
   .then(response => {
     console.log(response)
   })

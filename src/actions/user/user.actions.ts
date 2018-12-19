@@ -89,12 +89,3 @@ export const logout = () => (dispatch) => {
     toast.success("Log out");
   }
 }
-
-// export const changePage = (page: string) => dispatch => {
-//   dispatch({
-//     payload: {
-//       page
-//     },
-//     type: userTypes.CHANGE_PAGE
-//   });
-// }
