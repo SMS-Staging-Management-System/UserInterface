@@ -63,16 +63,20 @@ export class AssociateTableComponent extends React.Component<IProps, IComponentS
           </tbody>
         </Table>
         <Modal isOpen={this.state.isModalOpen} className="manager-comments">
-            <ModalHeader>{this.state.user.firstName} {this.state.user.lastName} Check Ins</ModalHeader>
-            <ModalBody className="">
-            {/* Render a table of checkins here with this.props.associateCheckIns
-              
-            */}
-            </ModalBody>
-            <ModalFooter className="flex-btw">
-              <Button className="" color="secondary" onClick={this.closeAssociateCheckInModal}>Exit</Button>
-            </ModalFooter>
-          </Modal>
+          { this.state.user !== null &&
+            <>
+              <ModalHeader>{this.state.user.firstName} {this.state.user.lastName} Check Ins</ModalHeader>
+              <ModalBody className="">
+              {/* Render a table of checkins here with this.props.associateCheckIns
+                
+              */}
+              </ModalBody>
+              <ModalFooter className="flex-btw">
+                <Button className="" color="secondary" onClick={this.closeAssociateCheckInModal}>Exit</Button>
+              </ModalFooter>
+            </>
+          }
+        </Modal>
       </>
     );
   }

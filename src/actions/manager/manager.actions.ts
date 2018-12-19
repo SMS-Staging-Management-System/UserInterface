@@ -108,7 +108,7 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
 export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate: number) => dispatch => {
   checkInClient.getCheckInByCohortId(cohortId, fromDate, toDate)
     .then(response => {
-      const checkinList = response.data.map(checkin => {
+      const checkinList = response.data.models.map(checkin => {
         return checkin as ICheckIn;
       })
       sortCheckInByDate(checkinList);
@@ -184,7 +184,7 @@ export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) 
 export const getAllUsers = () => dispatch => {
   userClient.getAllUsers()
   .then(response => {
-    const userList = response.data.models.map(user => {
+    const userList = response.data.map(user => {
       return user as IUser;
     })
     dispatch({

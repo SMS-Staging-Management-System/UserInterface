@@ -2,7 +2,7 @@ import * as React from "react";
 import { ManagerCheckinTableComponent } from "../table/manager-checkin-table.component";
 import CohortTableComponent from "../table/cohortTable.component";
 import CohortAssociatesComponent from "./cohort/cohort-associates.component";
-import { ManagerCheckinFilterComponent } from "../table/manager-checkin-filter.component";
+import ManagerCheckinFilterComponent from "../table/manager-checkin-filter.component";
 import CreateNewModalComponent from "./cohort/cohort-create-modal.component";
 import { Button } from "reactstrap";
 import { History } from "history";

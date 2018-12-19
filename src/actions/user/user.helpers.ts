@@ -191,9 +191,30 @@ export const getCurrentCognitoUser = () => {
 export const getCognitoManagements = () => dispatch => {
   blakeClient.findUsersByRole('admin')
   .then(response => {
-  console.log("HELLO")
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
 
-    console.log(response)
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(admins => {
+        dispatch({
+          payload: {
+            admins
+          },
+          type: userTypes.SET_ADMINS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })
   .catch(error => {
     console.log(error)
@@ -201,11 +222,57 @@ export const getCognitoManagements = () => dispatch => {
 
   blakeClient.findUsersByRole('staging-manager')  
   .then(response => {
-    console.log(response)
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(stagings => {
+        dispatch({
+          payload: {
+            stagings
+          },
+          type: userTypes.SET_STAGINGS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })
 
   blakeClient.findUsersByRole('trainer')  
   .then(response => {
-    console.log(response)
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(trainers => {
+        dispatch({
+          payload: {
+            trainers
+          },
+          type: userTypes.SET_TRAINERS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })
 }

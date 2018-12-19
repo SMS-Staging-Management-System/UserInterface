@@ -26,3 +26,7 @@ export const postUser = (user: IUserCreateDto) => {
 export const patchUser = (user: IUser) => {
   return axiosClient.patch(`/users`, user);
 }
+
+export const getUserByEmail = (email: string) => {
+  return axiosClient.get(`/users/email/${email}/`);
+}

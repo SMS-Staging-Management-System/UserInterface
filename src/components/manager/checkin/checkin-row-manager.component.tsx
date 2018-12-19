@@ -77,7 +77,6 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
   public renderRows = () => {
     const LAST_INDEX = (this.props.pageNumber * 10) - 1;
     const FIRST_INDEX = LAST_INDEX - 9;
-
     if (this.props.checkIns.length !== 0) {
       return this.props.checkIns.map((checkin, index) => {
         if (index >= FIRST_INDEX && index <= LAST_INDEX) {
@@ -108,7 +107,7 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
 
   public render() {
     const rows = this.renderRows();
-    console.log(this.state.checkinId)
+
     return (
       <>
         {rows}

@@ -73,11 +73,11 @@ export class ManagerCheckinFilterComponent extends React.Component<IComponentPro
     let lastWeek = new Date();
     lastWeek = new Date(lastWeek.setDate(lastWeek.getDate() - 7))
     const currentDate = new Date();
+    this.setState({
+      endDate: currentDate.getTime(),
+      startDate: lastWeek.getTime()
+    })
     console.log("today: " + currentDate.toString() + "  1 week ago: " + lastWeek.toString())
-  }
-
-  public getCustomDateFilter = () => {
-    console.log()
   }
 
   public renderCohortOptionList = () => {
@@ -162,7 +162,7 @@ export class ManagerCheckinFilterComponent extends React.Component<IComponentPro
               />
             </div>
             <div className="form-group sel-box">
-              <h4 className="head-divider"><button onClick={this.getCustomDateFilter} type="button" className="filter-button">Go</button></h4>
+              <h4 className="head-divider"><button onClick={this.submitGetCheckIn} type="button" className="filter-button">Go</button></h4>
             </div>
           </div>
         </div>
