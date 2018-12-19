@@ -7,6 +7,7 @@ import { environment } from '../../environment';
 import { userTypes } from './user.actions';
 import { IUser } from 'src/model/User.model';
 import { isLoading } from  '../loading/loading.actions';
+import { History } from 'history';
   
 /**
  * Get current login user info from the server
@@ -35,7 +36,7 @@ export const initUser = (dispatch) => {
   , 3000000);
 }
 
-export const cognitoLogin = (username: string, password: string) => (dispatch) => {
+export const cognitoLogin = (username: string, password: string, history: History) => (dispatch) => {
   isLoading(true)(dispatch);  
   const authenticationData = {
     Password: password,
@@ -82,6 +83,8 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
         },
         type: userTypes.COGNITO_SIGN_IN
       });
+
+      history.push("/dashboard/check-ins");
 
       initUser(dispatch)
 

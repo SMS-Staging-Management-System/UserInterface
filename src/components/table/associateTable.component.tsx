@@ -24,7 +24,7 @@ export class AssociateTableComponent extends React.Component<IProps> {
             {
               this.props.currentCohort ?
                 this.props.currentCohort.userList.map(user => 
-                  <AssociatesRowComponent key={user.userId} user={user}/>)
+                  <AssociatesRowComponent key={"associates-row-" + user.userId} user={user}/>)
                 : <></>
             }
           </tbody>

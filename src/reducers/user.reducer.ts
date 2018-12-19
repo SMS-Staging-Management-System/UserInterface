@@ -16,11 +16,11 @@ const initialState: IUserState = {
 
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case userTypes.CHANGE_PAGE:
-      return {
-        ...state,
-        page: action.payload.page
-      }
+    // case userTypes.CHANGE_PAGE:
+    //   return {
+    //     ...state,
+    //     page: action.payload.page
+    //   }
     case userTypes.REGISTER:
       toast.success("Register successful");
       return {
