@@ -28,7 +28,8 @@ interface IComponentProps {
   changePage: (page: string) => { void },
   logout: () => { void },
   history: History,
-  setup: () => { void }
+  setup: () => { void },
+  roles: string[]
 }
 class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> {
   constructor(props) {
@@ -46,6 +47,15 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
     this.setState({
       isOpen: !this.state.isOpen
     });
+  }
+
+  public route = () => {
+    if (this.props.roles === undefined) {
+      this.props.history.push("/dashboard")
+    }
+    else if (this.props.roles.includes("admin") || this.props.roles.includes("staging-manager") || this.props.roles.includes("trainer")) {
+      this.props.history.push("/dashboard/check-ins")
+    } 
   }
 
   public renderCollapse = () => {
@@ -89,7 +99,7 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
         light expand="md">
         <NavbarBrand
           className="cursor-hover"
-          onClick={() => this.props.history.push("/dashboard")}
+          onClick={() => this.route()}
         >
           <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
         </NavbarBrand>
