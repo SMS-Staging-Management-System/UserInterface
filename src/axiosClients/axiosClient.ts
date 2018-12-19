@@ -7,7 +7,7 @@ const AUTHORIZATION_HEADER = 'Authentication';
 
 export const addCognitoToHeader = (token: any) => {
   axiosClient.defaults.headers.common[AUTHORIZATION_HEADER] = token;
-  // blakeClient.defaults.headers.common[AUTHORIZATION_HEADER] = token;
+  blakeClient.defaults.headers.common[AUTHORIZATION_HEADER] = token;
   return true;
 }
 

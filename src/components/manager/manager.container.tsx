@@ -2,9 +2,11 @@ import * as React from "react";
 import { ManagerCheckinTableComponent } from "../table/manager-checkin-table.component";
 import CohortTableComponent from "../table/cohortTable.component";
 import CohortAssociatesComponent from "./cohort/cohort-associates.component";
-import { ManagerCheckinFilterComponent } from "../table/manager-checkin-filter.component";
+import ManagerCheckinFilterComponent from "../table/manager-checkin-filter.component";
 import CreateNewModalComponent from "./cohort/cohort-create-modal.component";
 import { Button } from "reactstrap";
+import ManagerUsersTableComponent from './manager-users-table.component'
+
 import { History } from "history";
 import { withRouter, Route } from "react-router-dom";
 
@@ -73,7 +75,6 @@ export class ContainerComponent extends React.Component<IProps, IState> {
             <a onClick={() => this.props.history.push("/dashboard/cohorts")} className="nav-item nav-link nav-t" id="nav-profile-tab" data-toggle="tab" href="#cohort" role="tab" aria-controls="nav-profile" aria-selected="false">
             Cohort
             </a>
-
           </div>
         </nav>
         {/* tab contents */}
@@ -128,6 +129,9 @@ export class ContainerComponent extends React.Component<IProps, IState> {
               modal={this.state.modal}
               modalOff={this.modalOff}
             />
+          </div>
+          <div className="tab-pane fade container-fluid " id="manage-users" role="tabpanel" aria-labelledby="nav-manage-users-tab">
+              <ManagerUsersTableComponent/>
           </div>
         </div>
       </>

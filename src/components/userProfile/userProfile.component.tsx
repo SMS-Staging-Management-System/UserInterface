@@ -4,12 +4,19 @@ import '../../App.css';
 import profSrc from "../../assets/interns.png"
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
-// import { IUser } from 'src/model/User.model';
+import { IUser } from 'src/model/User.model';
+import * as userActions from '../../actions/user/user.actions';
 
 /**
  * User Profile Component.
  */
-export class UserProfileComponent extends React.Component<any, {}>{
+
+interface IComponentProps {
+   user: IUser
+   roles: any[]
+   updateUser: (user: IUser) => void
+}
+export class UserProfileComponent extends React.Component<IComponentProps, any>{
 
    constructor(props: any) {
       super(props);
@@ -29,6 +36,36 @@ export class UserProfileComponent extends React.Component<any, {}>{
          userId: 0,
          zipcode: ''
       }
+   }
+
+   public componentDidMount() {
+      let sRole = "associate";
+      if (this.props.roles !== undefined) {
+         sRole = "";
+         if (this.props.roles.includes("admin")) {
+            sRole += "admin "
+         }
+         else if (this.props.roles.includes("staging-manager")) {
+            sRole += "staging-manager "
+         }
+         else if (this.props.roles.includes("trainer")) {
+            sRole += "trainer "
+         }
+      }
+
+      this.setState({
+         city: this.props.user.city,
+         email: this.props.user.email,
+         firstname: this.props.user.firstName,
+         lastname: this.props.user.lastName,
+         phone: this.props.user.mobile,
+         role: sRole,
+         zipcode: this.props.user.zip
+      })
+   }
+
+   public submitUserUpdate = () => {
+      // Create IUser object here and call updateUser
    }
 
    public zipChange = (e) => {
@@ -285,5 +322,7 @@ export class UserProfileComponent extends React.Component<any, {}>{
 }
 
 const mapStateToProps = (state: IState) => (state.user)
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+   ...userActions
+}
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfileComponent)
