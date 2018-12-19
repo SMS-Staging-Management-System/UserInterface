@@ -26,6 +26,7 @@ class App extends React.Component {
                 <ProtectedRoute path="/dashboard" component={DashboardComponent} />
                 <ProtectedRoute exact path="/profile" component={UserProfileComponent} />
                 <Route exact path="/sign-in" component={LoginComponent} />
+                <ProtectedRoute exact path="/" component={DashboardComponent} />
                 <Route component={PageNotFoundComponent} />
               </Switch>
             </div>
