@@ -15,7 +15,7 @@ export const associateTypes = {
 export const associateInit = (userId: number) => (dispatch) => {  
   checkInClient.getCheckInByUserId(userId, getTodayStart(), getTodayEnd())
   .then(response => {
-    const checkInList = response.data.result.checkIns.map(checkIn => {
+    const checkInList = response.data.models.map(checkIn => {
       return checkIn as ICheckIn;
     })
     dispatch({
@@ -26,7 +26,7 @@ export const associateInit = (userId: number) => (dispatch) => {
     });
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 }
 
@@ -34,14 +34,14 @@ export const associateInit = (userId: number) => (dispatch) => {
  * Associate submit a new check in
  * @param description 
  */
-export const submitCheckIn = (checkinDescription: string, userId: number) => {
+export const submitCheckIn = (description: string, userId: number) => {
   const body = {
-    checkinDescription,
-    userId
+    "checkinDescription": description,
+    "userId": userId
   }
   checkInClient.postCheckIn(body)
   .then(response => {
-    toast.success("Check in submitted")
+    console.log("success: " + JSON.stringify(response.data));
   })
   .catch(error => {
     toast.warn("Unable to submit check in")    
