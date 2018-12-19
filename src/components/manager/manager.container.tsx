@@ -11,6 +11,7 @@ import { withRouter, Route } from "react-router-dom";
 export interface IState {
   modal: boolean;
   collapse: boolean;
+  selected: number;
 }
 
 export interface IProps {
@@ -25,32 +26,39 @@ export class ContainerComponent extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       collapse: true,
-      modal: false
+      modal: false,
+      selected: 1
     };
   }
 
   public toggle = () => {
     this.setState({
-      ...this.state,
       collapse: !this.state.collapse
     });
   };
 
   public modalOn = () => {
     this.setState({
-      ...this.state,
       modal: true
     });
   };
 
   public modalOff = () => {
     this.setState({
-      ...this.state,
       modal: false
     });
   };
 
+  public changeSelected = (select: number) => {
+    console.log(select)
+
+    this.setState({
+      selected: select
+    });
+  };
+
   public render() {
+    console.log(this.state.selected)
     return (
       <>
         <nav>
@@ -65,31 +73,7 @@ export class ContainerComponent extends React.Component<IProps, IState> {
             <a onClick={() => this.props.history.push("/dashboard/cohorts")} className="nav-item nav-link nav-t" id="nav-profile-tab" data-toggle="tab" href="#cohort" role="tab" aria-controls="nav-profile" aria-selected="false">
             Cohort
             </a>
-            {/* <Link
-              to="/dashboard/check-ins"
-              className="nav-item nav-link active nav-t"
-              id="nav-contact-tab"
-              data-toggle="tab"
-              href="#check-in"
-              role="tab"
-              aria-controls="check-in"
-              aria-selected="true"
-              aria-hidden="false"
-            >
-              Check-In
-            </Link>
-            <Link
-              to="/dashboard/cohorts"
-              className="nav-item nav-link nav-t"
-              id="nav-profile-tab"
-              data-toggle="tab"
-              href="#cohort"
-              role="tab"
-              aria-controls="nav-profile"
-              aria-selected="false"
-            >
-              Cohort
-            </Link> */}
+
           </div>
         </nav>
         {/* tab contents */}
@@ -104,27 +88,13 @@ export class ContainerComponent extends React.Component<IProps, IState> {
                 path="/dashboard/check-ins"
                 component={ManagerCheckinFilterComponent}
               />
-              {/* <ManagerCheckinFilterComponent/> */}
 
-              {/* <div className="col">
-                  <ManagerCheckinFilterComponent />
-                </div>
-                <div className="col">
-                  <form>
-                    <input id="man-search" type="text" name="firstname" placeholder="Search" />
-                    {/* <input type="submit" value="Submit" /> *
-                  </form>
-                </div>
-                <div className="col">
-                  Today |  Week  |  <Input type="date" name="date" className="start-date" placeholder="date placeholder" />  to <Input type="date" name="date" className="end-date" placeholder="date placeholder" />
-                </div> */}
 
               <Route
                 path="/dashboard/check-ins"
                 component={ManagerCheckinTableComponent}
               />
 
-              {/* <ManagerCheckinTableComponent /> */}
             </div>
           </div>
           <div
@@ -138,19 +108,19 @@ export class ContainerComponent extends React.Component<IProps, IState> {
                 <div className="mb-2">
                   <Button
                     color="primary"
-                    className="btn btn-danger"
+                    className="btn button-add"
                     onClick={this.modalOn}
                   >
                     New Cohort
                   </Button>
                 </div>
                 <div>
-                  <CohortTableComponent toggle={this.toggle} />
+                  <CohortTableComponent toggle={this.toggle} changeSelected={this.changeSelected} />
                 </div>
               </div>
 
               <div className="col-9 pr-0">
-                <CohortAssociatesComponent collapse={this.state.collapse} />
+                <CohortAssociatesComponent collapse={this.state.collapse} selected={this.state.selected}/>
               </div>
             </div>
             <CreateNewModalComponent

@@ -28,6 +28,10 @@ $drew-orange: #f3a55d;
   cursor: pointer;
 }
 
+.no-link:hover {
+  text-decoration: none;
+}
+
 .flex-package {
   display:    flex;
   flex-shrink: 0;
@@ -778,4 +782,16 @@ Cohort Table
 
 .cohort-row-selected{
   background-color: $drew-orange;
+}
+
+.button-add{
+  color: $drew-orange;
+  background-color: white;
+  border-color: $drew-orange;
+}
+
+.button-add:hover{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
 }
