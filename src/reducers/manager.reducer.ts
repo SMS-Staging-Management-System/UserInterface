@@ -44,6 +44,11 @@ export const managerReducer = (state = initialState, action: any) => {
         cohorts: action.payload.cohorts,
         currentCohort: action.payload.currentCohort
       }
+    case managerTypes.SET_ASSOCIATE_LIST:
+      return {
+        ...state,
+        associates: action.payload.associates
+      }
     case managerTypes.SELECT_COHORT:
       return {
         ...state,

@@ -14,7 +14,22 @@ interface IProps {
   currentCohort: ICohort
 }
 
-export class AssociateTableComponent extends React.Component<IProps> {
+interface IComponentState {
+  isModalOpen: boolean
+}
+
+export class AssociateTableComponent extends React.Component<IProps, IComponentState> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isModalOpen: false
+    }
+  }
+
+  public openAssociateCheckInModal = () => {
+
+  }
+
   public render() {
     return (
       <>

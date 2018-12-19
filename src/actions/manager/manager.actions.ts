@@ -1,5 +1,6 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import * as cohortClient from '../../axiosClients/cohortClient/cohortClient';
+import * as userClient from '../../axiosClients/userClient/userClient';
 import { toast } from "react-toastify";
 import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
@@ -15,7 +16,8 @@ export const managerTypes = {
   SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
   SET_CHECK_IN_LIST: 'SET_CHECK_IN_LIST',
   SET_COHORT_LIST: 'SET_COHORT_LIST',
-  SET_TRAINERS: 'SET_TRAINERS'
+  SET_TRAINERS: 'SET_TRAINERS',
+  SET_ASSOCIATE_LIST: 'SET_ASSOCIATE_LIST'
 }
 
 /**
@@ -24,6 +26,7 @@ export const managerTypes = {
 export const managerInit = () => (dispatch) => {
   getManagerCohorts()(dispatch)
   getManagerCheckIn(getTodayStart(), getTodayEnd())(dispatch);
+  getAllUsers()(dispatch);
 }
 
 /**
@@ -175,4 +178,19 @@ export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) 
     .catch(error => {
       toast.warn("Unable to create user")
     })
+}
+
+export const getAllUsers = () => dispatch => {
+  userClient.getAllUsers()
+  .then(response => {
+    const userList = response.data.models.map(user => {
+      return user as IUser;
+    })
+    dispatch({
+      payload: {
+        associates:  userList
+      },
+      type: managerTypes.SET_ASSOCIATE_LIST
+    });
+  })
 }

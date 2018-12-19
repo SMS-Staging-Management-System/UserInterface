@@ -3,17 +3,14 @@ import { IUser } from 'src/model/User.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 
 /**
- * Get the current login user with the jwt token from cognito
- */
-export const getUserByJwtToken = () => {
-  return axiosClient.get(`/users`);
-}
-
-/**
  * Return promise to get user info from server
  */
 export const getUserFromCognitoJwt = () => {
   return axiosClient.get(`/users/info`);
+}
+
+export const getAllUsers = () => {
+  return axiosClient.get(`users`);
 }
 
 /**

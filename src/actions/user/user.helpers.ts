@@ -71,9 +71,12 @@ export const cognitoLogin = (username: string, password: string, history: Histor
     },
     onSuccess: (result: awsCognito.CognitoUserSession) => {
       const roles = result.getIdToken().payload['cognito:groups'];
+      if(roles !== undefined) {
+        getCognitoManagements()(dispatch);
+      }
+      
       // Set cognito jwt to header
       axiosClient.addCognitoToHeader(result.getIdToken().getJwtToken());
-      getCognitoManagements()(dispatch);
 
       dispatch({
         payload: {
@@ -115,7 +118,10 @@ export const refreshCognitoSession = () => (dispatch) => {
       }
       if(session) {
         const roles = session.getIdToken().payload['cognito:groups'];
-        
+        if(roles !== undefined) {
+          getCognitoManagements()(dispatch);
+        }
+
         // Set redux cognito data
         dispatch({
           payload: {
@@ -128,7 +134,6 @@ export const refreshCognitoSession = () => (dispatch) => {
 
         // Put jwt into axios client
         axiosClient.addCognitoToHeader(session.getIdToken().getJwtToken());
-        getCognitoManagements()(dispatch);
         const refreshToken = session.getRefreshToken();
         const awsCreds: any = AWS.config.credentials;
 
@@ -184,7 +189,6 @@ export const getCurrentCognitoUser = () => {
 }
 
 export const getCognitoManagements = () => dispatch => {
-  console.log("HELLO")
   blakeClient.findUsersByRole('admin')
   .then(response => {
   console.log("HELLO")
