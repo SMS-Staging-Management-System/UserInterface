@@ -14,6 +14,7 @@ export interface IClickerState {
 
 export interface IUserState {
   admins:   any[],
+  associates: any[],
   cogUser:  any,
   isFirstSignin: boolean,
   isLogin:  boolean,
