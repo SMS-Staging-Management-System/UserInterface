@@ -168,8 +168,13 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
     })
 }
 
-export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
-  cohortClient.postUser(user)
+export const managerPostUserToCohort = (cohortId: number, email: string) => dispatch => {
+  const user = {
+    "email": email,
+    "firstName": "first name",
+    "lastName": "last name"
+  }
+    cohortClient.postUser(user)
     .then(response => {
       cohortClient.addUserToCohort(cohortId, response.data.userId)
         .then(resp => {

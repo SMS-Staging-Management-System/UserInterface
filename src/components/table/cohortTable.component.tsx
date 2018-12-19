@@ -18,6 +18,8 @@ interface IStateComponent {
 interface IProps extends IManagerState {
   selectCohort: (sCohort: ICohort) => (dispatch: any) => void;
   toggle: () => void;
+  selected: number;
+  changeSelected: (selected: number) => void;
 }
 
 export class CohortTableComponent extends React.Component<
@@ -31,10 +33,12 @@ export class CohortTableComponent extends React.Component<
     };
   }
 
-  public changeSelected = (select: number) => {
+  public changeSelectedTable = (select: number) => {
     this.setState({
+      ...this.state,
       selected: select
     });
+    this.props.changeSelected(select);
   };
 
   public render() {
@@ -43,18 +47,20 @@ export class CohortTableComponent extends React.Component<
         <Table bordered hover>
           <CohortTableHeaderComponent />
           <tbody>
-            {this.props.cohorts.map(cohort => (
-              <CohortRowComponent
-                key={"cohort-row-" + cohort.cohortId}
-                toggle={this.props.toggle}
-                changeSelected={this.changeSelected}
-                selected={
-                  this.state.selected === cohort.cohortId ? true : false
-                }
-                cohort={cohort}
-                selectCohort={this.props.selectCohort}
-              />
-            ))}
+            {this.props.cohorts.map(cohort => {
+              return (
+                <CohortRowComponent
+                  key={"cohort-row-" + cohort.cohortId}
+                  toggle={this.props.toggle}
+                  changeSelected={this.changeSelectedTable}
+                  isSelected={
+                    this.state.selected === cohort.cohortId ? true : false
+                  }
+                  cohort={cohort}
+                  selectCohort={this.props.selectCohort}
+                />
+              );
+            })}
           </tbody>
         </Table>
       </>
@@ -62,7 +68,7 @@ export class CohortTableComponent extends React.Component<
   }
 }
 
-const mapStateToProps = (state: IState) => (state.manager);
+const mapStateToProps = (state: IState) => state.manager;
 const mapDispatchToProps = {
   selectCohort: managerActions.selectCohort
 };
