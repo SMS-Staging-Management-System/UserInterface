@@ -1,17 +1,22 @@
 import { blakeClient } from '../axiosClient';
-
-export const getTrainers = () => {
-  return blakeClient.get(`/dev/cognito/users/groups/trainers`);  
-}
-
-export const getStagingManagers = () => {
-  return blakeClient.get(`/dev/cognito/users/groups/staging-manager`);  
-}
-
-export const getAdmin = () => {
-  return blakeClient.get(`/dev/cognito/users/groups/admin`);  
-}
+// import { axiosClient } from '../axiosClient';
 
 export const findUsersByRole = (role: string) => {
   return blakeClient.get(`/cognito/users/groups/${role}`);
+}
+
+export const addUserGroup = (email: string, groupName: string) => {
+  const body = {
+    email,
+    groupName
+  }
+  return blakeClient.post(`cognito/users/groups`, {body});
+}
+
+export const deleteUserGroup = (email: string, groupName: string) => {
+  const body = {
+    email,
+    groupName
+  }
+  return blakeClient.delete(`cognito/users/groups`, {data: body});
 }
