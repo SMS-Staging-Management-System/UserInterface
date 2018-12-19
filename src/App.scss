@@ -795,3 +795,15 @@ Cohort Table
   background-color: $drew-orange;
   border-color: $drew-orange;
 }
+
+.button-add.active{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
+}
+
+.button-add:focus{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
+}
