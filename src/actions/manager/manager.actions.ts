@@ -6,7 +6,7 @@ import { ICohort } from '../../model/Cohort.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { IUser } from 'src/model/User.model';
 import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
-import { getManagerCohorts } from './manager.helpers';
+import { getManagerCohorts, sortCheckInByDate } from './manager.helpers';
 
 export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
@@ -57,6 +57,7 @@ export const getManagerCheckIn = (fromDate: number, toDate: number) => dispatch 
       const checkinList = response.data.models.map(checkin => {
         return checkin as ICheckIn;
       })
+      sortCheckInByDate(checkinList);
       dispatch({
         payload: {
           checkIns: checkinList
@@ -81,6 +82,7 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
       const checkinList = response.data.map(checkin => {
         return checkin as ICheckIn;
       })
+      sortCheckInByDate(checkinList);
       dispatch({
         payload: {
           checkIns: checkinList
@@ -99,16 +101,13 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
  * @param checkInList 
  * @param cohortList 
  */
-export const getCheckInByCohortId = (cohortId: number,
-  fromDate: number,
-  toDate: number
-) => dispatch => {
-
+export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate: number) => dispatch => {
   checkInClient.getCheckInByCohortId(cohortId, fromDate, toDate)
     .then(response => {
       const checkinList = response.data.map(checkin => {
         return checkin as ICheckIn;
       })
+      sortCheckInByDate(checkinList);
       dispatch({
         payload: {
           checkIns: checkinList
@@ -149,7 +148,6 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
       cohortClient.getUsersByCohortId(cohort.cohortId)
         .then(cohortResponse => {
           cohort.userList = cohortResponse.data.map(user => user as IUser);
-          console.log(cohort)
           dispatch({
             payload: {
               cohort
