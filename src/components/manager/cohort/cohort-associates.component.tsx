@@ -6,41 +6,28 @@ import AssociateTableComponent from "src/components/table/associateTable.compone
  *The cohort associates component
  */
 
-interface IState {
-  toggle: () => void;
+interface IProps {
   collapse: boolean;
 }
-export class CohortAssociatesComponent extends React.Component<{}, IState> {
+
+export class CohortAssociatesComponent extends React.Component<IProps> {
   constructor(props) {
     super(props);
-    this.state = {
-      collapse: false,
-      toggle: this.toggle
-    };
-  }
 
-  public toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  };
+  }
 
   public render() {
     return (
       <>
-        <Button
-          color="primary"
-          onClick={this.toggle}
-          style={{ marginBottom: "1rem" }}
-        >
-          Toggle
-        </Button>
-        <Collapse isOpen={this.state.collapse}>
+        <Button className="mb-2">Add Associate</Button>
+
+        <Collapse isOpen={this.props.collapse}>
           {/* <Card>
             <CardBody> */}
-              
-              <Button className="my-2">+ (Add associate)</Button>
-              <AssociateTableComponent />
-              
-            {/* </CardBody>
+
+          <AssociateTableComponent />
+
+          {/* </CardBody>
           </Card> */}
         </Collapse>
       </>

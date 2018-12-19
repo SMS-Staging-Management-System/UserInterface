@@ -20,10 +20,10 @@ export class AssociatesRowComponent extends React.Component<IProps> {
   public render() {
     return (
       <>
-          <tr className="orange" id={`row-${this.props.user.userId}`} onClick={() => this.handleClick()}>
+          <tr className="" id={`row-${this.props.user.userId}`} onClick={() => this.handleClick()}>
             <td>{this.props.user.userId}</td>
-            <td>{this.props.user.firstname}</td>
-            <td>{this.props.user.lastname}</td>
+            <td>{this.props.user.firstName}</td>
+            <td>{this.props.user.lastName}</td>
             <td>{this.props.user.email}</td>
           </tr>
         

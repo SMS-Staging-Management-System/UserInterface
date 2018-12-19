@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -9,7 +8,8 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem
+} from 'reactstrap';
 import RevLogo from '../../assets/rev-logo.png';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
@@ -21,9 +21,10 @@ interface IComponentState {
   isOpen: boolean
 }
 interface IComponentProps {
-  login: boolean,
-  user:  IUser,
-  logout: () => {void}
+  isLogin: boolean,
+  user: IUser,
+  changePage: (page: string) => { void },
+  logout: () => { void }
 }
 class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> {
   constructor(props) {
@@ -32,41 +33,61 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
       isOpen: false
     };
   }
-  
+
   public toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
-  
+
+  public renderCollapse = () => {
+    if (this.props.isLogin) {
+      return <UncontrolledDropdown nav inNavbar>
+        <DropdownToggle nav caret>
+          {this.props.user
+            ? this.props.user.email
+            : "User"
+          }
+        </DropdownToggle>
+        <DropdownMenu right>
+          {
+            this.props.user &&
+            <>
+              <DropdownItem
+                className="cursor-hover"
+                onClick={() => this.props.changePage('profile')}>
+                Profile
+              </DropdownItem>
+              <DropdownItem divider />
+            </>
+          }
+          <DropdownItem className="cursor-hover" onClick={() => this.props.logout()}>
+            Logout
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    } else {
+      return <></>
+    }
+  }
+
   public render() {
+    const sRenderCollapse = this.renderCollapse();
     return (
-      <Navbar color="light" light expand="md">
-        <NavbarBrand>
-          <Link to="/" className="unset-anchor">
-            <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
-          </Link>
+      <Navbar
+        className="flex-package"
+        color="light"
+        light expand="md">
+        <NavbarBrand
+          className="cursor-hover"
+          onClick={() => this.props.changePage('home')}
+        >
+          <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
-            {
-              this.props.user && this.props.login &&
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  {this.props.user.email}
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem className="cursor-hover">
-                    Profile
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem className="cursor-hover" onClick={() => this.props.logout()}>
-                    Logout
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            }
+            {sRenderCollapse}
           </Nav>
         </Collapse>
       </Navbar>

@@ -3,13 +3,10 @@ import AssociateHeader from './associate-header.component';
 import { Table } from 'reactstrap';
 import AssociateCheckInPagination from './associate-checkin-pagination.component';
 
-interface IProps {
-  type: string;
-}
 /**
  * The table to render a list of check in
  */
-export class AssociateTable extends React.Component<IProps, {}> {
+export class AssociateTable extends React.Component {
 
   // config for assocaite stuff
   public renderRows = () => {
