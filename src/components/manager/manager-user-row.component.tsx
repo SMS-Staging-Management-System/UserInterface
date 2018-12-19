@@ -17,7 +17,7 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
       super(props);
 
       this.state = {
-         cChecked: false,
+         cChecked: true,
         
       }
    }
@@ -31,7 +31,7 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
        });
        
    }
-   public removeRole = () =>{
+   public removeRoleBtn = () =>{
       this.setState({
          ...this.state,
          
@@ -50,11 +50,11 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
                <td>{this.props.Data.lastName}</td>
                <td>{this.props.Data.email}</td>
                <td>
-               <Button size="sm" color="danger"
-                  onClick={this.removeRole}> Remove </Button>
+                  <Button className="mt-1 ml-1" size="sm" color="danger"
+                  onClick={this.removeRoleBtn}> Remove </Button>
                </td>
                <td className="flex-center"> 
-                  <div>
+                  <div className="flex-center">
                      <label className="switch">
                         <input type="checkbox"
                            name="cChecked"
@@ -63,8 +63,8 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
                         />
                         <span className="slider round"></span>
                      </label>
-                     </div>
-                  </td>
+                  </div>
+               </td>
             </tr>
          </>
       )

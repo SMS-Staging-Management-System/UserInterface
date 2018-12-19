@@ -7,6 +7,7 @@ import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { IUser } from 'src/model/User.model';
 import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
 import { getManagerCohorts } from './manager.helpers';
+// import { blakeClient } from 'src/axiosClients/axiosClient';
 
 export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
@@ -177,6 +178,7 @@ export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) 
     })
 }
 
-export const patchCognitoGroup = (email: string, role: string) => dispatch => {
+export const deleteCognitoGroup = (email: string, role: string) => dispatch => {
+  // Stuff will go in here, don't complain
   
 }

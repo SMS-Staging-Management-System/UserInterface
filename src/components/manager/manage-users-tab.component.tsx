@@ -4,16 +4,19 @@ import ManagerUserRowComponent from '../manager/manager-user-row.component'
 import ManagerUserRowAdminComponent from '../manager/manger-user-row-admin.component';
 import { connect } from 'react-redux';
 import { IState } from 'src/reducers';
-import { IUser } from 'src/model/User.model';
+// import { IUser } from 'src/model/User.model';
+import {Button, FormGroup, Input, Label, Col, Row} from 'reactstrap';
 
 
 interface IComponentState {
+   isCheckedAssociate: any
+   isCheckedStageMan: any
+   isCheckedTrainer: any
    roleSelected: any
 }
 
 interface IComponentProps {
    roles: any
-   user: IUser
    admins: any[]
    trainers: any[]
    stagings: any[]
@@ -26,6 +29,9 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
       super(props);
 
       this.state={
+         isCheckedAssociate: false,
+         isCheckedStageMan: false,
+         isCheckedTrainer: false,
          roleSelected: 'ADMIN'
       }
    }
@@ -55,6 +61,30 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
          
        });
    }
+   public handleRoleCheckboxAssoc = (e: any) =>{
+      const target = e.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+
+      this.setState({
+         isCheckedAssociate: value
+      });
+   }
+   public handleRoleCheckboxTrain = (e: any) =>{
+      const target = e.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+
+      this.setState({
+         isCheckedTrainer: value
+      });
+   }
+   public handleRoleCheckboxStageMan = (e: any) =>{
+      const target = e.target;
+      const value = target.type === 'checkbox' ? target.checked : target.value;
+
+      this.setState({
+         isCheckedStageMan: value
+      });
+   }
 
    public renderTableHead = () => {
       
@@ -80,118 +110,7 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
    }
 
    public renderTabTable = () =>{
-      // this.props.trainerList
-      // const isAdmin = this.props.roles.includes("admin");
       
-      // const FAKE_DATA_ASSOCIATE = [
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Minasie",
-      //       'lastName': 'Hagos',
-      //       'role': 'Associate'
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Kayle",
-      //       'lastName': 'Ford',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Jose",
-      //       'lastName': 'Periz',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Calvin",
-      //       'lastName': 'Vo',
-      //       'role': 'Associate'
-      //    }
-      // ]
-
-      // const FAKE_DATA_STAGE_MAN = [
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Kurisu",
-      //       'lastName': 'Hagos',
-      //       'role': 'Associate'
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Kayle",
-      //       'lastName': 'Ford',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Jose",
-      //       'lastName': 'Periz',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Calvin",
-      //       'lastName': 'Vo',
-      //       'role': 'Associate'
-      //    }
-      // ]
-
-      // const FAKE_DATA_TRAINER = [
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Minasie",
-      //       'lastName': 'Hagos',
-      //       'role': 'Associate'
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Kayle",
-      //       'lastName': 'Ford',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Jose",
-      //       'lastName': 'Periz',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Calvin",
-      //       'lastName': 'Vo',
-      //       'role': 'Associate'
-      //    }
-      // ]
-
-      // const FAKE_DATA_ADMIN= [
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Minasie",
-      //       'lastName': 'Hagos',
-      //       'role': 'Associate'
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Kayle",
-      //       'lastName': 'Ford',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Jose",
-      //       'lastName': 'Periz',
-      //       'role': 'Associate' 
-      //    },
-      //    {
-      //       'email': 'revatureEmp@revature.com',
-      //       'firstName': "Calvin",
-      //       'lastName': 'Vo',
-      //       'role': 'Associate'
-      //    }
-      // ]
-      
-
       if(this.state.roleSelected ==='ADMIN'){
          return <> {this.props.admins.map((Data, index) => <ManagerUserRowAdminComponent Data={Data} key={index}/>)} </>
       }else if(this.state.roleSelected === 'ASSOCIATE') {
@@ -208,7 +127,6 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
    }
 
    public render(){
-      
       const renderTableDiv =  this.renderTabTable();
       const renderTableHeaderDiv =  this.renderTableHead();
       return (
@@ -225,6 +143,69 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
                    onClick={this.handleTabClickAssoc}>Associate</a>
                </div>
             </nav>
+            <div className="modal"  id="add-user-modal"role="dialog">
+               <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                     <div className="modal-header">
+                     <h3 className="modal-title">Add Role to User</h3>
+                     <Button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                     </Button>
+                     </div>
+                     <div className="modal-body">
+                        <FormGroup>
+                           <Row>
+                              <Col xs={2}> 
+                                 <Label > Email </Label> 
+                              </Col>
+                              <Col xs={10}> 
+                                 <Input type="email"> </Input>
+                              </Col>
+                           </Row>
+                        </FormGroup>
+                        <Row>
+                           <Col xs={2}>
+                              <Label> Role</Label>
+                           </Col>
+                           <Col xs={10}>
+                              <FormGroup check>
+                                 <Label check>
+                                    <Input type="checkbox"
+                                       name="isCheckedTrainer"
+                                       checked = {this.state.isCheckedTrainer}
+                                       onChange = {this.handleRoleCheckboxTrain}
+                                    /> Trainer
+                                 </Label>
+                              </FormGroup>
+                              <FormGroup check>
+                                 <Label check>
+                                    <Input type="checkbox"
+                                    name="isCheckedStageMan"
+                                    checked = {this.state.isCheckedStageMan}
+                                    onChange = {this.handleRoleCheckboxStageMan}/> Staging Manager
+                                 </Label>
+                              </FormGroup>
+                              <FormGroup check>
+                                 <Label check>
+                                    <Input type="checkbox"
+                                    name="isCheckedAssociate"
+                                    checked = {this.state.isCheckedAssociate}
+                                    onChange = {this.handleRoleCheckboxAssoc}/> Associate
+                                 </Label>
+                              </FormGroup>
+                           </Col>
+                        </Row>
+                     </div>
+                     <div className="modal-footer">
+                        <Button type="button" color="success">Submit</Button>
+                     {/* <Button type="button" color = "danger"data-dismiss="modal">Close</Button> */}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div className="mt-2">
+               <Button className="flex-align" color="danger" data-toggle="modal" data-target="#add-user-modal"> Add + </Button>
+            </div>
             <div>
                <div className="mt-3 col-10">
                   <Table bordered className="table table-sm">
@@ -242,6 +223,6 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
    }
 }
 
-const mapStateToProps = (state: IState) => state.user
+const mapStateToProps = (state: IState) => state.manager
 const mapDispatchToProps = {}
 export default connect(mapStateToProps, mapDispatchToProps)(ManageUsersTabComponenet)
