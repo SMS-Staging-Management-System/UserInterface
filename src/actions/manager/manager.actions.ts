@@ -38,11 +38,11 @@ export const managerPostComment = (managerComments: string, checkinId: number) =
   checkInClient.postManagerComment(body, checkinId)
     .then(response => {
       // console.log(response)
-      // toast.success("Comment submitted")
+      toast.success("Comment submitted")
     })
     .catch(error => {
       // console.log(error)
-      // toast.warn("Unable to submit comment")
+      toast.warn("Unable to submit comment")
     })
 }
 
