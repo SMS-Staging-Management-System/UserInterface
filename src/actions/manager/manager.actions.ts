@@ -1,21 +1,25 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import * as cohortClient from '../../axiosClients/cohortClient/cohortClient';
+import * as userClient from '../../axiosClients/userClient/userClient';
 import { toast } from "react-toastify";
 import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { IUser } from 'src/model/User.model';
 import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
-import { getManagerCohorts } from './manager.helpers';
-// import { blakeClient } from 'src/axiosClients/axiosClient';
+import { getManagerCohorts, sortCheckInByDate } from './manager.helpers';
 
 export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
   ADD_COHORT: 'ADD_COHORT',
   SELECT_COHORT: 'SELECT_COHORT',
+  SET_ADMINS: 'SET_ADMINS',
+  SET_ASSOCIATE_CHECK_IN_LIST: 'SET_ASSOCIATE_CHECK_IN_LIST',
+  SET_ASSOCIATE_LIST: 'SET_ASSOCIATE_LIST',
   SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
   SET_CHECK_IN_LIST: 'SET_CHECK_IN_LIST',
   SET_COHORT_LIST: 'SET_COHORT_LIST',
+  SET_STAGINGS: 'SET_STAGINGS',
   SET_TRAINERS: 'SET_TRAINERS'
 }
 
@@ -25,23 +29,26 @@ export const managerTypes = {
 export const managerInit = () => (dispatch) => {
   getManagerCohorts()(dispatch)
   getManagerCheckIn(getTodayStart(), getTodayEnd())(dispatch);
+  getAllUsers()(dispatch);
 }
 
 /**
  * Update a check in with a comment
  * @param comment 
  */
-export const managerPostComment = (managerComments: string, checkinId: number) => {
+export const managerPostComment = (managerComments: string, checkinId: number) => dispatch => {
   const body = {
     checkinId,
     managerComments
   }
   checkInClient.postManagerComment(body, checkinId)
     .then(response => {
+      // console.log(response)
       toast.success("Comment submitted")
     })
     .catch(error => {
-      toast.warn("Unable to submit comment")      
+      // console.log(error)
+      toast.warn("Unable to submit comment")
     })
 }
 
@@ -56,6 +63,7 @@ export const getManagerCheckIn = (fromDate: number, toDate: number) => dispatch 
       const checkinList = response.data.models.map(checkin => {
         return checkin as ICheckIn;
       })
+      sortCheckInByDate(checkinList);
       dispatch({
         payload: {
           checkIns: checkinList
@@ -80,11 +88,12 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
       const checkinList = response.data.map(checkin => {
         return checkin as ICheckIn;
       })
+      sortCheckInByDate(checkinList);
       dispatch({
         payload: {
-          checkIns: checkinList
+          associateCheckIns: checkinList
         },
-        type: managerTypes.SET_CHECK_IN_LIST
+        type: managerTypes.SET_ASSOCIATE_CHECK_IN_LIST
       });
     })
     .catch(error => {
@@ -98,16 +107,13 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
  * @param checkInList 
  * @param cohortList 
  */
-export const getCheckInByCohortId = (cohortId: number,
-  fromDate: number,
-  toDate: number
-) => dispatch => {
-
+export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate: number) => dispatch => {
   checkInClient.getCheckInByCohortId(cohortId, fromDate, toDate)
     .then(response => {
-      const checkinList = response.data.map(checkin => {
+      const checkinList = response.data.models.map(checkin => {
         return checkin as ICheckIn;
       })
+      sortCheckInByDate(checkinList);
       dispatch({
         payload: {
           checkIns: checkinList
@@ -148,7 +154,6 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
       cohortClient.getUsersByCohortId(cohort.cohortId)
         .then(cohortResponse => {
           cohort.userList = cohortResponse.data.map(user => user as IUser);
-          console.log(cohort)
           dispatch({
             payload: {
               cohort
@@ -162,7 +167,7 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
     })
 }
 
-export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
+export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
   cohortClient.postUser(user)
     .then(response => {
       cohortClient.addUserToCohort(cohortId, response.data.userId)
@@ -180,5 +185,19 @@ export const managetPostUserToCohort = (cohortId: number, user: IUserCreateDto) 
 
 export const deleteCognitoGroup = (email: string, role: string) => dispatch => {
   // Stuff will go in here, don't complain
-  
+}
+
+export const getAllUsers = () => dispatch => {
+  userClient.getAllUsers()
+  .then(response => {
+    const userList = response.data.map(user => {
+      return user as IUser;
+    })
+    dispatch({
+      payload: {
+        associates:  userList
+      },
+      type: managerTypes.SET_ASSOCIATE_LIST
+    });
+  })
 }

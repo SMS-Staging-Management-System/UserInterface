@@ -701,6 +701,20 @@ Manager Content
   background-color: white;
 }
 
+.associate-row-table-class {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+
+.associate-row-target {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+
 #associate-content {
   display: flex;
   justify-content: space-between;
@@ -772,7 +786,7 @@ Manager Content
 }
 
 #text-area{
-  width: 800px;
+  width: 100%;
 }
 
 #fields{
