@@ -13,7 +13,7 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
     fromDate,
     toDate
   }
-  return axiosClient.get(`/checkins/associates/${userId}`, params);
+  return axiosClient.get(`/checkins/associates/${userId}`, {params});
 }
 
 export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate: number) => {

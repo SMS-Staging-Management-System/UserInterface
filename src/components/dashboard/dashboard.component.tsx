@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { IUser } from 'src/model/User.model';
 import ManagerContentComponent from '../manager/manager-content.component';
 import AssociateContentComponent from '../associate/associate-content.component';
-import { UserProfileComponent } from '../userProfile/userProfile.component';
+// import { UserProfileComponent } from '../userProfile/userProfile.component';
 import { Route } from 'react-router';
 import { withRouter } from 'react-router-dom';
 // import { UserProfileComponent } from '../userProfile/userProfile.component';
