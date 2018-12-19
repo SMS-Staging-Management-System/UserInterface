@@ -41,6 +41,7 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
 
    public handleSubmit = () => {
       console.log("whoo 2")
+      console.log("ok")
    }
 
    public handleTabClickAssoc = ()=>{

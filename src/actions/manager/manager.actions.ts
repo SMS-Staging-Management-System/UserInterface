@@ -168,14 +168,9 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
     })
 }
 
-export const managerPostUserToCohort = (cohortId: number, email: string) => dispatch => {
-  const user = {
-    "email": email,
-    "firstName": "first name",
-    "lastName": "last name"
-  }
+export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
   cohortClient.postUser(user)
-    .then(response => { 
+    .then(response => {
       cohortClient.addUserToCohort(cohortId, response.data.userId)
         .then(resp => {
           toast.success("Successfully add user to cohort")

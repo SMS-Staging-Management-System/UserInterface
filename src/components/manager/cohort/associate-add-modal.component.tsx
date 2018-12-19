@@ -10,7 +10,6 @@ import { ICohort } from 'src/model/Cohort.model';
 /*
 * The modal to add a single associate to a cohort
 */
-
 export interface IProps {
   modal: boolean
   toggle: (name: string) => void
