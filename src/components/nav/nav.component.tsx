@@ -89,7 +89,7 @@ class AppNav extends React.PureComponent<IComponentProps, IComponentState, any> 
         light expand="md">
         <NavbarBrand
           className="cursor-hover"
-          onClick={() => this.props.history.push("/dashboard")}
+          onClick={() => this.props.history.push("/dashboard/check-ins")}
         >
           <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
         </NavbarBrand>
