@@ -11,6 +11,7 @@ interface IComponentProps {
   manager: IManagerState
   user: IUserState
   managerInit: () => void
+  match: any
 }
 
 export class ManagerContentComponent extends React.Component<IComponentProps> {
