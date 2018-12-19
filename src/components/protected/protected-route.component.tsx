@@ -1,6 +1,9 @@
 import * as React from "react";
 import {Redirect, Route} from 'react-router';
 import { connect } from "react-redux";
+import { IState } from "src/reducers";
+import * as awsCognito from 'amazon-cognito-identity-js';
+import { environment } from '../../environment';
 
 /*
  *The protected route component
@@ -12,13 +15,32 @@ import { connect } from "react-redux";
 //   authenticationPath: string;
 // }
 
-export const ProtectedRoute = ({ component: Component, ...rest }: any) => {
+export const checkSession = () => {
+  
+  const poolData = {
+    ClientId:   environment.cognitoClientId, 
+    UserPoolId: environment.cognitoUserPoolId,
+  };
 
+  const userPool = new awsCognito.CognitoUserPool(poolData);
+  const cognitoUser = userPool.getCurrentUser();
+
+  if (cognitoUser !== null) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+
+
+export const ProtectedRoute = ({ component: Component, ...rest }: any) => {
   return (
     <Route
       {...rest}
       render={props => {
-        if (rest.login) {
+        if (checkSession()) {
           return <Component {...props} />;
         } else {
           return (
@@ -35,10 +57,6 @@ export const ProtectedRoute = ({ component: Component, ...rest }: any) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    login: state.user.login
-  };
-};
+const mapStateToProps = (state: IState) => (state.user);
 
 export default connect(mapStateToProps)(ProtectedRoute);

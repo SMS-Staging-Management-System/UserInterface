@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import * as managerActions from '../../../actions/manager/manager.actions';
 
 /*
-  *The manager's comment component
-*/
+ *The manager's comment component
+ */
 interface IProps {
   checkinId: number
   firstName: string
@@ -20,6 +20,7 @@ interface IProps {
 interface IComponentState {
   comment: string
 }
+
 export class ManagerCommentComponent extends React.Component<IProps, IComponentState> {
   constructor(props) {
     super(props);
@@ -43,24 +44,24 @@ export class ManagerCommentComponent extends React.Component<IProps, IComponentS
     return (
       <>
         <div>
-        <Modal on isOpen={this.props.modal} className="manager-comments">
-          <ModalHeader>Leave a comment for {this.props.firstName}</ModalHeader>
-          <ModalBody>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText className="comment-addon">
-                Comment:
+          <Modal on isOpen={this.props.modal} className="manager-comments">
+            <ModalHeader>Leave a comment for {this.props.firstName}</ModalHeader>
+            <ModalBody>
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText className="comment-addon">
+                    Comment:
               </InputGroupText>
-            </InputGroupAddon>
-            <Input placeholder="note to associate" onChange={()=>this.getComment}/>
-          </InputGroup>
-          </ModalBody>
-          <ModalFooter>
-            <Button className="rev-btn" onClick={this.handlePostComment}>Submit</Button>
-            <Button color="secondary" onClick={this.props.modalOff}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
-      </div> 
+                </InputGroupAddon>
+                <Input placeholder="note to associate" onChange={this.getComment} />
+              </InputGroup>
+            </ModalBody>
+            <ModalFooter>
+              <Button className="rev-btn" onClick={this.handlePostComment}>Submit</Button>
+              <Button color="secondary" onClick={this.props.modalOff}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
       </>
     );
   }

@@ -17,6 +17,7 @@ export interface IComponentState {
   description: string
   managerComment: string
   checkinId: number
+  selectedCheckIn: number
 }
 
 interface IProps {
@@ -32,16 +33,18 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
       firstName: '',
       managerComment: '',
       modal: false,
-      popover: false
+      popover: false,
+      selectedCheckIn: null
     };
   }
   // get name to pass name to the comment component
-  public getName = (name: string) => {
+  public getName = (name: string, checkInId: number) => {
     this.setState({
       ...this.state,
       firstName: name,
       modal: !this.state.modal,
-      popover: !this.state.popover
+      popover: !this.state.popover,
+      selectedCheckIn: checkInId
     });
   }
   // get associate's daily tasks to pass to popover
@@ -74,25 +77,24 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
   public renderRows = () => {
     const LAST_INDEX = (this.props.pageNumber * 10) - 1;
     const FIRST_INDEX = LAST_INDEX - 9;
-
     if (this.props.checkIns.length !== 0) {
-      return this.props.checkIns.map((user, index) => {
+      return this.props.checkIns.map((checkin, index) => {
         if (index >= FIRST_INDEX && index <= LAST_INDEX) {
           return <tr
-            id={`row-${user.userId}`}  // set unique user ids for each row
-            key={user.checkinId}  // using user id for the key as well
-            onClick={() => this.getName(user.firstName)} // activate comment modal
-            onMouseOver={() => this.tasks(user.userId, user.checkinDescription, user.managerComments)} // activate daily tasks
+            id={`row-${checkin.checkinId}`}  // set unique checkin ids for each row
+            key={checkin.checkinId}  // using checkin id for the key as well
+            onClick={() => this.getName(checkin.firstName, checkin.checkinId)} // activate comment modal
+            onMouseOver={() => this.tasks(checkin.checkinId, checkin.checkinDescription, checkin.managerComments)} // activate daily tasks
             onMouseLeave={() => this.hide()}
             // adding support for mobile device to show daily tasks and manager comments
-            onTouchStart={() => this.tasks(user.userId, user.checkinDescription, user.managerComments)}
+            onTouchStart={() => this.tasks(checkin.checkinId, checkin.checkinDescription, checkin.managerComments)}
             onTouchCancel={() => this.hide()}
           >
-            <td >{user.userId}</td>
-            <td>{user.firstName}</td>
-            <td>{user.lastName}</td>
-            <td>{user.email}</td>
-            <td>{time(user.dateSubmitted)}</td>
+            <td >{checkin.checkinId}</td>
+            <td>{checkin.firstName}</td>
+            <td>{checkin.lastName}</td>
+            <td>{checkin.email}</td>
+            <td>{time(checkin.dateSubmitted)}</td>
           </tr>
         } else {
           return <></>
@@ -119,7 +121,7 @@ export class CheckInRowManagerComponent extends React.Component<IProps, ICompone
         }
         {/* Modal for manager comments */}
         <ManagerCommentComponent
-          checkinId={this.state.checkinId}
+          checkinId={this.state.selectedCheckIn}
           toggle={this.getName}
           modal={this.state.modal}
           firstName={this.state.firstName}
