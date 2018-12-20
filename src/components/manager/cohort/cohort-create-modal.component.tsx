@@ -100,7 +100,6 @@ export class CreateNewModalComponent extends React.Component<IProps, IComponentS
     const mapContent = this.state.fileContent.map((user, index) => {
       return (
         <tr key={index}>
-          {/* <th scope="row">{index}</th> */}
           <td>{user.firstname}</td>
           <td>{user.lastName}</td>
           <td>{user.email}</td>
