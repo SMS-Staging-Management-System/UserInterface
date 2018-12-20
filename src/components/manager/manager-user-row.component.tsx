@@ -1,7 +1,8 @@
 import * as React from 'react';
-// import { IUser } from "src/model/User.model";
 import {Button} from 'reactstrap';
-
+import * as managerActions from '../../actions/manager/manager.actions';
+import { connect } from 'react-redux';
+import { IState } from 'src/reducers';
 interface IComponentState {
    cChecked: any,
    
@@ -9,7 +10,8 @@ interface IComponentState {
 }
 interface IProps {
    Data: any,
-   
+   roleSelected: string,
+   deleteCognitoGroup: (email: string, role: string) => void
  }
 
 export class ManagerUserRowComponent extends React.Component <IProps, IComponentState > {
@@ -32,13 +34,7 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
        
    }
    public removeRoleBtn = () =>{
-      this.setState({
-         ...this.state,
-         
-       });
-       console.log("I have Removed!");
-       // Throw an Action.
-       // To remove from list of Roles.
+       this.props.deleteCognitoGroup(this.props.Data.email, this.props.roleSelected);
    }
 
    public render() {
@@ -70,6 +66,10 @@ export class ManagerUserRowComponent extends React.Component <IProps, IComponent
       )
    }
 }
+const mapStateToProps = (state: IState) => state.manager
+const mapDispatchToProps = {
+   ...managerActions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ManagerUserRowComponent)
 
-export default ManagerUserRowComponent
 
