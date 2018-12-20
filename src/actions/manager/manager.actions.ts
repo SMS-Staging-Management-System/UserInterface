@@ -44,11 +44,9 @@ export const managerPostComment = (managerComments: string, checkinId: number) =
   }
   checkInClient.postManagerComment(body, checkinId)
     .then(response => {
-      // console.log(response)
       toast.success("Comment submitted")
     })
     .catch(error => {
-      // console.log(error)
       toast.warn("Unable to submit comment")
     })
 }
@@ -86,10 +84,11 @@ export const getManagerCheckIn = (fromDate: number, toDate: number) => dispatch 
 export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => (dispatch) => {
   checkInClient.getCheckInByUserId(userId, fromDate, toDate)
     .then(response => {
-      const checkinList = response.data.map(checkin => {
+      const checkinList = response.data.models.map(checkin => {
         return checkin as ICheckIn;
       })
       sortCheckInByDate(checkinList);
+      
       dispatch({
         payload: {
           associateCheckIns: checkinList

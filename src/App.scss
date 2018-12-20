@@ -598,6 +598,20 @@ Manager Content
   background-color: $drew-orange;
   color: white;
 }
+.checkin-table-header-not-my-fault-i-have-to-do-this {
+  font-size: 8px;
+  text-align: center;
+  background-color: #f3a55d;
+  color: white;
+}
+
+.manager-associate-checkin-rows {
+  font-size: 9px;
+}
+
+.manager-associate-checkin-rows > td {
+  padding: 5px;
+}
 
 .daily-tasks-header{
   display: flex;

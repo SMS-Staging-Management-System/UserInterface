@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Modal, ModalBody, ModalFooter, Button} from 'reactstrap';
+import { Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
 // import { ICheckIn } from '../../../model/CheckIn.model';
 import { IState } from '../../../reducers/index';
 import { connect } from 'react-redux';
@@ -14,28 +14,26 @@ interface IProps {
   modal: boolean
   modalOff: () => void
   userId: number
+  getCheckInByUserId: (userId: number, fromDate: number, toDate: number) => void
 }
 export class AssociateRowCheckinComponent extends React.Component<IProps, {}> {
 
+  public componentWillReceiveProps (newProps) {
+    if( newProps.userId !== this.props.userId ) {
+      this.props.getCheckInByUserId(this.props.userId, 0, new Date().getTime())
+    }
+  }
 
   public render() {
     return (
-      <>
-        <div>
-        <Modal on isOpen={this.props.modal} className="manager-comments">
-          <ModalBody>
-            <ManagerCheckinTableComponent/>
-          </ModalBody>
-          <ModalFooter>
-              {/* Dates  */}
-            <Button color="primary" onClick={managerActions.getCheckInByUserId(
-                  this.props.userId, 0, new Date().getTime())}
-            >Get Checkins</Button> 
-            <Button color="secondary" onClick={this.props.modalOff}>Close</Button>
-          </ModalFooter>
-        </Modal>
-      </div> 
-      </>
+      <Modal on isOpen={this.props.modal} className="manager-comments">
+        <ModalBody>
+          <ManagerCheckinTableComponent />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={this.props.modalOff}>Close</Button>
+        </ModalFooter>
+      </Modal>
     );
   }
 }

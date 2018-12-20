@@ -4,7 +4,6 @@ import ManagerUserRowComponent from '../manager/manager-user-row.component'
 import ManagerUserRowAdminComponent from '../manager/manger-user-row-admin.component';
 import { connect } from 'react-redux';
 import { IState } from 'src/reducers';
-// import { IUser } from 'src/model/User.model';
 import {Button, FormGroup, Input, Label, Col, Row} from 'reactstrap';
 import * as managerActions from '../../actions/manager/manager.actions';
 
