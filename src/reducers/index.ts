@@ -13,20 +13,28 @@ export interface IClickerState {
 }
 
 export interface IUserState {
+  admins:   any[],
+  associates: any[],
   cogUser:  any,
   isFirstSignin: boolean,
   isLogin:  boolean,
   user:     IUser,
   page:     string,
-  roles:    string[]
+  roles:    string[],
+  stagings: any[],
+  trainers: any[]
 }
 
 export interface IManagerState {
+  admins:           IUser[],
   associates:       IUser[],
+  associateCheckIns:ICheckIn[],
   cohorts:          ICohort[],
+  comment:          string,
   checkIns:         ICheckIn[],
   currentCohort:    ICohort,
-  isShowCohort:     boolean
+  stagings:         IUser[],
+  trainers:         any[]
 }
 
 export interface IAssociateState {

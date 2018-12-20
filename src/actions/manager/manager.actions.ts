@@ -1,109 +1,78 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import * as cohortClient from '../../axiosClients/cohortClient/cohortClient';
+import * as userClient from '../../axiosClients/userClient/userClient';
+import * as blakeClient from '../../axiosClients/blakeClient/blakeClient';
 import { toast } from "react-toastify";
 import { ICheckIn } from '../../model/CheckIn.model';
 import { ICohort } from '../../model/Cohort.model';
 import { IUserCreateDto } from 'src/model/UserCreateDto.model';
+import { IUser } from 'src/model/User.model';
+import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
+import { getManagerCohorts, sortCheckInByDate } from './manager.helpers';
 
 export const managerTypes = {
-  ADD_CHECK_INS:    'ADD_CHECK_INS',
-  ADD_COHORTS:      'ADD_COHORTS',
-  FILTER_CHECK_IN_LIST: 'FILTER_CHECK_IN_LIST',
-  SELECT_COHORT:    'SELECT_COHORT',
-  SET_SHOW_COHORT:  'SET_SHOW_COHORT'
+  ADD_CHECK_INS: 'ADD_CHECK_INS',
+  ADD_COHORT: 'ADD_COHORT',
+  SELECT_COHORT: 'SELECT_COHORT',
+  SET_ADMINS: 'SET_ADMINS',
+  SET_ASSOCIATE_CHECK_IN_LIST: 'SET_ASSOCIATE_CHECK_IN_LIST',
+  SET_ASSOCIATE_LIST: 'SET_ASSOCIATE_LIST',
+  SET_CHECK_IN_COMMENT: 'SET_CHECK_IN_COMMENT',
+  SET_CHECK_IN_LIST: 'SET_CHECK_IN_LIST',
+  SET_COHORT_LIST: 'SET_COHORT_LIST',
+  SET_STAGINGS: 'SET_STAGINGS',
+  SET_TRAINERS: 'SET_TRAINERS'
 }
 
 /**
  * Set up manager list of classes and check-ins
  */
 export const managerInit = () => (dispatch) => {
-  checkInClient.getManagerCheckInToday()
-  .then(response => {
-    const checkInList = response.data.result.map(checkIn => {
-      return checkIn as ICheckIn;
-    })
-    dispatch({
-      payload: {
-        checkIns:  checkInList
-      },
-      type: managerTypes.ADD_CHECK_INS
-    });
-  })
-  .catch(error => {
-    console.log("error");
-  })
-
-  cohortClient.getManagerCohorts()
-  .then(response => {
-    const cohortList = response.data.result.map(cohort => {
-      return cohort as ICohort;
-    })
-    dispatch({
-      payload: {
-        cohorts:  cohortList
-      },
-      type: managerTypes.ADD_COHORTS
-    });
-  })
-  .catch(error => {
-    console.log("error");
-  })
-}
-
-/**
- * Manager post a new cohort
- * @param cohortName 
- * @param emailList 
- */
-export const postCohort = (cohortName: string, cohortDescription: string, users: IUserCreateDto[]) => dispatch => {
-  cohortClient.postCohort(cohortName, cohortDescription, users)
-  .then(response => {
-    toast.success("Cohort created")
-  })
-  .catch(error => {
-    toast.success("Unable to create cohort or some users")
-  })
+  getManagerCohorts()(dispatch)
+  getManagerCheckIn(getTodayStart(), getTodayEnd())(dispatch);
+  getAllUsers()(dispatch);
 }
 
 /**
  * Update a check in with a comment
  * @param comment 
  */
-export const submitCheckInComment = (comment: string, checkInId: number) => {
+export const managerPostComment = (managerComments: string, checkinId: number) => dispatch => {
   const body = {
-    "comments": comment
+    checkinId,
+    managerComments
   }
-  checkInClient.postManagerComment(body, checkInId)
-  .then(response => {
-    toast.success("Comment submitted")
-  })
-  .catch(error => {
-    console.log("error");
-  })
+  checkInClient.postManagerComment(body, checkinId)
+    .then(response => {
+      toast.success("Comment submitted")
+    })
+    .catch(error => {
+      toast.warn("Unable to submit comment")
+    })
 }
 
 /**
- * Set the current list of render check ins
+ * Get a list of manager's check ins
  * @param fromDate 
- * @param ?toDate 
- * @param ?checkInList 
+ * @param toDate  
  */
-export const getAllCheckIn = (fromDate: number, toDate: number) => dispatch => {
-  checkInClient.getAllCheckIn(fromDate, toDate)
-  .then(response => {
-    const checkinList = response.data.result.map(checkin => {
-      return checkin as ICheckIn;
+export const getManagerCheckIn = (fromDate: number, toDate: number) => dispatch => {
+  checkInClient.getManagerCheckIn(fromDate, toDate)
+    .then(response => {
+      const checkinList = response.data.models.map(checkin => {
+        return checkin as ICheckIn;
+      })
+      sortCheckInByDate(checkinList);
+      dispatch({
+        payload: {
+          checkIns: checkinList
+        },
+        type: managerTypes.SET_CHECK_IN_LIST
+      });
     })
-    dispatch({
-      payload: {
-        checkIns:  checkinList
-      },
-      type: managerTypes.FILTER_CHECK_IN_LIST
-    });
-  })
-  .catch(error => {
-    console.log("error");
-  })
+    .catch(error => {
+      console.log(error);
+    })
 }
 
 /**
@@ -114,20 +83,22 @@ export const getAllCheckIn = (fromDate: number, toDate: number) => dispatch => {
  */
 export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => (dispatch) => {
   checkInClient.getCheckInByUserId(userId, fromDate, toDate)
-  .then(response => {
-    const checkinList = response.data.result.map(checkin => {
-      return checkin as ICheckIn;
+    .then(response => {
+      const checkinList = response.data.models.map(checkin => {
+        return checkin as ICheckIn;
+      })
+      sortCheckInByDate(checkinList);
+      
+      dispatch({
+        payload: {
+          associateCheckIns: checkinList
+        },
+        type: managerTypes.SET_ASSOCIATE_CHECK_IN_LIST
+      });
     })
-    dispatch({
-      payload: {
-        checkIns:  checkinList
-      },
-      type: managerTypes.FILTER_CHECK_IN_LIST
-    });
-  })
-  .catch(error => {
-    console.log("error");
-  })
+    .catch(error => {
+      console.log(error);
+    })
 }
 
 /**
@@ -136,26 +107,23 @@ export const getCheckInByUserId = (userId: number, fromDate: number, toDate: num
  * @param checkInList 
  * @param cohortList 
  */
-export const getCheckInByCohortId = ( cohortId:     number,
-                                      fromDate:     number, 
-                                      toDate:       number
-                                      ) => dispatch => {
-
+export const getCheckInByCohortId = (cohortId: number, fromDate: number, toDate: number) => dispatch => {
   checkInClient.getCheckInByCohortId(cohortId, fromDate, toDate)
-  .then(response => {
-    const checkinList = response.data.result.map(checkin => {
-      return checkin as ICheckIn;
+    .then(response => {
+      const checkinList = response.data.models.map(checkin => {
+        return checkin as ICheckIn;
+      })
+      sortCheckInByDate(checkinList);
+      dispatch({
+        payload: {
+          checkIns: checkinList
+        },
+        type: managerTypes.SET_CHECK_IN_LIST
+      });
     })
-    dispatch({
-      payload: {
-        checkIns:  checkinList
-      },
-      type: managerTypes.FILTER_CHECK_IN_LIST
-    });
-  })
-  .catch(error => {
-    console.log("error");
-  })
+    .catch(error => {
+      console.log("error");
+    })
 }
 
 /**
@@ -163,41 +131,95 @@ export const getCheckInByCohortId = ( cohortId:     number,
  * @param sCohort 
  */
 export const selectCohort = (sCohort: ICohort) => dispatch => {
-  dispatch({
-    payload: {
-      currentCohort: sCohort
-    },
-    type: managerTypes.SELECT_COHORT
-  });
-  dispatch({
-    payload: {
-      isShowCohort: false
-    },
-    type: managerTypes.SET_SHOW_COHORT
-  });
   setTimeout(() => {
     dispatch({
       payload: {
-        isShowCohort: true
+        currentCohort: sCohort
       },
-      type: managerTypes.SET_SHOW_COHORT
+      type: managerTypes.SELECT_COHORT
     });
-  }, 50);
+  }, 500);
 }
 
 /**
- * Get a list of check ins to be render base on criterias
- * @param cohortId 
- * @param userId 
- * @param fromDate 
- * @param toDate 
+ * Create a new cohort
+ * @param cohortName 
+ * @param cohortDescription 
+ * @param userLists 
  */
-export const managerGetCheckIns = (cohortId: number, userId: number, fromDate: number, toDate:   number) => dispatch => {
-  if(userId === 0) {
-    if(cohortId === 0) {
-      getAllCheckIn(fromDate, toDate)(dispatch);
-    } else {
-      getCheckInByCohortId(cohortId, fromDate, toDate)(dispatch);
-    }
+export const managerPostCohort = (cohortName: string, cohortDescription: string, userList: IUserCreateDto[]) => dispatch => {
+  cohortClient.postCohort(cohortName, cohortDescription, userList)
+    .then(response => {
+      const cohort = response.data as ICohort;
+      cohortClient.getUsersByCohortId(cohort.cohortId)
+        .then(cohortResponse => {
+          cohort.userList = cohortResponse.data.map(user => user as IUser);
+          dispatch({
+            payload: {
+              cohort
+            },
+            type: managerTypes.ADD_COHORT
+          });
+        })
+    })
+    .catch(error => {
+      toast.warn(error.response.data.messages)
+    })
+}
+
+export const managerPostUserToCohort = (cohortId: number, email: string) => dispatch => {
+  const user = {
+    "email": email,
+    "firstName": "first name",
+    "lastName": "last name"
   }
+  cohortClient.postUser(user)
+  .then(response => {
+    cohortClient.addUserToCohort(cohortId, response.data.userId)
+      .then(resp => {
+        toast.success("Successfully created and add user to cohort")
+      })
+      .catch(err => {
+        toast.warn("Created user but unable to add to cohort")
+      })
+  })
+  .catch(error => {
+    cohortClient.addUserToCohort(cohortId, error.response.data.userId)
+      .then(resp => {
+        toast.success("Successfully add user to cohort")
+      })
+      .catch(err => {
+        toast.warn("Unable to add user to cohort")
+      })
+  })
+}
+
+export const addCognitoGroup = (email: string, role: string) => dispatch => {
+  blakeClient.addUserGroup(email, role)
+  .then(response => {
+    toast.success("User is added to group")
+  })
+  .catch(console.log)
+}
+
+export const deleteCognitoGroup = (email: string, role: string) => dispatch => {
+  blakeClient.deleteUserGroup(email, role)
+  .then(response => {
+    toast.success("User is removed from group")
+  })
+}
+
+export const getAllUsers = () => dispatch => {
+  userClient.getAllUsers()
+  .then(response => {
+    const userList = response.data.map(user => {
+      return user as IUser;
+    })
+    dispatch({
+      payload: {
+        associates:  userList
+      },
+      type: managerTypes.SET_ASSOCIATE_LIST
+    });
+  })
 }

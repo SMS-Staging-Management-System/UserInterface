@@ -2,19 +2,23 @@ import * as axiosClient from '../../axiosClients/axiosClient';
 import * as awsCognito from 'amazon-cognito-identity-js';
 import * as AWS from 'aws-sdk';
 import * as userClient from '../../axiosClients/userClient/userClient';
+import * as blakeClient from '../../axiosClients/blakeClient/blakeClient';
 import { environment } from '../../environment';
 import { userTypes } from './user.actions';
 import { IUser } from 'src/model/User.model';
 import { isLoading } from  '../loading/loading.actions';
+import { History } from 'history';
+import { managerTypes } from '../manager/manager.actions';
   
 /**
  * Get current login user info from the server
  */
 export const initUser = (dispatch) => {
-  isLoading(true); 
+  isLoading(true)(dispatch); 
   
   userClient.getUserFromCognitoJwt()
   .then(response => {
+    console.log(response)
     dispatch({
       payload: {
         user:  response.data as IUser
@@ -26,7 +30,7 @@ export const initUser = (dispatch) => {
     console.log(error)
   })
   
-  isLoading(false); 
+  isLoading(false)(dispatch); 
 
   // Reset token once every 50 minutes
   window.setInterval(
@@ -34,8 +38,8 @@ export const initUser = (dispatch) => {
   , 3000000);
 }
 
-export const cognitoLogin = (username: string, password: string) => (dispatch) => {
-  isLoading(true);  
+export const cognitoLogin = (username: string, password: string, history: History) => (dispatch) => {
+  isLoading(true)(dispatch);  
   const authenticationData = {
     Password: password,
     Username: username,
@@ -69,9 +73,13 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
     },
     onSuccess: (result: awsCognito.CognitoUserSession) => {
       const roles = result.getIdToken().payload['cognito:groups'];
+      if(roles !== undefined) {
+        getCognitoManagements()(dispatch);
+      }
       
       // Set cognito jwt to header
       axiosClient.addCognitoToHeader(result.getIdToken().getJwtToken());
+
       dispatch({
         payload: {
           cogUser:  cognitoUser,
@@ -81,6 +89,8 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
         type: userTypes.COGNITO_SIGN_IN
       });
 
+      history.push("/dashboard/check-ins");
+
       initUser(dispatch)
 
       // Reset token once every 50 minutes
@@ -89,14 +99,14 @@ export const cognitoLogin = (username: string, password: string) => (dispatch) =
       , 3000000);
       }
   });
-  isLoading(true);
+  isLoading(true)(dispatch);
 }
 
 /**
  * Attempt to log user in automatically if the cognito user is still in local storage
  */
 export const refreshCognitoSession = () => (dispatch) => {
-  isLoading(true); 
+  isLoading(true)(dispatch); 
 
   const cognitoUser = getCurrentCognitoUser();
   if (cognitoUser !== null) {
@@ -105,12 +115,15 @@ export const refreshCognitoSession = () => (dispatch) => {
     cognitoUser.getSession((getSessionError, session) => {
       if (getSessionError) {
         // console.log(getSessionError.message || JSON.stringify(getSessionError));
-        isLoading(false); 
+        isLoading(false)(dispatch); 
         return false;
       }
       if(session) {
         const roles = session.getIdToken().payload['cognito:groups'];
-    
+        if(roles !== undefined) {
+          getCognitoManagements()(dispatch);
+        }
+
         // Set redux cognito data
         dispatch({
           payload: {
@@ -137,29 +150,29 @@ export const refreshCognitoSession = () => (dispatch) => {
               awsCreds.refresh((refreshTokenError)=> {
                 if(refreshTokenError)  {
                   console.log(refreshTokenError);
-                  isLoading(false); 
+                  isLoading(false)(dispatch); 
                   return true;
                 }
                 else{
-                  isLoading(false); 
+                  isLoading(false)(dispatch); 
                   return true;
                 }
               });
             }
           });
         }
-        isLoading(false); 
+        isLoading(false)(dispatch); 
         return true;
       } else {
-        isLoading(false); 
+        isLoading(false)(dispatch); 
         return false;
       }
     });
   } else {
-    isLoading(false); 
+    isLoading(false)(dispatch); 
     return false;
   }
-  isLoading(false); 
+  isLoading(false)(dispatch); 
   return true;
 }
 
@@ -175,4 +188,102 @@ export const getCurrentCognitoUser = () => {
   const userPool = new awsCognito.CognitoUserPool(poolData);
   const cognitoUser = userPool.getCurrentUser();
   return cognitoUser;
+}
+
+export const getCognitoManagements = () => dispatch => {
+  blakeClient.findUsersByRole('admin')
+  .then(response => {
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(list => {
+        const admins = list.filter( (el) => {
+          return el !== "";
+        });
+        dispatch({
+          payload: {
+            admins
+          },
+          type: managerTypes.SET_ADMINS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  })
+  .catch(error => {
+    console.log(error)
+  })
+
+  blakeClient.findUsersByRole('staging-manager')  
+  .then(response => {
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(list => {
+        const stagings = list.filter( (el) => {
+          return el !== "";
+        });
+        dispatch({
+          payload: {
+            stagings
+          },
+          type: managerTypes.SET_STAGINGS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  })
+
+  blakeClient.findUsersByRole('trainer')  
+  .then(response => {
+    const emailList = response.data.Users.map(user => {
+      const length = user.Attributes.length;
+      return user.Attributes[length - 1].Value;
+    })
+
+    const userList = emailList.map(email => {
+      return userClient.getUserByEmail(email)
+        .then(userResponse => {
+          return userResponse.data as IUser;
+        })
+    })
+
+    Promise.all(userList)
+      .then(list => {
+        const trainers = list.filter( (el) => {
+          return el !== "";
+        });
+        dispatch({
+          payload: {
+            trainers
+          },
+          type: managerTypes.SET_TRAINERS
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  })
 }

@@ -1,5 +1,19 @@
 import * as React from 'react';
-export class AssociateCheckInSubmit extends React.Component<{}> {
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
+import * as associateActions from  '../../actions/associate/associate.actions';
+import { IUser } from 'src/model/User.model';
+
+interface IComponentState {
+  description: string
+}
+
+interface IComponentProps {
+  user: IUser,
+  associate: IState,
+  handleSubmitClick: () => void
+}
+export class AssociateCheckInSubmit extends React.Component<IComponentProps, IComponentState> {
 
   constructor(props: any) {
     super(props);
@@ -8,6 +22,8 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
     }
   }
 
+  // this.props.user.userId;
+
   public handleChange = (event) => {
     this.setState({
       description: event.target.value
@@ -15,10 +31,9 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
     console.log(event.target.value)
   }
 
-  public handleSubmit = (event) => {
-    ;
-    console.log('Check in successful');
-    event.preventDefault();
+  public handleSubmitCheckIn = () => {
+    associateActions.submitCheckIn(this.state.description, this.props.user.userId);
+    this.props.handleSubmitClick();
   }
 
   public render() {
@@ -36,7 +51,7 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
           </ul>
         </form>
         <div className="modal-footer">
-          <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.handleSubmit}>Check In</button>
+          <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={this.handleSubmitCheckIn}>Check In</button>
         </div>
       </div>
 
@@ -44,4 +59,9 @@ export class AssociateCheckInSubmit extends React.Component<{}> {
   }
 }
 
-export default AssociateCheckInSubmit
+const mapStateToProps = (state: IState) => (state.user)
+const mapDispatchToProps = {
+  ...associateActions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssociateCheckInSubmit);

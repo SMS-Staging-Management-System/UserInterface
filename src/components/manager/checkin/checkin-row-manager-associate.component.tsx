@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { IState } from '../../reducers/index';
+import ManagerCommentComponent from './manager-comment.component';
+import ManagerDailyTasksComponent from './manager-daily-tasks-component';
+import { IState } from '../../../reducers/index';
 import { connect } from 'react-redux';
-import * as associateActions from '../../actions/associate/associate.actions'
-import { ICheckIn } from '../../model/CheckIn.model';
-import time from '../../include/time';
-import AssociateDailyTasksComponent from './associate-daily-tasks.component';
+import * as managerActions from '../../../actions/manager/manager.actions';
+import { ICheckIn } from '../../../model/CheckIn.model';
+import time from '../../../include/time'
 
 /*
   *The check-in row component
@@ -16,13 +17,15 @@ export interface IComponentState {
   description: string
   managerComment: string
   checkinId: number
+  selectedCheckIn: number
 }
 
 interface IProps {
   pageNumber: number,
   checkIns: ICheckIn[]
+  associateCheckIns: ICheckIn[]
 }
-export class AssociateRowComponent extends React.Component<IProps, IComponentState> {
+export class CheckInRowManagerAssociateComponent extends React.Component<IProps, IComponentState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,16 +34,18 @@ export class AssociateRowComponent extends React.Component<IProps, IComponentSta
       firstName: '',
       managerComment: '',
       modal: false,
-      popover: false
+      popover: false,
+      selectedCheckIn: null
     };
   }
   // get name to pass name to the comment component
-  public getName = (name: string) => {
+  public getName = (name: string, checkInId: number) => {
     this.setState({
       ...this.state,
       firstName: name,
       modal: !this.state.modal,
-      popover: !this.state.popover
+      popover: !this.state.popover,
+      selectedCheckIn: checkInId
     });
   }
   // get associate's daily tasks to pass to popover
@@ -73,24 +78,25 @@ export class AssociateRowComponent extends React.Component<IProps, IComponentSta
   public renderRows = () => {
     const LAST_INDEX = (this.props.pageNumber * 10) - 1;
     const FIRST_INDEX = LAST_INDEX - 9;
-
-    if (this.props.checkIns.length !== 0) {
-      return this.props.checkIns.map((checkIn, index) => {
+    if (this.props.associateCheckIns.length !== 0) {
+      return this.props.associateCheckIns.map((checkin, index) => {
         if (index >= FIRST_INDEX && index <= LAST_INDEX) {
-          return <tr className ="associate-row-table-class"
-            id={`row-${checkIn.checkinId}`}  // set unique user ids for each row
-            key={checkIn.checkinId}  // using user id for the key as well
-            onClick={() => this.getName(checkIn.firstName)} // activate comment modal
-            onMouseOver={() => this.tasks(checkIn.checkinId, checkIn.checkinDescription, checkIn.managerComments)} // activate daily tasks
+          return <tr
+          className="manager-associate-checkin-rows"
+            id={`row-${checkin.checkinId}`}  // set unique checkin ids for each row
+            key={checkin.checkinId}  // using checkin id for the key as well
+            onClick={() => this.getName(checkin.firstName, checkin.checkinId)} // activate comment modal
+            onMouseOver={() => this.tasks(checkin.checkinId, checkin.checkinDescription, checkin.managerComments)} // activate daily tasks
             onMouseLeave={() => this.hide()}
             // adding support for mobile device to show daily tasks and manager comments
-            onTouchStart={() => this.tasks(checkIn.checkinId, checkIn.checkinDescription, checkIn.managerComments)}
+            onTouchStart={() => this.tasks(checkin.checkinId, checkin.checkinDescription, checkin.managerComments)}
             onTouchCancel={() => this.hide()}
           >
-            <td className="associate-row-target" >{checkIn.checkinId}</td>
-            <td className="associate-row-target" >{checkIn.checkinDescription}</td>
-            <td className="associate-row-target" >{checkIn.managerComments}</td>
-            <td className="associate-row-target" >{time(checkIn.dateSubmitted)}</td>
+            <td >{checkin.checkinId}</td>
+            <td>{checkin.firstName}</td>
+            <td>{checkin.lastName}</td>
+            <td>{checkin.email}</td>
+            <td>{time(checkin.dateSubmitted)}</td>
           </tr>
         } else {
           return <></>
@@ -109,19 +115,26 @@ export class AssociateRowComponent extends React.Component<IProps, IComponentSta
         {rows}
         { this.state.modal === false && 
           this.state.checkinId !== null &&
-          <AssociateDailyTasksComponent
+          <ManagerDailyTasksComponent
             comment={this.state.managerComment}
             description={this.state.description}
             checkinId={this.state.checkinId}
             show={this.state.popover} />
         }
+        {/* Modal for manager comments */}
+        <ManagerCommentComponent
+          checkinId={this.state.selectedCheckIn}
+          toggle={this.getName}
+          modal={this.state.modal}
+          firstName={this.state.firstName}
+          modalOff={this.modalOff} />
       </>
     );
   }
 }
 
-const mapStateToProps = (state: IState) => (state.associate)
+const mapStateToProps = (state: IState) => (state.manager)
 const mapDispatchToProps = {
-  ...associateActions
+  ...managerActions
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AssociateRowComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(CheckInRowManagerAssociateComponent)

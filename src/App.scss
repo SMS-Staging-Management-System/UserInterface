@@ -28,6 +28,10 @@ $drew-orange: #f3a55d;
   cursor: pointer;
 }
 
+.no-link:hover {
+  text-decoration: none;
+}
+
 .flex-package {
   display:    flex;
   flex-shrink: 0;
@@ -48,6 +52,7 @@ $drew-orange: #f3a55d;
 ************************************/
 @media (min-width: 1200px) { 
   .top-lev-div{
+    margin-top:50px;
     zoom: 1.5;
     -moz-transform: scale(1.5);
   } 
@@ -56,6 +61,7 @@ $drew-orange: #f3a55d;
 
 @media (max-width: 1199.99px) { 
   .top-lev-div{
+    margin-top:50px;
     zoom: 1.0;
     -moz-transform: scale(1.0);
   } 
@@ -172,6 +178,10 @@ $drew-orange: #f3a55d;
 
 #user, #pass {
   padding-right: 50px;
+}
+
+#user{
+  margin-top: 30px;
 }
 
 
@@ -299,7 +309,7 @@ body {
   flex-grow: 1;
   flex-shrink: 0;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 5vh 5vw;
 }
 
@@ -463,9 +473,70 @@ body {
 Manager Content
 ******************************************************/
 .manager-content {
-  position: absolute;
-  top: 100px;
-  width: 90%;
+  width: 100%;
+}
+
+.sel-box{
+  float: left;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.filter-button{
+  transition: box-shadow 0.5s;
+  background: none;
+  border: none;
+  color: $drew-orange;
+  font: inherit;
+  max-height: 40px;
+ // margin: 0.5em;
+ // padding: 1em 2em;;
+  cursor: pointer;
+  &:hover, &:focus {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+  }
+}
+
+.filter-button:focus{
+  transition: box-shadow 0.5s;
+  background-color: $drew-orange;
+  border: none;
+  color: white;
+  font: inherit;
+  max-height: 40px;
+ // margin: 0.5em;
+ // padding: 1em 2em;;
+  cursor: pointer;
+  &:hover, &:focus {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+  }
+}
+
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--hover); }
+}
+
+.div-filter {
+  margin-top: 5px;
+}
+
+.filter-wrapper {
+  padding-top: 20px;
+}
+
+.head-divider{
+  padding-left: 10px;
+  padding-right: 10px;
+  color: $drew-orange;
+}
+.v-center{
+  margin: 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .selected-cohort{
@@ -484,6 +555,10 @@ Manager Content
     color: $drew-orange;
   }
 
+}
+
+.sel-elem{
+  max-width: 200px;
 }
 
 .filter-div{
@@ -539,6 +614,20 @@ Manager Content
   background-color: $drew-orange;
   color: white;
 }
+.checkin-table-header-not-my-fault-i-have-to-do-this {
+  font-size: 8px;
+  text-align: center;
+  background-color: #f3a55d;
+  color: white;
+}
+
+.manager-associate-checkin-rows {
+  font-size: 9px;
+}
+
+.manager-associate-checkin-rows > td {
+  padding: 5px;
+}
 
 .daily-tasks-header{
   display: flex;
@@ -588,6 +677,47 @@ Manager Content
   width: 100vw;
   z-index: 999;
 }
+
+/*******************************************
+  cohort-create-modal.component.tsx
+*******************************************/
+.flex-btw {
+  justify-content: space-between
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.flex-align {
+  display: flex;
+  justify-content: end
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn-cohort {
+  border: 1px solid #f26925;
+  color: white;
+  background-color: #f26925;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
 /*******************************************
   associates-row.component.tsx
 *******************************************/
@@ -603,6 +733,20 @@ Manager Content
   margin: 0;
   width: 100%;
   background-color: white;
+}
+
+.associate-row-table-class {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+
+.associate-row-target {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
 }
 
 #associate-content {
@@ -676,11 +820,154 @@ Manager Content
 }
 
 #text-area{
-  width: 800px;
+  width: 100%;
 }
 
 #fields{
   padding: 0px 4px 0px 4px;
   margin: 4px;
   width: 800px;
+}
+/*******************************************
+  manageer-manage-users.component.tsx
+*******************************************/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: $drew-orange;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #f26925;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/*****************************************************
+Cohort Table
+******************************************************/
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: $drew-orange;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #f26925;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/*****************************************************
+Cohort Table
+******************************************************/
+
+.cohort-row-selected{
+  background-color: #f89a42;
+}
+
+.button-add{
+  color: $drew-orange;
+  background-color: white;
+  border-color: $drew-orange;
+}
+
+.button-add:hover{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
+}
+
+.button-add.active{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
+}
+
+.button-add:focus{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
 }

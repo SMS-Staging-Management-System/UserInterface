@@ -1,5 +1,8 @@
 import * as checkInClient from '../../axiosClients/checkInClient/checkInClient';
 import { ICheckIn } from '../../model/CheckIn.model';
+import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
+import { toast } from 'react-toastify';
+import { sortCheckInByDate } from '../manager/manager.helpers';
 
 export const associateTypes = {
   CHECK_IN_PAGE_CHANGE: 'CHECK_IN_PAGE_CHANGE',
@@ -10,22 +13,22 @@ export const associateTypes = {
 /**
  * Get associate checkins
  */
-export const associateInit = (userId: number) => (dispatch) => {
-  checkInClient.getCheckInByUserId(userId)
+export const associateInit = (userId: number) => (dispatch) => {  
+  checkInClient.getCheckInByUserId(userId, getTodayStart(), getTodayEnd())
   .then(response => {
-    localStorage.setItem('REVATURE_SMS_COGNITO', response.data.result.auth);
-    const checkInList = response.data.result.checkIns.map(checkIn => {
+    const checkInList = response.data.models.map(checkIn => {
       return checkIn as ICheckIn;
     })
+    const list = sortCheckInByDate(checkInList);
     dispatch({
       payload: {
-        checkIns: checkInList
+        checkIns: list
       },
       type: associateTypes.INIT
     });
   })
   .catch(error => {
-    console.log("error");
+    console.log(error);
   })
 }
 
@@ -33,15 +36,17 @@ export const associateInit = (userId: number) => (dispatch) => {
  * Associate submit a new check in
  * @param description 
  */
-export const submitCheckIn = (description: string) => {
+export const submitCheckIn = (description: string, userId: number) => {
   const body = {
-    "description": description
+    "checkinDescription": description,
+    "userId": userId
   }
   checkInClient.postCheckIn(body)
   .then(response => {
-    console.log("error");
+    console.log("success: " + JSON.stringify(response.data));
+    toast.success("Check in submitted")
   })
   .catch(error => {
-    console.log("error");
+    toast.warn("Unable to submit check in")    
   });
 }

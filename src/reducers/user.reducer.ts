@@ -2,32 +2,35 @@ import { userTypes } from '../actions/user/user.actions';
 import { IUserState } from '.';
 import { toast } from "react-toastify";
 
-const FAKE_USER = { "city":       "Arlington",
-                    "email":      "a@mail.com",
-                    "firstname":  "Blake",
-                    "lastname":   "Kruppa",
-                    "mobile":     "714-123-1234",
-                    "state":      "California", 
-                    "timezone":   "+2", 
-                    "userId":     1,
-                    "zip":        "76013"}
-
 const initialState: IUserState = {
+  admins:  [{
+    'email': 'revatureEmp@revature.com',
+    'firstName': "Calvin",
+    'lastName': 'Vo'
+    }],
+  associates: [],
   cogUser: null,
   isFirstSignin: false,
-  isLogin: false,
+  isLogin: true,
   page:   'home',
-  roles:  [],
-  user:   FAKE_USER
+  roles:    [],
+  stagings: [],
+  trainers: [],
+  user:   {
+    city: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    state: '',
+    timezone: '',
+    userId: undefined,
+    zip: ''
+  }
 }
 
 export const userReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case userTypes.CHANGE_PAGE:
-      return {
-        ...state,
-        page: action.payload.page
-      }
     case userTypes.REGISTER:
       toast.success("Register successful");
       return {
@@ -46,7 +49,6 @@ export const userReducer = (state = initialState, action: any) => {
         roles: action.payload.roles
       }
     case userTypes.LOGOUT:
-      toast.success("Logged out");
       return {
         ...state,
         cogUser: null,
@@ -68,6 +70,26 @@ export const userReducer = (state = initialState, action: any) => {
         ...state,
         cogUser:  action.payload.cogUser,
         isFirstSignin: true
+      }
+    case userTypes.USER_INIT:
+      return {
+        ...state,
+        user:  action.payload.user
+      }
+    case userTypes.SET_TRAINERS:
+      return {
+        ...state,
+        trainers:  action.payload.trainers
+      }
+    case userTypes.SET_STAGINGS:
+      return {
+        ...state,
+        stagings:  action.payload.stagings
+      }
+    case userTypes.SET_ADMINS:
+      return {
+        ...state,
+        admins:  action.payload.admins
       }
   }
   return state;
