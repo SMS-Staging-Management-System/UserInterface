@@ -201,6 +201,7 @@ export const addCognitoGroup = (email: string, role: string) => dispatch => {
   .then(response => {
     toast.success("User is added to group")
   })
+  .catch(console.log)
 }
 
 export const deleteCognitoGroup = (email: string, role: string) => dispatch => {
