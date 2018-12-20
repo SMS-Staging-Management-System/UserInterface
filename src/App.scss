@@ -28,6 +28,10 @@ $drew-orange: #f3a55d;
   cursor: pointer;
 }
 
+.no-link:hover {
+  text-decoration: none;
+}
+
 .flex-package {
   display:    flex;
   flex-shrink: 0;
@@ -594,6 +598,20 @@ Manager Content
   background-color: $drew-orange;
   color: white;
 }
+.checkin-table-header-not-my-fault-i-have-to-do-this {
+  font-size: 8px;
+  text-align: center;
+  background-color: #f3a55d;
+  color: white;
+}
+
+.manager-associate-checkin-rows {
+  font-size: 9px;
+}
+
+.manager-associate-checkin-rows > td {
+  padding: 5px;
+}
 
 .daily-tasks-header{
   display: flex;
@@ -911,5 +929,29 @@ Cohort Table
 ******************************************************/
 
 .cohort-row-selected{
+  background-color: #f89a42;
+}
+
+.button-add{
+  color: $drew-orange;
+  background-color: white;
+  border-color: $drew-orange;
+}
+
+.button-add:hover{
+  color: white;
   background-color: $drew-orange;
+  border-color: $drew-orange;
+}
+
+.button-add.active{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
+}
+
+.button-add:focus{
+  color: white;
+  background-color: $drew-orange;
+  border-color: $drew-orange;
 }

@@ -44,11 +44,9 @@ export const managerPostComment = (managerComments: string, checkinId: number) =
   }
   checkInClient.postManagerComment(body, checkinId)
     .then(response => {
-      // console.log(response)
       toast.success("Comment submitted")
     })
     .catch(error => {
-      // console.log(error)
       toast.warn("Unable to submit comment")
     })
 }
@@ -86,10 +84,11 @@ export const getManagerCheckIn = (fromDate: number, toDate: number) => dispatch 
 export const getCheckInByUserId = (userId: number, fromDate: number, toDate: number) => (dispatch) => {
   checkInClient.getCheckInByUserId(userId, fromDate, toDate)
     .then(response => {
-      const checkinList = response.data.map(checkin => {
+      const checkinList = response.data.models.map(checkin => {
         return checkin as ICheckIn;
       })
       sortCheckInByDate(checkinList);
+      
       dispatch({
         payload: {
           associateCheckIns: checkinList
@@ -168,20 +167,31 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
     })
 }
 
-export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
+export const managerPostUserToCohort = (cohortId: number, email: string) => dispatch => {
+  const user = {
+    "email": email,
+    "firstName": "first name",
+    "lastName": "last name"
+  }
   cohortClient.postUser(user)
-    .then(response => {
-      cohortClient.addUserToCohort(cohortId, response.data.userId)
-        .then(resp => {
-          toast.success("Successfully add user to cohort")
-        })
-        .catch(err => {
-          toast.warn("Created user but unable to add to cohort")
-        })
-    })
-    .catch(error => {
-      toast.warn("Unable to create user")
-    })
+  .then(response => {
+    cohortClient.addUserToCohort(cohortId, response.data.userId)
+      .then(resp => {
+        toast.success("Successfully created and add user to cohort")
+      })
+      .catch(err => {
+        toast.warn("Created user but unable to add to cohort")
+      })
+  })
+  .catch(error => {
+    cohortClient.addUserToCohort(cohortId, error.response.data.userId)
+      .then(resp => {
+        toast.success("Successfully add user to cohort")
+      })
+      .catch(err => {
+        toast.warn("Unable to add user to cohort")
+      })
+  })
 }
 
 export const addCognitoGroup = (email: string, role: string) => dispatch => {
@@ -189,6 +199,7 @@ export const addCognitoGroup = (email: string, role: string) => dispatch => {
   .then(response => {
     toast.success("User is added to group")
   })
+  .catch(console.log)
 }
 
 export const deleteCognitoGroup = (email: string, role: string) => dispatch => {

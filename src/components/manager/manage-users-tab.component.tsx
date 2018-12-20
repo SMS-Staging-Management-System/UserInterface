@@ -4,7 +4,6 @@ import ManagerUserRowComponent from '../manager/manager-user-row.component'
 import ManagerUserRowAdminComponent from '../manager/manger-user-row-admin.component';
 import { connect } from 'react-redux';
 import { IState } from 'src/reducers';
-// import { IUser } from 'src/model/User.model';
 import {Button, FormGroup, Input, Label, Col, Row} from 'reactstrap';
 import * as managerActions from '../../actions/manager/manager.actions';
 
@@ -15,6 +14,7 @@ interface IComponentState {
    isCheckedStageMan: any
    isCheckedTrainer: any
    roleSelected: any
+   roleUpdating: any
 }
 
 interface IComponentProps {
@@ -23,6 +23,9 @@ interface IComponentProps {
    trainers: any[]
    stagings: any[]
    associates: any[]
+   addCognitoGroup: (email: string, role: string) => void
+   removeCognitoGroup: (email: string, role: string) => void
+   
 }
 
 export class ManageUsersTabComponenet extends React.Component <IComponentProps, IComponentState> {
@@ -35,13 +38,19 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
          isCheckedAssociate: false,
          isCheckedStageMan: false,
          isCheckedTrainer: false,
-         roleSelected: 'ADMIN'
+         roleSelected: 'ADMIN',
+         roleUpdating: ''
       }
    }
 
    public handleSubmit = () => {
-      console.log("whoo 2")
-      console.log("ok")
+      if(this.state.isCheckedStageMan){
+        this.props.addCognitoGroup(this.state.email, 'staging-manager');
+      } 
+      
+      if(this.state.isCheckedTrainer){
+         this.props.addCognitoGroup(this.state.email, 'trainer');
+      } 
    }
 
    public handleTabClickAssoc = ()=>{
@@ -60,7 +69,6 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
    public handleTabClickStage = ()=>{
       this.setState({
          roleSelected: 'STAGING_MANAGER'
-         
        });
    }
    public handleTabClickTrainer = ()=>{
@@ -117,7 +125,7 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
                <th>First Name</th>
                <th>Last Name</th>
                <th>User Email</th>
-               <th>User Role</th>
+               <th>Action</th>
                <th>Active/Inactive</th>
             </tr>
             )
@@ -129,11 +137,11 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
       if(this.state.roleSelected ==='ADMIN'){
          return <> {this.props.admins.map((Data, index) => <ManagerUserRowAdminComponent Data={Data} key={index}/>)} </>
       }else if(this.state.roleSelected === 'ASSOCIATE') {
-         return <> {this.props.associates.map((Data, index) => <ManagerUserRowComponent  Data={Data} key={index}/>)} </>
+         return <> {this.props.associates.map((Data, index) => <ManagerUserRowComponent  roleSelected={this.state.roleSelected} Data={Data} key={index}/>)} </>
       }else if(this.state.roleSelected === 'STAGING_MANAGER') {
-         return <> {this.props.stagings.map((Data, index) => <ManagerUserRowComponent  Data={Data} key={index}/>)} </>
+         return <> {this.props.stagings.map((Data, index) => <ManagerUserRowComponent  roleSelected={this.state.roleSelected} Data={Data} key={index}/>)} </>
       }else if(this.state.roleSelected === 'TRAINER') {
-         return <> {this.props.trainers.map((Data, index) => <ManagerUserRowComponent  Data={Data} key={index}/>)} </>
+         return <> {this.props.trainers.map((Data, index) => <ManagerUserRowComponent  roleSelected={this.state.roleSelected} Data={Data} key={index}/>)} </>
       } else{
          return (
             <></>
@@ -200,26 +208,18 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
                                     onChange = {this.handleRoleCheckboxStageMan}/> Staging Manager
                                  </Label>
                               </FormGroup>
-                              <FormGroup check>
-                                 <Label check>
-                                    <Input type="checkbox"
-                                    name="isCheckedAssociate"
-                                    checked = {this.state.isCheckedAssociate}
-                                    onChange = {this.handleRoleCheckboxAssoc}/> Associate
-                                 </Label>
-                              </FormGroup>
                            </Col>
                         </Row>
                      </div>
                      <div className="modal-footer">
-                        <Button onClick={this.handleSubmit} type="button" color="success">Submit</Button>
+                        <Button onClick={this.handleSubmit} type="button" data-dismiss="modal" color="success">Submit</Button>
                      {/* <Button type="button" color = "danger"data-dismiss="modal">Close</Button> */}
                      </div>
                   </div>
                </div>
             </div>
             <div className="mt-2">
-               <Button className="flex-align" color="danger" data-toggle="modal" data-target="#add-user-modal"> Add + </Button>
+               <Button className="flex-align" color="danger" data-toggle="modal" data-target="#add-user-modal"> Add Role + </Button>
             </div>
             <div>
                <div className="mt-3 col-10">

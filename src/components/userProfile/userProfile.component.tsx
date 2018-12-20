@@ -4,7 +4,6 @@ import '../../App.css';
 import profSrc from "../../assets/interns.png"
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
-import { IUser } from 'src/model/User.model';
 import * as userActions from '../../actions/user/user.actions';
 
 /**
@@ -12,9 +11,9 @@ import * as userActions from '../../actions/user/user.actions';
  */
 
 interface IComponentProps {
-   user: IUser
+   user: any
    roles: any[]
-   updateUser: (user: IUser) => void
+   updateUser: (user) => void
 }
 export class UserProfileComponent extends React.Component<IComponentProps, any>{
 
@@ -27,89 +26,85 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
          lastname: '',
          newPassword: '',
          password: '',
-         phone: '',
+         phoneNumber: '',
          role: '',
          selectState: '',
          selectTz: '',
          states: this.stateBuilder(),
          tzs: this.timeZoneBuilder(),
          userId: 0,
-         zipcode: ''
+         userState: false,
+         zipCode: ''
       }
    }
 
-   public componentDidMount() {
-      let sRole = "associate";
-      if (this.props.roles !== undefined) {
-         sRole = "";
-         if (this.props.roles.includes("admin")) {
-            sRole += "admin "
-         }
-         else if (this.props.roles.includes("staging-manager")) {
-            sRole += "staging-manager "
-         }
-         else if (this.props.roles.includes("trainer")) {
-            sRole += "trainer "
-         }
-      }
 
-      this.setState({
-         city: this.props.user.city,
-         email: this.props.user.email,
-         firstname: this.props.user.firstName,
-         lastname: this.props.user.lastName,
-         phone: this.props.user.mobile,
-         role: sRole,
-         zipcode: this.props.user.zip
-      })
-   }
-
-   public submitUserUpdate = () => {
-      // Create IUser object here and call updateUser
-   }
 
    public zipChange = (e) => {
       this.setState({
-         zipcode: e.target.value
+         ...this.state,
+         zipCode: e.target.value
       })
    }
 
    public stateChange = (e) => {
       this.setState({
+         ...this.state,
          selectState: e.target.value
       })
    }
 
    public cityChange = (e) => {
       this.setState({
+         ...this.state,
          city: e.target.value
       })
    }
 
    public lastnameChange = (e) => {
       this.setState({
+         ...this.state,
          lastname: e.target.value
       })
    }
 
    public firstnameChange = (e) => {
       this.setState({
-
+         ...this.state,
          firstname: e.target.value
       })
    }
 
    public phoneChange = (e) => {
       this.setState({
-         phone: e.target.value
+         ...this.state,
+         phoneNumber: e.target.value
       })
    }
 
    public tzChange = (e) => {
       this.setState({
+         ...this.state,
          selectTz: e.target.value
       })
    }
+   public submit = (e) => {
+      e.preventDefault();
+      const user = {
+         city: this.state.city,
+         email: this.props.user.email,
+         firstName: this.state.firstName,
+         lastName: this.state.lastName,
+         phoneNumber: this.state.phoneNumber,
+         state: this.state.selectState,
+         timezone: this.state.selectTz,
+         userId: this.props.user.userId,
+         zipCode: this.state.zipCode,
+      }
+      this.props.updateUser(user);
+   }
+
+
 
    public stateBuilder = () => {
       return <select id="sel1" onChange={e => this.stateChange(e)}>
@@ -254,7 +249,29 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
       </select>;
    }
 
+   public populateFields() {
+      if (!this.state.userState) {
+         if (this.props.user !== null) {
+            console.log(this.props.user)
+            this.setState({
+               ...this.state,
+               city: this.props.user.city,
+               email: this.props.user.email,
+               firstname: this.props.user.firstName,
+               lastname: this.props.user.lastName,
+               phoneNumber: this.props.user.phoneNumber,
+               states: this.stateBuilder(),
+               tzs: this.timeZoneBuilder(),
+               userId: 0,
+               userState: true,
+               zipCode: this.props.user.zipCode
+            })
+         }
+      }
+   }
+
    public render() {
+      this.populateFields();
       return (
          <>
             <div className="reg-form prof-form">
@@ -268,19 +285,19 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
                         <div className="form-group row">
                            <div className="col">
                               <label> First Name *</label>
-                              <input type="text" className="form-control reg-inputs" placeholder="" onChange={e => this.firstnameChange(e)} />
+                              <input id="fname" type="text" className="form-control reg-inputs" placeholder="" value={this.state.firstname} onChange={e => this.firstnameChange(e)} />
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Last Name *</label>
-                              <input type="text" className="form-control reg-inputs" placeholder="" onChange={e => this.lastnameChange(e)} />
+                              <input id="lname" type="text" className="form-control reg-inputs" placeholder="" value={this.state.lastname} onChange={e => this.lastnameChange(e)} />
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Mobile Phone *</label>
-                              <input type="tel" className="form-control reg-inputs" placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                              <input id="phone" type="tel" className="form-control reg-inputs" value={this.state.phoneNumber} placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                  required onChange={e => this.phoneChange(e)} />
                               <span className="note">Format: 123-456-7890</span>
                            </div>
@@ -288,30 +305,30 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
                         <div className="form-group row">
                            <div className="col">
                               <label> Time Zone *</label>
-                              {this.timeZoneBuilder}
+                              {this.state.tzs}
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> City *</label>
-                              <input type="text" className="form-control reg-inputs" placeholder="" onChange={e => this.cityChange(e)} />
+                              <input id="city" type="text" className="form-control reg-inputs" placeholder="" value={this.state.city} onChange={e => this.cityChange(e)} />
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> State *</label>
-                              {this.stateBuilder}
+                              {this.state.states}
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Zip Code *</label>
-                              <input type="text" className="form-control reg-inputs" placeholder="" pattern="(\d{5}([\-]\d{4})?)" onChange={e => this.zipChange(e)} />
+                              <input id="zip" type="text" className="form-control reg-inputs" value={this.state.zipCode} placeholder="" pattern="(\d{5}([\-]\d{4})?)" onChange={e => this.zipChange(e)} />
                            </div>
                         </div>
                      </div>
                      <div className="card-footer col-xs-12 text-center" id="reg-form-footer">
-                        <button type="submit" className="btn rev-btn submit-but" > Update </button>
+                        <button type="submit" className="btn rev-btn submit-but" onClick={this.submit}> Update </button>
                      </div>
                   </div>
                </form>

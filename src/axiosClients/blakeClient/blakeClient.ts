@@ -1,8 +1,9 @@
-import { blakeClient } from '../axiosClient';
-// import { axiosClient } from '../axiosClient';
+// import { blakeClient } from '../blakeClient';
+import { axiosClient } from '../axiosClient';
+
 
 export const findUsersByRole = (role: string) => {
-  return blakeClient.get(`/cognito/users/groups/${role}`);
+  return axiosClient.get(`/cognito/users/groups/${role}`);
 }
 
 export const addUserGroup = (email: string, groupName: string) => {
@@ -10,7 +11,7 @@ export const addUserGroup = (email: string, groupName: string) => {
     email,
     groupName
   }
-  return blakeClient.post(`cognito/users/groups`, {body});
+  return axiosClient.put(`/cognito/users/groups`, body);
 }
 
 export const deleteUserGroup = (email: string, groupName: string) => {
@@ -18,5 +19,5 @@ export const deleteUserGroup = (email: string, groupName: string) => {
     email,
     groupName
   }
-  return blakeClient.delete(`cognito/users/groups`, {data: body});
+  return axiosClient.delete(`/cognito/users/groups`, {data: body});
 }

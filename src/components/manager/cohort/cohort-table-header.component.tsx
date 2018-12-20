@@ -9,7 +9,7 @@ export class CohortTableHeaderComponent extends React.PureComponent<any, {}, {}>
 	public render(){
 		return(
 			<>
-			<thead>
+			<thead className="checkin-table-header">
 			  <tr>
 				<th scope="col">Cohort</th>
 				<th scope="col"># of Associates</th>

@@ -15,12 +15,18 @@ const initialState: IUserState = {
   page:   'home',
   roles:    [],
   stagings: [],
-  trainers: [{
-    'email': 'revatureEmp@revature.com',
-    'firstName': "Calvin",
-    'lastName': 'Vo'
-    }],
-  user:   null
+  trainers: [],
+  user:   {
+    city: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    state: '',
+    timezone: '',
+    userId: undefined,
+    zip: ''
+  }
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -43,7 +49,6 @@ export const userReducer = (state = initialState, action: any) => {
         roles: action.payload.roles
       }
     case userTypes.LOGOUT:
-      toast.success("Logged out");
       return {
         ...state,
         cogUser: null,

@@ -18,7 +18,7 @@ export const postCohort = (cohortName: string, cohortDescription: string, userLi
   return axiosClient.post(`/cohorts`, body)
 }
 
-export const postUser = (user: IUserCreateDto) => {
+export const postUser = (user: any) => {
   return axiosClient.post(`/users`, user)
 }
 
