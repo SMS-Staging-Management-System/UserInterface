@@ -104,7 +104,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
       this.props.updateUser(user);
    }
 
-  
+
 
    public stateBuilder = () => {
       return <select id="sel1" onChange={e => this.stateChange(e)}>
@@ -249,7 +249,28 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
       </select>;
    }
 
+   public populateFields() {
+      if (!this.state.userState) {
+         if (this.props.user !== null) {
+            this.setState({
+               ...this.state,
+               city: this.props.user.city,
+               email: this.props.user.email,
+               firstname: this.props.user.firstName,
+               lastname: this.props.user.lastName,
+               phone: this.props.user.phoneNumber,
+               states: this.stateBuilder(),
+               tzs: this.timeZoneBuilder(),
+               userId: 0,
+               userState: true,
+               zipcode: this.props.user.zipCode
+            })
+         }
+      }
+   }
+
    public render() {
+      this.populateFields();
       return (
          <>
             <div className="reg-form prof-form">
@@ -263,19 +284,19 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
                         <div className="form-group row">
                            <div className="col">
                               <label> First Name *</label>
-                              <input id="fname" type="text" className="form-control reg-inputs" placeholder="" value={this.props.user.firstName} onChange={e => this.firstnameChange(e)} />
+                              <input id="fname" type="text" className="form-control reg-inputs" placeholder="" value={this.state.firstname} onChange={e => this.firstnameChange(e)} />
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Last Name *</label>
-                              <input id="lname" type="text" className="form-control reg-inputs" placeholder="" value={this.props.user.lastName} onChange={e => this.lastnameChange(e)} />
+                              <input id="lname" type="text" className="form-control reg-inputs" placeholder="" value={this.state.lastname} onChange={e => this.lastnameChange(e)} />
                            </div>
                         </div>
                         <div className="form-group row">
                            <div className="col">
                               <label> Mobile Phone *</label>
-                              <input id="phone" type="tel" className="form-control reg-inputs" value = {this.props.user.phoneNumber} placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                              <input id="phone" type="tel" className="form-control reg-inputs" value={this.state.phone} placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                  required onChange={e => this.phoneChange(e)} />
                               <span className="note">Format: 123-456-7890</span>
                            </div>
@@ -289,7 +310,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
                         <div className="form-group row">
                            <div className="col">
                               <label> City *</label>
-                              <input id="city" type="text" className="form-control reg-inputs" placeholder="" value = {this.props.user.city} onChange={e => this.cityChange(e)} />
+                              <input id="city" type="text" className="form-control reg-inputs" placeholder="" value={this.state.city} onChange={e => this.cityChange(e)} />
                            </div>
                         </div>
                         <div className="form-group row">
@@ -301,7 +322,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
                         <div className="form-group row">
                            <div className="col">
                               <label> Zip Code *</label>
-                              <input id="zip" type="text" className="form-control reg-inputs" value = {this.props.user.zipCode} placeholder="" pattern="(\d{5}([\-]\d{4})?)" onChange={e => this.zipChange(e)} />
+                              <input id="zip" type="text" className="form-control reg-inputs" value={this.state.zip} placeholder="" pattern="(\d{5}([\-]\d{4})?)" onChange={e => this.zipChange(e)} />
                            </div>
                         </div>
                      </div>
