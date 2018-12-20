@@ -17,6 +17,7 @@ interface IComponentProps {
 export class ManagerContentComponent extends React.Component<IComponentProps> {
 
   public componentDidMount() {
+    console.log("1")
     this.props.managerInit();
   }
 

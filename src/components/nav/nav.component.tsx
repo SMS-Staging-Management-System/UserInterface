@@ -78,7 +78,7 @@ class AppNav extends React.PureComponent<
                 <div className="">
                   <Link to="/profile" className="cursor-hover no-link">
                     <DropdownItem className="cursor-hover">
-                      className="cursor-hover"> Profile
+                      Profile
                     </DropdownItem>
                   </Link>
                 </div>
