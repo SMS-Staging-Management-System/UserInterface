@@ -169,6 +169,7 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
 }
 
 export const managerPostUserToCohort = (cohortId: number, email: string) => dispatch => {
+  
   const user = {
     "email": email,
     "firstName": "first name",
@@ -178,14 +179,20 @@ export const managerPostUserToCohort = (cohortId: number, email: string) => disp
     .then(response => {
       cohortClient.addUserToCohort(cohortId, response.data.userId)
         .then(resp => {
-          toast.success("Successfully add user to cohort")
+          toast.success("Successfully created and add user to cohort")
         })
         .catch(err => {
           toast.warn("Created user but unable to add to cohort")
         })
     })
     .catch(error => {
-      toast.warn("Unable to create user")
+      cohortClient.addUserToCohort(cohortId, error.response.data.userId)
+        .then(resp => {
+          toast.success("Successfully add user to cohort")
+        })
+        .catch(err => {
+          toast.warn("Unable to add user to cohort")
+        })
     })
 }
 

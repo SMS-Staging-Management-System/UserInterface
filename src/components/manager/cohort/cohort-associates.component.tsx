@@ -4,7 +4,7 @@ import AssociateTableComponent from "src/components/table/associateTable.compone
 import CreateNewAddAssociateModalComponent from "./associate-add-modal.component";
 
 /*
- *The cohort associates component
+ *The Cohort Associates component
  */
 
 export interface IState {
