@@ -87,7 +87,7 @@ export class AssociateTableComponent extends React.Component<IProps, IComponentS
             }
           </tbody>
         </Table>
-        <Modal isOpen={this.state.isModalOpen} toggle={this.closeAssociateCheckInModal} className="manager-comments">
+        <Modal isOpen={this.state.isModalOpen} toggle={this.closeAssociateCheckInModal} size='lg' className="manager-comments">
           {this.state.user !== null &&
             <>
               <ModalHeader>{this.state.user.firstName} {this.state.user.lastName} Check Ins</ModalHeader>

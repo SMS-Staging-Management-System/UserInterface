@@ -71,5 +71,3 @@ const mapDispatchToProps = {
    ...managerActions
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ManagerUserRowComponent)
-
-
