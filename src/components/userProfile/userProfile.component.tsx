@@ -26,7 +26,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
          lastname: '',
          newPassword: '',
          password: '',
-         phone: '',
+         phoneNumber: '',
          role: '',
          selectState: '',
          selectTz: '',
@@ -34,7 +34,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
          tzs: this.timeZoneBuilder(),
          userId: 0,
          userState: false,
-         zipcode: ''
+         zipCode: ''
       }
    }
 
@@ -43,7 +43,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
    public zipChange = (e) => {
       this.setState({
          ...this.state,
-         zipcode: e.target.value
+         zipCode: e.target.value
       })
    }
 
@@ -78,7 +78,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
    public phoneChange = (e) => {
       this.setState({
          ...this.state,
-         phone: e.target.value
+         phoneNumber: e.target.value
       })
    }
 
@@ -95,11 +95,11 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
          email: this.props.user.email,
          firstName: this.state.firstName,
          lastName: this.state.lastName,
-         phoneNumber: this.state.phone,
+         phoneNumber: this.state.phoneNumber,
          state: this.state.selectState,
          timezone: this.state.selectTz,
          userId: this.props.user.userId,
-         zipCode: this.state.zip,
+         zipCode: this.state.zipCode,
       }
       this.props.updateUser(user);
    }
@@ -252,18 +252,19 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
    public populateFields() {
       if (!this.state.userState) {
          if (this.props.user !== null) {
+            console.log(this.props.user)
             this.setState({
                ...this.state,
                city: this.props.user.city,
                email: this.props.user.email,
                firstname: this.props.user.firstName,
                lastname: this.props.user.lastName,
-               phone: this.props.user.phoneNumber,
+               phoneNumber: this.props.user.phoneNumber,
                states: this.stateBuilder(),
                tzs: this.timeZoneBuilder(),
                userId: 0,
                userState: true,
-               zipcode: this.props.user.zipCode
+               zipCode: this.props.user.zipCode
             })
          }
       }
@@ -296,7 +297,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
                         <div className="form-group row">
                            <div className="col">
                               <label> Mobile Phone *</label>
-                              <input id="phone" type="tel" className="form-control reg-inputs" value={this.state.phone} placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                              <input id="phone" type="tel" className="form-control reg-inputs" value={this.state.phoneNumber} placeholder="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                  required onChange={e => this.phoneChange(e)} />
                               <span className="note">Format: 123-456-7890</span>
                            </div>
@@ -322,7 +323,7 @@ export class UserProfileComponent extends React.Component<IComponentProps, any>{
                         <div className="form-group row">
                            <div className="col">
                               <label> Zip Code *</label>
-                              <input id="zip" type="text" className="form-control reg-inputs" value={this.state.zip} placeholder="" pattern="(\d{5}([\-]\d{4})?)" onChange={e => this.zipChange(e)} />
+                              <input id="zip" type="text" className="form-control reg-inputs" value={this.state.zipCode} placeholder="" pattern="(\d{5}([\-]\d{4})?)" onChange={e => this.zipChange(e)} />
                            </div>
                         </div>
                      </div>
