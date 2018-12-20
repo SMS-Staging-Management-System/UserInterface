@@ -9,7 +9,7 @@ import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { IUser } from 'src/model/User.model';
 import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
 import { getManagerCohorts, sortCheckInByDate } from './manager.helpers';
-import { blakeClient } from 'src/axiosClients/axiosClient';
+// import { blakeClient } from 'src/axiosClients/axiosClient';
 
 export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
@@ -190,6 +190,7 @@ export const addCognitoGroup = (email: string, role: string) => dispatch => {
   .then(response => {
     toast.success("User is added to group")
   })
+  .catch(console.log)
 }
 
 export const deleteCognitoGroup = (email: string, role: string) => dispatch => {

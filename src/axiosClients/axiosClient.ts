@@ -3,7 +3,7 @@ import { environment }  from '../environment';
 const smsContext = environment.smsContext;
 const blakeContext = environment.blakeContext;
 
-const AUTHORIZATION_HEADER = 'Authentication';
+const AUTHORIZATION_HEADER = 'Authorization';
 
 export const addCognitoToHeader = (token: any) => {
   axiosClient.defaults.headers.common[AUTHORIZATION_HEADER] = token;

@@ -43,7 +43,6 @@ export const userReducer = (state = initialState, action: any) => {
         roles: action.payload.roles
       }
     case userTypes.LOGOUT:
-      toast.success("Logged out");
       return {
         ...state,
         cogUser: null,
