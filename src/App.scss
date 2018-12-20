@@ -498,6 +498,22 @@ Manager Content
   }
 }
 
+.filter-button:focus{
+  transition: box-shadow 0.5s;
+  background-color: $drew-orange;
+  border: none;
+  color: white;
+  font: inherit;
+  max-height: 40px;
+ // margin: 0.5em;
+ // padding: 1em 2em;;
+  cursor: pointer;
+  &:hover, &:focus {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+  }
+}
+
+
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 var(--hover); }
 }
