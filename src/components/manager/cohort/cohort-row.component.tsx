@@ -13,7 +13,7 @@ interface IPropsComponent {
   cohort: ICohort;
   selectCohort: (sCohort: ICohort) => (dispatch: any) => void;
   changeSelected: (selected: number) => void;
-  selected: boolean;
+  isSelected: boolean;
   toggle: () => void;
 }
 
@@ -54,7 +54,7 @@ export class CohortRowComponent extends React.Component<
     return (
       <>
         <tr
-          className={"cursor-hover " + (this.props.selected ? "cohort-row-selected" : "")}
+          className={"cursor-hover " + (this.props.isSelected ? "cohort-row-selected" : "")}
           id={`cohort-row-${this.props.cohort.cohortId}`}
           onClick={() => this.handleClick()}
         >

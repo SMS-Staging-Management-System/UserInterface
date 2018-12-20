@@ -45,20 +45,13 @@ export class ManageUsersTabComponenet extends React.Component <IComponentProps, 
    }
 
    public handleSubmit = () => {
-
       if(this.state.isCheckedStageMan){
         this.props.addCognitoGroup(this.state.email, 'staging-manager');
       } 
-      // else {
-      //   this.props.removeCognitoGroup(this.state.email, 'staging-manager');
-      // }
       
       if(this.state.isCheckedTrainer){
          this.props.addCognitoGroup(this.state.email, 'trainer');
       } 
-      // else {
-      //   this.props.removeCognitoGroup(this.state.email, 'trainer');
-      // }
    }
 
    public handleTabClickAssoc = ()=>{

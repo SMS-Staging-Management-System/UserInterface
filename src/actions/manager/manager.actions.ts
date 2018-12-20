@@ -9,7 +9,6 @@ import { IUserCreateDto } from 'src/model/UserCreateDto.model';
 import { IUser } from 'src/model/User.model';
 import { getTodayStart, getTodayEnd } from 'src/include/utcUtil';
 import { getManagerCohorts, sortCheckInByDate } from './manager.helpers';
-// import { blakeClient } from 'src/axiosClients/axiosClient';
 
 export const managerTypes = {
   ADD_CHECK_INS: 'ADD_CHECK_INS',
@@ -169,19 +168,31 @@ export const managerPostCohort = (cohortName: string, cohortDescription: string,
     })
 }
 
-export const managerPostUserToCohort = (cohortId: number, user: IUserCreateDto) => dispatch => {
-  cohortClient.postUser(user)
+export const managerPostUserToCohort = (cohortId: number, email: string) => dispatch => {
+  
+  const user = {
+    "email": email,
+    "firstName": "first name",
+    "lastName": "last name"
+  }
+    cohortClient.postUser(user)
     .then(response => {
       cohortClient.addUserToCohort(cohortId, response.data.userId)
         .then(resp => {
-          toast.success("Successfully add user to cohort")
+          toast.success("Successfully created and add user to cohort")
         })
         .catch(err => {
           toast.warn("Created user but unable to add to cohort")
         })
     })
     .catch(error => {
-      toast.warn("Unable to create user")
+      cohortClient.addUserToCohort(cohortId, error.response.data.userId)
+        .then(resp => {
+          toast.success("Successfully add user to cohort")
+        })
+        .catch(err => {
+          toast.warn("Unable to add user to cohort")
+        })
     })
 }
 
