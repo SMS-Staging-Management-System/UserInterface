@@ -10,3 +10,4 @@ export const increment = (amount: number) => {
     type: clickerTypes.INCREMENT
   }
 }
+

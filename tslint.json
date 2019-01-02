@@ -13,7 +13,6 @@
     "jsx-no-lambda": false,
     "no-console": false,
     "jsx-no-bind": false,
-    "jsx-boolean-value": false,
-    "no-unused-expression": false
+    "jsx-boolean-value": false
   }
 }

@@ -3,36 +3,27 @@ import './include/bootstrap';
 import './App.css';
 import AppNav from './components/nav/nav.component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HomeComponent } from './components/home/home.component';
 import { Provider } from 'react-redux';
 import { store } from './Store';
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import LoadingComponent from './components/loading/loading.component';
-import DashboardComponent from './components/dashboard/dashboard.component';
-import LoginComponent from './components/login/login.component';
-import ProtectedRoute from './components/protected/protected-route.component';
-import UserProfileComponent from './components/userProfile/userProfile.component';
-import PageNotFoundComponent from './components/404/page-not-found.component';
+import clickerContainer from './components/clicker/clicker.container';
+
 
 class App extends React.Component {
   public render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <>
+          <div>
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                <ProtectedRoute path="/dashboard" component={DashboardComponent} />
-                <ProtectedRoute exact path="/profile" component={UserProfileComponent} />
-                <Route exact path="/sign-in" component={LoginComponent} />
-                <ProtectedRoute exact path="/" component={DashboardComponent} />
-                <Route component={PageNotFoundComponent} />
+                <Route path="/home" component={HomeComponent} />
+                <Route path="/clicker" component={clickerContainer} />
+                <Route component={HomeComponent} />
               </Switch>
             </div>
-            <ToastContainer autoClose={2000} />
-            <LoadingComponent />
-          </>
+          </div>
         </BrowserRouter>
       </Provider>
     );

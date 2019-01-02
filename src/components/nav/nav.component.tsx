@@ -1,134 +1,64 @@
-import * as React from "react";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
-} from "reactstrap";
-import RevLogo from "../../assets/rev-logo.png";
-import { IState } from "../../reducers";
-import { connect } from "react-redux";
-import { IUser } from "../../model/User.model";
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import RevLogo from '../../assets/rev-logo.png';
+import { IState } from '../../reducers';
+import { connect } from 'react-redux';
 
-import * as userActions from "../../actions/user/user.actions";
-import { withRouter, Link } from "react-router-dom";
-import { History } from "history";
 
-interface IComponentState {
-  isOpen: boolean;
-}
-interface IComponentProps {
-  isLogin: boolean;
-  user: IUser;
-  changePage: (page: string) => { void };
-  logout: () => { void };
-  history: History;
-  setup: () => { void };
-  roles: string[];
-}
-class AppNav extends React.PureComponent<
-  IComponentProps,
-  IComponentState,
-  any
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false
-    };
-  }
-
-  public componentDidMount() {
-    this.props.setup();
-  }
-
-  public toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
-
-  public route = () => {
-    if (this.props.roles === undefined) {
-      this.props.history.push("/dashboard");
-    } else if (
-      this.props.roles.includes("admin") ||
-      this.props.roles.includes("staging-manager") ||
-      this.props.roles.includes("trainer")
-    ) {
-      this.props.history.push("/dashboard/check-ins");
-    }
-  };
-
-  public renderCollapse = () => {
-    if (this.props.isLogin) {
-      return (
-        <UncontrolledDropdown nav inNavbar>
-          <DropdownToggle nav caret>
-            {this.props.user ? this.props.user.email : "User"}
-          </DropdownToggle>
-          <DropdownMenu right>
-            {this.props.user && (
-              <>
-                <div className="">
-                  <Link to="/profile" className="cursor-hover no-link">
-                    <DropdownItem className="cursor-hover">
-                      Profile
-                    </DropdownItem>
-                  </Link>
-                </div>
-
-                <DropdownItem divider />
-              </>
-            )}
-            <DropdownItem
-              className="cursor-hover"
-              onClick={() => this.props.logout()}
-            >
-              Logout
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      );
-    } else {
-      return <></>;
-    }
-  };
-
+class AppNav extends React.PureComponent<any, {}, {}> {
   public render() {
-    const sRenderCollapse = this.renderCollapse();
+    const props = this.props;
     return (
-      <Navbar className="flex-package" color="light" light expand="md">
-        <NavbarBrand className="cursor-hover" onClick={() => this.route()}>
-          <img
-            className="img-adjust-position rev-logo"
-            src={RevLogo}
-            alt="revature"
-          />
-        </NavbarBrand>
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            {sRenderCollapse}
-          </Nav>
-        </Collapse>
-      </Navbar>
+      <div>
+        <nav className="app-nav navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
+          <div className="navbar-header c-pointer shift-left">
+            <Link to="/home" className="unset-anchor">
+              <img className="img-adjust-position rev-logo" src={RevLogo} alt="revature" />
+            </Link>
+          </div>
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarsExample04">
+            <ul className="navbar-nav ml-auto margin-nav">
+              <li className="nav-item active">
+                <Link to="/home" className="unset-anchor nav-link">Home</Link>
+              </li>
+              <li className="nav-item active">
+                <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
+              </li>
+              <li className="nav-item active">
+                <Link to="/first" className="unset-anchor nav-link">First</Link>
+              </li>
+              <li className="nav-item active">
+                <Link to="/second" className="unset-anchor nav-link">Second</Link>
+              </li>
+              <li className="nav-item active">
+                <Link to="/clicker" className="unset-anchor nav-link">Clicker</Link>
+              </li>
+              <li className="nav-item active dropdown">
+                <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
+                <div className="dropdown-menu" aria-labelledby="examples-dropdown">
+                  <div className="dropdown-item"><Link to="/movies" className="unset-anchor nav-link active">Movies</Link></div>
+                  <div className="dropdown-item"><Link to="/clicker" className="unset-anchor nav-link active">Clicker Game</Link></div>
+                  <div className="dropdown-item"><Link to="/tic-tac-toe" className="unset-anchor nav-link active">Tic Tac Toe Game</Link></div>
+                  <div className="dropdown-item"><Link to="/chuck-norris" className="unset-anchor nav-link active">Chuck Norris Jokes</Link></div>
+                  <div className="dropdown-item"><Link to="/pokemon" className="unset-anchor nav-link active">Pokemon</Link></div>
+                  <div className="dropdown-item"><Link to="/canvas" className="unset-anchor nav-link active">Canvas</Link></div>
+                  <div className="dropdown-item"><Link to="/fragment" className="unset-anchor nav-link active">Fragment</Link></div>
+                </div>
+              </li>
+              <li className="nav-item active">
+                <Link to="/nested" className="unset-anchor nav-link">Nested</Link>
+              </li>
+              {props.clicks}
+            </ul>
+          </div>
+        </nav>
+      </div >
     );
   }
 }
 
-const mapStateToProps = (state: IState) => state.user;
-const mapDispatchToProps = {
-  ...userActions
-};
-export default withRouter<any>(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(AppNav)
-);
+const mapStateToProps = (state: IState) => (state.clicker)
+export default connect(mapStateToProps)(AppNav);
