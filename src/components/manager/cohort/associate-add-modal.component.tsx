@@ -47,7 +47,7 @@ export class CreateNewAddAssociateModalComponent extends React.Component<IProps,
         return null
     } else {
         const cohort: ICohort = this.props.cohorts.find((element) => (element.cohortId === this.props.selected))
-        return cohort.cohortName;
+        return 'cohort not found' || cohort.cohortName;
     }
   }
 

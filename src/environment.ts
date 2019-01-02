@@ -14,4 +14,10 @@ const prod = {
   smsContext:         'https://7i6rudc3m2.execute-api.us-east-1.amazonaws.com/prod'
 };
 
-export const environment = process.env.NODE_ENV === "production" ? prod : dev;
+console.log(process.env.NODE_ENV);
+
+export let environment = dev;
+
+if (process.env.NODE_ENV === 'production' || process.env.REACT_APP_ENV === 'production') {
+  environment = prod;
+}
