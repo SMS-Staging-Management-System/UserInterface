@@ -10,6 +10,7 @@ import clickerContainer from './components/clicker/clicker.container';
 import { ManageComponent } from './components/manage/manage.component';
 import  ProtectedRoute  from './components/protected-route.component.tsx/protected-route.component';
 import  LoginComponent  from './components/login/login.component';
+import { ToastContainer } from 'react-toastify';
 
 
 class App extends React.Component {
@@ -28,6 +29,7 @@ class App extends React.Component {
                 <Route component={HomeComponent} />
               </Switch>
             </div>
+            <ToastContainer autoClose={2000} />
           </div>
         </BrowserRouter>
       </Provider>

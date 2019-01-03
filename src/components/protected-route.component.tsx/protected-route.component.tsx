@@ -1,10 +1,11 @@
 import * as React from "react";
-import {Redirect, Route} from 'react-router';
+import { Route } from 'react-router';
 import { connect } from "react-redux";
 import { IState } from "src/reducers";
+import LoginComponent from "../login/login.component";
 
 
-const mapStateToProps = (state: IState) => ({auth: state.auth});
+const mapStateToProps = (state: IState) => ({ auth: state.auth });
 
 /*
  *The protected route component
@@ -18,12 +19,7 @@ export const ProtectedRoute = ({ component: Component, auth, allowedRoles, ...re
           return <Component {...props} />;
         } else {
           return (
-            <Redirect
-              to={{
-                pathname: "/sign-in",
-                state: { from: props.location }
-              }}
-            />
+            <LoginComponent />
           );
         }
       }}
@@ -32,7 +28,7 @@ export const ProtectedRoute = ({ component: Component, auth, allowedRoles, ...re
 }
 
 // export const checkSession = () => {
-  
+
 //   const poolData = {
 //     ClientId:   environment.cognitoClientId, 
 //     UserPoolId: environment.cognitoUserPoolId,

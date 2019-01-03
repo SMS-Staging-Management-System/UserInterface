@@ -3,8 +3,10 @@ import * as AWS from 'aws-sdk';
 import { environment } from '../../environment';
 import { History } from 'history';
 import { ICognitoUser } from '../../model/cognito-user.model';
+import { toast } from 'react-toastify';
 
 export const authTypes = {
+  LOGOUT: 'LOGOUT',
   UPDATE_CURRENT_USER: 'UPDATE_CURRENT_USER',
 }
 
@@ -52,14 +54,9 @@ export const cognitoLogin = (username: string, password: string, history: Histor
       dispatch(updateCurrentUser(currentUser));
 
       // set token to local storage for axios
-      localStorage.setItem('token',result.getIdToken().getJwtToken())
+      localStorage.setItem('token', result.getIdToken().getJwtToken())
 
       history.push("/dashboard/check-ins");
-
-      // Reset token once every 50 minutes
-      window.setInterval(
-        () => refreshCognitoSession()(dispatch)
-        , 3000000);
     }
   });
 }
@@ -74,20 +71,11 @@ export const refreshCognitoSession = () => (dispatch) => {
     cognitoUser.getSession((getSessionError, session) => {
       if (getSessionError) {
         // console.log(getSessionError.message || JSON.stringify(getSessionError));
-        return false;
+        toast.error('something occured trying to refresh login');
+        return;
       }
       if (session) {
-        const userAttributes = session.getIdToken().payload;
-        const currentUser = {
-          email: userAttributes.email,
-          roles: userAttributes['cognito:groups'],
 
-        }
-        // Set redux cognito data
-        dispatch(updateCurrentUser(currentUser));
-
-        // set token to local storage for axios
-      localStorage.setItem('token',session.getIdToken().getJwtToken())
 
         const refreshToken = session.getRefreshToken();
         const awsCreds: any = AWS.config.credentials;
@@ -100,6 +88,18 @@ export const refreshCognitoSession = () => (dispatch) => {
             }
             else {
               awsCreds.params.Logins[`cognito-idp.${environment.awsRegion}.amazonaws.com/${environment.cognitoUserPoolId}`] = refreshSession.getIdToken().getJwtToken();
+              const userAttributes = refreshSession.getIdToken().payload;
+              const currentUser = {
+                email: userAttributes.email,
+                roles: userAttributes['cognito:groups'],
+
+              }
+              // Set redux cognito data
+              dispatch(updateCurrentUser(currentUser));
+
+              // set token to local storage for axios
+              localStorage.setItem('token', refreshSession.getIdToken().getJwtToken())
+              toast.success('welcome back')
               awsCreds.refresh((refreshTokenError) => {
                 if (refreshTokenError) {
                   console.log(refreshTokenError);
@@ -111,6 +111,18 @@ export const refreshCognitoSession = () => (dispatch) => {
               });
             }
           });
+        } else {
+          const userAttributes = session.getIdToken().payload;
+          const currentUser = {
+            email: userAttributes.email,
+            roles: userAttributes['cognito:groups'],
+
+          }
+          // Set redux cognito data
+          dispatch(updateCurrentUser(currentUser));
+
+          // set token to local storage for axios
+          localStorage.setItem('token', session.getIdToken().getJwtToken())
         }
         return true;
       } else {
@@ -149,3 +161,12 @@ export const updateCurrentUser = (currentUser: ICognitoUser) => {
   }
 }
 
+/**
+ * Get current login user info from the server
+ */
+export const setup = () => (dispatch) => {
+  refreshCognitoSession()(dispatch);
+  window.setInterval(
+    () => refreshCognitoSession()(dispatch)
+    , 3000000);
+}

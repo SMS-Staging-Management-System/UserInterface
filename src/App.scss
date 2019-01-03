@@ -1,7 +1,8 @@
 // @import 'components/pokemon/pokemon-card/pokemon-card.scss';
 
 // variables can be declared and later reused
-$revature-orange: #f3a55d;
+$revature-orange-light: #f3a55d;
+$revature-orange: #f26925;
 $drew-orange: #f3a55d;
 
 // Small tablets and large smartphones (landscape view)
@@ -82,48 +83,52 @@ $screen-xl-min: 1200px;
 }
 
 .rev-btn {
-  background-color: $revature-orange;
-  border-color: $revature-orange;
+  background-color: $revature-orange-light;
+  border-color: $revature-orange-light;
   color: black;
   &:hover {
     background-color: white;
-    border-color: $revature-orange;
-    color: $revature-orange;
+    border-color: $revature-orange-light;
+    color: $revature-orange-light;
   }
   &:active {
-    background-color: $revature-orange;
+    background-color: $revature-orange-light;
     color: black;
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
   &:active, &:focus {
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
 
 li > a.rev-btn-tab {
   background-color: white;
-  border-color: $revature-orange;
+  border-color: $revature-orange-light;
   color: black;
   &:hover {
     background-color: white;
-    border-color: $revature-orange;
-    color: $revature-orange;
+    border-color: $revature-orange-light;
+    color: $revature-orange-light;
   }
   &:active {
     color: black;
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
-    border-color: $revature-orange
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
+    border-color: $revature-orange-light
   }
   &:active, &:focus {
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
 .rev-table-row:hover {
-  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange;
-  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange;
-  box-shadow: inset 0px 0px 15px 5px $revature-orange;
+  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
 }
 
+
+.rev-background-color {
+  background-color: $revature-orange-light;
+}
 
 
 
@@ -194,7 +199,7 @@ body {
     color: black !important;
   }
   &:active, &:focus {
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
 
@@ -357,3 +362,30 @@ body {
     max-width: 80%
   }
 }
+#manage-users-nav {
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
+.manage-user-nav-item {
+  color: gray;
+  &:hover {
+    color: $revature-orange;
+  }
+}
+
+.nav-tabs .manage-user-nav-item-active {
+  border: 2px solid;
+  border-color: #d6dce2;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+  border-bottom: none;
+  color: $revature-orange-light;
+  &:hover {
+    color: $revature-orange-light;
+  }
+  &:focus {
+    border-color: #d6dce2;
+  }
+}
+

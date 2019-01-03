@@ -26,7 +26,7 @@ export class ManageUsersComponenet extends React.Component<IProps, any> {
         <ManageUserNavComponent role={this.props.match.params.role}/>
         <Table striped id="manage-users-table">
           <thead>
-            <tr>
+            <tr className="rev-background-color">
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>

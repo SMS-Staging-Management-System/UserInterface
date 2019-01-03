@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom';
 import RevLogo from '../../assets/rev-logo.png';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
+import { setup } from '../../actions/auth/auth.actions';
 
 
 class AppNav extends React.PureComponent<any, {}, {}> {
+
+  componentDidMount() {
+    this.props.setup();
+  }
+
   public render() {
     const props = this.props;
     return (
@@ -20,29 +26,30 @@ class AppNav extends React.PureComponent<any, {}, {}> {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarsExample04">
+
             <ul className="navbar-nav ml-auto margin-nav">
-              <li className="nav-item active">
-                <Link to="/login" className="unset-anchor nav-link">Log In</Link>
-              </li>
-              <li className="nav-item active">
-                <Link to="/manage" className="unset-anchor nav-link">Manage</Link>
-              </li>
-              <li className="nav-item active dropdown">
-                <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
-                <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                  <div className="dropdown-item"><Link to="/movies" className="unset-anchor nav-link active">Movies</Link></div>
-                  <div className="dropdown-item"><Link to="/clicker" className="unset-anchor nav-link active">Clicker Game</Link></div>
-                  <div className="dropdown-item"><Link to="/tic-tac-toe" className="unset-anchor nav-link active">Tic Tac Toe Game</Link></div>
-                  <div className="dropdown-item"><Link to="/chuck-norris" className="unset-anchor nav-link active">Chuck Norris Jokes</Link></div>
-                  <div className="dropdown-item"><Link to="/pokemon" className="unset-anchor nav-link active">Pokemon</Link></div>
-                  <div className="dropdown-item"><Link to="/canvas" className="unset-anchor nav-link active">Canvas</Link></div>
-                  <div className="dropdown-item"><Link to="/fragment" className="unset-anchor nav-link active">Fragment</Link></div>
-                </div>
-              </li>
-              <li className="nav-item active">
-                <Link to="/nested" className="unset-anchor nav-link">Nested</Link>
-              </li>
-              {props.clicks}
+              {props.auth.currentUser.email
+                ? // if ther is a email show the nav elements 
+                <>
+                  <li className="nav-item active">
+                    <Link to="/checkins" className="unset-anchor nav-link">Checkins</Link>
+                  </li>
+                  <li className="nav-item active">
+                    <Link to="/manage" className="unset-anchor nav-link">Manage</Link>
+                  </li>
+                  <li className="nav-item active dropdown">
+                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{props.auth.currentUser.email}</a>
+                    <div className="dropdown-menu" aria-labelledby="examples-dropdown">
+                      <div className="dropdown-item"><Link to="/profile" className="unset-anchor nav-link active">Profile</Link></div>
+                      <div className="dropdown-item"><Link to="/logout" className="unset-anchor nav-link active">Logout</Link></div>
+                    </div>
+                  </li>
+                </>
+                : // if there is no email show login button
+                <li className="nav-item active">
+                  <Link to="/login" className="unset-anchor nav-link">Log In</Link>
+                </li>
+              }
             </ul>
           </div>
         </nav>
@@ -51,5 +58,10 @@ class AppNav extends React.PureComponent<any, {}, {}> {
   }
 }
 
-const mapStateToProps = (state: IState) => (state.clicker)
-export default connect(mapStateToProps)(AppNav);
+const mapStateToProps = (state: IState) => ({
+  auth: state.auth
+});
+const mapDispatchToProps = {
+  setup
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AppNav);

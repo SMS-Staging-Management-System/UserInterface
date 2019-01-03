@@ -12,6 +12,8 @@ export const authReducer = (state = initialState, action: any) => {
         ...state,
         currentUser: action.payload.currentUser
       }
+    case 'RESET':
+      return initialState;
   }
   return state;
 }
