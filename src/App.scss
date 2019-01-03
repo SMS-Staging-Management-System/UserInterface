@@ -1,7 +1,20 @@
 // @import 'components/pokemon/pokemon-card/pokemon-card.scss';
 
 // variables can be declared and later reused
-$revature-orange: #f26925;
+$revature-orange: #f3a55d;
+$drew-orange: #f3a55d;
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
 
 // mixins are reusable styles that can be included in other places
 @mixin flex-col {
@@ -9,6 +22,114 @@ $revature-orange: #f26925;
   flex-direction: column;
 }
 
+/* @include transition(all,2s,ease-out); */
+@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
+  -webkit-transition: $what $time $how;
+  -moz-transition:    $what $time $how;
+  -ms-transition:     $what $time $how;
+  -o-transition:      $what $time $how;
+  transition:         $what $time $how;
+}
+
+// Small devices
+@mixin sm {
+  @media (min-width: #{$screen-sm-min}) {
+      @content;
+  }
+}
+
+// Medium devices
+@mixin md {
+  @media (min-width: #{$screen-md-min}) {
+      @content;
+  }
+}
+
+// Large devices
+@mixin lg {
+  @media (min-width: #{$screen-lg-min}) {
+      @content;
+  }
+}
+
+// Extra large devices
+@mixin xl {
+  @media (min-width: #{$screen-xl-min}) {
+      @content;
+  }
+}
+
+/*******************************************
+  Positioning
+*******************************************/
+.align-start {
+  align-self: flex-start
+}
+/********************************************
+  Shared
+********************************************/
+.cursor-hover:hover {
+  cursor: pointer;
+}
+
+.no-link:hover {
+  text-decoration: none;
+}
+
+.flex-package {
+  display:    flex;
+  flex-shrink: 0;
+}
+
+.rev-btn {
+  background-color: $revature-orange;
+  border-color: $revature-orange;
+  color: black;
+  &:hover {
+    background-color: white;
+    border-color: $revature-orange;
+    color: $revature-orange;
+  }
+  &:active {
+    background-color: $revature-orange;
+    color: black;
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+  }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+  }
+}
+
+li > a.rev-btn-tab {
+  background-color: white;
+  border-color: $revature-orange;
+  color: black;
+  &:hover {
+    background-color: white;
+    border-color: $revature-orange;
+    color: $revature-orange;
+  }
+  &:active {
+    color: black;
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+    border-color: $revature-orange
+  }
+  &:active, &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
+  }
+}
+.rev-table-row:hover {
+  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange;
+  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange;
+  box-shadow: inset 0px 0px 15px 5px $revature-orange;
+}
+
+
+
+
+/****************************************
+  App
+****************************************/
 
 body {
   margin: 0;
@@ -50,25 +171,6 @@ body {
   @include flex-col;
   width: 100%;
   align-items: center
-}
-
-.rev-btn {
-  background-color: $revature-orange;
-  border-color: $revature-orange;
-  color: black;
-  &:hover {
-    background-color: white;
-    border-color: $revature-orange;
-    color: $revature-orange;
-  }
-  &:active {
-    background-color: $revature-orange;
-    color: black;
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
-  }
-  &:active, &:focus {
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange, 0.5);
-  }
 }
 
 
@@ -126,6 +228,11 @@ body {
   -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
   box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
+  background: -webkit-linear-gradient(right, #f8d6b6, #acc5c9);
+  background: -webkit-linear-gradient(right, #e7d6c7, #8bdde7);
+  background: -moz-linear-gradient(right, #e2d0be, #eaf1f1);
+  background: -o-linear-gradient(right, #eec5a0, #e1e9eb);
+  background: linear-gradient(to left, #f3a55d, #e1e7e7);
 }
 
 #examples-dropdown {
@@ -143,41 +250,110 @@ body {
   color: red;
 }
 
-
-/*****************************
-  Canvas
-*****************************/
-#my-canvas {
-  border: solid 1px black;
-  top:10%;
-  left:10%;
+/************************************
+          login.component.tsx
+************************************/
+#login-pass {
+  margin: 0.3em
 }
 
-.canvas-container {
+#login-form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
 }
 
-/*****************************
-  TIC TAC TOE
-*****************************/
-.tic-tac-col {
-  border: 1px solid black;
-  font-size: 4em;
+@media (min-width: 1200px) { 
+  .top-lev-div{
+    margin-top:50px;
+    zoom: 1.5;
+    -moz-transform: scale(1.5);
+  } 
+}
+
+@media (max-width: 1199.99px) { 
+  .top-lev-div{
+    margin-top:50px;
+    zoom: 1.0;
+    -moz-transform: scale(1.0);
+  } 
+
+}
+
+.frontDiv {
+  z-index: 3;
+  position: absolute;
+}
+
+.behindDiv {
+  z-index: 2;
+
+}
+
+.box input {
+  margin-left:0;
+  -webkit-transition: 1s;
+          transition: 1s;
+}
+
+.txt-bx{
+  width: 250px;
+}
+
+.rememberDiv {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+  border-bottom:solid rgb(245, 139, 0) 4px;
+}
+
+.resetDiv {
+  margin:auto;
+  display: flex;
+  justify-content: center;
+}
+
+
+.rememberSpan {
+  display: inline;
+  float: none;
+}
+
+#rememberCheck {
+  display: inline;
+}
+
+#titleHead{
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+#forgot-pass-btn{
+  color: blue;
+  margin-top: 0.5em;
+  border: none;
   text-align: center;
-  min-height: 2em ;
-  cursor: pointer;
-  border-radius: 0.1em;
+  background-color: transparent;
+  -webkit-transition: 1s;
+          transition: 1s;
+}
 
-  &:hover {
-    box-shadow: inset 0px 0px 0.5em 0px $revature-orange;
+#invalidCredHead {
+  color: red;
+  text-align: center;
+  padding-top: 10px;
+}
+
+
+
+/***********************************
+  Manage
+***********************************/
+#manage-users-container {
+  width: 100%;
+  @include md {
+    max-width: 80%
   }
-}
-#tic-tac-board {
-  width: 75%;
-  margin: 0.5em;
-}
-
-.not-allowed-cursor {
-  cursor: not-allowed;
 }

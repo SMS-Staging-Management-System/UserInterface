@@ -22,19 +22,10 @@ class AppNav extends React.PureComponent<any, {}, {}> {
           <div className="collapse navbar-collapse" id="navbarsExample04">
             <ul className="navbar-nav ml-auto margin-nav">
               <li className="nav-item active">
-                <Link to="/home" className="unset-anchor nav-link">Home</Link>
+                <Link to="/login" className="unset-anchor nav-link">Log In</Link>
               </li>
               <li className="nav-item active">
-                <Link to="/sign-in" className="unset-anchor nav-link">Sign In</Link>
-              </li>
-              <li className="nav-item active">
-                <Link to="/first" className="unset-anchor nav-link">First</Link>
-              </li>
-              <li className="nav-item active">
-                <Link to="/second" className="unset-anchor nav-link">Second</Link>
-              </li>
-              <li className="nav-item active">
-                <Link to="/clicker" className="unset-anchor nav-link">Clicker</Link>
+                <Link to="/manage" className="unset-anchor nav-link">Manage</Link>
               </li>
               <li className="nav-item active dropdown">
                 <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
