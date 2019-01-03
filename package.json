@@ -59,7 +59,7 @@
     "cross-env": "^5.2.0",
     "enzyme": "^3.4.4",
     "enzyme-adapter-react-16": "^1.2.0",
-    "react-docgen-typescript": "^1.9.0",
+    "react-docgen-typescript": "^1.12.2",
     "react-styleguidist": "^8.0.6",
     "typedoc": "^0.12.0",
     "typescript": "^2.9.1"
