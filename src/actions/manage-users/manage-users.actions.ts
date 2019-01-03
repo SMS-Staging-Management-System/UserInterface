@@ -2,10 +2,10 @@ export const manageUsersTypes = {
   GET_USERS: 'MANAGE_GET_USERS',
 }
 
-export const getUsers = (roles: string[]) => {
+export const manageGetUsersByRole = (role: string) => (dispatch) => {
   return {
     payload: {
-      roles
+      role
     },
     type: manageUsersTypes.GET_USERS
   }

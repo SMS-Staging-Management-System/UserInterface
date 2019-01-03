@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
-import ProtectedRoute from '../protected-route.component.tsx/protected-route.component';
+import ProtectedRoute from '../protected-route.component/protected-route.component';
 import { ManageUsersComponenet } from './users/manage-users.component';
 import { Link } from 'react-router-dom';
 

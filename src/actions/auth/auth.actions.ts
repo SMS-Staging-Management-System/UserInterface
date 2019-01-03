@@ -170,3 +170,13 @@ export const setup = () => (dispatch) => {
     () => refreshCognitoSession()(dispatch)
     , 3000000);
 }
+
+
+export const logout = () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  return {
+    payload:{},
+    type: authTypes.LOGOUT    
+  }
+}

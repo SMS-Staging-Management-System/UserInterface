@@ -6,29 +6,22 @@ import { Link } from 'react-router-dom';
 import {FaUserPlus} from 'react-icons/fa';
 import NavLink from 'reactstrap/lib/NavLink';
 
+
 export class ManageUserNavComponent extends React.Component<any, any> {
   constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false
-    };
   }
+
+  // componentDidMount() {
+    
+  // }
 
   // returns active if the role provided in the route is the routeName provided
   isActive = (routeName: string) => ((this.props.role === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 
-
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
-  }
-
   render() {
     return (
-      <Navbar id="manage-users-nav" color="faded" light>
+      <Navbar className="manage-users-nav" color="faded" light>
         <Nav tabs className="align-start">
           <NavItem>
             <Link to="/manage/users/admin" className={`nav-link ${this.isActive('admin')}`}>Admins</Link>
@@ -52,3 +45,4 @@ export class ManageUserNavComponent extends React.Component<any, any> {
     );
   }
 }
+

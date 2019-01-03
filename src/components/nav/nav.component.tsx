@@ -1,15 +1,28 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import RevLogo from '../../assets/rev-logo.png';
-import { IState } from '../../reducers';
+import { IState, IAuthState } from '../../reducers';
 import { connect } from 'react-redux';
-import { setup } from '../../actions/auth/auth.actions';
+import { setup, logout } from '../../actions/auth/auth.actions';
+import { toast } from 'react-toastify';
+import { withRouter } from "react-router";
 
+interface IProps extends RouteComponentProps<{}> {
+  logout: () => void;
+  setup: () => void;
+  auth: IAuthState;
+}
 
-class AppNav extends React.PureComponent<any, {}, {}> {
+class AppNav extends React.PureComponent<IProps, {}, {}> {
 
   componentDidMount() {
     this.props.setup();
+  }
+
+  logout= () => {
+    this.props.logout();
+    this.props.history.push('/login');
+    toast.success('Successfully logged out');
   }
 
   public render() {
@@ -40,8 +53,8 @@ class AppNav extends React.PureComponent<any, {}, {}> {
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                      <div className="dropdown-item"><Link to="/profile" className="unset-anchor nav-link active">Profile</Link></div>
-                      <div className="dropdown-item"><Link to="/logout" className="unset-anchor nav-link active">Logout</Link></div>
+                      <div className="dropdown-item nav-dropdown"><Link to="/profile" className="nav-dropdown active">Profile</Link></div>
+                      <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                     </div>
                   </li>
                 </>
@@ -62,6 +75,7 @@ const mapStateToProps = (state: IState) => ({
   auth: state.auth
 });
 const mapDispatchToProps = {
-  setup
+  logout,
+  setup,
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AppNav);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppNav)) as any;

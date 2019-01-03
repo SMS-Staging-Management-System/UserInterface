@@ -69,6 +69,7 @@ $screen-xl-min: 1200px;
 /********************************************
   Shared
 ********************************************/
+
 .cursor-hover:hover {
   cursor: pointer;
 }
@@ -123,6 +124,7 @@ li > a.rev-btn-tab {
   -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  cursor: pointer;
 }
 
 
@@ -196,10 +198,16 @@ body {
   background-color: unset;
   border: unset;
   color: black;
+  text-decoration: none;
+  &:hover, &:focus {
+    color: black;
+    text-decoration: none;
+  }
   &:hover {
     background-color: unset;
     border: unset;
-    color: black;
+    color: $revature-orange;
+    cursor: pointer;
   }
   &:active {
     background-color: unset !important;
@@ -367,7 +375,7 @@ body {
 #manage-users-container {
   width: 100%;
 }
-#manage-users-nav {
+.manage-users-nav {
   padding-left: 0;
   padding-bottom: 0;
 }
