@@ -3,6 +3,9 @@ import { Nav, NavItem } from 'reactstrap';
 import Navbar from 'reactstrap/lib/Navbar';
 import { Link } from 'react-router-dom';
 
+import {FaUserPlus} from 'react-icons/fa';
+import NavLink from 'reactstrap/lib/NavLink';
+
 export class ManageUserNavComponent extends React.Component<any, any> {
   constructor(props) {
     super(props);
@@ -14,7 +17,7 @@ export class ManageUserNavComponent extends React.Component<any, any> {
   }
 
   // returns active if the role provided in the route is the routeName provided
-  isActive =(routeName: string) => ((this.props.role === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
+  isActive = (routeName: string) => ((this.props.role === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 
 
   toggle() {
@@ -38,6 +41,11 @@ export class ManageUserNavComponent extends React.Component<any, any> {
           </NavItem>
           <NavItem>
             <Link to="/manage/users/associate" className={`nav-link ${this.isActive('associate')}`}>Associates</Link>
+          </NavItem>
+        </Nav>
+        <Nav tabs>
+          <NavItem>
+            <NavLink className="cursor-hover" ><FaUserPlus className="rev-color" /></NavLink>
           </NavItem>
         </Nav>
       </Navbar>

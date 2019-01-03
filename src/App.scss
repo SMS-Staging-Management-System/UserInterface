@@ -130,6 +130,10 @@ li > a.rev-btn-tab {
   background-color: $revature-orange-light;
 }
 
+.rev-color { 
+  color: $revature-orange;
+}
+
 
 
 /****************************************
@@ -175,7 +179,11 @@ body {
 #main-content-container {
   @include flex-col;
   width: 100%;
-  align-items: center
+  align-items: center;
+  margin:auto;
+  @include md {
+    max-width: 80%
+  }
 }
 
 
@@ -358,9 +366,6 @@ body {
 ***********************************/
 #manage-users-container {
   width: 100%;
-  @include md {
-    max-width: 80%
-  }
 }
 #manage-users-nav {
   padding-left: 0;
