@@ -7,10 +7,13 @@ export const manageUsersTypes = {
 
 export const manageGetUsersByGroup = (groupName: string) => async (dispatch) => {
   try {
-    const users = await cognitoClient.findUsersByGroup(groupName)
+    const response = await cognitoClient.findUsersByGroup(groupName)
     dispatch({
       payload: {
-        manageUsers: users
+        manageUsers: response.data.Users.map(user => ({
+          email: user.Attributes.find(attr => attr.Name === 'email').Value,
+
+        }))
       },
       type: manageUsersTypes.GET_USERS
     })
@@ -22,6 +25,5 @@ export const manageGetUsersByGroup = (groupName: string) => async (dispatch) => 
       type: ''
     })
   }
-  
 }
 

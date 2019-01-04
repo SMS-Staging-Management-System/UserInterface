@@ -14,10 +14,14 @@ export class ManageUsersComponenet extends React.Component<IManageUserNavCompone
     this.props.manageGetUsersByGroup(this.props.match.params.group);
   }
 
+  updateManageUsersTable = (groupName: string) => {
+    this.props.manageGetUsersByGroup(groupName);
+  }
+
   render() {
     return (
       <div id="manage-users-container">
-        <ManageUserNavComponent role={this.props.match.params.group}/>
+        <ManageUserNavComponent updateManageUsersTable={this.updateManageUsersTable} role={this.props.match.params.group}/>
         <Table striped id="manage-users-table">
           <thead>
             <tr className="rev-background-color">
@@ -27,21 +31,15 @@ export class ManageUsersComponenet extends React.Component<IManageUserNavCompone
             </tr>
           </thead>
           <tbody>
-            <tr className="rev-table-row">
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr className="rev-table-row">
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr className="rev-table-row">
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {
+              this.props.manageUsers.manageUsers.map((user) => 
+                    <tr key={user.email} className="rev-table-row">
+                      <td></td>
+                      <td></td>
+                      <td>{user.email}</td>
+                    </tr>
+               )
+            }
           </tbody>
         </Table>
       </div>

@@ -20,17 +20,26 @@ export class ManageUserNavComponent extends React.Component<any, any> {
       <Navbar className="manage-users-nav" color="faded" light>
         <Nav tabs className="align-start">
           <NavItem>
-            <Link to="/manage/users/admin" className={`nav-link ${this.isActive('admin')}`}>Admins</Link>
+            <Link to="/manage/users/admin" 
+                className={`nav-link ${this.isActive('admin')}`}
+                onClick={() => this.props.updateManageUsersTable('admin')}>Admins</Link>
           </NavItem>
           <NavItem>
-            <Link to="/manage/users/staging-manager" className={`nav-link ${this.isActive('staging-manager')}`}>Staging Managers</Link>
+            <Link to="/manage/users/staging-manager" 
+                className={`nav-link ${this.isActive('staging-manager')}`}
+                onClick={() => this.props.updateManageUsersTable('staging-manager')}>Staging Managers</Link>
           </NavItem>
           <NavItem>
-            <Link to="/manage/users/trainer" className={`nav-link ${this.isActive('trainer')}`}>Trainers</Link>
+            <Link to="/manage/users/trainer" 
+                className={`nav-link ${this.isActive('trainer')}`}
+                onClick={() => this.props.updateManageUsersTable('trainer')}>Trainers</Link>
           </NavItem>
           <NavItem>
-            <Link to="/manage/users/associate" className={`nav-link ${this.isActive('associate')}`}>Associates</Link>
-          </NavItem>
+            <Link to="/manage/users/associate" 
+                className={`nav-link ${this.isActive('associate')}`}>
+                Associates
+            </Link> 
+          </NavItem> 
         </Nav>
         <Nav tabs>
           <NavItem>

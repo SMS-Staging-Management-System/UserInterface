@@ -18,7 +18,8 @@
     "eject": "react-scripts-ts eject"
   },
   "dependencies": {
-    "amazon-cognito-identity-js": "^3.0.6",
+    "amazon-cognito-identity-js": "3.0.4",
+    "aws-amplify": "^1.1.18",
     "aws-sdk": "^2.382.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
