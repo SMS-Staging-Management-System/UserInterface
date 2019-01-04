@@ -1,29 +1,23 @@
 import * as React from 'react';
 import { Table } from 'reactstrap';
-import { IUser } from '../../../model/user.model';
 import { ManageUserNavComponent } from './manage-users-nav/manage-users-nav.component';
-import { RouteComponentProps } from 'react-router';
+import { IManageUserNavComponentProps } from './manage-users.container';
 
 
-interface IProps extends RouteComponentProps<{role: string}>{
-  users: IUser
-}
-
-
-export class ManageUsersComponenet extends React.Component<IProps, any> {
+export class ManageUsersComponenet extends React.Component<IManageUserNavComponentProps, any> {
 
   constructor(props) {
     super(props);
   }
 
-  // componentDidMount() {
-
-  // }
+  componentDidMount() {
+    this.props.manageGetUsersByGroup(this.props.match.params.group);
+  }
 
   render() {
     return (
       <div id="manage-users-container">
-        <ManageUserNavComponent role={this.props.match.params.role}/>
+        <ManageUserNavComponent role={this.props.match.params.group}/>
         <Table striped id="manage-users-table">
           <thead>
             <tr className="rev-background-color">

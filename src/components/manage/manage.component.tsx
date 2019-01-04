@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Nav, NavItem, NavLink } from 'reactstrap';
 import ProtectedRoute from '../protected-route.component/protected-route.component';
-import { ManageUsersComponenet } from './users/manage-users.component';
+import  ManageUsersComponenet  from './users/manage-users.container';
 import { Link } from 'react-router-dom';
 
 
@@ -35,7 +35,7 @@ export class ManageComponent extends React.Component<any, any> {
             </NavItem>
           </Nav>
         </div>
-        <ProtectedRoute component={ManageUsersComponenet} path="/manage/users/:role" allowedRoles={['admin']} />
+        <ProtectedRoute component={ManageUsersComponenet} path="/manage/users/:group" allowedRoles={['admin']} />
       </>
     )
   }

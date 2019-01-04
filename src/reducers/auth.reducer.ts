@@ -12,7 +12,7 @@ export const authReducer = (state = initialState, action: any) => {
         ...state,
         currentUser: action.payload.currentUser
       }
-    case 'RESET':
+    case authTypes.LOGOUT:
       return initialState;
   }
   return state;

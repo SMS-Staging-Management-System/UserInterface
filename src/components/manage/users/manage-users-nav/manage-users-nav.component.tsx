@@ -12,10 +12,6 @@ export class ManageUserNavComponent extends React.Component<any, any> {
     super(props);
   }
 
-  // componentDidMount() {
-    
-  // }
-
   // returns active if the role provided in the route is the routeName provided
   isActive = (routeName: string) => ((this.props.role === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 

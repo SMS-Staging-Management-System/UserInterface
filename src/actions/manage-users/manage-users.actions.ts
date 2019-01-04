@@ -1,13 +1,27 @@
+import { cognitoClient } from "../../axios/sms-clients/cognito-client";
+import { toast } from "react-toastify";
+
 export const manageUsersTypes = {
   GET_USERS: 'MANAGE_GET_USERS',
 }
 
-export const manageGetUsersByRole = (role: string) => (dispatch) => {
-  return {
-    payload: {
-      role
-    },
-    type: manageUsersTypes.GET_USERS
+export const manageGetUsersByGroup = (groupName: string) => async (dispatch) => {
+  try {
+    const users = await cognitoClient.findUsersByGroup(groupName)
+    dispatch({
+      payload: {
+        manageUsers: users
+      },
+      type: manageUsersTypes.GET_USERS
+    })
+  } catch (e) {
+    toast.warn('Unable to retreive users')
+    dispatch({
+      payload: {
+      },
+      type: ''
+    })
   }
+  
 }
 
