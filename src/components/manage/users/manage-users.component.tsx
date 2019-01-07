@@ -21,7 +21,10 @@ export class ManageUsersComponenet extends React.Component<IManageUserNavCompone
   render() {
     return (
       <div id="manage-users-container">
-        <ManageUserNavComponent updateManageUsersTable={this.updateManageUsersTable} role={this.props.match.params.group}/>
+        <ManageUserNavComponent 
+          toggleCreateUserModal={this.props.toggleCreateUserModal}
+          updateManageUsersTable={this.updateManageUsersTable} 
+          role={this.props.match.params.group}/>
         <Table striped id="manage-users-table">
           <thead>
             <tr className="rev-background-color">

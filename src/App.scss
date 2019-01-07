@@ -83,10 +83,10 @@ $screen-xl-min: 1200px;
   flex-shrink: 0;
 }
 
-.rev-btn {
-  background-color: $revature-orange-light;
-  border-color: $revature-orange-light;
-  color: black;
+.rev-btn:not(.dropdown), .rev-btn > button.dropdown-toggle {
+  background-color: $revature-orange-light !important;
+  border-color: $revature-orange-light !important;
+  color: black !important;
   &:hover {
     background-color: white;
     border-color: $revature-orange-light;
@@ -95,11 +95,12 @@ $screen-xl-min: 1200px;
   &:active {
     background-color: $revature-orange-light;
     color: black;
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
   }
   &:active, &:focus {
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
-  }
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
+  } 
+
 }
 
 li > a.rev-btn-tab {
@@ -136,6 +137,35 @@ li > a.rev-btn-tab {
   color: $revature-orange;
 }
 
+.responsive-modal-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include md {
+    flex-direction: row;
+  }
+
+  .responsive-modal-row-item {
+    padding-bottom: 0.3em;
+    padding-right: 0.3em;
+  }
+}
+
+.dropdown-item { 
+  &:active {
+    background-color: $revature-orange-light;
+  }
+  &:focus {
+    outline-color: $revature-orange;
+  }
+}
+
+.form-control {
+  &:focus {
+    border-color: $revature-orange-light;
+    box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;
+  }
+}
 
 
 /****************************************
@@ -400,5 +430,10 @@ body {
   &:focus {
     border-color: #d6dce2;
   }
+}
+
+#create-user-modal-footer {
+  display: flex;
+  justify-content: space-between;
 }
 

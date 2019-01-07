@@ -30,6 +30,7 @@ export const cognitoLogin = (username: string, password: string, history: Histor
     username, // Required, the username
 
   }).then(user => {
+    console.log('here',user);
     history.push('/check-ins');
     setup()(dispatch);
   })

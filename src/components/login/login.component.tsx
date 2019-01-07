@@ -72,13 +72,6 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
   }
 
   public onSuccess = (result: awsCognito.CognitoUserSession) => {
-    // console.log(userPool.getCurrentUser());
-    // console.log(result.getIdToken().decodePayload())
-    // const idtok: any = result.getIdToken();
-    // console.log(idtok.payload['cognito:groups']) //payload has the user info on it
-
-    // navigate pages now that we have successfully logged in
-    // Call setup whenevr yo are ready for the app to go away from login page
     this.props.initUser();
   }
 

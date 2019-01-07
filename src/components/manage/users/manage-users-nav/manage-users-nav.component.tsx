@@ -6,8 +6,13 @@ import { Link } from 'react-router-dom';
 import {FaUserPlus} from 'react-icons/fa';
 import NavLink from 'reactstrap/lib/NavLink';
 
+interface IManageUserNavComponentProps {
+  updateManageUsersTable: (group: string) => void,
+  toggleCreateUserModal: () => void,
+  role: string
+}
 
-export class ManageUserNavComponent extends React.Component<any, any> {
+export class ManageUserNavComponent extends React.Component<IManageUserNavComponentProps, any> {
   constructor(props) {
     super(props);
   }
@@ -43,7 +48,7 @@ export class ManageUserNavComponent extends React.Component<any, any> {
         </Nav>
         <Nav tabs>
           <NavItem>
-            <NavLink className="cursor-hover" ><FaUserPlus className="rev-color" /></NavLink>
+            <NavLink className="cursor-hover" onClick={this.props.toggleCreateUserModal}><FaUserPlus className="rev-color" /></NavLink>
           </NavItem>
         </Nav>
       </Navbar>

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import { Nav, NavItem } from 'reactstrap';
 import ProtectedRoute from '../protected-route.component/protected-route.component';
 import  ManageUsersComponenet  from './users/manage-users.container';
 import { Link } from 'react-router-dom';
+import CreateUserModal from './create-user-modal/create-user-modal.container';
 
 
 export class ManageComponent extends React.Component<any, any> {
@@ -28,14 +29,15 @@ export class ManageComponent extends React.Component<any, any> {
         <div>
           <Nav tabs>
             <NavItem>
-              <Link className="" to="/manage/cohorts"><NavLink className="rev-btn-tab">Cohorts</NavLink></Link>
+              <Link to="/manage/cohorts" className="rev-btn-tab">Cohorts</Link>
             </NavItem>
             <NavItem>
-              <Link className="" to="/manage/users/staging-manager"><NavLink className="rev-btn-tab" >Users</NavLink></Link>
+              <Link to="/manage/users/staging-manager"className="rev-btn-tab">Users</Link>
             </NavItem>
           </Nav>
         </div>
         <ProtectedRoute component={ManageUsersComponenet} path="/manage/users/:group" allowedRoles={['admin']} />
+        <CreateUserModal />
       </>
     )
   }
