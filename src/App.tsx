@@ -2,17 +2,16 @@ import * as React from 'react';
 import './include/bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import { store } from './Store';
 import AppNav from './components/nav/nav.component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HomeComponent } from './components/home/home.component';
 import { Provider } from 'react-redux';
-import { store } from './Store';
 import clickerContainer from './components/clicker/clicker.container';
 import { ManageComponent } from './components/manage/manage.component';
 import  ProtectedRoute  from './components/protected-route.component/protected-route.component';
 import  LoginComponent  from './components/login/login.component';
 import { ToastContainer, toast } from 'react-toastify';
-
 
 class App extends React.Component {
   public render() {
@@ -37,5 +36,4 @@ class App extends React.Component {
     );
   }
 }
-
 export default App;

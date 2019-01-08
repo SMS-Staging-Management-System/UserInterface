@@ -146,9 +146,10 @@ li > a.rev-btn-tab {
   }
 
   .responsive-modal-row-item {
-    padding-bottom: 0.3em;
-    padding-right: 0.3em;
-  }
+    margin-right: 0.3em;
+    margin-bottom: 0.7em;
+  } 
+  
 }
 
 .dropdown-item { 
@@ -164,6 +165,26 @@ li > a.rev-btn-tab {
   &:focus {
     border-color: $revature-orange-light;
     box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;
+  }
+}
+
+.modal-dialog {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+
+  @include sm {
+    max-width: 90%;
+    margin: 1em auto;
+  }
+
+  @include md {
+    max-width: 70%;
+    margin: 2em auto;
+  }
+
+  @include lg { 
+    max-width: 900px;
   }
 }
 

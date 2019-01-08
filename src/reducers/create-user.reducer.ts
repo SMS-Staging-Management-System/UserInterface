@@ -1,4 +1,5 @@
 import { ICreateUserState } from '.';
+import { authTypes } from '../actions/auth/auth.actions';
 import { createUserTypes } from '../actions/create-user/create-user.actions';
 
 const initialState: ICreateUserState = {
@@ -7,7 +8,11 @@ const initialState: ICreateUserState = {
   newUser: {
     address: {
       addressId: 0,
-      alias: ''
+      alias: '',
+      city: '',
+      country: '',
+      state: '',
+      zip: ''
     },
     email: '',
     firstName: '',
@@ -28,6 +33,16 @@ export const createUserReducer = (state = initialState, action: any) => {
         ...state,
         locationDropdownActive: !state.locationDropdownActive
       }
+    case createUserTypes.UPDATE_NEW_USER_LOCATION:
+      return {
+        ...state,
+        newUser: {
+          ...state.newUser,
+          address: action.payload.location
+        }
+      }
+    case authTypes.LOGOUT:
+      return initialState
   }
   return state;
 }

@@ -15,3 +15,7 @@ export const store: Store<any> = createStore(
   state,
   enhancer
 );
+
+export default store;
+
+export const test  = 'hello'
