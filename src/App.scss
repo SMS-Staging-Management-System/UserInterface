@@ -159,6 +159,10 @@ li > a.rev-btn-tab {
   &:focus {
     outline-color: $revature-orange;
   }
+  &:hover {
+    cursor: pointer;
+    background-color: $revature-orange-light;
+  }
 }
 
 .form-control {

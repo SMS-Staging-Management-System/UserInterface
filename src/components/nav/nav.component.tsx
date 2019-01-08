@@ -53,7 +53,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                      <div className="dropdown-item nav-dropdown"><Link to="/profile" className="nav-dropdown active">Profile</Link></div>
+                      <Link to="/profile" className=" dropdown-item nav-dropdown">Profile</Link>
                       <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                     </div>
                   </li>

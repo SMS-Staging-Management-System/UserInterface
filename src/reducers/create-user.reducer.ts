@@ -3,7 +3,7 @@ import { authTypes } from '../actions/auth/auth.actions';
 import { createUserTypes } from '../actions/create-user/create-user.actions';
 
 const initialState: ICreateUserState = {
-  enabled: true,
+  enabled: false,
   locationDropdownActive: false,
   newUser: {
     address: {
@@ -41,8 +41,15 @@ export const createUserReducer = (state = initialState, action: any) => {
           address: action.payload.location
         }
       }
+    case createUserTypes.UPDATE_NEW_USER:
+      return {
+        ...state,
+        newUser: action.payload.newUser
+      }
+    case createUserTypes.USER_SAVED:
+      return initialState;
     case authTypes.LOGOUT:
-      return initialState
+      return initialState;
   }
   return state;
 }
