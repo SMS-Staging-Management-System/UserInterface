@@ -12,6 +12,10 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.updateLocations();
+  }
+
 
 
   render() {
@@ -37,7 +41,7 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
                 </DropdownToggle>
                 <DropdownMenu>
                   {
-                    createUser.newUser.address.alias
+                    addresses.trainingAddresses.length === 0
                       ? <>
                         <DropdownItem>Unable To Find Any Locations</DropdownItem>
                         <DropdownItem divider />

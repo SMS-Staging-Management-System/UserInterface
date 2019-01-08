@@ -16,6 +16,4 @@ export const store: Store<any> = createStore(
   enhancer
 );
 
-export default store;
 
-export const test  = 'hello'

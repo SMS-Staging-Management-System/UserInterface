@@ -4,7 +4,6 @@ import ProtectedRoute from '../protected-route.component/protected-route.compone
 import  ManageUsersComponenet  from './users/manage-users.container';
 import { Link } from 'react-router-dom';
 import CreateUserModal from './create-user-modal/create-user-modal.container';
-import '../../actions/address/address.actions';
 
 
 export class ManageComponent extends React.Component<any, any> {

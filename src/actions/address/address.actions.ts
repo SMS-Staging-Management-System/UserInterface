@@ -1,9 +1,5 @@
 import { addressesClient } from "../../axios/sms-clients/address-client";
 
-import {test} from '../../Store';
-
-console.log(test);
-
 export const addressTypes = {
   UPDATE_TRAINING_ADDRESSES: 'UPDATE_TRAINING_ADDRESSES'
 }
