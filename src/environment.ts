@@ -1,8 +1,15 @@
 const dev = {
-  awsRegion:          'us-west-2',
-  cognitoClientId:    'n09bpbndlp78jrbv6rbar4d13',
-  cognitoUserPoolId:  'us-east-1_xavxFp1nr',
+  awsRegion:          'us-east-1',
+  cognitoClientId:    '4mafdnad6u1o1ugokulsmbrl96',
+  cognitoUserPoolId:  'us-east-1_6hCFlGZHZ',
   smsContext:         'http://localhost:8765'
+};
+
+const uat = {
+  awsRegion:          'us-east-1',
+  cognitoClientId:    '4mafdnad6u1o1ugokulsmbrl96',
+  cognitoUserPoolId:  'us-east-1_6hCFlGZHZ',
+  smsContext:         'https://7i6rudc3m2.execute-api.us-east-1.amazonaws.com/prod'
 };
 
 const prod = {
@@ -15,6 +22,10 @@ const prod = {
 console.log(process.env.NODE_ENV);
 
 export let environment = dev;
+
+if (process.env.REACT_APP_ENV === 'uat') {
+  environment = uat;
+}
 
 if (process.env.NODE_ENV === 'production' || process.env.REACT_APP_ENV === 'production') {
   environment = prod;
