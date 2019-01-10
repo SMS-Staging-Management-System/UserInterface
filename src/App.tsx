@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HomeComponent } from './components/home/home.component';
 import { Provider } from 'react-redux';
 import clickerContainer from './components/clicker/clicker.container';
-import { ManageComponent } from './components/manage/manage.component';
+import ManageComponent from './components/manage/manage.container';
 import  ProtectedRoute  from './components/protected-route.component/protected-route.component';
 import  LoginComponent  from './components/login/login.component';
 import { ToastContainer, toast } from 'react-toastify';
@@ -25,7 +25,7 @@ class App extends React.Component {
                 <Route path="/login" component={LoginComponent} />
                 <Route path="/home" component={HomeComponent} />
                 <Route path="/clicker" component={clickerContainer} />
-                <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path="/manage" component={ManageComponent} />
+                <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path="/manage/:manage" component={ManageComponent} />
                 <Route component={HomeComponent} />
               </Switch>
             </div>

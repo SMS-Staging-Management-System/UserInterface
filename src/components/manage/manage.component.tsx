@@ -1,44 +1,42 @@
 import * as React from 'react';
-import { Nav, NavItem } from 'reactstrap';
-import ProtectedRoute from '../protected-route.component/protected-route.component';
-import  ManageUsersComponenet  from './users/manage-users.container';
-import { Link } from 'react-router-dom';
+import { ManageNavComponent } from './manage-nav/manage-nav.component';
+import { IManageComponentProps } from './manage.container';
 import CreateUserModal from './create-user-modal/create-user-modal.container';
+import { ManageInternalComponenet } from './manage-internal/manage-internal.component';
+import { ManageAssociatesComponenet } from './manage-associates/manage-associates.component';
 
 
-export class ManageComponent extends React.Component<any, any> {
+export class ManageComponenet extends React.Component<IManageComponentProps, any> {
 
   constructor(props) {
     super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdownOpen: false
-    };
   }
 
-  toggle() {
-    this.setState({
-      dropdownOpen: !this.state.dropdownOpen
-    });
+  componentDidMount() {
+    const manage = this.props.match.params.manage;
+    if (manage === 'users') {
+      this.props.manageGetUsersByGroup(manage);
+    }
+  }
+
+  updateManageUsersTable = (groupName: string) => {
+    this.props.manageGetUsersByGroup(groupName);
   }
 
   render() {
     return (
-      <>
-        <div>
-          <Nav tabs>
-            <NavItem>
-              <Link to="/manage/cohorts" className="rev-btn-tab">Cohorts</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/manage/users/staging-manager"className="rev-btn-tab">Users</Link>
-            </NavItem>
-          </Nav>
-        </div>
-        <ProtectedRoute component={ManageUsersComponenet} path="/manage/users/:group" allowedRoles={['admin']} />
+      <div id="manage-users-container">
+        <ManageNavComponent
+          toggleCreateUserModal={this.props.toggleCreateUserModal}
+          updateManageUsersTable={this.updateManageUsersTable}
+          manage={this.props.match.params.manage} />
+
+        {this.props.match.params.manage === 'associates'
+          ? <ManageAssociatesComponenet manageUsers={this.props.manageUsers.manageUsers} />
+          : <ManageInternalComponenet manageUsers={this.props.manageUsers.manageUsers} />
+        }
         <CreateUserModal />
-      </>
+      </div>
     )
   }
 }

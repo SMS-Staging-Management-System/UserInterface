@@ -6,7 +6,6 @@ import { ICognitoUser } from '../../model/cognito-user.model';
 // import { toast } from 'react-toastify';
 import Amplify, { Auth } from 'aws-amplify';
 import { refreshJwt } from '../../axios/sms-clients';
-import { cognitoClient } from '../../axios/sms-clients/cognito-client';
 // import Axios from 'axios';
 
 Amplify.configure({
@@ -30,7 +29,7 @@ export const cognitoLogin = (username: string, password: string, history: Histor
     username, // Required, the username
 
   }).then(user => {
-    console.log('here',user);
+    console.log('here', user);
     history.push('/check-ins');
     setup()(dispatch);
   })
@@ -53,21 +52,17 @@ export const updateCurrentUser = (currentUser: ICognitoUser) => {
 export const setup = () => (dispatch) => {
   Auth.currentAuthenticatedUser()
     .then(user => {
-
       // initialize the jwt for axios
       Auth.currentSession()
         .then(data => {
           refreshJwt(data.getIdToken().getJwtToken());
-          cognitoClient.auth()
-            .then((userAttributes: any) => {
-              const currentUser = {
-                email: userAttributes.data.email,
-                roles: userAttributes.data['cognito:groups'],
-
-              }
-              // Set redux cognito data
-              dispatch(updateCurrentUser(currentUser));
-            })
+          const userAttributes = data.getIdToken().payload;
+          const currentUser = {
+            email: userAttributes.email,
+            roles: userAttributes['cognito:groups'],
+          }
+          // Set redux cognito data
+          dispatch(updateCurrentUser(currentUser));
         })
 
       // create interval to refresh the jwt periodically
