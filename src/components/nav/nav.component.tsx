@@ -19,7 +19,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
     this.props.setup();
   }
 
-  logout= () => {
+  logout = () => {
     this.props.logout();
     this.props.history.push('/login');
     toast.success('Successfully logged out');
@@ -44,12 +44,17 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
               {props.auth.currentUser.email
                 ? // if ther is a email show the nav elements 
                 <>
-                  <li className="nav-item active">
-                    <Link to="/checkins" className="unset-anchor nav-link">Checkins</Link>
-                  </li>
-                  <li className="nav-item active">
-                    <Link to="/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
-                  </li>
+                  {
+                    this.props.auth.currentUser.roles.some(role => role === 'staging-manager' || role === 'admin' || role === 'trainer') &&
+                    <>
+                      <li className="nav-item active">
+                        <Link to="/checkins" className="unset-anchor nav-link">Checkins</Link>
+                      </li>
+                      <li className="nav-item active">
+                        <Link to="/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
+                      </li>
+                    </>
+                  }
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">

@@ -7,6 +7,7 @@
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
     "start": "npm-run-all -p watch-css start-js",
+    "start:uat": "cross-env REACT_APP_ENV=uat npm start",
     "start:prod": "cross-env REACT_APP_ENV=production npm start",
     "build-js": "react-scripts-ts build",
     "build": "npm-run-all build-css build-js",

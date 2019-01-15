@@ -59,7 +59,7 @@ export const setup = () => (dispatch) => {
           const userAttributes = data.getIdToken().payload;
           const currentUser = {
             email: userAttributes.email,
-            roles: userAttributes['cognito:groups'],
+            roles: userAttributes['cognito:groups'] || [],
           }
           // Set redux cognito data
           dispatch(updateCurrentUser(currentUser));
