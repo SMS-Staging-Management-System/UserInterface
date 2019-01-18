@@ -11,6 +11,7 @@
     "start:prod": "cross-env REACT_APP_ENV=production npm start",
     "build-js": "react-scripts-ts build",
     "build": "npm-run-all build-css build-js",
+    "build:uat": "cross-env REACT_APP_ENV=uat npm run build",
     "test": "react-scripts-ts test --env=jsdom",
     "test:coverage": "npm test -- --coverage --watchAll",
     "styleguide": "styleguidist server",
