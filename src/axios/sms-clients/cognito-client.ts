@@ -7,6 +7,7 @@ const urls = {
   auth: cognitoContext + '/auth',
   deleteUser: cognitoContext + '/users',
   findUsersByGroup: (groupName: string) => cognitoContext + `/users/groups/${groupName}`,
+  resetPassword: (email: string) => cognitoContext + `/users/${email}/password`,
   registerUser: cognitoContext + '/users',
   removeUserFromGroup: cognitoContext + '/users/groups'
 }
@@ -20,5 +21,8 @@ export const cognitoClient = {
   },
   auth() {
     return smsClient.get(urls.auth);
+  },
+  resetPassword(email: string) {
+    return smsClient.delete(urls.resetPassword(email));
   }
 }

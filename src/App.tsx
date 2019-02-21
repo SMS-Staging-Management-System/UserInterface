@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './include/bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import './App.scss';
 import { store } from './Store';
 import AppNav from './components/nav/nav.component';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';

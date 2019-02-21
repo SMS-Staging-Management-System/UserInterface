@@ -75,7 +75,10 @@ $screen-xl-min: 1200px;
 /********************************************
   Shared
 ********************************************/
-
+input:invalid:not(:valid) {
+  border-color: salmon;
+  box-shadow: 0 0 0.2rem 0.1rem salmon;
+}
 .cursor-hover:hover {
   cursor: pointer;
 }
@@ -420,6 +423,9 @@ body {
   background-color: transparent;
   -webkit-transition: 1s;
           transition: 1s;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 #invalidCredHead {

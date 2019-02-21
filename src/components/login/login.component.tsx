@@ -7,6 +7,11 @@ import { setup } from '../../actions/auth/auth.actions';
 
 import { Auth } from 'aws-amplify';
 import { RouteComponentProps } from 'react-router';
+import { cognitoClient } from '../../axios/sms-clients/cognito-client';
+import { toast } from 'react-toastify';
+import Popover from 'reactstrap/lib/Popover';
+import PopoverHeader from 'reactstrap/lib/PopoverHeader';
+import PopoverBody from 'reactstrap/lib/PopoverBody';
 
 interface IComponentState {
   cogUser: any,
@@ -15,7 +20,10 @@ interface IComponentState {
   confirmationPassword: string,
   newPassword: string,
   passwordNeedsReset,
-  incorrectUserPass
+  incorrectUserPass: boolean,
+  verificationCode: string,
+  needsVerificationCode: boolean,
+  showPasswordTip: boolean
 }
 
 interface IComponentProps extends IAuthState, RouteComponentProps<{}> {
@@ -34,6 +42,9 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
       password: '',
       passwordNeedsReset: false,
       username: '',
+      verificationCode: '',
+      needsVerificationCode: false,
+      showPasswordTip: false
     }
   }
 
@@ -67,10 +78,20 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
       newPassword: password
     })
   }
+  public updateVerificationCode = (e: any) => {
+    const verificationCode = e.target.value;
+    this.setState({
+      verificationCode
+    })
+  }
 
   public submitLogin = async (e: any) => {
     e.preventDefault();
     const { username, password } = this.state; // destructuring
+    this.login(username, password);
+  }
+
+  private login = async (username: string, password: string) => {
     try {
       const user = await Auth.signIn({
         password,
@@ -89,8 +110,10 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
       }
     } catch (err) {
       console.log(err);
+      this.setState({
+        incorrectUserPass: true
+      })
     }
-    // this.props.cognitoLogin(username, password, this.props.history);
   }
 
   public submitPasswordReset = async (e: any) => {
@@ -99,22 +122,51 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
       // You need to get the new password and required attributes from the UI inputs
       // and then trigger the following function with a button click
       // For example, the email and phone_number are required attributes
-      await Auth.completeNewPassword(
-        this.state.cogUser,               // the Cognito User Object
-        this.state.newPassword,       // the new password
-        // OPTIONAL, the required attributes
-        {
-          email: this.state.username,
+      try {
+        if (this.state.needsVerificationCode) {
+          console.log('submitting code')
+          await Auth.forgotPasswordSubmit(this.state.username, this.state.verificationCode, this.state.newPassword);
+          this.login(this.state.username, this.state.newPassword);
+        } else {
+          await Auth.completeNewPassword(
+            this.state.cogUser,               // the Cognito User Object
+            this.state.newPassword,       // the new password
+            // OPTIONAL, the required attributes
+            {
+              email: this.state.username,
+            }
+          );
+          this.props.setup();
+          this.props.history.push('/check-ins');
         }
-      );
-      this.props.setup();
+
+      } catch (err) {
+        toast.error('failed to set new password');
+        console.log(err);
+      }
     }
   }
 
-  public handlePassChange(event) {
+  public resetPassword = async () => {
+    try {
+      await cognitoClient.resetPassword(this.state.username);
+      this.setState({
+        needsVerificationCode: true,
+        passwordNeedsReset: true
+      })
+      console.log('password reset');
+    } catch (err) {
+      if (err.response && err.response.data.code === 'LimitExceededException') {
+        toast.error('Too Many Password Reset Attempts');
+      } else {
+        toast.error('Failed to Reset Password');
+      }
+    }
+  }
+
+  public togglePasswordTip = () => {
     this.setState({
-      ...this.state,
-      password: event.target.value
+      showPasswordTip: !this.state.showPasswordTip
     })
   }
 
@@ -125,9 +177,10 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
           <>
             <h4 id="titleHead">Sign in to SMS</h4>
             <form id="login-form" onSubmit={this.submitLogin}>
-              <input name="username" type="text" className="form-control txt-bx" placeholder="Username" onChange={this.updateUsername} value={this.state.username} />
+              <input name="username" type="text" className="form-control txt-bx" placeholder="Username" onChange={this.updateUsername} value={this.state.username} required />
 
-              <input name="password" type="password" className="form-control txt-bx" id="login-pass" placeholder="Password" onChange={this.updatePassword} value={this.state.password}/>
+              <input name="password" type="password" className="form-control txt-bx" id="login-pass" placeholder="Password" onChange={this.updatePassword} value={this.state.password} required />
+
               <button className="btn rev-btn">Login</button>
 
             </form>
@@ -141,20 +194,28 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
           <>
             <h4 id="titleHead">Reset Password</h4>
             <form id="login-form" onSubmit={this.submitPasswordReset}>
-              <input  type="text" className="form-control txt-bx" placeholder="New Password" onChange={this.updateNewPassword} value={this.state.newPassword} />
+              {this.state.needsVerificationCode &&
+                <input name="verification-code" type="text" className="form-control txt-bx" placeholder="Verification Code" onChange={this.updateVerificationCode} value={this.state.verificationCode} />
+              }
 
-              <input id="login-pass" type="password" className="form-control txt-bx" placeholder="Confirm Password" onChange={this.updateConfirmationPassword} value={this.state.confirmationPassword} />
+              <input id="new-password-input" name="password" type="password" className="form-control txt-bx" placeholder="New Password" onMouseLeave={this.togglePasswordTip} onMouseEnter={this.togglePasswordTip} onChange={this.updateNewPassword} value={this.state.newPassword}
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\^$*.[\]{}()?\-!@#%&/,><':;|_~`]).{8,99}" required />
+
+              <Popover placement="bottom" isOpen={this.state.showPasswordTip} target="new-password-input" toggle={this.togglePasswordTip}>
+                <PopoverHeader>Password Requirements</PopoverHeader>
+                <PopoverBody>Password must be at least 8 characters, have 1 special character, 1 number, 1 uppercase letter, and 1 lower case number</PopoverBody>
+              </Popover>
+
+
+
+              <input name="new-password" id="login-pass" type="password" className="form-control txt-bx" placeholder="Confirm Password" onChange={this.updateConfirmationPassword} value={this.state.confirmationPassword} />
               <button className="btn rev-btn">Reset</button>
 
             </form>
           </>
-          // <ResetFirstPasswordComponent
-          //   cognitUser={this.props.cogUser}
-          //   code={this.state.password}
-          //   setup={this.props.initUser} />
         }
         <div className="row resetDiv">
-          <button id="forgot-pass-btn">Forgot Username or Password</button>
+          <button id="forgot-pass-btn" onClick={this.resetPassword}>Forgot Password</button>
         </div>
       </div>
     );
