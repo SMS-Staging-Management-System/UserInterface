@@ -40,8 +40,8 @@ export class ManageNavComponent extends React.Component<IManageNavComponentProps
               onClick={() => this.props.updateManageUsersTable('trainer')}>Trainers</Link>
           </NavItem>
           <NavItem>
-            <Link to="/manage/associates"
-              className={`nav-link ${this.isActive('associates')}`}>Associates</Link>
+            <Link to="/manage/cohorts"
+              className={`nav-link ${this.isActive('associates')}`}>Cohorts</Link>
           </NavItem>
         </Nav>
         <Nav tabs>

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { ManageNavComponent } from './manage-nav/manage-nav.component';
 import { IManageComponentProps } from './manage.container';
-import CreateUserModal from './create-user-modal/create-user-modal.container';
+import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
 import { ManageInternalComponenet } from './manage-internal/manage-internal.component';
-import { ManageAssociatesComponenet } from './manage-associates/manage-associates.component';
+import { ManageCohortsComponenet } from './manage-cohorts/manage-cohorts.component';
+import CreateUserModal from './create-user-modal/create-user-modal.container';
 
 
 export class ManageComponenet extends React.Component<IManageComponentProps, any> {
@@ -31,10 +32,11 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
           updateManageUsersTable={this.updateManageUsersTable}
           manage={this.props.match.params.manage} />
 
-        {this.props.match.params.manage === 'associates'
-          ? <ManageAssociatesComponenet manageUsers={this.props.manageUsers.manageUsers} />
+        {this.props.match.params.manage === 'cohorts'
+          ? <ManageCohortsComponenet manageUsers={this.props.manageUsers.manageUsers} toggleCreateCohortModal={this.props.toggleCreateCohortModal}/>
           : <ManageInternalComponenet manageUsers={this.props.manageUsers.manageUsers} />
         }
+        <CreateCohortModal />
         <CreateUserModal />
       </div>
     )

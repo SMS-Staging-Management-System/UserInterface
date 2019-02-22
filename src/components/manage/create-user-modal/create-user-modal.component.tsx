@@ -71,7 +71,7 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
     return (
       <Modal isOpen={this.props.createUser.enabled}>
         <form onSubmit={this.saveNewUser}>
-          <ModalHeader className="rev-background-color">Modal title</ModalHeader>
+          <ModalHeader className="rev-background-color">Create User</ModalHeader>
           <ModalBody>
             <div className="responsive-modal-row">
               <InputGroup className="responsive-modal-row-item">

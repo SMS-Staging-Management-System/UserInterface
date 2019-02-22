@@ -2,10 +2,9 @@ import { toggleModal, toggleLocationDropdown, updateNewUserLocation, updateNewUs
 import { updateLocations } from '../../../actions/address/address.actions';
 import { IState, ICreateUserState, IAddressState } from '../../../reducers';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
 import { CreateUserModal } from './create-user-modal.component';
 
-export interface ICreateUserModal extends RouteComponentProps<{group: string}>{
+export interface ICreateUserModal {
   toggleModal,
   toggleLocationDropdown,
   createUser: ICreateUserState,

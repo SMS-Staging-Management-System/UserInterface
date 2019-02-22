@@ -93,17 +93,16 @@ input:invalid:not(:valid) {
 }
 
 .rev-btn:not(.dropdown), .rev-btn > button.dropdown-toggle {
-  background-color: $revature-orange-light !important;
-  border-color: $revature-orange-light !important;
+  background-color: $revature-orange-light ;
+  border-color: $revature-orange-light;
   color: black !important;
   &:hover {
-    background-color: white;
-    border-color: $revature-orange-light;
+    border-bottom-color: #565D61;
     color: $revature-orange-light;
   }
   &:active {
     background-color: $revature-orange-light;
-    color: black;
+    color: #565D61;
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
   }
   &:active, &:focus {
@@ -158,6 +157,10 @@ li > a.rev-btn-tab {
     margin-right: 0.3em;
     margin-bottom: 0.7em;
   } 
+
+  textarea {
+    width: 100%;
+  }
   
 }
 
@@ -439,6 +442,8 @@ body {
 /***********************************
   Manage
 ***********************************/
+
+
 #manage-users-container {
   width: 100%;
 }
@@ -479,11 +484,18 @@ body {
 
 
 
-#manage-associates-nav {
+#manage-cohorts-nav {
   display: flex;
   padding: 0.25em 0.75rem;
   align-items: center;
+  justify-content: space-between;
   @include rounded-top();
+}
+
+#manage-cohorts-view-selection-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 #manage-users-table {

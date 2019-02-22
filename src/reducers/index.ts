@@ -6,6 +6,8 @@ import { manageUsersReducer } from './manage-users.reducer';
 import { createUserReducer } from './create-user.reducer';
 import { IAddress } from '../model/address.model';
 import { addressReducer } from './address.reducer';
+import { createCohortReducer } from './create-cohort.reducer';
+import { IUser } from '../model/user.model';
 
 export interface IAuthState {
   currentUser: ICognitoUser
@@ -27,6 +29,19 @@ export interface ICreateUserState {
   locationDropdownActive: false
 }
 
+export interface ICreateCohortState {
+  enabled: boolean,
+  newCohort: {
+    address: IAddress,
+    cohortDescription: string,
+    cohortName: string,
+    trainer: IUser,
+    startDate: string,
+    endDate: string
+  },
+  locationDropdownActive: false
+}
+
 export interface IAddressState {
   trainingAddresses: IAddress[]
 }
@@ -39,6 +54,7 @@ export interface IManageUsersState {
 export interface IState {
   clicker: IClickerState,
   createUser: ICreateUserState,
+  createCohort: ICreateCohortState,
   auth: IAuthState,
   manageUsers: IManageUsersState,
   addresses: IAddressState
@@ -49,5 +65,6 @@ export const state = combineReducers<IState>({
   auth: authReducer,
   clicker: clickerReducer,
   createUser: createUserReducer,
+  createCohort: createCohortReducer,
   manageUsers: manageUsersReducer
 })
