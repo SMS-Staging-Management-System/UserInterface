@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IState, IAuthState } from '../../reducers';
+import {  IAuthState } from '../../reducers/management';
+import {IState} from '../../reducers'
 import { connect } from 'react-redux';
 // import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPassword.component';
 // import * as userActions from '../../actions/user/user.actions';
@@ -222,7 +223,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
   }
 }
 
-const mapStateToProps = (state: IState) => (state.auth)
+const mapStateToProps = (state: IState) => (state.managementState.auth)
 const mapDispatchToProps = {
   setup
 }

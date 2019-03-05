@@ -1,6 +1,6 @@
 import { IManageUsersState } from '.';
-import { authTypes } from '../actions/auth/auth.actions';
-import { manageUsersTypes } from '../actions/manage-users/manage-users.actions';
+import { authTypes } from '../../actions/auth/auth.actions';
+import { manageUsersTypes } from '../../actions/manage-users/manage-users.actions';
 
 const initialState: IManageUsersState = {
   manageUsers: []

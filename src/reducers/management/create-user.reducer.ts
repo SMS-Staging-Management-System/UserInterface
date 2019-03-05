@@ -1,6 +1,6 @@
 import { ICreateUserState } from '.';
-import { authTypes } from '../actions/auth/auth.actions';
-import { createUserTypes } from '../actions/create-user/create-user.actions';
+import { authTypes } from '../../actions/auth/auth.actions';
+import { createUserTypes } from '../../actions/create-user/create-user.actions';
 
 const initialState: ICreateUserState = {
   enabled: false,

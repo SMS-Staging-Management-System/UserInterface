@@ -1,6 +1,6 @@
 import { IAddressState } from '.';
-import { authTypes } from '../actions/auth/auth.actions';
-import { addressTypes } from '../actions/address/address.actions';
+import { authTypes } from '../../actions/auth/auth.actions';
+import { addressTypes } from '../../actions/address/address.actions';
 
 const initialState: IAddressState = {
   trainingAddresses: []

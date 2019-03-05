@@ -1,5 +1,5 @@
 import { IAuthState } from '.';
-import { authTypes } from '../actions/auth/auth.actions';
+import { authTypes } from '../../actions/auth/auth.actions';
 
 const initialState: IAuthState = {
   currentUser: {email: '', roles: []}

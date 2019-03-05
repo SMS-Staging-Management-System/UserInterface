@@ -1,4 +1,4 @@
-import { clickerTypes } from '../actions/clicker/clicker.actions';
+import { clickerTypes } from '../../actions/clicker/clicker.actions';
 import { IClickerState } from '.';
 
 const initialState: IClickerState = {

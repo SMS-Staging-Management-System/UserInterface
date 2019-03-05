@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import RevLogo from '../../assets/rev-logo.png';
-import { IState, IAuthState } from '../../reducers';
+import { IState, } from '../../reducers';
+import {IAuthState } from '../../reducers/management'
 import { connect } from 'react-redux';
 import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
@@ -77,7 +78,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
 }
 
 const mapStateToProps = (state: IState) => ({
-  auth: state.auth
+  auth: state.managementState.auth
 });
 const mapDispatchToProps = {
   logout,

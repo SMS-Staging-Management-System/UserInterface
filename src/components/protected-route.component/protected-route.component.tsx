@@ -5,7 +5,7 @@ import LoginComponent from "../login/login.component";
 import { IState } from "../../reducers";
 
 
-const mapStateToProps = (state: IState) => ({ auth: state.auth });
+const mapStateToProps = (state: IState) => ({ auth: state.managementState.auth });
 
 /*
  *The protected route component

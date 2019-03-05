@@ -1,6 +1,7 @@
 import { toggleModal, toggleLocationDropdown, updateNewUserLocation, updateNewUser, saveUser } from '../../../actions/create-user/create-user.actions';
 import { updateLocations } from '../../../actions/address/address.actions';
-import { IState, ICreateUserState, IAddressState } from '../../../reducers';
+import { IState,} from '../../../reducers';
+import { ICreateUserState, IAddressState } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { CreateUserModal } from './create-user-modal.component';
 
@@ -16,8 +17,8 @@ export interface ICreateUserModal {
 }
 
 const mapStateToProps = (state:IState) => ({
-  addresses: state.addresses,
-  createUser: state.createUser
+  addresses: state.managementState.addresses,
+  createUser: state.managementState.createUser
 });
 
 const mapDispatchToProps = {

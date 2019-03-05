@@ -1,6 +1,6 @@
 import { ICreateCohortState } from '.';
-import { authTypes } from '../actions/auth/auth.actions';
-import { createCohortTypes } from '../actions/create-cohort/create-cohort.actions';
+import { authTypes } from '../../actions/auth/auth.actions';
+import { createCohortTypes } from '../../actions/create-cohort/create-cohort.actions';
 
 const initialState: ICreateCohortState = {
   enabled: false,

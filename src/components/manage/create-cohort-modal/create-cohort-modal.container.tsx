@@ -1,6 +1,7 @@
 import { toggleModal, toggleLocationDropdown, updateNewCohortLocation, updateNewCohort, saveCohort } from '../../../actions/create-cohort/create-cohort.actions';
 import { updateLocations } from '../../../actions/address/address.actions';
-import { IState, IAddressState, ICreateCohortState } from '../../../reducers';
+import { IState,} from '../../../reducers';
+import { IAddressState, ICreateCohortState } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { CreateCohortModal } from './create-cohort-modal.component';
 
@@ -16,8 +17,8 @@ export interface ICreateCohortModal {
 }
 
 const mapStateToProps = (state:IState) => ({
-  addresses: state.addresses,
-  createCohort: state.createCohort
+  addresses: state.managementState.addresses,
+  createCohort: state.managementState.createCohort
 });
 
 const mapDispatchToProps = {
