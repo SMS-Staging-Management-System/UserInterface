@@ -2,7 +2,7 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { IState } from '../../../reducers';
+import { IInterviewState } from '../../reducers';
 
 export interface InterviewListProps {
     listOfInterviews : any[]
@@ -47,7 +47,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
     }
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IInterviewState) => {
     return {
 
     }
