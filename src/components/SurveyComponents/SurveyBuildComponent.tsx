@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import $ from "jquery";
 //import { IUserState, state } from '../../reducers';
-const ReactDOM = require('react-dom')
 import Question1 from '../SurveyComponents/Question1.component'
 
 
