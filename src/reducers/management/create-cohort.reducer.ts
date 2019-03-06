@@ -5,6 +5,7 @@ import { createCohortTypes } from '../../actions/create-cohort/create-cohort.act
 const initialState: ICreateCohortState = {
   enabled: false,
   locationDropdownActive: false,
+  trainerDropdownActive: false,
   newCohort: {
     address: {
       addressId: 0,
@@ -47,6 +48,19 @@ export const createCohortReducer = (state = initialState, action: any) => {
       return {
         ...state,
         locationDropdownActive: !state.locationDropdownActive
+      }
+    case createCohortTypes.TOGGLE_TRAINER_DROPDOWN:
+      return {
+        ...state,
+        trainerDropdownActive: !state.trainerDropdownActive
+      }
+    case createCohortTypes.UPDATE_NEW_COHORT_TRAINER:
+      return {
+        ...state,
+        newCohort: {
+          ...state.newCohort,
+          trainer: action.payload.trainer
+        }
       }
     case createCohortTypes.UPDATE_NEW_COHORT_LOCATION:
       return {
