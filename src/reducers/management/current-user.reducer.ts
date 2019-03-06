@@ -15,7 +15,8 @@ const initialState: ICurrentUserState = {
             state: '',
             country: '',
             zip: ''
-        }
+        },
+        role: ''
     }
 }
 
