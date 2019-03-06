@@ -94,6 +94,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
   private login = async (username: string, password: string) => {
     try {
+      //what does cogUSer actually look like?
       const user = await Auth.signIn({
         password,
         username, // Required, the username
@@ -106,6 +107,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
         });
       } else {
+        //Should probably go somewhere else
         this.props.history.push('/check-ins');
         this.props.setup();
       }
@@ -119,6 +121,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
 
   public submitPasswordReset = async (e: any) => {
     e.preventDefault();
+    //Make sure our two password fields are equal
     if (this.state.newPassword === this.state.confirmationPassword) {
       // You need to get the new password and required attributes from the UI inputs
       // and then trigger the following function with a button click
@@ -138,6 +141,7 @@ export class LoginComponent extends React.Component<IComponentProps, IComponentS
             }
           );
           this.props.setup();
+          //Same as above, probably shouldn't go here anymore
           this.props.history.push('/check-ins');
         }
 
