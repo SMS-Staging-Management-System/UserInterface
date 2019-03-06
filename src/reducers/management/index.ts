@@ -40,7 +40,8 @@ export interface IAuthState {
       startDate: string,
       endDate: string
     },
-    locationDropdownActive: false
+    locationDropdownActive: false,
+    trainerDropdownActive: false
   }
   
   export interface IAddressState {
