@@ -5,9 +5,6 @@ import ManageComponent from '../components/manage/manage.container';
 import  ProtectedRoute  from '../components/protected-route.component/protected-route.component';
 import  LoginComponent  from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
-import ProfileContainer from '../components/profile/profile.container';
-
-
 
 export class ManagementRoutes extends React.Component<any, any> {
     constructor(props){
