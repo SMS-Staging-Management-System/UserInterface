@@ -88,6 +88,11 @@ export const saveCohort = (newCohort: ICohort) => (dispatch) => {
         },
         type: createCohortTypes.UPDATE_NEW_COHORT
       })
+      dispatch({
+        payload: {},
+        type: createCohortTypes.COHORT_SAVED
+      })
+
     })
     .catch(e => {
       toast.error('Failed To Save Cohort')

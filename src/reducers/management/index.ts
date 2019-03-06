@@ -33,6 +33,7 @@ export interface IAuthState {
   
   export interface ICreateCohortState {
     enabled: boolean,
+    isSaved: boolean,
     newCohort: {
       address: IAddress,
       cohortDescription: string,
