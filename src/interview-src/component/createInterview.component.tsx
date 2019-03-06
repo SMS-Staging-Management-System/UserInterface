@@ -6,6 +6,11 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router";
 import { ICreateInterviewComponentState } from '../../reducers/interview';
 import { setState } from '../actions/createInterview.actions';
+import { InputGroupAddon } from 'reactstrap';
+import Input from 'reactstrap/lib/Input';
+import InputGroup from 'reactstrap/lib/InputGroup';
+import { allInterviewFormats } from '../model/interviewFormat.model';
+import './createInterview.component.scss'
 
 
 interface ICreateInterviewComponentProps extends RouteComponentProps {
@@ -19,16 +24,46 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
       
   }
 
-  public render() {
-    return (
-        <>
-            <h1>halloooo</h1>
-            <p>this state is {}</p>
-            {console.log('hello')}
+  render() {
+	// private int associateId;	
+	// private Date scheduled; 
+	// private String Place;
+	// private int interview_format;
+    // private int managerId;
+    const formatOptions = allInterviewFormats.map((val) => {return <option value={val}>{val}</option>} )
 
-        </>
+    return (
+        <div id='new-interview-full'>
+            <span>CREATE A NEW INTERVIEW FOR AN ASSOCIATE</span>
+            <hr />
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">associate</InputGroupAddon>
+                <Input placeholder="enter associates first name" />
+                <Input placeholder="enter associates last name" />
+            </InputGroup>
+            < br/>
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">date</InputGroupAddon>
+                <Input placeholder="enter date of interview" />
+            </InputGroup>
+            < br/>
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">location</InputGroupAddon>
+                <Input placeholder="enter location of interview" />
+            </InputGroup>
+            < br/>
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">format</InputGroupAddon>
+                <Input type='select' placeholder="enter format of interview" >
+                    <option value={undefined} style={{display:'none'}}>select a format...</option>
+                    {formatOptions}
+                </Input>
+            </InputGroup>
+        </div>
     );
   }
+
+
 }
 
 const mapStateToProps = (state: IState) => ({
