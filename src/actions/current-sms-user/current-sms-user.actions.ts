@@ -6,10 +6,10 @@ export const currentSMSUserTypes = {
 
 export const getUserByEmail = (email: string) => async (dispatch) => {
     const resp = await userClient.findOneByEmail(email);
-    return {
+    dispatch ({
         payload: {
             user: resp.data
         },
         type: currentSMSUserTypes.GET_USER_INFO
-    }
+    })
 }

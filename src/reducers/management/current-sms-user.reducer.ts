@@ -32,7 +32,9 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
                     email: action.payload.currentUser.email,
                     roles: action.payload.currentUser.roles
                 }
+                
             }
+
         case (currentSMSUserTypes.GET_USER_INFO): 
             return {
                 ...state,
