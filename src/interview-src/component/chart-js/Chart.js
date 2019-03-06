@@ -39,7 +39,7 @@ class Chart extends Component {
     }
 }
 
-Chart.propTypes = {
+Chart.propTypes = { 
     type: PropTypes.string.isRequired,
     data: PropTypes.shape({
         labels: PropTypes.arrayOf(PropTypes.string),

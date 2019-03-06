@@ -61,7 +61,7 @@ render() {
      
 
     return (
- <br><App/></br>
+    <div><App/></div>
     )
   }
  
