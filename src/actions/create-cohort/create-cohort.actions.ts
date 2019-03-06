@@ -50,7 +50,7 @@ export const updateNewCohortLocation = (location: IAddress) => {
 
 export const updateNewCohortTrainer = (trainer: ICognitoUser) => async (dispatch) => {
   try {
-    const response = await userClient.getFullUserByEmail(trainer.email)
+    const response = await userClient.findOneByEmail(trainer.email)
     dispatch( {
       payload: {
         trainer: response.data
