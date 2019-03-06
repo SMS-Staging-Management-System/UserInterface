@@ -1,4 +1,6 @@
 import { ICurrentSMSUserState } from ".";
+import { authTypes } from "../../actions/auth/auth.actions";
+import { currentSMSUserTypes } from "../../actions/current-sms-user/current-sms-user.actions";
 
 
 const initialState: ICurrentSMSUserState = {
@@ -22,7 +24,23 @@ const initialState: ICurrentSMSUserState = {
 
 export const currentSMSUserReducer = (state = initialState, action: any) => {
     switch (action.type) {
-      
+        case (authTypes.UPDATE_CURRENT_USER):
+            return {
+                ...state,
+                currentSMSUser: {
+                    ...state.currentSMSUser,
+                    email: action.payload.currentUser.email,
+                    roles: action.payload.currentUser.roles
+                }
+            }
+        case (currentSMSUserTypes.GET_USER_INFO): 
+            return {
+                ...state,
+                currentSMSUser: {
+                    ...action.payload.user
+                }
+            }
+        
     }
     return state;
-  }
+}
