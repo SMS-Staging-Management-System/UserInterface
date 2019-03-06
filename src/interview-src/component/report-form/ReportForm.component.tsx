@@ -25,12 +25,12 @@ interface IGroupProps {
     initializeReceipts: ()  => void,
     claimReceipt: (receiptID: number, claimant:number) => void, //as a user I would like to be able to claim a receipt
     claimLine: (receiptID: number, claimant:number, claimed: number) => void, //as a user I would like to be able to claim a line
-}
-export class ReceiptComponent extends React.Component<IGroupProps, any> {
+}*/
+export class ReportComponent extends React.Component<IGroupProps, any> {
   constructor(props) {
     super(props);
   }
-
+/*
 // whenever the change the username input, call the updateUsername action with the value
 initializeReceipts = () => {
   this.props.initializeReceipts() 
