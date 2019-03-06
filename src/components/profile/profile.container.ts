@@ -3,7 +3,7 @@ import { IState } from '../../reducers/index';
 import Profile from './profile.component';
 
 const mapStateToProps = (state: IState) => ({
-    user: state.managementState.currentUser.currentUser
+    user: state.managementState.currentSMSUser.currentSMSUser
 })
 
 const mapDispatchToProps = {

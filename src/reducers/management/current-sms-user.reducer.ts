@@ -1,8 +1,8 @@
-import { ICurrentUserState } from ".";
+import { ICurrentSMSUserState } from ".";
 
 
-const initialState: ICurrentUserState = {
-    currentUser: {
+const initialState: ICurrentSMSUserState = {
+    currentSMSUser: {
         userId: 0,
         firstName: '',
         lastName: '',
@@ -20,7 +20,7 @@ const initialState: ICurrentUserState = {
     }
 }
 
-export const currentUserReducer = (state = initialState, action: any) => {
+export const currentSMSUserReducer = (state = initialState, action: any) => {
     switch (action.type) {
       
     }

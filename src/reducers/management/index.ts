@@ -8,7 +8,7 @@ import { createUserReducer } from "./create-user.reducer";
 import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
-import { currentUserReducer } from "./current-user.reducer";
+import { currentSMSUserReducer } from "./current-sms-user.reducer";
 
 
 export interface IAuthState {
@@ -52,8 +52,8 @@ export interface IAuthState {
     manageUsers: ICognitoUser[];
   }
 
-  export interface ICurrentUserState {
-    currentUser: IUser
+  export interface ICurrentSMSUserState {
+    currentSMSUser: IUser
   }
 
   export interface IManagementState {
@@ -63,7 +63,7 @@ export interface IAuthState {
     auth: IAuthState,
     manageUsers: IManageUsersState,
     addresses: IAddressState,
-    currentUser: ICurrentUserState
+    currentSMSUser: ICurrentSMSUserState
   }
 
   export const managementState = combineReducers<IManagementState>({
@@ -73,5 +73,5 @@ export interface IAuthState {
     createUser: createUserReducer,
     createCohort: createCohortReducer,
     manageUsers: manageUsersReducer,
-    currentUser: currentUserReducer
+    currentSMSUser: currentSMSUserReducer
   })
