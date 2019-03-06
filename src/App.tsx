@@ -6,8 +6,6 @@ import { store } from './Store';
 import AppNav from './components/nav/nav.component';
 import { BrowserRouter,  Switch } from 'react-router-dom';
 
-// hello world
-
 import { Provider } from 'react-redux';
 
 import { ToastContainer, toast } from 'react-toastify';
