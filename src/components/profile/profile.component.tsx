@@ -1,10 +1,15 @@
 import  React, { Component } from 'react';
+import { IUser } from '../../model/user.model';
 
-class Profile extends Component<any, any> {
+interface IProfileProps {
+  user: IUser
+}
+
+class Profile extends Component<IProfileProps, any> {
   render() {
     return (
-      <div>
-        <h1>Test</h1>
+      <div> 
+                 
       </div>
     )
   }
