@@ -1,7 +1,13 @@
 import { ICreateInterviewComponentState } from '../../reducers/interview';
 import { createInterviewTypes } from '../actions/createInterview.actions';
+import { InterviewFormat } from '../model/interviewFormat.model';
 
 const initialState: ICreateInterviewComponentState = {
+    firstName: '',
+    lastName: '',
+    date: '',
+    location: '',
+    format: InterviewFormat.none,
 }
 
 // export interface IReduxAction {
@@ -14,7 +20,7 @@ export const createInterviewReducer = (state = initialState, action: any) => {
     case createInterviewTypes.SET_CREATE_INTERVIEW_COMPONENT_STATE:
       return {
         ...state,
-        createInterviewComponentState: action.payload
+        ...action.payload
       }
     default: return state;
   }

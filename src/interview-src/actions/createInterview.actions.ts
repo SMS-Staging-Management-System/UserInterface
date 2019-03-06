@@ -8,8 +8,6 @@ export const createInterviewTypes = {
 export const setState = (newCreateInterviewComponentState: ICreateInterviewComponentState) => (dispatch) => {    
     dispatch({
         type: createInterviewTypes.SET_CREATE_INTERVIEW_COMPONENT_STATE,
-        payload: {
-            newCreateInterviewComponentState: newCreateInterviewComponentState
-        }
+        payload:  newCreateInterviewComponentState
     });
 }

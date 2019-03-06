@@ -1,13 +1,13 @@
 
-export const interviewformat = {
-    onSite:'On Site',
-    inPerson: 'In Person',
-    videoCall: 'Video Call',
-    phoneCall: 'Phone Call'
+export enum InterviewFormat {
+    none = '',
+    onSite ='On Site',
+    inPerson = 'In Person',
+    videoCall = 'Video Call',
+    phoneCall = 'Phone Call'
 }
 
-export const allInterviewFormats =  Object.keys(interviewformat).map(key => {
-    if(interviewformat.hasOwnProperty(key)){
-        return interviewformat[key];
-    }
-});
+/**
+ * returns all the print friendly and DB friendly representations of the formats
+ */
+export const allInterviewFormats =  Object.values(InterviewFormat)
