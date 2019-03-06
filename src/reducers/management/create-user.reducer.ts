@@ -17,7 +17,7 @@ const initialState: ICreateUserState = {
     email: '',
     firstName: '',
     lastName: '',
-    phoneNumber: ''
+    phoneNumber: '',
   },
 }
 

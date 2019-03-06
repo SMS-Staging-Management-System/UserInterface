@@ -28,13 +28,14 @@ const initialState: ICreateCohortState = {
         city: '',
         country: '',
         state: '',
-        zip: ''
+        zip: '',
       },
       email: '',
       firstName: '',
       lastName: '',
       mobile: '',
-      userId: 0
+      userId: 0,
+      roles: []
     }
   },
 }
