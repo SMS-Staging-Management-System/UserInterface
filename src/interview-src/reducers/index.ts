@@ -22,3 +22,10 @@ export const state = combineReducers<IState>({
     surveyState,
 
 })
+export interface IInterviewListState {
+    listOfInterviews : any[]
+}
+
+export interface IInterviewState {
+    interviewList : IInterviewListState
+}
