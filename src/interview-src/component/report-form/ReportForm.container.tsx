@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router';
 import { connect } from "react-redux";
-import {ReportFormComponent} from ".";
+import { ReportFormComponent } from "./ReportForm.component";
 
-//mport { IState } from "../../reducers";
+import { IState } from "../../reducers";
 
 
 //This is getting every field from the receipt state in the interface IState
