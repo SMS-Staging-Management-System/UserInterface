@@ -26,7 +26,7 @@ interface IGroupProps {
     claimReceipt: (receiptID: number, claimant:number) => void, //as a user I would like to be able to claim a receipt
     claimLine: (receiptID: number, claimant:number, claimed: number) => void, //as a user I would like to be able to claim a line
 }*/
-export class ReportComponent extends React.Component<IGroupProps, any> {
+export class ReportFormComponent extends React.Component<any, any> { //the first argument should be IReportFormProps
   constructor(props) {
     super(props);
   }
