@@ -24,7 +24,7 @@ class App extends React.Component {
               <Switch>
                   <Route path='/management' component={ManagementRoutes}/>
                   <Route path='/interview' component={InterviewRoutes}/>
-                  <Route path='/survey' component ={SurveyRoutes}/>
+                  <Route path='/surveys' component ={SurveyRoutes}/>
               </Switch>
             </div>
             <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_RIGHT}/>
