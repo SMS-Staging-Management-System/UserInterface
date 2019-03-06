@@ -20,6 +20,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
 
   componentDidMount() {
     this.props.updateLocations();
+    this.props.manageGetUsersByGroup('trainer');
   }
 
   updateNewCohortInfo = (e) => {
@@ -53,7 +54,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
 
   render() {
 
-    const { createCohort, addresses } = this.props;
+    const { createCohort, addresses , manageUsers} = this.props;
     return (
       <Modal isOpen={this.props.createCohort.enabled}>
         <form onSubmit={this.saveNewCohort}>
@@ -97,6 +98,27 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
                 onChange={this.updateNewCohortInfo}
                 value={createCohort.newCohort.cohortDescription}
                 required />
+            </div>
+            <div>
+            <Dropdown color="success" className="responsive-modal-row-item rev-btn"
+                isOpen={this.props.createCohort.trainerDropdownActive}
+                toggle={this.props.toggleTrainerDropdown}>
+                <DropdownToggle caret>
+                  {createCohort.newCohort.trainer.email || 'Trainer'}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {
+                    manageUsers.manageUsers.length === 0
+                      ? <>
+                        <DropdownItem>No trainers available</DropdownItem>
+                        <DropdownItem divider />
+                      </>
+                      : manageUsers.manageUsers.map(trainer =>
+                        <DropdownItem key={trainer.email} onClick={() => this.props.updateNewCohortTrainer(trainer)}>{trainer.email}</DropdownItem>
+                      )
+                  }
+                </DropdownMenu>
+              </Dropdown>
             </div>
           </ModalBody>
           <ModalFooter id="create-Cohort-modal-footer">
