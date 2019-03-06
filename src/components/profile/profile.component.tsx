@@ -33,11 +33,7 @@ class Profile extends Component<IProfileProps, any> {
           </Row>
         <FormGroup>
           <Label for="currentSMSUserAddress">Address</Label>
-          <Input type="text" name="address" id="currentSMSUserAddress" placeholder="1234 Main St"/>
-        </FormGroup>
-        <FormGroup>
-          <Label for="currentSMSUserAddress2">Address 2</Label>
-          <Input type="text" name="address2" id="currentSMSUserAddress2" placeholder="Apartment, studio, or floor"/>
+          <Input type="text" name="address" id="currentSMSUserAddress" placeholder={this.props.user.address.street}/>
         </FormGroup>
         <Row>
           <Col md={6}>

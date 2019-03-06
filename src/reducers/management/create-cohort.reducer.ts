@@ -10,6 +10,7 @@ const initialState: ICreateCohortState = {
     cohortToken: '',
     address: {
       addressId: 0,
+      street: '',
       alias: '',
       city: '',
       country: '',
@@ -24,6 +25,7 @@ const initialState: ICreateCohortState = {
  trainer: {
       address: {
         addressId: 0,
+        street: '',
         alias: '',
         city: '',
         country: '',
