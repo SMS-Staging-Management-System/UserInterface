@@ -1,31 +1,21 @@
 import { combineReducers } from 'redux';
 
-import { IManagementState, managementState } from '../../reducers/management';
 import { IInterviewState, interviewState } from '../../reducers/interview';
-import { ISurveyState, surveyState } from '../../reducers/survey';
+import { interviewListReducer } from './interview.reducer';
 
 
+export interface IReportFormState {
 
-export interface IReceiptFormState {
-
-}
-
-export interface IState {
-    managementState: IManagementState,
-    interviewState: IInterviewState,
-    surveyState: ISurveyState,
-}
-
-export const state = combineReducers<IState>({
-    managementState,
-    interviewState,
-    surveyState,
-
-})
-export interface IInterviewListState {
-    listOfInterviews : any[]
 }
 
 export interface IInterviewState {
-    interviewList : IInterviewListState
+    listOfInterviews: any[];
+}
+
+export const state = combineReducers<IInterviewState>({
+   interviewList: interviewListReducer,
+})
+
+export interface IInterviewListState {
+    listOfInterviews : any[]
 }
