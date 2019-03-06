@@ -79,11 +79,14 @@ export const updateNewCohort = (newCohort: ICohort) => {
 
 export const saveCohort = (newCohort: ICohort) => (dispatch) => {
   cohortClient.save(newCohort)
-    .then(resp => {
+    .then(async resp => {
       toast.success('Cohort Created')
+      const createdCohort = await resp.data
       dispatch({
-        payload: {},
-        type: createCohortTypes.COHORT_SAVED
+        payload: {
+          newUser: createdCohort
+        },
+        type: createCohortTypes.UPDATE_NEW_COHORT
       })
     })
     .catch(e => {
