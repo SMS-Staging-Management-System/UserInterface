@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { store } from './Store';
 import AppNav from './components/nav/nav.component';
-import { BrowserRouter,  Switch } from 'react-router-dom';
+import { BrowserRouter,  Switch, Route } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 
@@ -22,9 +22,9 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                  <ManagementRoutes/>
-                  <InterviewRoutes/>
-                  <SurveyRoutes/>
+                  <Route path='/management' component={ManagementRoutes}/>
+                  <Route path='/interview' component={InterviewRoutes}/>
+                  <Route path='/survey' component ={SurveyRoutes}/>
               </Switch>
             </div>
             <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_RIGHT}/>
