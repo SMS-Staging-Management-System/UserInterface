@@ -11,10 +11,10 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
 
-          <h2>Welcome to ACME</h2>
+          <h2>Reports</h2>
         </div>
         <p className="App-intro">
-            A playground with React.JS, React Redux and Chart.js!
+            A report that shows you
         </p>
         <nav>
          <NavLink exact to="/" activeClassName="active">Home</NavLink>

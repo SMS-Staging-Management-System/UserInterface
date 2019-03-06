@@ -21,9 +21,9 @@ class App extends React.Component {
           <div>
             <AppNav />
             <div id="main-content-container">
-              <Switch>         
+              <Switch> 
               <InterviewRoutes/>
-                  <ManagementRoutes/>
+              <ManagementRoutes/>        
                   <SurveyRoutes/>
               </Switch>
             </div>

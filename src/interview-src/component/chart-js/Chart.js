@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {Chart as ChartJS} from 'chart.js/src/chart';
+//import {Chart as ChartJS} from 'chart.js/src/chart';
 
 class Chart extends Component {
     chart = null;
