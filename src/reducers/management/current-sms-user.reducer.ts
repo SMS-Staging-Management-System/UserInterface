@@ -12,6 +12,7 @@ const initialState: ICurrentSMSUserState = {
         mobile: '',
         address: {
             addressId: 0,
+            street: '',
             alias: '',
             city: '',
             state: '',
