@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import $ from "jquery";
 //import { IUserState, state } from '../../reducers';
-import Question1 from '../SurveyComponents/Question1.component'
+import Question1 from '../SurveyBuild/Question1.component'
 
 
 export interface ISurveyBuildProps {
@@ -13,7 +13,6 @@ export interface ISurveyBuildProps {
   newSurvey: {},
   handleSubmit(newSurvey: {}, userId: number): void
 }
-
 
 export class SurveyBuildComponent extends React.Component<ISurveyBuildProps, any> {
   constructor(props) {
