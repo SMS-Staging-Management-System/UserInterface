@@ -32,7 +32,7 @@ const initialState: ICreateCohortState = {
       lastName: '',
       mobile: '',
       userId: 0,
-      role: ''
+      roles: []
     }
   },
 }
