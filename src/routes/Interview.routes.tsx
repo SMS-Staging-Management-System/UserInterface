@@ -1,5 +1,7 @@
 import React from 'react'
 import { Switch } from 'react-router';
+import { Route } from 'react-router';
+import InterviewList from '../interview-src/component/InterviewList/InterviewList';
 
 
 export class InterviewRoutes extends React.Component<any, any> {
@@ -12,10 +14,9 @@ export class InterviewRoutes extends React.Component<any, any> {
         //put path in front of any sub paths
         return (
             <Switch>
+                <Route path="/list" component={InterviewList} />
 
             </Switch>
-            
-
         )
     }
 }
