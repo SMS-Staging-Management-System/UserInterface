@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { IInterviewState, interviewState } from '../../reducers/interview';
+import { IInterviewState } from '../../reducers/interview';
 import { interviewListReducer } from './interview.reducer';
 
 
