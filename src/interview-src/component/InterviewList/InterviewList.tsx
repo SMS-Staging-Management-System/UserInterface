@@ -2,6 +2,7 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
 import { IState } from '../../../reducers';
 
@@ -13,6 +14,12 @@ export interface InterviewListProps {
         pageNumber? : number, 
         pageSize? : number)=> void,
     getNumberOfPages : (pageSize : number) => void
+=======
+import { IState } from '../../../reducers';
+
+export interface InterviewListProps {
+    listOfInterviews : any[]
+>>>>>>> Framed the InterviewList component. Need to hook to react, and api.
 }
  
 export interface InterviewListState {
