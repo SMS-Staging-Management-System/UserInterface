@@ -2,10 +2,18 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { IInterviewState } from '../../reducers';
+import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
+import PageNavigator from '../PageNavigator/PageNavigator';
+import { IState } from '../../../reducers';
 
 export interface InterviewListProps {
-    listOfInterviews : any[]
+    listOfInterviews : any[],
+    numberOfPages : number,
+    getInterviewPages : (ordeyBy?: string, 
+        direction? : string, 
+        pageNumber? : number, 
+        pageSize? : number)=> void,
+    getNumberOfPages : (pageSize : number) => void
 }
  
 export interface InterviewListState {
@@ -42,19 +50,22 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                     </thead>
                 {this.renderListOfInterviews()}
                 </Table>
+                <PageNavigator currentPage={0} maxPage={5} />
             </Jumbotron>
          );
     }
 }
 
-const mapStateToProps = (state: IInterviewState) => {
+const mapStateToProps = (state: IState) => {
     return {
-
+        listOfInterviews : state.interviewState.interviewList.listOfInterviews,
+        numberOfPages : state.interviewState.interviewList.numberOfPages
     }
 }
  
 const mapDispatchToProps = {
-
+    getInterviewPages,
+    getNumberOfPages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterviewList);
