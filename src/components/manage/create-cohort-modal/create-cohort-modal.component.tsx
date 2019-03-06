@@ -42,6 +42,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
         break;
     }
     this.props.updateNewCohort(updatedNewCohort)
+    console.log(updatedNewCohort);
   }
 
   saveNewCohort = (e) => {

@@ -2,6 +2,7 @@ import { IAddress } from "../../model/address.model";
 import { toast } from "react-toastify";
 import { ICohort } from "../../model/cohort";
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
+import { userClient } from "../../axios/sms-clients/user-client";
 import { ICognitoUser } from "../../model/cognito-user.model";
 
 export const createCohortTypes = {  
@@ -47,12 +48,23 @@ export const updateNewCohortLocation = (location: IAddress) => {
   }
 }
 
-export const updateNewCohortTrainer = (trainer: ICognitoUser) => {
-  return {
-    payload: {
-      trainer
-    },
-    type: createCohortTypes.UPDATE_NEW_COHORT_TRAINER }
+export const updateNewCohortTrainer = (trainer: ICognitoUser) => async (dispatch) => {
+  try {
+    const response = await userClient.getFullUserByEmail(trainer.email)
+    dispatch( {
+      payload: {
+        trainer: response.data
+      },
+      type: createCohortTypes.UPDATE_NEW_COHORT_TRAINER
+    })
+  } catch (e) {
+    toast.warn('Unable to retrieve trainer')
+    dispatch({
+      payload: {
+      },
+      type: ''
+    })
+  }
 }
 
 export const updateNewCohort = (newCohort: ICohort) => {
