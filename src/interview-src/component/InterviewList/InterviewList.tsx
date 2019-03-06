@@ -14,10 +14,6 @@ export interface InterviewListProps {
         pageSize? : number)=> void,
     getNumberOfPages : (pageSize : number) => void
 }
-
-export interface InterviewListProps {
-    listOfInterviews : any[]
-}
  
 export interface InterviewListState {
     
