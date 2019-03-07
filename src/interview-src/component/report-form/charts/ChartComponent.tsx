@@ -61,7 +61,7 @@ render() {
      
 
     return (
-    <ChartDisplayComponent></ChartDisplayComponent>
+    <ChartDisplayComponent/>
     )
   }
  

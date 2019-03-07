@@ -22,8 +22,8 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                  <Route path='/management' component={ManagementRoutes}/>
                   <Route path='/interview' component={InterviewRoutes}/>
+                  <Route path='/management' component={ManagementRoutes}/>
                   <Route path='/surveys' component ={SurveyRoutes}/>
               </Switch>
             </div>
