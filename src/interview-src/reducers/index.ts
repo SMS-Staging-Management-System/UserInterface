@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { IInterviewState } from '../../reducers/interview';
 import { interviewListReducer } from './interview.reducer';
 
 
@@ -12,10 +11,11 @@ export interface IInterviewListState {
     numberOfPages : number
 }
 
-export interface IInterviewListState {
-    listOfInterviews : any[]
+export interface IInterviewState {
+    interviewList : IInterviewListState,
+    reportForm : IReportFormState
 }
 
-export const state = combineReducers<IInterviewState>({
+export const interviewState = combineReducers<IInterviewState>({
    interviewList: interviewListReducer,
 })

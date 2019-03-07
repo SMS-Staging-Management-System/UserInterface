@@ -3,7 +3,7 @@ import { interviewListTypes } from "../actions/interviewList/interviewList.actio
 
 const initialState : IInterviewListState = {
     listOfInterviews : [],
-    numberOfPages: 0,
+    numberOfPages : 0
 }
 
 export const interviewListReducer = (state = initialState, action : any): IInterviewListState => {

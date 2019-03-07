@@ -1,5 +1,6 @@
 export const interviewListTypes = {
-    GET_PAGES :'GET_PAGES'
+    GET_PAGES :'GET_PAGES',
+    GET_NUMBER_OF_PAGES : "GET_NUMBER_OF_PAGES"
 }
 
 export const getInterviewPages = (
@@ -29,6 +30,6 @@ export const getNumberOfPages = (pageSize : number) => (dispatch) => {
          payload : {
              numberOfPages : 0 // Put result here.
          },
-         type: interviewListTypes.GET_NUM_OF_PAGES
+         type: interviewListTypes.GET_NUMBER_OF_PAGES
      }
 }
