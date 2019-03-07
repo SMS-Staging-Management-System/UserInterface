@@ -39,9 +39,10 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                * 
                * then the modal can reuse that same user in its state
                * and it all be goouchi
+               * onMouseEnter={this.props.hoveredUser}
                */
               this.props.manageUsers.map((user) =>
-                <tr key={user.email} className="rev-table-row" onClick={this.props.toggleViewUserModal} onMouseEnter={this.props.hoveredUser}>
+                <tr key={user.email} className="rev-table-row" onClick={this.props.toggleViewUserModal}>
                   <td></td>
                   <td></td>
                   <td>{user.email}</td>

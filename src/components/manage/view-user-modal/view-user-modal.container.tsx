@@ -1,4 +1,4 @@
-import { toggleViewUserModal, viewUserLocation, viewUserInfo } from '../../../actions/view-user/view-user.actions';
+import { toggleViewUserModal, viewUserLocation, viewUserInfo, hoveredUser } from '../../../actions/view-user/view-user.actions';
 import { IState,} from '../../../reducers';
 import { IViewUserState, IAddressState } from '../../../reducers/management'
 import { connect } from 'react-redux';
@@ -20,5 +20,6 @@ const mapDispatchToProps = {
   toggleViewUserModal,
   viewUserInfo,
   viewUserLocation,
+  hoveredUser
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ViewUserModal);
