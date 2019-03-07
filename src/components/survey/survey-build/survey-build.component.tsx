@@ -112,7 +112,7 @@ class surveyBuild extends React.Component<any, any>{
 
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
-                <label htmlFor="title">Survey Title</label>
+                <label htmlFor="title" className="labelTitle">Survey Title</label>
                 <input type="title" className="form-control" name="title" required /><br />
 
                 <label htmlFor="description">Survey Description</label>
@@ -136,7 +136,8 @@ class surveyBuild extends React.Component<any, any>{
                     }
                   </div>
                 </div>
-                  <br /><br /><button type="submit" className="btn btn-primary">Create Survey</button>
+                <hr/>
+                  <br /><br /><button type="submit" className="surveyCreateBtn">Create Survey</button>
 
               </div>
 

@@ -33,7 +33,7 @@ export class Question1 extends React.Component<ISurveyBuildProps, any> {
     return (
 
       <div>
-        <button value="1" id="multi" className="form-control" name="type" type="button"   > Multiple Chioce </button>
+        <button value="1" id="multi" className="form-control" name="type" type="button"   > Multiple Choice </button>
 
      
           <div className="new" id="t1">
@@ -43,6 +43,7 @@ export class Question1 extends React.Component<ISurveyBuildProps, any> {
             <input name="answerText" type="text" placeholder="answerText (i.e. apples, pie, chicken, ... )" style={{ marginLeft: "0px", width: '100%' }}   ></input>
 
           </div>
+         
    <hr/>
         <div className="yuay">
 
