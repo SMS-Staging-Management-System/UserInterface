@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router';
 // import { Route } from 'react-router';
-import { SurveyNavComponent } from './SurveyAssign/SurveyNavComponent';
-import SurveyBuildComponent from './SurveyBuild/SurveyBuildComponent';
-import SurveyAssignComponent from './SurveyAssign/SurveyAssignComponent';
-import SurveyAnalyticsComponent from './SurveyAnalytics/SurveyAnalyticsComponent';
-import SurveyAvailableComponent from './SurveyAvailable/SurveyAvailableComponent';
+import { SurveyNavComponent } from './survey-nav/survey-nav.component';
+import SurveyBuildComponent from './survey-build/survey-build.component';
+import SurveyAssignComponent from './survey-assign/survey-assign.component';
+import SurveyAnalyticsComponent from './survey-analytics/survey-analytics.component';
+import SurveyAvailableComponent from './survey-available/survey-available.component';
 // import { IManageComponentProps } from './manage.container';
 // import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
 // import { ManageInternalComponenet } from './manage-internal/manage-internal.component';

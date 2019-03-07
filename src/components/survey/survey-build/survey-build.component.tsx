@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import $ from "jquery";
 //import { IUserState, state } from '../../reducers';
-import Question1 from '../SurveyBuild/Question1.component'
+import Question1 from '../survey-build/question1.component'
 
 
 export interface ISurveyBuildProps {
