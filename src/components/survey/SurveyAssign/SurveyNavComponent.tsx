@@ -8,7 +8,7 @@ interface ISurveyNavComponentProps extends RouteComponentProps{
   updateSurveyTable: (group: string) => void,
   toggleCreateUserModal: () => void,
   manage: string,
-} 
+}  
 
 export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps, any> {
   constructor(props) {
@@ -26,22 +26,26 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
           <NavItem>
             <Link to= {path + "/build"}
               className={`nav-link ${this.isActive('admin')}`}
-              onClick={() => this.props.updateSurveyTable('admin')}>Build</Link>
+            //   onClick={() => this.props.updateSurveyTable('admin')}
+              >Build</Link>
           </NavItem>
           <NavItem>
             <Link to={path + "/assign"}
               className={`nav-link ${this.isActive('staging-manager')}`}
-              onClick={() => this.props.updateSurveyTable('staging-manager')}>Assign</Link>
+            //   onClick={() => this.props.updateSurveyTable('staging-manager')}
+              >Assign</Link>
           </NavItem>
           <NavItem>
             <Link to={path + "/analytics"}
               className={`nav-link ${this.isActive('trainer')}`}
-              onClick={() => this.props.updateSurveyTable('trainer')}>Analytics</Link>
+            //   onClick={() => this.props.updateSurveyTable('trainer')}
+              >Analytics</Link>
           </NavItem>
           <NavItem>
             <Link to={path + "/available"}
               className={`nav-link ${this.isActive('associates')}`}
-              onClick={() => this.props.updateSurveyTable('trainer')}>Available</Link>
+            //   onClick={() => this.props.updateSurveyTable('trainer')}
+              >Available</Link>
           </NavItem>
         </Nav>
       </Navbar>
