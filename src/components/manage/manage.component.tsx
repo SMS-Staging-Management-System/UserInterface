@@ -35,7 +35,7 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
 
         {this.props.match.params.manage === 'cohorts'
           ? <ManageCohortsComponenet manageUsers={this.props.manageUsers.manageUsers} toggleCreateCohortModal={this.props.toggleCreateCohortModal}/>
-          : <ManageInternalComponenet manageUsers={this.props.manageUsers.manageUsers}/>
+          : <ManageInternalComponenet/>
         }
 
 

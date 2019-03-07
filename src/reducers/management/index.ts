@@ -70,7 +70,7 @@ export interface IAuthState {
     createCohort: ICreateCohortState,
     auth: IAuthState,
     manageUsers: IManageUsersState,
-    addresses: IAddressState
+    addresses: IAddressState,
   }
 
   export const managementState = combineReducers<IManagementState>({

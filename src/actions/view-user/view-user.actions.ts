@@ -4,7 +4,7 @@ import { userClient } from "../../axios/sms-clients/user-client";
 
 export const viewUserTypes = {  
   TOGGLE: 'TOGGLE_VIEW_USER_MODAL',
-  VIEW_USER: 'VIEW_USER',
+  VIEW_USER: 'VIEW_USER_UPDATE_USER',
   VIEW_USER_LOCATION: 'VIEW_USER_LOCATION',
   GET_USER_INFO:"GET_USER_INFO"
 }
@@ -21,11 +21,12 @@ export const hoveredUser = (email: string) => async (dispatch) => {
   const resp = await userClient.findOneByEmail(email);
   dispatch ({
       payload: {
-          user: resp.data
+          newUser: resp.data
       },
-      type: viewUserTypes.GET_USER_INFO
+      type: viewUserTypes.VIEW_USER
   })
 }
+
 
 
 export const viewUserLocation = (location: IAddress) => {
@@ -37,7 +38,7 @@ export const viewUserLocation = (location: IAddress) => {
   }
 }
 
-export const viewUserInfo = (newUser: IUser) => {
+export const updateUserInfo = (newUser: IUser) => {
   return {
     payload: {
       newUser
