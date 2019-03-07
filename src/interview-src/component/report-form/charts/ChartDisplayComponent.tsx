@@ -20,10 +20,8 @@ interface IChartDisplayProps {
     // receipt: Receipt,
 }
 
-export class ChartDisplayComponent extends React.Component<IChartDisplayProps, any> { //the first argument should be IReportFormProps
-  canvasRef: any;
 
-export class ChartDisplayComponent extends React.Component<any, any> { //the first argument should be IReportFormProps
+export class ChartDisplayComponent extends React.Component<IChartDisplayProps, any> { //the first argument should be IReportFormProps
   canvasRef : any;
   constructor(props) {
     super(props);
