@@ -7,7 +7,7 @@ export const userClient = {
   saveUser(newUser: IUser) {
     return smsClient.post(usersContext, newUser);
   },
-  getFullUserByEmail(email: string) {
-    return smsClient.get(usersContext + `/email/` + email);
+  findOneByEmail(email: string) {
+    return smsClient.get(usersContext + `/email/${email}`);
   }
 }

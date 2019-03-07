@@ -5,6 +5,7 @@ export interface IUser {
   userId:     number;
   firstName:  string;
   lastName:   string;
-  mobile:     string,
-  address:    IAddress
+  mobile:     string;
+  address:    IAddress;
+  roles: string[];
 }

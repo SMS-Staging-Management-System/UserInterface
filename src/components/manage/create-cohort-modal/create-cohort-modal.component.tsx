@@ -12,7 +12,6 @@ const inputNames = {
   NAME: 'NEW_COHORT_NAME',
 }
 
-
 export class CreateCohortModal extends React.Component<ICreateCohortModal, any> {
   constructor(props) {
     super(props);
@@ -57,7 +56,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
 
     const { createCohort, addresses , manageUsers} = this.props;
     return (
-      <Modal isOpen={this.props.createCohort.enabled}>
+      <Modal isOpen={createCohort.enabled}>
         <form onSubmit={this.saveNewCohort}>
           <ModalHeader className="rev-background-color">Create Cohort</ModalHeader>
           <ModalBody>
@@ -120,6 +119,9 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
                   }
                 </DropdownMenu>
               </Dropdown>
+            </div>
+            <div>
+              {createCohort.newCohort.cohortToken || 'this is where the token should go'}
             </div>
           </ModalBody>
           <ModalFooter id="create-Cohort-modal-footer">

@@ -7,6 +7,7 @@ const initialState: ICreateCohortState = {
   locationDropdownActive: false,
   trainerDropdownActive: false,
   newCohort: {
+    cohortToken: '',
     address: {
       addressId: 0,
       alias: '',
@@ -19,20 +20,22 @@ const initialState: ICreateCohortState = {
     cohortName: '',
     endDate: '2019-03-21',
     startDate: '2019-01-10',
-    trainer: {
+    cohortId: 0,
+ trainer: {
       address: {
         addressId: 0,
         alias: '',
         city: '',
         country: '',
         state: '',
-        zip: ''
+        zip: '',
       },
       email: '',
       firstName: '',
       lastName: '',
       mobile: '',
-      userId: 0
+      userId: 0,
+      roles: []
     }
   },
 }
@@ -76,7 +79,14 @@ export const createCohortReducer = (state = initialState, action: any) => {
         newCohort: action.payload.newUser
       }
     case createCohortTypes.COHORT_SAVED:
-      return initialState;
+      return {
+        ...initialState,
+        enabled:true,
+        newCohort: {
+          ...initialState.newCohort,
+          cohortToken: state.newCohort.cohortToken
+        }
+        };
     case authTypes.LOGOUT:
       return initialState;
   }
