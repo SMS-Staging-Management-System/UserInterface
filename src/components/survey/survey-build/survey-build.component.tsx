@@ -1,7 +1,7 @@
 import React from 'react';
 //import { Draggable, Droppable } from 'react-drag-and-drop'
 
-import './App.css';
+
 
 import $ from 'jquery'
 import Question1 from './question1.component';
@@ -101,14 +101,14 @@ class surveyBuild extends React.Component<any, any>{
                 </div>
 
               )
-            }
-          </div>
-        </div>
+            }</div></div>
+          
+        
 
 
-        <div className="container create-survey-container" >
+        <div className="container" >
 
-          <div className="jumbo">
+          <div className="jumbotron">
 
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>

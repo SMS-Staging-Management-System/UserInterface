@@ -519,3 +519,39 @@ body {
     }
   }
 }
+
+/*****************
+Drag and Drop
+*****************/ 
+.container{
+  //position: absolute;
+}
+
+.todos {
+  float: top;
+  background: grey;
+  height: 100px;
+  width: 100px;
+  /* margin-left: 10px; */
+ 
+
+}
+.test {
+  //margin-right: 100%;
+  float: left;
+
+float: left;
+
+}
+
+.done {
+ 
+  background: grey;
+  height: 100px;
+  width: 700px;
+  margin: 10px;
+}
+.jumbotron{
+  
+  margin-left: 20em;
+}
