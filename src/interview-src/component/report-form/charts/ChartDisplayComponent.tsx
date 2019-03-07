@@ -50,9 +50,9 @@ claimLine = (event) => {
 
 componentDidMount()
 {
-  this.props.initializeReceipts();
-  var ctx = this.canvasRef.current.getContext('2d');
-    var myChart = new Chart(ctx, {
+  //this.props.initializeReceipts();
+  //var ctx = this.canvasRef.current.getContext('2d');
+    /*var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -87,7 +87,7 @@ componentDidMount()
             }]
         }
     }
-});
+});*/
 }
 
 

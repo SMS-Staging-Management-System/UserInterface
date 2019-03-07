@@ -11,4 +11,5 @@ export interface ICohort {
   endDate:            string, // yyyy-MM-dd
   users:              IUser[],
   trainer:            IUser
+  
 }
