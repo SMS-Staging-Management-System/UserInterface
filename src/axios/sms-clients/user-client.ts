@@ -10,5 +10,7 @@ export const userClient = {
   findOneByEmail(email: string) {
     return smsClient.get(usersContext + `/email/${email}`);
   },
-
+  updateSMSUserInfo(updatedUser: IUser) {
+    return smsClient.patch(usersContext, updatedUser);
+  }
 }
