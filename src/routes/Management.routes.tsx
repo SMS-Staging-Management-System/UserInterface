@@ -5,6 +5,7 @@ import ManageComponent from '../components/manage/manage.container';
 import  ProtectedRoute  from '../components/protected-route.component/protected-route.component';
 import  LoginComponent  from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
+import profileContainer from '../components/profile/profile.container';
 
 export class ManagementRoutes extends React.Component<any, any> {
     constructor(props){
@@ -15,6 +16,7 @@ export class ManagementRoutes extends React.Component<any, any> {
         let {path} =this.props.match
         return (
             <Switch>
+                <Route path={`${path}/profile`} component={profileContainer} />
                 <Route path={`${path}/login`} component={LoginComponent} />
                 <Route path={`${path}/home`} component={HomeComponent} />
                 <Route path={`${path}/clicker`} component={clickerContainer} />
