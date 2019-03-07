@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom';
-// import SurveyBuildComponent from '../components/survey-service/survey-builder/survey-build.component';
 import SurveyAssignComponent from '../components/SurveyComponents/SurveyAssign/SurveyAssignComponent';
-// import SurveyHomeComponent from '../components/survey-service/survey-home/survey-home.component';
+import SurveyBuildComponent from '../components/SurveyComponents/SurveyBuild/SurveyBuildComponent';
+import SurveyHomeComponent from '../components/SurveyComponents/SurveyHomeComponent';
 
 export class SurveyRoutes extends React.Component<any, any> {
     constructor(props) {
@@ -14,10 +14,10 @@ export class SurveyRoutes extends React.Component<any, any> {
         //add path to the front of any sub routes
         return (
             <Switch>
-                <Route exact path={`${path}/`} component={SurveyAssignComponent} />
-                {/* <Route exact path="/build" component={SurveyBuildComponent} /> */}
-                {/* <Route exact path="/assign" component={SurveyAssignComponent} />
-                <Route exact path="/available" component={SurveyAssignComponent} /> */}
+                <Route exact path={`${path}/`} component={SurveyHomeComponent} />
+                <Route path={`${path}/assign`} component={SurveyAssignComponent} />
+                <Route path={`${path}/build`} component={SurveyBuildComponent} />
+                <Route component={SurveyHomeComponent} />
             </Switch>
             
         )
