@@ -519,3 +519,49 @@ body {
     }
   }
 }
+
+/* --------------------------------------
+Paginated Interview page
+-----------------------------------------*/
+#react-paginate ul {
+  display: inline-block;
+  padding-left: 15em;
+  padding-right: 15em;
+}
+
+#react-paginate li {
+  display: inline-block;
+}
+
+.break-me-link {
+  cursor : pointer;
+  color : black;
+}
+
+.pagination {
+  background-color: grey;
+}
+
+.paginate-link {
+  padding : 1em;
+  cursor : pointer;
+  color : black;
+}
+
+.paginate-active {
+  color:white;
+}
+
+.paginate-next {
+  padding-right : 3em;
+  padding : 1em;
+  cursor : pointer;
+  color : black;
+}
+
+.paginate-previous {
+  padding-left : 3em;
+  padding : 1em;
+  cursor : pointer;
+  color : black;
+}
