@@ -1,4 +1,4 @@
-oimport { IAddress } from "./address.model";
+import { IAddress } from "./address.model";
 
 export interface IUser {
   email:      string;

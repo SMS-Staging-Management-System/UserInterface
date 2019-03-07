@@ -1,7 +1,8 @@
 import React from 'react'
 import ReportFormComponent from '../interview-src/component/report-form/ReportForm.container';
 import  ProtectedRoute  from '../components/protected-route.component/protected-route.component';
-import { Switch } from 'react-router';
+import { Switch, Route } from 'react-router';
+import InterviewList from '../interview-src/component/InterviewList/InterviewList';
 
 
 export class InterviewRoutes extends React.Component<any, any> {
@@ -15,10 +16,8 @@ export class InterviewRoutes extends React.Component<any, any> {
         let {path} =this.props.match
         return (
             <Switch>
-            <>
-            <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path="/reports" component={ReportFormComponent} />
-            </>
                 <Route path={`${path}/list`} component={InterviewList} />
+                <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/reports`} component={ReportFormComponent} />
             </Switch>
         )
     }

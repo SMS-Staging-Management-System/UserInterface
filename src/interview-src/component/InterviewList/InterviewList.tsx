@@ -2,7 +2,6 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { IInterviewState } from '../../reducers';
 import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
 import { IState } from '../../../reducers';
 import ReactPaginate from 'react-paginate'
@@ -10,10 +9,10 @@ import ReactPaginate from 'react-paginate'
 export interface InterviewListProps {
     listOfInterviews : any[],
     numberOfPages : number,
-    getInterviewPages : (pageNumber : number, 
-        pageSize : number,
-        ordeyBy?: string, 
-        direction? : string)=> void,
+    getInterviewPages : (ordeyBy?: string, 
+        direction? : string, 
+        pageNumber? : number, 
+        pageSize? : number) => void,
     getNumberOfPages : (pageSize : number) => void
 }
  
@@ -53,8 +52,6 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                             <th></th>
                         </tr>
                     </thead>
-                {this.renderListOfInterviews()}
-                </Table>
                     <tbody>
                         {this.renderListOfInterviews()}
                     </tbody>
