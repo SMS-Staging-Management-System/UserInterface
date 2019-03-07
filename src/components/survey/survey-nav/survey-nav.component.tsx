@@ -23,6 +23,12 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
     return (
       <Navbar className="manage-users-nav" color="faded" light>
         <Nav tabs className="align-start">
+        <NavItem>
+          <Link to={path + "/available"}
+            className={`nav-link ${this.isActive('associates')}`}
+          //   onClick={() => this.props.updateSurveyTable('trainer')}
+            >Available</Link>
+        </NavItem>
           <NavItem>
             <Link to= {path + "/build"}
               className={`nav-link ${this.isActive('admin')}`}
@@ -40,12 +46,6 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
               className={`nav-link ${this.isActive('trainer')}`}
             //   onClick={() => this.props.updateSurveyTable('trainer')}
               >Analytics</Link>
-          </NavItem>
-          <NavItem>
-            <Link to={path + "/available"}
-              className={`nav-link ${this.isActive('associates')}`}
-            //   onClick={() => this.props.updateSurveyTable('trainer')}
-              >Available</Link>
           </NavItem>
         </Nav>
       </Navbar>
