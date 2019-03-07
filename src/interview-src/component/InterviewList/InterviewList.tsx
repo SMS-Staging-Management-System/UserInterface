@@ -60,17 +60,20 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 previousLabel={'Prev'}
                 nextLabel={'Next'}
                 breakLabel={'...'}
-                breakClassName={'break-me'}
-                breakLinkClassName={'break-me-link btn'}
-                pageCount={10}
+                breakClassName={'page-item no-select'}
+                breakLinkClassName={'break-me-link page-link'}
+                pageCount={100}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
-                containerClassName={'pagination '}
-                activeClassName={'active paginate-active'}
-                pageLinkClassName={'paginate-link btn'}
-                nextLinkClassName={'paginate-next btn'}
-                previousLinkClassName={'paginate-previous btn'}/>
+                containerClassName={'pagination page-navigator'}
+                activeClassName={'active'}
+                pageClassName={'page-item cursor-hover'}
+                pageLinkClassName={'paginate-link page-link no-select'}
+                nextClassName={'page-item cursor-hover'}
+                nextLinkClassName={'paginate-next page-link no-select'}
+                previousClassName={'page-item cursor-hover'}
+                previousLinkClassName={'paginate-previous page-link no-select'}/>
             </Jumbotron>
          );
     }
