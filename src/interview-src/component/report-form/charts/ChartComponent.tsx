@@ -1,4 +1,5 @@
 import React from 'react';
+import {ChartDisplayComponent} from './ChartDisplayComponent'
 /*
 import { IGroupState } from '../../reducers';
 import { ReceiptDisplayComponent } from './Receipt.display.component';
