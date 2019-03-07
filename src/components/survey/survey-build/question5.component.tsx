@@ -1,9 +1,5 @@
 import React from 'react';
 
-const ReactDOM = require('react-dom')
-
-
-
 export interface ISurveyBuildProps {
 //   user: IUserState,
 //   surveyTitle: string,
