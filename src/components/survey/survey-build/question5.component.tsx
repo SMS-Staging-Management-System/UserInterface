@@ -38,11 +38,11 @@ export class Question5 extends React.Component<ISurveyBuildProps, any> {
 
           <div className="new" id="t5">
 
-            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '500px' }}    >
+            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }}    >
             </input>
 
           </div>
-       
+          <hr/>
       </div>
 
     );

@@ -36,13 +36,13 @@ export class Question3 extends React.Component<ISurveyBuildProps, any> {
         <button value="3" id="agree" className="form-control" name="type" > Strongly Agree-Strongly Disagree  </button>
           <div className="new" id="t3">
          
-            <input name="questionText" type="text" placeholder="Question Title (i.e. Product is easy to use )" style={{ width: '500px' }}   ></input>
+            <input name="questionText" type="text" placeholder="Question Title (i.e. Product is easy to use )" style={{ width: '100%' }}   ></input>
                 <input name="answerText" value="Strongly Agree, Agree, Neutral, Disagree, Strongly Disagree" readOnly hidden />
                 
          </div>
        
 
-<br></br>
+         <hr/>
 
       </div>
 
