@@ -55,6 +55,8 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
                     roles: state.currentSMSUser.roles
                 }
             }
+        case (authTypes.LOGOUT):
+            return initialState;
         
     }
     return state;
