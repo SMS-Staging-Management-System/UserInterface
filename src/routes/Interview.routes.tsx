@@ -12,16 +12,14 @@ export class InterviewRoutes extends React.Component<any, any> {
     render() {
         //let {path} = this.props.match//get the path from url
         //put path in front of any sub paths
+        let {path} =this.props.match
         return (
             <Switch>
             <>
             <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path="/reports" component={ReportFormComponent} />
             </>
-
-
+                <Route path={`${path}/list`} component={InterviewList} />
             </Switch>
-            
-
         )
     }
 }
