@@ -15,20 +15,18 @@ import { Users } from '../../models/Users';
  let receiptLines : Line[]
  */
 
- /*
-//passing everything thru props
-interface IGroupProps {
+ let canvasRef;
+
+
+interface IChartDisplayProps {
     // receipt: Receipt,
-    user: Users,
-    groupReceipts: Receipt[],
-    //lines have a 1:M relationship with items
-    initializeReceipts: ()  => void,
-    claimReceipt: (receiptID: number, claimant:number) => void, //as a user I would like to be able to claim a receipt
-    claimLine: (receiptID: number, claimant:number, claimed: number) => void, //as a user I would like to be able to claim a line
-}*/
+    canvasRef: any;
+}
+
 export class ChartDisplayComponent extends React.Component<any, any> { //the first argument should be IReportFormProps
   constructor(props) {
     super(props);
+    this.canvasRef = React.createRef();
   }
 /*
 // whenever the change the username input, call the updateUsername action with the value
@@ -53,7 +51,7 @@ claimLine = (event) => {
 componentDidMount()
 {
   this.props.initializeReceipts();
-  var ctx = document.getElementById("myChart").getContext('2d');
+  var ctx = this.canvasRef.current.getContext('2d');
     var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -97,7 +95,7 @@ render() {
      
 
     return (
-    <div><canvas></canvas></div>
+    <canvas ref={this.canvasRef}></canvas>
     )
   }
  
