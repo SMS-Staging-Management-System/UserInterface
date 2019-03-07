@@ -22,7 +22,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
 
   logout = () => {
     this.props.logout();
-    this.props.history.push('/login');
+    this.props.history.push('/management/login');
     toast.success('Successfully logged out');
   }
 
@@ -52,7 +52,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                         <Link to="/checkins" className="unset-anchor nav-link">Checkins</Link>
                       </li>
                       <li className="nav-item active">
-                        <Link to="/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
+                        <Link to="/management/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
                       </li>
                       <li className="nav-item active">
                         <Link to="/reports" className="unset-anchor nav-link">Reports</Link>
@@ -62,14 +62,14 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                      <Link to="/profile" className=" dropdown-item nav-dropdown">Profile</Link>
+                      <Link to="/management/profile" className=" dropdown-item nav-dropdown">Profile</Link>
                       <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                     </div>
                   </li>
                 </>
                 : // if there is no email show login button
                 <li className="nav-item active">
-                  <Link to="/login" className="unset-anchor nav-link">Log In</Link>
+                  <Link to="/management/login" className="unset-anchor nav-link">Log In</Link>
                 </li>
               }
             </ul>
