@@ -24,6 +24,6 @@ const mapDispatchToProps = {
   manageGetUsersByGroup,
   toggleCreateUserModal: createUserActions.toggleModal,
   toggleCreateCohortModal: createCohortActions.toggleModal,
-  toggleViewUserModal: viewUserActions.toggleModal,
+  toggleViewUserModal: viewUserActions.toggleViewUserModal,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ManageComponenet);

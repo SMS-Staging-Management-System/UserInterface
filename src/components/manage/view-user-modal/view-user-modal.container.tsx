@@ -1,12 +1,11 @@
-import { toggleModal, viewUserLocation, viewUser } from '../../../actions/view-user/view-user.actions';
-import { updateLocations } from '../../../actions/address/address.actions';
+import { toggleViewUserModal, viewUserLocation, viewUserInfo } from '../../../actions/view-user/view-user.actions';
 import { IState,} from '../../../reducers';
 import { IViewUserState, IAddressState } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { ViewUserModal } from './view-user-modal.component';
 
 export interface IViewUserModal {
-  toggleModal,
+  toggleViewUserModal,
   viewUser: IViewUserState,
   addresses: IAddressState,
   viewUserLocation,
@@ -18,9 +17,8 @@ const mapStateToProps = (state:IState) => ({
 });
 
 const mapDispatchToProps = {
-  toggleModal,
-  updateLocations,
-  viewUser,
+  toggleViewUserModal,
+  viewUserInfo,
   viewUserLocation,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ViewUserModal);

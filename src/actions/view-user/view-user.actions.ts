@@ -7,7 +7,7 @@ export const viewUserTypes = {
   VIEW_USER_LOCATION: 'VIEW_USER_LOCATION'
 }
 
-export const toggleModal = () => {
+export const toggleViewUserModal = () => {
   return {
     payload: {
     },
@@ -24,7 +24,7 @@ export const viewUserLocation = (location: IAddress) => {
   }
 }
 
-export const viewUser = (newUser: IUser) => {
+export const viewUserInfo = (newUser: IUser) => {
   return {
     payload: {
       newUser

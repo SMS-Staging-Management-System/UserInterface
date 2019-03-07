@@ -2,10 +2,9 @@ import * as React from 'react';
 import { ManageNavComponent } from './manage-nav/manage-nav.component';
 import { IManageComponentProps } from './manage.container';
 import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
-import { ManageInternalComponenet } from './manage-internal/manage-internal.component';
+import  ManageInternalComponenet from './manage-internal/manage-internal.container';
 import { ManageCohortsComponenet } from './manage-cohorts/manage-cohorts.component';
 import CreateUserModal from './create-user-modal/create-user-modal.container';
-// import ViewUserModal from './view-user-modal/view-user-modal.container';
 
 
 
@@ -39,9 +38,9 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
           : <ManageInternalComponenet manageUsers={this.props.manageUsers.manageUsers}/>
         }
 
+
         <CreateCohortModal />
         <CreateUserModal />
-        {/* <ViewUserModal /> */}
       </div>
     )
   }
