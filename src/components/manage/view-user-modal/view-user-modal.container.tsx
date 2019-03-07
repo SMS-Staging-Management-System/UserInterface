@@ -9,10 +9,7 @@ export interface IViewUserModal {
   toggleModal,
   viewUser: IViewUserState,
   addresses: IAddressState,
-  saveUser,
-  updateNewUserLocation,
-  updateNewUser,
-  updateLocations
+  viewUserLocation,
 }
 
 const mapStateToProps = (state:IState) => ({

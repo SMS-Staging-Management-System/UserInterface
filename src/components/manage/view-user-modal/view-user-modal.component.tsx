@@ -1,18 +1,18 @@
 import * as React from 'react';
 import {
   Button, Modal, ModalHeader, ModalBody, ModalFooter,
-  InputGroup, InputGroupText, InputGroupAddon, Input,
-  Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+  // InputGroup, InputGroupText, InputGroupAddon, Input,
+  // Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import { IViewUserModal } from './view-user-modal.container';
 
 
-const inputNames = {
-  EMAIL: 'NEW_USER_EMAIL',
-  FIRST_NAME: 'NEW_USER_FIRST_NAME',
-  LAST_NAME: 'NEW_USER_LAST_NAME',
-  PHONE: 'NEW_USER_PHONE'
-}
+// const inputNames = {
+//   EMAIL: 'NEW_USER_EMAIL',
+//   FIRST_NAME: 'NEW_USER_FIRST_NAME',
+//   LAST_NAME: 'NEW_USER_LAST_NAME',
+//   PHONE: 'NEW_USER_PHONE'
+// }
 
 
 export class ViewUserModal extends React.Component<IViewUserModal, any> {
@@ -20,48 +20,16 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.updateLocations();
-  }
+  // componentDidMount() {
+  //   this.props.updateLocations();
+  // }
 
-  updateNewUserInfo = (e) => {
-    let updatedNewUser = this.props.viewUser.newUser;
-    switch (e.target.name) {
-      case inputNames.EMAIL:
-        updatedNewUser = {
-          ...updatedNewUser,
-          email: e.target.value
-        }
-        break;
-      case inputNames.FIRST_NAME:
-        updatedNewUser = {
-          ...updatedNewUser,
-          firstName: e.target.value
-        }
-        break;
-      case inputNames.LAST_NAME:
-        updatedNewUser = {
-          ...updatedNewUser,
-          lastName: e.target.value
-        }
-        break;
-      case inputNames.PHONE:
-        updatedNewUser = {
-          ...updatedNewUser,
-          phoneNumber: e.target.value
-        }
-        break;
-      default:
-        break;
-    }
-    this.props.updateNewUser(updatedNewUser)
-  }
-
+  
 
 
   render() {
   //  addresses 
-    const { viewUser } = this.props;
+    // const { viewUser } = this.props;
     return (
       <Modal isOpen={this.props.viewUser.enabled}>
           <ModalHeader className="rev-background-color">User info</ModalHeader>
@@ -98,7 +66,7 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
               </Dropdown>
             </div> */}
             <div className="responsive-modal-row">
-              <p className="responsive-modal-row-item">First Name: {viewUser.newUser.firstName}</p>
+              {/* <p className="responsive-modal-row-item">First Name: {viewUser.newUser.firstName}</p> */}
 
               {/* <Input name={inputNames.LAST_NAME}
                 className="responsive-modal-row-item"

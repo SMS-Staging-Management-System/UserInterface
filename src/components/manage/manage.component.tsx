@@ -5,6 +5,8 @@ import CreateCohortModal from './create-cohort-modal/create-cohort-modal.contain
 import { ManageInternalComponenet } from './manage-internal/manage-internal.component';
 import { ManageCohortsComponenet } from './manage-cohorts/manage-cohorts.component';
 import CreateUserModal from './create-user-modal/create-user-modal.container';
+// import ViewUserModal from './view-user-modal/view-user-modal.container';
+
 
 
 export class ManageComponenet extends React.Component<IManageComponentProps, any> {
@@ -34,10 +36,12 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
 
         {this.props.match.params.manage === 'cohorts'
           ? <ManageCohortsComponenet manageUsers={this.props.manageUsers.manageUsers} toggleCreateCohortModal={this.props.toggleCreateCohortModal}/>
-          : <ManageInternalComponenet manageUsers={this.props.manageUsers.manageUsers} />
+          : <ManageInternalComponenet manageUsers={this.props.manageUsers.manageUsers}/>
         }
+
         <CreateCohortModal />
         <CreateUserModal />
+        {/* <ViewUserModal /> */}
       </div>
     )
   }
