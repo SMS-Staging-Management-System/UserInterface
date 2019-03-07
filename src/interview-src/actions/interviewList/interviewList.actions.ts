@@ -4,10 +4,10 @@ export const interviewListTypes = {
 }
 
 export const getInterviewPages = (
-    ordeyBy?: string, 
-    direction? : string, 
-    pageNumber? : number, 
-    pageSize? : number) => (dispatch) => {
+        pageNumber : number, 
+        pageSize : number,
+        ordeyBy?: string, 
+        direction? : string) => (dispatch) => {
         // Build fetch request with params.
         // Example : *:*/interviews?orderBy="id"?direction="ASC"?pageNumber=0?pageSize=5
 
