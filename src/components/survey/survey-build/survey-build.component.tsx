@@ -92,19 +92,7 @@ class surveyBuild extends React.Component<any, any>{
     return (
       <>
         {/* Used for dragging */}
-        <div className="test">
-          <div className="todos" >
-            {
-              todos.map(todo =>
-                <div key={todo.questionID} draggable onDrag={(event) => this.onDrag(event, todo)}>
-                  {todo.task}
-                </div>
-
-              )
-            }
-          </div>
-        </div>
-
+    
 
         <div className="container create-survey-container" >
 
@@ -141,7 +129,18 @@ class surveyBuild extends React.Component<any, any>{
               </div>
 
             </form>
+            <div className="test">
+          <div className="todos" >
+            {
+              todos.map(todo =>
+                <div key={todo.questionID} draggable onDrag={(event) => this.onDrag(event, todo)}>
+                  {todo.task}
+                </div>
 
+              )
+            }
+          </div>
+        </div>
 
           </div>
         </div>

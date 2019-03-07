@@ -518,4 +518,42 @@ body {
       }
     }
   }
+/***********************************
+  Manage
+***********************************/
+  .App {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .todos {
+    background: red;
+    height: 1000px;
+    width: 1000px;
+    /* margin-left: 10px; */
+   
+  
+  }
+  .test {
+    margin-right: 100%;
+
+  float: left;
+  
+  }
+  
+  .done {
+    background: grey;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    height: auto;
+    width: 700px;
+    margin-left: 20%;
+  }
+
+  .jumbo {
+    margin-bottom: 2rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+    height: auto;
+}
 }
