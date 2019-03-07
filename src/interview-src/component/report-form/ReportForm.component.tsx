@@ -1,5 +1,4 @@
 import React from 'react';
-import Home from '../chart-js/Home'
 /*
 import { IGroupState } from '../../reducers';
 import { ReceiptDisplayComponent } from './Receipt.display.component';
@@ -61,7 +60,7 @@ render() {
      
 
     return (
-    <div><Home/></div>
+    <div>Report</div>
     )
   }
  
