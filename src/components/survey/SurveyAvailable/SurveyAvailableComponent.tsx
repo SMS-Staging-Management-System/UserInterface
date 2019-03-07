@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class SurveyHomeComponent extends React.Component {
+export class SurveyAvailableComponent extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -10,7 +10,7 @@ export class SurveyHomeComponent extends React.Component {
 
             <div className="container create-survey-container" >
                 <div className="jumbotron">
-                    <h2>Survey Home Component</h2>
+                    <h2>Survey Available Component</h2>
                 </div>
             </div>
         );
@@ -18,4 +18,4 @@ export class SurveyHomeComponent extends React.Component {
 }
 
 
-export default SurveyHomeComponent;
+export default SurveyAvailableComponent;
