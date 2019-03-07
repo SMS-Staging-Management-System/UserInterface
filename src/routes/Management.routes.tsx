@@ -24,9 +24,7 @@ export class ManagementRoutes extends React.Component<any, any> {
                 <Route component={HomeComponent} />
             </Switch>
 
-
         )
-
 
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 //import { Draggable, Droppable } from 'react-drag-and-drop'
 
-import './survey-build/App.css';
+import './App.css';
 
 import $ from 'jquery'
 import Question1 from './question1.component';
