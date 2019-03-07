@@ -10,6 +10,13 @@ export const smsClient = axios.create({
   }
 });
 
+export const surveyContext = axios.create({
+  baseURL: environment.surveyContext,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
 // Create interceptor to add the token into the header for every request
 smsClient.interceptors.request.use((config) => {
   config.headers.Authorization = jwt
