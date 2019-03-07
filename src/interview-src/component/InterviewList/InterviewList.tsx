@@ -47,7 +47,9 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                             <th></th>
                         </tr>
                     </thead>
-                {this.renderListOfInterviews()}
+                    <tbody>
+                        {this.renderListOfInterviews()}
+                    </tbody>
                 </Table>
             </Jumbotron>
          );
