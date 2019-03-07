@@ -121,12 +121,15 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
               </Dropdown>
             </div>
             <div>
-              {createCohort.newCohort.cohortToken || 'this is where the token should go'}
+              { ((createCohort.isSaved && 'Token: ') || '') + ((createCohort.isSaved && createCohort.newCohort.cohortToken ) || '')} <br/>
             </div>
           </ModalBody>
           <ModalFooter id="create-Cohort-modal-footer">
-            <Button type="submit" className="rev-btn">Save</Button>{' '}
-            <Button color="secondary" onClick={this.props.toggleModal}>Cancel</Button>
+            <div>{createCohort.isSaved &&'saved'}</div>
+            <Button type="submit" 
+              className="rev-btn" 
+              disabled = {createCohort.isSaved}>Save</Button>{' '}
+            <Button color="secondary" onClick={this.props.toggleModal}>{createCohort.isSaved?'Close': 'Cancel'}</Button>
           </ModalFooter>
         </form>
       </Modal >
