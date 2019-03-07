@@ -60,7 +60,7 @@ render() {
      
 
     return (
-    <div>Report</div>
+    <ChartDisplayComponent></ChartDisplayComponent>
     )
   }
  

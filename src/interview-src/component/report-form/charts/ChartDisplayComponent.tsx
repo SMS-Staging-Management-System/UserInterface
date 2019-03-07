@@ -15,15 +15,13 @@ import { Users } from '../../models/Users';
  let receiptLines : Line[]
  */
 
- let canvasRef;
-
 
 interface IChartDisplayProps {
     // receipt: Receipt,
-    canvasRef: any;
 }
 
-export class ChartDisplayComponent extends React.Component<any, any> { //the first argument should be IReportFormProps
+export class ChartDisplayComponent extends React.Component<IChartDisplayProps, any> { //the first argument should be IReportFormProps
+  canvasRef: any;
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();

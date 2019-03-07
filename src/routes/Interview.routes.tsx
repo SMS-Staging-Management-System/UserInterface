@@ -1,8 +1,7 @@
 import React from 'react'
-import ReportFormComponent from '../interview-src/component/report-form/ReportForm.container';
+import InterviewList from '../interview-src/component/interviewList/InterviewList';
+import { Switch, Route} from 'react-router';
 import  ProtectedRoute  from '../components/protected-route.component/protected-route.component';
-import { Switch } from 'react-router';
-
 
 export class InterviewRoutes extends React.Component<any, any> {
     constructor(props){
