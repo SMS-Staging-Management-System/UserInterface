@@ -135,8 +135,8 @@ class surveyBuild extends React.Component<any, any>{
                     )
                     }
                   </div>
-                  <br /><br /><button type="submit" className="btn btn-primary">Create Survey</button>
                 </div>
+                  <br /><br /><button type="submit" className="btn btn-primary">Create Survey</button>
 
               </div>
 
