@@ -8,7 +8,7 @@ interface ISurveyNavComponentProps extends RouteComponentProps{
   updateSurveyTable: (group: string) => void,
   toggleCreateUserModal: () => void,
   manage: string,
-}
+} 
 
 export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps, any> {
   constructor(props) {
