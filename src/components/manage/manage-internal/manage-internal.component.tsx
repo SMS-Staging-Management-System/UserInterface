@@ -2,10 +2,12 @@ import * as React from 'react';
 import { Table } from 'reactstrap';
 import { ICognitoUser } from '../../../model/cognito-user.model';
 import ViewUserModal from '../view-user-modal/view-user-modal.container';
+import { IUser } from '../../../model/user.model';
 
 
 export interface IManageInternalComponentProps {
   manageUsers: ICognitoUser[];
+  hoveredUser: IUser;
   toggleViewUserModal: () => void;
 }
 
@@ -39,7 +41,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                * and it all be goouchi
                */
               this.props.manageUsers.map((user) =>
-                <tr key={user.email} className="rev-table-row" onClick={this.props.toggleViewUserModal} onMouseEnter={this.props.toggleViewUserModal}>
+                <tr key={user.email} className="rev-table-row" onClick={this.props.toggleViewUserModal} onMouseEnter={this.props.hoveredUser}>
                   <td></td>
                   <td></td>
                   <td>{user.email}</td>

@@ -15,6 +15,15 @@ export const toggleViewUserModal = () => {
   }
 }
 
+export const hoveredUser = (newUser: IUser) => {
+  return {
+    payload: {
+      newUser
+    },
+    type: viewUserTypes.VIEW_USER
+  }
+}
+
 export const viewUserLocation = (location: IAddress) => {
   return {
     payload: {
