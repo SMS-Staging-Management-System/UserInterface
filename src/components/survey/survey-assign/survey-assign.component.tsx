@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Table, Input } from 'reactstrap';
+import SurveyModal from './survey-assign-modal.component';
 
 export class SurveyAssignComponent extends React.Component {
     constructor(props) {
@@ -7,7 +8,6 @@ export class SurveyAssignComponent extends React.Component {
     }
 
     render() {
-
         return (
             <Fragment>
                 <Table striped id="manage-users-table" className="tableUsers">
@@ -28,9 +28,9 @@ export class SurveyAssignComponent extends React.Component {
                         </tr>
                         <tr className="rev-table-row">
                             <td><Input type="checkbox" /></td>
-                            <td>Dunieski</td>
-                            <td>Otano</td>
-                            <td>dunieskior@gmail.com</td>
+                            <td>Kyle</td>
+                            <td>Serrecchia</td>
+                            <td>kyserrecchia@gmail.com</td>
                         </tr>
                         {/* {
               this.props.manageUsers.map((user) =>
@@ -45,7 +45,8 @@ export class SurveyAssignComponent extends React.Component {
                     </tbody>
                 </Table>
                 <div className="buttonDiv">
-                    <tr><button type="submit" className="assignSurveyBtn">Assign Survey</button></tr>
+                    {/* <tr><button type="submit" className="assignSurveyBtn">Assign Survey</button></tr> */}
+                    <tr><SurveyModal buttonLabel='Assign Survey' className='assignSurveyBtn'/></tr>
                 </div>
             </Fragment>
         );

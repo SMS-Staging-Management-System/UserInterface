@@ -537,7 +537,7 @@ Survey Component
 
 .assignSurveyBtn{
   border-radius: 10px;
-  background-color: #f3a55d;
+  background-color: $revature-orange-light;
   font-weight: bold;
   height: 40px;
   width: 150px;
@@ -545,11 +545,9 @@ Survey Component
 
 .assignSurveyBtn:hover,
 .assignSurveyBtn:active{
-background-color: white;
-color: #f3a55d;
-border: 1px solid black;
+background-color: $revature-orange-light;
+color:#565D61;
 }
-
 
 /*****************
 Drag and Drop
