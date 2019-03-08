@@ -9,7 +9,7 @@ const initialState: ICurrentSMSUserState = {
         firstName: '',
         lastName: '',
         email: '',
-        mobile: '',
+        phoneNumber: '',
         address: {
             addressId: 0,
             street: '',
