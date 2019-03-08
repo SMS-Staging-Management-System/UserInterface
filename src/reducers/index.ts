@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { IManagementState, managementState } from './management';
-import { IInterviewState, interviewState } from './interview';
+import { IInterviewState, interviewState } from '../interview-src/reducers';
 import { ISurveyState, surveyState } from './survey';
 
 
