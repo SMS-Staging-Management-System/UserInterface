@@ -520,6 +520,35 @@ body {
   }
 }
 
+
+/*****************
+Survey Component
+*****************/ 
+
+.tableUsers{
+  text-align: center;
+  margin-top: 4em;
+}
+
+.buttonDiv{
+  float: right;
+  
+}
+
+.assignSurveyBtn{
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 40px;
+  width: 100%;
+}
+
+.assignSurveyBtn:hover,
+.assignSurveyBtn:active{
+background-color: $revature-orange-light;
+color:#565D61;
+}
+
 /*****************
 Drag and Drop
 *****************/ 

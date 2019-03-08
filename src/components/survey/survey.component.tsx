@@ -44,6 +44,7 @@ export class SurveyComponent extends React.Component<any, any> {
           match={this.props.match}/>
 
         <Switch>
+            <Route exact path={`${path}`} component={SurveyAvailableComponent} />
             <Route path={`${path}/build`} component={SurveyBuildComponent} />
             <Route path={`${path}/assign`} component={SurveyAssignComponent} />
             <Route path={`${path}/analytics`} component={SurveyAnalyticsComponent} />
