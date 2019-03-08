@@ -8,6 +8,7 @@ import { createUserReducer } from "./create-user.reducer";
 import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
+import { viewUserReducer } from "./view-user.reducer";
 import { currentSMSUserReducer } from "./current-sms-user.reducer";
 
 
@@ -31,6 +32,17 @@ export interface IAuthState {
     locationDropdownActive: false
   }
   
+  export interface IViewUserState {
+    enabled: boolean,
+    newUser: {
+      address: IAddress,
+      email: string,
+      firstName: string,
+      lastName: string,
+      phoneNumber: string
+    }
+  }
+
   export interface ICreateCohortState {
     enabled: boolean,
     isSaved: boolean,
@@ -61,6 +73,7 @@ export interface IAuthState {
   }
 
   export interface IManagementState {
+    viewUser: any;
     clicker: IClickerState,
     createUser: ICreateUserState,
     createCohort: ICreateCohortState,
@@ -74,6 +87,7 @@ export interface IAuthState {
     addresses: addressReducer,
     auth: authReducer,
     clicker: clickerReducer,
+    viewUser: viewUserReducer,
     createUser: createUserReducer,
     createCohort: createCohortReducer,
     manageUsers: manageUsersReducer,
