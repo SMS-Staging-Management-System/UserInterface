@@ -2,60 +2,139 @@ import  React, { Component } from 'react';
 import { IUser } from '../../model/user.model';
 import { Container, Form, Row, FormGroup, Label, Input, Col, Button } from 'reactstrap';
 
+// For the intial population of the user's info
+// Retrieved from the redux store
 interface IProfileProps {
   user: IUser
+  updateCurrentSMSUser(userToUpdate: IUser): void
 }
 
-class Profile extends Component<IProfileProps, any> {
+// This component keeps track of its own state
+// The rest of the application does not need to know about the state
+// of this component
+interface IProfileState {
+  user: IUser
+  bFieldDidChange: boolean // Prevents user from spamming update
+}
+
+class Profile extends Component<IProfileProps, IProfileState> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ...props,
+      bFieldDidChange: false
+    };
+  }
+
+  onUserInfoChangeHandler = (event) => {
+    this.setState({
+      ...this.state,
+      user: {
+        ...this.state.user,
+        [event.target.name]: event.target.value
+      },
+      bFieldDidChange: true
+    })
+  }
+
+  onAddressChangeHandler = (event) => {
+    this.setState({
+      ...this.state,
+      user: {
+        ...this.state.user,
+        address: {
+          ...this.state.user.address,
+          [event.target.name]: event.target.value
+        }
+      },
+      bFieldDidChange: true
+    })
+  }
+
+  onSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(this.state.bFieldDidChange);
+    if (this.state.bFieldDidChange) {
+      this.props.updateCurrentSMSUser(this.state.user);
+    }
+  }
+
   render() {
     return (
       <Container>
-        <Form>
+        <Form onSubmit={() => this.onSubmitHandler(event)}>
           <Row>
             <Col md={4}>
               <FormGroup>
-                <Label for="currentSMSUserEmail">Email</Label>
-                <Input type="email" name="email" id="currentSMSUserEmail" value={this.props.user.email} />
+                <Label>Email</Label>
+                <Input 
+                  type="email" 
+                  name="email" 
+                  value={this.props.user.email} readOnly />
               </FormGroup>
              </Col>
              <Col md={4}>
               <FormGroup>
-                <Label for="currentSMSUserFirstname">Firstname</Label>
-                <Input type="text" name="firstName" id="currentSMSUserFirstname" defaultValue={this.props.user.firstName} />
+                <Label>Firstname</Label>
+                <Input 
+                  type="text" 
+                  name="firstName"
+                  defaultValue={this.state.user.firstName}
+                  onChange={() => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
             <Col md={4}>
               <FormGroup>
-                <Label for="currentSMSUserLastname">Lastname</Label>
-                <Input type="text" name="lastName" id="currentSMSUserLastname" defaultValue={this.props.user.lastName} />
+                <Label>Lastname</Label>
+                <Input 
+                  type="text" 
+                  name="lastName"
+                  defaultValue={this.state.user.lastName}
+                  onChange={() => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
           </Row>
         <FormGroup>
-          <Label for="currentSMSUserAddress">Address</Label>
-          <Input type="text" name="address" id="currentSMSUserAddress" defaultValue={this.props.user.address.street}/>
+          <Label>Street</Label>
+          <Input
+            type="text" 
+            name="street" 
+            defaultValue={this.state.user.address.street}
+            onChange={() => this.onAddressChangeHandler(event)} required />
         </FormGroup>
         <Row>
           <Col md={6}>
             <FormGroup>
-              <Label for="currentSMSUserCity">City</Label>
-              <Input type="text" name="city" id="currentSMSUserCity" defaultValue={this.props.user.address.city}/>
+              <Label>City</Label>
+              <Input 
+                type="text" 
+                name="city"  
+                defaultValue={this.state.user.address.city}
+                onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>
           </Col>
           <Col md={4}>
             <FormGroup>
-              <Label for="currentSMSUserState">State</Label>
-              <Input type="text" name="state" id="currentSMSUserState" defaultValue={this.props.user.address.state}/>
+              <Label>State</Label>
+              <Input 
+                type="text" 
+                name="state"
+                defaultValue={this.state.user.address.state}
+                onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>
           </Col>
           <Col md={2}>
             <FormGroup>
-              <Label for="currentSMSUserZip">Zip</Label>
-              <Input type="text" name="zip" id="currentSMSUserState" defaultValue={this.props.user.address.zip}/>
+              <Label>Zip</Label>
+              <Input 
+                type="text" 
+                name="zip" 
+                defaultValue={this.state.user.address.zip}
+                onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>  
           </Col>
         </Row>
-        <Button >Update</Button>
+        <Button>Update</Button>
       </Form>
       </Container>
     )
