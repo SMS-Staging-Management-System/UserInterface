@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { interviewListReducer } from './interview.reducer';
+import { interviewListReducer } from './interviewList.reducer';
 
 
 export interface IReportFormState {
