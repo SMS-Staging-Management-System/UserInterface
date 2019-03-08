@@ -1,4 +1,5 @@
 import React from 'react';
+import { interviewClient } from '../../../axios/sms-clients/interview-client';
 
 export interface InterviewPerAssocProps {
     assocInterviewArr: InterviewPAssoc[],
@@ -31,8 +32,10 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         this.fetchDbInfo(0);
     }
 
-    fetchDbInfo(pageNumber:number){
-        //TODO: pull from DB based on page
+    async fetchDbInfo(pageNumber:number){
+        // const pageSize = 3;
+        const res = await interviewClient.testfetch(); //.interviewPerAssoc(pageNumber, pageSize);
+        console.log(res);
     }
 
     render() { 
@@ -49,8 +52,10 @@ export class InterviewPerAssoc extends React.Component<any, any> {
             <div>
                 <table>
                     <thead>
-                        <th>Associate</th>
-                        <th>Interviews</th>
+                        <tr>
+                            <th>Associate</th>
+                            <th>Interviews</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {assocInterviewRows}
