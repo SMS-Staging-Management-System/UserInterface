@@ -11,7 +11,7 @@ export class SurveyAnalyticsComponent extends React.Component {
             <Table striped id="manage-users-table" className="tableUsers">
                 <thead className="rev-background-color">
                 <tr>
-                    <th>Choose A Survey To View Data</th>
+                    <th>View Data</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -24,8 +24,11 @@ class SurveyModal extends React.Component<any, any> {
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Surveys</ModalHeader>
           <ModalBody>
-            <p>QC Template</p>
-            <p>Template 1</p>
+            <p>Staging</p>
+            <p>Class 1</p>
+            <p>Class 2</p>
+            <p>Class 3</p>
+            <p>Class 4</p>
           </ModalBody>
           <ModalFooter>
             {/* <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
