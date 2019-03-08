@@ -519,3 +519,25 @@ body {
     }
   }
 }
+.tableUsers{
+  text-align: center;
+  margin-top: 4em;
+}
+.buttonDiv{
+  float: right;
+  
+}
+.assignSurveyBtn{
+  border-radius: 10px;
+  background-color: #f3a55d;
+  font-weight: bold;
+  height: 40px;
+  width: 150px;
+  
+}
+.assignSurveyBtn:hover,
+.assignSurveyBtn:active{
+background-color: white;
+color: #f3a55d;
+border: 1px solid black;
+}
