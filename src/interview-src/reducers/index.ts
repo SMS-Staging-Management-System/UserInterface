@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { interviewListReducer } from './interview.reducer';
-
+import { interviewListReducer } from './interviewList.reducer';
+import { reportFormReducer } from './reportform.reducer';
 
 export interface IReportFormState {
 
@@ -18,4 +18,5 @@ export interface IInterviewState {
 
 export const interviewState = combineReducers<IInterviewState>({
    interviewList: interviewListReducer,
+   reportForm: reportFormReducer
 })

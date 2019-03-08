@@ -1,5 +1,7 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
+import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
+import { IState } from '../../../reducers';
 
  
  
@@ -11,11 +13,13 @@ export class ReportForm extends React.Component<any, any> {
  
     render() { 
         return ( 
-        <div>Report</div>
+        <React.Fragment>
+          ReportReportReportReport
+        </React.Fragment>
          );
     }
 }
-/*
+
 const mapStateToProps = (state: IState) => {
     return {
         listOfInterviews : state.interviewState.interviewList.listOfInterviews,
@@ -28,4 +32,4 @@ const mapDispatchToProps = {
     getNumberOfPages
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InterviewList);*/
+export default connect(mapStateToProps, mapDispatchToProps)(ReportForm);
