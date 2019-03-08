@@ -17,7 +17,10 @@ interface IProfileState {
   bFieldDidChange: boolean // Prevents user from spamming update
 }
 
+const PHONE_NUMBER_REGEX: string =  "^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
+
 class Profile extends Component<IProfileProps, IProfileState> {
+ 
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +76,10 @@ class Profile extends Component<IProfileProps, IProfileState> {
                   value={this.props.user.email} readOnly />
               </FormGroup>
              </Col>
-             <Col md={4}>
+          </Row>
+          <Row>
+            
+            <Col md={4}>
               <FormGroup>
                 <Label>Firstname</Label>
                 <Input 
@@ -91,6 +97,17 @@ class Profile extends Component<IProfileProps, IProfileState> {
                   name="lastName"
                   defaultValue={this.state.user.lastName}
                   onChange={() => this.onUserInfoChangeHandler(event)} required />
+              </FormGroup>
+            </Col>
+            <Col md={4}>
+              <FormGroup>
+                <Label>Phone Number</Label>
+                <Input 
+                  type="tel" 
+                  pattern={PHONE_NUMBER_REGEX}
+                  name="phoneNumber"
+                  defaultValue={this.state.user.phoneNumber}
+                  onChange={() => this.onUserInfoChangeHandler(event)} />
               </FormGroup>
             </Col>
           </Row>
