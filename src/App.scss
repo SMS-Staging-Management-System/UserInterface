@@ -519,25 +519,121 @@ body {
     }
   }
 }
+
+
+/*****************
+Survey Component
+*****************/ 
+
 .tableUsers{
   text-align: center;
   margin-top: 4em;
 }
+
 .buttonDiv{
   float: right;
   
 }
+
 .assignSurveyBtn{
   border-radius: 10px;
   background-color: #f3a55d;
   font-weight: bold;
   height: 40px;
   width: 150px;
-  
 }
+
 .assignSurveyBtn:hover,
 .assignSurveyBtn:active{
 background-color: white;
 color: #f3a55d;
 border: 1px solid black;
+}
+
+
+/*****************
+Drag and Drop
+*****************/ 
+.container{
+  //position: absolute;
+}
+
+.todos {
+  float: top;
+  background: #f3a55d;
+  height: auto;
+  width: 300px;
+   margin-top: 3em; 
+ 
+
+}
+.test {
+  //margin-right: 100%;
+float: left;
+
+}
+
+.done {
+ 
+  background: #e9ecef;
+  height: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width: auto;
+  margin: 10px;
+}
+.jumbotron{
+  height: auto;
+  margin-top: 3em;
+  margin-left: 20em;
+  border: 3px solid black;
+  box-shadow: 0 16px 16px black;
+  letter-spacing: 0.2pc;
+  font-weight: bold;
+  background-color: #eee;
+}
+#multi{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+ 
+}
+#yn{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+#agree{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+#rating{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+#feedback{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+// .labelTitle{
+//   font-family: Helvetica;
+//   font-weight: bold;
+//   text-shadow: 0 16px 16px black;
+// }
+.surveyCreateBtn{
+  border-radius: 10px;
+  float: right;
+  background: rgb(44, 90, 117);
+  color: white;
+  width: 150px;
+  height: 40px;
+  font-weight: bold;
+}
+.surveyCreateBtn:hover,
+.surveyCreateBtn:active{
+  background: black;
+  color: white;
 }
