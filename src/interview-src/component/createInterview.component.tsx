@@ -11,7 +11,6 @@ import Input from 'reactstrap/lib/Input';
 import InputGroup from 'reactstrap/lib/InputGroup';
 import { InterviewFormat } from '../model/interviewFormat.model';
 import './createInterview.component.scss'
-import { interviewClient } from '../../axios/sms-clients/interview-client';
 
 
 interface ICreateInterviewComponentProps extends RouteComponentProps {
