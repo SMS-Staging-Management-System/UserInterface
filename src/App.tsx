@@ -22,7 +22,6 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                  {interviewRouteArr}
                   <ManagementRoutes/>
                   <SurveyRoutes/>
               </Switch>
