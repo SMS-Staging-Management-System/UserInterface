@@ -39,11 +39,11 @@ class surveyBuild extends React.Component<any, any>{
         },
         {
           questionID: 6,
-          task: <Question5 />
+          task: <Question6 />
         },
         {
           questionID: 7,
-          task: <Question5 />
+          task: <Question7 />
         }
 
 

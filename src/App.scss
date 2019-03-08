@@ -532,7 +532,7 @@ Drag and Drop
   background: #f3a55d;
   height: auto;
   width: 300px;
-   margin-top: 12em; 
+   margin-top: 3em; 
  
 
 }
@@ -553,5 +553,56 @@ float: left;
 }
 .jumbotron{
   height: auto;
+  margin-top: 3em;
   margin-left: 20em;
+  border: 3px solid black;
+  box-shadow: 0 16px 16px black;
+  letter-spacing: 0.2pc;
+  font-weight: bold;
+  background-color: #eee;
+}
+#multi{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+ 
+}
+#yn{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+#agree{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+#rating{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+#feedback{
+  background-color: black;
+  color: white;
+  letter-spacing: 0.5pc;
+}
+// .labelTitle{
+//   font-family: Helvetica;
+//   font-weight: bold;
+//   text-shadow: 0 16px 16px black;
+// }
+.surveyCreateBtn{
+  border-radius: 10px;
+  float: right;
+  background: rgb(44, 90, 117);
+  color: white;
+  width: 150px;
+  height: 40px;
+  font-weight: bold;
+}
+.surveyCreateBtn:hover,
+.surveyCreateBtn:active{
+  background: black;
+  color: white;
 }
