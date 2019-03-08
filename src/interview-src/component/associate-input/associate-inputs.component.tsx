@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { IAssociateInput } from './interview-interfaces';
 import { MultipleChoice, Dropdown } from './choices.component';
 import './radio.style.css';
+import { IAssociateInput } from '../../model/Associateinput.model';
 
 interface IProps {
     fields?: IAssociateInput;

@@ -1,13 +1,16 @@
-import { ICreateInterviewComponentState } from '../../reducers/interview';
-import { createInterviewTypes } from '../actions/createInterview.actions';
-import { InterviewFormat } from '../model/interviewFormat.model';
+import { createInterviewTypes } from '../actions/createInterview/createInterview.actions';
+import { ICreateInterviewComponentState } from '.';
+import { InterviewFormats } from '../model/Interview.format.model';
 
 const initialState: ICreateInterviewComponentState = {
     firstName: '',
     lastName: '',
     date: '',
     location: '',
-    format: InterviewFormat.none,
+    format: {
+      interviewFormatId: 0,
+      formatDesc: InterviewFormats.none
+    }
 }
 
 // export interface IReduxAction {

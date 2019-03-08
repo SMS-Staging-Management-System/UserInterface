@@ -1,5 +1,5 @@
-import { IAssociateInput } from "../component/associate-input/interview-interfaces";
-import { AssocInputActions } from '../actions/assoc-input.action';
+import { AssocInputActions } from '../actions/assoc-input/assoc-input.action';
+import { IAssociateInput } from '../model/Associateinput.model';
 
 const initalState: IAssociateInput = {
     dateNotified: new Date(0),

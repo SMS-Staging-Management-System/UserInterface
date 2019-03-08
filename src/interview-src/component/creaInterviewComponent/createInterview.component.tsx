@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { IState, } from '../../reducers';
 import { connect } from 'react-redux';
 //import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
-import { ICreateInterviewComponentState } from '../../reducers/interview';
-import { setState } from '../actions/createInterview.actions';
 import { InputGroupAddon } from 'reactstrap';
 import Input from 'reactstrap/lib/Input';
 import InputGroup from 'reactstrap/lib/InputGroup';
-import { InterviewFormat } from '../model/interviewFormat.model';
 import './createInterview.component.scss'
+import { ICreateInterviewComponentState } from '../../reducers';
+import { IState } from '../../../reducers';
+import { setState } from '../../actions/createInterview/createInterview.actions';
+import { InterviewFormats } from '../../model/Interview.format.model';
 
 
 interface ICreateInterviewComponentProps extends RouteComponentProps {
@@ -34,7 +34,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 	// private String Place;
 	// private int interview_format;
     // private int managerId;
-    const formatOptions = Object.keys(InterviewFormat).map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormat[key]}</option> : undefined })
+    const formatOptions = Object.keys(InterviewFormats).map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormats[key]}</option> : undefined })
     const state = this.props.createInterviewComponentState;
     const setState = this.props.setState;
     const { firstName, lastName, date, location, format} = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
@@ -60,8 +60,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
             < br/>
             <InputGroup>
                 <InputGroupAddon addonType="prepend">format</InputGroupAddon>
-                <Input type='select' placeholder="enter format of interview" value={format}  onChange={(e)=>{setState({...state, format: e.target.value as InterviewFormat })}} >
-                    <option value={InterviewFormat.none} style={{display:'none'}}>select a format...</option>
+                <Input type='select' placeholder="enter format of interview" value={format.formatDesc}  onChange={(e)=>{setState({...state, format:{ ...format, formatDesc : e.target.value } })}} >
+                    <option value={InterviewFormats.none} style={{display:'none'}}>select a format...</option>
                     {formatOptions}
                 </Input>
             </InputGroup>

@@ -1,5 +1,4 @@
-import { ICreateInterviewComponentState } from "../../reducers/interview";
-
+import { ICreateInterviewComponentState } from "../../reducers";
 
 export const createInterviewTypes = {
   SET_CREATE_INTERVIEW_COMPONENT_STATE: 'SET_CREATE_INTERVIEW_COMPONENT_STATE'
