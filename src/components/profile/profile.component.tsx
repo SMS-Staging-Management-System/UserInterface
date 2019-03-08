@@ -17,8 +17,6 @@ interface IProfileState {
   bFieldDidChange: boolean // Prevents user from spamming update
 }
 
-const PHONE_NUMBER_REGEX: string =  "^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
-
 class Profile extends Component<IProfileProps, IProfileState> {
  
   constructor(props) {
@@ -58,8 +56,10 @@ class Profile extends Component<IProfileProps, IProfileState> {
     event.preventDefault();
     console.log(this.state.bFieldDidChange);
     if (this.state.bFieldDidChange) {
-      this.props.updateCurrentSMSUser(this.state.user);
+      this.props.updateCurrentSMSUser(this.state.user); 
+      this.setState({bFieldDidChange: false}); 
     }
+    
   }
 
   render() {
@@ -104,7 +104,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Label>Phone Number</Label>
                 <Input 
                   type="tel" 
-                  pattern={PHONE_NUMBER_REGEX}
+                  pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
                   name="phoneNumber"
                   defaultValue={this.state.user.phoneNumber}
                   onChange={() => this.onUserInfoChangeHandler(event)} />
