@@ -41,11 +41,11 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                * 
                * eventually call this.props.updateUserInfo(e)
                * 
-               * One way to solve it is to use this, but it does the operation in render and we do NOT want that:
+               * One way to solve it is to use this, but it does the operation in render and we do NOT want tha
                * () => userClient.findOneByEmail(user.email).then(resp => this.props.updateUserInfo(resp.data))
                */
               this.props.manageUsers.map((user) =>
-                <tr key={user.email} className="rev-table-row" onClick={this.props.toggleViewUserModal} onMouseEnter={this.props.hoveredUser(user.email)}>
+                <tr key={user.email} className="rev-table-row" onClick={this.props.toggleViewUserModal} onMouseEnter={()=>this.props.hoveredUser(user.email)}>
                   <td></td>
                   <td></td>
                   <td>{user.email}</td>

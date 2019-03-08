@@ -14,19 +14,25 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
           <ModalHeader className="rev-background-color">User info</ModalHeader>
           <ModalBody>
             <div className="responsive-modal-row">
-              <p>First Name: {this.props.viewUser.newUser.firstName}</p>
+              <p>First Name: {this.props.viewUser.newUser.firstName || 'Unknown'}</p>
             </div>
             <div className="responsive-modal-row">
-              <p>Last Name: {this.props.viewUser.newUser.lastName}</p>
+              <p>Last Name: {this.props.viewUser.newUser.lastName || 'Unknown'}</p>
             </div>
             <div className="responsive-modal-row">
-              <p>Email: {this.props.viewUser.newUser.email}</p>
+              <p>Email: {this.props.viewUser.newUser.email || 'Unknown'}</p>
             </div>
             <div className="responsive-modal-row">
-              <p>Phone Number: {this.props.viewUser.newUser.phoneNumber}</p>
+              <p>Phone Number: {this.props.viewUser.newUser.phoneNumber || 'Unknown'}</p>
             </div>
             <div className="responsive-modal-row">
-              <p>Address: {this.props.viewUser.newUser.address.alias}</p>
+              {/* In case the user that's returned is not
+                * well formatted, we need a guard
+                * to make sure the app doesn't crash
+                * on failing to load the address
+                * alias
+                */}
+              <p>Training Location: {this.props.viewUser.newUser.address ||'no alias'}</p>
             </div>
           </ModalBody>
           <ModalFooter id="create-user-modal-footer">

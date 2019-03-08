@@ -1,7 +1,7 @@
 import { ManageInternalComponenet } from "./manage-internal.component";
 import { IState } from "../../../reducers";
 import { connect } from 'react-redux';
-import { toggleViewUserModal, updateUserInfo, hoveredUser} from "../../../actions/view-user/view-user.actions"
+import { toggleViewUserModal, hoveredUser} from "../../../actions/view-user/view-user.actions"
 
 
 const mapStateToProps = (state:IState) => ({
@@ -10,7 +10,6 @@ const mapStateToProps = (state:IState) => ({
 
   const mapDispatchToProps = {
     toggleViewUserModal: toggleViewUserModal,
-    updateUserInfo: updateUserInfo,
     hoveredUser: hoveredUser
   }
 
