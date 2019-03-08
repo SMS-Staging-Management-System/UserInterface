@@ -27,14 +27,6 @@ export const viewUserReducer = (state = initialState, action: any) => {
         ...state,
         enabled: !state.enabled
       }
-    case viewUserTypes.VIEW_USER_LOCATION:
-      return {
-        ...state,
-        newUser: {
-          ...state.newUser,
-          address: action.payload.location
-        }
-      }
     case viewUserTypes.VIEW_USER:
       return {
         ...state,
