@@ -32,7 +32,7 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
                 * on failing to load the address
                 * alias
                 */}
-              <p>Training Location: {this.props.viewUser.newUser.address ||'no alias'}</p>
+              <p>Training Location: {this.props.viewUser.newUser.address && this.props.viewUser.newUser.address.alias ||'no alias'}</p>
             </div>
           </ModalBody>
           <ModalFooter id="create-user-modal-footer">

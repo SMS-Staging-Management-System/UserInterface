@@ -7,6 +7,7 @@ const initialState: IViewUserState = {
     address: {
       addressId: 0,
       alias: '',
+      street: '',
       city: '',
       country: '',
       state: '',
