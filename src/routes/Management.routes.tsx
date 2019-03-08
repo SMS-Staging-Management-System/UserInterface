@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import clickerContainer from '../components/clicker/clicker.container';
 import ManageComponent from '../components/manage/manage.container';
 import  ProtectedRoute  from '../components/protected-route.component/protected-route.component';
-import  LoginComponent  from '../components/login/login.component';
+import  LoginComponent  from '../components/login/login.container';
 import { HomeComponent } from '../components/home/home.component';
 
 

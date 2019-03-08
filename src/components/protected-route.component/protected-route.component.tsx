@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Route } from 'react-router';
 import { connect } from "react-redux";
-import LoginComponent from "../login/login.component";
+import LoginComponent from "../login/login.container";
 import { IState } from "../../reducers";
 
 

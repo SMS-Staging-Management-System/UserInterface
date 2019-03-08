@@ -8,6 +8,7 @@ import { createUserReducer } from "./create-user.reducer";
 import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
+import { loginReducer } from "./login.reducer";
 
 
 export interface IAuthState {
@@ -46,6 +47,19 @@ export interface IAuthState {
   export interface IAddressState {
     trainingAddresses: IAddress[]
   }
+  export interface ILoginState {
+    username: string,
+    password: string,
+    cogUser: ICognitoUser,
+    confirmationPassword: string,
+    newPassword: string,
+    passwordNeedsReset,
+    incorrectUserPass: boolean,
+    verificationCode: string,
+    needsVerificationCode: boolean,
+    showPasswordTip: boolean
+
+  }
   
   export interface IManageUsersState {
     manageUsers: ICognitoUser[];
@@ -58,6 +72,7 @@ export interface IAuthState {
     auth: IAuthState,
     manageUsers: IManageUsersState,
     addresses: IAddressState
+    login: ILoginState
   }
 
   export const managementState = combineReducers<IManagementState>({
@@ -66,5 +81,6 @@ export interface IAuthState {
     clicker: clickerReducer,
     createUser: createUserReducer,
     createCohort: createCohortReducer,
-    manageUsers: manageUsersReducer
+    manageUsers: manageUsersReducer,
+    login: loginReducer,
   })
