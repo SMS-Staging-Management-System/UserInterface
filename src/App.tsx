@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 
 import { ToastContainer, toast } from 'react-toastify';
 import { ManagementRoutes } from './routes/Management.routes';
-import { InterviewRoutes } from './routes/Interview.routes';
+import { interviewRouteArr } from './routes/Interview.routes';
 import { SurveyRoutes } from './routes/Survey.routes';
 
 class App extends React.Component {
@@ -22,9 +22,9 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                  <Route path='/management' component={ManagementRoutes}/>
-                  <Route path='/interview' component={InterviewRoutes}/>
-                  <Route path='/surveys' component ={SurveyRoutes}/>
+                  {interviewRouteArr}
+                  <ManagementRoutes/>
+                  <SurveyRoutes/>
               </Switch>
             </div>
             <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_RIGHT}/>
