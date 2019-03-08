@@ -9,6 +9,7 @@ import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
 import { viewUserReducer } from "./view-user.reducer";
+import { currentSMSUserReducer } from "./current-sms-user.reducer";
 
 
 export interface IAuthState {
@@ -44,15 +45,19 @@ export interface IAuthState {
 
   export interface ICreateCohortState {
     enabled: boolean,
+    isSaved: boolean,
     newCohort: {
       address: IAddress,
       cohortDescription: string,
       cohortName: string,
       trainer: IUser,
       startDate: string,
-      endDate: string
+      endDate: string,
+      cohortId: number,
+      cohortToken: string
     },
-    locationDropdownActive: false
+    locationDropdownActive: false,
+    trainerDropdownActive: false
   }
   
   export interface IAddressState {
@@ -63,6 +68,10 @@ export interface IAuthState {
     manageUsers: ICognitoUser[];
   }
 
+  export interface ICurrentSMSUserState {
+    currentSMSUser: IUser
+  }
+
   export interface IManagementState {
     viewUser: any;
     clicker: IClickerState,
@@ -71,6 +80,7 @@ export interface IAuthState {
     auth: IAuthState,
     manageUsers: IManageUsersState,
     addresses: IAddressState,
+    currentSMSUser: ICurrentSMSUserState
   }
 
   export const managementState = combineReducers<IManagementState>({
@@ -80,5 +90,6 @@ export interface IAuthState {
     viewUser: viewUserReducer,
     createUser: createUserReducer,
     createCohort: createCohortReducer,
-    manageUsers: manageUsersReducer
+    manageUsers: manageUsersReducer,
+    currentSMSUser: currentSMSUserReducer
   })

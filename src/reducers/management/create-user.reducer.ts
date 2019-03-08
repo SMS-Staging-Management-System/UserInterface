@@ -8,6 +8,7 @@ const initialState: ICreateUserState = {
   newUser: {
     address: {
       addressId: 0,
+      street: '',
       alias: '',
       city: '',
       country: '',
@@ -17,7 +18,7 @@ const initialState: ICreateUserState = {
     email: '',
     firstName: '',
     lastName: '',
-    phoneNumber: ''
+    phoneNumber: '',
   },
 }
 
