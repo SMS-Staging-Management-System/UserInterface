@@ -9,6 +9,8 @@ import Question2 from './question2.component';
 import Question3 from './question3.component';
 import Question4 from './question4.component';
 import Question5 from './question5.component';
+import Question6 from './question6.component';
+import Question7 from './question7.component';
 
 class surveyBuild extends React.Component<any, any>{
   constructor(props) {
@@ -34,7 +36,16 @@ class surveyBuild extends React.Component<any, any>{
         {
           questionID: 5,
           task: <Question5 />
+        },
+        {
+          questionID: 6,
+          task: <Question5 />
+        },
+        {
+          questionID: 7,
+          task: <Question5 />
         }
+
 
       ],
       completedTasks: [],

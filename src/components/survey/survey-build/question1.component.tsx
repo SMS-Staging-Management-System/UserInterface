@@ -38,9 +38,8 @@ export class Question1 extends React.Component<ISurveyBuildProps, any> {
      
           <div className="new" id="t1">
 
-            <input name="questionText" type="text" placeholder="Question Title (i.e. What do you like best? )" style={{ marginLeft: "0px" ,width: '100%' }}   ></input>
-            <br/>
-            <input name="answerText" type="text" placeholder="answerText (i.e. apples, pie, chicken, ... )" style={{ marginLeft: "0px", width: '100%' }}   ></input>
+            <input name="questionText" type="text" placeholder="Question Title (i.e. What do you like best? )" style={{ marginLeft: "0px" ,width: '300px' }}   ></input>
+            <input name="answerText" type="text" placeholder="answerText (i.e. apples, pie, chicken, ... )" style={{ marginLeft: "0px", width: '300px' }}   ></input>
 
           </div>
    <hr/>
