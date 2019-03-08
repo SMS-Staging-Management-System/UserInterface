@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { store } from './Store';
 import AppNav from './components/nav/nav.component';
-import { BrowserRouter,  Switch } from 'react-router-dom';
+import { BrowserRouter,  Switch, Route } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 
