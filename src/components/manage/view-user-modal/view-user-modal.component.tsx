@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { IViewUserModal } from './view-user-modal.container';
+import { Link } from 'react-router-dom';
 
 
 export class ViewUserModal extends React.Component<IViewUserModal, any> {
@@ -37,6 +38,7 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
           </ModalBody>
           <ModalFooter id="create-user-modal-footer">
             <Button color="secondary" onClick={this.props.toggleViewUserModal}>Close</Button>
+            <Button color="secondary"><Link to="/management/profile">Edit</Link></Button>
           </ModalFooter>
       </Modal>
 
