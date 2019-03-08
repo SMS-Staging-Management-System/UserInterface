@@ -56,11 +56,24 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                         {this.renderListOfInterviews()}
                     </tbody>
                 </Table>
-                <ReactPaginate 
-                pageCount={10} 
-                pageRangeDisplayed={1}
+                <ReactPaginate
+                previousLabel={'Prev'}
+                nextLabel={'Next'}
+                breakLabel={'...'}
+                breakClassName={'page-item no-select'}
+                breakLinkClassName={'break-me-link page-link'}
+                pageCount={100}
                 marginPagesDisplayed={2}
-                containerClassName="button"/>
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePageClick}
+                containerClassName={'pagination page-navigator'}
+                activeClassName={'active'}
+                pageClassName={'page-item cursor-hover'}
+                pageLinkClassName={'paginate-link page-link no-select'}
+                nextClassName={'page-item cursor-hover'}
+                nextLinkClassName={'paginate-next page-link no-select'}
+                previousClassName={'page-item cursor-hover'}
+                previousLinkClassName={'paginate-previous page-link no-select'}/>
             </Jumbotron>
          );
     }
