@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
 import { IState } from '../../../reducers';
-
- 
  
 export class ReportForm extends React.Component<any, any> {
     constructor(props) {
