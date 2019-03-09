@@ -33,9 +33,22 @@ export class InterviewPerAssoc extends React.Component<any, any> {
     }
 
     async fetchDbInfo(pageNumber:number){
-        // const pageSize = 3;
-        const res = await interviewClient.testfetch(); //.interviewPerAssoc(pageNumber, pageSize);
-        console.log(res);
+        const pageSize = 3;
+        this.setState({
+            ...this.state
+          },
+          async () => {
+              try {
+                  const res = await interviewClient.interviewPerAssoc(pageNumber, pageSize);
+                  console.log(res.data.content);
+                  this.setState({
+                    assocInterviewArr: res.data.content
+                  });
+              } catch (err) {
+                  console.log(err);
+              }
+          }
+        );
     }
 
     render() { 
