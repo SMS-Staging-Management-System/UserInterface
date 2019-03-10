@@ -17,5 +17,8 @@ export const interviewClient = {
             url += '&pageSize=' + pageSize;
         }
         return smsClient.get(url);
+    },
+    interviewPerAssoc: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     }
 }
