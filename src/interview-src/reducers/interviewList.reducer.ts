@@ -11,7 +11,12 @@ export const interviewListReducer = (state = initialState, action : any): IInter
         case interviewListTypes.GET_PAGES:
             return {
                 ...state,
-                listOfInterviews : action.payload.listOfInterviews
+                ...action.payload
+            }
+        case interviewListTypes.GET_NUMBER_OF_PAGES:
+            return {
+                ...state,
+                ...action.payload
             }
         default:
             return state
