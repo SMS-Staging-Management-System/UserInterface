@@ -1,12 +1,19 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate';
 import { interviewClient } from '../../../axios/sms-clients/interview-client';
 
 export interface InterviewPerAssocProps {
     assocInterviewArr: InterviewPAssoc[],
+    totalPages: number,
+    currentPage: number,
+    pageSize: number
 }
  
 export interface InterviewPerAssocState {
-    assocInterviewArr
+    assocInterviewArr,
+    totalpages,
+    currentPage,
+    pageSize
 }
 
 export interface InterviewPAssoc {
@@ -24,7 +31,10 @@ export class InterviewPerAssoc extends React.Component<any, any> {
                 { associateId: 2002, interviewCount: -1, AssociateName: 'Betty Bronte' },
                 { associateId: 2003, interviewCount: -1, AssociateName: 'Charles Cromwell' },
                 { associateId: 2004, interviewCount: -1, AssociateName: 'Delta Dawn' },
-              ]
+              ],
+            totalPages:0,
+            currentPage:0,
+            pageSize:4
         };
     }
 
@@ -32,17 +42,25 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         this.fetchDbInfo(0);
     }
 
+    handlePageClick = (data) => {
+        console.log(data);
+        let selected = data.selected;
+        this.fetchDbInfo(selected);
+    }
+
     async fetchDbInfo(pageNumber:number){
-        const pageSize = 3;
         this.setState({
             ...this.state
           },
           async () => {
               try {
-                  const res = await interviewClient.interviewPerAssoc(pageNumber, pageSize);
-                  console.log(res.data.content);
+                  console.log(pageNumber+'x'+this.state.pageSize)
+                  const res = await interviewClient.interviewPerAssoc(pageNumber, this.state.pageSize);
+                  console.log(res.data);
                   this.setState({
-                    assocInterviewArr: res.data.content
+                    assocInterviewArr: res.data.content,
+                    totalPages: res.data.totalPages,
+                    currentPage: pageNumber
                   });
               } catch (err) {
                   console.log(err);
@@ -74,6 +92,25 @@ export class InterviewPerAssoc extends React.Component<any, any> {
                         {assocInterviewRows}
                     </tbody>
                 </table>
+                <ReactPaginate
+                    previousLabel={'Prev'}
+                    nextLabel={'Next'}
+                    breakLabel={'...'}
+                    breakClassName={'page-item no-select'}
+                    breakLinkClassName={'break-me-link page-link'}
+                    pageCount={this.state.totalPages}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination page-navigator'}
+                    activeClassName={'active'}
+                    pageClassName={'page-item cursor-hover'}
+                    pageLinkClassName={'paginate-link page-link no-select'}
+                    nextClassName={'page-item cursor-hover'}
+                    nextLinkClassName={'paginate-next page-link no-select'}
+                    previousClassName={'page-item cursor-hover'}
+                    previousLinkClassName={'paginate-previous page-link no-select'}
+                />
             </div>
         );
     }
