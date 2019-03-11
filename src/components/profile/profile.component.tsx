@@ -5,33 +5,51 @@ import { Container, Form, Row, FormGroup, Label, Input, Col, Button } from 'reac
 // For the intial population of the user's info
 // Retrieved from the redux store
 interface IProfileProps {
-  user: IUser
-  updateCurrentSMSUser(userToUpdate: IUser): void
+  currentSMSUser: IUser
+  userToView: IUser
+  updateUser(userToUpdate: IUser): void
+  updateCurrentSMSUser(user: IUser): void
 }
 
 // This component keeps track of its own state
 // The rest of the application does not need to know about the state
 // of this component
 interface IProfileState {
-  user: IUser
+  editingUser: IUser
   bFieldDidChange: boolean // Prevents user from spamming update
+  bIsCurrentUser: boolean 
 }
 
 class Profile extends Component<IProfileProps, IProfileState> {
- 
   constructor(props) {
-    super(props);
+    super(props)
+    let endOfPath = location.pathname.split('/').pop();
+    let userToView: null | IUser = null;
+    let bIsCurrentUser: boolean = false;
+    if (endOfPath && endOfPath === 'profile') {
+      userToView = this.props.currentSMSUser;
+      bIsCurrentUser= true;
+    } else {
+      // Need to check if user clicked on in modal is the current user
+      // so we can update the current SMS user
+      if (this.props.currentSMSUser.email === this.props.userToView.email) {
+        bIsCurrentUser = true;
+      }
+      userToView = this.props.userToView;
+    }
+
     this.state = {
-      ...props,
-      bFieldDidChange: false
-    };
+      editingUser: userToView,
+      bFieldDidChange: false,
+      bIsCurrentUser: bIsCurrentUser
+    }
   }
 
   onUserInfoChangeHandler = (event) => {
     this.setState({
       ...this.state,
-      user: {
-        ...this.state.user,
+      editingUser: {
+        ...this.state.editingUser,
         [event.target.name]: event.target.value
       },
       bFieldDidChange: true
@@ -41,10 +59,10 @@ class Profile extends Component<IProfileProps, IProfileState> {
   onAddressChangeHandler = (event) => {
     this.setState({
       ...this.state,
-      user: {
-        ...this.state.user,
-        address: {
-          ...this.state.user.trainingAddress,
+      editingUser: {
+        ...this.state.editingUser,
+        trainingAddress: {
+          ...this.state.editingUser.trainingAddress,
           [event.target.name]: event.target.value
         }
       },
@@ -54,15 +72,20 @@ class Profile extends Component<IProfileProps, IProfileState> {
 
   onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(this.state.bFieldDidChange);
     if (this.state.bFieldDidChange) {
-      this.props.updateCurrentSMSUser(this.state.user); 
+      this.props.updateUser(this.state.editingUser); 
       this.setState({bFieldDidChange: false}); 
+
+      // Update the current SMS User if it's their profile
+      if (this.state.bIsCurrentUser) {
+        this.props.updateCurrentSMSUser(this.state.editingUser);
+      }
     }
     
   }
 
   render() {
+
     return (
       <Container>
         <Form onSubmit={() => this.onSubmitHandler(event)}>
@@ -73,7 +96,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Input 
                   type="email" 
                   name="email" 
-                  value={this.props.user.email} readOnly />
+                  value={this.state.editingUser.email} readOnly />
               </FormGroup>
              </Col>
           </Row>
@@ -85,7 +108,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Input 
                   type="text" 
                   name="firstName"
-                  defaultValue={this.state.user.firstName}
+                  defaultValue={this.state.editingUser.firstName}
                   onChange={() => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
@@ -95,7 +118,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Input 
                   type="text" 
                   name="lastName"
-                  defaultValue={this.state.user.lastName}
+                  defaultValue={this.state.editingUser.lastName}
                   onChange={() => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
@@ -106,7 +129,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                   type="tel" 
                   pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
                   name="phoneNumber"
-                  defaultValue={this.state.user.phoneNumber}
+                  defaultValue={this.state.editingUser.phoneNumber}
                   onChange={() => this.onUserInfoChangeHandler(event)} />
               </FormGroup>
             </Col>
@@ -116,8 +139,8 @@ class Profile extends Component<IProfileProps, IProfileState> {
           <Input
             type="text" 
             name="street" 
-            defaultValue={this.state.user.trainingAddress.street}
-            onChange={() => this.onAddressChangeHandler(event)} required />
+            defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.street}
+            onChange={() => this.onAddressChangeHandler(event)} />
         </FormGroup>
         <Row>
           <Col md={6}>
@@ -126,8 +149,8 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="city"  
-                defaultValue={this.state.user.trainingAddress.city}
-                onChange={() => this.onAddressChangeHandler(event)} required />
+                defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.city}
+                onChange={() => this.onAddressChangeHandler(event)} />
             </FormGroup>
           </Col>
           <Col md={4}>
@@ -136,8 +159,8 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="state"
-                defaultValue={this.state.user.trainingAddress.state}
-                onChange={() => this.onAddressChangeHandler(event)} required />
+                defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.state}
+                onChange={() => this.onAddressChangeHandler(event)} />
             </FormGroup>
           </Col>
           <Col md={2}>
@@ -146,8 +169,8 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="zip" 
-                defaultValue={this.state.user.trainingAddress.zip}
-                onChange={() => this.onAddressChangeHandler(event)} required />
+                defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.zip}
+                onChange={() => this.onAddressChangeHandler(event)} />
             </FormGroup>  
           </Col>
         </Row>

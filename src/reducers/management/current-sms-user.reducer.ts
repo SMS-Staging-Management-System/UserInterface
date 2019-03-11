@@ -60,8 +60,7 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
                     roles: state.currentSMSUser.roles
                 }
             }
-
-        case (currentSMSUserTypes.UPDATE_USER_INFO):
+        case (currentSMSUserTypes.UPDATE_CURRENT_SMS_USER): {
             return {
                 ...state,
                 currentSMSUser: {
@@ -70,6 +69,8 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
                     roles: state.currentSMSUser.roles
                 }
             }
+        }
+
         case (authTypes.LOGOUT):
             return initialState;
         
