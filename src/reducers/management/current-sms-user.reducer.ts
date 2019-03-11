@@ -4,23 +4,38 @@ import { currentSMSUserTypes } from "../../actions/current-sms-user/current-sms-
 
 
 const initialState: ICurrentSMSUserState = {
-    currentSMSUser: {
-        userId: 0,
+    currentSMSUser:  {
+        trainingAddress: {
+          addressId: 0,
+          street: '',
+          alias: '',
+          city: '',
+          country: '',
+          state: '',
+          zip: '',
+        },
+        personalAddress: {
+          addressId: 0,
+          street: '',
+          alias: '',
+          city: '',
+          country: '',
+          state: '',
+          zip: '',
+        },
+        email: '',
         firstName: '',
         lastName: '',
-        email: '',
         phoneNumber: '',
-        address: {
-            addressId: 0,
-            street: '',
-            alias: '',
-            city: '',
-            state: '',
-            country: '',
-            zip: ''
-        },
-        roles: []
-    }
+        userId: 0,
+        roles: [],
+        status: {
+          statusId: 0,
+          genericStatus: '',
+          specificStatus: '',
+          virtual: false
+        }
+      }
 }
 
 export const currentSMSUserReducer = (state = initialState, action: any) => {

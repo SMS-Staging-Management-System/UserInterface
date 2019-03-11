@@ -44,7 +44,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
       user: {
         ...this.state.user,
         address: {
-          ...this.state.user.address,
+          ...this.state.user.trainingAddress,
           [event.target.name]: event.target.value
         }
       },
@@ -116,7 +116,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
           <Input
             type="text" 
             name="street" 
-            defaultValue={this.state.user.address.street}
+            defaultValue={this.state.user.trainingAddress.street}
             onChange={() => this.onAddressChangeHandler(event)} required />
         </FormGroup>
         <Row>
@@ -126,7 +126,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="city"  
-                defaultValue={this.state.user.address.city}
+                defaultValue={this.state.user.trainingAddress.city}
                 onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>
           </Col>
@@ -136,7 +136,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="state"
-                defaultValue={this.state.user.address.state}
+                defaultValue={this.state.user.trainingAddress.state}
                 onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>
           </Col>
@@ -146,7 +146,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="zip" 
-                defaultValue={this.state.user.address.zip}
+                defaultValue={this.state.user.trainingAddress.zip}
                 onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>  
           </Col>
