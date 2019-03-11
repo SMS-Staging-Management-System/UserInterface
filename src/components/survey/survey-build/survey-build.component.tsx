@@ -95,44 +95,43 @@ class surveyBuild extends React.Component<any, any>{
 
   handleSubmit = async (event) => {
     event.preventDefault();
+
     let frmData = $(":input").serializeArray();
     frmData.splice(0, 13);
+    let today = new Date();
+  //  `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}`
 
     let dummySurvey: ISurvey = {
       id: 1,
       title: frmData,
       description: 'Example Survey 1 Description',
-      dateCreated: new Date('03-09-2019'),
+      dateCreated:  `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}`,
       closingDate: new Date('03-25-2019'),
       template: false,
       published: true
     };
-
-
-    let dummyAnswers: IAnswer = {
-      id: 0,
-      anser: "string",
-      questionId: 0
-    }
-
-
-
-
+    console.log(dummySurvey.dateCreated)
+    let dummyQuestionArray: IQuestion[] = [];
 
     let dummyAnswerArray: IAnswer[] = [];
 
-    let dummyQuestionArray: IQuestion[] = [];
     console.log(frmData);
-
-
 
     let questionindex = 0;
     for (let index = 0; index < frmData.length; index++) {
+
       let dummyquestion: IQuestion = {
         id: 0,
         question: 'string',
         typeId: 0,
       }
+
+      let dummyAnswers: IAnswer = {
+        id: 0,
+        anser: "string",
+        questionId: 0
+      }
+
       switch (frmData[index].name) {
         case 'title':
           dummySurvey.title = frmData[index].value;
@@ -155,12 +154,12 @@ class surveyBuild extends React.Component<any, any>{
           break;
         case 'answerText':
           dummyAnswers.id = 0;
-          dummyAnswers.questionId = 0//if not then use questionindex
-          dummyAnswers.anser = frmData[index].value
+          dummyAnswers.questionId = questionindex;//if not then use questionindex
+          dummyAnswers.anser = frmData[index].value;
           dummyAnswerArray.push(dummyAnswers);
           console.log(dummyAnswers)
           break;
-        case 'tempalte?':
+        case 'template?':
           dummySurvey.template = true;
           break;
 
@@ -168,7 +167,12 @@ class surveyBuild extends React.Component<any, any>{
           break;
       }
     }
- 
+
+    
+  //  surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
+   surveyClient.saveSurvey(dummySurvey);
+
+
   }
   testaxois = async (event) => {
     surveyClient.findSurveyById(2);

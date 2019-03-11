@@ -9,7 +9,6 @@ const questionBaseRoute = '/questions';
 const answerBaseRoute = '/answers';
 const responseBaseRoute = '/responses';
 const questionTypeBaseRoute = '/questiontype';
-const URL = 'http://localhost:8091/';
 
 export const surveyClient = {
 
@@ -17,36 +16,21 @@ export const surveyClient = {
   //-- Survey Methods --//
   //--------------------//
 
+  // saveSurvey(survey: ISurvey, question: IQuestion[], answer: IAnswer[]) { // this will be taking in ISurvey,IQuestion, and IAnswer and will enter seperate endpoints
+  //   surveyContext.post(surveyBaseRoute, survey);
+  //   // this.saveQuestion(question);
+  //   // this.saveAnswer(answer);
 
+  // },
+  saveSurvey(survey: ISurvey) { // this will be taking in ISurvey,IQuestion, and IAnswer and will enter seperate endpoints
+    surveyContext.post(surveyBaseRoute, survey);
+    // this.saveQuestion(question);
+    // this.saveAnswer(answer);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  saveSurvey(survey: ISurvey) {
-    surveyContext.post(URL + surveyBaseRoute, survey);
   },
 
   async findAllSurveys() {
-    let surveys = await surveyContext.get(URL + surveyBaseRoute)
+    let surveys = await surveyContext.get(surveyBaseRoute)
     for (let index = 0; index < surveys.data.length; index++) {
       console.log(surveys.data[index]);
 
@@ -54,7 +38,7 @@ export const surveyClient = {
     return surveys
   },
   async findAllSurveystemplate(templateType: boolean) {
-    let surveys = await surveyContext.get(URL + surveyBaseRoute)
+    let surveys = await surveyContext.get(surveyBaseRoute)
     let returntemplate: any[] = [];
 
     for (let index = 0; index < surveys.data.length; index++) {
@@ -69,7 +53,7 @@ export const surveyClient = {
     return returntemplate
   },
   async findSurveyById(id: number) {
-    let surveys = await surveyContext.get(`${URL + surveyBaseRoute}/${id}`);
+    let surveys = await surveyContext.get(`${surveyBaseRoute}/${id}`);
 
     console.log(surveys);
 
@@ -79,13 +63,15 @@ export const surveyClient = {
   //-- Question Methods --//
   //----------------------//
 
-  saveQuestion(question: IQuestion) {
-    return surveyContext.post(questionBaseRoute, question)
+  saveQuestion(question: IQuestion[]) {
+    for (let index = 0; index < question.length; index++) {
+      surveyContext.post(questionBaseRoute, question[index]);
+    }
   },
 
   async getQuestionType(index: number) {
 
-    let resp = await surveyContext.get(URL + questionTypeBaseRoute);
+    let resp = await surveyContext.get(questionTypeBaseRoute);
     const body = resp.data;
     console.log(body[index].questionType);
     return body[index].questionType;
@@ -95,8 +81,10 @@ export const surveyClient = {
   //-- Answer Methods --//
   //--------------------//
 
-  saveAnswer(answer: IAnswer) {
-    return surveyContext.post(answerBaseRoute, answer)
+  saveAnswer(answer: IAnswer[]) {
+    for (let index = 0; index < answer.length; index++) {
+      surveyContext.post(answerBaseRoute, answer[index]);
+    }
   },
 
   //----------------------//
