@@ -27,7 +27,7 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
     // Load the surveys into the state
     loadMySurveys = () => {
         const dummySurveyData = [{
-            id: 1,
+            surveyId: 1,
             title: 'Example Survey 1',
             description: 'Example Survey 1 Description',
             dateCreated: new Date('03-09-2019'),
@@ -36,7 +36,7 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
             published: true
         },
         {
-            id: 2,
+            surveyId: 2,
             title: 'Example Survey 2',
             description: 'Example Survey 2 Description',
             dateCreated: new Date('02-15-2019'),
@@ -45,7 +45,7 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
             published: true
         },
         {
-            id: 3,
+            surveyId: 3,
             title: 'Example Survey 3',
             description: 'Example Survey 3 Description',
             dateCreated: new Date('03-05-2019'),
@@ -54,7 +54,7 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
             published: false
         },
         {
-            id: 4,
+            surveyId: 4,
             title: 'Example Survey 4',
             description: 'Example Survey 4 Description',
             dateCreated: new Date('03-10-2019'),
@@ -86,7 +86,7 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
                         </thead>
                         <tbody>
                             {this.state.surveys.map(survey => (
-                                <tr key={survey.id} className="rev-table-row">
+                                <tr key={survey.surveyId} className="rev-table-row">
                                     <td>{survey.title}</td>
                                     <td>{survey.description}</td>
                                     <td>{survey.dateCreated.toDateString()}</td>
