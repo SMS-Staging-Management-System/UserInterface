@@ -9,6 +9,8 @@ import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
 import { currentSMSUserReducer } from "./current-sms-user.reducer";
+import { manageCohortsReducer} from './manage-cohorts.reducer'
+import { ICohort } from "../../model/cohort";
 
 
 export interface IAuthState {
@@ -60,12 +62,17 @@ export interface IAuthState {
     currentSMSUser: IUser
   }
 
+  export interface IManageCohortsState {
+    cohorts: ICohort[]
+  }
+
   export interface IManagementState {
     clicker: IClickerState,
     createUser: ICreateUserState,
     createCohort: ICreateCohortState,
     auth: IAuthState,
     manageUsers: IManageUsersState,
+    manageCohorts: IManageCohortsState,
     addresses: IAddressState,
     currentSMSUser: ICurrentSMSUserState
   }
@@ -77,5 +84,6 @@ export interface IAuthState {
     createUser: createUserReducer,
     createCohort: createCohortReducer,
     manageUsers: manageUsersReducer,
-    currentSMSUser: currentSMSUserReducer
+    currentSMSUser: currentSMSUserReducer,
+    manageCohorts: manageCohortsReducer
   })

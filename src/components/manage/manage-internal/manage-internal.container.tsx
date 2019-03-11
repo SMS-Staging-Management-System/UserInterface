@@ -1,11 +1,10 @@
-import * as React from 'react';
-import { Table } from 'reactstrap';
 import { ICognitoUser } from '../../../model/cognito-user.model';
+import { connect } from 'react-redux';
+import { ManageInternalComponenet } from './manage-internal.component';
+import { IState } from '../../../reducers';
 
-export interface IManageInternalComponentProps {
-  manageUsers: ICognitoUser[];
 
-}
+
 /**
  * {v}: dropdown with further info
  * #: hoverable props
@@ -37,34 +36,20 @@ export interface IManageInternalComponentProps {
  * }
  */
 
-export class ManageInternalComponenet extends React.Component<IManageInternalComponentProps, any> {
+export interface IManageInternalComponentProps {
+  manageUsers: ICognitoUser[];
+}
 
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-        <Table striped id="manage-users-table">
-          <thead className="rev-background-color">
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.props.manageUsers.map((user) =>
-                <tr key={user.email} className="rev-table-row">
-                  <td></td>
-                  <td></td>
-                  <td>{user.email}</td>
-                </tr>
-              )
-            }
-          </tbody>
-        </Table>
-    )
+const mapStateToProps= ( state: IState) => {
+  return {
+      manageUsers: state.managementState.manageUsers.manageUsers
   }
 }
+
+const mapDispatchToProps= () => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageInternalComponenet)
