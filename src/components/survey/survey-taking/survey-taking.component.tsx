@@ -4,11 +4,31 @@ import { Redirect } from 'react-router';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { IResponse } from '../../../model/surveys/response.model';
 
-export default class SurveyTakingComponent extends Component<any, any>{
+interface SurveyTakingProps {
+    match: any
+}
+
+interface SurveyTakingState {
+    survey: any,
+    surveyLoaded: boolean,
+    responses: any,
+    newFeedback: any,
+    redirectTo: any
+}
+
+export default class SurveyTakingComponent extends Component<SurveyTakingProps, SurveyTakingState>{
     constructor(props) {
         super(props);
         this.state = {
-            survey: {},
+            survey: {
+                surveyId: 0,
+                title: '',
+                description: '',
+                dateCreated: new Date(),
+                closingDate: new Date(),
+                template: false,
+                published: false
+              },
             surveyLoaded: false,
             responses: [],
             newFeedback: [],
@@ -210,7 +230,7 @@ export default class SurveyTakingComponent extends Component<any, any>{
         for (let key in this.state.newFeedback) {
             const newAnswer: IAnswer = {
                 "id": 0,
-                "answer": this.state.newFeedback[key],
+                "answer": parseInt[key],
                 "questionId": parseInt(key)
             }
             surveyClient.saveAnswer(newAnswer);
