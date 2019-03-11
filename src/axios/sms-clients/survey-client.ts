@@ -15,6 +15,30 @@ export const surveyClient = {
   //-- Survey Methods --//
   //--------------------//
 
+  findAllSurveys: async () => {
+    let surveys;
+    await surveyContext.get('surveys')
+      .then(response => {
+        surveys = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    return surveys
+  },
+
+  findSurveyById: async (id: number) => {
+    let survey;
+    await surveyContext.get(`surveys/${id}`)
+      .then(response => {
+        survey = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    return survey;
+  },
+
   saveSurvey(survey: ISurvey) {
     return surveyContext.post(surveyBaseRoute, survey);
   },
