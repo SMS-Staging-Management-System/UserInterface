@@ -1,4 +1,5 @@
 import { IAddress } from "./address.model";
+import { IStatus } from "./status.model";
 
 export interface IUser {
   email:      string;
@@ -6,6 +7,8 @@ export interface IUser {
   firstName:  string;
   lastName:   string;
   phoneNumber:     string;
-  address:    IAddress;
+  trainingAddress:    IAddress;
+  personalAddress:    IAddress;
+  status:     IStatus
   roles: string[];
 }

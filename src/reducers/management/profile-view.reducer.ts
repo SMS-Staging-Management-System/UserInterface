@@ -8,7 +8,7 @@ const initialState: IProfileViewState = {
         lastName: '',
         email: '',
         phoneNumber: '',
-        address: {
+        personalAddress: {
             addressId: 0,
             street: '',
             alias: '',
@@ -16,6 +16,21 @@ const initialState: IProfileViewState = {
             state: '',
             country: '',
             zip: ''
+        },
+        trainingAddress: {
+            addressId: 0,
+            street: '',
+            alias: '',
+            city: '',
+            state: '',
+            country: '',
+            zip: ''
+        },
+        status: {
+            statusId: 0,
+            genericStatus: '',
+            specificStatus: '',
+            virtual: false     
         },
         roles: []
     }
