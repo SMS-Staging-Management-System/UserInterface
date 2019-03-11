@@ -14,7 +14,6 @@ interface SurveyAvailableState {
     redirectTo: any
 }
 
-
 export class SurveyAvailableComponent extends React.Component<SurveyAvailableProps, SurveyAvailableState> {
     constructor(props) {
         super(props);
@@ -31,10 +30,12 @@ export class SurveyAvailableComponent extends React.Component<SurveyAvailablePro
 
     loadAllSurveys = async () => {
         const surveys = await surveyClient.findAllSurveys();
-        this.setState({
-            surveys: surveys,
-            surveysLoaded: true
-        })
+        if (surveys) {
+            this.setState({
+                surveys: surveys,
+                surveysLoaded: true
+            })
+        }
     }
 
     handleTakeSurvey = (surveyId: number) => {
