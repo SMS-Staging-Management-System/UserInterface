@@ -39,6 +39,7 @@ export class Question6 extends React.Component<ISurveyBuildProps, any> {
           <div className="new" id="t6">
 
             <input name="questionText" type="text" placeholder="Question Title (i.e. Choose one or more response: Which of these objects is white? )" style={{ marginLeft: "0px" ,width: '300px' }}   ></input>
+            <br></br>
             <input name="answerText" type="text" placeholder="answerText (i.e. the moon, rice, cotton, blueberries, lemons )" style={{ marginLeft: "0px", width: '300px' }}   ></input>
 
           </div>

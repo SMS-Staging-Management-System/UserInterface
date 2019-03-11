@@ -11,6 +11,10 @@ import Question4 from './question4.component';
 import Question5 from './question5.component';
 import Question6 from './question6.component';
 import Question7 from './question7.component';
+import { surveyClient } from '../../../axios/sms-clients/survey-client';
+import { ISurvey } from '../../../model/surveys/survey.model';
+import { IQuestion } from '../../../model/surveys/question.model';
+import { IAnswer } from '../../../model/surveys/answer.model';
 
 class surveyBuild extends React.Component<any, any>{
   constructor(props) {
@@ -18,8 +22,8 @@ class surveyBuild extends React.Component<any, any>{
     this.state = {
       todos: [
         {
-          questionID: 1,
-          task: <Question1 />
+          questionID: 1, // make sure this questioID matches the id in the datatype for questiontype
+          task: <Question1 /> //multiple choice
         },
         {
           questionID: 2,
@@ -91,11 +95,90 @@ class surveyBuild extends React.Component<any, any>{
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    var frmData = $(":input").serializeArray();
+    let frmData = $(":input").serializeArray();
+    frmData.splice(0, 13);
+
+    let dummySurvey: ISurvey = {
+      id: 1,
+      title: frmData,
+      description: 'Example Survey 1 Description',
+      dateCreated: new Date('03-09-2019'),
+      closingDate: new Date('03-25-2019'),
+      template: false,
+      published: true
+    };
+
+
+    let dummyAnswers: IAnswer = {
+      id: 0,
+      anser: "string",
+      questionId: 0
+    }
+
+
+
+
+
+    let dummyAnswerArray: IAnswer[] = [];
+
+    let dummyQuestionArray: IQuestion[] = [];
     console.log(frmData);
-    // We need to the id of the loggedIn user
-    //  await this.props.handleSubmit(frmData, this.props.user.userId);
-    // this.setState({ redirectTo: '/home' })
+
+
+
+    let questionindex = 0;
+    for (let index = 0; index < frmData.length; index++) {
+      let dummyquestion: IQuestion = {
+        id: 0,
+        question: 'string',
+        typeId: 0,
+      }
+      switch (frmData[index].name) {
+        case 'title':
+          dummySurvey.title = frmData[index].value;
+          dummySurvey.description = frmData[index].value;
+          console.log(dummySurvey.title);
+          break;
+
+        case 'description':
+          dummySurvey.description = frmData[index].value;
+          console.log(dummySurvey.description);
+          break;
+
+        case 'questionText':
+          //   console.log('current index '+index);
+          dummyquestion.typeId = this.state.completedTasks[questionindex].questionID;
+          console.log(dummyquestion.question = frmData[index].value);
+          dummyQuestionArray.push(dummyquestion);
+          questionindex += 1
+          //  console.log(dummySurvey.description);
+          break;
+        case 'answerText':
+          dummyAnswers.id = 0;
+          dummyAnswers.questionId = 0//if not then use questionindex
+          dummyAnswers.anser = frmData[index].value
+          dummyAnswerArray.push(dummyAnswers);
+          console.log(dummyAnswers)
+          break;
+        case 'tempalte?':
+          dummySurvey.template = true;
+          break;
+
+        default:
+          break;
+      }
+    }
+ 
+  }
+  testaxois = async (event) => {
+    surveyClient.findSurveyById(2);
+  }
+
+  componentDidMount() {
+
+
+
+    this.testaxois(event);
   }
 
   render() {
@@ -113,8 +196,8 @@ class surveyBuild extends React.Component<any, any>{
 
               )
             }</div></div>
-          
-        
+
+
 
 
         <div className="container" >
@@ -125,7 +208,9 @@ class surveyBuild extends React.Component<any, any>{
               <div id="123d" className={'form-group'}>
                 <label htmlFor="title">Survey Title</label>
                 <input type="title" className="form-control" name="title" required /><br />
+                <input type="checkbox" name="template?" /> Is this a template?
 
+     <br></br><br></br>
                 <label htmlFor="description">Survey Description</label>
                 <textarea className="form-control" name="description" placeholder="Survey Description" required></textarea><br />
 
@@ -140,14 +225,19 @@ class surveyBuild extends React.Component<any, any>{
                   <div onDrop={event => this.onDrop(event)} onDragOver={(event => this.onDragOver(event))} className="done">
                     {completedTasks.map((task, index) =>
                       <div key={index}>
+                        <br />
+
+                        <button className="btn btn-primary" onClick={() => this.deleterow(event, index)}>Remove &#8628;</button>
                         {task.task}
-                        <button onClick={() => this.deleterow(event, index)}>X</button>
+
+
                       </div>
+
                     )
                     }
                   </div>
                 </div>
-                  <br /><br /><button type="submit" className="btn btn-primary">Create Survey</button>
+                <br /><br /><button type="submit" className="btn btn-primary">Create Survey</button>
 
               </div>
 
