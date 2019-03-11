@@ -6,6 +6,7 @@ import SurveyBuildComponent from './survey-build/survey-build.component';
 import SurveyAssignComponent from './survey-assign/survey-assign.component';
 import SurveyAnalyticsComponent from './survey-analytics/survey-analytics.component';
 import SurveyAvailableComponent from './survey-available/survey-available.component';
+import SurveyTakingComponent from './survey-taking/survey-taking.component';
 // import { IManageComponentProps } from './manage.container';
 // import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
 // import { ManageInternalComponenet } from './manage-internal/manage-internal.component';
@@ -49,6 +50,7 @@ export class SurveyComponent extends React.Component<any, any> {
             <Route path={`${path}/assign`} component={SurveyAssignComponent} />
             <Route path={`${path}/analytics`} component={SurveyAnalyticsComponent} />
             <Route path={`${path}/available`} component={SurveyAvailableComponent} />
+            <Route path={`${path}/survey-taking/:surveyId`} component={SurveyTakingComponent} />
         </Switch>
       </div>
     )
