@@ -27,7 +27,7 @@ class TemplatesComponent extends React.Component<TemplatesProps, TemplatesState>
     // Load the templates into the state
     loadTemplates = () => {
         const dummyTemplates = [{
-            id: 1,
+            surveyId: 1,
             title: 'Example Template 1',
             description: 'Example Template 1 Description',
             dateCreated: new Date('03-09-2019'),
@@ -36,7 +36,7 @@ class TemplatesComponent extends React.Component<TemplatesProps, TemplatesState>
             published: true
         },
         {
-            id: 2,
+            surveyId: 2,
             title: 'Example Template 2',
             description: 'Example Template 2 Description',
             dateCreated: new Date('02-15-2019'),
@@ -45,7 +45,7 @@ class TemplatesComponent extends React.Component<TemplatesProps, TemplatesState>
             published: true
         },
         {
-            id: 3,
+            surveyId: 3,
             title: 'Example Template 3',
             description: 'Example Template 3 Description',
             dateCreated: new Date('03-05-2019'),
@@ -54,7 +54,7 @@ class TemplatesComponent extends React.Component<TemplatesProps, TemplatesState>
             published: false
         },
         {
-            id: 4,
+            surveyId: 4,
             title: 'Example Template 4',
             description: 'Example Template 4 Description',
             dateCreated: new Date('03-10-2019'),
@@ -84,7 +84,7 @@ class TemplatesComponent extends React.Component<TemplatesProps, TemplatesState>
                         </thead>
                         <tbody>
                             {this.state.templates.map(template => (
-                                <tr key={template.id} className="rev-table-row">
+                                <tr key={template.surveyId} className="rev-table-row">
                                     <td>{template.title}</td>
                                     <td>{template.description}</td>
                                     <td>{template.dateCreated.toDateString()}</td>
