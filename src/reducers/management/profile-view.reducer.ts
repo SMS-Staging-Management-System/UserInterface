@@ -38,7 +38,7 @@ const initialState: IProfileViewState = {
 
 export const profileViewReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case (viewUserTypes.GET_USER_INFO):
+        case (viewUserTypes.VIEW_USER):
             return {
                 ...state,
                 user: action.payload.newUser

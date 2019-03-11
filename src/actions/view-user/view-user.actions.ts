@@ -21,7 +21,7 @@ export const hoveredUser = (email: string) => async (dispatch) => {
       payload: {
           newUser: resp.data
       },
-      type: viewUserTypes.GET_USER_INFO
+      type: viewUserTypes.VIEW_USER
   })
 }
 
@@ -30,6 +30,6 @@ export const updateUserInfo = (newUser: IUser) => {
     payload: {
       newUser: newUser
     },
-    type: viewUserTypes.VIEW_USER
+    type: viewUserTypes.GET_USER_INFO
   }
 }
