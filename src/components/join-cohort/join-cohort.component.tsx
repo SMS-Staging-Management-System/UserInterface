@@ -1,10 +1,16 @@
 import React from 'react'
+import { IAuthState } from '../../reducers/management';
 
 
 
 interface IJoinCohortProps {
-    urlparam: string,
+    urlParam: string,
+    validToken: boolean,
+    login: IAuthState,
 
+
+
+    findCohortByToken: (token:string) => void
 
 }
 
@@ -16,10 +22,13 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
     //assert cohort token is real
     //if not display not a valid cohort link,
 
-    //If already logged in take to join cohort window
+    componentDidMount() {
+        this.props.findCohortByToken(this.props.urlParam);
+    }
 
-    //Offer login or signup for the current cohort
-    //on successful login/signup, take to join cohort window
+    
+
+   
 
     
     //join cohort window has username and cohort name and a join button
@@ -28,12 +37,32 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
     render(){
 
 
-
-        return(
-            <div>
-
-            </div>
-        )
+        if(this.props.validToken){
+            
+            if(this.props.login.currentUser.email){
+                //If already logged in take to join cohort window
+                return(
+                    <div>
+                        <p>logged in</p>
+                    </div>
+                )
+            }else {
+                //Offer login or signup for the current cohort
+                //on successful login/signup, take to join cohort window
+                return(
+                    <div>
+                        <p>login/create</p>
+                    </div>
+                )
+            }
+        } else {
+            //Not a valid link
+            return(
+                <div>
+                    <p>not a real place</p>
+                </div>
+            )
+        }
     }
 
 
