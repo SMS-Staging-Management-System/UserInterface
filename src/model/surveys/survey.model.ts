@@ -1,5 +1,5 @@
 export interface ISurvey {
-  id: number;
+  surveyId: number;
   title: string;
   description: string;
   dateCreated: string;
