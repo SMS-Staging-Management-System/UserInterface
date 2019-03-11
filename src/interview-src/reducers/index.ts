@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
-import { InterviewFormat } from '../model/Interview.format.model';
 import { createInterviewReducer } from './createInterview.reducer';
 
 export interface IReportFormState {
@@ -9,11 +8,12 @@ export interface IReportFormState {
 }
 
 export interface ICreateInterviewComponentState {
-    firstName: string,
-    lastName: string,
-    date: string,
+    allCohorts: any[] | undefined,
+    selectedCohort: any | undefined,
+    associatesInSelectedCohort: any[] | undefined,
+    selectedAssociate: any | undefined,
+    date: number,
     location: string,
-    format: InterviewFormat,
   }
 
 export interface IInterviewListState {
