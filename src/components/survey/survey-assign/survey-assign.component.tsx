@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Table } from 'reactstrap';
 import SurveyModal from './survey-assign-modal.component';
+import { surveyClient } from '../../../axios/sms-clients/survey-client';
 
 export class SurveyAssignComponent extends React.Component<any, any> {
     constructor(props) {
@@ -14,7 +15,17 @@ export class SurveyAssignComponent extends React.Component<any, any> {
 
 
     componentDidMount() {
-        this.loadMySurveys();
+        this.loadAllSurveys();
+    }
+
+    loadAllSurveys = async () => {
+        const surveys = await surveyClient.findAllSurveys();
+        if (surveys) {
+            this.setState({
+                surveys: surveys,
+                surveysLoaded: true
+            })
+        }
     }
 
     checkFunc = (e) => {
