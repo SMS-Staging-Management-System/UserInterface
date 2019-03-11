@@ -98,14 +98,13 @@ class surveyBuild extends React.Component<any, any>{
 
     let frmData = $(":input").serializeArray();
     frmData.splice(0, 13);
-    let today = new Date();
   //  `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}`
 
     let dummySurvey: ISurvey = {
-      id: 1,
+      surveyId: 1,
       title: frmData,
       description: 'Example Survey 1 Description',
-      dateCreated:  `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}`,
+      dateCreated:  new Date('03-25-2019'),
       closingDate: new Date('03-25-2019'),
       template: false,
       published: true
@@ -128,7 +127,7 @@ class surveyBuild extends React.Component<any, any>{
 
       let dummyAnswers: IAnswer = {
         id: 0,
-        anser: "string",
+        answer: "string",
         questionId: 0
       }
 
@@ -155,7 +154,7 @@ class surveyBuild extends React.Component<any, any>{
         case 'answerText':
           dummyAnswers.id = 0;
           dummyAnswers.questionId = questionindex;//if not then use questionindex
-          dummyAnswers.anser = frmData[index].value;
+          dummyAnswers.answer = frmData[index].value;
           dummyAnswerArray.push(dummyAnswers);
           console.log(dummyAnswers)
           break;

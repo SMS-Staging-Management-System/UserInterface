@@ -25,7 +25,7 @@ export const surveyClient = {
   saveSurvey(survey: ISurvey) { // this will be taking in ISurvey,IQuestion, and IAnswer and will enter seperate endpoints
     surveyContext.post(surveyBaseRoute, survey);
     // this.saveQuestion(question);
-    // this.saveAnswer(answer);
+    // this.saveAllAnswer(answer);
 
   },
 
@@ -63,7 +63,10 @@ export const surveyClient = {
   //-- Question Methods --//
   //----------------------//
 
-  saveQuestion(question: IQuestion[]) {
+  saveQuestion(question: IQuestion) {
+      surveyContext.post(questionBaseRoute, question);
+  },
+  saveAllQuestion(question: IQuestion[]) {
     for (let index = 0; index < question.length; index++) {
       surveyContext.post(questionBaseRoute, question[index]);
     }
@@ -81,11 +84,16 @@ export const surveyClient = {
   //-- Answer Methods --//
   //--------------------//
 
-  saveAnswer(answer: IAnswer[]) {
+  saveAnswer(answer: IAnswer) {
+      surveyContext.post(answerBaseRoute, answer);
+  },
+
+  saveAllAnswer(answer: IAnswer[]) {
     for (let index = 0; index < answer.length; index++) {
       surveyContext.post(answerBaseRoute, answer[index]);
     }
   },
+  
 
   //----------------------//
   //-- Response Methods --//
