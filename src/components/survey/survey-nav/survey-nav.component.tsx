@@ -29,12 +29,22 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
           //   onClick={() => this.props.updateSurveyTable('trainer')}
             >Available</Link>
         </NavItem>
+        <NavItem>
+          <Link to={path + "/my-surveys"}
+            className={`nav-link ${this.isActive('my-surveys')}`}
+            >My Surveys</Link>
+        </NavItem>
           <NavItem>
             <Link to= {path + "/build"}
               className={`nav-link ${this.isActive('admin')}`}
             //   onClick={() => this.props.updateSurveyTable('admin')}
               >Build</Link>
           </NavItem>
+          <NavItem>
+          <Link to={path + "/templates"}
+            className={`nav-link ${this.isActive('templates')}`}
+            >Templates</Link>
+        </NavItem>
           <NavItem>
             <Link to={path + "/assign"}
               className={`nav-link ${this.isActive('staging-manager')}`}
