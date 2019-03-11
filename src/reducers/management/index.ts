@@ -10,6 +10,7 @@ import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
 import { viewUserReducer } from "./view-user.reducer";
 import { currentSMSUserReducer } from "./current-sms-user.reducer";
+import { profileViewReducer } from "./profile-view.reducer";
 
 
 export interface IAuthState {
@@ -72,6 +73,11 @@ export interface IAuthState {
     currentSMSUser: IUser
   }
 
+  export interface IProfileViewState {
+    user: IUser
+    bIsLoggedInUser: boolean
+  }
+
   export interface IManagementState {
     viewUser: any;
     clicker: IClickerState,
@@ -80,7 +86,8 @@ export interface IAuthState {
     auth: IAuthState,
     manageUsers: IManageUsersState,
     addresses: IAddressState,
-    currentSMSUser: ICurrentSMSUserState
+    currentSMSUser: ICurrentSMSUserState,
+    currentProfile: IProfileViewState
   }
 
   export const managementState = combineReducers<IManagementState>({
@@ -91,5 +98,6 @@ export interface IAuthState {
     createUser: createUserReducer,
     createCohort: createCohortReducer,
     manageUsers: manageUsersReducer,
-    currentSMSUser: currentSMSUserReducer
+    currentSMSUser: currentSMSUserReducer,
+    currentProfile: profileViewReducer
   })

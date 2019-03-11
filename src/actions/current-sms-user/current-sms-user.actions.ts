@@ -17,7 +17,7 @@ export const getUserByEmail = (email: string) => async (dispatch) => {
     })
 }
 
-export const updateCurrentSMSUser = (currentSMSUser: IUser) => async (dispatch) => {
+export const updateUser = (currentSMSUser: IUser) => async (dispatch) => {
     try {
      const resp = await userClient.updateSMSUserInfo(currentSMSUser);
      toast.success('Info updated successfully');
