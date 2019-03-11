@@ -3,21 +3,38 @@ import { viewUserTypes } from '../../actions/view-user/view-user.actions';
 
 const initialState: IViewUserState = {
   enabled: false,
-    newUser: {
-    address: {
-      addressId: 0,
-      alias: '',
-      street: '',
-      city: '',
-      country: '',
-      state: '',
-      zip: ''
-    },
-    email: '',
-    firstName: '',
-    lastName: '',
-    phoneNumber: ''
-  },
+    newUser:{
+      userId: 0,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      personalAddress: {
+          addressId: 0,
+          street: '',
+          alias: '',
+          city: '',
+          state: '',
+          country: '',
+          zip: ''
+      },
+      trainingAddress: {
+          addressId: 0,
+          street: '',
+          alias: '',
+          city: '',
+          state: '',
+          country: '',
+          zip: ''
+      },
+      status: {
+          statusId: 0,
+          genericStatus: '',
+          specificStatus: '',
+          virtual: false     
+      },
+      roles: []
+  }
 }
 
 export const viewUserReducer = (state = initialState, action: any) => {
@@ -32,6 +49,12 @@ export const viewUserReducer = (state = initialState, action: any) => {
         ...state,
         newUser: action.payload.newUser
       }
+
+    // case viewUserTypes.GET_USER_INFO:
+    //   return {
+    //     ...state,
+    //     newUser: action.payload.newUser
+    //   }
   }
   return state;
 }

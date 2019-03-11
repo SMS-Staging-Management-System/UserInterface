@@ -31,7 +31,7 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
       * on failing to load the address
       * alias
       */}
-    <p>Training Location: {this.props.viewUser.newUser.address && this.props.viewUser.newUser.address.alias ||'no alias'}</p>
+    <p>Training Location: {this.props.viewUser.newUser.trainingAddress && this.props.viewUser.newUser.trainingAddress.alias ||'no alias'}</p>
   </div></>);
 
     return (
@@ -39,7 +39,7 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
           <ModalHeader className="rev-background-color">User info</ModalHeader>
           <ModalBody>
           
-          {this.props.user.roles.some(role => (role === 'admin')) ?  <Profile/> : currentModalDisplay }
+          {this.props.user.roles.some(role => (role !== 'admin')) ?  <Profile/> : currentModalDisplay }
             
           </ModalBody>
           <ModalFooter id="create-user-modal-footer">

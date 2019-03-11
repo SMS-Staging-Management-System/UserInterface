@@ -35,13 +35,7 @@ export interface IAuthState {
   
   export interface IViewUserState {
     enabled: boolean,
-    newUser: {
-      address: IAddress,
-      email: string,
-      firstName: string,
-      lastName: string,
-      phoneNumber: string
-    }
+    newUser: IUser
   }
 
   export interface ICreateCohortState {
@@ -78,7 +72,7 @@ export interface IAuthState {
   }
 
   export interface IManagementState {
-    viewUser: any;
+    viewUser: IViewUserState;
     clicker: IClickerState,
     createUser: ICreateUserState,
     createCohort: ICreateCohortState,
