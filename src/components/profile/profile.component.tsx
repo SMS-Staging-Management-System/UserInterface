@@ -1,16 +1,14 @@
 import  React, { Component } from 'react';
 import { IUser } from '../../model/user.model';
 import { Container, Form, Row, FormGroup, Label, Input, Col, Button } from 'reactstrap';
-import { IViewUserModal } from '../manage/view-user-modal/view-user-modal.container';
 
 // For the intial population of the user's info
 // Retrieved from the redux store
 interface IProfileProps {
   currentSMSUser: IUser
   userToView: IUser
-  bIsLoggedInUser: boolean
-  viewProfile(currentUser: IViewUserModal)
   updateUser(userToUpdate: IUser): void
+  updateCurrentSMSUser(user: IUser): void
 }
 
 // This component keeps track of its own state
@@ -19,22 +17,32 @@ interface IProfileProps {
 interface IProfileState {
   editingUser: IUser
   bFieldDidChange: boolean // Prevents user from spamming update
+  bIsCurrentUser: boolean 
 }
 
 class Profile extends Component<IProfileProps, IProfileState> {
- 
-  // Decide which user this state is here
   constructor(props) {
-    super(props);
-    let userToView: IUser = this.props.currentSMSUser;
-    if (this.props.bIsLoggedInUser) {
-          userToView = this.props.currentSMSUser;
+    super(props)
+    let endOfPath = location.pathname.split('/').pop();
+    let userToView: null | IUser = null;
+    let bIsCurrentUser: boolean = false;
+    if (endOfPath && endOfPath === 'profile') {
+      userToView = this.props.currentSMSUser;
+      bIsCurrentUser = true;
+    } else {
+      // Need to check if user clicked on in modal is the current user
+      // so we can update the current SMS user
+      if (this.props.currentSMSUser.email === this.props.userToView.email) {
+        bIsCurrentUser = true;
+      }
+      userToView = this.props.userToView;
     }
 
     this.state = {
       editingUser: userToView,
-      bFieldDidChange: false
-    };
+      bFieldDidChange: false,
+      bIsCurrentUser: bIsCurrentUser
+    }
   }
 
   onUserInfoChangeHandler = (event) => {
@@ -64,16 +72,19 @@ class Profile extends Component<IProfileProps, IProfileState> {
 
   onSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(this.state.bFieldDidChange);
     if (this.state.bFieldDidChange) {
       this.props.updateUser(this.state.editingUser); 
       this.setState({bFieldDidChange: false}); 
+
+      // Update the current SMS User if it's their profile
+      if (this.state.bIsCurrentUser) {
+        this.props.updateCurrentSMSUser(this.state.editingUser);
+      }
     }
     
   }
 
   render() {
-
 
     return (
       <Container>
@@ -128,7 +139,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
           <Input
             type="text" 
             name="street" 
-            defaultValue={this.state.editingUser.address.street}
+            defaultValue={this.state.editingUser.address && this.state.editingUser.address.street}
             onChange={() => this.onAddressChangeHandler(event)} required />
         </FormGroup>
         <Row>
@@ -138,7 +149,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="city"  
-                defaultValue={this.state.editingUser.address.city}
+                defaultValue={this.state.editingUser.address && this.state.editingUser.address.city}
                 onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>
           </Col>
@@ -148,7 +159,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="state"
-                defaultValue={this.state.editingUser.address.state}
+                defaultValue={this.state.editingUser.address && this.state.editingUser.address.state}
                 onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>
           </Col>
@@ -158,7 +169,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Input 
                 type="text" 
                 name="zip" 
-                defaultValue={this.state.editingUser.address.zip}
+                defaultValue={this.state.editingUser.address && this.state.editingUser.address.zip}
                 onChange={() => this.onAddressChangeHandler(event)} required />
             </FormGroup>  
           </Col>

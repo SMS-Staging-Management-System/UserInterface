@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 
 export const currentSMSUserTypes = {
     GET_USER_INFO: 'GET_USER_INFO',
-    UPDATE_USER_INFO: 'UPDATE_USER_INFO'
+    UPDATE_USER_INFO: 'UPDATE_USER_INFO',
+    UPDATE_CURRENT_SMS_USER: 'UPDATE_CURRENT_SMS_USER'
 }
 
 export const getUserByEmail = (email: string) => async (dispatch) => {
@@ -29,5 +30,14 @@ export const updateUser = (currentSMSUser: IUser) => async (dispatch) => {
      })
     } catch (error) {
         toast.error('Failed to update');
+    }
+}
+
+export const updateCurrentSMSUser = (currentSMSUser: IUser) => {
+    return {
+        payload: {
+            updatedUser: currentSMSUser
+        },
+        type: currentSMSUserTypes.UPDATE_CURRENT_SMS_USER
     }
 }

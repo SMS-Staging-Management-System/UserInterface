@@ -75,7 +75,6 @@ export interface IAuthState {
 
   export interface IProfileViewState {
     user: IUser
-    bIsLoggedInUser: boolean
   }
 
   export interface IManagementState {

@@ -1,5 +1,5 @@
 import { IProfileViewState } from ".";
-import { profileTypes } from "../../actions/profile/profile.actions";
+import { viewUserTypes } from "../../actions/view-user/view-user.actions";
 
 const initialState: IProfileViewState = {
     user: {
@@ -18,16 +18,15 @@ const initialState: IProfileViewState = {
             zip: ''
         },
         roles: []
-    },
-    bIsLoggedInUser: true 
+    }
 }
 
 export const profileViewReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case (profileTypes.VIEW_PROFILE):
+        case (viewUserTypes.GET_USER_INFO):
             return {
                 ...state,
-                user: action.payload.user
+                user: action.payload.newUser
             }
     }
     return state;
