@@ -1,21 +1,24 @@
 import React from 'react';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { ISurvey } from '../../../model/surveys/survey.model';
-import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import { IAuthState } from '../../../reducers/management';
+import { IState } from '../../../reducers';
 
-interface SurveyAvailableProps {
-
+interface IComponentProps extends RouteComponentProps<{}> {
+    auth: IAuthState;
 }
 
-interface SurveyAvailableState {
+interface IComponentState {
     surveys: ISurvey[],
     surveysLoaded: boolean,
     redirectTo: any
 }
 
-export class SurveyAvailableComponent extends React.Component<SurveyAvailableProps, SurveyAvailableState> {
-    constructor(props) {
+export class SurveyAvailableComponent extends React.Component<IComponentProps, IComponentState, {}> {
+    constructor(props: any) {
         super(props);
         this.state = {
             surveys: [],
@@ -25,17 +28,15 @@ export class SurveyAvailableComponent extends React.Component<SurveyAvailablePro
     }
 
     componentDidMount() {
-        this.loadAllSurveys();
+        this.loadMySurveys();
     }
 
-    loadAllSurveys = async () => {
-        const surveys = await surveyClient.findAllSurveys();
-        if (surveys) {
-            this.setState({
-                surveys: surveys,
-                surveysLoaded: true
-            })
-        }
+    loadMySurveys = async () => {
+        const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
+        this.setState({
+            surveys: myAssignedSurveys,
+            surveysLoaded: true
+        })
     }
 
     handleTakeSurvey = (surveyId: number) => {
@@ -80,4 +81,8 @@ export class SurveyAvailableComponent extends React.Component<SurveyAvailablePro
     }
 }
 
-export default SurveyAvailableComponent;
+const mapStateToProps = (state: IState) => ({
+    auth: state.managementState.auth
+});
+
+export default connect(mapStateToProps)(SurveyAvailableComponent);
