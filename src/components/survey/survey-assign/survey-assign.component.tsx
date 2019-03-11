@@ -2,38 +2,101 @@ import React, { Fragment } from 'react';
 import { Table } from 'reactstrap';
 import SurveyModal from './survey-assign-modal.component';
 
-export class SurveyAssignComponent extends React.Component {
+export class SurveyAssignComponent extends React.Component<any, any> {
     constructor(props) {
         super(props);
+        this.state = {
+            surveys: [],
+            surveysLoaded: false,
+            surveysToAssign: []
+        }
     }
 
+
+    componentDidMount() {
+        this.loadMySurveys();
+    }
+
+    checkFunc = (e) => {
+        const { checked, id } = e.target;
+
+        if (checked) {
+            if (!this.state.surveysToAssign.includes(id)) {
+                this.setState({
+                    surveysToAssign: [...this.state.surveysToAssign, id]
+                });
+            }
+        }  else {
+            if (this.state.surveysToAssign.includes(id)) {
+                this.setState({
+                    surveysToAssign: this.state.surveysToAssign.filter((surveyId) => { 
+                        return surveyId !== id 
+                })});
+            }
+        }
+    }
+
+    loadMySurveys = () => {
+        const dummySurveyData = [{
+            id: 1,
+            title: 'Example Survey 1',
+            description: 'Example Survey 1 Description'
+        },
+        {
+            id: 2,
+            title: 'Example Survey 2',
+            description: 'Example Survey 2 Description'
+        },
+        {
+            id: 3,
+            title: 'Example Survey 3',
+            description: 'Example Survey 3 Description'
+        },
+        {
+            id: 4,
+            title: 'Example Survey 4',
+            description: 'Example Survey 4 Description'
+        }]
+        this.setState({
+            surveys: dummySurveyData,
+            surveysLoaded: true
+        })
+    }
+
+
+
     render() {
+        console.log(this.state.surveysToAssign);
         return (
             <Fragment>
-                <Table striped id="manage-users-table" className="tableUsers">
-                    <thead className="rev-background-color">
-                    <tr>
-                        <th>Surveys To Assign</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="rev-table-row">
-                            <td>QC Survey</td>
+                    <Table striped id="manage-users-table" className="tableUsers">
+                        <thead className="rev-background-color">
+                        <tr>
+                            <th>Select</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th></th>
+                            <th></th>
                         </tr>
-                        <tr className="rev-table-row">
-                            <td>Template 1</td>
-                        </tr>
-                        <tr className="rev-table-row">
-                            <td>Template 2</td>
-                        </tr>
-                        <tr className="rev-table-row">
-                            <td>Template 3</td>
-                        </tr>
-                    </tbody>
-                </Table>
+                        </thead>
+                        <tbody>
+                            {this.state.surveys.map(survey => (
+                                    <tr key={survey.id} className="rev-table-row">
+                                        <td><input type="checkbox" onChange={e=>this.checkFunc(e)} id={survey.id}/></td>
+                                        <td>{survey.title}</td>
+                                        <td>{survey.description}</td>
+                                    </tr>
+                                ))}
+                        </tbody>
+                    </Table>
 
                 <div className="buttonDiv">
-                    <tr><SurveyModal buttonLabel='Assign To Users' className='assignSurveyBtn'/></tr>
+                    <tr>
+                        <SurveyModal 
+                            buttonLabel='Assign To Users' 
+                            className='assignSurveyBtn'
+                            surveysToAssign={this.state.surveysToAssign}/>
+                    </tr>
                 </div>
             </Fragment>
         );
