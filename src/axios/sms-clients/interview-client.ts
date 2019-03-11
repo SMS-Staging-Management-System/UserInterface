@@ -11,7 +11,8 @@ export const interviewClient = {
   
     addNewInterview: async (newInterview: INewInterviewData) => {
         return await smsClient.post(interviewContext + '/new', newInterview);
-
+    },
+    
     fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC') => {
         let url = interviewContext;
         url += '/page?orderBy=' + orderBy + '&direction=' + direction;
