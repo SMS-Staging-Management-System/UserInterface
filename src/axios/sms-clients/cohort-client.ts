@@ -6,5 +6,9 @@ const cohortContext = '/users'
 export const cohortClient = {
   save(cohort: ICohort) {
     return smsClient.post(cohortContext, cohort);
+  },
+  
+  getAll: () => {
+    return smsClient.get(cohortContext + "/cohorts");
   }
 }
