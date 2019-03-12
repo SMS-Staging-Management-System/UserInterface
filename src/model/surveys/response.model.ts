@@ -1,6 +1,9 @@
+import { IAnswer } from "./answer.model";
+import { ISurvey } from "./survey.model";
+
 export interface IResponse {
     id: number;
-    surveyId: number;
-    answerId: number;
-    userEmail: string;
+    surveyId: ISurvey;
+    answerId: IAnswer;
+    userEmailString: string;
 }
