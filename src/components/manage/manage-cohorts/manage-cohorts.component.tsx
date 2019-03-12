@@ -7,7 +7,6 @@ import Button from 'reactstrap/lib/Button';
 import { IManageCohortsComponentProps } from './manage-cohorts.container';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { ICohort } from '../../../model/cohort';
-import { toast } from 'react-toastify';
 
 /**
  * {v}: dropdown with further info
@@ -54,7 +53,6 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
   }
 
   async componentDidMount () {
-    toast.info('updating cohorts');
 
      const data = await this.getAllCohorts();
      console.log('calling getAllCohorts in componentDidMount')

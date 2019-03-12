@@ -36,8 +36,11 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
           history={this.props.history} 
           location={this.props.location}
           match={this.props.match}/>
+
+        {this.props.match.params.manage === 'cohorts'?
+        <ManageCohortsComponent />:
         <ManageInternalComponenet/>
-        <ManageCohortsComponent />
+        }
         <CreateCohortModal />
         <CreateUserModal />
       </div>
