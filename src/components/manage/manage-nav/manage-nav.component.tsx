@@ -14,7 +14,7 @@ interface IManageNavComponentProps extends RouteComponentProps{
 }
 
 export class ManageNavComponent extends React.Component<IManageNavComponentProps, any> {
-  constructor(props) {
+  constructor(props: IManageNavComponentProps) {
     super(props);
   }
 

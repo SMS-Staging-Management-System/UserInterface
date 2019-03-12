@@ -8,7 +8,7 @@ export const currentSMSUserTypes = {
     UPDATE_CURRENT_SMS_USER: 'UPDATE_CURRENT_SMS_USER'
 }
 
-export const getUserByEmail = (email: string) => async (dispatch) => {
+export const getUserByEmail = (email: string) => async (dispatch: (action: any) => void) => {
     const resp = await userClient.findOneByEmail(email);
     dispatch ({
         payload: {
@@ -18,7 +18,7 @@ export const getUserByEmail = (email: string) => async (dispatch) => {
     })
 }
 
-export const updateUser = (currentSMSUser: IUser) => async (dispatch) => {
+export const updateUser = (currentSMSUser: IUser) => async (dispatch: (action: any) => void) => {
     try {
      const resp = await userClient.updateSMSUserInfo(currentSMSUser);
      toast.success('Info updated successfully');

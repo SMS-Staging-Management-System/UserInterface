@@ -8,7 +8,7 @@ import { HomeComponent } from '../components/home/home.component';
 import profileContainer from '../components/profile/profile.container';
 
 export class ManagementRoutes extends React.Component<any, any> {
-    constructor(props){
+    constructor(props:any){
         super(props)
     }
 

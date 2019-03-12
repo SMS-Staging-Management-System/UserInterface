@@ -8,6 +8,7 @@ const initialState: ICreateCohortState = {
   trainerDropdownActive: false,
   isSaved: false,
   newCohort: {
+    users: [],
     cohortToken: '',
     address: {
       addressId: 0,

@@ -7,7 +7,12 @@ import ViewUserModal from '../view-user-modal/view-user-modal.container';
 export interface IManageInternalComponentProps {
   manageUsers: ICognitoUser[];
   toggleViewUserModal: () => void;
-  hoveredUser;
+  /**
+   * Handles what happens when a user is hovered
+   * 
+   * @param email: The email address of the hovered user
+   */
+  hoveredUser: (email: string) => void;
 }
 /**
  * {v}: dropdown with further info
@@ -42,7 +47,7 @@ export interface IManageInternalComponentProps {
 
 export class ManageInternalComponenet extends React.Component<IManageInternalComponentProps, any> {
 
-  constructor(props) {
+  constructor(props: IManageInternalComponentProps) {
     super(props);
   }
   

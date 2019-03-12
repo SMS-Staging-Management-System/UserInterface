@@ -6,11 +6,10 @@ import { ViewUserModal } from './view-user-modal.component';
 import { IUser } from '../../../model/user.model';
 
 export interface IViewUserModal {
-  toggleViewUserModal,
+  toggleViewUserModal: () => void,
   viewUser: IViewUserState,
   addresses: IAddressState,
   user: IUser
-
 }
 
 const mapStateToProps = (state:IState) => ({
@@ -25,4 +24,5 @@ const mapDispatchToProps = {
   updateUserInfo,
   hoveredUser
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(ViewUserModal);

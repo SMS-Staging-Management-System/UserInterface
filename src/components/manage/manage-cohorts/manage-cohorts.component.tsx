@@ -42,7 +42,7 @@ import { ICohort } from '../../../model/cohort';
 
 export class ManageCohortsComponenent extends React.Component<IManageCohortsComponentProps, any> {
 
-  constructor(props) {
+  constructor(props: IManageCohortsComponentProps) {
     super(props);
   }
 

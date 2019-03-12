@@ -9,8 +9,8 @@ import { RouteComponentProps } from 'react-router';
 import { ManageComponenet } from './manage.component';
 
 export interface IManageComponentProps extends RouteComponentProps<{manage: string}>{
-  manageGetUsersByGroup,
   manageUsers: IManageUsersState,
+  manageGetUsersByGroup: (groupName: string) => void,
   toggleCreateUserModal: () => void,
   toggleCreateCohortModal: () => void,
   toggleViewUserModal: () => void,
