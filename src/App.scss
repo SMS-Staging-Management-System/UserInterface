@@ -536,17 +536,27 @@ Survey Component
 }
 
 .assignSurveyBtn{
+  color: black;
   border-radius: 10px;
   background-color: $revature-orange-light;
   font-weight: bold;
   height: 40px;
   width: 100%;
+  border: none;
 }
 
 .assignSurveyBtn:hover,
 .assignSurveyBtn:active{
 background-color: $revature-orange-light;
 color:#565D61;
+}
+
+.assignSurveyModalHeader{
+    text-align: center;
+    background-color: $revature-orange-light;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
 }
 
 /*****************
