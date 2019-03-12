@@ -10,7 +10,7 @@ import './createInterview.component.scss'
 import { ICreateInterviewComponentState } from '../../reducers';
 import { IState } from '../../../reducers';
 import { setState } from '../../actions/createInterview/createInterview.actions';
-import { InterviewFormats } from '../../model/Interview.format.model';
+import { InterviewFormat } from '../../model/Interview.format.model';
 import { interviewClient } from '../../../axios/sms-clients/interview-client';
 import Button from 'reactstrap/lib/Button';
 import { INewInterviewData } from '../../model/INewInterviewData';
@@ -26,10 +26,7 @@ interface ICreateInterviewComponentProps extends RouteComponentProps {
 
 class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps> {
 
-    componentDidMount(){
-        // interviewClient.testfetch().then((res) => {
-        //     console.log(res);
-        // });
+    componentDidMount() {
         cohortClient.getAll().then((res) => {
             if(res.data){
                 this.props.setState({...this.props.createInterviewComponentState, allCohorts:res.data} )
@@ -79,20 +76,19 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
     const state = this.props.createInterviewComponentState;
     const setState = this.props.setState;
     const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location} = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
-    const cohortOptions = allCohorts && allCohorts.map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormats[key]}</option> : undefined })
-    const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormats[key]}</option> : undefined })
+    const cohortOptions = allCohorts && allCohorts.map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormat[key]}</option> : undefined })
+    const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormat[key]}</option> : undefined })
    
     return (
         <div id='new-interview-full'>
             <span>CREATE A NEW INTERVIEW FOR AN ASSOCIATE</span>
             <hr />
             <InputGroup>
-                <InputGroupAddon addonType="prepend">Select an associate...</InputGroupAddon>
-                <Input type='select' value={selectedCohort} disabled={!allCohorts}  onChange={(e)=>{setState({...state, selectedCohort: selectedCohort }); this.fetchAssociatesInSelectedCohort();}} >
+                <Input type='select' value={selectedCohort} disabled={!allCohorts || allCohorts.length == 0}  onChange={(e)=>{setState({...state, selectedCohort: selectedCohort }); this.fetchAssociatesInSelectedCohort();}} >
                     <option value={undefined} style={{display:'none'}}>select a cohort...</option>
                     {cohortOptions}
                 </Input>
-                <Input type='select' value={selectedAssociate} disabled={!associatesInSelectedCohort}  onChange={(e)=>{setState({...state, selectedAssociate: selectedAssociate });}} >
+                <Input type='select' value={selectedAssociate} disabled={!associatesInSelectedCohort || associatesInSelectedCohort.length == 0}  onChange={(e)=>{setState({...state, selectedAssociate: selectedAssociate });}} >
                     <option value={undefined} style={{display:'none'}}>select a associate...</option>
                     {associateOptions}
                 </Input>

@@ -1,4 +1,4 @@
-import { InterviewFormat } from "../../model/Interview.format.model";
+import { IInterviewFormat } from "../../model/Interview.format.model";
 
 export const AssocInputActions = {
     UPDATE_DAY_NOTIFIED: 'UPDATE_DAY_NOTIFIED',
@@ -6,9 +6,9 @@ export const AssocInputActions = {
     UPDATE_DESC_PROVIDED: 'UPDATE_DESC_PROVIDED',
     UPDATE_ACTUAL: 'UPDATE_ACTUAL',
     UPDATE_PROPOSED: 'UPDATE_PROPOSED',
-    SUBMIT: 'SUBMIT'
+    SUBMIT: 'SUBMIT' 
 };
-
+   
 export const updateDayNotified = () => {
     return {
         type: AssocInputActions.UPDATE_DAY_NOTIFIED,
@@ -31,7 +31,7 @@ export const updateDescProvided = () => {
 };
 
 export const updateActualFormat = () => {
-    const payload: InterviewFormat = {
+    const payload: IInterviewFormat = {
         interviewFormatId: 0,
         formatDesc: ''
     };
@@ -42,7 +42,7 @@ export const updateActualFormat = () => {
 };
 
 export const updateProposedFormat = () => {
-    const payload: InterviewFormat = {
+    const payload: IInterviewFormat = {
         interviewFormatId: 0,
         formatDesc: ''
     };

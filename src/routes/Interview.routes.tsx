@@ -3,6 +3,7 @@ import {ReportForm} from "../interview-src/component/report-form/ReportForm.cont
 import { Switch, Route } from 'react-router';
 import InterviewList from '../interview-src/component/InterviewList/InterviewList';
 import createInterviewComponent from '../interview-src/component/creaInterviewComponent/createInterview.component';
+import { InterviewFeedbackComponent } from '../interview-src/component/interviewFeedbackComponent/interviewFeedback.component';
 
 
 export class InterviewRoutes extends React.Component<any, any> {
@@ -19,6 +20,7 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/reports`} component={ReportForm} />
                 <Route path={`${path}/list`} component={InterviewList} />
                 <Route path={`${path}/new`} component={createInterviewComponent} />
+                <Route path={`${path}/feedback`} component={ InterviewFeedbackComponent} />
              </Switch>
         )
     }
