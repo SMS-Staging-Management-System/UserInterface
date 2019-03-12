@@ -25,6 +25,10 @@ export const interviewClient = {
         return smsClient.get(url);
     },
       
+    assocNeedFeedback: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/reports/AssociateNeedFeedback/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    },
+      
     interviewPerAssoc: async (pageNumber:number, PageSize:number) => {
         return await smsClient.get(interviewContext+`/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     }
