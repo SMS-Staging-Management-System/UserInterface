@@ -67,6 +67,7 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
             return (
                 <tr>
                     <td>{User.firstName} {User.lastName}</td>
+                    <td>{User.email}</td>
                 </tr>
             );
         });
@@ -76,7 +77,8 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
                 <table>
                     <thead>
                         <tr>
-                            <th>Associate</th>
+                            <th>Name</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
