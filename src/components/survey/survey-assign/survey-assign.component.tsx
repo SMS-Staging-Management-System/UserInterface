@@ -103,11 +103,9 @@ export class SurveyAssignComponent extends React.Component<any, any> {
                     </Table>
 
                 <div className="buttonDiv">
-                    <tr>
                         <SurveyModal 
-                            buttonLabel='Assign To Users' 
+                            buttonLabel='Assign To Cohorts' 
                             surveysToAssign={this.state.surveysToAssign}/>
-                    </tr>
                 </div>
             </Fragment>
         );
