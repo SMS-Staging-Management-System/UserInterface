@@ -2,9 +2,11 @@ import { combineReducers } from 'redux';
 import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
+import { assocInputReducer } from '../reducers/assoc-input.reducer';
+import { IAssociateInput } from '../model/Associateinput.model';
 
 export interface IReportFormState {
-
+    
 }
 
 export interface ICreateInterviewComponentState {
@@ -24,11 +26,13 @@ export interface IInterviewListState {
 export interface IInterviewState {
     interviewList : IInterviewListState,
     reportForm : IReportFormState,
-    createInterviewComponentState: ICreateInterviewComponentState
+    createInterviewComponentState: ICreateInterviewComponentState,
+    associateInput: IAssociateInput
 }
 
 export const interviewState = combineReducers<IInterviewState>({
    interviewList: interviewListReducer,
    reportForm: reportFormReducer,
-   createInterviewComponentState: createInterviewReducer
-})
+   createInterviewComponentState: createInterviewReducer,
+   associateInput: assocInputReducer
+});
