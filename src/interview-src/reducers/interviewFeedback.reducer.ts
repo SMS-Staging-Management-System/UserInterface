@@ -1,5 +1,5 @@
 import { IInterviewFeedbackComponentState } from '.';
-import { interviewFeedbackTypes } from '../actions/interviewFeedback/interviewFeedback.component';
+import { interviewFeedbackTypes } from '../actions/interviewFeedback/interviewFeedback.actions';
 
 const initialState: IInterviewFeedbackComponentState = {
 }
