@@ -55,12 +55,10 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
     // Updates state when the user selects an option
     handleResponseInput = event => {
         const { name, value } = event.target;
-        // const updatedResponses = this.state.responses.concat({ [name]: value });
         this.setState(prevState => ({
             responses: {
                 ...prevState.responses,
                 [name]: value
-
             }
         }));
     };
@@ -68,12 +66,10 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
     // Updates state when the user enters feedback
     handleFeedbackInput = event => {
         const { name, value } = event.target;
-        // const updatedResponses = this.state.responses.concat({ [name]: value });
         this.setState(prevState => ({
             newFeedback: {
                 ...prevState.newFeedback,
                 [name]: value
-
             }
         }));
     };
@@ -82,7 +78,6 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
     handleSubmitResponses = (event) => {
         event.preventDefault();
         for (let key in this.state.responses) {
-            console.log('key', key);
             const responseToSubmit: IResponse = {
                 "answerId": {
                     "id": this.state.responses[key],
@@ -117,7 +112,6 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
     };
 
     render() {
-        console.log('survey-taking this.state', this.state)
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
