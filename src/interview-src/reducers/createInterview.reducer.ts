@@ -1,16 +1,13 @@
 import { createInterviewTypes } from '../actions/createInterview/createInterview.actions';
 import { ICreateInterviewComponentState } from '.';
-import { InterviewFormats } from '../model/Interview.format.model';
 
 const initialState: ICreateInterviewComponentState = {
-    firstName: '',
-    lastName: '',
-    date: '',
-    location: '',
-    format: {
-      interviewFormatId: 0,
-      formatDesc: InterviewFormats.none
-    }
+  allCohorts: undefined,
+  selectedCohort: undefined,
+  associatesInSelectedCohort: undefined,
+  selectedAssociate: undefined,
+  date: 0,
+  location: ''
 }
 
 // export interface IReduxAction {

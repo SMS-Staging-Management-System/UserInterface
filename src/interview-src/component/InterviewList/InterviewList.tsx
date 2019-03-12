@@ -9,15 +9,15 @@ import ReactPaginate from 'react-paginate'
 export interface InterviewListProps {
     listOfInterviews : any[],
     numberOfPages : number,
-    getInterviewPages : (ordeyBy?: string, 
-        direction? : string, 
+    getInterviewPages : (
         pageNumber? : number, 
-        pageSize? : number) => void,
-    getNumberOfPages : (pageSize : number) => void
+        pageSize? : number,
+        ordeyBy?: string, 
+        direction? : string) => void,
+    getNumberOfPages : (pageSize? : number) => void
 }
  
 export interface InterviewListState {
-    
 }
  
 class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
@@ -25,35 +25,42 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         super(props);
     }
 
-    renderListOfInterviews = () => {
-        if(this.props.listOfInterviews[0]){
-            const result = this.props.listOfInterviews.map(() => {
-                <tr>
-                    <td></td>
-                </tr>
-            })
-
-            return result;
-        } else {
-            return <p></p>
-        }
+    async componentDidMount() {
+        this.props.getInterviewPages();
+        this.props.getNumberOfPages();
     }
 
-    handlePageClick = () => {
-
+    handlePageClick = (data) => {
+        let selected = data.selected;
+        this.props.getInterviewPages(selected);
     }
 
     render() { 
+        console.log(this.props.listOfInterviews)
         return ( 
             <Jumbotron>
                 <Table>
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Associate ID</th>
+                            <th>Manager ID</th>
+                            <th>Location</th>
+                            <th>Date Notified</th>
+                            <th>Date Scheduled</th>
+                            <th>Date Reviewed</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderListOfInterviews()}
+                        {this.props.listOfInterviews.map((entry) => {
+                            return (<tr>
+                                <td>{entry.associateId}</td>
+                                <td>{entry.managerId}</td>
+                                <td>{entry.place}</td>
+                                <td>{new Date(entry.notified).toDateString()}</td>
+                                <td>{new Date(entry.scheduled).toDateString()}</td>
+                                <td>{new Date(entry.reviewed).toDateString()}</td>
+                            </tr>)
+                        })}
                     </tbody>
                 </Table>
                 <ReactPaginate
@@ -62,7 +69,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 breakLabel={'...'}
                 breakClassName={'page-item no-select'}
                 breakLinkClassName={'break-me-link page-link'}
-                pageCount={100}
+                pageCount={this.props.numberOfPages}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
