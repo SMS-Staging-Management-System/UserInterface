@@ -6,5 +6,9 @@ const usersContext = '/users'
 export const userClient = {
   saveUser(newUser: IUser) {
     return smsClient.post(usersContext, newUser);
+  },
+
+  findAllByCohortId: (cohortId: number) => {
+    return smsClient.get(`${usersContext}/cohort/${cohortId}`)
   }
 }
