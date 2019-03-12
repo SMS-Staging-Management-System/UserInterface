@@ -9,6 +9,7 @@ import Navbar from 'reactstrap/lib/Navbar';
 interface IManageNavComponentProps extends RouteComponentProps{
   updateManageUsersTable: (group: string) => void,
   toggleCreateUserModal: () => void,
+  // toggleViewUserModal: () => void,
   manage: string,
 }
 

@@ -8,7 +8,7 @@ import Button from 'reactstrap/lib/Button';
 
 export interface IManageAssociatesComponentProps {
   manageUsers: ICognitoUser[];
-  toggleCreateCohortModal: () => void
+  toggleCreateCohortModal: () => void;
 }
 
 export class ManageCohortsComponenet extends React.Component<IManageAssociatesComponentProps, any> {

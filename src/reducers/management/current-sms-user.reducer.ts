@@ -4,22 +4,38 @@ import { currentSMSUserTypes } from "../../actions/current-sms-user/current-sms-
 
 
 const initialState: ICurrentSMSUserState = {
-    currentSMSUser: {
-        userId: 0,
+    currentSMSUser:  {
+        trainingAddress: {
+          addressId: 0,
+          street: '',
+          alias: '',
+          city: '',
+          country: '',
+          state: '',
+          zip: '',
+        },
+        personalAddress: {
+          addressId: 0,
+          street: '',
+          alias: '',
+          city: '',
+          country: '',
+          state: '',
+          zip: '',
+        },
+        email: '',
         firstName: '',
         lastName: '',
-        email: '',
-        mobile: '',
-        address: {
-            addressId: 0,
-            alias: '',
-            city: '',
-            state: '',
-            country: '',
-            zip: ''
-        },
-        roles: []
-    }
+        phoneNumber: '',
+        userId: 0,
+        roles: [],
+        status: {
+          statusId: 0,
+          genericStatus: '',
+          specificStatus: '',
+          virtual: false
+        }
+      }
 }
 
 export const currentSMSUserReducer = (state = initialState, action: any) => {
@@ -44,6 +60,19 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
                     roles: state.currentSMSUser.roles
                 }
             }
+        case (currentSMSUserTypes.UPDATE_CURRENT_SMS_USER): {
+            return {
+                ...state,
+                currentSMSUser: {
+                    ...state.currentSMSUser,
+                    ...action.payload.updatedUser,
+                    roles: state.currentSMSUser.roles
+                }
+            }
+        }
+
+        case (authTypes.LOGOUT):
+            return initialState;
         
     }
     return state;

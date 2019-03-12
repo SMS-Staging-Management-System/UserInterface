@@ -6,10 +6,12 @@ const initialState: ICreateCohortState = {
   enabled: false,
   locationDropdownActive: false,
   trainerDropdownActive: false,
+  isSaved: false,
   newCohort: {
     cohortToken: '',
     address: {
       addressId: 0,
+      street: '',
       alias: '',
       city: '',
       country: '',
@@ -22,8 +24,18 @@ const initialState: ICreateCohortState = {
     startDate: '2019-01-10',
     cohortId: 0,
  trainer: {
-      address: {
+      trainingAddress: {
         addressId: 0,
+        street: '',
+        alias: '',
+        city: '',
+        country: '',
+        state: '',
+        zip: '',
+      },
+      personalAddress: {
+        addressId: 0,
+        street: '',
         alias: '',
         city: '',
         country: '',
@@ -33,9 +45,15 @@ const initialState: ICreateCohortState = {
       email: '',
       firstName: '',
       lastName: '',
-      mobile: '',
+      phoneNumber: '',
       userId: 0,
-      roles: []
+      roles: [],
+      status: {
+        statusId: 0,
+        genericStatus: '',
+        specificStatus: '',
+        virtual: false
+      }
     }
   },
 }
@@ -45,7 +63,12 @@ export const createCohortReducer = (state = initialState, action: any) => {
     case createCohortTypes.TOGGLE:
       return {
         ...state,
-        enabled: !state.enabled
+        enabled: !state.enabled,
+        isSaved: false,
+        newCohort: {
+          ...state.newCohort,
+          cohortToken: ''
+        }
       }
     case createCohortTypes.TOGGLE_LOCATION_DROPDOWN:
       return {
@@ -60,33 +83,39 @@ export const createCohortReducer = (state = initialState, action: any) => {
     case createCohortTypes.UPDATE_NEW_COHORT_TRAINER:
       return {
         ...state,
+        isSaved: false,
         newCohort: {
           ...state.newCohort,
-          trainer: action.payload.trainer
+          trainer: action.payload.trainer,
+          cohortToken: ''
         }
       }
     case createCohortTypes.UPDATE_NEW_COHORT_LOCATION:
       return {
         ...state,
+        isSaved: false,
         newCohort: {
           ...state.newCohort,
-          address: action.payload.location
+          address: action.payload.location,
+          cohortToken: ''
         }
       }
     case createCohortTypes.UPDATE_NEW_COHORT:
       return {
         ...state,
-        newCohort: action.payload.newUser
+        newCohort: action.payload.newUser,
+        isSaved: false
       }
     case createCohortTypes.COHORT_SAVED:
       return {
-        ...initialState,
+        ...state,
         enabled:true,
+        isSaved: true,
         newCohort: {
-          ...initialState.newCohort,
+          ...state.newCohort,
           cohortToken: state.newCohort.cohortToken
         }
-        };
+      };
     case authTypes.LOGOUT:
       return initialState;
   }
