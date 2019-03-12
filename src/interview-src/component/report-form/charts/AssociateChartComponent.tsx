@@ -14,8 +14,6 @@ export class AssociateChartComponent extends React.Component<IChartDisplayProps,
   }
 
 
-
-
 componentDidMount()
 {
   var ctx = this.canvasRef.current.getContext('2d');
