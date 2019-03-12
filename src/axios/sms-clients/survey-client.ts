@@ -29,12 +29,15 @@ export const surveyClient = {
 
   },
 
-  async findAllSurveys() {
-    let surveys = await surveyContext.get(surveyBaseRoute)
-    for (let index = 0; index < surveys.data.length; index++) {
-      console.log(surveys.data[index]);
-
-    }
+  findAllSurveys: async () => {
+    let surveys;
+    await surveyContext.get('surveys')
+      .then(response => {
+        surveys = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
     return surveys
   },
   async findAllSurveystemplate(templateType: boolean) {

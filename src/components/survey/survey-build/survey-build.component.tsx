@@ -15,6 +15,19 @@ import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
+// import { ISurveyBuildState, ISurveyState } from '../../../reducers/survey';
+// import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
+// import { connect } from 'react-redux';
+
+
+
+
+// export interface ISurveyBuildProps {
+//   surveyBuild: ISurveyBuildState,
+//   CreatSurvey: (survey: ISurvey) => void,
+
+// }
+
 
 class surveyBuild extends React.Component<any, any>{
   constructor(props) {
@@ -98,13 +111,13 @@ class surveyBuild extends React.Component<any, any>{
 
     let frmData = $(":input").serializeArray();
     frmData.splice(0, 13);
-  //  `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}`
+    //  `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}`
 
     let dummySurvey: ISurvey = {
       surveyId: 1,
       title: frmData,
       description: 'Example Survey 1 Description',
-      dateCreated:  new Date('03-25-2019'),
+      dateCreated: new Date('03-25-2019'),
       closingDate: new Date('03-25-2019'),
       template: false,
       published: true
@@ -167,10 +180,10 @@ class surveyBuild extends React.Component<any, any>{
       }
     }
 
-    
-  //  surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
-   surveyClient.saveSurvey(dummySurvey);
 
+    //  surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
+    // surveyClient.saveSurvey(dummySurvey);
+    // this.props.CreatSurvey(dummySurvey);
 
   }
   testaxois = async (event) => {
@@ -256,5 +269,18 @@ class surveyBuild extends React.Component<any, any>{
     );
   }
 }
+
+// const mapStateToProps = (state: ISurveyState) => {
+//   return {
+//     surveyBuild: state.surveyBuild,
+//   }
+// }
+
+
+// const mapDispatchToProps = {
+//   CreatSurvey
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(surveyBuild);
 
 export default surveyBuild;
