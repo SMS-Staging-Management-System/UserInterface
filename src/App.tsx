@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ManagementRoutes } from './routes/Management.routes';
 import { InterviewRoutes } from './routes/Interview.routes';
 import { SurveyRoutes } from './routes/Survey.routes';
+import TemplateModalComponent  from './components/modal/template-modal.container';
 
 class App extends React.Component {
   public render() {
@@ -20,11 +21,13 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <AppNav />
+            
             <div id="main-content-container">
               <Switch>
                   <Route path='/management' component={ManagementRoutes}/>
                   <Route path='/interview' component={InterviewRoutes}/>
                   <Route path='/surveys' component ={SurveyRoutes}/>
+                  <Route path='/modal' component={TemplateModalComponent}/>
               </Switch>
             </div>
             <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_RIGHT}/>
