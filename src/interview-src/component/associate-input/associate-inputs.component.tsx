@@ -6,7 +6,7 @@ import * as actions from '../../actions/assoc-input/assoc-input.action';
 import { IState } from '../../../reducers/index';
 import { connect } from 'react-redux';
 import { getFormatNames } from './temp.util';
-import './radio.style.css';
+//import './radio.style.css';
 
 
 interface IProps {
@@ -127,7 +127,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
 const mapStateToProps = (state: IState) => {
     return {
-        fields: state.interviewState.associateInput
+    //    fields: state.interviewState.associateInput
     };
 };
 

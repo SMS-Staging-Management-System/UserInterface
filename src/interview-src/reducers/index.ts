@@ -2,12 +2,67 @@ import { combineReducers } from 'redux';
 import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
-import { assocInputReducer } from '../reducers/assoc-input.reducer';
-import { IAssociateInput } from '../model/Associateinput.model';
+import { managerChartReducer } from './managerchart.reducer';
+import { associateChartReducer } from './associatechart.reducer';
+//import { assocInputReducer } from '../reducers/assoc-input.reducer';
+//import { IAssociateInput } from '../model/Associateinput.model';
 
 export interface IReportFormState {
     
 }
+
+export interface IManagerChartState {
+    type: string,
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+    chartInfo:[number, number]
+}
+
+export interface IAssociateChartState {
+    type: string,
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+    chartInfo:[number, number]
+}
+
 
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
@@ -27,12 +82,14 @@ export interface IInterviewState {
     interviewList : IInterviewListState,
     reportForm : IReportFormState,
     createInterviewComponentState: ICreateInterviewComponentState,
-    associateInput: IAssociateInput
+    managerChart: IManagerChartState,
+    associateChart: IAssociateChartState,
 }
 
 export const interviewState = combineReducers<IInterviewState>({
    interviewList: interviewListReducer,
    reportForm: reportFormReducer,
    createInterviewComponentState: createInterviewReducer,
-   associateInput: assocInputReducer
-});
+   managerChart: managerChartReducer,
+   associateChart: associateChartReducer,
+})

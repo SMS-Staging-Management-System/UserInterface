@@ -31,5 +31,13 @@ export const interviewClient = {
       
     interviewPerAssoc: async (pageNumber:number, PageSize:number) => {
         return await smsClient.get(interviewContext+`/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
-    }
+    },
+
+    fetchManager24: async () => {
+        return await smsClient.get(interviewContext+`/reports/request24/manager`);
+    },
+
+    fetchAssoc24: async () => {
+        return await smsClient.get(interviewContext+`/reports/request24/associate`);
+    },
 }
