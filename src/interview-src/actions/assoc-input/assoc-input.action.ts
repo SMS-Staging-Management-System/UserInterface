@@ -1,5 +1,3 @@
-
-import { IInterviewFormat } from "../../model/Interview.format.model";
 // Temp import
 import { getFormatById } from '../../component/associate-input/temp.util';
 import { IAssociateInput } from '../../model/Associateinput.model';

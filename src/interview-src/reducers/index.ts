@@ -79,7 +79,7 @@ export interface ICreateInterviewComponentState {
     selectedCohort: any | undefined,
     associatesInSelectedCohort: any[] | undefined,
     selectedAssociate: any | undefined,
-    date: number,
+    date: string,
     location: string,
 }
 
