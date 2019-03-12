@@ -1,16 +1,19 @@
 import React from 'react'
 import { IAuthState } from '../../reducers/management';
+import { Button } from 'reactstrap';
+import { ICognitoUser } from '../../model/cognito-user.model';
 
 
 
 interface IJoinCohortProps {
-    urlParam: string,
+    token: string,
     validToken: boolean,
     login: IAuthState,
 
 
 
-    findCohortByToken: (token:string) => void
+    //findCohortByToken: (token:string) => void,
+    joinCohort:(user:ICognitoUser, token:string) => void
 
 }
 
@@ -23,11 +26,12 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
     //if not display not a valid cohort link,
 
     componentDidMount() {
-        this.props.findCohortByToken(this.props.urlParam);
+        //this.props.findCohortByToken(this.props.token);
     }
 
-    
-
+    joinCohort = () => {
+        this.props.joinCohort(this.props.login.currentUser, this.props.token)
+    }
    
 
     
@@ -44,6 +48,7 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
                 return(
                     <div>
                         <p>logged in</p>
+                        <Button color='primary' onClick={this.joinCohort}>Join Cohort</Button>
                     </div>
                 )
             }else {

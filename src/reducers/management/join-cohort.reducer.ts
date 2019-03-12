@@ -4,20 +4,19 @@ import { IJoinCohortState } from ".";
 
 
 const initialState: IJoinCohortState = {
-    validToken: false
+    validToken: true
 }
 
 
 export const joinCohortReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN:
+        case joinCohortTypes.FAILED_TO_JOIN_COHORT:
             return {
                 ...state,
             }
-        case joinCohortTypes.FIND_BY_COHORT_TOKEN:
+        case joinCohortTypes.JOIN_COHORT:
             return {
                 ...state,
-                validToken: action.payload.validToken
             }
         case authTypes.LOGOUT:
             return initialState;

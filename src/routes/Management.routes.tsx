@@ -21,7 +21,7 @@ export class ManagementRoutes extends React.Component<any, any> {
                 <Route path={`${path}/login`} component={LoginComponent} />
                 <Route path={`${path}/home`} component={HomeComponent} />
                 <Route path={`${path}/clicker`} component={clickerContainer} />
-                <Route path={`${path}/joincohort:token`} component={JoinCohortComponent}/>
+                <Route path={`${path}/joincohort/:token`} component={JoinCohortComponent}/>
                 <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/manage/:manage`} component={ManageComponent} />
                 <Route component={HomeComponent} />
             </Switch>
