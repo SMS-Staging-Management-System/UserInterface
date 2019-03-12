@@ -14,11 +14,9 @@ const mapStateToProps= ( state: IState) => {
   }
 }
 
-const mapDispatchToProps= () => {
-  return {
+const mapDispatchToProps= {
     toggleViewUserModal: toggleViewUserModal,
     hoveredUser: hoveredUser
-  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageInternalComponenet)
