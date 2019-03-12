@@ -20,14 +20,6 @@ export class Question7 extends React.Component<ISurveyBuildProps, any> {
 
   }
 
-
-  //   handleChange = (event) => { 
-
-  //   }
-
- 
-
-
   render() {
 
     return (
@@ -36,13 +28,13 @@ export class Question7 extends React.Component<ISurveyBuildProps, any> {
 
 
         <button value="7" id="tf" className="form-control" name="type"  > True/False  </button>
-           <div className="new" id="t7">
+        <div className="new" id="t7">
 
-            <input name="questionText" type="text" placeholder="Question Title (i.e. The sky is blue) " style={{ width: '100%' }}   ></input>
-            <input name="answerText" value="True,False" readOnly hidden />
-          </div>
- 
-          <hr/>
+          <input name="questionText" type="text" placeholder="Question Title (i.e. The sky is blue) " style={{ width: '100%' }}   ></input>
+          <input name="answerText" value="True,False" readOnly hidden />
+        </div>
+
+        <hr />
       </div>
 
     );
