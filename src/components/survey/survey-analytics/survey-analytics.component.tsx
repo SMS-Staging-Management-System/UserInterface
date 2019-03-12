@@ -47,7 +47,7 @@ export class SurveyAnalyticsComponent extends React.Component<any, any> {
                 </thead>
                 <tbody>
                     {this.state.surveys.map(survey => (
-                            <tr key={survey.id} className="rev-table-row" onClick={() => this.handleLoadSurveyData(survey.surveyId)}>
+                            <tr key={survey.surveyId} className="rev-table-row" onClick={() => this.handleLoadSurveyData(survey.surveyId)}>
                                 <td>{survey.title}</td>
                                 <td>{survey.description}</td>
                             </tr>
