@@ -9,6 +9,7 @@ const questionBaseRoute = '/questions';
 const answerBaseRoute = '/answers';
 const responseBaseRoute = '/responses';
 const historyBaseRoute = '/history';
+const junctionSurveyQuestionsBaseRoute = '/junction_survey_questions';
 
 export const surveyClient = {
 
@@ -18,7 +19,7 @@ export const surveyClient = {
 
   findAllSurveys: async () => {
     let surveys;
-    await surveyContext.get('surveys')
+    await surveyContext.get(surveyBaseRoute)
       .then(response => {
         surveys = response.data;
       })
@@ -29,14 +30,37 @@ export const surveyClient = {
   },
 
   findSurveyById: async (id: number) => {
+    // Get the Survey
     let survey;
-    await surveyContext.get(`surveys/${id}`)
+    await surveyContext.get(`${surveyBaseRoute}/${id}`)
       .then(response => {
         survey = response.data;
       })
       .catch(err => {
         console.log(err);
       });
+    // Get the Junctions of Survey Questions
+    let junctions;
+    await surveyContext.get(`${junctionSurveyQuestionsBaseRoute}/surveyId/${id}`)
+      .then(response => {
+        junctions = response.data;
+        // Sort the junction by question order
+        junctions.sort((a, b) => (a.questionOrder > b.questionOrder) ? 1 : -1)
+        survey.questionJunctions = junctions;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // Append Answers to the Questions
+    for (const questionJunction of survey.questionJunctions) {
+      await surveyContext.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
+        .then(response => {
+          questionJunction.questionId.answerChoices = response.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
     return survey;
   },
 
@@ -71,7 +95,7 @@ export const surveyClient = {
     return myAssignedSurveys;
   },
 
-  saveSurvey(survey: ISurvey) {
+  saveSurvey: (survey: ISurvey) => {
     return surveyContext.post(surveyBaseRoute, survey);
   },
 
@@ -79,7 +103,7 @@ export const surveyClient = {
   //-- Question Methods --//
   //----------------------//
 
-  saveQuestion(question: IQuestion) {
+  saveQuestion: (question: IQuestion) => {
     return surveyContext.post(questionBaseRoute, question)
   },
 
@@ -87,7 +111,7 @@ export const surveyClient = {
   //-- Answer Methods --//
   //--------------------//
 
-  saveAnswer(answer: IAnswer) {
+  saveAnswer: (answer: IAnswer) => {
     return surveyContext.post(answerBaseRoute, answer)
   },
 
@@ -95,7 +119,7 @@ export const surveyClient = {
   //-- Response Methods --//
   //----------------------//  
 
-  saveResponse(response: IResponse) {
+  saveResponse: (response: IResponse) => {
     return surveyContext.post(responseBaseRoute, response)
   },
 
