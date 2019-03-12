@@ -15,7 +15,7 @@ export const toggleViewUserModal = () => {
   }
 }
 
-export const hoveredUser = (email: string) => async (dispatch) => {
+export const hoveredUser = (email: string) => async (dispatch: (action: any) => void) => {
   const resp = await userClient.findOneByEmail(email);
   dispatch ({
       payload: {

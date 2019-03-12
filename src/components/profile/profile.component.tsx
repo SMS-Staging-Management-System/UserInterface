@@ -1,4 +1,4 @@
-import  React, { Component } from 'react';
+import  React, { Component, FormEvent } from 'react';
 import { IUser } from '../../model/user.model';
 import { Container, Form, Row, FormGroup, Label, Input, Col, Button } from 'reactstrap';
 
@@ -21,7 +21,7 @@ interface IProfileState {
 }
 
 class Profile extends Component<IProfileProps, IProfileState> {
-  constructor(props) {
+  constructor(props: IProfileProps) {
     super(props)
     let endOfPath = location.pathname.split('/').pop();
     let userToView: null | IUser = null;
@@ -45,32 +45,34 @@ class Profile extends Component<IProfileProps, IProfileState> {
     }
   }
 
-  onUserInfoChangeHandler = (event) => {
+  onUserInfoChangeHandler = (event: FormEvent) => {
+    const target = event.target as HTMLSelectElement;
     this.setState({
       ...this.state,
       editingUser: {
         ...this.state.editingUser,
-        [event.target.name]: event.target.value
+        [target.name]: target.value
       },
       bFieldDidChange: true
     })
   }
 
-  onAddressChangeHandler = (event) => {
+  onAddressChangeHandler = (event: FormEvent) => {
+    const target = event.target as HTMLSelectElement
     this.setState({
       ...this.state,
       editingUser: {
         ...this.state.editingUser,
         trainingAddress: {
           ...this.state.editingUser.trainingAddress,
-          [event.target.name]: event.target.value
+          [target.name]: target.value
         }
       },
       bFieldDidChange: true
     })
   }
 
-  onSubmitHandler = (event) => {
+  onSubmitHandler = (event: FormEvent) => {
     event.preventDefault();
     if (this.state.bFieldDidChange) {
       this.props.updateUser(this.state.editingUser); 
@@ -88,7 +90,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
 
     return (
       <Container>
-        <Form onSubmit={() => this.onSubmitHandler(event)}>
+        <Form onSubmit={(event) => this.onSubmitHandler(event)}>
           <Row>
             <Col md={4}>
               <FormGroup>
@@ -109,7 +111,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                   type="text" 
                   name="firstName"
                   defaultValue={this.state.editingUser.firstName}
-                  onChange={() => this.onUserInfoChangeHandler(event)} required />
+                  onChange={(event) => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
             <Col md={4}>
@@ -119,7 +121,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                   type="text" 
                   name="lastName"
                   defaultValue={this.state.editingUser.lastName}
-                  onChange={() => this.onUserInfoChangeHandler(event)} required />
+                  onChange={(event) => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
             <Col md={4}>
@@ -130,7 +132,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                   pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
                   name="phoneNumber"
                   defaultValue={this.state.editingUser.phoneNumber}
-                  onChange={() => this.onUserInfoChangeHandler(event)} />
+                  onChange={(event) => this.onUserInfoChangeHandler(event)} />
               </FormGroup>
             </Col>
           </Row>
@@ -140,7 +142,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
             type="text" 
             name="street" 
             defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.street}
-            onChange={() => this.onAddressChangeHandler(event)} />
+            onChange={(event) => this.onAddressChangeHandler(event)} />
         </FormGroup>
         <Row>
           <Col md={6}>
@@ -150,7 +152,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 type="text" 
                 name="city"  
                 defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.city}
-                onChange={() => this.onAddressChangeHandler(event)} />
+                onChange={(event) => this.onAddressChangeHandler(event)} />
             </FormGroup>
           </Col>
           <Col md={4}>
@@ -160,7 +162,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 type="text" 
                 name="state"
                 defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.state}
-                onChange={() => this.onAddressChangeHandler(event)} />
+                onChange={(event) => this.onAddressChangeHandler(event)} />
             </FormGroup>
           </Col>
           <Col md={2}>
@@ -170,7 +172,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 type="text" 
                 name="zip" 
                 defaultValue={this.state.editingUser.trainingAddress && this.state.editingUser.trainingAddress.zip}
-                onChange={() => this.onAddressChangeHandler(event)} />
+                onChange={(event) => this.onAddressChangeHandler(event)} />
             </FormGroup>  
           </Col>
         </Row>

@@ -3,7 +3,7 @@ import { Switch } from 'react-router';
 
 
 export class SurveyRoutes extends React.Component<any, any> {
-    constructor(props){
+    constructor(props:any){
         super(props)
     }
 

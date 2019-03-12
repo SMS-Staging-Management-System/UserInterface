@@ -25,13 +25,7 @@ export interface IAuthState {
   
   export interface ICreateUserState {
     enabled: boolean,
-    newUser: {
-      address: IAddress,
-      email: string,
-      firstName: string,
-      lastName: string,
-      phoneNumber: string
-    },
+    newUser: IUser,
     locationDropdownActive: false
   }
   
@@ -43,16 +37,7 @@ export interface IAuthState {
   export interface ICreateCohortState {
     enabled: boolean,
     isSaved: boolean,
-    newCohort: {
-      address: IAddress,
-      cohortDescription: string,
-      cohortName: string,
-      trainer: IUser,
-      startDate: string,
-      endDate: string,
-      cohortId: number,
-      cohortToken: string
-    },
+    newCohort: ICohort,
     locationDropdownActive: false,
     trainerDropdownActive: false
   }

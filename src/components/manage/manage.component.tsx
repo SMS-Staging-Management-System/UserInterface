@@ -2,7 +2,6 @@ import * as React from 'react';
 import { ManageNavComponent } from './manage-nav/manage-nav.component';
 import { IManageComponentProps } from './manage.container';
 import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
-//import ManageInternalComponent  from './manage-internal/manage-internal.container';
 import ManageCohortsComponent from './manage-cohorts/manage-cohorts.container';
 import CreateUserModal from './create-user-modal/create-user-modal.container';
 import ManageInternalComponenet  from './manage-internal/manage-internal.container';
@@ -11,7 +10,7 @@ import ManageInternalComponenet  from './manage-internal/manage-internal.contain
 
 export class ManageComponenet extends React.Component<IManageComponentProps, any> {
 
-  constructor(props) {
+  constructor(props:IManageComponentProps) {
     super(props);
   }
 
@@ -37,7 +36,7 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
           location={this.props.location}
           match={this.props.match}/>
 
-        {this.props.match.params.manage === 'cohorts'?
+        {/cohorts/.test(this.props.location.pathname)?
         <ManageCohortsComponent />:
         <ManageInternalComponenet/>
         }

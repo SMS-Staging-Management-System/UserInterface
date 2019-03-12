@@ -6,7 +6,7 @@ import Profile from '../../profile/profile.container';
 
 
 export class ViewUserModal extends React.Component<IViewUserModal, any> {
-  constructor(props) {
+  constructor(props:IViewUserModal) {
     super(props);
   }
 
