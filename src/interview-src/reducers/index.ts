@@ -2,10 +2,65 @@ import { combineReducers } from 'redux';
 import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
+import { managerChartReducer } from './managerchart.reducer';
+import { associateChartReducer } from './associatechart.reducer';
 
 export interface IReportFormState {
 
 }
+
+export interface IManagerChartState {
+    type: string,
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+    chartInfo:[number, number]
+}
+
+export interface IAssociateChartState {
+    type: string,
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+    chartInfo:[number, number]
+}
+
 
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
@@ -24,11 +79,15 @@ export interface IInterviewListState {
 export interface IInterviewState {
     interviewList : IInterviewListState,
     reportForm : IReportFormState,
-    createInterviewComponentState: ICreateInterviewComponentState
+    createInterviewComponentState: ICreateInterviewComponentState,
+    managerChart: IManagerChartState,
+    associateChart: IAssociateChartState,
 }
 
 export const interviewState = combineReducers<IInterviewState>({
    interviewList: interviewListReducer,
    reportForm: reportFormReducer,
-   createInterviewComponentState: createInterviewReducer
+   createInterviewComponentState: createInterviewReducer,
+   managerChart: managerChartReducer,
+   associateChart: associateChartReducer,
 })
