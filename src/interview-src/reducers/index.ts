@@ -4,9 +4,11 @@ import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
+import { assocInputReducer } from '../reducers/assoc-input.reducer';
+import { IAssociateInput } from '../model/Associateinput.model';
 
 export interface IReportFormState {
-
+    
 }
 
 export interface IManagerChartState {
