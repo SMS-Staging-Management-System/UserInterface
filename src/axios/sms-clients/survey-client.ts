@@ -8,6 +8,7 @@ const surveyBaseRoute = '/surveys';
 const questionBaseRoute = '/questions';
 const answerBaseRoute = '/answers';
 const responseBaseRoute = '/responses';
+const historyBaseRoute = '/history';
 
 export const surveyClient = {
 
@@ -39,6 +40,37 @@ export const surveyClient = {
     return survey;
   },
 
+  findSurveysAssignedToUser: async (email: String) => {
+    let allSurveys;
+    let myAssignedSurveys: any[] = [];
+    let myHistories;
+    // Get all surveys
+    await surveyClient.findAllSurveys()
+      .then(response => {
+        allSurveys = response;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    // Get histories by email
+    await surveyClient.findHistoriesByEmail(email)
+      .then(response => {
+        myHistories = response;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    //Loop through the surveys, and save those that are in my histories
+    allSurveys.forEach(survey => {
+      myHistories.forEach(history => {
+        if (survey.surveyId === history.surveyId) {
+          myAssignedSurveys.push(survey);
+        }
+      })
+    });
+    return myAssignedSurveys;
+  },
+
   saveSurvey(survey: ISurvey) {
     return surveyContext.post(surveyBaseRoute, survey);
   },
@@ -65,5 +97,21 @@ export const surveyClient = {
 
   saveResponse(response: IResponse) {
     return surveyContext.post(responseBaseRoute, response)
-  }
+  },
+
+  //---------------------//
+  //-- History Methods --//
+  //---------------------//  
+
+  findHistoriesByEmail: async (email: String) => {
+    let histories;
+    await surveyContext.post(`${historyBaseRoute}/email/`, email)
+      .then(response => {
+        histories = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    return histories;
+  },
 }
