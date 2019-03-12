@@ -1,53 +1,53 @@
+
 import { IInterviewFormat } from "../../model/Interview.format.model";
+// Temp import
+import { getFormatById } from '../../component/associate-input/temp.util';
+import { IAssociateInput } from '../../model/Associateinput.model';
 
 export const AssocInputActions = {
     UPDATE_DAY_NOTIFIED: 'UPDATE_DAY_NOTIFIED',
-    UPDATE_DAY_NOTICE: 'UPDATE_DAY_NOTICE',
     UPDATE_DESC_PROVIDED: 'UPDATE_DESC_PROVIDED',
     UPDATE_ACTUAL: 'UPDATE_ACTUAL',
     UPDATE_PROPOSED: 'UPDATE_PROPOSED',
     SUBMIT: 'SUBMIT' 
 };
-   
-export const updateDayNotified = () => {
+export const updateDayNotified = (event: any) => {
     return {
         type: AssocInputActions.UPDATE_DAY_NOTIFIED,
-        payload: new Date(0)
+        payload: event.target.valueAsDate
     };
 };
 
-export const updateDayNotice = () => {
+export const updateDescProvided = (value: string, id: number) => {
     return {
-        type: AssocInputActions.UPDATE_DAY_NOTICE,
-        payload: false
+        type: AssocInputActions.UPDATE_DESC_PROVIDED,
+        payload: (value === 'Yes')
     };
 };
 
-export const updateDescProvided = () => {
-    return {
-        type: AssocInputActions.UPDATE_DAY_NOTICE,
-        payload: false
-    };
-};
 
-export const updateActualFormat = () => {
-    const payload: IInterviewFormat = {
-        interviewFormatId: 0,
-        formatDesc: ''
-    };
+export const updateActualFormat = (value: string, id: number) => {
     return {
         type: AssocInputActions.UPDATE_ACTUAL,
-        payload: payload
+        payload: getFormatById(id)
     };
 };
 
-export const updateProposedFormat = () => {
-    const payload: IInterviewFormat = {
-        interviewFormatId: 0,
-        formatDesc: ''
-    };
+export const updateProposedFormat = (value: string, id: number) => {
     return {
         type: AssocInputActions.UPDATE_PROPOSED,
-        payload: payload
+        payload: getFormatById(id)
     };
+};
+
+export const submit = (fields: IAssociateInput) => (dispatch) => {
+    // interview id
+    // recieved notification
+    // description provided
+    // interview format
+    // proposed format.
+    dispatch({
+        type: AssocInputActions.SUBMIT,
+        payload: fields
+    });
 };

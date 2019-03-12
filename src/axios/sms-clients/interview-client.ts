@@ -25,11 +25,23 @@ export const interviewClient = {
         return smsClient.get(url);
     },
       
+    assocNeedFeedback: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/reports/AssociateNeedFeedback/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    },
+      
     interviewPerAssoc: async (pageNumber:number, PageSize:number) => {
         return await smsClient.get(interviewContext+`/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
       
     sendFeedback: async (feedback: any) => {
         return await smsClient.post(interviewContext+`/feedback`, feedback);
-    }
+    },
+
+    fetchManager24: async () => {
+        return await smsClient.get(interviewContext+`/reports/request24/manager`);
+    },
+
+    fetchAssoc24: async () => {
+        return await smsClient.get(interviewContext+`/reports/request24/associate`);
+    },
 }

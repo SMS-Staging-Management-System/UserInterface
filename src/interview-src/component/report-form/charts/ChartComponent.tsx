@@ -1,14 +1,11 @@
 import React from 'react';
-import {ChartDisplayComponent} from './ChartDisplayComponent'
-/*
-import { IGroupState } from '../../reducers';
-import { ReceiptDisplayComponent } from './Receipt.display.component';
-import { Receipt } from '../../models/Receipt';
-import { Line } from '../../models/Line';
-import { Item } from '../../models/Item';
-import { Users } from '../../models/Users';
-*/
+import { connect } from 'react-redux';
+import {AssociateChartComponent} from './AssociateChartComponent'
+import {ManagerChartComponent} from './ManagerChartComponent'
+import {getInfoAssociate} from '../../../actions/assoc-24-chart/assoc24chart.actions';
+import {getInfoManager} from '../../../actions/manager-24-chart/manager24chart.actions';
 
+import {IState} from '../../../../reducers';
 //requires the importing of Line and Item classes, which should also be in Store
 
  /*
@@ -57,13 +54,46 @@ componentWillMount()
 }
 */
 
+
+
 render() {
      
 
     return (
-    <ChartDisplayComponent/>
+    <div>
+      <div id='AssociateChart'>
+          <AssociateChartComponent/>
+          <br/>
+          <h2>
+        Data according to the Associates.
+        <hr/>
+    </h2>
+      </div>
+      <div id='ManagerChart'>
+          <ManagerChartComponent/>
+          <br/>
+          <h2>
+        Data according to the Staging Manager.
+        <hr/>
+        </h2>
+      </div>
+    </div>
     )
   }
  
 }
 
+//connect this to the store and pass in the required states to Props
+const mapStateToProps = (state: IState) => {
+  return {
+      managersChart : state.interviewState.managerChart,
+      associatesChart : state.interviewState.associateChart
+  }
+}
+
+const mapDispatchToProps = {
+  getInfoAssociate,
+  getInfoManager
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChartComponent);

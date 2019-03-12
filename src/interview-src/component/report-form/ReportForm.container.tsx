@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
 import { IState } from '../../../reducers';
+import { ChartComponent } from './charts/ChartComponent';
  
 export class ReportForm extends React.Component<any, any> {
     constructor(props) {
@@ -12,7 +13,8 @@ export class ReportForm extends React.Component<any, any> {
     render() { 
         return ( 
         <React.Fragment>
-          ReportReportReportReport
+             <h1>Interviews that received 24 Hour Notice</h1>>
+            <ChartComponent/>
         </React.Fragment>
          );
     }

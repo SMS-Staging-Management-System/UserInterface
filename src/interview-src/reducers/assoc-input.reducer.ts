@@ -2,25 +2,18 @@ import { AssocInputActions } from '../actions/assoc-input/assoc-input.action';
 import { IAssociateInput } from '../model/Associateinput.model';
 
 const initalState: IAssociateInput = {
-    dateNotified: new Date(0),
-    dayNotice: false,
-    descriptionProvided: false,
+    dateNotified: undefined,
+    descriptionProvided: undefined,
     interviewFormat: undefined,
     proposedFormat: undefined
 };
 
-export const assocInputReducer = (state = initalState, action: any): IAssociateInput => {
+export const assocInputReducer = (state = initalState, action: any) => {
     switch(action.type) {
         case AssocInputActions.UPDATE_DAY_NOTIFIED:
             return {
                 ...state,
                 dateNotified: action.payload
-            };
-
-        case AssocInputActions.UPDATE_DAY_NOTICE:
-            return {
-                ...state,
-                dayNotice: action.payload
             };
 
         case AssocInputActions.UPDATE_DESC_PROVIDED:
@@ -38,7 +31,7 @@ export const assocInputReducer = (state = initalState, action: any): IAssociateI
         case AssocInputActions.UPDATE_ACTUAL:
             return {
                 ...state,
-                proposedFormat: action.payload
+                interviewFormat: action.payload
             };
 
         case AssocInputActions.SUBMIT:

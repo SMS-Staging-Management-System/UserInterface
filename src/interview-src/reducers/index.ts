@@ -4,9 +4,39 @@ import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
 import { interviewFeedbackReducer } from './interviewFeedback.reducer';
 import { InterviewFormat } from '../model/Interview.format.model';
+import { managerChartReducer } from './managerchart.reducer';
+import { associateChartReducer } from './associatechart.reducer';
+//import { assocInputReducer } from '../reducers/assoc-input.reducer';
+//import { IAssociateInput } from '../model/Associateinput.model';
 
 export interface IReportFormState {
+    
+}
 
+export interface IManagerChartState {
+    type: string,
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+    chartInfo:[number, number]
 }
 
 export interface IInterviewFeedbackComponentState {
@@ -16,6 +46,33 @@ export interface IInterviewFeedbackComponentState {
     feedbackDeliveredDate: string
     interviewFormat: InterviewFormat
 }
+
+export interface IAssociateChartState {
+    type: string,
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+    chartInfo:[number, number]
+}
+
 
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
@@ -36,11 +93,15 @@ export interface IInterviewState {
     reportForm : IReportFormState,
     createInterviewComponentState: ICreateInterviewComponentState,
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
+    managerChart: IManagerChartState,
+    associateChart: IAssociateChartState,
 }
 
 export const interviewState = combineReducers<IInterviewState>({
    interviewList: interviewListReducer,
    reportForm: reportFormReducer,
    createInterviewComponentState: createInterviewReducer,
-   interviewFeedbackComponentState: interviewFeedbackReducer
+   interviewFeedbackComponentState: interviewFeedbackReducer,
+   managerChart: managerChartReducer,
+   associateChart: associateChartReducer,
 })
