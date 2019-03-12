@@ -10,7 +10,6 @@ import './createInterview.component.scss'
 import { ICreateInterviewComponentState } from '../../reducers';
 import { IState } from '../../../reducers';
 import { setState } from '../../actions/createInterview/createInterview.actions';
-import { InterviewFormat } from '../../model/Interview.format.model';
 import { interviewClient } from '../../../axios/sms-clients/interview-client';
 import Button from 'reactstrap/lib/Button';
 import { INewInterviewData } from '../../model/INewInterviewData';
@@ -42,23 +41,19 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         if(res && res.data){
             this.props.setState({...this.props.createInterviewComponentState, associatesInSelectedCohort:res.data} )
         }
-        console.log("all cohorts");
+        console.log("all associates in cohort");
         console.log(res);
     }
 
     sendInputToDB = async() => {
         const s = store.getState() as IState;
         let managerEmail = s.managementState.auth.currentUser.email;
-        let { selectedAssociate, date, location} = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
-        managerEmail = 'blake.kruppa@revature.com';
-        selectedAssociate = {userId:9};
-        date = 2;
-        location = 'loc';
-        if(managerEmail && selectedAssociate && date ){
+        let { selectedAssociate, date: dateString, location} = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
+        if(managerEmail && selectedAssociate && dateString ){
             const newInterviewData: INewInterviewData = {
                 managerEmail: managerEmail, 
                 associateId: selectedAssociate.userId,
-                date: date,
+                date: (new Date(dateString)).valueOf(),
                 location: location
             };
             interviewClient.addNewInterview(newInterviewData).then((res) => {
@@ -76,19 +71,19 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
     const state = this.props.createInterviewComponentState;
     const setState = this.props.setState;
     const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location} = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
-    const cohortOptions = allCohorts && allCohorts.map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormat[key]}</option> : undefined })
-    const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((key) => {return (key !== 'none')? <option value={key}>{InterviewFormat[key]}</option> : undefined })
+    const cohortOptions = allCohorts && allCohorts.map((val) => {return  <option value={JSON.stringify(val)}>{val.cohortName}</option>})
+    const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val) => {return <option value={JSON.stringify(val)}>{`${val.firstName} ${val.lastName}`}</option> })
    
     return (
         <div id='new-interview-full'>
             <span>CREATE A NEW INTERVIEW FOR AN ASSOCIATE</span>
             <hr />
             <InputGroup>
-                <Input type='select' value={selectedCohort} disabled={!allCohorts || allCohorts.length == 0}  onChange={(e)=>{setState({...state, selectedCohort: selectedCohort }); this.fetchAssociatesInSelectedCohort();}} >
+                <Input type='select' value={JSON.stringify(selectedCohort)} disabled={!allCohorts || allCohorts.length == 0}  onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setState({...state, selectedCohort: JSON.parse(e.target.value) }); this.fetchAssociatesInSelectedCohort();}} >
                     <option value={undefined} style={{display:'none'}}>select a cohort...</option>
                     {cohortOptions}
                 </Input>
-                <Input type='select' value={selectedAssociate} disabled={!associatesInSelectedCohort || associatesInSelectedCohort.length == 0}  onChange={(e)=>{setState({...state, selectedAssociate: selectedAssociate });}} >
+                <Input type='select' value={JSON.stringify(selectedAssociate)} disabled={!associatesInSelectedCohort || associatesInSelectedCohort.length == 0}  onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setState({...state, selectedAssociate: JSON.parse(e.target.value) });}} >
                     <option value={undefined} style={{display:'none'}}>select a associate...</option>
                     {associateOptions}
                 </Input>
@@ -97,7 +92,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
             < br/>
             <InputGroup>
                 <InputGroupAddon addonType="prepend">date</InputGroupAddon>
-                <Input placeholder="enter date of interview" value={date} onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{setState({...state, date: e.target.valueAsNumber })}} />
+                <Input type="date" placeholder="date" value={date} onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{setState({...state, date: e.target.value }); }}   />
             </InputGroup>
             < br/>
             <InputGroup>

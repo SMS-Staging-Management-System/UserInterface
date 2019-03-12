@@ -6,7 +6,7 @@ const initialState: ICreateInterviewComponentState = {
   selectedCohort: undefined,
   associatesInSelectedCohort: undefined,
   selectedAssociate: undefined,
-  date: 0,
+  date: '',
   location: ''
 }
 

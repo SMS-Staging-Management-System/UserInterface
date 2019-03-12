@@ -1,6 +1,6 @@
-import { InterviewFormat } from '../../model/Interview.format.model';
+import { IInterviewFormat } from '../../model/Interview.format.model';
 
-const FORMATS: InterviewFormat[] = [
+const FORMATS: IInterviewFormat[] = [
     {
         interviewFormatId: 1,
         formatDesc: 'On Site'
