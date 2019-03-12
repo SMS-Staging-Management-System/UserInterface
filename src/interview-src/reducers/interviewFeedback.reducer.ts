@@ -1,13 +1,14 @@
 import { IInterviewFeedbackComponentState } from '.';
 import { interviewFeedbackTypes } from '../actions/interviewFeedback/interviewFeedback.actions';
+import { InterviewFormat } from '../model/Interview.format.model';
 
 const initialState: IInterviewFeedbackComponentState = {
+  feedbackRequestedDate: '',
+  feedbackText: '',
+  feedbackReceivedDate: '',
+  feedbackDeliveredDate: '',
+  interviewFormat: InterviewFormat.none
 }
-
-// export interface IReduxAction {
-//     type: string;
-//     payload: any;
-// }
 
 export const interviewFeedbackReducer = (state = initialState, action: any) => {
   switch (action.type) {

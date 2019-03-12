@@ -3,12 +3,18 @@ import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
 import { interviewFeedbackReducer } from './interviewFeedback.reducer';
+import { InterviewFormat } from '../model/Interview.format.model';
 
 export interface IReportFormState {
 
 }
 
 export interface IInterviewFeedbackComponentState {
+    feedbackRequestedDate: string
+    feedbackText: string
+    feedbackReceivedDate: string
+    feedbackDeliveredDate: string
+    interviewFormat: InterviewFormat
 
 }
 
@@ -29,7 +35,8 @@ export interface IInterviewListState {
 export interface IInterviewState {
     interviewList : IInterviewListState,
     reportForm : IReportFormState,
-    createInterviewComponentState: ICreateInterviewComponentState
+    createInterviewComponentState: ICreateInterviewComponentState,
+    interviewFeedbackComponentState: IInterviewFeedbackComponentState,
 }
 
 export const interviewState = combineReducers<IInterviewState>({
