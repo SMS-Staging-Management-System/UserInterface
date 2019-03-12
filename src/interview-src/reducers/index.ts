@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
+import { interviewFeedbackReducer } from './interviewFeedback.reducer';
+import { InterviewFormat } from '../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 //import { assocInputReducer } from '../reducers/assoc-input.reducer';
@@ -35,6 +37,14 @@ export interface IManagerChartState {
 
     },
     chartInfo:[number, number]
+}
+
+export interface IInterviewFeedbackComponentState {
+    feedbackRequestedDate: string
+    feedbackText: string
+    feedbackReceivedDate: string
+    feedbackDeliveredDate: string
+    interviewFormat: InterviewFormat
 }
 
 export interface IAssociateChartState {
@@ -71,7 +81,7 @@ export interface ICreateInterviewComponentState {
     selectedAssociate: any | undefined,
     date: number,
     location: string,
-  }
+}
 
 export interface IInterviewListState {
     listOfInterviews : any[],
@@ -82,6 +92,7 @@ export interface IInterviewState {
     interviewList : IInterviewListState,
     reportForm : IReportFormState,
     createInterviewComponentState: ICreateInterviewComponentState,
+    interviewFeedbackComponentState: IInterviewFeedbackComponentState,
     managerChart: IManagerChartState,
     associateChart: IAssociateChartState,
 }
@@ -90,6 +101,7 @@ export const interviewState = combineReducers<IInterviewState>({
    interviewList: interviewListReducer,
    reportForm: reportFormReducer,
    createInterviewComponentState: createInterviewReducer,
+   interviewFeedbackComponentState: interviewFeedbackReducer,
    managerChart: managerChartReducer,
    associateChart: associateChartReducer,
 })

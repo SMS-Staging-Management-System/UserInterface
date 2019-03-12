@@ -1,10 +1,10 @@
 
-export interface InterviewFormat {
+export interface IInterviewFormat {
   interviewFormatId:      number,
   formatDesc:             string
 }
 
-export enum InterviewFormats {
+export enum InterviewFormat {
   none = '',
   onSite ='On Site',
   inPerson = 'In Person',
@@ -15,4 +15,4 @@ export enum InterviewFormats {
 /**
 * returns all the print friendly and DB friendly representations of the formats
 */
-export const allInterviewFormats =  Object.values(InterviewFormats)
+export const allInterviewFormats =  Object.values(InterviewFormat)
