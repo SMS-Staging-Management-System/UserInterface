@@ -55,7 +55,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                         <Link to="/management/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
                       </li>
                       <li className="nav-item active">
-                        <Link to="/reports" className="unset-anchor nav-link">Reports</Link>
+                        <Link to="interview/reports" className="unset-anchor nav-link">Reports</Link>
                       </li>
                     </>
                   }
