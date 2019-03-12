@@ -20,11 +20,13 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <AppNav />
+            
             <div id="main-content-container">
               <Switch>
                   <Route path='/management' component={ManagementRoutes}/>
                   <Route path='/interview' component={InterviewRoutes}/>
                   <Route path='/surveys' component ={SurveyRoutes}/>
+                 
               </Switch>
             </div>
             <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_RIGHT}/>
