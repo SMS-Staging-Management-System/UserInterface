@@ -15,7 +15,6 @@ export interface IInterviewFeedbackComponentState {
     feedbackReceivedDate: string
     feedbackDeliveredDate: string
     interviewFormat: InterviewFormat
-
 }
 
 export interface ICreateInterviewComponentState {

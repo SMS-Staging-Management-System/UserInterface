@@ -14,6 +14,7 @@ import { IInterviewFeedbackComponentState } from "../../reducers";
 import { IState } from "../../../reducers";
 import { setState } from "../../actions/interviewFeedback/interviewFeedback.actions";
 import { connect } from "react-redux";
+import { interviewClient } from "../../../axios/sms-clients/interview-client";
 
 
 interface IInterviewFeedbackComponentProps extends RouteComponentProps {
@@ -29,6 +30,21 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
     // feedbackDelivered: Date,
     // status: FeedbackStatus,
     // interview: Interview
+    sendFeedbackToDB = async () => {
+        console.log("this.props.match.params");
+        console.log((this.props.match.params as any).interviewId);
+        const state = this.props.interviewFeedbackComponentState;
+        const {feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat } = state;
+        console.log( await interviewClient.sendFeedback ({
+            interviewId: (this.props.match.params as any).interviewId,
+            feedbackRequestedDate: (new Date(feedbackRequestedDate)).valueOf(),
+            feedbackText: feedbackText,
+            feedbackReceivedDate: (new Date(feedbackReceivedDate)).valueOf(),
+            feedbackDeliveredDate: (new Date(feedbackDeliveredDate)).valueOf(),
+            interviewFormat: InterviewFormat[interviewFormat],
+        }));
+    }
+
     render() {
         const state = this.props.interviewFeedbackComponentState;
         const setState = this.props.setState;
@@ -64,7 +80,7 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
                     </Input>
                    </InputGroup>
                 < br/>
-                <Button color="secondary" size="lg" block onClick={()=>{}}>SUBMIT</Button>
+                <Button color="secondary" size="lg" block onClick={this.sendFeedbackToDB}>SUBMIT</Button>
             </div>
         );
       }

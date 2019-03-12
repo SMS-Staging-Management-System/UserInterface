@@ -20,7 +20,7 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/reports`} component={ReportForm} />
                 <Route path={`${path}/list`} component={InterviewList} />
                 <Route path={`${path}/new`} component={createInterviewComponent} />
-                <Route path={`${path}/feedback`} component={ interviewFeedbackComponent} />
+                <Route path={`${path}/:interviewId/feedback`} component={ interviewFeedbackComponent} />
              </Switch>
         )
     }
