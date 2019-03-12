@@ -24,7 +24,16 @@ const initialState: ICreateCohortState = {
     startDate: '2019-01-10',
     cohortId: 0,
  trainer: {
-      address: {
+      trainingAddress: {
+        addressId: 0,
+        street: '',
+        alias: '',
+        city: '',
+        country: '',
+        state: '',
+        zip: '',
+      },
+      personalAddress: {
         addressId: 0,
         street: '',
         alias: '',
@@ -36,9 +45,15 @@ const initialState: ICreateCohortState = {
       email: '',
       firstName: '',
       lastName: '',
-      mobile: '',
+      phoneNumber: '',
       userId: 0,
-      roles: []
+      roles: [],
+      status: {
+        statusId: 0,
+        genericStatus: '',
+        specificStatus: '',
+        virtual: false
+      }
     }
   },
 }

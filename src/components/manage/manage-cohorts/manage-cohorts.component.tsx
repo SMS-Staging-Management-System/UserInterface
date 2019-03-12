@@ -40,6 +40,7 @@ import { toast } from 'react-toastify';
  * }
  */
 
+
 export class ManageCohortsComponenent extends React.Component<IManageCohortsComponentProps, any> {
 
   constructor(props) {
