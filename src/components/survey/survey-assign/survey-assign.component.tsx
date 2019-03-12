@@ -24,12 +24,13 @@ export class SurveyAssignComponent extends React.Component<any, any> {
             this.setState({
                 surveys: surveys,
                 surveysLoaded: true
-            })
+            });
         }
     }
 
     checkFunc = (e) => {
-        const { checked, id } = e.target;
+        const { checked } = e.target;
+        const id = +e.target.id;
 
         if (checked) {
             if (!this.state.surveysToAssign.includes(id)) {
@@ -77,7 +78,7 @@ export class SurveyAssignComponent extends React.Component<any, any> {
 
 
     render() {
-        console.log(this.state.surveysToAssign);
+        // console.log(this.state.surveysToAssign);
         return (
             <Fragment>
                     <Table striped id="manage-users-table" className="tableUsers">
@@ -92,8 +93,8 @@ export class SurveyAssignComponent extends React.Component<any, any> {
                         </thead>
                         <tbody>
                             {this.state.surveys.map(survey => (
-                                    <tr key={survey.id} className="rev-table-row">
-                                        <td><input type="checkbox" onChange={e=>this.checkFunc(e)} id={survey.id}/></td>
+                                    <tr key={survey.surveyId} className="rev-table-row">
+                                        <td><input type="checkbox" onChange={e=>this.checkFunc(e)} id={survey.surveyId}/></td>
                                         <td>{survey.title}</td>
                                         <td>{survey.description}</td>
                                     </tr>
@@ -105,7 +106,6 @@ export class SurveyAssignComponent extends React.Component<any, any> {
                     <tr>
                         <SurveyModal 
                             buttonLabel='Assign To Users' 
-                            className='assignSurveyBtn'
                             surveysToAssign={this.state.surveysToAssign}/>
                     </tr>
                 </div>
