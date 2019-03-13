@@ -6,5 +6,11 @@ const usersContext = '/users'
 export const userClient = {
   saveUser(newUser: IUser) {
     return smsClient.post(usersContext, newUser);
+  },
+  findOneByEmail(email: string) {
+    return smsClient.get(usersContext + `/email/${email}`);
+  },
+  updateSMSUserInfo(updatedUser: IUser) {
+    return smsClient.patch(usersContext, updatedUser);
   }
 }

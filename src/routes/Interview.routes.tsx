@@ -3,7 +3,7 @@ import { Switch } from 'react-router';
 
 
 export class InterviewRoutes extends React.Component<any, any> {
-    constructor(props){
+    constructor(props:any){
         super(props)
     }
 
