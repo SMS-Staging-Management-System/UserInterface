@@ -16,7 +16,7 @@ const inputNames = {
 
 
 export class CreateUserModal extends React.Component<ICreateUserModal, any> {
-  constructor(props) {
+  constructor(props: ICreateUserModal) {
     super(props);
   }
 
@@ -24,31 +24,33 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
     this.props.updateLocations();
   }
 
-  updateNewUserInfo = (e) => {
+  updateNewUserInfo = (e: React.FormEvent) => {
     let updatedNewUser = this.props.createUser.newUser;
-    switch (e.target.name) {
+
+    const target = e.target as HTMLSelectElement;
+    switch (target.name) {
       case inputNames.EMAIL:
         updatedNewUser = {
           ...updatedNewUser,
-          email: e.target.value
+          email: target.value
         }
         break;
       case inputNames.FIRST_NAME:
         updatedNewUser = {
           ...updatedNewUser,
-          firstName: e.target.value
+          firstName: target.value
         }
         break;
       case inputNames.LAST_NAME:
         updatedNewUser = {
           ...updatedNewUser,
-          lastName: e.target.value
+          lastName: target.value
         }
         break;
       case inputNames.PHONE:
         updatedNewUser = {
           ...updatedNewUser,
-          phoneNumber: e.target.value
+          phoneNumber: target.value
         }
         break;
       default:
@@ -57,7 +59,7 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
     this.props.updateNewUser(updatedNewUser)
   }
 
-  saveNewUser = (e) => {
+  saveNewUser = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('saving')
     this.props.saveUser(this.props.createUser.newUser);
@@ -88,7 +90,7 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
                 isOpen={this.props.createUser.locationDropdownActive}
                 toggle={this.props.toggleLocationDropdown}>
                 <DropdownToggle caret>
-                  {createUser.newUser.address.alias || 'Location'}
+                  {createUser.newUser.trainingAddress.alias || 'Location'}
                 </DropdownToggle>
                 <DropdownMenu>
                   {

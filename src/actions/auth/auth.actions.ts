@@ -6,6 +6,7 @@ import { ICognitoUser } from '../../model/cognito-user.model';
 // import { toast } from 'react-toastify';
 import Amplify, { Auth } from 'aws-amplify';
 import { refreshJwt } from '../../axios/sms-clients';
+import { getUserByEmail } from '../current-sms-user/current-sms-user.actions';
 // import Axios from 'axios';
 
 Amplify.configure({
@@ -22,7 +23,7 @@ export const authTypes = {
   UPDATE_CURRENT_USER: 'UPDATE_CURRENT_USER',
 }
 
-export const cognitoLogin = (username: string, password: string, history: History) => (dispatch) => {
+export const cognitoLogin = (username: string, password: string, history: History) => (dispatch: (action: any) => void) => {
 
   Auth.signIn({
     password, // Optional, the password
@@ -49,7 +50,7 @@ export const updateCurrentUser = (currentUser: ICognitoUser) => {
 /**
  * Get current login user info from the server
  */
-export const setup = () => (dispatch) => {
+export const setup = () => (dispatch: ((action: any) => void)) => {
   Auth.currentAuthenticatedUser()
     .then(user => {
       // initialize the jwt for axios
@@ -63,6 +64,8 @@ export const setup = () => (dispatch) => {
           }
           // Set redux cognito data
           dispatch(updateCurrentUser(currentUser));
+          console.log('calling to get user by emil')
+          getUserByEmail(userAttributes.email)(dispatch);
         })
 
       // create interval to refresh the jwt periodically

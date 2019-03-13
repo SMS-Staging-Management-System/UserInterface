@@ -556,3 +556,13 @@ text-align:center;
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
+.editButton{
+  background-color: #f26925; 
+  color: white; 
+  border: 2px solid #f26925;
+}
+
+.editButton:hover {
+  background-color: white;
+  color: #f26925;
+}

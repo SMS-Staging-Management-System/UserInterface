@@ -7,8 +7,13 @@ export const userClient = {
   saveUser(newUser: IUser) {
     return smsClient.post(usersContext, newUser);
   },
-
   findAllByCohortId: (cohortId: number) => {
     return smsClient.get(`${usersContext}/cohort/${cohortId}`)
+  },
+  findOneByEmail(email: string) {
+    return smsClient.get(usersContext + `/email/${email}`);
+  },
+  updateSMSUserInfo(updatedUser: IUser) {
+    return smsClient.patch(usersContext, updatedUser);
   }
 }

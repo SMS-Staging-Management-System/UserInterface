@@ -8,7 +8,7 @@ import interviewFeedbackComponent from '../components/interviewFeedbackComponent
 
 
 export class InterviewRoutes extends React.Component<any, any> {
-    constructor(props){
+    constructor(props:any){
         super(props)
     }
 
