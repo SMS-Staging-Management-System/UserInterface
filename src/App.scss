@@ -520,6 +520,42 @@ body {
   }
 }
 
+
+/***********************************
+  Chart
+***********************************/
+
+#ManagerChart{
+ width:50vw;
+ height:100vh;
+ display:inline-block;
+ top:180px;
+ left:0%;
+ position:fixed;
+z-index:12;
+text-align:center;
+}
+
+#AssociateChart{
+  width:50vw;
+  height:100vh;
+  display:inline-block;
+  top:180px;
+  left:50vw;
+  position:fixed;
+  z-index:10;
+  text-align:center;
+}
+
+.no-select {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
 .editButton{
   background-color: #f26925; 
   color: white; 
