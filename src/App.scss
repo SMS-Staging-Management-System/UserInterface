@@ -32,37 +32,37 @@ $screen-xl-min: 1200px;
 /* @include transition(all,2s,ease-out); */
 @mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
   -webkit-transition: $what $time $how;
-  -moz-transition: $what $time $how;
-  -ms-transition: $what $time $how;
-  -o-transition: $what $time $how;
-  transition: $what $time $how;
+  -moz-transition:    $what $time $how;
+  -ms-transition:     $what $time $how;
+  -o-transition:      $what $time $how;
+  transition:         $what $time $how;
 }
 
 // Small devices
 @mixin sm {
   @media (min-width: #{$screen-sm-min}) {
-    @content;
+      @content;
   }
 }
 
 // Medium devices
 @mixin md {
   @media (min-width: #{$screen-md-min}) {
-    @content;
+      @content;
   }
 }
 
 // Large devices
 @mixin lg {
   @media (min-width: #{$screen-lg-min}) {
-    @content;
+      @content;
   }
 }
 
 // Extra large devices
 @mixin xl {
   @media (min-width: #{$screen-xl-min}) {
-    @content;
+      @content;
   }
 }
 
@@ -72,7 +72,6 @@ $screen-xl-min: 1200px;
 .align-start {
   align-self: flex-start
 }
-
 /********************************************
   Shared
 ********************************************/
@@ -80,7 +79,6 @@ input:invalid:not(:valid) {
   border-color: salmon;
   box-shadow: 0 0 0.2rem 0.1rem salmon;
 }
-
 .cursor-hover:hover {
   cursor: pointer;
 }
@@ -90,57 +88,47 @@ input:invalid:not(:valid) {
 }
 
 .flex-package {
-  display: flex;
+  display:    flex;
   flex-shrink: 0;
 }
 
-.rev-btn:not(.dropdown),
-.rev-btn>button.dropdown-toggle {
-  background-color: $revature-orange-light;
+.rev-btn:not(.dropdown), .rev-btn > button.dropdown-toggle {
+  background-color: $revature-orange-light ;
   border-color: $revature-orange-light;
   color: black !important;
-
   &:hover {
     border-bottom-color: #565D61;
     color: $revature-orange-light;
   }
-
   &:active {
     background-color: $revature-orange-light;
     color: #565D61;
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
   }
-
-  &:active,
-  &:focus {
+  &:active, &:focus {
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
-  }
+  } 
 
 }
 
-li>a.rev-btn-tab {
+li > a.rev-btn-tab {
   background-color: white;
   border-color: $revature-orange-light;
   color: black;
-
   &:hover {
     background-color: white;
     border-color: $revature-orange-light;
     color: $revature-orange-light;
   }
-
   &:active {
     color: black;
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
     border-color: $revature-orange-light
   }
-
-  &:active,
-  &:focus {
+  &:active, &:focus {
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
-
 .rev-table-row:hover {
   -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
@@ -153,7 +141,7 @@ li>a.rev-btn-tab {
   background-color: $revature-orange-light;
 }
 
-.rev-color {
+.rev-color { 
   color: $revature-orange;
 }
 
@@ -161,7 +149,6 @@ li>a.rev-btn-tab {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   @include md {
     flex-direction: row;
   }
@@ -169,23 +156,21 @@ li>a.rev-btn-tab {
   .responsive-modal-row-item {
     margin-right: 0.3em;
     margin-bottom: 0.7em;
-  }
+  } 
 
   textarea {
     width: 100%;
   }
-
+  
 }
 
-.dropdown-item {
+.dropdown-item { 
   &:active {
     background-color: $revature-orange-light;
   }
-
   &:focus {
     outline-color: $revature-orange;
   }
-
   &:hover {
     cursor: pointer;
     background-color: $revature-orange-light;
@@ -214,7 +199,7 @@ li>a.rev-btn-tab {
     margin: 2em auto;
   }
 
-  @include lg {
+  @include lg { 
     max-width: 900px;
   }
 }
@@ -255,13 +240,8 @@ body {
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 
@@ -269,8 +249,7 @@ body {
   @include flex-col;
   width: 100%;
   align-items: center;
-  margin: auto;
-
+  margin:auto;
   @include md {
     max-width: 80%
   }
@@ -287,28 +266,22 @@ body {
   border: unset;
   color: black;
   text-decoration: none;
-
-  &:hover,
-  &:focus {
+  &:hover, &:focus {
     color: black;
     text-decoration: none;
   }
-
   &:hover {
     background-color: unset;
     border: unset;
     color: $revature-orange;
     cursor: pointer;
   }
-
   &:active {
     background-color: unset !important;
     border: unset !important;
     color: black !important;
   }
-
-  &:active,
-  &:focus {
+  &:active, &:focus {
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
@@ -324,9 +297,8 @@ body {
 }
 
 
-.navbar-light .navbar-nav .nav-link:focus,
-.navbar-light .navbar-nav .nav-link:hover {
-  color: rgba(0, 0, 0, .7);
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+  color: rgba(0,0,0,.7);
 }
 
 .navbar-expand-md .navbar-nav .nav-link {
@@ -379,20 +351,20 @@ body {
   align-items: center;
 }
 
-@media (min-width: 1200px) {
-  .top-lev-div {
-    margin-top: 50px;
+@media (min-width: 1200px) { 
+  .top-lev-div{
+    margin-top:50px;
     zoom: 1.5;
     -moz-transform: scale(1.5);
-  }
+  } 
 }
 
-@media (max-width: 1199.99px) {
-  .top-lev-div {
-    margin-top: 50px;
+@media (max-width: 1199.99px) { 
+  .top-lev-div{
+    margin-top:50px;
     zoom: 1.0;
     -moz-transform: scale(1.0);
-  }
+  } 
 
 }
 
@@ -407,12 +379,12 @@ body {
 }
 
 .box input {
-  margin-left: 0;
+  margin-left:0;
   -webkit-transition: 1s;
-  transition: 1s;
+          transition: 1s;
 }
 
-.txt-bx {
+.txt-bx{
   width: 250px;
 }
 
@@ -420,11 +392,11 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 0.5em;
-  border-bottom: solid rgb(245, 139, 0) 4px;
+  border-bottom:solid rgb(245, 139, 0) 4px;
 }
 
 .resetDiv {
-  margin: auto;
+  margin:auto;
   display: flex;
   justify-content: center;
 }
@@ -439,22 +411,21 @@ body {
   display: inline;
 }
 
-#titleHead {
-  margin: auto;
+#titleHead{
+  margin:auto;
   display: flex;
   justify-content: center;
   padding-bottom: 10px;
 }
 
-#forgot-pass-btn {
+#forgot-pass-btn{
   color: blue;
   margin-top: 0.5em;
   border: none;
   text-align: center;
   background-color: transparent;
   -webkit-transition: 1s;
-  transition: 1s;
-
+          transition: 1s;
   &:hover {
     text-decoration: underline;
   }
@@ -476,11 +447,9 @@ body {
 #manage-users-container {
   width: 100%;
 }
-
 .manage-users-nav {
   padding-left: 0;
   padding-bottom: 0;
-
   .nav-tabs {
     border: none;
   }
@@ -488,7 +457,6 @@ body {
 
 .manage-user-nav-item {
   color: gray;
-
   &:hover {
     color: $revature-orange;
   }
@@ -501,11 +469,9 @@ body {
   border-top-right-radius: .25rem;
   border-bottom: none;
   color: $revature-orange-light;
-
   &:hover {
     color: $revature-orange-light;
   }
-
   &:focus {
     border-color: #d6dce2;
   }
@@ -535,22 +501,17 @@ body {
 #manage-users-table {
   margin-top: 1px;
   @include rounded-top();
-
   thead {
     @include rounded-top();
-
     tr {
       @include rounded-top();
-
       th {
         border: none;
       }
-
       :first-child {
         border-top-left-radius: $rounded-amount;
         border: none;
       }
-
       :last-child {
         border-top-right-radius: $rounded-amount;
         border: none;
@@ -562,19 +523,19 @@ body {
 
 /*****************
 Survey Component
-*****************/
+*****************/ 
 
-.tableUsers {
+.tableUsers{
   text-align: center;
   margin-top: 4em;
 }
 
-.buttonDiv {
+.buttonDiv{
   float: right;
-
+  
 }
 
-.assignSurveyBtn {
+.assignSurveyBtn{
   color: black;
   border-radius: 10px;
   background-color: $revature-orange-light;
@@ -585,23 +546,23 @@ Survey Component
 }
 
 .assignSurveyBtn:hover,
-.assignSurveyBtn:active {
-  background-color: $revature-orange-light;
-  color: #565D61;
+.assignSurveyBtn:active{
+background-color: $revature-orange-light;
+color:#565D61;
 }
 
-.assignSurveyModalHeader {
-  text-align: center;
-  background-color: $revature-orange-light;
-  font-weight: bold;
-  height: 100%;
-  width: 100%;
+.assignSurveyModalHeader{
+    text-align: center;
+    background-color: $revature-orange-light;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
 }
 
 /*****************
 Drag and Drop
-*****************/
-.container {
+*****************/ 
+.container{
   //position: absolute;
 }
 
@@ -610,23 +571,20 @@ Drag and Drop
   background: #f3a55d;
   height: auto;
   width: 300px;
-  margin-top: 3em;
-
+   margin-top: 3em; 
+ 
 
 }
-
 .test {
   //margin-right: 100%;
-  float: left;
+float: left;
 
 }
-
-.questionbutton {
+.questionbutton{
   display: inline-block;
 }
-
 .done {
-
+ 
   background: #e9ecef;
   height: auto;
   padding-top: 50px;
@@ -636,8 +594,7 @@ Drag and Drop
   width: auto;
   margin: 10px;
 }
-
-.jumbotron {
+.jumbotron{
   height: auto;
   margin-top: 3em;
   border: 3px solid black;
@@ -646,61 +603,52 @@ Drag and Drop
   font-weight: bold;
   background-color: #eee;
 }
-
-.survey-build-jumbotron {
-  margin-left: 20em;
+.build-survey-jumbotron{
+    margin-left: 20em;
 }
-
-#multi {
+#multi{
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
   display: inline-block;
-
+ 
 }
-
-#yn {
+#yn{
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
 }
-
-#agree {
+#agree{
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
 }
-
-#rating {
+#rating{
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
 }
-
-#feedback {
+#feedback{
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
 }
-
-#checkbox {
+#checkbox{
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
 }
-
-#tf {
+#tf{
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
 }
-
 // .labelTitle{
 //   font-family: Helvetica;
 //   font-weight: bold;
 //   text-shadow: 0 16px 16px black;
 // }
-.surveyCreateBtn {
+.surveyCreateBtn{
   border-radius: 10px;
   float: right;
   background: rgb(44, 90, 117);
@@ -709,17 +657,16 @@ Drag and Drop
   height: 40px;
   font-weight: bold;
 }
-
 .surveyCreateBtn:hover,
-.surveyCreateBtn:active {
+.surveyCreateBtn:active{
   background: black;
   color: white;
 }
 
 /***************
 TEMPLATE MODAL
-***************/
-.buttonCreate {
+***************/ 
+.buttonCreate{
   border-radius: 10px;
   background-color: $revature-orange-light;
   font-weight: bold;
@@ -727,14 +674,12 @@ TEMPLATE MODAL
   border: none;
   color: black;
 }
-
 .buttonCreate:hover,
-.buttonCreate:active {
-  background-color: $revature-orange-light;
-  color: #565D61;
+.buttonCreate:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
 }
-
-.buttonEdit {
+.buttonEdit{
   border-radius: 10px;
   background-color: white;
   font-weight: bold;
@@ -742,11 +687,10 @@ TEMPLATE MODAL
   border: 1px solid $revature-orange-light;
   color: $revature-orange;
 }
-
 .buttonEdit:hover,
-.buttonEdit:active {
-  background-color: $revature-orange-light;
-  color: black;
+.buttonEdit:active{
+  background-color: $revature-orange-light; 
+  color:black;
   border: none;
 }
 
@@ -754,47 +698,40 @@ TEMPLATE MODAL
   Chart
 ***********************************/
 
-#ManagerChart {
-  width: 50vw;
-  height: 100vh;
-  display: inline-block;
-  top: 180px;
-  left: 0%;
-  position: fixed;
-  z-index: 12;
-  text-align: center;
+#ManagerChart{
+ width:50vw;
+ height:100vh;
+ display:inline-block;
+ top:180px;
+ left:0%;
+ position:fixed;
+z-index:12;
+text-align:center;
 }
 
-#AssociateChart {
-  width: 50vw;
-  height: 100vh;
-  display: inline-block;
-  top: 180px;
-  left: 50vw;
-  position: fixed;
-  z-index: 10;
-  text-align: center;
+#AssociateChart{
+  width:50vw;
+  height:100vh;
+  display:inline-block;
+  top:180px;
+  left:50vw;
+  position:fixed;
+  z-index:10;
+  text-align:center;
 }
 
 .no-select {
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
-
-.editButton {
-  background-color: #f26925;
-  color: white;
+.editButton{
+  background-color: #f26925; 
+  color: white; 
   border: 2px solid #f26925;
 }
 
