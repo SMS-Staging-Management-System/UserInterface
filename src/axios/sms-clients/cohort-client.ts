@@ -10,7 +10,7 @@ export const cohortClient = {
   
   getAll: () => {
     return smsClient.get(cohortContext + "/cohorts");
-
+  },
 
   findAll() {
     return smsClient.get(cohortContext)
