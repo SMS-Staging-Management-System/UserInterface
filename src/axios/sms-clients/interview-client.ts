@@ -1,5 +1,5 @@
 import { smsClient } from ".";
-import { INewInterviewData } from "../../interview-src/model/INewInterviewData";
+import { INewInterviewData } from "../../model/INewInterviewData";
 
 const interviewContext = '/interview';
 
