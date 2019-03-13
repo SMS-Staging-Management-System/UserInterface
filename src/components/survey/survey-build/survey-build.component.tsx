@@ -293,7 +293,7 @@ class surveyBuild extends React.Component<any, any>{
 
         <div className="container" >
 
-          <div className="jumbotron">
+          <div className="jumbotron survey-build-jumbotron">
 
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
