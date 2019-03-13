@@ -15,7 +15,6 @@ import TemplatesComponent from './templates/templates.component';
 // import { ManageCohortsComponenet } from './manage-cohorts/manage-cohorts.component';
 // import CreateUserModal from './create-user-modal/create-user-modal.container';
 
-
 export class SurveyComponent extends React.Component<any, any> {
 
   constructor(props) {
@@ -57,6 +56,7 @@ export class SurveyComponent extends React.Component<any, any> {
             <Route path={`${path}/survey-taking/:surveyId`} component={SurveyTakingComponent} />
         </Switch>
       </div>
-    )
+    ) 
   }
 }
+

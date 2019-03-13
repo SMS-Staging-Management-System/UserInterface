@@ -10,8 +10,8 @@ import { Provider } from 'react-redux';
 
 import { ToastContainer, toast } from 'react-toastify';
 import { ManagementRoutes } from './routes/Management.routes';
-import { InterviewRoutes } from './routes/Interview.routes';
 import { SurveyRoutes } from './routes/Survey.routes';
+import { InterviewRoutes } from './routes/Interview.routes';
 
 class App extends React.Component {
   public render() {
