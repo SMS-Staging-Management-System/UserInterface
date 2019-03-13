@@ -6,8 +6,26 @@ const initialState: ICreateUserState = {
   enabled: false,
   locationDropdownActive: false,
   newUser: {
-    address: {
+    userId: 0,
+    status: {
+      statusId: 0,
+      genericStatus: '',
+      specificStatus: '',
+      virtual: false
+    },
+    roles: [],
+    trainingAddress: {
       addressId: 0,
+      street: '',
+      alias: '',
+      city: '',
+      country: '',
+      state: '',
+      zip: ''
+    },
+    personalAddress: {
+      addressId: 0,
+      street: '',
       alias: '',
       city: '',
       country: '',
@@ -17,7 +35,7 @@ const initialState: ICreateUserState = {
     email: '',
     firstName: '',
     lastName: '',
-    phoneNumber: ''
+    phoneNumber: '',
   },
 }
 

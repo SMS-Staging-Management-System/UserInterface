@@ -6,7 +6,7 @@ import  ProtectedRoute  from '../components/protected-route.component/protected-
 import { SurveyComponent } from '../components/survey/survey.component';
 
 export class SurveyRoutes extends React.Component<any, any> {
-    constructor(props) {
+    constructor(props:any){
         super(props)
     }
 

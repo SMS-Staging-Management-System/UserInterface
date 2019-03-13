@@ -45,7 +45,9 @@ export const updateNewUser = (newUser: IUser) => {
   }
 }
 
-export const saveUser = (newUser: IUser) => (dispatch) => {
+
+//Use async await tho?
+export const saveUser = (newUser: IUser) => (dispatch: (action: any) => void) => {
   userClient.saveUser(newUser)
     .then(resp => {
       toast.success('User Created')
