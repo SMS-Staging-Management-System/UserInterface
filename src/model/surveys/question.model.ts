@@ -1,5 +1,9 @@
 export interface IQuestion {
-    id: number;
+    questionId :{ 
+        questionId: number;
     question: string;
     typeId: number;
+    }
+
 }
+

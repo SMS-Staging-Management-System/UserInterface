@@ -3,7 +3,7 @@ export interface ISurvey {
   title: string;
   description: string;
   dateCreated: Date;
-  closingDate: Date;
+  closingDate: Date | null;
   template: boolean;
   published: boolean;
 }

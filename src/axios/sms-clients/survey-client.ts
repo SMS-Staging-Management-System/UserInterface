@@ -9,6 +9,10 @@ const questionBaseRoute = '/questions';
 const answerBaseRoute = '/answers';
 const responseBaseRoute = '/responses';
 const questionTypeBaseRoute = '/questiontype';
+const questionJunctionBaseRoute = '/junction_survey_questions';
+const questionAllBaseRoute = '/questions/multi-question';
+
+
 
 export const surveyClient = {
 
@@ -23,7 +27,23 @@ export const surveyClient = {
 
   // },
   saveSurvey(survey: ISurvey) { // this will be taking in ISurvey,IQuestion, and IAnswer and will enter seperate endpoints
-    surveyContext.post(surveyBaseRoute, survey);
+    // let today = `${survey.dateCreated.getFullYear()}-${(survey.dateCreated.getMonth()+1).toString().padStart(2, '0')}-${(survey.dateCreated.getDate()).toString().padStart(2, '0')}`
+
+    // let convert = {
+    //   surveyId: survey.surveyId,
+    //   title: survey.title,
+    //   description: survey.description,
+    //   dateCreated: today,
+    //   closingDate: null,
+    //   template: survey.template,
+    //   published: survey.published
+    // }
+
+console.log('this is the survey '+ survey);
+
+     surveyContext.post(surveyBaseRoute, survey);
+console.log('post finished');
+
     // this.saveQuestion(question);
     // this.saveAllAnswer(answer);
 
@@ -66,14 +86,38 @@ export const surveyClient = {
   //-- Question Methods --//
   //----------------------//
 
-  saveQuestion(question: IQuestion) {
-      surveyContext.post(questionBaseRoute, question);
-  },
+  async saveQuestion(question: IQuestion) {
+   //let ID = new Array;
+  //  await surveyContext.post(questionBaseRoute, question.questionId).then(response => {
+  //     this.answArray(  parseInt(response.data.questionId));
+
+  //     });
+     
+      let resp = await surveyContext.post(questionBaseRoute, question.questionId);
+      let ID = parseInt(resp.data.questionId);      // return ID; 
+console.log('THIS IS ID: '+ID);
+return ID;
+
+},
+
+//    answArray( ID : number) {
+
+//     let anArray=new Array;
+//     anArray.push(ID)
+
+    
+//     console.log(anArray)
+//   return anArray;
+
+// },
+
   saveAllQuestion(question: IQuestion[]) {
-    for (let index = 0; index < question.length; index++) {
-      surveyContext.post(questionBaseRoute, question[index]);
-    }
+  
+      surveyContext.post(questionAllBaseRoute, question);
   },
+  saveToQuestionJunction(question: IQuestion) {
+    surveyContext.post(questionJunctionBaseRoute, question);
+},
 
   async getQuestionType(index: number) {
 
@@ -87,8 +131,14 @@ export const surveyClient = {
   //-- Answer Methods --//
   //--------------------//
 
-  saveAnswer(answer: IAnswer) {
-      surveyContext.post(answerBaseRoute, answer);
+ async saveAnswer(answer: IAnswer) {
+
+
+     await surveyContext.post(answerBaseRoute, answer)
+
+
+
+
   },
 
   saveAllAnswer(answer: IAnswer[]) {

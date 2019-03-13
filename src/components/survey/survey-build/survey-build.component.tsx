@@ -4,13 +4,13 @@ import React from 'react';
 
 
 import $ from 'jquery'
-import Question1 from './question1.component';
-import Question2 from './question2.component';
-import Question3 from './question3.component';
-import Question4 from './question4.component';
-import Question5 from './question5.component';
-import Question6 from './question6.component';
-import Question7 from './question7.component';
+import { MultipleChoice } from './multiplechoice.component';
+import { YesNoMaybe } from './yes_no_question.component';
+import { StronglyAgree } from './stronglyAgree.component';
+import { Rating } from './Rating.component';
+import { FeedBack } from './feedback.component';
+import { CheckBox } from './checkbox.component';
+import { TrueFalse } from './truefalse.component';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import { IQuestion } from '../../../model/surveys/question.model';
@@ -36,31 +36,31 @@ class surveyBuild extends React.Component<any, any>{
       todos: [
         {
           questionID: 1, // make sure this questioID matches the id in the datatype for questiontype
-          task: <Question1 /> //multiple choice
+          task: <TrueFalse /> //multiple choice
         },
         {
           questionID: 2,
-          task: <Question2 />
+          task: <MultipleChoice />
         },
         {
           questionID: 3,
-          task: <Question3 />
+          task: <CheckBox />
         },
         {
           questionID: 4,
-          task: <Question4 />
+          task: <Rating />
         },
         {
           questionID: 5,
-          task: <Question5 />
+          task: <FeedBack />
         },
         {
           questionID: 6,
-          task: <Question6 />
+          task: <YesNoMaybe />
         },
         {
           questionID: 7,
-          task: <Question7 />
+          task: <StronglyAgree />
         }
 
 
@@ -111,38 +111,54 @@ class surveyBuild extends React.Component<any, any>{
 
     let frmData = $(":input").serializeArray();
     frmData.splice(0, 13);
+
     //  `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, '0')}-${(today.getDate()).toString().padStart(2, '0')}`
 
     let dummySurvey: ISurvey = {
       surveyId: 1,
       title: frmData,
       description: 'Example Survey 1 Description',
-      dateCreated: new Date('03-25-2019'),
-      closingDate: new Date('03-25-2019'),
+      dateCreated: new Date(),
+      closingDate: null,
       template: false,
       published: true
     };
-    console.log(dummySurvey.dateCreated)
+    // dummySurvey.closingDate.setDate(1);
+    // dummySurvey.closingDate.setFullYear(0);
+    // dummySurvey.closingDate.setMonth(0);
+
+
+
+
+
+    console.log('cloasing date: ' + dummySurvey.closingDate)
     let dummyQuestionArray: IQuestion[] = [];
 
     let dummyAnswerArray: IAnswer[] = [];
 
     console.log(frmData);
 
+
     let questionindex = 0;
     for (let index = 0; index < frmData.length; index++) {
 
       let dummyquestion: IQuestion = {
-        id: 0,
-        question: 'string',
-        typeId: 0,
+        questionId: {
+          questionId: 0,
+          question: 'string',
+          typeId: 0,
+        }
       }
-
       let dummyAnswers: IAnswer = {
         id: 0,
         answer: "string",
         questionId: 0
       }
+      // let dummyAnswers: IAnswer = {
+      //   id: 0,
+      //   answer: "string",
+      //   questionId: 0
+      // }
 
       switch (frmData[index].name) {
         case 'title':
@@ -158,8 +174,8 @@ class surveyBuild extends React.Component<any, any>{
 
         case 'questionText':
           //   console.log('current index '+index);
-          dummyquestion.typeId = this.state.completedTasks[questionindex].questionID;
-          console.log(dummyquestion.question = frmData[index].value);
+          dummyquestion.questionId.typeId = this.state.completedTasks[questionindex].questionID;
+          console.log(dummyquestion.questionId.question = frmData[index].value);
           dummyQuestionArray.push(dummyquestion);
           questionindex += 1
           //  console.log(dummySurvey.description);
@@ -180,12 +196,71 @@ class surveyBuild extends React.Component<any, any>{
       }
     }
 
-
-    //  surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
-    // surveyClient.saveSurvey(dummySurvey);
+    // //surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
+    surveyClient.saveSurvey(dummySurvey);
+    let questionid = new Array;
+    //get current questionid into an array
     // this.props.CreatSurvey(dummySurvey);
+    for (let index = 0; index < dummyQuestionArray.length; index++) {
+      let num = await surveyClient.saveQuestion(dummyQuestionArray[index]);
+      console.log(num + " this is the array you got")
+      questionid.push(num);
+    }
 
+
+    for (let index = 0; index < dummyAnswerArray.length; index++) {
+
+      //console.log( dummyAnswerArray[index].answer+ "HELLOOOOOOO")
+
+      let match = dummyAnswerArray[index].answer.split(/[\s,]+/)
+      console.log(match)
+      for (let a in match) {
+
+        let dummyAnswers: IAnswer = {
+          id: 0,
+          answer: "string",
+          questionId: 0
+        }
+
+        let choice = match[a]
+        dummyAnswers.answer = choice
+
+        let change = dummyAnswerArray[0].questionId;//keep a temp variable to check if the surveys answer questionid changes
+        let count = 0;
+
+        for (let index = 0; index < dummyAnswerArray.length; index++) {
+          if (change != dummyAnswerArray[index].questionId) {
+            //if the change doesn't equal the surveys answer questionid
+            //then a new question arrived
+            change = dummyAnswerArray[index].questionId;
+            count++;
+          }
+          dummyAnswerArray[index].questionId = questionid[count];
+          dummyAnswers.questionId=questionid[count];
+
+          surveyClient.saveAnswer(dummyAnswers);
+          // console.log('this is the dummt answer: '+JSON.stringify(dummyAnswers));
+      
+        }
+
+      }
+      // let change = dummyAnswerArray[0].questionId;//keep a temp variable to check if the surveys answer questionid changes
+      // let count = 0;
+
+      // for (let index = 0; index < dummyAnswerArray.length; index++) {
+      //   if (change != dummyAnswerArray[index].questionId) {
+      //     //if the change doesn't equal the surveys answer questionid
+      //     //then a new question arrived
+      //     change = dummyAnswerArray[index].questionId;
+      //     count++;
+      //   }
+      //   dummyAnswerArray[index].questionId = questionid[count];
+      //     surveyClient.saveAnswer(dummyAnswerArray[index])
+      //     console.log('this is the answer: '+dummyAnswerArray[index].answer);
+      // console.log('this is the answer questionID: ' + dummyAnswerArray[index].questionId);
+    }
   }
+
   testaxois = async (event) => {
     surveyClient.findSurveyById(2);
   }
