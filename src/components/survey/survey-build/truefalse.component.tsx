@@ -13,7 +13,7 @@ export interface ISurveyBuildProps {
 }
 
 
-export class Question7 extends React.Component<ISurveyBuildProps, any> {
+export class TrueFalse extends React.Component<ISurveyBuildProps, any> {
   constructor(props) {
     super(props);
 
@@ -42,4 +42,4 @@ export class Question7 extends React.Component<ISurveyBuildProps, any> {
 }
 
 
-export default Question7;
+export default TrueFalse;

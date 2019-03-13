@@ -90,7 +90,7 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
                                     <td>{survey.title}</td>
                                     <td>{survey.description}</td>
                                     <td>{survey.dateCreated.toDateString()}</td>
-                                    <td>{survey.closingDate.toDateString()}</td>
+                                    <td>{survey.closingDate!.toString}</td> 
                                     <td>{survey.template ? 'Yes' : 'No'}</td>
                                     <td>{survey.published ? 'Yes' : 'No'}</td>
                                 </tr>

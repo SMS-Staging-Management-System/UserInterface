@@ -580,13 +580,17 @@ Drag and Drop
 float: left;
 
 }
-
+.questionbutton{
+  display: inline-block;
+}
 .done {
  
   background: #e9ecef;
   height: auto;
   padding-top: 50px;
   padding-bottom: 50px;
+  border-style: dashed;
+  border-color: grey;
   width: auto;
   margin: 10px;
 }
@@ -604,6 +608,7 @@ float: left;
   background-color: black;
   color: white;
   letter-spacing: 0.5pc;
+  display: inline-block;
  
 }
 #yn{
