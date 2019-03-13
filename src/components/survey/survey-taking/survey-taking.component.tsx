@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
-import { Redirect } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
+import { connect } from 'react-redux';
+import { IAuthState } from '../../../reducers/management';
+import { IState } from '../../../reducers';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { IResponse } from '../../../model/surveys/response.model';
 
-interface SurveyTakingProps {
+interface IComponentProps extends RouteComponentProps<{}> {
+    auth: IAuthState,
     match: any
-}
+};
 
-interface SurveyTakingState {
+interface IComponentState {
     survey: any,
     surveyLoaded: boolean,
     responses: any,
     newFeedback: any,
     redirectTo: any
-}
+};
 
-export default class SurveyTakingComponent extends Component<SurveyTakingProps, SurveyTakingState>{
+class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
     constructor(props) {
         super(props);
         this.state = {
@@ -28,176 +32,33 @@ export default class SurveyTakingComponent extends Component<SurveyTakingProps, 
                 closingDate: new Date(),
                 template: false,
                 published: false
-              },
+            },
             surveyLoaded: false,
             responses: [],
             newFeedback: [],
             redirectTo: null
-        }
-    }
+        };
+    };
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.loadSurvey();
+    };
+
+    loadSurvey = async () => {
         const survey = await surveyClient.findSurveyById(this.props.match.params.surveyId);
-        console.log('loaded survey:', survey);
-        const dummySurvey = {
-            "surveyId": 1,
-            "title": "Fried Chicken",
-            "description": "A survey to determine who has the best fried chicken.",
-            "dateCreated": 1551330000000,
-            "closingDate": null,
-            "template": true,
-            "published": true,
-            "questions": [
-                {
-                    "questionId": 1,
-                    "question": "Who has the best fried chicken?",
-                    "typeId": 2,
-                    "answers": [
-
-                        {
-                            "id": 1,
-                            "answer": "KFC",
-                            "questionId": 1
-                        },
-                        {
-                            "id": 2,
-                            "answer": "Churchs",
-                            "questionId": 1
-                        },
-                        {
-                            "id": 3,
-                            "answer": "Pollo",
-                            "questionId": 1
-                        },
-                        {
-                            "id": 4,
-                            "answer": "Chicken Kitchen",
-                            "questionId": 1
-                        },
-                        {
-                            "id": 5,
-                            "answer": "Publix",
-                            "questionId": 1
-                        }
-                    ]
-                },
-                {
-                    "questionId": 2,
-                    "question": "Are you biased?",
-                    "typeId": 1,
-                    "answers": [
-
-                        {
-                            "id": 1,
-                            "answer": "KFC",
-                            "questionId": 2
-                        },
-                        {
-                            "id": 2,
-                            "answer": "Churchs",
-                            "questionId": 2
-                        },
-                        {
-                            "id": 3,
-                            "answer": "Pollo",
-                            "questionId": 2
-                        },
-                        {
-                            "id": 4,
-                            "answer": "Chicken Kitchen",
-                            "questionId": 2
-                        },
-                        {
-                            "id": 5,
-                            "answer": "Publix",
-                            "questionId": 2
-                        }
-                    ]
-                },
-                {
-                    "questionId": 3,
-                    "question": "test question",
-                    "typeId": 1,
-                    "answers": [
-
-                        {
-                            "id": 1,
-                            "answer": "KFC",
-                            "questionId": 3
-                        },
-                        {
-                            "id": 2,
-                            "answer": "Churchs",
-                            "questionId": 3
-                        },
-                        {
-                            "id": 3,
-                            "answer": "Pollo",
-                            "questionId": 3
-                        },
-                        {
-                            "id": 4,
-                            "answer": "Chicken Kitchen",
-                            "questionId": 3
-                        },
-                        {
-                            "id": 5,
-                            "answer": "Publix",
-                            "questionId": 3
-                        }
-                    ]
-                },
-                {
-                    "questionId": 4,
-                    "question": "How would you rate the interview?",
-                    "typeId": 4,
-                    "answers": [
-
-                        {
-                            "id": 1,
-                            "answer": "KFC",
-                            "questionId": 4
-                        },
-                        {
-                            "id": 2,
-                            "answer": "Churchs",
-                            "questionId": 4
-                        },
-                        {
-                            "id": 3,
-                            "answer": "Pollo",
-                            "questionId": 4
-                        },
-                        {
-                            "id": 4,
-                            "answer": "Chicken Kitchen",
-                            "questionId": 4
-                        },
-                        {
-                            "id": 5,
-                            "answer": "Publix",
-                            "questionId": 4
-                        }
-                    ]
-                }
-            ]
-        }
-        console.log('dummy Survey', dummySurvey);
         this.setState({
-            survey: dummySurvey,
+            survey: survey,
             surveyLoaded: true
-        })
-    }
+        });
+    };
 
     // Updates state when the user selects an option
     handleResponseInput = event => {
         const { name, value } = event.target;
-        // const updatedResponses = this.state.responses.concat({ [name]: value });
         this.setState(prevState => ({
             responses: {
                 ...prevState.responses,
                 [name]: value
-
             }
         }));
     };
@@ -205,12 +66,10 @@ export default class SurveyTakingComponent extends Component<SurveyTakingProps, 
     // Updates state when the user enters feedback
     handleFeedbackInput = event => {
         const { name, value } = event.target;
-        // const updatedResponses = this.state.responses.concat({ [name]: value });
         this.setState(prevState => ({
             newFeedback: {
                 ...prevState.newFeedback,
                 [name]: value
-
             }
         }));
     };
@@ -220,17 +79,29 @@ export default class SurveyTakingComponent extends Component<SurveyTakingProps, 
         event.preventDefault();
         for (let key in this.state.responses) {
             const responseToSubmit: IResponse = {
+                "answerId": {
+                    "id": this.state.responses[key],
+                    "answer": '',
+                    "questionId": 0
+                },
                 "id": 0,
-                "surveyId": this.state.survey.surveyId,
-                "answerId": parseInt(key),
-                "userEmail": "test@email.com"
-            };
+                "surveyId": {
+                    "surveyId": this.state.survey.surveyId,
+                    "closingDate": new Date(),
+                    "dateCreated": new Date(),
+                    "description": '',
+                    "published": true,
+                    "template": true,
+                    "title": ''
+                },
+                "userEmailString": this.props.auth.currentUser.email
+            }
             surveyClient.saveResponse(responseToSubmit);
         }
         for (let key in this.state.newFeedback) {
             const newAnswer: IAnswer = {
                 "id": 0,
-                "answer": parseInt[key],
+                "answer": this.state.newFeedback[key],
                 "questionId": parseInt(key)
             }
             surveyClient.saveAnswer(newAnswer);
@@ -238,7 +109,7 @@ export default class SurveyTakingComponent extends Component<SurveyTakingProps, 
         this.setState({
             redirectTo: '/surveys'
         })
-    }
+    };
 
     render() {
         if (this.state.redirectTo) {
@@ -253,36 +124,39 @@ export default class SurveyTakingComponent extends Component<SurveyTakingProps, 
                             {this.state.surveyLoaded &&
                                 <form>
                                     {
-                                        this.state.survey.questions.map(question => (
-                                            <div key={question.questionId} className="card form-group mb-3">
-                                                <h5 className="card-header">{question.question}</h5>
+                                        this.state.survey.questionJunctions.map(questionJunction => (
+                                            <div key={questionJunction.questionId.questionId} className="card form-group mb-3">
+                                                <h5 className="card-header">{questionJunction.questionId.question}</h5>
                                                 <div className="card-body">
-                                                    {question.type === 5 ? (
+                                                    {questionJunction.questionId.typeId === 5 ? (
                                                         <div className="form-group">
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
-                                                                name={question.questionId}
-                                                                value={this.state.newFeedback[question.questionId]}
+                                                                name={questionJunction.questionId.questionId}
+                                                                value={this.state.newFeedback[questionJunction.questionId.questionId] || ''}
                                                                 onChange={this.handleFeedbackInput}
                                                                 placeholder="Enter your response here"
                                                             />
                                                         </div>
                                                     ) : (
                                                             <>
-                                                                {question.answers.map(choice => (
-                                                                    <div key={choice.id} className="form-check">
-                                                                        <input
-                                                                            className="form-check-input"
-                                                                            type="radio"
-                                                                            name={`question-${question.questionId}-choice`}
-                                                                            value={choice.id}
-                                                                            onChange={this.handleResponseInput}
-                                                                        />
-                                                                        <label className="form-check-label">
-                                                                            {choice.answer} </label>
-                                                                    </div>
-                                                                ))}
+                                                                {questionJunction.questionId.answerChoices &&
+
+                                                                    questionJunction.questionId.answerChoices.map(choice => (
+                                                                        <div key={choice.id} className="form-check">
+                                                                            <input
+                                                                                className="form-check-input"
+                                                                                type="radio"
+                                                                                name={`question-${questionJunction.questionId.questionId}-choice`}
+                                                                                value={choice.id}
+                                                                                onChange={this.handleResponseInput}
+                                                                            />
+                                                                            <label className="form-check-label">
+                                                                                {choice.answer} </label>
+                                                                        </div>
+                                                                    ))
+                                                                }
                                                             </>
                                                         )}
                                                 </div>
@@ -294,10 +168,16 @@ export default class SurveyTakingComponent extends Component<SurveyTakingProps, 
                             }
                         </>
                     ) : (
-                            <div>Loading</div>
+                            <div>Loading...</div>
                         )}
                 </div>
             </div >
         )
-    }
-}
+    };
+};
+
+const mapStateToProps = (state: IState) => ({
+    auth: state.managementState.auth
+});
+
+export default connect(mapStateToProps)(SurveyTakingComponent);

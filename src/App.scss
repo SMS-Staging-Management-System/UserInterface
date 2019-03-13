@@ -536,17 +536,27 @@ Survey Component
 }
 
 .assignSurveyBtn{
+  color: black;
   border-radius: 10px;
   background-color: $revature-orange-light;
   font-weight: bold;
   height: 40px;
   width: 100%;
+  border: none;
 }
 
 .assignSurveyBtn:hover,
 .assignSurveyBtn:active{
 background-color: $revature-orange-light;
 color:#565D61;
+}
+
+.assignSurveyModalHeader{
+    text-align: center;
+    background-color: $revature-orange-light;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
 }
 
 /*****************
@@ -640,3 +650,35 @@ float: left;
   background: black;
   color: white;
 }
+
+/***************
+TEMPLATE MODAL
+***************/ 
+.buttonCreate{
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 40px;
+  border: none;
+  color: black;
+}
+.buttonCreate:hover,
+.buttonCreate:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+}
+.buttonEdit{
+  border-radius: 10px;
+  background-color: white;
+  font-weight: bold;
+  height: 40px;
+  border: 1px solid $revature-orange-light;
+  color: $revature-orange;
+}
+.buttonEdit:hover,
+.buttonEdit:active{
+  background-color: $revature-orange-light; 
+  color:black;
+  border: none;
+}
+    

@@ -1,15 +1,13 @@
 import { combineReducers } from "redux";
-import { surveyBuildReducer } from "./SurveyBuild.reducer";
-
-export interface ISurveyBuildState {
-    
-  }
+//import { templateModalReducer } from "./template-modal-reducer";
 
 
+export interface IModalTemplateState{
+  //showModal: boolean,
+}
 export interface ISurveyState {
-  surveyBuild : ISurveyBuildState
-  }
-
+  templateModal: IModalTemplateState,
+}
   export const surveyState = combineReducers<ISurveyState>({
-    surveyBuild : surveyBuildReducer
+    //templateModal: templateModalReducer,
   })
