@@ -1,5 +1,6 @@
 import { IProfileViewState } from ".";
 import { viewUserTypes } from "../../actions/view-user/view-user.actions";
+import { profileTypes } from "../../actions/profile/profile.actions";
 
 const initialState: IProfileViewState = {
     user: {
@@ -38,10 +39,18 @@ const initialState: IProfileViewState = {
 
 export const profileViewReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case (viewUserTypes.VIEW_USER):
+        case viewUserTypes.VIEW_USER:
             return {
                 ...state,
                 user: action.payload.newUser
+            }
+        case profileTypes.UPDATE_USER_TRAINING_LOCATION:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    trainingAddress: action.payload.location
+                }
             }
     }
     return state;

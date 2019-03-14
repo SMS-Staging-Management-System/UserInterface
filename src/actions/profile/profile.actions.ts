@@ -1,14 +1,15 @@
-import { IUser } from "../../model/user.model";
+import { IAddress } from "../../model/address.model";
 
 export const profileTypes = {
-    VIEW_PROFILE: 'VIEW_PROFILE',
+    UPDATE_USER_TRAINING_LOCATION: 'UPDATE_USER_TRAINING_LOCATION'
 }
 
-export const viewProfile = (user: IUser) => {
+export const updateUserTrainingLocation = (location: IAddress) => {
     return {
         payload: {
-            user: user
+            location
         },
-        type: profileTypes.VIEW_PROFILE
+        type: profileTypes.UPDATE_USER_TRAINING_LOCATION
     }
 }
+
