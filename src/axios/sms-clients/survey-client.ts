@@ -74,6 +74,7 @@ export const surveyClient = {
         // Sort the junction by question order
         junctions.sort((a, b) => (a.questionOrder > b.questionOrder) ? 1 : -1)
         survey.questionJunctions = junctions;
+        console.log("HERE I AM", survey.questionJunctions);
       })
       .catch(err => {
         console.log(err);
