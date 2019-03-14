@@ -4,7 +4,7 @@ import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
-import { FaInfoCircle} from 'react-icons/fa'
+import { FaInfoCircle } from 'react-icons/fa'
 
 
 interface TemplatesProps extends RouteComponentProps<{}> {
@@ -56,9 +56,11 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
 
     handleShow = async (id) => {
+        this.setState({
+            showModal: true
+        })
         const openedTemplate = await surveyClient.findSurveyById(id);
         this.setState({
-            showModal: true,
             survey: openedTemplate,
             //surveyId: id,
             surveyLoaded: true
@@ -70,6 +72,8 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
     }
     handleClose = () => {
         this.setState({
+            survey: {},
+            surveyLoaded: false,
             showModal: false
         })
 
@@ -121,14 +125,14 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                 <Modal show={this.state.showModal} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>
-                        <div className="surveyInfoCircle"><FaInfoCircle /> <strong>This is how your survey will look</strong></div>
+                            <div className="surveyInfoCircle"><FaInfoCircle /> <strong>This is how your survey will look</strong></div>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className="modalHeading">
                             <strong>Survey Title</strong>: {this.state.survey.title}</div>
-                        <div className="container">
-                           
+                        <div className="container" id="containerTemplate">
+
                             {this.state.surveyLoaded ?
                                 this.state.surveyLoaded &&
                                 this.state.survey.questionJunctions.map(questionJunction => (
