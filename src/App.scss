@@ -597,12 +597,14 @@ float: left;
 .jumbotron{
   height: auto;
   margin-top: 3em;
-  margin-left: 20em;
   border: 3px solid black;
   box-shadow: 0 16px 16px black;
   letter-spacing: 0.2pc;
   font-weight: bold;
   background-color: #eee;
+}
+.survey-build-jumbotron{
+    margin-left: 20em;
 }
 #multi{
   background-color: black;
