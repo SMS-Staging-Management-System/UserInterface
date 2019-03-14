@@ -4,7 +4,7 @@ const dev = {
   cognitoUserPoolId:  'us-east-1_6hCFlGZHZ',
   mgtContext:         'http://localhost:8090',
   surveyContext:       'http://localhost:8092',
-  smsContext:         'http://localhost:8091'
+  smsContext:         'http://localhost:8091/interview'
 };
 
 const uat = {
