@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Table } from 'reactstrap';
-import { ISurvey } from '../../../model/surveys/survey.model'
+import { Table, Button } from 'reactstrap';
+import { ISurvey } from '../../../model/surveys/survey.model';
+import { Redirect } from 'react-router';
 
 interface MySurveysProps {
 
@@ -8,7 +9,8 @@ interface MySurveysProps {
 
 interface MySurveysState {
     surveys: ISurvey[],
-    surveysLoaded: boolean
+    surveysLoaded: boolean,
+    redirectTo: string | null
 }
 
 class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
@@ -16,12 +18,19 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
         super(props);
         this.state = {
             surveys: [],
-            surveysLoaded: false
+            surveysLoaded: false,
+            redirectTo: null
         }
     }
 
     componentDidMount() {
         this.loadMySurveys();
+    }
+
+    handleLoadSurveyData = (surveyId: number) => {
+        this.setState({
+            redirectTo: `/surveys/survey-data/${surveyId}`
+        })
     }
 
     // Load the surveys into the state
@@ -70,6 +79,9 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
 
     render() {
         console.log('this.state.surveys', this.state.surveys);
+        if (this.state.redirectTo) {
+            return <Redirect push to={this.state.redirectTo} />
+        }
         return (
             <>
                 {this.state.surveysLoaded ? (
@@ -82,6 +94,7 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
                                 <th>Closing Date</th>
                                 <th>Template</th>
                                 <th>Published</th>
+                                <th>Analytics</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,6 +106,8 @@ class MySurveysComponent extends Component<MySurveysProps, MySurveysState> {
                                     <td>{survey.closingDate!.toString}</td> 
                                     <td>{survey.template ? 'Yes' : 'No'}</td>
                                     <td>{survey.published ? 'Yes' : 'No'}</td>
+                                    <td><Button className='assignSurveyBtn'  onClick={() =>                 
+                                            this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
                                 </tr>
                             ))}
                         </tbody>
