@@ -1,46 +1,46 @@
 import { INewInterviewData } from "../../model/INewInterviewData";
-import { interviewContext } from ".";
+import { smsClient } from ".";
 
-
+const interviewContext = '/interview';
 
 export const interviewClient = {
     testfetch: async () => {
-        return await interviewContext.get('');
+        return await smsClient.get(interviewContext);
     },
-  
+
     addNewInterview: async (newInterview: INewInterviewData) => {
-        return await interviewContext.post('' + '/new', newInterview);
+        return await smsClient.post(interviewContext + '/new', newInterview);
     },
-    
-    fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC') => {
-        let url = '';
+
+    fetchPage: (pageNumber?: number, pageSize?: number, orderBy = 'id', direction = 'ASC') => {
+        let url = interviewContext;
         url += '/page?orderBy=' + orderBy + '&direction=' + direction;
         if (pageNumber) {
-            url+='&pageNumber=' + pageNumber;
+            url += '&pageNumber=' + pageNumber;
         }
         if (pageSize) {
             url += '&pageSize=' + pageSize;
         }
-        return interviewContext.get(url);
+        return smsClient.get(url);
     },
-      
-    assocNeedFeedback: async (pageNumber:number, PageSize:number) => {
-        return await interviewContext.get(''+`/reports/AssociateNeedFeedback/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+
+    assocNeedFeedback: async (pageNumber: number, PageSize: number) => {
+        return await smsClient.get(interviewContext + `/reports/AssociateNeedFeedback/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
-      
-    interviewPerAssoc: async (pageNumber:number, PageSize:number) => {
-        return await interviewContext.get(''+`/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+
+    interviewPerAssoc: async (pageNumber: number, PageSize: number) => {
+        return await smsClient.get(interviewContext + `/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
-      
+
     sendFeedback: async (feedback: any) => {
-        return await interviewContext.post(''+`/feedback`, feedback);
+        return await smsClient.post(interviewContext + `/feedback`, feedback);
     },
 
     fetchManager24: async () => {
-        return await interviewContext.get(interviewContext+`/reports/request24/manager`);
+        return await smsClient.get(interviewContext + `/reports/request24/manager`);
     },
 
     fetchAssoc24: async () => {
-        return await interviewContext.get(interviewContext+`/reports/request24/associate`);
+        return await smsClient.get(interviewContext + `/reports/request24/associate`);
     },
 }
