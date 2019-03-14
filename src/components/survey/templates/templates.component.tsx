@@ -127,7 +127,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                     <Modal.Body>
                         <div className="modalHeading">
                             <strong>Survey Title</strong>: {this.state.survey.title}</div>
-                        <div className="container">
+                        <div className="container" id="containerTemplate">
                            
                             {this.state.surveyLoaded ?
                                 this.state.surveyLoaded &&
