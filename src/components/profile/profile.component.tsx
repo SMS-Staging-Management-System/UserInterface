@@ -1,10 +1,9 @@
 import  React, { Component, FormEvent } from 'react';
-import { IUser } from '../../model/user.model';
 import { Container, Form, Row, FormGroup, Label, Input, Col, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { IAddressState } from '../../reducers/management';
 import { IAddress } from '../../model/address.model';
+import { IProfileProps } from './profile.container';
 
-const inputNames = {
+export const inputNames = {
   EMAIL: 'NEW_USER_EMAIL',
   FIRST_NAME: 'NEW_USER_FIRST_NAME',
   LAST_NAME: 'NEW_USER_LAST_NAME',
@@ -12,24 +11,11 @@ const inputNames = {
   STREET: 'STREET',
   CITY: 'CITY',
   STATE: 'STATE',
-  ZIP: 'ZIP'
+  ZIP: 'ZIP',
+  TRAINING_ALIASES: 'TRAINING_ALIASES'
 }
 
-// For the intial population of the user's info
-// Retrieved from the redux store
-interface IProfileProps {
-  currentSMSUser: IUser
-  userToView: IUser
-  trainingAddresses: IAddressState
-  locationDropdownActive: boolean
-  bUserInfoChanged: boolean
-  updateUserInfo(updatedUser: IUser): void
-  setToCurrentSMSUser(currentSMSUser: IUser): void
-  updateUser(userToUpdate: IUser): void
-  updateCurrentSMSUser(user: IUser): void
-  updateUserTrainingLocation(location: IAddress): void
-  toggleTrainingLocationsDropdown(): void
-}
+
 
 class Profile extends Component<IProfileProps, any> {
 
@@ -158,7 +144,7 @@ class Profile extends Component<IProfileProps, any> {
                   <DropdownToggle caret>
                     {userToView.trainingAddress.alias || 'Location'}
                   </DropdownToggle>
-                  <DropdownMenu>
+                  <DropdownMenu name={inputNames.TRAINING_ALIASES}>
                   {
                     trainingAddresses.trainingAddresses.length === 0
                       ? <>
