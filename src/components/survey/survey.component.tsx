@@ -10,7 +10,7 @@ import TemplatesComponent from './templates/templates.component';
 
 export class SurveyComponent extends React.Component<any, any> {
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
   }
 
