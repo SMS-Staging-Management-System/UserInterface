@@ -6,6 +6,7 @@ import React from 'react';
 import $ from 'jquery'
 import { MultipleChoice } from './multiplechoice.component';
 import { YesNoMaybe } from './yes_no_question.component';
+import { connect } from 'react-redux';
 import { StronglyAgree } from './stronglyAgree.component';
 import { Rating } from './Rating.component';
 import { FeedBack } from './feedback.component';
@@ -15,6 +16,11 @@ import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
+import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
+import { RouteComponentProps } from 'react-router';
+import { IAuthState } from '../../../reducers/management';
+import { IState } from '../../../reducers';
+// import { IEditor } from '../../../model/editor.model';
 // import { ISurveyBuildState, ISurveyState } from '../../../reducers/survey';
 // import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
 // import { connect } from 'react-redux';
@@ -28,8 +34,12 @@ import { IAnswer } from '../../../model/surveys/answer.model';
 
 // }
 
+interface IComponentProps extends RouteComponentProps<{}> {
+  auth: IAuthState,
+  match: any
+};
 
-class surveyBuild extends React.Component<any, any>{
+class surveyBuild extends React.Component<IComponentProps, any>{
   constructor(props) {
     super(props);
     this.state = {
@@ -195,16 +205,50 @@ class surveyBuild extends React.Component<any, any>{
           break;
       }
     }
+    let junctionTable: IJunctionSurveyQuestion = {
+
+      id: 0,
+
+      questionId: {
+        questionId: 0,
+        question: 'string',
+        typeId: 0,
+      },
+      questionOrder: 0,
+
+      surveyId: dummySurvey,
+
+    }
+
+    // let editor: IEditor = {
+    //   email: this.props.auth.currentUser.email,
+    //   id: 0,
+    //   surveyId: dummySurvey
+    // }
+    // console.log(JSON.stringify(editor));
+
 
     // //surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
-    surveyClient.saveSurvey(dummySurvey);
+    let surveyId = await surveyClient.saveSurvey(dummySurvey);
     let questionid = new Array;
-    //get current questionid into an array
-    // this.props.CreatSurvey(dummySurvey);
+
+
     for (let index = 0; index < dummyQuestionArray.length; index++) {
       let num = await surveyClient.saveQuestion(dummyQuestionArray[index]);
       console.log(num + " this is the array you got")
       questionid.push(num);
+
+      junctionTable.questionId = dummyQuestionArray[index].questionId;
+      junctionTable.questionId.questionId = num;
+
+      junctionTable.questionOrder = index + 1;
+      junctionTable.surveyId = dummySurvey;
+      junctionTable.surveyId.surveyId = surveyId;
+
+
+
+      surveyClient.saveToQuestionJunction(junctionTable);
+      console.log(JSON.stringify(junctionTable));
     }
 
 
@@ -216,6 +260,7 @@ class surveyBuild extends React.Component<any, any>{
       console.log(match)
       for (let a in match) {
 
+
         let dummyAnswers: IAnswer = {
           id: 0,
           answer: "string",
@@ -226,38 +271,25 @@ class surveyBuild extends React.Component<any, any>{
         dummyAnswers.answer = choice
 
         let change = dummyAnswerArray[0].questionId;//keep a temp variable to check if the surveys answer questionid changes
-        let count = 0;
+        let questionOrder = 0;
 
         for (let index = 0; index < dummyAnswerArray.length; index++) {
           if (change != dummyAnswerArray[index].questionId) {
-            //if the change doesn't equal the surveys answer questionid
-            //then a new question arrived
+
             change = dummyAnswerArray[index].questionId;
-            count++;
+            questionOrder++;
           }
-          dummyAnswerArray[index].questionId = questionid[count];
-          dummyAnswers.questionId = questionid[count];
+          dummyAnswerArray[index].questionId = questionid[questionOrder];
+          dummyAnswers.questionId = questionid[questionOrder];
 
           surveyClient.saveAnswer(dummyAnswers);
-          // console.log('this is the dummt answer: '+JSON.stringify(dummyAnswers));
-
         }
 
-      }
-      // let change = dummyAnswerArray[0].questionId;//keep a temp variable to check if the surveys answer questionid changes
-      // let count = 0;
 
-      // for (let index = 0; index < dummyAnswerArray.length; index++) {
-      //   if (change != dummyAnswerArray[index].questionId) {
-      //     //if the change doesn't equal the surveys answer questionid
-      //     //then a new question arrived
-      //     change = dummyAnswerArray[index].questionId;
-      //     count++;
-      //   }
-      //   dummyAnswerArray[index].questionId = questionid[count];
-      //     surveyClient.saveAnswer(dummyAnswerArray[index])
-      //     console.log('this is the answer: '+dummyAnswerArray[index].answer);
-      // console.log('this is the answer questionID: ' + dummyAnswerArray[index].questionId);
+
+        console.log(JSON.stringify(junctionTable) + " HERE IS THE JUNCTION");
+
+      }
     }
   }
 
@@ -290,7 +322,7 @@ class surveyBuild extends React.Component<any, any>{
 
         <div className="container" >
 
-          <div className="jumbotron survey-build-jumbotron">
+          <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
 
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
@@ -342,17 +374,8 @@ class surveyBuild extends React.Component<any, any>{
   }
 }
 
-// const mapStateToProps = (state: ISurveyState) => {
-//   return {
-//     surveyBuild: state.surveyBuild,
-//   }
-// }
+const mapStateToProps = (state: IState) => ({
+  auth: state.managementState.auth
+});
 
-
-// const mapDispatchToProps = {
-//   CreatSurvey
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(surveyBuild);
-
-export default surveyBuild;
+export default connect(mapStateToProps)(surveyBuild);
