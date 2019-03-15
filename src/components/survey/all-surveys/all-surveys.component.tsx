@@ -72,7 +72,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
     }
 
     render() {
-        console.log('all surveys this.state.surveys', this.state.surveys);
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
