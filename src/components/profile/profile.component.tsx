@@ -15,8 +15,6 @@ export const inputNames = {
   TRAINING_ALIASES: 'TRAINING_ALIASES'
 }
 
-
-
 class Profile extends Component<IProfileProps, any> {
 
 
