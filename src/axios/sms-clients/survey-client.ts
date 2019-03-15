@@ -173,9 +173,9 @@ export const surveyClient = {
     //     });
 
     let resp = await surveyContext.post(questionBaseRoute, question.questionId);
-    let ID = parseInt(resp.data.questionId);      // return ID; 
-    console.log('THIS IS ID: ' + ID);
-    return ID;
+    let qID = parseInt(resp.data.questionId);      // return ID; 
+    console.log('THIS IS ID: ' + qID);
+    return qID;
 
   },
 
@@ -201,8 +201,8 @@ export const surveyClient = {
   },
 =======
   },
-  saveToQuestionJunction(question: IQuestion) {
-    surveyContext.post(questionJunctionBaseRoute, question);
+  saveToQuestionJunction(junction: IJunctionSurveyQuestion) {
+    surveyContext.post(questionJunctionBaseRoute, junction);
   },
 >>>>>>> f59053b6cbbc032cea137ca32f8a2e8cc45e98b8
 

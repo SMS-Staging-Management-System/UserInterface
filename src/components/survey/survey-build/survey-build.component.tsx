@@ -6,6 +6,7 @@ import React from 'react';
 import $ from 'jquery'
 import { MultipleChoice } from './multiplechoice.component';
 import { YesNoMaybe } from './yes_no_question.component';
+import { connect } from 'react-redux';
 import { StronglyAgree } from './stronglyAgree.component';
 import { Rating } from './Rating.component';
 import { FeedBack } from './feedback.component';
@@ -16,6 +17,12 @@ import { ISurvey } from '../../../model/surveys/survey.model';
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
+
+import { RouteComponentProps } from 'react-router';
+import { IAuthState } from '../../../reducers/management';
+import { IState } from '../../../reducers';
+// import { IEditor } from '../../../model/editor.model';
+
 // import { ISurveyBuildState, ISurveyState } from '../../../reducers/survey';
 // import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
 // import { connect } from 'react-redux';
@@ -29,8 +36,12 @@ import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-
 
 // }
 
+interface IComponentProps extends RouteComponentProps<{}> {
+  auth: IAuthState,
+  match: any
+};
 
-class surveyBuild extends React.Component<any, any>{
+class surveyBuild extends React.Component<IComponentProps, any>{
   constructor(props) {
     super(props);
     this.state = {
@@ -212,6 +223,13 @@ class surveyBuild extends React.Component<any, any>{
     }
 
 
+    // let editor: IEditor = {
+    //   email: this.props.auth.currentUser.email,
+    //   id: 0,
+    //   surveyId: dummySurvey
+    // }
+    // console.log(JSON.stringify(editor));
+
 
 
     // //surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
@@ -230,6 +248,7 @@ class surveyBuild extends React.Component<any, any>{
       junctionTable.questionOrder = index + 1;
       junctionTable.surveyId = dummySurvey;
       junctionTable.surveyId.surveyId = surveyId;
+
 
       surveyClient.saveToQuestionJunction(junctionTable);
       console.log(JSON.stringify(junctionTable));
@@ -306,7 +325,7 @@ class surveyBuild extends React.Component<any, any>{
 
         <div className="container" >
 
-          <div className="jumbotron survey-build-jumbotron">
+          <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
 
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
@@ -358,17 +377,8 @@ class surveyBuild extends React.Component<any, any>{
   }
 }
 
-// const mapStateToProps = (state: ISurveyState) => {
-//   return {
-//     surveyBuild: state.surveyBuild,
-//   }
-// }
+const mapStateToProps = (state: IState) => ({
+  auth: state.managementState.auth
+});
 
-
-// const mapDispatchToProps = {
-//   CreatSurvey
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(surveyBuild);
-
-export default surveyBuild;
+export default connect(mapStateToProps)(surveyBuild);
