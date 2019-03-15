@@ -535,6 +535,10 @@ Survey Component
   
 }
 
+.assignButtonDiv{
+    width: 100%;  
+}
+
 .assignSurveyBtn{
   color: black;
   border-radius: 10px;
@@ -562,7 +566,9 @@ color:#565D61;
 /*****************
 Drag and Drop
 *****************/ 
-
+.container{
+  //position: absolute;
+}
 
 .todos {
   float: top;
@@ -607,46 +613,39 @@ float: left;
 #multi{
   background-color: black;
   color: white;
-  letter-spacing: 0.1pc;
+  letter-spacing: 0.5pc;
   display: inline-block;
-  font-size: 14.9px;
  
 }
 #yn{
   background-color: black;
   color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
+  letter-spacing: 0.5pc;
 }
 #agree{
   background-color: black;
   color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
+  letter-spacing: 0.5pc;
 }
 #rating{
   background-color: black;
   color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
+  letter-spacing: 0.5pc;
 }
 #feedback{
   background-color: black;
   color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
+  letter-spacing: 0.5pc;
 }
 #checkbox{
   background-color: black;
   color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
+  letter-spacing: 0.5pc;
 }
 #tf{
   background-color: black;
   color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
+  letter-spacing: 0.5pc;
 }
 // .labelTitle{
 //   font-family: Helvetica;
@@ -678,7 +677,6 @@ TEMPLATE MODAL
   height: 40px;
   border: none;
   color: black;
-  width: 100%;
 }
 .buttonCreate:hover,
 .buttonCreate:active{
@@ -698,30 +696,6 @@ TEMPLATE MODAL
   background-color: $revature-orange-light; 
   color:black;
   border: none;
-}
-.modalHeading{
-  width: 100%;
-  height: 60px;
-  background-color: $revature-orange-light;
-  color: black;
-  padding: 10px;
-  
-  text-align: center;
-  font-size: 22px;
-  font-family: Helvetica;
-  border-radius: 10px 10px 0px 0px;
-}
-#jumbotronTemplate{
-  margin: auto;
-}
-
-/*******************
-Info Circle
-*******************/ 
-.surveyInfoCircle{
-  font-size: 17px;
-  text-align: center;
-  width: 100%;
 }
 
 /***********************************
@@ -769,10 +743,11 @@ text-align:center;
   background-color: white;
   color: #f26925;
 }
+
 /***********
 Container
 ***********/ 
-.container{
+#containerTemplate{
   background: #f8f9fa;
   border-radius: 0 0 10px 10px;
   padding: 15px;
