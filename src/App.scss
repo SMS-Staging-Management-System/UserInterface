@@ -535,6 +535,10 @@ Survey Component
   
 }
 
+.assignButtonDiv{
+    width: 100%;  
+}
+
 .assignSurveyBtn{
   color: black;
   border-radius: 10px;
@@ -597,12 +601,14 @@ float: left;
 .jumbotron{
   height: auto;
   margin-top: 3em;
-  margin-left: 20em;
   border: 3px solid black;
   box-shadow: 0 16px 16px black;
   letter-spacing: 0.2pc;
   font-weight: bold;
   background-color: #eee;
+}
+.survey-build-jumbotron{
+    margin-left: 20em;
 }
 #multi{
   background-color: black;
@@ -736,4 +742,13 @@ text-align:center;
 .editButton:hover {
   background-color: white;
   color: #f26925;
+}
+
+/***********
+Container
+***********/ 
+#containerTemplate{
+  background: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+  padding: 15px;
 }
