@@ -35,7 +35,7 @@ class Profile extends Component<IProfileProps, any> {
 
 
   onUserInfoChangeHandler = (event: React.FormEvent) => {
-    let updatedUser = {...this.props.userToView};
+    let updatedUser = this.props.userToView;
     
     const target = event.target as HTMLSelectElement;
     switch (target.name) {
