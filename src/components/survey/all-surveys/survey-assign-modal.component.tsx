@@ -1,62 +1,74 @@
 import React from 'react';
 import { Table, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
-// import { cohortClient } from '../../../axios/sms-clients/cohort-client';
+import { ICohort } from '../../../model/cohort';
+import { cohortClient } from '../../../axios/sms-clients/cohort-client';
+import { userClient } from '../../../axios/sms-clients/user-client';
 
-class SurveyModal extends React.Component<any, any> {
+
+interface IComponentProps {
+    surveysToAssign: number[],
+    buttonLabel: string
+}
+
+interface IComponentState {
+    cohorts: ICohort[],
+    cohortIdsToAssign: number[],
+    cohortsLoaded: boolean,
+    modal: boolean
+}
+
+class SurveyModal extends React.Component<IComponentProps, IComponentState> {
   constructor(props) {
     super(props);
     this.state = {
       modal: false,
-      cohorts: [1,2,3],
-      cohortsToAssign: []
+      cohorts: [],
+      cohortsLoaded: false,
+      cohortIdsToAssign: []
     };
-    
   }
 
     componentDidMount() {
-        this.loadMyCohorts();
+        this.loadAllCohorts();
     }
 
-    // loadAllCohorts = async () => {
-    //     // const surveys = await cohortClient.findAllCohorts();
-    //     if (cohorts) {
-    //         this.setState({
-    //             cohorts: cohorts,
-    //             cohortsLoaded: true
-    //         })
-    //     }
-    // }
 
-    loadMyCohorts = () => {
-        const dummyCohortData = [{
-            id: 1,
-            title: 'Cohort 1'
-        }, {
-            id: 2,
-            title: 'Cohort 2'
-        }, {
-            id: 3,
-            title: 'Cohort 3'
-        }]
-        this.setState({
-            cohorts: dummyCohortData,
-            cohortsLoaded: true
-        })
+    loadAllCohorts = async () => {
+        const cohorts = await cohortClient.findAll();
+        await console.log(cohorts.data);
+        if (cohorts) {
+            this.setState({
+                cohorts: cohorts.data,
+                cohortsLoaded: true
+            })
+        }
+    }
+
+    loadCohortUsersToAssign = async () => {
+        const { cohortIdsToAssign : ids } = this.state;
+        let usersArr = [];
+        if (ids.length > 0) {
+            ids.map(async id => {
+                const users = await userClient.findAllByCohortId(id);
+                usersArr.concat(users.data);
+            });
+        }
+        await console.log(usersArr);
     }
 
     checkFunc = (e) => {
         const { checked } = e.target;
         const id = +e.target.id;
         if (checked) {
-            if (!this.state.cohortsToAssign.includes(id)) {
+            if (!this.state.cohortIdsToAssign.includes(id)) {
                 this.setState({
-                    cohortsToAssign: [...this.state.cohortsToAssign, id]
+                    cohortIdsToAssign: [...this.state.cohortIdsToAssign, id]
                 });
             }
         }  else {
-            if (this.state.cohortsToAssign.includes(id)) {
+            if (this.state.cohortIdsToAssign.includes(id)) {
                 this.setState({
-                    cohortsToAssign: this.state.cohortsToAssign.filter((cohortId) => { 
+                    cohortIdsToAssign: this.state.cohortIdsToAssign.filter((cohortId) => { 
                         return cohortId !== id 
                 })});
             }
@@ -65,7 +77,7 @@ class SurveyModal extends React.Component<any, any> {
 
     postSurveyToCohort = () => {
         console.log(`survey ids: ${this.props.surveysToAssign}`);
-        console.log(`cohort ids: ${this.state.cohortsToAssign}`);
+        console.log(`cohort ids: ${this.state.cohortIdsToAssign}`);
     }
 
   toggle = () => {
@@ -77,7 +89,7 @@ class SurveyModal extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <Button className='assignSurveyBtn' color="black" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+        <Button className='assignSurveyBtn mb-3' color="black" onClick={this.toggle}>{this.props.buttonLabel}</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader className='assignSurveyModalHeader' toggle={this.toggle}>Cohorts</ModalHeader>
           <ModalBody>
@@ -85,7 +97,7 @@ class SurveyModal extends React.Component<any, any> {
                   <thead>
                       <tr>
                         <th>Select</th>
-                        <th colSpan={5}>Cohort Title</th>
+                        <th colSpan={5}>Cohort</th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -94,9 +106,9 @@ class SurveyModal extends React.Component<any, any> {
                   </thead>
                   <tbody>
                     {this.state.cohorts.map(cohort => (
-                        <tr key={`modal${cohort.id}`} className="rev-table-row">
-                            <td><input type="checkbox"  id={cohort.id}  onChange={e=>this.checkFunc(e)} /></td>
-                            <td colSpan={5}>{cohort.title}</td>
+                        <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
+                            <td><input type="checkbox"  id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} /></td>
+                            <td colSpan={5}>{cohort.cohortName}</td>
                             <td></td>
                             <td></td>
                             <td></td>
