@@ -685,10 +685,26 @@ TEMPLATE MODAL
   border: none;
   color: black;
 }
+.buttonBack{
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 40px;
+  border: none;
+  color: black;
+  width: 100%;
+}
+.buttonBack:hover,
+.buttonBack:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
+}
 .buttonCreate:hover,
 .buttonCreate:active{
   background-color: $revature-orange-light; 
   color:#565D61;
+  border: 1px solid black;
 }
 .buttonEdit{
   border-radius: 10px;
@@ -704,6 +720,39 @@ TEMPLATE MODAL
   color:black;
   border: none;
 }
+
+.modalHeading{
+  width: 100%;
+  height: 60px;
+  background-color: $revature-orange-light;
+  color: black;
+  padding: 10px;
+  
+  
+  text-align: center;
+  font-size: 22px;
+  font-family: Helvetica;
+  border-radius: 10px 10px 0px 0px;
+}
+#jumbotronTemplate{
+  margin: auto;
+}
+.surveyName{
+  width: 50%;
+  text-align: center;
+  border: 1px solid black;
+  
+}
+
+/*******************
+Info Circle
+*******************/ 
+.surveyInfoCircle{
+  font-size: 17px;
+  text-align: center;
+  width: 100%;
+}
+
 
 /***********************************
   Chart
@@ -758,4 +807,5 @@ Container
   background: #f8f9fa;
   border-radius: 0 0 10px 10px;
   padding: 15px;
+  
 }
