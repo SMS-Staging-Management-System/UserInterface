@@ -1,7 +1,7 @@
 import { addressesClient } from "../../axios/sms-clients/address-client";
 
 export const addressTypes = {
-  UPDATE_TRAINING_ADDRESSES: 'UPDATE_TRAINING_ADDRESSES',
+  UPDATE_TRAINING_ADDRESSES: 'UPDATE_TRAINING_ADDRESSES'
 }
 
 export const updateLocations = () => (dispatch: (action: any) => void) => {
