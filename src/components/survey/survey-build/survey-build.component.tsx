@@ -236,11 +236,11 @@ class surveyBuild extends React.Component<any, any>{
             count++;
           }
           dummyAnswerArray[index].questionId = questionid[count];
-          dummyAnswers.questionId=questionid[count];
+          dummyAnswers.questionId = questionid[count];
 
           surveyClient.saveAnswer(dummyAnswers);
           // console.log('this is the dummt answer: '+JSON.stringify(dummyAnswers));
-      
+
         }
 
       }
@@ -266,9 +266,6 @@ class surveyBuild extends React.Component<any, any>{
   }
 
   componentDidMount() {
-
-
-
     this.testaxois(event);
   }
 
