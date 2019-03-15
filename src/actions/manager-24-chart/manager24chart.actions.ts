@@ -5,7 +5,7 @@ export const managerChartTypes = {
 }
 
 
-export const getInfoManager = () => async (dispatch) => {
+export const getInfoManager = (chartRef) => async (dispatch) => {
     const resp = await interviewClient.fetchManager24();
 
 

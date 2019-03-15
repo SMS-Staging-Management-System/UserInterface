@@ -5,7 +5,7 @@ export const associateChartTypes = {
 }
 
 
-export const getInfoAssociate = () => async (dispatch) => {
+export const getInfoAssociate = (chartRef) => async (dispatch) => {
     const resp = await interviewClient.fetchAssoc24();
 
     console.log(resp.data);

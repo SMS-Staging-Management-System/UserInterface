@@ -6,15 +6,12 @@ import { interviewFeedbackReducer } from './interviewFeedback.reducer';
 import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
-//import { assocInputReducer } from '../reducers/assoc-input.reducer';
-//import { IAssociateInput } from '../model/Associateinput.model';
 
 export interface IReportFormState {
     
 }
 
 export interface IManagerChartState {
-    type: string,
     data: {
         datasets: [{
             data: number[],
@@ -36,7 +33,6 @@ export interface IManagerChartState {
         ],
 
     },
-    chartInfo:[number, number]
 }
 
 export interface IInterviewFeedbackComponentState {
@@ -48,7 +44,6 @@ export interface IInterviewFeedbackComponentState {
 }
 
 export interface IAssociateChartState {
-    type: string,
     data: {
         datasets: [{
             data: number[],
@@ -70,7 +65,6 @@ export interface IAssociateChartState {
         ],
 
     },
-    chartInfo:[number, number]
 }
 
 
