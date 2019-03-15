@@ -148,7 +148,6 @@ export const surveyClient = {
     //let ID = new Array;
     //  await surveyContext.post(questionBaseRoute, question.questionId).then(response => {
     //     this.answArray(  parseInt(response.data.questionId));
-<<<<<<< HEAD
 
     //     });
 
@@ -168,43 +167,15 @@ export const surveyClient = {
   //     console.log(anArray)
   //   return anArray;
 
-=======
-
-    //     });
-
-    let resp = await surveyContext.post(questionBaseRoute, question.questionId);
-    let qID = parseInt(resp.data.questionId);      // return ID; 
-    console.log('THIS IS ID: ' + qID);
-    return qID;
-
-  },
-
-  //    answArray( ID : number) {
-
-  //     let anArray=new Array;
-  //     anArray.push(ID)
-
-
-  //     console.log(anArray)
-  //   return anArray;
-
->>>>>>> f59053b6cbbc032cea137ca32f8a2e8cc45e98b8
   // },
 
   saveAllQuestion(question: IQuestion[]) {
 
     surveyContext.post(questionAllBaseRoute, question);
-<<<<<<< HEAD
   },
   saveToQuestionJunction(junction: IJunctionSurveyQuestion) {
     surveyContext.post(questionJunctionBaseRoute, junction);
   },
-=======
-  },
-  saveToQuestionJunction(junction: IJunctionSurveyQuestion) {
-    surveyContext.post(questionJunctionBaseRoute, junction);
-  },
->>>>>>> f59053b6cbbc032cea137ca32f8a2e8cc45e98b8
 
   async getQuestionType(index: number) {
 
