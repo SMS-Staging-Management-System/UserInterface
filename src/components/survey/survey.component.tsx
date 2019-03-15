@@ -1,32 +1,18 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router';
-// import { Route } from 'react-router';
 import { SurveyNavComponent } from './survey-nav/survey-nav.component';
+import AssignedSurveysComponent from './assigned-surveys/assigned-surveys.component';
 import SurveyBuildComponent from './survey-build/survey-build.component';
-import SurveyAssignComponent from './survey-assign/survey-assign.component';
 import SurveyAnalyticsComponent from './survey-analytics/survey-analytics.component';
-import SurveyAvailableComponent from './survey-available/survey-available.component';
 import SurveyTakingComponent from './survey-taking/survey-taking.component';
-import MySurveysComponent from './my-surveys/my-surveys.component';
+import AllSurveysComponent from './all-surveys/all-surveys.component';
 import TemplatesComponent from './templates/templates.component';
-// import { IManageComponentProps } from './manage.container';
-// import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
-// import { ManageInternalComponenet } from './manage-internal/manage-internal.component';
-// import { ManageCohortsComponenet } from './manage-cohorts/manage-cohorts.component';
-// import CreateUserModal from './create-user-modal/create-user-modal.container';
 
 export class SurveyComponent extends React.Component<any, any> {
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
   }
-
-//   componentDidMount() {
-//     const manage = this.props.match.params.manage;
-//     if (manage === 'users') {
-//       this.props.manageGetUsersByGroup(manage);
-//     }
-//   }
 
   updateSurveyTable = (groupName: string) => {
     this.props.manageGetUsersByGroup(groupName);
@@ -46,13 +32,12 @@ export class SurveyComponent extends React.Component<any, any> {
           match={this.props.match}/>
 
         <Switch>
-            <Route exact path={`${path}`} component={SurveyAvailableComponent} />
-            <Route path={`${path}/my-surveys`} component={MySurveysComponent} />
+            <Route exact path={`${path}`} component={AssignedSurveysComponent} />
+            <Route path={`${path}/assigned`} component={AssignedSurveysComponent} />
+            <Route path={`${path}/all-surveys`} component={AllSurveysComponent} />
             <Route path={`${path}/build`} component={SurveyBuildComponent} />
             <Route path={`${path}/templates`} component={TemplatesComponent} />
-            <Route path={`${path}/assign`} component={SurveyAssignComponent} />
-            <Route path={`${path}/analytics`} component={SurveyAnalyticsComponent} />
-            <Route path={`${path}/available`} component={SurveyAvailableComponent} />
+            <Route path={`${path}/survey-data/:surveyId`} component={SurveyAnalyticsComponent} />
             <Route path={`${path}/survey-taking/:surveyId`} component={SurveyTakingComponent} />
         </Switch>
       </div>
