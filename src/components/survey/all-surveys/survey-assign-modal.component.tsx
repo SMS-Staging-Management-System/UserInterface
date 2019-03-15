@@ -14,6 +14,7 @@ interface IComponentState {
     cohorts: ICohort[],
     cohortIdsToAssign: number[],
     cohortsLoaded: boolean,
+    userEmailsToAssign: string[],
     modal: boolean
 }
 
@@ -30,11 +31,17 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
     componentDidMount() {
         this.loadAllCohorts();
+        this.loadCohortUsersToAssign();
+    }
+
+    componentDidUpdate() {
+        this.loadCohortUsersToAssign();
     }
 
 
     loadAllCohorts = async () => {
         const cohorts = await cohortClient.findAll();
+        await console.log('cohorts:');
         await console.log(cohorts.data);
         if (cohorts) {
             this.setState({
@@ -46,14 +53,20 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
     loadCohortUsersToAssign = async () => {
         const { cohortIdsToAssign : ids } = this.state;
-        let usersArr = [];
+        const emailArray:string[] = [];
         if (ids.length > 0) {
-            ids.map(async id => {
+            for (const id of ids) {
                 const users = await userClient.findAllByCohortId(id);
-                usersArr.concat(users.data);
-            });
+                for (const user of users.data) {
+                    emailArray.push(user.email);
+                }
+            }
         }
-        await console.log(usersArr);
+        for ( const surveyId of this.props.surveysToAssign) {
+
+        }
+        // console.log(emailArray);
+    
     }
 
     checkFunc = (e) => {
