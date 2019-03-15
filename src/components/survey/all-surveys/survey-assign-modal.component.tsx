@@ -14,7 +14,6 @@ interface IComponentState {
     cohorts: ICohort[],
     cohortIdsToAssign: number[],
     cohortsLoaded: boolean,
-    userEmailsToAssign: string[],
     modal: boolean
 }
 
@@ -31,11 +30,11 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
     componentDidMount() {
         this.loadAllCohorts();
-        this.loadCohortUsersToAssign();
+        // this.loadCohortUsersToAssign();
     }
 
     componentDidUpdate() {
-        this.loadCohortUsersToAssign();
+        // this.loadCohortUsersToAssign();
     }
 
 
@@ -63,9 +62,11 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             }
         }
         for ( const surveyId of this.props.surveysToAssign) {
-
+            for ( const email of emailArray) {
+                console.log(surveyId);
+                console.log(email);
+            }
         }
-        // console.log(emailArray);
     
     }
 
@@ -91,6 +92,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     postSurveyToCohort = () => {
         console.log(`survey ids: ${this.props.surveysToAssign}`);
         console.log(`cohort ids: ${this.state.cohortIdsToAssign}`);
+        this.loadCohortUsersToAssign();
     }
 
   toggle = () => {
