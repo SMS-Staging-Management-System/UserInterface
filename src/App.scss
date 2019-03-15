@@ -535,6 +535,10 @@ Survey Component
   
 }
 
+.assignButtonDiv{
+    width: 100%;  
+}
+
 .assignSurveyBtn{
   color: black;
   border-radius: 10px;
@@ -562,8 +566,6 @@ color:#565D61;
 /*****************
 Drag and Drop
 *****************/ 
-
-
 .todos {
   float: top;
   background: #f3a55d;
@@ -592,7 +594,7 @@ float: left;
   width: auto;
   margin: 10px;
 }
-.jumbotron{
+#jumbotronSurveyBuild{
   height: auto;
   margin-top: 3em;
   border: 3px solid black;
@@ -678,7 +680,7 @@ TEMPLATE MODAL
   height: 40px;
   border: none;
   color: black;
-  width: 100%;
+  width: 50%;
 }
 .buttonBack{
   border-radius: 10px;
@@ -687,7 +689,7 @@ TEMPLATE MODAL
   height: 40px;
   border: none;
   color: black;
-  width: 100%;
+  width: 50%;
 }
 .buttonBack:hover,
 .buttonBack:active{

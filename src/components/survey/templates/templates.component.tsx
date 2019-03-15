@@ -125,7 +125,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         surveyClient.saveSurvey(temp);
         surveyClient.saveAllQuestion(questions);
         surveyClient.saveAllAnswer(answers);
-        // surveyClient.saveToQuestionJunction()
+        //surveyClient.saveToQuestionJunction()
         console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
     }
 
@@ -149,26 +149,30 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         return (
             <Fragment>
                 {this.state.templatesLoaded ? (
-                    <Table striped id="manage-users-table" className="tableUsers">
-                        <thead className="rev-background-color">
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Date Created</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.templates.map(template => (
-                                <tr key={template.surveyId} className="rev-table-row"
-                                    onClick={() => this.handleShow(template.surveyId, template.description)}>
-                                    <td>{template.title}</td>
-                                    <td>{template.description}</td>
-                                    <td>{template.dateCreated && new Date(template.dateCreated).toDateString()}</td>
+                    this.state.templates ? (
+                        <Table striped id="manage-users-table" className="tableUsers">
+                            <thead className="rev-background-color">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Date Created</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.templates.map(template => (
+                                    <tr key={template.surveyId} className="rev-table-row"
+                                        onClick={() => this.handleShow(template.surveyId, template.description)}>
+                                        <td>{template.title}</td>
+                                        <td>{template.description}</td>
+                                        <td>{template.dateCreated && new Date(template.dateCreated).toDateString()}</td>
+                                    </tr>
 
-                            ))}
-                        </tbody>
-                    </Table>
+                                ))}
+                            </tbody>
+                        </Table>
+                    ) : (
+                            <div>No Templates to Display</div>
+                        )
                 ) : (
                         <div>Loading...</div>
                     )}
