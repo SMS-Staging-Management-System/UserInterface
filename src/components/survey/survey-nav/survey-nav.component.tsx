@@ -26,7 +26,6 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
         <NavItem>
           <Link to={path + "/available"}
             className={`nav-link ${this.isActive('associates')}`}
-          //   onClick={() => this.props.updateSurveyTable('trainer')}
             >Available</Link>
         </NavItem>
         <NavItem>
@@ -37,7 +36,6 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
           <NavItem>
             <Link to= {path + "/build"}
               className={`nav-link ${this.isActive('admin')}`}
-            //   onClick={() => this.props.updateSurveyTable('admin')}
               >Build</Link>
           </NavItem>
           <NavItem>
@@ -45,12 +43,6 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
             className={`nav-link ${this.isActive('templates')}`}
             >Templates</Link>
         </NavItem>
-          <NavItem>
-            <Link to={path + "/assign"}
-              className={`nav-link ${this.isActive('staging-manager')}`}
-            //   onClick={() => this.props.updateSurveyTable('staging-manager')}
-              >Assign</Link>
-          </NavItem>
         </Nav>
       </Navbar>
     );

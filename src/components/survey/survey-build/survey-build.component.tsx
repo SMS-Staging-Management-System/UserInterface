@@ -298,9 +298,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
   }
 
   componentDidMount() {
-
-
-
     this.testaxois(event);
   }
 
@@ -325,7 +322,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
         <div className="container" >
 
-          <div className="jumbotron survey-build-jumbotron">
+          <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
 
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
