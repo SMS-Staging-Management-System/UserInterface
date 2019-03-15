@@ -7,6 +7,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa'
 
 
+
 interface TemplatesProps extends RouteComponentProps<{}> {
     match: any
 }
@@ -22,17 +23,24 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         super(props);
         this.state = {
             templates: [],
-            survey: {},
             templatesLoaded: false,
             showModal: false,
-            surveyId: 0,
             newTitle: '',
+            surveyId: 0,
             surveyLoaded: false,
             openedTemplate: [],
-            readOnly: ''
+            survey: {
+                surveyId: 0,
+                title: '',
+                description: '',
+                dateCreated: new Date(),
+                closingDate: null,
+                template: false,
+                published: true
+            }
 
         }
-        this.changeSurveyTitle = this.changeSurveyTitle.bind(this);
+
 
     }
 
@@ -58,19 +66,21 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
 
 
-    handleShow = async (id) => {
+    handleShow = async (id: number, description: string) => {
+
         this.setState({
             showModal: true
         })
         const openedTemplate = await surveyClient.findSurveyById(id);
+
         this.setState({
             survey: openedTemplate,
-            //surveyId: id,
-            surveyLoaded: true
+            surveyLoaded: true,
+            description: description
 
         })
 
-        console.log("open template", openedTemplate);
+        console.log("open template", openedTemplate, " Description", this.state.description);
 
     }
     handleClose = () => {
@@ -78,17 +88,45 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             survey: {},
             surveyLoaded: false,
             showModal: false
+
         })
+
 
 
 
     }
 
-    handleCreateClose = (surveyId: number) => {
+    handleCreateClose = () => {
         this.setState({
             showModal: false,
-            redirectTo: `/surveys/build/${surveyId}`
+            surveyId: 0,
+            title: this.state.newTitle,
+            dateCreated: new Date()
+            //redirectTo: `/surveys/build/${this.state.survey.surveyId}`
+
         })
+        let questions: any = [];
+        let answers: any = [];
+        let temp = this.state.survey;
+        temp.surveyId = 0;
+        for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
+            questions.push(this.state.survey.questionJunctions[i].questionId);
+
+        }
+
+        for (let index = 0; index < questions.length; index++) {
+            for (let j = 0; j < questions[index].answerChoices.length; j++) {
+                answers.push(questions[index].answerChoices[j]);
+            }
+
+        }
+        console.log('AHAHAHAHAAHA', this.state.survey);
+        console.log('Survey', this.state.survey.questionJunctions);
+        surveyClient.saveSurvey(temp);
+        surveyClient.saveAllQuestion(questions);
+        surveyClient.saveAllAnswer(answers);
+        // surveyClient.saveToQuestionJunction()
+        console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
     }
 
 
@@ -122,7 +160,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                         <tbody>
                             {this.state.templates.map(template => (
                                 <tr key={template.surveyId} className="rev-table-row"
-                                    onClick={() => this.handleShow(template.surveyId)}>
+                                    onClick={() => this.handleShow(template.surveyId, template.description)}>
                                     <td>{template.title}</td>
                                     <td>{template.description}</td>
                                     <td>{template.dateCreated && new Date(template.dateCreated).toDateString()}</td>
@@ -155,6 +193,8 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                     <div key={questionJunction.questionId.questionId}>
                                         <strong>{questionJunction.questionId.question}:</strong>
                                         {
+
+
                                             questionJunction.questionId.typeId === 5 ?
                                                 <div>Question Type: Feedback</div>
                                                 : questionJunction.questionId.answerChoices.map(choice => (
@@ -165,16 +205,18 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                                 ))
                                         }
                                         <hr />
+
                                     </div>
                                 )) : (
                                     <div>Loading...Please wait</div>
                                 )}
+
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-
                         <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>
-                        <Button className="buttonCreate" onClick={() => this.handleCreateClose(this.state.surveyId)}>Create</Button>
+                        <Button className="buttonCreate" onClick={() => this.handleCreateClose()}>Create</Button>
+
                     </Modal.Footer>
                 </Modal>
             </Fragment>
