@@ -3,6 +3,7 @@ import { Table, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { ICohort } from '../../../model/cohort';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { userClient } from '../../../axios/sms-clients/user-client';
+import { surveyClient } from '../../../axios/sms-clients/survey-client';
 
 
 interface IComponentProps {
@@ -63,8 +64,15 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }
         for ( const surveyId of this.props.surveysToAssign) {
             for ( const email of emailArray) {
-                console.log(surveyId);
-                console.log(email);
+                const postObject = {
+                    "dateAssigned": new Date(),
+                    "dateCompleted": null,
+                    "historyId": 0,
+                    "surveyId": surveyId,
+                    "userEmail": email
+                }
+
+                // post postObject to surveyClient.saveHistory(postObject);
             }
         }
     
