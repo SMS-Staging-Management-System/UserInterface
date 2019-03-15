@@ -59,7 +59,9 @@ export interface IAuthState {
     cohorts: ICohort[]
   }
   export interface IProfileViewState {
-    user: IUser
+    user: IUser,
+    bUserInfoChanged: boolean,
+    locationDropdownActive: boolean
   }
 
   export interface IManagementState {

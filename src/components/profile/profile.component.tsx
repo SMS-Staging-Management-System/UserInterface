@@ -4,113 +4,138 @@ import { Container, Form, Row, FormGroup, Label, Input, Col, Button, Dropdown, D
 import { IAddressState } from '../../reducers/management';
 import { IAddress } from '../../model/address.model';
 
+const inputNames = {
+  EMAIL: 'NEW_USER_EMAIL',
+  FIRST_NAME: 'NEW_USER_FIRST_NAME',
+  LAST_NAME: 'NEW_USER_LAST_NAME',
+  PHONE: 'NEW_USER_PHONE',
+  STREET: 'STREET',
+  CITY: 'CITY',
+  STATE: 'STATE',
+  ZIP: 'ZIP'
+}
+
 // For the intial population of the user's info
 // Retrieved from the redux store
 interface IProfileProps {
   currentSMSUser: IUser
   userToView: IUser
   trainingAddresses: IAddressState
+  locationDropdownActive: boolean
+  bUserInfoChanged: boolean
+  updateUserInfo(updatedUser: IUser): void
+  setToCurrentSMSUser(currentSMSUser: IUser): void
   updateUser(userToUpdate: IUser): void
   updateCurrentSMSUser(user: IUser): void
   updateUserTrainingLocation(location: IAddress): void
+  toggleTrainingLocationsDropdown(): void
 }
 
-// This component keeps track of its own state
-// The rest of the application does not need to know about the state
-// of this component
-interface IProfileState {
-  editingUser: IUser
-  trainingAddresses: IAddressState
-  bFieldDidChange: boolean // Prevents user from spamming update
-  bIsCurrentUser: boolean
-  bTrainingLocationIsOpen: boolean
-}
+class Profile extends Component<IProfileProps, any> {
 
-class Profile extends Component<IProfileProps, IProfileState> {
-  constructor(props: IProfileProps) {
-    super(props)
+
+  componentWillMount() {
+    // If looking at profile page, set info to current SMS User
     let endOfPath = location.pathname.split('/').pop();
-    let userToView: null | IUser = null;
-    let bIsCurrentUser: boolean = false;
     if (endOfPath && endOfPath === 'profile') {
-      userToView = this.props.currentSMSUser;
-      bIsCurrentUser= true;
+      this.props.setToCurrentSMSUser(this.props.currentSMSUser);
     } else {
       // Need to check if user clicked on in modal is the current user
       // so we can update the current SMS user
       if (this.props.currentSMSUser.email === this.props.userToView.email) {
-        bIsCurrentUser = true;
+        this.props.setToCurrentSMSUser(this.props.currentSMSUser);
       }
-      userToView = this.props.userToView;
-    }
-
-    this.state = {
-      editingUser: userToView,
-      trainingAddresses: this.props.trainingAddresses,
-      bFieldDidChange: false,
-      bIsCurrentUser: bIsCurrentUser,
-      bTrainingLocationIsOpen: false
     }
   }
 
-  onUserInfoChangeHandler = (event: FormEvent) => {
+
+  onUserInfoChangeHandler = (event: React.FormEvent) => {
+    let updatedUser = {...this.props.userToView};
+    
     const target = event.target as HTMLSelectElement;
-    this.setState({
-      ...this.state,
-      editingUser: {
-        ...this.state.editingUser,
-        [target.name]: target.value
-      },
-      bFieldDidChange: true
-    })
+    switch (target.name) {
+      case inputNames.EMAIL:
+        updatedUser = {
+          ...updatedUser,
+          email: target.value
+        }
+        break;
+      case inputNames.FIRST_NAME:
+        updatedUser = {
+          ...updatedUser,
+          firstName: target.value
+        }
+        break;
+      case inputNames.LAST_NAME:
+        updatedUser = {
+          ...updatedUser,
+          lastName: target.value
+        }
+        break;
+      case inputNames.PHONE:
+        updatedUser = {
+          ...updatedUser,
+          phoneNumber: target.value
+        }
+        break;
+      case inputNames.STREET:
+        updatedUser = {
+          ...updatedUser,
+          personalAddress: {
+            ...updatedUser.personalAddress,
+            street: target.value
+          }
+        }
+        break;
+        case inputNames.CITY:
+        updatedUser = {
+          ...updatedUser,
+          personalAddress: {
+            ...updatedUser.personalAddress,
+            city: target.value
+          }
+        }
+        break;
+        case inputNames.STATE:
+        updatedUser = {
+          ...updatedUser,
+          personalAddress: {
+            ...updatedUser.personalAddress,
+            state: target.value
+          }
+        }
+        case inputNames.ZIP:
+        updatedUser = {
+          ...updatedUser,
+          personalAddress: {
+            ...updatedUser.personalAddress,
+            zip: target.value
+          }
+        }
+        break;
+      default:
+        break;
+    }
+    this.props.updateUserInfo(updatedUser);
   }
 
   onTrainingLocationChangeHandler = (location: IAddress) => {
     this.props.updateUserTrainingLocation(location)
-    this.setState({
-      ...this.state,
-      editingUser: {
-        ...this.state.editingUser,
-        trainingAddress: location
-      }
-    })
-  }
-
-  onAddressChangeHandler = (event: FormEvent) => {
-    const target = event.target as HTMLSelectElement
-    this.setState({
-      ...this.state,
-      editingUser: {
-        ...this.state.editingUser,
-        personalAddress: {
-          ...this.state.editingUser.personalAddress,
-          [target.name]: target.value
-        }
-      },
-      bFieldDidChange: true
-    })
   }
 
   onSubmitHandler = (event: FormEvent) => {
     event.preventDefault();
-    if (this.state.bFieldDidChange) {
-      this.props.updateUser(this.state.editingUser); 
-      this.setState({bFieldDidChange: false}); 
-
-      // Update the current SMS User if it's their profile
-      if (this.state.bIsCurrentUser) {
-        this.props.updateCurrentSMSUser(this.state.editingUser);
-      }
+    if (this.props.bUserInfoChanged) {
+      this.props.updateUser(this.props.userToView); 
     }
-    
   }
 
   trainingLocationListToggle = () => {
-    this.setState({bTrainingLocationIsOpen: !this.state.bTrainingLocationIsOpen });
+    this.props.toggleTrainingLocationsDropdown();
   }
 
   render() {
-
+    const {userToView, trainingAddresses} = this.props;
     return (
       <Container>
         <Form onSubmit={(event) => this.onSubmitHandler(event)}>
@@ -120,27 +145,27 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Label>Email</Label>
                 <Input 
                   type="email" 
-                  name="email" 
-                  value={this.state.editingUser.email} readOnly />
+                  name={inputNames.EMAIL} 
+                  value={userToView.email} readOnly />
               </FormGroup>
              </Col>
              <Col md={4}>
                 <Label>Training Location</Label>
                 <Dropdown
                   color="success" className="responsive-modal-row-item rev-btn"
-                  isOpen={this.state.bTrainingLocationIsOpen} 
-                  toggle={this.trainingLocationListToggle}>
+                  isOpen={this.props.locationDropdownActive}
+                  toggle={this.props.toggleTrainingLocationsDropdown}>
                   <DropdownToggle caret>
-                    {this.props.userToView.trainingAddress.alias}
+                    {userToView.trainingAddress.alias || 'Location'}
                   </DropdownToggle>
                   <DropdownMenu>
                   {
-                    this.state.trainingAddresses.trainingAddresses.length === 0
+                    trainingAddresses.trainingAddresses.length === 0
                       ? <>
                         <DropdownItem>Unable To Find Any Locations</DropdownItem>
                         <DropdownItem divider />
                       </>
-                      : this.state.trainingAddresses.trainingAddresses.map(location =>
+                      : trainingAddresses.trainingAddresses.map(location =>
                         <DropdownItem 
                           key={location.addressId}
                           onClick={() => this.props.updateUserTrainingLocation(location)} >{location.alias}</DropdownItem>
@@ -157,8 +182,8 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Label>Firstname</Label>
                 <Input 
                   type="text" 
-                  name="firstName"
-                  defaultValue={this.state.editingUser.firstName}
+                  name={inputNames.FIRST_NAME}
+                  value={userToView.firstName}
                   onChange={(event) => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
@@ -167,8 +192,8 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Label>Lastname</Label>
                 <Input 
                   type="text" 
-                  name="lastName"
-                  defaultValue={this.state.editingUser.lastName}
+                  name={inputNames.LAST_NAME}
+                  value={userToView.lastName}
                   onChange={(event) => this.onUserInfoChangeHandler(event)} required />
               </FormGroup>
             </Col>
@@ -178,8 +203,8 @@ class Profile extends Component<IProfileProps, IProfileState> {
                 <Input 
                   type="tel" 
                   pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
-                  name="phoneNumber"
-                  defaultValue={this.state.editingUser.phoneNumber}
+                  name={inputNames.PHONE}
+                  value={userToView.phoneNumber}
                   onChange={(event) => this.onUserInfoChangeHandler(event)} />
               </FormGroup>
             </Col>
@@ -188,9 +213,9 @@ class Profile extends Component<IProfileProps, IProfileState> {
           <Label>Street</Label>
           <Input
             type="text" 
-            name="street" 
-            defaultValue={this.state.editingUser.personalAddress && this.state.editingUser.personalAddress.street}
-            onChange={(event) => this.onAddressChangeHandler(event)} />
+            name={inputNames.STREET}
+            value={userToView.personalAddress && userToView.personalAddress.street}
+            onChange={(event) => this.onUserInfoChangeHandler(event)} />
         </FormGroup>
         <Row>
           <Col md={6}>
@@ -198,9 +223,9 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Label>City</Label>
               <Input 
                 type="text" 
-                name="city"  
-                defaultValue={this.state.editingUser.personalAddress && this.state.editingUser.personalAddress.city}
-                onChange={(event) => this.onAddressChangeHandler(event)} />
+                name={inputNames.CITY}  
+                value={userToView.personalAddress && userToView.personalAddress.city}
+                onChange={(event) => this.onUserInfoChangeHandler(event)} />
             </FormGroup>
           </Col>
           <Col md={4}>
@@ -208,9 +233,9 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Label>State</Label>
               <Input 
                 type="text" 
-                name="state"
-                defaultValue={this.state.editingUser.personalAddress && this.state.editingUser.personalAddress.state}
-                onChange={(event) => this.onAddressChangeHandler(event)} />
+                name={inputNames.STATE}
+                value={userToView.personalAddress && userToView.personalAddress.state}
+                onChange={(event) => this.onUserInfoChangeHandler(event)} />
             </FormGroup>
           </Col>
           <Col md={2}>
@@ -218,9 +243,9 @@ class Profile extends Component<IProfileProps, IProfileState> {
               <Label>Zip</Label>
               <Input 
                 type="text" 
-                name="zip" 
-                defaultValue={this.state.editingUser.personalAddress && this.state.editingUser.personalAddress.zip}
-                onChange={(event) => this.onAddressChangeHandler(event)} />
+                name={inputNames.ZIP}
+                value={userToView.personalAddress && userToView.personalAddress.zip}
+                onChange={(event) => this.onUserInfoChangeHandler(event)} />
             </FormGroup>  
           </Col>
         </Row>

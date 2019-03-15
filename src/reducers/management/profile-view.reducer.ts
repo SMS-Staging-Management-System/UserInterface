@@ -34,7 +34,9 @@ const initialState: IProfileViewState = {
             virtual: false     
         },
         roles: []
-    }
+    },
+    bUserInfoChanged: false,
+    locationDropdownActive: false
 }
 
 export const profileViewReducer = (state = initialState, action: any) => {
@@ -49,8 +51,32 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 ...state,
                 user: {
                     ...state.user,
-                    trainingAddress: action.payload.location
+                    trainingAddress: action.payload.location,
+                    bUserInfoChanged: true
                 }
+            }
+        case profileTypes.UPDATE_USER_INFO:
+            return {
+                ...state,
+                user: action.payload.user,
+                bUserInfoChanged: true
+            }
+        case profileTypes.SET_TO_CURRENT_SMS_USER:
+            return {
+                ...state,
+                user: action.payload.currentSMSUser
+            }
+        case profileTypes.TOGGLE_TRAINING_LOCATIONS_DROPDOWN:
+            return {
+                ...state,
+                locationDropdownActive: !state.locationDropdownActive,
+                bUserInfoChanged: true
+            }
+        case profileTypes.USER_UPDATE_SUCCESSFUL:
+            return {
+                ...state,
+                user: action.payload.updatedUser,
+                bUserInfoChanged: false
             }
     }
     return state;
