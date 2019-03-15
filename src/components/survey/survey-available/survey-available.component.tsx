@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
@@ -17,7 +17,7 @@ interface IComponentState {
     redirectTo: any
 }
 
-export class SurveyAvailableComponent extends React.Component<IComponentProps, IComponentState, {}> {
+export class SurveyAvailableComponent extends Component<IComponentProps, IComponentState, {}> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -28,11 +28,12 @@ export class SurveyAvailableComponent extends React.Component<IComponentProps, I
     }
 
     componentDidMount() {
-        this.loadMySurveys();
+        this.loadMyAssignedSurveys();
     }
 
-    loadMySurveys = async () => {
-        const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
+    loadMyAssignedSurveys = async () => {
+        // const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
+        const myAssignedSurveys = await surveyClient.findAllSurveys();
         this.setState({
             surveys: myAssignedSurveys,
             surveysLoaded: true
@@ -52,27 +53,30 @@ export class SurveyAvailableComponent extends React.Component<IComponentProps, I
         return (
             <>
                 {this.state.surveysLoaded ? (
-
-                    <Table striped id="manage-users-table" className="tableUsers">
-                        <thead className="rev-background-color">
-                            <tr>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Date Created</th>
-                                <th>Closing Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.surveys.map(survey => (
-                                <tr key={survey.surveyId} className="rev-table-row" onClick={() => this.handleTakeSurvey(survey.surveyId)}>
-                                    <td>{survey.title}</td>
-                                    <td>{survey.description}</td>
-                                    <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
-                                    <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
+                    this.state.surveys ? (
+                        <Table striped id="manage-users-table" className="tableUsers">
+                            <thead className="rev-background-color">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Date Created</th>
+                                    <th>Closing Date</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </Table>
+                            </thead>
+                            <tbody>
+                                {this.state.surveys.map(survey => (
+                                    <tr key={survey.surveyId} className="rev-table-row" onClick={() => this.handleTakeSurvey(survey.surveyId)}>
+                                        <td>{survey.title}</td>
+                                        <td>{survey.description}</td>
+                                        <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
+                                        <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    ) : (
+                            <div>No Surveys to Display</div>
+                        )
                 ) : (
                         <div>Loading...</div>
                     )}
