@@ -1,3 +1,5 @@
+// NO LONGER IN USE
+
 import React from 'react';
 import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';

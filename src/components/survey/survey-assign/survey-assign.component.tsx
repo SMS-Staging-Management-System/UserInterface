@@ -1,6 +1,8 @@
+// NO LONGER IN USE
+
 import React, { Fragment } from 'react';
 import { Table } from 'reactstrap';
-import SurveyModal from './survey-assign-modal.component';
+// import SurveyModal from './survey-assign-modal.component';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 
 export class SurveyAssignComponent extends React.Component<any, any> {
@@ -103,9 +105,9 @@ export class SurveyAssignComponent extends React.Component<any, any> {
                     </Table>
 
                 <div className="buttonDiv">
-                        <SurveyModal 
+                        {/* <SurveyModal 
                             buttonLabel='Assign To Cohorts' 
-                            surveysToAssign={this.state.surveysToAssign}/>
+                            surveysToAssign={this.state.surveysToAssign}/> */}
                 </div>
             </Fragment>
         );
