@@ -99,12 +99,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         })
         console.log(this.state.newTitle);
     }
-    // editTitle = () =>{
-    //     this.setState({
-    //         newTitle: '
-    //         +'
-    //     })
-    // }
+
 
     render() {
 
@@ -151,8 +146,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                             <input type="text"
                                 className="surveyName"
                                 defaultValue={this.state.survey.title}
-                                onChange={this.changeSurveyTitle}/>
-                            {/* &nbsp;<Button className="editTitleBtn" onClick={this.editTitle}>Edit Title</Button> */}
+                                onChange={this.changeSurveyTitle} />
                         </div>
                         <div className="container" id="containerTemplate">
                             {this.state.surveyLoaded ?
@@ -178,7 +172,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        
+
                         <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>
                         <Button className="buttonCreate" onClick={() => this.handleCreateClose(this.state.surveyId)}>Create</Button>
                     </Modal.Footer>
