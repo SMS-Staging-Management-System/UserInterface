@@ -1,7 +1,4 @@
-// NO LONGER IN USE
-
 import React from 'react';
-import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { Redirect } from 'react-router';
 
@@ -9,30 +6,22 @@ export class SurveyAnalyticsComponent extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            surveys: [],
-            surveysLoaded: false,
+            surveyData: [],
+            surveyDataLoaded: false,
             redirectTo: null
         }
     }
 
     componentDidMount() {
-        this.loadAllSurveys();
+        this.loadSurveyData();
     }
 
-    loadAllSurveys = async () => {
-        const surveys = await surveyClient.findAllSurveys();
-        if (surveys) {
-            this.setState({
-                surveys: surveys,
-                surveysLoaded: true
-            });
-        }
-    }
-
-    handleLoadSurveyData = (surveyId: number) => {
+    loadSurveyData = async () => {
+        const surveyData = await surveyClient.findSurveyById(this.props.match.params.surveyId);
         this.setState({
-            redirectTo: `/surveys/survey-data/${surveyId}`
-        })
+            surveyData: surveyData,
+            surveyDataLoaded: true
+        });
     }
 
     render() {
@@ -40,25 +29,10 @@ export class SurveyAnalyticsComponent extends React.Component<any, any> {
             return <Redirect push to={this.state.redirectTo} />
         }
         return (
-            <Table striped id="manage-users-table" className="tableUsers">
-                <thead className="rev-background-color">
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {this.state.surveys.map(survey => (
-                            <tr key={survey.surveyId} className="rev-table-row" onClick={() => this.handleLoadSurveyData(survey.surveyId)}>
-                                <td>{survey.title}</td>
-                                <td>{survey.description}</td>
-                            </tr>
-                    ))}
-                </tbody>
-            </Table>
+            <h2>Survey Data Page for survey {this.props.match.params.surveyId}</h2>
+            // <h2>Survey Data Page for survey </h2>
         );
     }
 }
-
 
 export default SurveyAnalyticsComponent;

@@ -17,7 +17,7 @@ interface IComponentState {
     redirectTo: any
 }
 
-export class SurveyAvailableComponent extends Component<IComponentProps, IComponentState, {}> {
+class AssignedSurveysComponent extends Component<IComponentProps, IComponentState, {}> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -89,4 +89,4 @@ const mapStateToProps = (state: IState) => ({
     auth: state.managementState.auth
 });
 
-export default connect(mapStateToProps)(SurveyAvailableComponent);
+export default connect(mapStateToProps)(AssignedSurveysComponent);

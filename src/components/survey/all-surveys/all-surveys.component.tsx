@@ -19,7 +19,7 @@ interface IComponentState {
     redirectTo: string | null
 }
 
-class MySurveysComponent extends Component<IComponentProps, IComponentState> {
+class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +31,7 @@ class MySurveysComponent extends Component<IComponentProps, IComponentState> {
     }
 
     componentDidMount() {
-        this.loadMySurveys();
+        this.loadAllSurveys();
     }
 
     // When the user clicks a data button for a survey, redirect to the data page for that survey
@@ -64,11 +64,11 @@ class MySurveysComponent extends Component<IComponentProps, IComponentState> {
 
 
     // Load the surveys into the state
-    loadMySurveys = async () => {
+    loadAllSurveys = async () => {
         // const mySurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
-        const mySurveys = await surveyClient.findAllSurveys();
+        const allSurveys = await surveyClient.findAllSurveys();
         this.setState({
-            surveys: mySurveys,
+            surveys: allSurveys,
             surveysLoaded: true
         })
     }
@@ -135,4 +135,4 @@ const mapStateToProps = (state: IState) => ({
     auth: state.managementState.auth
 });
 
-export default connect(mapStateToProps)(MySurveysComponent);
+export default connect(mapStateToProps)(AllSurveysComponent);
