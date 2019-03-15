@@ -52,7 +52,7 @@ export const updateUser = (userToUpdate: IUser) => async (dispatch: (action: any
         toast.success('Info updated successfully');
         dispatch ({
             payload: {
-                updatedUser: resp.data
+                updatedUser: resp.data as IUser
             },
             type: profileTypes.USER_UPDATE_SUCCESSFUL
         })

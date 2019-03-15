@@ -1,5 +1,6 @@
 import  React, { Component, FormEvent } from 'react';
-import { Container, Form, Row, FormGroup, Label, Input, Col, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Container, Form, Row, FormGroup, Label, Input, 
+  Col, Button, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { IAddress } from '../../model/address.model';
 import { IProfileProps } from './profile.container';
 
