@@ -12,8 +12,6 @@ const responseBaseRoute = '/responses';
 const questionTypeBaseRoute = '/questiontype';
 const questionJunctionBaseRoute = '/junction_survey_questions';
 const questionAllBaseRoute = '/questions/multi-question';
-
-
 const historyBaseRoute = '/history';
 const junctionSurveyQuestionsBaseRoute = '/junction_survey_questions';
 
@@ -222,5 +220,16 @@ export const surveyClient = {
         console.log(err);
       });
     return histories;
+  },
+
+  assignSurveyByIdAndEmail(id: number, email: string) {
+    const postObject = {
+        "dateAssigned": new Date(),
+        "dateCompleted": null,
+        "historyId": 0,
+        "surveyId": id,
+        "userEmail": email
+    }
+    surveyContext.post(historyBaseRoute, postObject);
   },
 }

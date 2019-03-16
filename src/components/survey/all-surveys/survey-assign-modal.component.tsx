@@ -30,7 +30,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
   }
 
     componentDidMount() {
-        this.loadAllCohorts();
+        //    surveyClient.assignSurveyByIdAndEmail(1, );
+           this.loadAllCohorts();
         // this.loadCohortUsersToAssign();
     }
 
@@ -62,17 +63,10 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 }
             }
         }
+
         for ( const surveyId of this.props.surveysToAssign) {
             for ( const email of emailArray) {
-                const postObject = {
-                    "dateAssigned": new Date(),
-                    "dateCompleted": null,
-                    "historyId": 0,
-                    "surveyId": surveyId,
-                    "userEmail": email
-                }
-
-                // post postObject to surveyClient.saveHistory(postObject);
+               surveyClient.assignSurveyByIdAndEmail(surveyId, email);
             }
         }
     
