@@ -231,5 +231,5 @@ export const surveyClient = {
         "userEmail": email
     }
     surveyContext.post(historyBaseRoute, postObject);
-  },
+  }
 }

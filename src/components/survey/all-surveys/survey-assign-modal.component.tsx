@@ -30,15 +30,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
   }
 
     componentDidMount() {
-        //    surveyClient.assignSurveyByIdAndEmail(1, );
-           this.loadAllCohorts();
-        // this.loadCohortUsersToAssign();
+        this.loadAllCohorts();
     }
-
-    componentDidUpdate() {
-        // this.loadCohortUsersToAssign();
-    }
-
 
     loadAllCohorts = async () => {
         const cohorts = await cohortClient.findAll();
