@@ -103,7 +103,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
   }
 
   deleterow = (event, index) => {
-    console.log(index);
     let temp: any[];
     temp = this.state.completedTasks;
     temp.splice(index, 1);
@@ -141,12 +140,11 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
 
 
-    console.log('cloasing date: ' + dummySurvey.closingDate)
     let dummyQuestionArray: IQuestion[] = [];
 
     let dummyAnswerArray: IAnswer[] = [];
 
-    console.log(frmData);
+    // console.log(frmData);
 
 
     let questionindex = 0;
@@ -174,18 +172,18 @@ class surveyBuild extends React.Component<IComponentProps, any>{
         case 'title':
           dummySurvey.title = frmData[index].value;
           dummySurvey.description = frmData[index].value;
-          console.log(dummySurvey.title);
+          // console.log(dummySurvey.title);
           break;
 
         case 'description':
           dummySurvey.description = frmData[index].value;
-          console.log(dummySurvey.description);
+          // console.log(dummySurvey.description);
           break;
 
         case 'questionText':
           //   console.log('current index '+index);
           dummyquestion.questionId.typeId = this.state.completedTasks[questionindex].questionID;
-          console.log(dummyquestion.questionId.question = frmData[index].value);
+          dummyquestion.questionId.question = frmData[index].value;
           dummyQuestionArray.push(dummyquestion);
           questionindex += 1
           //  console.log(dummySurvey.description);
@@ -195,16 +193,18 @@ class surveyBuild extends React.Component<IComponentProps, any>{
           dummyAnswers.questionId = questionindex;//if not then use questionindex
           dummyAnswers.answer = frmData[index].value;
           dummyAnswerArray.push(dummyAnswers);
-          console.log(dummyAnswers)
+          // console.log(dummyAnswers)
           break;
         case 'template?':
           dummySurvey.template = true;
+          dummySurvey.published = false;
           break;
 
         default:
           break;
       }
     }
+    console.log('This is the dummyquestionarray ',dummyQuestionArray);
     let junctionTable: IJunctionSurveyQuestion = {
 
       id: 0,
@@ -235,7 +235,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
     for (let index = 0; index < dummyQuestionArray.length; index++) {
       let num = await surveyClient.saveQuestion(dummyQuestionArray[index]);
-      console.log(num + " this is the array you got")
+      // console.log(num + " this is the array you got")
       questionid.push(num);
 
       junctionTable.questionId = dummyQuestionArray[index].questionId;
@@ -257,7 +257,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       //console.log( dummyAnswerArray[index].answer+ "HELLOOOOOOO")
 
       let match = dummyAnswerArray[index].answer.split(/[\s,]+/)
-      console.log(match)
+      // console.log(match)
       for (let a in match) {
 
 
@@ -281,7 +281,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
           }
           dummyAnswerArray[index].questionId = questionid[questionOrder];
           dummyAnswers.questionId = questionid[questionOrder];
-
+        
           surveyClient.saveAnswer(dummyAnswers);
         }
 
