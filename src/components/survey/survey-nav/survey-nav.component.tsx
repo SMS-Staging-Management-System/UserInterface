@@ -26,7 +26,7 @@ export class SurveyNavComponent extends React.Component<ISurveyNavComponentProps
           <NavItem>
             <Link to={path + "/assigned"}
               className={`nav-link ${this.isActive('assigned')}`}
-            >Assigned</Link>
+            >Assigned To Me</Link>
           </NavItem>
           <NavItem>
             <Link to={path + "/all-surveys"}
