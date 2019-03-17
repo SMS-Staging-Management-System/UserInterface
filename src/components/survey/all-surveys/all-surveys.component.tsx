@@ -19,7 +19,7 @@ interface IComponentState {
     redirectTo: string | null
 }
 
-class MySurveysComponent extends Component<IComponentProps, IComponentState> {
+class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +31,7 @@ class MySurveysComponent extends Component<IComponentProps, IComponentState> {
     }
 
     componentDidMount() {
-        this.loadMySurveys();
+        this.loadAllSurveys();
     }
 
     // When the user clicks a data button for a survey, redirect to the data page for that survey
@@ -62,19 +62,16 @@ class MySurveysComponent extends Component<IComponentProps, IComponentState> {
         }
     }
 
-
     // Load the surveys into the state
-    loadMySurveys = async () => {
-        // const mySurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
-        const mySurveys = await surveyClient.findAllSurveys();
+    loadAllSurveys = async () => {
+        const allSurveys = await surveyClient.findAllSurveys();
         this.setState({
-            surveys: mySurveys,
+            surveys: allSurveys,
             surveysLoaded: true
         })
     }
 
     render() {
-        console.log('this.state.surveys', this.state.surveys);
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
@@ -82,7 +79,7 @@ class MySurveysComponent extends Component<IComponentProps, IComponentState> {
             <>
                 {this.state.surveysLoaded ? (
                     <Fragment>
-                        {this.state.surveys ? (
+                        {this.state.surveys.length ? (
                             <>
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">
@@ -135,4 +132,4 @@ const mapStateToProps = (state: IState) => ({
     auth: state.managementState.auth
 });
 
-export default connect(mapStateToProps)(MySurveysComponent);
+export default connect(mapStateToProps)(AllSurveysComponent);

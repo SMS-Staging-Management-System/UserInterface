@@ -17,10 +17,12 @@ import { ISurvey } from '../../../model/surveys/survey.model';
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
+
 import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 // import { IEditor } from '../../../model/editor.model';
+
 // import { ISurveyBuildState, ISurveyState } from '../../../reducers/survey';
 // import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
 // import { connect } from 'react-redux';
@@ -220,12 +222,14 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
     }
 
+
     // let editor: IEditor = {
     //   email: this.props.auth.currentUser.email,
     //   id: 0,
     //   surveyId: dummySurvey
     // }
     // console.log(JSON.stringify(editor));
+
 
 
     // //surveyClient.saveSurvey(dummySurvey,dummyQuestionArray,dummyAnswerArray);
@@ -244,7 +248,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       junctionTable.questionOrder = index + 1;
       junctionTable.surveyId = dummySurvey;
       junctionTable.surveyId.surveyId = surveyId;
-
 
 
       surveyClient.saveToQuestionJunction(junctionTable);
