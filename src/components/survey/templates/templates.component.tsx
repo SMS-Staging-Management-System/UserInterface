@@ -61,7 +61,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
     // Load the templates into the state
     loadTemplates = async () => {
-        const templates = await surveyClient.findAllSurveystemplate(true);
+        const templates = await surveyClient.findAllTemplates();
         this.setState({
             templates: templates,
             templatesLoaded: true
@@ -238,7 +238,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
     }
 
 
-    
+
     render() {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
