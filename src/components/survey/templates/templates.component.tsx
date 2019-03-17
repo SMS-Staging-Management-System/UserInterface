@@ -61,7 +61,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
     // Load the templates into the state
     loadTemplates = async () => {
-        const templates = await surveyClient.findAllSurveys();
+        const templates = await surveyClient.findAllTemplates();
         this.setState({
             templates: templates,
             templatesLoaded: true
@@ -248,7 +248,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         return (
             <Fragment>
                 {this.state.templatesLoaded ? (
-                    this.state.templates ? (
+                    this.state.templates.length ? (
                         <Table striped id="manage-users-table" className="tableUsers">
                             <thead className="rev-background-color">
                                 <tr>

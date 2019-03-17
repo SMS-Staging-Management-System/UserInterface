@@ -12,8 +12,6 @@ const responseBaseRoute = '/responses';
 const questionTypeBaseRoute = '/questiontype';
 const questionJunctionBaseRoute = '/junction_survey_questions';
 const questionAllBaseRoute = '/questions/multi-question';
-
-
 const historyBaseRoute = '/history';
 const junctionSurveyQuestionsBaseRoute = '/junction_survey_questions';
 
@@ -31,30 +29,42 @@ export const surveyClient = {
   // },
 
   findAllSurveys: async () => {
-    let surveys;
+    let surveysAndTemplates;
+    let surveys: any = [];
     await surveyContext.get(surveyBaseRoute)
       .then(response => {
-        surveys = response.data;
+        surveysAndTemplates = response.data;
       })
       .catch(err => {
         console.log(err);
       });
-    return surveys
-  },
-  async findAllSurveystemplate(templateType: boolean) {
-    let surveys = await surveyContext.get(surveyBaseRoute)
-    let returntemplate: any[] = [];
-
-    for (let index = 0; index < surveys.data.length; index++) {
-
-      if (surveys.data[index].template == templateType) {
-        returntemplate.push(surveys.data[index]);
-
-      }
-
+    if (surveysAndTemplates) {
+      surveysAndTemplates.forEach(element => {
+        if (!element.template) {
+          surveys.push(element);
+        }
+      });
     }
-    returntemplate.map(r => console.log(r));
-    return returntemplate
+    return surveys;
+  },
+  findAllTemplates: async () => {
+    let surveysAndTemplates;
+    let templates: any = [];
+    await surveyContext.get(surveyBaseRoute)
+      .then(response => {
+        surveysAndTemplates = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    if (surveysAndTemplates) {
+      surveysAndTemplates.forEach(element => {
+        if (element.template) {
+          templates.push(element);
+        }
+      });
+    }
+    return templates;
 
   },
   findSurveyById: async (id: number) => {
@@ -75,7 +85,6 @@ export const surveyClient = {
         // Sort the junction by question order
         junctions.sort((a, b) => (a.questionOrder > b.questionOrder) ? 1 : -1)
         survey.questionJunctions = junctions;
-        console.log("HERE I AM", survey.questionJunctions);
       })
       .catch(err => {
         console.log(err);
@@ -83,6 +92,7 @@ export const surveyClient = {
     // Append Answers to the Questions
     // If statement prevents crashing if the API server is down
     if (survey) {
+      console.log('Answers are being retrieved...');
       for (const questionJunction of survey.questionJunctions) {
         await surveyContext.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
           .then(response => {
@@ -93,6 +103,43 @@ export const surveyClient = {
           });
       };
     }
+    return survey;
+  },
+  countResponses: async (id: number) => {
+    const allResponses = await surveyContext.get(`responses/surveyId/${id}`);
+    const responseCount = {};
+    allResponses.data.forEach(element => {
+      const answerChosen = element.answerId.id;
+      if (!responseCount[answerChosen]) {
+        responseCount[answerChosen] = 1;
+      } else {
+        responseCount[answerChosen]++;
+      }
+    });
+    return responseCount;
+  },
+  findSurveyByIdWithResponses: async (id: number) => {
+    // Get the Survey
+    let survey = await surveyClient.findSurveyById(id);
+    console.log("Full survey output: ", survey);
+
+    // Get the Responses
+    const responseCount = await surveyClient.countResponses(id);
+    console.log("The count array is: ", responseCount);
+
+    // Add the response count to each question
+    survey.questionJunctions.forEach(question => {
+      if (question.questionId.typeId !== 5) {
+        question.questionId.answerChoices.forEach(choice => {
+          if (responseCount[choice.id]) {
+            choice.responseCount = responseCount[choice.id];
+          } else {
+            choice.responseCount = 0;
+          }
+        });
+      }
+    });
+
     return survey;
   },
   findSurveysAssignedToUser: async (email: String) => {
@@ -111,22 +158,21 @@ export const surveyClient = {
     await surveyClient.findHistoriesByEmail(email)
       .then(response => {
         myHistories = response;
-        console.log('histories found');
       })
       .catch(err => {
         console.log(err);
       });
-    // If loading failed, don't loop through surveys
-    console.log('assSurveys in survey client', allSurveys);
-    console.log('before for each');
-    if (allSurveys !== undefined) {
-      //Loop through the surveys, and save those that are in my histories
-      allSurveys.forEach(survey => {
-        myHistories.forEach(history => {
-          if (survey.surveyId === history.surveyId) {
-            myAssignedSurveys.push(survey);
-          }
-        })
+    // If loading failed, don't loop through surveys, preventing crashing the page if the api server is down
+    if (myHistories !== undefined) {
+      //Loop through the histories, and save the corresponding survey
+      myHistories.forEach(history => {
+        if (history.dateCompleted === null) {
+          allSurveys.forEach(survey => {
+            if (survey.surveyId === history.surveyId) {
+              myAssignedSurveys.push(survey);
+            }
+          })
+        }
       });
     }
     return myAssignedSurveys;
@@ -190,6 +236,7 @@ export const surveyClient = {
   //--------------------//
 
   saveAnswer: (answer: IAnswer) => {
+    answer.id = 0;
     return surveyContext.post(answerBaseRoute, answer)
   },
 
@@ -214,7 +261,7 @@ export const surveyClient = {
 
   findHistoriesByEmail: async (email: String) => {
     let histories;
-    await surveyContext.post(`${historyBaseRoute}/email/`, email)
+    await surveyContext.post(`${historyBaseRoute}/email`, email)
       .then(response => {
         histories = response.data;
       })
@@ -223,4 +270,15 @@ export const surveyClient = {
       });
     return histories;
   },
+
+  assignSurveyByIdAndEmail(id: number, email: string) {
+    const postObject = {
+      "dateAssigned": new Date(),
+      "dateCompleted": null,
+      "historyId": 0,
+      "surveyId": id,
+      "userEmail": email
+    }
+    surveyContext.post(historyBaseRoute, postObject);
+  }
 }

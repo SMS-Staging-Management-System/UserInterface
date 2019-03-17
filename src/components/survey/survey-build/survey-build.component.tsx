@@ -105,7 +105,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
   }
 
   deleterow = (event, index) => {
-    console.log(index);
     let temp: any[];
     temp = this.state.completedTasks;
     temp.splice(index, 1);
@@ -143,12 +142,11 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
 
 
-    console.log('cloasing date: ' + dummySurvey.closingDate)
     let dummyQuestionArray: IQuestion[] = [];
 
     let dummyAnswerArray: IAnswer[] = [];
 
-    console.log(frmData);
+    // console.log(frmData);
 
 
     let questionindex = 0;
@@ -176,37 +174,39 @@ class surveyBuild extends React.Component<IComponentProps, any>{
         case 'title':
           dummySurvey.title = frmData[index].value;
           dummySurvey.description = frmData[index].value;
-          console.log(dummySurvey.title);
+          // console.log(dummySurvey.title);
           break;
 
         case 'description':
           dummySurvey.description = frmData[index].value;
-          console.log(dummySurvey.description);
+          // console.log(dummySurvey.description);
           break;
 
         case 'questionText':
           //   console.log('current index '+index);
           dummyquestion.questionId.typeId = this.state.completedTasks[questionindex].questionID;
-          console.log(dummyquestion.questionId.question = frmData[index].value);
+          dummyquestion.questionId.question = frmData[index].value;
           dummyQuestionArray.push(dummyquestion);
           questionindex += 1
           //  console.log(dummySurvey.description);
           break;
         case 'answerText':
-          dummyAnswers.id = 0;
+          dummyAnswers.id = questionindex;
           dummyAnswers.questionId = questionindex;//if not then use questionindex
           dummyAnswers.answer = frmData[index].value;
           dummyAnswerArray.push(dummyAnswers);
-          console.log(dummyAnswers)
+          console.log('This is the quesion index: '+questionindex);
           break;
         case 'template?':
           dummySurvey.template = true;
+          dummySurvey.published = false;
           break;
 
         default:
           break;
       }
     }
+    //  console.log('This is the dummyquestionarray ',dummyQuestionArray);
     let junctionTable: IJunctionSurveyQuestion = {
 
       id: 0,
@@ -239,7 +239,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
     for (let index = 0; index < dummyQuestionArray.length; index++) {
       let num = await surveyClient.saveQuestion(dummyQuestionArray[index]);
-      console.log(num + " this is the array you got")
+      // console.log(num + " this is the array you got")
       questionid.push(num);
 
       junctionTable.questionId = dummyQuestionArray[index].questionId;
@@ -251,16 +251,18 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
 
       surveyClient.saveToQuestionJunction(junctionTable);
-      console.log(JSON.stringify(junctionTable));
+      //console.log(JSON.stringify(junctionTable));
     }
+    let change = dummyAnswerArray[0].id;//keep a temp variable to check if the surveys answer questionid changes
+    let questionOrder = 0;
 
-
+    //console.log(JSON.stringify(questionid+ "THESE ARE MY IDS"))
     for (let index = 0; index < dummyAnswerArray.length; index++) {
 
       //console.log( dummyAnswerArray[index].answer+ "HELLOOOOOOO")
 
       let match = dummyAnswerArray[index].answer.split(/[\s,]+/)
-      console.log(match)
+      //  console.log(match + " this is MATCH");
       for (let a in match) {
 
 
@@ -273,24 +275,30 @@ class surveyBuild extends React.Component<IComponentProps, any>{
         let choice = match[a]
         dummyAnswers.answer = choice
 
-        let change = dummyAnswerArray[0].questionId;//keep a temp variable to check if the surveys answer questionid changes
-        let questionOrder = 0;
+        //console.log("change outtttt the if statement "+ change)
+        console.log(change + " the change" + dummyAnswerArray[index].questionId + " questionid ")
+        // for (let j = 0; j < dummyAnswerArray.length; j++) {
+        if (change != dummyAnswerArray[index].id) {
+          //console.log("change in the if statement "+ change)
+          console.log("QUESTION ORDER CHANGED")
 
-        for (let index = 0; index < dummyAnswerArray.length; index++) {
-          if (change != dummyAnswerArray[index].questionId) {
+          change = dummyAnswerArray[index].id;
+          questionOrder++;
 
-            change = dummyAnswerArray[index].questionId;
-            questionOrder++;
-          }
-          dummyAnswerArray[index].questionId = questionid[questionOrder];
-          dummyAnswers.questionId = questionid[questionOrder];
-
-          surveyClient.saveAnswer(dummyAnswers);
         }
 
 
+        //  console.log("THE ORDER AS ID"+ questionid[questionOrder])
+        dummyAnswerArray[index].questionId = questionid[questionOrder];
+        dummyAnswers.questionId = questionid[questionOrder];
+        // console.log("ID IN THE LOOP "+ dummyAnswers.questionId)
+        console.log(JSON.stringify(dummyAnswers) + " MY ANSWERS")
+        surveyClient.saveAnswer(dummyAnswers);
+        //        }
 
-        console.log(JSON.stringify(junctionTable) + " HERE IS THE JUNCTION");
+
+
+        //     console.log(JSON.stringify(junctionTable) + " HERE IS THE JUNCTION");
 
       }
     }
