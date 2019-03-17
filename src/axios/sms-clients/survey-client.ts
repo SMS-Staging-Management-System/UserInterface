@@ -198,6 +198,7 @@ export const surveyClient = {
   //--------------------//
 
   saveAnswer: (answer: IAnswer) => {
+    answer.id = 0;
     return surveyContext.post(answerBaseRoute, answer)
   },
 

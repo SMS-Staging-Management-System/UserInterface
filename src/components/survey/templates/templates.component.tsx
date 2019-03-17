@@ -47,7 +47,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
     // Load the templates into the state
     loadTemplates = async () => {
-        const templates = await surveyClient.findAllTemplates();
+        const templates = await surveyClient.findAllSurveystemplate(true);
         this.setState({
             templates: templates,
             templatesLoaded: true
