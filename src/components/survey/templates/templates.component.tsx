@@ -4,7 +4,11 @@ import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
-import { FaInfoCircle } from 'react-icons/fa'
+import { FaInfoCircle, FaHandPointRight } from 'react-icons/fa'
+import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
+import { IQuestion } from '../../../model/surveys/question.model';
+import { IAnswer } from '../../../model/surveys/answer.model';
+import { ISurvey } from '../../../model/surveys/survey.model';
 
 
 
@@ -26,9 +30,11 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             templatesLoaded: false,
             showModal: false,
             newTitle: '',
+            newDescription: '',
             surveyId: 0,
             surveyLoaded: false,
             openedTemplate: [],
+            dateCreated: Date.now(),
             survey: {
                 surveyId: 0,
                 title: '',
@@ -64,6 +70,18 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         console.log("Template Loaded", this.state.templatesLoaded);
     };
 
+    changeSurveyTitle = (event) => {
+        this.setState({
+            newTitle: event.target.value,
+        })
+        console.log('NEW TITLE ', this.state.newTitle);
+    }
+    changeSurveyDescription = (event) => {
+        this.setState({
+            newDescription: event.target.value,
+        })
+        console.log('NEW DESCRIPTION ', this.state.newDescription);
+    }
 
 
     handleShow = async (id: number, description: string) => {
@@ -75,6 +93,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
         this.setState({
             survey: openedTemplate,
+            newTitle: openedTemplate.title,
             surveyLoaded: true,
             description: description
 
@@ -96,52 +115,131 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
     }
 
-    handleCreateClose = () => {
-        this.setState({
-            showModal: false,
-            surveyId: 0,
-            title: this.state.newTitle,
-            dateCreated: new Date()
-            //redirectTo: `/surveys/build/${this.state.survey.surveyId}`
+    handleCreateClose = async () => {
+        console.log('Current title', this.state.survey.title, '   New title', this.state.newTitle);
+        if (this.state.survey.title !== this.state.newTitle) {
+            this.setState({
+                newTitle: this.state.newTitle,
+                showModal: false,
+                surveyId: 0,
+                description: this.state.newDescription,
+                dateCreated: this.state.dateCreated
+            })
+        } else {
+            this.setState({
+                showModal: false,
+                surveyId: 0,
+                newTitle: this.state.survey.title,
+                description: this.state.newDescription,
+                dateCreated: this.state.dateCreated
+                //redirectTo: `/surveys/build/${this.state.survey.surveyId}`
 
-        })
-        let questions: any = [];
-        let answers: any = [];
-        let temp = this.state.survey;
-        temp.surveyId = 0;
-        for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
-            questions.push(this.state.survey.questionJunctions[i].questionId);
-
+            })
         }
 
+        // else {
+        //     this.setState({
+        //         newTitle: this.state.survey.title
+        //     })
+        // }
+
+
+        let questions: IQuestion[] = [];
+        let answers: IAnswer[] = [];
+        let dummySurvey: ISurvey = {
+            surveyId: 1,
+            title: this.state.newTitle,
+            description: this.state.description,
+            dateCreated: this.state.dateCreated,
+            closingDate: this.state.survey.closingDate,
+            template: false,
+            published: true
+        };
+        for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
+
+            let dummyquestion: IQuestion | any = {
+                questionId: {
+                    questionId: 0,
+                    question: 'string',
+                    typeId: 0,
+                }
+            }
+            dummyquestion.questionId.questionId = this.state.survey.questionJunctions[i].questionId.questionId;
+            dummyquestion.questionId.typeId = this.state.survey.questionJunctions[i].questionId.typeId;
+            dummyquestion.questionId.question = this.state.survey.questionJunctions[i].questionId.question;
+
+            for (let j = 0; j < this.state.survey.questionJunctions[i].questionId.answerChoices.length; j++) {
+
+                let dummyAnswers: IAnswer | any = {
+                    id: 0,
+                    answer: "string",
+                    questionId: 0
+                }
+                dummyAnswers.id = this.state.survey.questionJunctions[i].questionId.answerChoices[j].id;
+                dummyAnswers.answer = this.state.survey.questionJunctions[i].questionId.answerChoices[j].answer;
+                dummyAnswers.questionId = this.state.survey.questionJunctions[i].questionId.answerChoices[j].questionId;
+                answers.push(dummyAnswers);
+            }
+            questions.push(dummyquestion);
+        }
+
+        // for (let index = 0; index < questions.length; index++) {
+        //     for (let j = 0; j < questions[index].answerChoices.length; j++) {
+        //         dummyAnswers.answer = questions[index].answerChoices[j].answer
+        //         answers.push(questions[index].answerChoices[j]);
+        //     }
+
+        // }
+        // console.log('Survey', this.state.survey.questionJunctions);
+        dummySurvey.surveyId = await surveyClient.saveSurvey(dummySurvey);
+        let questionid = new Array;
+
         for (let index = 0; index < questions.length; index++) {
-            for (let j = 0; j < questions[index].answerChoices.length; j++) {
-                answers.push(questions[index].answerChoices[j]);
+            // console.log('this is a question ',questions[index]);
+            let num = await surveyClient.saveQuestion(questions[index]);
+            questionid.push(num);
+
+            for (let j = 0; j < answers.length; j++) {
+                console.log('this is the answer id ', answers[j].questionId, 'this is a question ', questions[index])
+                if (answers[j].questionId === questions[index].questionId.questionId) {
+                    answers[j].questionId = questionid[index];
+                    surveyClient.saveAnswer(answers[j]);
+                }
             }
 
         }
-        console.log('AHAHAHAHAAHA', this.state.survey);
-        console.log('Survey', this.state.survey.questionJunctions);
-        surveyClient.saveSurvey(temp);
-        surveyClient.saveAllQuestion(questions);
-        surveyClient.saveAllAnswer(answers);
-        //surveyClient.saveToQuestionJunction()
-        console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
+
+
+        let junctionTable: IJunctionSurveyQuestion = {
+
+            id: 0,
+
+            questionId: {
+                questionId: 0,
+                question: 'string',
+                typeId: 0,
+            },
+            questionOrder: 0,
+
+            surveyId: dummySurvey,
+
+        }
+        for (let index = 0; index < questions.length; index++) {
+            junctionTable.questionId.question = questions[index].questionId.question;
+            junctionTable.questionId.questionId = questionid[index];
+            junctionTable.questionId.typeId = questions[index].questionId.typeId;
+            junctionTable.questionOrder = index + 1;
+            junctionTable.surveyId = dummySurvey;
+            junctionTable.surveyId.surveyId = dummySurvey.surveyId;
+            surveyClient.saveToQuestionJunction(junctionTable);
+            console.log(junctionTable);
+        }
+        // console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
     }
 
 
-    changeSurveyTitle = (event) => {
-        this.setState({
-            newTitle: event.target.value,
-
-        })
-        console.log(this.state.newTitle);
-    }
-
-
+    
     render() {
-
-
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
@@ -183,12 +281,19 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <div ><FaHandPointRight /> <i><span className="noteDiv">Note that you can edit both the survey title and description</span></i></div>
                         <div className="modalHeading">
                             <strong>Survey Title</strong>:&nbsp;
                             <input type="text"
                                 className="surveyName"
                                 defaultValue={this.state.survey.title}
-                                onChange={this.changeSurveyTitle} />
+                                onChange={this.changeSurveyTitle} />&nbsp;
+                            <strong>Description</strong>:&nbsp;
+                                <input
+                                type="text"
+                                className="surveyDescription"
+                                defaultValue={this.state.survey.description}
+                                onChange={this.changeSurveyDescription} />
                         </div>
                         <div className="container" id="containerTemplate">
                             {this.state.surveyLoaded ?
@@ -197,8 +302,6 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                     <div key={questionJunction.questionId.questionId}>
                                         <strong>{questionJunction.questionId.question}:</strong>
                                         {
-
-
                                             questionJunction.questionId.typeId === 5 ?
                                                 <div>Question Type: Feedback</div>
                                                 : questionJunction.questionId.answerChoices.map(choice => (

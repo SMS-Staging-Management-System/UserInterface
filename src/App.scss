@@ -720,6 +720,7 @@ TEMPLATE MODAL
 
 .modalHeading{
   width: 100%;
+  text-align: left;
   height: 60px;
   background-color: $revature-orange-light;
   color: black;
@@ -735,12 +736,21 @@ TEMPLATE MODAL
   margin: auto;
 }
 .surveyName{
-  width: 50%;
-  text-align: center;
+  width: 20%;
   border: 1px solid black;
+  padding: 5px;
+ 
   
 }
-
+.surveyDescription{
+  width: 45%;
+  border: 1px solid black;
+  padding: 5px;
+}
+.noteDiv{
+  color: green;
+  font-weight: bold;
+}
 /*******************
 Info Circle
 *******************/ 
