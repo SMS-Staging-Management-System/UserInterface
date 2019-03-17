@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router';
-import { SurveyNavComponent } from './survey-nav/survey-nav.component';
+import SurveyNavComponent from './survey-nav/survey-nav.component'
 import AssignedSurveysComponent from './assigned-surveys/assigned-surveys.component';
 import SurveyBuildComponent from './survey-build/survey-build.component';
 import SurveyAnalyticsComponent from './survey-analytics/survey-analytics.component';

@@ -4,7 +4,12 @@ import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
-import { FaInfoCircle } from 'react-icons/fa'
+import { FaInfoCircle, FaHandPointRight } from 'react-icons/fa'
+import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
+import { IQuestion } from '../../../model/surveys/question.model';
+import { IAnswer } from '../../../model/surveys/answer.model';
+import { ISurvey } from '../../../model/surveys/survey.model';
+
 
 
 interface TemplatesProps extends RouteComponentProps<{}> {
@@ -22,17 +27,26 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         super(props);
         this.state = {
             templates: [],
-            survey: {},
             templatesLoaded: false,
             showModal: false,
-            surveyId: 0,
             newTitle: '',
+            newDescription: '',
+            surveyId: 0,
             surveyLoaded: false,
             openedTemplate: [],
-            readOnly: ''
+            dateCreated: Date.now(),
+            survey: {
+                surveyId: 0,
+                title: '',
+                description: '',
+                dateCreated: new Date(),
+                closingDate: null,
+                template: false,
+                published: true
+            }
 
         }
-        this.changeSurveyTitle = this.changeSurveyTitle.bind(this);
+
 
     }
 
@@ -56,21 +70,36 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         console.log("Template Loaded", this.state.templatesLoaded);
     };
 
+    changeSurveyTitle = (event) => {
+        this.setState({
+            newTitle: event.target.value,
+        })
+        console.log('NEW TITLE ', this.state.newTitle);
+    }
+    changeSurveyDescription = (event) => {
+        this.setState({
+            newDescription: event.target.value,
+        })
+        console.log('NEW DESCRIPTION ', this.state.newDescription);
+    }
 
 
-    handleShow = async (id) => {
+    handleShow = async (id: number, description: string) => {
+
         this.setState({
             showModal: true
         })
         const openedTemplate = await surveyClient.findSurveyById(id);
+
         this.setState({
             survey: openedTemplate,
-            //surveyId: id,
-            surveyLoaded: true
+            newTitle: openedTemplate.title,
+            surveyLoaded: true,
+            description: description
 
         })
 
-        console.log("open template", openedTemplate);
+        console.log("open template", openedTemplate, " Description", this.state.description);
 
     }
     handleClose = () => {
@@ -78,32 +107,139 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             survey: {},
             surveyLoaded: false,
             showModal: false
+
         })
+
 
 
 
     }
 
-    handleCreateClose = (surveyId: number) => {
-        this.setState({
-            showModal: false,
-            redirectTo: `/surveys/build/${surveyId}`
-        })
+    handleCreateClose = async () => {
+        console.log('Current title', this.state.survey.title, '   New title', this.state.newTitle);
+        if (this.state.survey.title !== this.state.newTitle) {
+            this.setState({
+                newTitle: this.state.newTitle,
+                showModal: false,
+                surveyId: 0,
+                description: this.state.newDescription,
+                dateCreated: this.state.dateCreated
+            })
+        } else {
+            this.setState({
+                showModal: false,
+                surveyId: 0,
+                newTitle: this.state.survey.title,
+                description: this.state.newDescription,
+                dateCreated: this.state.dateCreated
+                //redirectTo: `/surveys/build/${this.state.survey.surveyId}`
+
+            })
+        }
+
+        // else {
+        //     this.setState({
+        //         newTitle: this.state.survey.title
+        //     })
+        // }
+
+
+        let questions: IQuestion[] = [];
+        let answers: IAnswer[] = [];
+        let dummySurvey: ISurvey = {
+            surveyId: 1,
+            title: this.state.newTitle,
+            description: this.state.description,
+            dateCreated: this.state.dateCreated,
+            closingDate: this.state.survey.closingDate,
+            template: false,
+            published: true
+        };
+        for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
+
+            let dummyquestion: IQuestion | any = {
+                questionId: {
+                    questionId: 0,
+                    question: 'string',
+                    typeId: 0,
+                }
+            }
+            dummyquestion.questionId.questionId = this.state.survey.questionJunctions[i].questionId.questionId;
+            dummyquestion.questionId.typeId = this.state.survey.questionJunctions[i].questionId.typeId;
+            dummyquestion.questionId.question = this.state.survey.questionJunctions[i].questionId.question;
+
+            for (let j = 0; j < this.state.survey.questionJunctions[i].questionId.answerChoices.length; j++) {
+
+                let dummyAnswers: IAnswer | any = {
+                    id: 0,
+                    answer: "string",
+                    questionId: 0
+                }
+                dummyAnswers.id = this.state.survey.questionJunctions[i].questionId.answerChoices[j].id;
+                dummyAnswers.answer = this.state.survey.questionJunctions[i].questionId.answerChoices[j].answer;
+                dummyAnswers.questionId = this.state.survey.questionJunctions[i].questionId.answerChoices[j].questionId;
+                answers.push(dummyAnswers);
+            }
+            questions.push(dummyquestion);
+        }
+
+        // for (let index = 0; index < questions.length; index++) {
+        //     for (let j = 0; j < questions[index].answerChoices.length; j++) {
+        //         dummyAnswers.answer = questions[index].answerChoices[j].answer
+        //         answers.push(questions[index].answerChoices[j]);
+        //     }
+
+        // }
+        // console.log('Survey', this.state.survey.questionJunctions);
+        dummySurvey.surveyId = await surveyClient.saveSurvey(dummySurvey);
+        let questionid = new Array;
+
+        for (let index = 0; index < questions.length; index++) {
+            // console.log('this is a question ',questions[index]);
+            let num = await surveyClient.saveQuestion(questions[index]);
+            questionid.push(num);
+
+            for (let j = 0; j < answers.length; j++) {
+                console.log('this is the answer id ', answers[j].questionId, 'this is a question ', questions[index])
+                if (answers[j].questionId === questions[index].questionId.questionId) {
+                    answers[j].questionId = questionid[index];
+                    surveyClient.saveAnswer(answers[j]);
+                }
+            }
+
+        }
+
+
+        let junctionTable: IJunctionSurveyQuestion = {
+
+            id: 0,
+
+            questionId: {
+                questionId: 0,
+                question: 'string',
+                typeId: 0,
+            },
+            questionOrder: 0,
+
+            surveyId: dummySurvey,
+
+        }
+        for (let index = 0; index < questions.length; index++) {
+            junctionTable.questionId.question = questions[index].questionId.question;
+            junctionTable.questionId.questionId = questionid[index];
+            junctionTable.questionId.typeId = questions[index].questionId.typeId;
+            junctionTable.questionOrder = index + 1;
+            junctionTable.surveyId = dummySurvey;
+            junctionTable.surveyId.surveyId = dummySurvey.surveyId;
+            surveyClient.saveToQuestionJunction(junctionTable);
+            console.log(junctionTable);
+        }
+        // console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
     }
 
 
-    changeSurveyTitle = (event) => {
-        this.setState({
-            newTitle: event.target.value,
-
-        })
-        console.log(this.state.newTitle);
-    }
-
-
+    
     render() {
-
-
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
@@ -123,7 +259,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                             <tbody>
                                 {this.state.templates.map(template => (
                                     <tr key={template.surveyId} className="rev-table-row"
-                                        onClick={() => this.handleShow(template.surveyId)}>
+                                        onClick={() => this.handleShow(template.surveyId, template.description)}>
                                         <td>{template.title}</td>
                                         <td>{template.description}</td>
                                         <td>{template.dateCreated && new Date(template.dateCreated).toDateString()}</td>
@@ -145,12 +281,19 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <div ><FaHandPointRight /> <i><span className="noteDiv">Note that you can edit both the survey title and description</span></i></div>
                         <div className="modalHeading">
                             <strong>Survey Title</strong>:&nbsp;
                             <input type="text"
                                 className="surveyName"
                                 defaultValue={this.state.survey.title}
-                                onChange={this.changeSurveyTitle} />
+                                onChange={this.changeSurveyTitle} />&nbsp;
+                            <strong>Description</strong>:&nbsp;
+                                <input
+                                type="text"
+                                className="surveyDescription"
+                                defaultValue={this.state.survey.description}
+                                onChange={this.changeSurveyDescription} />
                         </div>
                         <div className="container" id="containerTemplate">
                             {this.state.surveyLoaded ?
@@ -169,16 +312,18 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                                 ))
                                         }
                                         <hr />
+
                                     </div>
                                 )) : (
                                     <div>Loading...Please wait</div>
                                 )}
+
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-
                         <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>
-                        <Button className="buttonCreate" onClick={() => this.handleCreateClose(this.state.surveyId)}>Create</Button>
+                        <Button className="buttonCreate" onClick={() => this.handleCreateClose()}>Create</Button>
+
                     </Modal.Footer>
                 </Modal>
             </Fragment>
