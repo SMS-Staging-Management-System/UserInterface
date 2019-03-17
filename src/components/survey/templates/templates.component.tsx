@@ -156,7 +156,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             published: true
         };
         for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
-
+            console.log('THESE ARE THE QUESTION JUNCTIONS', this.state.survey.questionJunctions[i]);
             let dummyquestion: IQuestion | any = {
                 questionId: {
                     questionId: 0,
@@ -167,7 +167,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             dummyquestion.questionId.questionId = this.state.survey.questionJunctions[i].questionId.questionId;
             dummyquestion.questionId.typeId = this.state.survey.questionJunctions[i].questionId.typeId;
             dummyquestion.questionId.question = this.state.survey.questionJunctions[i].questionId.question;
-
+            console.log(dummyquestion);
             for (let j = 0; j < this.state.survey.questionJunctions[i].questionId.answerChoices.length; j++) {
 
                 let dummyAnswers: IAnswer | any = {
@@ -178,6 +178,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                 dummyAnswers.id = this.state.survey.questionJunctions[i].questionId.answerChoices[j].id;
                 dummyAnswers.answer = this.state.survey.questionJunctions[i].questionId.answerChoices[j].answer;
                 dummyAnswers.questionId = this.state.survey.questionJunctions[i].questionId.answerChoices[j].questionId;
+            console.log(dummyAnswers);
                 answers.push(dummyAnswers);
             }
             questions.push(dummyquestion);
@@ -200,7 +201,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             questionid.push(num);
 
             for (let j = 0; j < answers.length; j++) {
-                console.log('this is the answer id ', answers[j].questionId, 'this is a question ', questions[index])
+                // console.log('this is the answer id ', answers[j].questionId, 'this is a question ', questions[index])
                 if (answers[j].questionId === questions[index].questionId.questionId) {
                     answers[j].questionId = questionid[index];
                     surveyClient.saveAnswer(answers[j]);
@@ -232,18 +233,18 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             junctionTable.surveyId = dummySurvey;
             junctionTable.surveyId.surveyId = dummySurvey.surveyId;
             surveyClient.saveToQuestionJunction(junctionTable);
-            console.log(junctionTable);
+            // console.log(junctionTable);
         }
         // console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
     }
 
 
-    
+
     render() {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
-        console.log('this.state', this.state);
+        // console.log('this.state', this.state);
         return (
             <Fragment>
                 {this.state.templatesLoaded ? (
