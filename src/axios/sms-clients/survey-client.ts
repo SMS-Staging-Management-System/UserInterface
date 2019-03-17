@@ -231,4 +231,15 @@ export const surveyClient = {
       });
     return histories;
   },
+
+  assignSurveyByIdAndEmail(id: number, email: string) {
+    const postObject = {
+        "dateAssigned": new Date(),
+        "dateCompleted": null,
+        "historyId": 0,
+        "surveyId": id,
+        "userEmail": email
+    }
+    surveyContext.post(historyBaseRoute, postObject);
+  }
 }
