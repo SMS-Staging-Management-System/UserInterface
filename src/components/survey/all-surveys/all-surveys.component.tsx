@@ -62,10 +62,8 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
         }
     }
 
-
     // Load the surveys into the state
     loadAllSurveys = async () => {
-        // const mySurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
         const allSurveys = await surveyClient.findAllSurveys();
         this.setState({
             surveys: allSurveys,
@@ -74,7 +72,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
     }
 
     render() {
-        console.log('this.state.surveys', this.state.surveys);
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
@@ -82,7 +79,7 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
             <>
                 {this.state.surveysLoaded ? (
                     <Fragment>
-                        {this.state.surveys ? (
+                        {this.state.surveys.length ? (
                             <>
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">

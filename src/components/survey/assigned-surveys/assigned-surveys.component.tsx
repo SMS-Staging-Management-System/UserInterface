@@ -31,13 +31,20 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
         this.loadMyAssignedSurveys();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.auth !== this.props.auth) {
+            this.loadMyAssignedSurveys();
+        }
+    }
+
     loadMyAssignedSurveys = async () => {
-        // const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
-        const myAssignedSurveys = await surveyClient.findAllSurveys();
-        this.setState({
-            surveys: myAssignedSurveys,
-            surveysLoaded: true
-        })
+        if (this.props.auth.currentUser.email) {
+            const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
+            this.setState({
+                surveys: myAssignedSurveys,
+                surveysLoaded: true
+            })
+        }
     }
 
     handleTakeSurvey = (surveyId: number) => {
@@ -53,7 +60,7 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
         return (
             <>
                 {this.state.surveysLoaded ? (
-                    this.state.surveys ? (
+                    this.state.surveys.length ? (
                         <Table striped id="manage-users-table" className="tableUsers">
                             <thead className="rev-background-color">
                                 <tr>
@@ -64,8 +71,8 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.surveys.map(survey => (
-                                    <tr key={survey.surveyId} className="rev-table-row" onClick={() => this.handleTakeSurvey(survey.surveyId)}>
+                                {this.state.surveys.map((survey, index) => (
+                                    <tr key={index} className="rev-table-row" onClick={() => this.handleTakeSurvey(survey.surveyId)}>
                                         <td>{survey.title}</td>
                                         <td>{survey.description}</td>
                                         <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
