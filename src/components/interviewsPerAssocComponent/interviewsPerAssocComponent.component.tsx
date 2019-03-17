@@ -18,7 +18,7 @@ export interface InterviewPerAssocState {
 }
 
 export interface InterviewPAssoc {
-    associateId:number,
+    associateEmail:String,
     interviewCount:number,
     AssociateName:String
 }
@@ -28,10 +28,10 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         super(props);
         this.state = {
             assocInterviewArr: [
-                { associateId: 2001, interviewCount: -1, AssociateName: 'Aaron Anderson' },
-                { associateId: 2002, interviewCount: -1, AssociateName: 'Betty Bronte' },
-                { associateId: 2003, interviewCount: -1, AssociateName: 'Charles Cromwell' },
-                { associateId: 2004, interviewCount: -1, AssociateName: 'Delta Dawn' },
+                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Aaron Anderson' },
+                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Betty Bronte' },
+                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Charles Cromwell' },
+                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Delta Dawn' },
               ],
             totalPages:0,
             currentPage:0,
