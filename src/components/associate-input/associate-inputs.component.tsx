@@ -16,6 +16,7 @@ interface IProps {
     updateActualFormat: (value: string, id: number) => void;
     updateProposedFormat: (value: string, id: number) => void;
     submitInput: (fields: IAssociateInput) => void;
+    ownProps: any;
 }
 
 interface IInputState {
@@ -30,6 +31,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
             error: false,
             redirect: false
         };
+        
     }
 
     toDateString = (): string => {
@@ -84,13 +86,16 @@ export class AssociateInput extends Component<IProps, IInputState> {
             updateActualFormat,
             updateProposedFormat
         } = this.props;
+        
+        // This is the interviewId from the previous page that you will need Ben.
+        const {interviewId} = this.props.ownProps.location.state;
+        console.log(interviewId);
 
         return (
             <form id='assoc-questionaire'>
                 <Question value='When did you recieve a notification?' >
                     <input className='tab-once' type="date" onChange={updateDayNotified} />
                 </Question>
-
                 <Question value='Were you provided a job description?' >
                     <MultipleChoice name='q3' choices={['Yes', 'No']} onChange={updateDescProvided} />
                 </Question>
@@ -125,8 +130,9 @@ export class AssociateInput extends Component<IProps, IInputState> {
     }
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IState, ownProps) => {
     return {
+        ownProps: ownProps
     //    fields: state.interviewState.associateInput
     };
 };
