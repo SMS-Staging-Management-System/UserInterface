@@ -92,6 +92,7 @@ export const surveyClient = {
     // Append Answers to the Questions
     // If statement prevents crashing if the API server is down
     if (survey) {
+      console.log('Answers are being retrieved...');
       for (const questionJunction of survey.questionJunctions) {
         await surveyContext.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
           .then(response => {
@@ -102,6 +103,43 @@ export const surveyClient = {
           });
       };
     }
+    return survey;
+  },
+  countResponses: async (id: number) => {
+    const allResponses = await surveyContext.get(`responses/surveyId/${id}`);
+    const responseCount = {};
+    allResponses.data.forEach(element => {
+      const answerChosen = element.answerId.id;
+      if (!responseCount[answerChosen]) {
+        responseCount[answerChosen] = 1;
+      } else {
+        responseCount[answerChosen]++;
+      }
+    });
+    return responseCount;
+  },
+  findSurveyByIdWithResponses: async (id: number) => {
+    // Get the Survey
+    let survey = await surveyClient.findSurveyById(id);
+    console.log("Full survey output: ", survey);
+
+    // Get the Responses
+    const responseCount = await surveyClient.countResponses(id);
+    console.log("The count array is: ", responseCount);
+
+    // Add the response count to each question
+    survey.questionJunctions.forEach(question => {
+      if (question.questionId.typeId !== 5) {
+        question.questionId.answerChoices.forEach(choice => {
+          if (responseCount[choice.id]) {
+            choice.responseCount = responseCount[choice.id];
+          } else {
+            choice.responseCount = 0;
+          }
+        });
+      }
+    });
+
     return survey;
   },
   findSurveysAssignedToUser: async (email: String) => {
@@ -128,7 +166,7 @@ export const surveyClient = {
     if (myHistories !== undefined) {
       //Loop through the histories, and save the corresponding survey
       myHistories.forEach(history => {
-        if(history.dateCompleted === null) {
+        if (history.dateCompleted === null) {
           allSurveys.forEach(survey => {
             if (survey.surveyId === history.surveyId) {
               myAssignedSurveys.push(survey);
@@ -235,11 +273,11 @@ export const surveyClient = {
 
   assignSurveyByIdAndEmail(id: number, email: string) {
     const postObject = {
-        "dateAssigned": new Date(),
-        "dateCompleted": null,
-        "historyId": 0,
-        "surveyId": id,
-        "userEmail": email
+      "dateAssigned": new Date(),
+      "dateCompleted": null,
+      "historyId": 0,
+      "surveyId": id,
+      "userEmail": email
     }
     surveyContext.post(historyBaseRoute, postObject);
   }
