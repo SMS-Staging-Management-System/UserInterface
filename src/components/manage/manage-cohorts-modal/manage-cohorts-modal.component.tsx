@@ -1,44 +1,8 @@
 import * as React from 'react';
 import Modal from 'reactstrap/lib/Modal';
-import { ICohort } from '../../../model/cohort';
-import { IUser } from '../../../model/user.model';
 import ModalHeader from 'reactstrap/lib/ModalHeader';
-import { IStatus } from '../../../model/status.model';
 import { ModalFooter } from 'react-bootstrap';
-
-//move this to reducers
-export interface ICohortModalState {
-    /**
-     * The currently selected cohort
-     */
-    cohort: ICohort,
-    /**
-     * List of users in the cohort
-     * that are currently selected for
-     * changes
-     */
-    selectedUsers: IUser[],
-    /**
-     * The status that we would like to
-     * change all of the selected users to.
-     */
-    selectedStatus: IStatus;
-    /**
-     * Whether the modal is visible or not.
-     */
-    modalVisible: boolean;
-    /**
-     * Whether the modal is in the 'saved' state or not
-     */
-    isSaved: boolean;
-}
-
-// move this to ManageCohortsModal.container.tsx
-export interface IManageCohortsModal {
-    toggleViewCohortModal: () => void,
-    viewCohort: ICohortModalState
-}
-
+import { IManageCohortsModalProps } from './manage-cohorts-modal.container';
 
 /**
  * `
@@ -50,28 +14,30 @@ export interface IManageCohortsModal {
  * |    | First name  v | Last name  v | Status   v | Virtual v | all [ ]  |    |
  * |    |---------------|--------------|------------|-----------|----------|    |
  * |    | John          | Jill         | Staging    |    [ ]    |   [x]   /\    |
- * |    | Peter         | Jill         | Staging    |    [ ]    |   [_]   []    |
+ * |    | Peter         | Jill         | Complete   |    [ ]    |   [_]   []    |
  * |    | Samantha      | Samson       | Staging    |    [ ]    |   [_]   []    |
- * |    | John          | Jill         | Staging    |    [ ]    |   [x]   ||    |
- * |    | John          | Jill         | Staging    |    [ ]    |   [x]   ||    |
- * |    | John          | Jill         | Staging    |    [ ]    |   [_]   ||    |
+ * |    | John          | Jill         | Staging    |    [X]    |   [x]   ||    |
+ * |    | John          | Jill         | Bench      |    [ ]    |   [x]   ||    |
+ * |    | John          | Jill         | Training   |    [ ]    |   [_]   ||    |
  * |    | John          | Jill         | Staging    |    [ ]    |   [x]   ||    |
  * |    |_______________|______________|____________|___________|_________\/    |
  * |    |------------------------------------------------------------------|    |
  * |                                  ______________________________________    |        ______________________________________
- * |                    Set status:  |___________________________________\/_|   |       |___________________________________\/_| 
- * |                                                                            |       | -Training-                        /\ |
- * |                                                    ____________________    |       |    Training                       [] |
- * |    "Saved"?                                       [ "Close" | "Cancel" ]   |       |    Complete                       [] |
- * |                                                                            |       | -Staging-                         || |
- * |----------------------------------------------------------------------------/       |    Staging                        || |
- *                                                                                      |    Bench                          || |
- *                                                                                      |    Waiting for Paperwork          \/ |
- *                                                                                      |______________________________________|
+ * |  Set status of selected users:  |___________________________________\/_|   |       |___________________________________\/_| 
+ * |                                  ______________________________________    |       | -Training-                        /\ |
+ * |         Remove selected users:  [   color=red   text="Remove users"    ]   |       |    Training                       [] |
+ * |                                                                            |       |    Complete                       [] |
+ * |____________________________________________________________________________|       | -Staging-                         || |
+ * |                                                                            |       |    Staging                        || |
+ * |    "Saved"?                                    [ "Close" | "Cancel" ]      |       |    Bench                          || |
+ * |                                                                            |       |    Waiting for Paperwork          \/ |
+ * |----------------------------------------------------------------------------/       |______________________________________|
+ *                                                                                      
+ * NOTE: clicking the remove selected users button should mount a new modal
  * `
  */
-export class ManageCohortsModal extends React.Component<IManageCohortsModal, any> {
-    constructor(props:IManageCohortsModal) {
+export class ManageCohortsModal extends React.Component<IManageCohortsModalProps, any> {
+    constructor(props:IManageCohortsModalProps) {
         super(props);
     }
 
@@ -81,7 +47,6 @@ export class ManageCohortsModal extends React.Component<IManageCohortsModal, any
             <Modal isOpen = {true}>
                 <ModalHeader className="rev-background-color">Cohort info for {viewCohort.cohort.cohortName}</ModalHeader>
                 <ModalFooter id="manage-Cohort-modal-footer">
-
                 </ModalFooter>
 
            </Modal>

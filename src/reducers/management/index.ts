@@ -13,6 +13,7 @@ import { currentSMSUserReducer } from "./current-sms-user.reducer";
 import { manageCohortsReducer} from './manage-cohorts.reducer'
 import { ICohort } from "../../model/cohort";
 import { profileViewReducer } from "./profile-view.reducer";
+import { IStatus } from "../../model/status.model";
 
 
 export interface IAuthState {
@@ -53,7 +54,31 @@ export interface IAuthState {
   export interface ICurrentSMSUserState {
     currentSMSUser: IUser
   }
-
+export interface ICohortModalState {
+    /**
+     * The currently selected cohort
+     */
+    cohort: ICohort,
+    /**
+     * List of users in the cohort
+     * that are currently selected for
+     * changes
+     */
+    selectedUsers: IUser[],
+    /**
+     * The status that we would like to
+     * change all of the selected users to.
+     */
+    selectedStatus: IStatus;
+    /**
+     * Whether the modal is visible or not.
+     */
+    modalVisible: boolean;
+    /**
+     * Whether the modal is in the 'saved' state or not
+     */
+    isSaved: boolean;
+ }
 
   export interface IManageCohortsState {
     cohorts: ICohort[]
@@ -74,7 +99,8 @@ export interface IAuthState {
     manageCohorts: IManageCohortsState,
     addresses: IAddressState,
     currentSMSUser: ICurrentSMSUserState,
-    currentProfile: IProfileViewState
+    currentProfile: IProfileViewState,
+    viewCohort: ICohortModalState
   }
 
   export const managementState = combineReducers<IManagementState>({
