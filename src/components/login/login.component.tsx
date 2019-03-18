@@ -1,28 +1,14 @@
 import * as React from 'react';
 import { ILoginState } from '../../reducers/management';
-/* import {IState} from '../../reducers'
-import { connect } from 'react-redux';
-// import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPassword.component';
-// import * as userActions from '../../actions/user/user.actions';
-import { setup } from '../../actions/auth/auth.actions'; */
+import { RouteComponentProps} from 'react-router';
+import ResetPasswordComponent from '../resetPassword/reset-password.container';
 
-//import { Auth } from 'aws-amplify';
-import { RouteComponentProps, /* Route  */} from 'react-router';
-//import { cognitoClient } from '../../axios/sms-clients/cognito-client';
-//import { toast } from 'react-toastify';
-//import Popover from 'reactstrap/lib/Popover';
-//import PopoverHeader from 'reactstrap/lib/PopoverHeader';
-//import PopoverBody from 'reactstrap/lib/PopoverBody';
-
-interface ILoginProps extends  RouteComponentProps<{}> {
-  login: ILoginState
-  // confirmationPassword: string,
-  // newPassword: string,
-  // passwordNeedsReset,
-  // incorrectUserPass: boolean,
-  // verificationCode: string,
-  // needsVerificationCode: boolean,
-  // showPasswordTip: boolean
+interface ILoginProps extends RouteComponentProps<{}> {
+  login: ILoginState,
+  match: any,
+  location: any;
+  history: any;
+  staticContext?: any;
   updateUsername: (username: string) => void,
   updatePassword: (password: string) => void,
   // updateConfirmationPassword: (confirmationPassword: string) => void,
@@ -31,6 +17,7 @@ interface ILoginProps extends  RouteComponentProps<{}> {
   //submitLogin: () => void,
   loginRequest: (username: string, password: string, history) => void,
  // setup: () => void,
+ resetPassword: (username: string) => void,
 
 
 
@@ -44,38 +31,15 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
 
   constructor(props) {
     super(props);
-    /* this.state = {
-      cogUser: undefined,
-      confirmationPassword: '',
-      incorrectUserPass: false,
-      newPassword: '',
-      password: '',
-      passwordNeedsReset: false,
-      username: '',
-      verificationCode: '',
-      needsVerificationCode: false,
-      showPasswordTip: false
-     } */
   
   }
 
   updateUsername = (event) => {
-    /* const username = e.target.value;
-    this.setState({
-      ...this.state,
-      username
-
-    }) */
     event.preventDefault();
     this.props.updateUsername(event.target.value)
   }
 
   updatePassword = (event) => {
-    /* const password = e.target.value;
-    this.setState({
-      ...this.state,
-      password
-    }) */
     event.preventDefault();
     this.props.updatePassword(event.target.value);
   }
@@ -113,30 +77,6 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
     this.props.loginRequest(username, password,this.props.history);
   }
 
-  //loginRequest = (username: string, password: string) => {
-    /* try {
-      const user = await Auth.signIn({
-        password,
-        username, // Required, the username
-      })
-      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        this.setState({
-          ...this.state,
-          cogUser: user,
-          passwordNeedsReset: true,
-
-        });
-      } else {
-        this.props.setup();
-      }
-    } catch (err) {
-      console.log(err);
-      this.setState({
-        incorrectUserPass: true
-      })
-    } */
-  //  this.props.loginRequest(username, password)
-  //}
 
   /* submitPasswordReset = async (e: any) => {
     e.preventDefault();
@@ -169,7 +109,7 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
     }
   } */
 
-  /* resetPassword = async () => {
+   /* resetPassword = async () => {
     try {
       await cognitoClient.resetPassword(this.state.username);
       this.setState({
@@ -185,13 +125,13 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
         toast.error('Failed to Reset Password');
       }
     }
-  } */
-/* 
-  togglePasswordTip = () => {
-    this.setState({
-      showPasswordTip: !this.state.showPasswordTip
-    })
-  } */
+  }  */
+  resetPassword = (event) => {
+    event.preventDefault();
+    this.props.resetPassword(this.props.login.username);
+}
+ 
+
 
   render() {
     const username = this.props.login.username;
@@ -207,16 +147,21 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
               <input name="password" type="password" className="form-control txt-bx" id="login-pass" placeholder="Password" onChange={this.updatePassword} value={password} required />
 
               <button className="btn rev-btn" type="submit">Login</button>
-
             </form>
 
-           { /* {this.props.login.incorrectUserPass &&
+            {this.props.login.incorrectUserPass &&
               <h6 id="invalidCredHead">Invalid Credentials</h6>
-            } */}
+            } 
+            {this.props.login.passwordNeedsReset &&
+
+            <ResetPasswordComponent/>
+            }
+
           </>
         }
-       {/*  {this.props.login.passwordNeedsReset && */}
+            
           <>
+          
             {/* <h4 id="titleHead">Reset Password</h4>
             <form id="login-form" onSubmit={this.submitPasswordReset}>
               {this.props.needsVerificationCode &&
@@ -239,9 +184,9 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
             </form> */}
           </>
         
-        {/* <div className="row resetDiv">
+         <div className="row resetDiv">
           <button id="forgot-pass-btn" onClick={this.resetPassword}>Forgot Password</button>
-        </div> */}
+        </div> 
       </div>
     );
   }

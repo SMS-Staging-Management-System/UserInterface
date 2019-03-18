@@ -19,7 +19,7 @@ export const ProtectedRoute = ({ component: Component, auth, allowedRoles, ...re
           return <Component {...props} />;
         } else {
           return (
-            <LoginComponent {...props}/>
+            <LoginComponent {...props} />
           );
         }
       }}
@@ -27,3 +27,7 @@ export const ProtectedRoute = ({ component: Component, auth, allowedRoles, ...re
   );
 }
 export default connect(mapStateToProps)(ProtectedRoute);
+// Type '{ history: History<any>; location: Location<any>; match: match<any>; staticContext?: StaticContext | undefined; }'
+// is missing the following properties from type 'Readonly<Pick<ILoginProps, "confirmationPassword" | "newPassword" | "passwordNeedsReset" | "incorrectUserPass" | 
+// "verificationCode" | "needsVerificationCode" | "showPasswordTip" | "history" | "location" | "match" | "staticContext"> 
+// & ILoginState>': confirmationPassword, newPassword, passwordNeedsReset, incorrectUserPass, and 6 more.
