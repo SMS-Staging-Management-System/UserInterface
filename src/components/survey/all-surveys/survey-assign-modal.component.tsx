@@ -4,6 +4,7 @@ import { ICohort } from '../../../model/cohort';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { userClient } from '../../../axios/sms-clients/user-client';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
+// import createCohortModalContainer from '../../manage/create-cohort-modal/create-cohort-modal.container';
 
 
 interface IComponentProps {
@@ -15,7 +16,13 @@ interface IComponentState {
     cohorts: ICohort[],
     cohortIdsToAssign: number[],
     cohortsLoaded: boolean,
+    userArray: IUserCohortIdAndEmail[],
     modal: boolean
+}
+
+interface IUserCohortIdAndEmail {
+    id: number,
+    email: string
 }
 
 class SurveyModal extends React.Component<IComponentProps, IComponentState> {
@@ -25,12 +32,35 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
       modal: false,
       cohorts: [],
       cohortsLoaded: false,
+      userArray: [],
       cohortIdsToAssign: []
     };
   }
 
     componentDidMount() {
         this.loadAllCohorts();
+    }
+
+    loadAllUserEmails = async () => {
+        const { cohorts } = this.state;
+        const idAndEmailArray: IUserCohortIdAndEmail[] = [];
+        for (const cohort of cohorts) {
+            const users = await userClient.findAllByCohortId(cohort.cohortId);
+            for (const user of users.data) {
+                const idAndEmailObj: IUserCohortIdAndEmail = {
+                    id: cohort.cohortId,
+                    email: user.email
+                }
+                idAndEmailArray.push(idAndEmailObj);
+            }
+        }
+
+        this.setState({
+            userArray: idAndEmailArray
+        }, 
+            () => {
+                console.log(this.state.userArray);
+            });
     }
 
     loadAllCohorts = async () => {
@@ -41,7 +71,10 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             this.setState({
                 cohorts: cohorts.data,
                 cohortsLoaded: true
-            })
+            }, 
+                ()=>{
+                    this.loadAllUserEmails();
+                });
         }
     }
 
@@ -117,7 +150,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                   <tbody>
                     {this.state.cohorts.map(cohort => (
                         <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                            <td><input type="checkbox"  id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} /></td>
+                            <td>All: <input type="checkbox"  id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} /></td>
                             <td colSpan={5}>{cohort.cohortName}</td>
                             <td></td>
                             <td></td>
