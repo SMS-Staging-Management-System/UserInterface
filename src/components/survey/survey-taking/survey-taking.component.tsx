@@ -19,7 +19,7 @@ interface IComponentState {
     surveyLoaded: boolean,
     responses: any,
     newFeedback: any,
-    anonymousResponses: any,
+    anonymousResponses: boolean,
     redirectTo: any
 };
 
