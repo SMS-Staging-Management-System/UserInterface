@@ -41,7 +41,10 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         const selectedCohort = this.props.createInterviewComponentState.selectedCohort;
         const res = selectedCohort && await userClient.findAllByCohortId( selectedCohort.cohortId);        
         if(res && res.data){
-            this.props.setState({...this.props.createInterviewComponentState, associatesInSelectedCohort:res.data} )
+            this.props.setState({...this.props.createInterviewComponentState, 
+                associatesInSelectedCohort:res.data,
+                selectedAssociate: undefined,
+            } )
         }
         console.log("all associates in cohort");
         console.log(res);
@@ -80,15 +83,17 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
             <span>CREATE A NEW INTERVIEW FOR AN ASSOCIATE</span>
             <hr />
             <InputGroup>
-                <Input type='select' value={JSON.stringify(selectedCohort)} disabled={!allCohorts || allCohorts.length == 0}  onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setState({...state, selectedCohort: JSON.parse(e.target.value) }); this.fetchAssociatesInSelectedCohort();}} >
+                <Input type='select' value={JSON.stringify(selectedCohort)} disabled={!allCohorts || allCohorts.length == 0}  onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setState({...state, selectedCohort: JSON.parse(e.target.value), selectedAssociate: undefined }); this.fetchAssociatesInSelectedCohort();}} >
                     <option value={undefined} style={{display:'none'}}>select a cohort...</option>
                     {cohortOptions}
                 </Input>
-                <Input type='select' value={JSON.stringify(selectedAssociate)} disabled={!associatesInSelectedCohort || associatesInSelectedCohort.length == 0}  onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setState({...state, selectedAssociate: JSON.parse(e.target.value) });}} >
+                <Input type='select' value={selectedAssociate ? JSON.stringify(selectedAssociate) : ''} disabled={!associatesInSelectedCohort || associatesInSelectedCohort.length == 0}  onChange={(e: React.ChangeEvent<HTMLInputElement>)=>{setState({...state, selectedAssociate: JSON.parse(e.target.value) });}} >
                     <option value={undefined} style={{display:'none'}}>select a associate...</option>
                     {associateOptions}
                 </Input>
-                <Input placeholder="" value={selectedAssociate && `${selectedAssociate.firstName} ${selectedAssociate.lastName}`} />
+            </InputGroup>
+            <InputGroup>
+                <Input placeholder="" disabled={true} value={selectedAssociate ? `${selectedAssociate.firstName} ${selectedAssociate.lastName}` : ''} />
             </InputGroup>
             < br/>
             <InputGroup>
