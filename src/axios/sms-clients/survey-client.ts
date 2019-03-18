@@ -288,6 +288,6 @@ export const surveyClient = {
       "dateAssigned": new Date(),
       "dateCompleted": new Date()
     }
-    surveyContext.post(`${historyBaseRoute}/taken`, historyUpdate);
+    surveyContext.patch(`${historyBaseRoute}/taken`, historyUpdate);
   }
 }
