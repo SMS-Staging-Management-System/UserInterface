@@ -50,7 +50,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log(res);
     }
 
-    sendInputToDB = async() => {
+    sendInputToDB = async() => { 
         let { selectedAssociate, date: dateString, location, client} = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
         if(selectedAssociate && dateString && location && client ){
             const newInterviewData: INewInterviewData = {
