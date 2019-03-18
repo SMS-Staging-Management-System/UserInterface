@@ -8,7 +8,7 @@ export const userClient = {
     return smsClient.post(usersContext, newUser);
   },
   findAllByCohortId: (cohortId: number) => {
-    return smsClient.get(`${usersContext}/cohort/${cohortId}`)
+    return smsClient.get(`${usersContext}/cohorts/${cohortId}`)
   },
   findOneByEmail(email: string) {
     return smsClient.get(usersContext + `/email/${email}`);

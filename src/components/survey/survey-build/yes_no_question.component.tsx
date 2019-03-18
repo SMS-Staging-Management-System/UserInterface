@@ -35,7 +35,9 @@ export class YesNoMaybe extends React.Component<ISurveyBuildProps, any> {
       <div>
 
 
-        <button value="2" id="yn" className="form-control" name="type"  > Yes/No  </button>
+        {/* <button value="2" id="yn" className="form-control" name="type"  > Yes/No  </button> */}
+        <label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="yn" className="form-control" > Yes/No </label>
+
            <div className="new" id="t2">
 
             <input name="questionText" type="text" placeholder="Question Title (i.e. Do you like apples?) " style={{ width: '100%' }}   ></input>
