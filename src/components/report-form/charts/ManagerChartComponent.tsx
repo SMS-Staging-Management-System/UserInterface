@@ -38,7 +38,7 @@ componentDidMount()
 	this.props.chartAction(myChart);
 	console.log(myChart);
 	myChart.update();
-	setTimeout((() => {myChart.update();}),5000);
+	setInterval((() => {myChart.update();}),5000);
 }
 
 render() {

@@ -6,6 +6,8 @@ import { interviewFeedbackReducer } from './interviewFeedback.reducer';
 import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
+import { feedbackDeliveredChartReducer } from './feedbackdelivered';
+import { feedbackRequestedChartReducer } from './feedbackrequested';
 
 export interface IReportFormState {
     
@@ -70,6 +72,58 @@ export interface IAssociateChartState {
 }
 
 
+export interface IFeedbackRequestedChartState {
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+	canvas: any
+}
+
+
+export interface IFeedbackDeliveredChartState {
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+	canvas: any
+}
+
+
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
     selectedCohort: any | undefined,
@@ -91,6 +145,8 @@ export interface IInterviewState {
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
     managerChart: IManagerChartState,
     associateChart: IAssociateChartState,
+    feedbackRequestedChart: IFeedbackRequestedChartState,
+    feedbackDeliveredChart: IFeedbackDeliveredChartState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -100,4 +156,6 @@ export const interviewState = combineReducers<IInterviewState>({
    interviewFeedbackComponentState: interviewFeedbackReducer,
    managerChart: managerChartReducer,
    associateChart: associateChartReducer,
+   feedbackRequestedChart: feedbackRequestedChartReducer,
+   feedbackDeliveredChart: feedbackDeliveredChartReducer
 })

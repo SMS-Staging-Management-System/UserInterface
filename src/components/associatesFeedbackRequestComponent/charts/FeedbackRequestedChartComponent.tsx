@@ -1,45 +1,49 @@
 import React from 'react';
 import Chart from 'chart.js';
 
-interface IChartDisplayProps {
 
+interface IChartDisplayProps {
+chart:any,
+chartAction:any,
+setCanvas:any
 }
 
-export class FeedbackRequestedChartComponent extends React.Component<IChartDisplayProps, any> {
+export class FeedbackRequestedChartComponent extends React.Component<IChartDisplayProps, any> { //the first argument should be IReportFormProps
   canvasRef : any;
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
   }
 
-  componentDidMount() {
-    var ctx = this.canvasRef.current.getContext('2d');
-    let myChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        datasets: [{
-          data: [2, 2],         
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 255, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 255, 1)',
-          ],
-        }],
-        labels: [
-          'Feedback not requested',
-          'Feedback requested',
-        ],
-      },
-    });
-    if (!myChart) return;
-  }
 
-  render() {
+componentDidMount()
+{
+  var ctx = this.canvasRef.current.getContext('2d');
+  
+  //chart is a closure
+    let myChart = new Chart(ctx, {
+        ...this.props.chart,
+        type: 'doughnut',
+});
+if (!myChart) return;
+	
+  console.log(this.props.setCanvas);
+  console.log(this.props.chartAction);
+	this.props.chartAction(myChart);
+	this.props.setCanvas(myChart);
+	
+	setInterval((() => {myChart.update();}),5000);
+    // console.log(this.props.chartAction);
+	myChart.update();
+}
+
+render() {
+     
+
     return (
-      <canvas  ref={this.canvasRef}></canvas>
+    <canvas  ref={this.canvasRef}></canvas>
     )
   }
+ 
 }
+

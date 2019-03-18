@@ -32,7 +32,7 @@ if (!myChart) return;
 	this.props.chartAction(myChart);
 	this.props.setCanvas(myChart);
 	
-	setTimeout((() => {myChart.update();}),5000);
+	setInterval((() => {myChart.update();}),5000);
     // console.log(this.props.chartAction);
 	myChart.update();
 }

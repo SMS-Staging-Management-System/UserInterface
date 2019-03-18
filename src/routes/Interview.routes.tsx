@@ -1,5 +1,6 @@
 import React from 'react'
 import ReportForm from "../components/report-form/ReportFormComponent"
+import FeedbackReportForm from "../components/associatesFeedbackRequestComponent/ReportFormComponent"
 //import { AssociatesFeedbackRequest } from "../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component"
 import { Switch, Route } from 'react-router';
 import InterviewList from '../components/InterviewList/InterviewList';
@@ -7,6 +8,7 @@ import createInterviewComponent from '../components/creaInterviewComponent/creat
 import interviewFeedbackComponent from '../components/interviewFeedbackComponent/interviewFeedback.component';
 import AssociateInput from '../components/associate-input/associate-inputs.component';
 import { AssociatesFeedbackRequest } from '../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component';
+
 import { InterviewPerAssoc } from '../components/interviewsPerAssocComponent/interviewsPerAssocComponent.component';
 
 
@@ -22,6 +24,7 @@ export class InterviewRoutes extends React.Component<any, any> {
         return (
             <Switch>
                 <Route path={`${path}/reports`} component={ReportForm} />
+                <Route path={`${path}/report/feedback/charts`} component={FeedbackReportForm} />
                 <Route path={`${path}/report/AssociateInterviews`} component={InterviewPerAssoc} />
                 <Route path={`${path}/report/feedback`} component={AssociatesFeedbackRequest} />
                 <Route path={`${path}/report/AssociatesFeedbackRequest`}/>
