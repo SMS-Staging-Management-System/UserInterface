@@ -24,7 +24,7 @@ export class Rating extends React.Component<ISurveyBuildProps, any> {
 
     //   }
 
-  
+
 
 
     render() {
@@ -33,15 +33,17 @@ export class Rating extends React.Component<ISurveyBuildProps, any> {
 
             <div>
 
-                <button value="4" id="rating" className="form-control" name="type" >Rating  </button>
-                   <div className="new" id="t4">
+                {/* <button value="4" id="rating" className="form-control" name="type" >Rating  </button> */}
+                <label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="rating" className="form-control" > Rating </label>
 
-                        <input name="questionText" type="text" placeholder="Question Title (i.e. How likely are you to recommend our product to a friend? )" style={{ width: '100%' }}   ></input>
-                        <input name="answerText" value="1, 2, 3, 4, 5" readOnly hidden />
+                <div className="new" id="t4">
 
-                    </div>
-           
-                    <hr/>
+                    <input name="questionText" type="text" placeholder="Question Title (i.e. How likely are you to recommend our product to a friend? )" style={{ width: '100%' }}   ></input>
+                    <input name="answerText" value="1, 2, 3, 4, 5" readOnly hidden />
+
+                </div>
+
+                <hr />
 
             </div>
 

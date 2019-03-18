@@ -33,7 +33,8 @@ export class MultipleChoice extends React.Component<ISurveyBuildProps, any> {
     return (
 
       <div>
-        <button value="1" id="multi" className="form-control" name="type" type="button"   > Multiple Choice </button>
+        {/* <button value="1" id="multi" className="form-control" name="type" type="button"   > Multiple Choice </button> */}
+        <label htmlFor="" style={{ marginBottom: 0, textAlign:'center' }} id="multi" className="form-control" > Multiple Choice </label>
 
      
           <div className="new" id="t1">

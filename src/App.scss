@@ -255,7 +255,12 @@ body {
   }
 }
 
-
+.loader {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 100px;
+}
 
 /*****************************
   NAV
@@ -739,6 +744,36 @@ TEMPLATE MODAL
   color:#565D61;
   border: 1px solid black;
 }
+.createSurveyButton{
+  background-color: $revature-orange-light; 
+  color:black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
+}
+.createSurveyButton:hover,
+.createSurveyButton:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
+}
+.submitSurveyButton{
+  background-color: $revature-orange-light; 
+  color:black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
+}
+.submitSurveyButton:hover,
+.submitSurveyButton:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
+}
 .buttonEdit{
   border-radius: 10px;
   background-color: white;
@@ -795,7 +830,14 @@ Info Circle
   text-align: center;
   width: 100%;
 }
-
+.modalSuccessHeading{
+  height: 40px;
+  width: 100%;
+  background-color: $revature-orange-light;
+  color: white;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+}
 
 /***********************************
   Chart
@@ -851,4 +893,14 @@ Container
   border-radius: 0 0 10px 10px;
   padding: 15px;
   
+}
+/**************
+Alert
+**************/ 
+#alertSubmission{
+  width: auto;
+  text-align: center;
+  display: none;
+  border:  1px solid black;
+  color: black;
 }

@@ -6,6 +6,8 @@ import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { IResponse } from '../../../model/surveys/response.model';
+import Loader from '../Loader/Loader';
+import { IHistory } from '../../../model/surveys/history.model';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState,
@@ -75,40 +77,62 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
     };
 
     // Submits responses to the database
-    handleSubmitResponses = (event) => {
+    handleSubmitResponses = async (event) => {
         event.preventDefault();
-        for (let key in this.state.responses) {
-            const responseToSubmit: IResponse = {
-                "answerId": {
-                    "id": this.state.responses[key],
-                    "answer": '',
-                    "questionId": 0
-                },
-                "id": 0,
-                "surveyId": {
-                    "surveyId": this.state.survey.surveyId,
-                    "closingDate": new Date(),
-                    "dateCreated": new Date(),
-                    "description": '',
-                    "published": true,
-                    "template": true,
-                    "title": ''
-                },
-                "userEmailString": this.props.auth.currentUser.email
+        // Get all of the histories for the current user
+        const currentUserHistories = await surveyClient.findHistoriesByEmail(this.props.auth.currentUser.email);
+        let historiesForThisSurvey: IHistory[] = [];
+        // For each of the histories, check if they match the current survey and if they are not yet completed. If so, save them in an array
+        currentUserHistories.forEach(history => {
+            if ((history.surveyId === this.state.survey.surveyId) && (history.dateCompleted === null)) {
+                historiesForThisSurvey.push(history);
             }
-            surveyClient.saveResponse(responseToSubmit);
+        });
+        // If this user isn't assigned the survey, don't submit the responses, and redirect to /surveys
+        if (historiesForThisSurvey.length === 0) {
+            this.setState({
+                redirectTo: '/surveys'
+            })
         }
-        for (let key in this.state.newFeedback) {
-            const newAnswer: IAnswer = {
-                "id": 0,
-                "answer": this.state.newFeedback[key],
-                "questionId": parseInt(key)
+        // If the user is assigned the survey, update the history to mark it as complete, and submit the responses
+        else {
+            surveyClient.updateHistoryAsComplete(historiesForThisSurvey[0].historyId);
+            // Submit the Responses
+            for (let key in this.state.responses) {
+                const responseToSubmit: IResponse = {
+                    "answerId": {
+                        "id": this.state.responses[key],
+                        "answer": '',
+                        "questionId": 0
+                    },
+                    "id": 0,
+                    "surveyId": {
+                        "surveyId": this.state.survey.surveyId,
+                        "closingDate": new Date(),
+                        "dateCreated": new Date(),
+                        "description": '',
+                        "published": true,
+                        "template": true,
+                        "title": ''
+                    },
+                    "userEmailString": this.props.auth.currentUser.email
+                }
+                surveyClient.saveResponse(responseToSubmit);
             }
-            surveyClient.saveAnswer(newAnswer);
+            // Submit the feedback
+            for (let key in this.state.newFeedback) {
+                const newAnswer: IAnswer = {
+                    "id": 0,
+                    "answer": this.state.newFeedback[key],
+                    "questionId": parseInt(key)
+                }
+                surveyClient.saveAnswer(newAnswer);
+            }
+            // Redirect to the main page
+            this.setState({
+                redirectTo: '/surveys'
+            })
         }
-        this.setState({
-            redirectTo: '/surveys'
-        })
     };
 
     render() {
@@ -163,12 +187,12 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                                             </div>
                                         ))
                                     }
-                                    <button type="submit" className="btn btn-primary" onClick={this.handleSubmitResponses}>Submit</button>
+                                    <button type="submit" className="submitSurveyButton" onClick={this.handleSubmitResponses}>Submit</button>
                                 </form>
                             }
                         </>
                     ) : (
-                            <div>Loading...</div>
+                            <Loader />
                         )}
                 </div>
             </div >
