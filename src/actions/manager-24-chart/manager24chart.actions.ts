@@ -5,27 +5,23 @@ export const managerChartTypes = {
     SET_CANVAS :'SET_CANVAS',
 }
 
-
 export const setCanvasManager = (canvasRef) => async (dispatch) => {
- 
     dispatch({
         payload: {
             canvas: canvasRef
         },
         type: managerChartTypes.SET_CANVAS
     })
-
 }
+
 export const getInfoManager = (chartRef) => async (dispatch) => {
     const resp = await interviewClient.fetchManager24();
 
-    console.log(resp.data);
-    
     dispatch({
          payload : {             
 			 chartInfo : resp.data,
 			 canvas: chartRef
          },
          type: managerChartTypes.GET_INFO
-     })
+    })
 }

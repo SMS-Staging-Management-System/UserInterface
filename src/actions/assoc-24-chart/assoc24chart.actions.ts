@@ -5,17 +5,15 @@ export const associateChartTypes = {
     SET_CANVAS :'SET_CANVAS',
 }
 
-
 export const setCanvasAssociate = (canvasRef) => async (dispatch) => {
- 
     dispatch({
         payload: {
             canvas: canvasRef
         },
         type: associateChartTypes.SET_CANVAS
     })
-
 }
+
 export const getInfoAssociate = (chartRef) => async (dispatch) => {
     const resp = await interviewClient.fetchAssoc24();
 
@@ -25,5 +23,5 @@ export const getInfoAssociate = (chartRef) => async (dispatch) => {
 			 canvas: chartRef
          },
          type: associateChartTypes.GET_INFO
-     })
+    })
 }
