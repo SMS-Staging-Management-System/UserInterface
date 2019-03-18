@@ -1,6 +1,6 @@
 import React from 'react'
 import ReportForm from "../components/report-form/ReportFormComponent"
-import { AssociatesFeedbackRequest } from "../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component"
+//import { AssociatesFeedbackRequest } from "../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component"
 import { Switch, Route } from 'react-router';
 import InterviewList from '../components/InterviewList/InterviewList';
 import createInterviewComponent from '../components/creaInterviewComponent/createInterview.component';
@@ -28,7 +28,6 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/list`} component={InterviewList} />
                 {/* This is for Ben, please don't delete */}
                 {/* <Route path={`${path}/testing`} component={Testing} /> */}
-				<Route path={`${path}/arc`} component={AssociatesFeedbackRequest} />
                 <Route path={`${path}/associateInput`} component={AssociateInput} />
                 <Route path={`${path}/new`} component={createInterviewComponent} />
                 <Route path={`${path}/:interviewId/feedback`} component={ interviewFeedbackComponent} />
