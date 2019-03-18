@@ -568,6 +568,42 @@ color:#565D61;
     width: 100%;
 }
 
+
+
+/*****************
+User Dropdown
+*****************/
+
+.userDropdown {
+    // background-color: $revature-orange-light;
+    float: right;
+}
+
+.userDropdownBtn {
+    color: black;
+    border-radius: 10px;
+    background-color: $revature-orange-light;
+    height: 40px;
+    width: 100%;
+    border: none;
+}
+
+.userDropdownBtn:hover,
+.userDropdownBtn:active {
+    background-color: $revature-orange-light;
+    color:#565D61;
+}
+
+.userDropInput {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#userDropdownWidth {
+    width: 335px;
+}
+
+
 /*****************
 Drag and Drop
 *****************/ 
@@ -867,4 +903,10 @@ Alert
   display: none;
   border:  1px solid black;
   color: black;
+}
+/****************
+Fa Circle
+****************/ 
+.faCircle{
+  color: $revature-orange-light;
 }

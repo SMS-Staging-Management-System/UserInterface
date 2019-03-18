@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import RevLogo from '../../assets/rev-logo.png';
 import { IState, } from '../../reducers';
-import {IAuthState } from '../../reducers/management'
+import { IAuthState } from '../../reducers/management'
 import { connect } from 'react-redux';
 import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
@@ -45,11 +45,17 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
             <ul className="navbar-nav ml-auto margin-nav">
               {props.auth.currentUser.email
                 ? // if ther is a email show the nav elements 
+
                 <>
                   {
+                    this.props.auth.currentUser.roles.length === 0 ?
+                      <li className="nav-item active"><Link to="/surveys" className="unset-anchor nav-link">Surveys</Link></li> : null
+                  }
+                  {
+
                     this.props.auth.currentUser.roles.some(role => role === 'staging-manager' || role === 'admin' || role === 'trainer') &&
                     <>
-                    <li className="nav-item active">
+                      <li className="nav-item active">
                         <Link to="/surveys" className="unset-anchor nav-link">Surveys</Link>
                       </li>
                       <li className="nav-item active">
@@ -61,25 +67,22 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                       <li className="nav-item active">
                         <Link to="/interview/reports" className="unset-anchor nav-link">Reports</Link>
                       </li>
-                      
+
                     </>
                   }
                   <li className="nav-item active dropdown">
-                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt/>  {props.auth.currentUser.email}</a>
+                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt />  {props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
                       <Link to="/management/profile" className=" dropdown-item nav-dropdown">Profile</Link>
-                     
-                      {
-                        this.props.auth.currentUser.roles.length===0 ?
-                        <Link to="/surveys" className=" dropdown-item nav-dropdown">Assigned Surveys</Link>: null
-                      }
+
+
                       <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                     </div>
                   </li>
                 </>
                 : // if there is no email show login button
                 <li className="nav-item active">
-                  <Link to="/management/login" className="unset-anchor nav-link"><FaUserAlt/> Log In</Link>
+                  <Link to="/management/login" className="unset-anchor nav-link"><FaUserAlt /> Log In</Link>
                 </li>
               }
             </ul>
