@@ -114,7 +114,7 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                                 <td><Button className='assignSurveyBtn' onClick={() =>
                                                     this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
                                                 <td><Button className='assignSurveyBtn' onClick={() =>
-                                                    this.loadSurveyRespondents(survey.surveyId)}>Users</Button></td>
+                                                    this.loadSurveyRespondents(survey.surveyId)}>Status</Button></td>
                                             </tr>
                                         ))}
                                     </tbody>
