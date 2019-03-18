@@ -270,7 +270,6 @@ export const surveyClient = {
       });
     return histories;
   },
-
   assignSurveyByIdAndEmail(id: number, email: string) {
     const postObject = {
       "dateAssigned": new Date(),
@@ -280,5 +279,15 @@ export const surveyClient = {
       "userEmail": email
     }
     surveyContext.post(historyBaseRoute, postObject);
+  },
+  updateHistoryAsComplete(id: number) {
+    const historyUpdate = {
+      "historyId": id,
+      "surveyId": 0,
+      "userEmail": '',
+      "dateAssigned": new Date(),
+      "dateCompleted": new Date()
+    }
+    surveyContext.patch(`${historyBaseRoute}/taken`, historyUpdate);
   }
 }

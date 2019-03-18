@@ -6,6 +6,7 @@ import { ISurvey } from '../../../model/surveys/survey.model';
 import { connect } from 'react-redux';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
+import Loader from '../Loader/Loader';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState;
@@ -86,7 +87,7 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
                             <div>No Surveys to Display</div>
                         )
                 ) : (
-                        <div>Loading...</div>
+                        <Loader/>
                     )}
             </>
         );

@@ -9,6 +9,7 @@ import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
+import Loader from '../Loader/Loader';
 
 
 
@@ -285,7 +286,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                             <div>No Templates to Display</div>
                         )
                 ) : (
-                        <div>Loading...</div>
+                        <Loader/>
                     )}
                 <Modal show={this.state.showModal} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
@@ -328,7 +329,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
                                     </div>
                                 )) : (
-                                    <div>Loading...Please wait</div>
+                                    <Loader/>
                                 )}
 
                         </div>
