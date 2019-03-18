@@ -150,7 +150,21 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                   <tbody>
                     {this.state.cohorts.map(cohort => (
                         <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                            <td>All: <input type="checkbox"  id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} /></td>
+                            <td>All: <input type="checkbox"  id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} />
+                                <div className="dropdown userDropdown">
+                                    <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        By Member
+                                    </Button>
+                                    <div className="dropdown-menu" id="userDropdownWidth" aria-labelledby="dropdownMenu2">
+                                        {this.state.userArray.filter(user => {
+                                            return user.id === cohort.cohortId;
+                                        }).map(user => (
+                                            <p><input className="userDropInput" type="checkbox" checked/>{user.email}</p>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+                            </td>
                             <td colSpan={5}>{cohort.cohortName}</td>
                             <td></td>
                             <td></td>
