@@ -88,7 +88,12 @@ export const surveyClient = {
       for (const questionJunction of survey.questionJunctions) {
         await surveyContext.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
           .then(response => {
-            questionJunction.questionId.answerChoices = response.data;
+            let answerChoices = response.data;
+            // If it is a rating question, sort the ratings
+            if (questionJunction.typeId === 4) {
+              answerChoices.sort((a, b) => (a.answer > b.answer) ? 1 : -1);
+            }
+            questionJunction.questionId.answerChoices = answerChoices;
           })
           .catch(err => {
             console.log(err);
@@ -113,9 +118,11 @@ export const surveyClient = {
   findSurveyByIdWithResponses: async (id: number) => {
     // Get the Survey
     let survey = await surveyClient.findSurveyById(id);
+    console.log('findSurveyById survey:', survey);
 
     // Get the Responses
     const responseCount = await surveyClient.countResponses(id);
+    console.log('findSurveyById responseCount', responseCount);
 
     // Add the response count to each question
     survey.questionJunctions.forEach(question => {
@@ -129,9 +136,9 @@ export const surveyClient = {
         });
       }
     });
-
     return survey;
   },
+
   findSurveysAssignedToUser: async (email: String) => {
     let allSurveys: any[] = [];
     let myAssignedSurveys: any[] = [];
@@ -213,7 +220,6 @@ export const surveyClient = {
       surveyContext.post(answerBaseRoute, answer[index]);
     }
   },
-
 
   //----------------------//
   //-- Response Methods --//
