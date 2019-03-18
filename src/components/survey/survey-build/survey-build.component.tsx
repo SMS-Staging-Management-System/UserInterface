@@ -17,10 +17,10 @@ import { ISurvey } from '../../../model/surveys/survey.model';
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
-
 import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
+
 // import { IEditor } from '../../../model/editor.model';
 
 // import { ISurveyBuildState, ISurveyState } from '../../../reducers/survey';
@@ -45,6 +45,8 @@ class surveyBuild extends React.Component<IComponentProps, any>{
   constructor(props) {
     super(props);
     this.state = {
+      isSuccessfullySubmitted: false,
+      showModal: false,
       todos: [
         {
           questionID: 1, // make sure this questioID matches the id in the datatype for questiontype
@@ -179,7 +181,13 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
         case 'description':
           dummySurvey.description = frmData[index].value;
-          // console.log(dummySurvey.description);
+          if (dummySurvey.description != '' && dummySurvey.title != '') {
+            console.log('this is the description ',dummySurvey.description);
+            this.setState({
+              isSuccessfullySubmitted: true
+            })
+          }
+          console.log(dummySurvey.description);
           break;
 
         case 'questionText':
@@ -195,7 +203,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
           dummyAnswers.questionId = questionindex;//if not then use questionindex
           dummyAnswers.answer = frmData[index].value;
           dummyAnswerArray.push(dummyAnswers);
-          console.log('This is the quesion index: '+questionindex);
+          console.log('This is the quesion index: ' + questionindex);
           break;
         case 'template?':
           dummySurvey.template = true;
@@ -302,6 +310,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
       }
     }
+    this.handleShow();
   }
 
   testaxois = async (event) => {
@@ -312,6 +321,20 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     this.testaxois(event);
   }
 
+  handleShow = () => {
+    $('#alertSubmission').show();
+    setTimeout(function () {
+      $('#alertSubmission').hide();
+    }, 3000);
+    this.setState({
+      showModal: true
+    })
+  }
+  handleClose = () => {
+    this.setState({
+      showModal: false
+    })
+  }
   render() {
     const { todos, completedTasks } = this.state;
     return (
@@ -338,7 +361,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
                 <label htmlFor="title">Survey Title</label>
-                <input type="title" className="form-control" name="title" required /><br />
+                <input type="text" className="form-control" name="title" required /><br />
                 <input type="checkbox" name="template?" /> Is this a template?
 
      <br></br><br></br>
@@ -368,13 +391,13 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                     }
                   </div>
                 </div>
-                <br /><br /><button type="submit" className="btn btn-primary">Create Survey</button>
+                <br /><br /><button type="submit" className="btn btn-primary" >Create Survey</button>
 
               </div>
-
+              <div id="alertSubmission" className="alert alert-success" role="alert">
+                 Your survey has been successfully submitted!</div>
             </form>
-
-
+            
           </div>
         </div>
       </>

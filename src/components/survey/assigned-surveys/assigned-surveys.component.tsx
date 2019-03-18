@@ -38,6 +38,7 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
     }
 
     loadMyAssignedSurveys = async () => {
+        
         if (this.props.auth.currentUser.email) {
             const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
             this.setState({
