@@ -3,7 +3,9 @@ import Chart from 'chart.js';
 
 
 interface IChartDisplayProps {
-
+chart:any,
+chartAction:any,
+setCanvas:any
 }
 
 export class ManagerChartComponent extends React.Component<IChartDisplayProps, any> { //the first argument should be IReportFormProps
@@ -14,38 +16,29 @@ export class ManagerChartComponent extends React.Component<IChartDisplayProps, a
   }
 
 
+componentWillMount()
+{
 
+}
 
 componentDidMount()
 {
-  var ctx = this.canvasRef.current.getContext('2d');
-  var ctx = this.canvasRef.current.getContext('2d');
-  let myChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-          datasets: [{
-              data: [50, 20],
-                          // These labels appear in the legend and in the tooltips when hovering different arcs
-       
-          backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 255, 0.2)',
-          ],
-          borderColor: [
-              'rgba(255,99,132,1)',
-              'rgba(54, 162, 255, 1)',
-          ],
-          
-          }],
-      
-          labels: [
-            'Insufficient Notice',
-            'Sufficient Notice',
-          ],
 
-      },
+  var ctx = this.canvasRef.current.getContext('2d');
+  
+  //chart is a closure
+  let myChart = new Chart(ctx, {
+    ...this.props.chart,
+    type: 'doughnut',
 });
-if (!myChart) return;
+
+	if (!myChart) return;
+	//this.props.chartAction(myChart);
+	this.props.setCanvas(myChart);
+	this.props.chartAction(myChart);
+	console.log(myChart);
+	myChart.update();
+	setTimeout((() => {myChart.update();}),5000);
 }
 
 render() {
