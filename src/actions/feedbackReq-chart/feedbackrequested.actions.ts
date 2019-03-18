@@ -5,17 +5,15 @@ export const feedbackRequestedChartTypes = {
     SET_CANVAS :'SET_CANVAS',
 }
 
-
 export const setCanvasAssociate = (canvasRef) => async (dispatch) => {
- 
     dispatch({
         payload: {
             canvas: canvasRef
         },
         type: feedbackRequestedChartTypes.SET_CANVAS
     })
-
 }
+
 export const getInfoAssociate = (chartRef) => async (dispatch) => {
     const resp = await interviewClient.assocNeedFeedbackChart();
 
@@ -25,5 +23,5 @@ export const getInfoAssociate = (chartRef) => async (dispatch) => {
 			 canvas: chartRef
          },
          type: feedbackRequestedChartTypes.GET_INFO
-     })
+    })
 }
