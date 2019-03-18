@@ -391,7 +391,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                     }
                   </div>
                 </div>
-                <br /><br /><button type="submit" className="btn btn-primary" >Create Survey</button>
+                <br /><br /><button type="submit" className="createSurveyButton" >Create Survey</button>
 
               </div>
               <div id="alertSubmission" className="alert alert-success" role="alert">
