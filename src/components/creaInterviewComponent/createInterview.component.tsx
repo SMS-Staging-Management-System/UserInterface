@@ -13,7 +13,6 @@ import { INewInterviewData } from '../../model/INewInterviewData';
 import { ICreateInterviewComponentState } from '../../reducers/interview';
 import { cohortClient } from '../../axios/sms-clients/cohort-client';
 import { userClient } from '../../axios/sms-clients/user-client';
-import { store } from '../../Store';
 import { IState } from '../../reducers';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
 
@@ -26,12 +25,15 @@ interface ICreateInterviewComponentProps extends RouteComponentProps {
 class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps> {
 
     componentDidMount() {
-        cohortClient.getAll().then((res) => {
+        cohortClient.findAll().then((res) => {
             if(res.data){
                 this.props.setState({...this.props.createInterviewComponentState, allCohorts:res.data} )
             }
             console.log("all cohorts");
             console.log(res);
+        }).catch((e) => {
+            console.trace();
+            console.log(e);
         });
     }
 
@@ -46,19 +48,17 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
     }
 
     sendInputToDB = async() => {
-        const s = store.getState() as IState;
-        let managerEmail = s.managementState.auth.currentUser.email;
         let { selectedAssociate, date: dateString, location} = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
-        if(managerEmail && selectedAssociate && dateString ){
+        if(selectedAssociate && dateString && location ){
             const newInterviewData: INewInterviewData = {
-                managerEmail: managerEmail, 
-                associateId: selectedAssociate.userId,
+                associateEmail: selectedAssociate.email,
                 date: (new Date(dateString)).valueOf(),
                 location: location
             };
             interviewClient.addNewInterview(newInterviewData).then((res) => {
+                console.log('submitted')
                 console.log(res);
-            });
+            }).catch((e)=>{console.log('didnt submit successfully'), console.log(e)});
         }
     }
     

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
+import { Link } from 'react-router-dom';
+import Button from 'reactstrap/lib/Button';
 
 export interface InterviewListProps {
     listOfInterviews : any[],
@@ -35,6 +37,10 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         this.props.getInterviewPages(selected);
     }
 
+    // redirectToAssocInput() {
+    //     return ();
+    // }
+
     render() { 
         console.log(this.props.listOfInterviews)
         return ( 
@@ -42,23 +48,26 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 <Table>
                     <thead>
                         <tr>
-                            <th>Associate ID</th>
-                            <th>Manager ID</th>
+                            <th>Associate Email</th>
+                            <th>Manager Email</th>
                             <th>Location</th>
                             <th>Date Notified</th>
                             <th>Date Scheduled</th>
                             <th>Date Reviewed</th>
+                            <th>Associate Input</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.props.listOfInterviews.map((entry) => {
                             return (<tr>
-                                <td>{entry.associateId}</td>
-                                <td>{entry.managerId}</td>
+                                <td>{entry.associateEmail}</td>
+                                <td>{entry.managerEmail}</td>
                                 <td>{entry.place}</td>
                                 <td>{new Date(entry.notified).toDateString()}</td>
                                 <td>{new Date(entry.scheduled).toDateString()}</td>
                                 <td>{new Date(entry.reviewed).toDateString()}</td>
+                                <td>{entry.associateInput ? "Associate Input filled!" : <Button>
+                                    <Link to={{ pathname: '/interview/associateInput', state: { interviewId: entry.id } }} >Add Associate Input</Link></Button>}</td>
                             </tr>)
                         })}
                     </tbody>
