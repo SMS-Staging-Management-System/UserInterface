@@ -1,6 +1,5 @@
 import { smsClient } from ".";
 import { ICohort } from "../../model/cohort";
-//import { joinCohort } from "../../actions/join-cohort/join-cohort.actions";
 import { IUser } from "../../model/user.model";
 
 const cohortContext = '/cohorts'
@@ -14,5 +13,12 @@ export const cohortClient = {
   // },
   joinCohort(user:IUser, token:string){
     return smsClient.post(cohortContext + `/token/${token.toString()}`, user)
+  },
+  getAll: () => {
+    return smsClient.get(cohortContext + "/cohorts");
+  },
+
+  findAll() {
+    return smsClient.get(cohortContext)
   }
 }

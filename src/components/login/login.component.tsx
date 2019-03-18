@@ -20,7 +20,7 @@ interface IComponentState {
   password: string,
   confirmationPassword: string,
   newPassword: string,
-  passwordNeedsReset,
+  passwordNeedsReset: boolean,
   incorrectUserPass: boolean,
   verificationCode: string,
   needsVerificationCode: boolean,
@@ -28,7 +28,7 @@ interface IComponentState {
 }
 
 interface IComponentProps extends IAuthState, RouteComponentProps<{}> {
-  setup
+  setup: () => void
 }
 
 export class LoginComponent extends React.Component<IComponentProps, IComponentState> {

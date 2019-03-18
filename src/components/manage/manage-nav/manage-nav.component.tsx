@@ -14,7 +14,7 @@ interface IManageNavComponentProps extends RouteComponentProps{
 }
 
 export class ManageNavComponent extends React.Component<IManageNavComponentProps, any> {
-  constructor(props) {
+  constructor(props: IManageNavComponentProps) {
     super(props);
   }
 
@@ -22,7 +22,7 @@ export class ManageNavComponent extends React.Component<IManageNavComponentProps
   isActive = (routeName: string) => ((this.props.manage === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 
   render() {
-    let {path} = this.props.match
+    let path = '/management'
     return (
       <Navbar className="manage-users-nav" color="faded" light>
         <Nav tabs className="align-start">

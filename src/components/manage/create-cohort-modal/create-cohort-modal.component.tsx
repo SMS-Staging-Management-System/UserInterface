@@ -13,7 +13,7 @@ const inputNames = {
 }
 
 export class CreateCohortModal extends React.Component<ICreateCohortModal, any> {
-  constructor(props) {
+  constructor(props: ICreateCohortModal) {
     super(props);
   }
 
@@ -22,19 +22,20 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
     this.props.manageGetUsersByGroup('trainer');
   }
 
-  updateNewCohortInfo = (e) => {
+  updateNewCohortInfo = (e: React.FormEvent) => {
     let updatedNewCohort = this.props.createCohort.newCohort;
-    switch (e.target.name) {
+    const target = e.target as HTMLSelectElement;
+    switch (target.name) {
       case inputNames.DESCRIPTION:
         updatedNewCohort = {
           ...updatedNewCohort,
-          cohortDescription: e.target.value
+          cohortDescription: target.value
         }
         break;
       case inputNames.NAME:
         updatedNewCohort = {
           ...updatedNewCohort,
-          cohortName: e.target.value
+          cohortName: target.value
         }
         break;
       default:
@@ -44,7 +45,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
     console.log(updatedNewCohort);
   }
 
-  saveNewCohort = (e) => {
+  saveNewCohort = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('saving')
     this.props.saveCohort(this.props.createCohort.newCohort);

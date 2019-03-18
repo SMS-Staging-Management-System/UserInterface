@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
+import { FaUserAlt } from 'react-icons/fa';
 
 interface IProps extends RouteComponentProps<{}> {
   logout: () => void;
@@ -48,16 +49,22 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                   {
                     this.props.auth.currentUser.roles.some(role => role === 'staging-manager' || role === 'admin' || role === 'trainer') &&
                     <>
+                    <li className="nav-item active">
+                        <Link to="/surveys" className="unset-anchor nav-link">Surveys</Link>
+                      </li>
                       <li className="nav-item active">
                         <Link to="/checkins" className="unset-anchor nav-link">Checkins</Link>
                       </li>
                       <li className="nav-item active">
                         <Link to="/management/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
                       </li>
+                      <li className="nav-item active">
+                        <Link to="/interview/reports" className="unset-anchor nav-link">Reports</Link>
+                      </li>
                     </>
                   }
                   <li className="nav-item active dropdown">
-                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{props.auth.currentUser.email}</a>
+                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt/>  {props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
                       <Link to="/management/profile" className=" dropdown-item nav-dropdown">Profile</Link>
                       <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
@@ -66,7 +73,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                 </>
                 : // if there is no email show login button
                 <li className="nav-item active">
-                  <Link to="/management/login" className="unset-anchor nav-link">Log In</Link>
+                  <Link to="/management/login" className="unset-anchor nav-link"><FaUserAlt/> Log In</Link>
                 </li>
               }
             </ul>

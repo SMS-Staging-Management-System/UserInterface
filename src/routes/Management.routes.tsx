@@ -9,7 +9,7 @@ import  JoinCohortComponent from '../components/join-cohort/join-cohort.containe
 import profileContainer from '../components/profile/profile.container';
 
 export class ManagementRoutes extends React.Component<any, any> {
-    constructor(props){
+    constructor(props:any){
         super(props)
     }
 
@@ -26,9 +26,7 @@ export class ManagementRoutes extends React.Component<any, any> {
                 <Route component={HomeComponent} />
             </Switch>
 
-
         )
-
 
     }
 }

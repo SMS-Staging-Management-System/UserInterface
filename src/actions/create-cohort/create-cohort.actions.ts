@@ -48,7 +48,7 @@ export const updateNewCohortLocation = (location: IAddress) => {
   }
 }
 
-export const updateNewCohortTrainer = (trainer: ICognitoUser) => async (dispatch) => {
+export const updateNewCohortTrainer = (trainer: ICognitoUser) => async (dispatch: (action: any) => void) => {
   try {
     const response = await userClient.findOneByEmail(trainer.email)
     dispatch( {
@@ -77,7 +77,7 @@ export const updateNewCohort = (newCohort: ICohort) => {
 }
 
 
-export const saveCohort = (newCohort: ICohort) => (dispatch) => {
+export const saveCohort = (newCohort: ICohort) => (dispatch: (action: any)=> void) => {
   cohortClient.save(newCohort)
     .then(async resp => {
       toast.success('Cohort Created')
