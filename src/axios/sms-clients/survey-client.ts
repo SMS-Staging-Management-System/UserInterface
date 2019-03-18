@@ -237,6 +237,7 @@ export const surveyClient = {
 
   saveAnswer: (answer: IAnswer) => {
     answer.id = 0;
+    console.log('this is the asnwer ',answer);
     return surveyContext.post(answerBaseRoute, answer)
   },
 
@@ -280,6 +281,19 @@ export const surveyClient = {
     }
     surveyContext.post(historyBaseRoute, postObject);
   },
+
+  findHistoriesBySurveyId: async (id: number) => {
+    let histories;
+    await surveyContext.get(`${historyBaseRoute}/survey/${id}`)
+      .then(response => {
+        histories = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    return histories;
+  },
+
   updateHistoryAsComplete(id: number) {
     const historyUpdate = {
       "historyId": id,

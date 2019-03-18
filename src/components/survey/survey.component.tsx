@@ -7,6 +7,7 @@ import SurveyAnalyticsComponent from './survey-analytics/survey-analytics.compon
 import SurveyTakingComponent from './survey-taking/survey-taking.component';
 import AllSurveysComponent from './all-surveys/all-surveys.component';
 import TemplatesComponent from './templates/templates.component';
+import SurveyRespondentsComponent from './survey-respondents/survey-respondents.component';
 
 
 export class SurveyComponent extends React.Component<any, any> {
@@ -20,8 +21,7 @@ export class SurveyComponent extends React.Component<any, any> {
   }
 
   render() {
-    let { path } = this.props.match;
-    console.log(path);
+    let {path} = this.props.match;
     return (
       <div id="manage-users-container">
         <SurveyNavComponent
@@ -33,14 +33,14 @@ export class SurveyComponent extends React.Component<any, any> {
           match={this.props.match} />
         
         <Switch>
-          <Route exact path={`${path}`} component={AssignedSurveysComponent} />
-          <Route path={`${path}/assigned`} component={AssignedSurveysComponent} />
-          <Route path={`${path}/all-surveys`} component={AllSurveysComponent} />
-          <Route path={`${path}/build`} component={SurveyBuildComponent} />
-          <Route path={`${path}/templates`} component={TemplatesComponent} />
-          <Route path={`${path}/survey-data/:surveyId`} component={SurveyAnalyticsComponent} />
-          <Route path={`${path}/survey-taking/:surveyId`} component={SurveyTakingComponent} />
-         
+            <Route exact path={`${path}`} component={AssignedSurveysComponent} />
+            <Route path={`${path}/assigned`} component={AssignedSurveysComponent} />
+            <Route path={`${path}/all-surveys`} component={AllSurveysComponent} />
+            <Route path={`${path}/build`} component={SurveyBuildComponent} />
+            <Route path={`${path}/templates`} component={TemplatesComponent} />
+            <Route path={`${path}/survey-data/:surveyId`} component={SurveyAnalyticsComponent} />
+            <Route path={`${path}/survey-taking/:surveyId`} component={SurveyTakingComponent} />
+            <Route path={`${path}/respondents-data/:surveyId`} component={SurveyRespondentsComponent} />
         </Switch>
       </div>
     )

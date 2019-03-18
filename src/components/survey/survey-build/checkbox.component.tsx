@@ -34,7 +34,7 @@ export class CheckBox extends React.Component<ISurveyBuildProps, any> {
 
       <div>
         {/* <button value="6" id="checkbox" className="form-control" name="type"   > Checkboxes for Multiple Answers </button> */}
-        <label htmlFor="" id="checkbox" className="form-control" > Checkboxes for Multiple Answers </label>
+        <label htmlFor="" id="checkbox" style={{ marginBottom: 0, textAlign:'center' }} className="form-control" > Checkboxes for Multiple Answers </label>
 
         <div className="new" id="t6">
 
