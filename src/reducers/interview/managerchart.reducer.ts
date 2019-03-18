@@ -1,11 +1,9 @@
 import { IManagerChartState } from ".";
-import { managerChartTypes } from "../../actions/manager-24-chart/manager24chart.actions";
-
+import { managerChartTypes } from "../../actions/manager-24-chart/manager24chart.actions"
 const initialState : IManagerChartState = {
-    type: 'doughnut',
     data: {
         datasets: [{
-            data: [50, 20],
+            data: [0,0],
                         // These labels appear in the legend and in the tooltips when hovering different arcs
      
         backgroundColor: [
@@ -25,16 +23,36 @@ const initialState : IManagerChartState = {
         ],
 
     },
-    chartInfo:[6,4]
+	canvas: undefined,
+	
 }
 
 export const managerChartReducer = (state = initialState, action : any): IManagerChartState => {
     switch (action.type) {
         case managerChartTypes.GET_INFO:
+
+        //update the data according to api
+        if (action.payload.chartInfo)
+        {
+        //people who weren't sufficiently notified
+        state.data.datasets[0].data[0] = action.payload.chartInfo[0]-action.payload.chartInfo[1];
+        //people who were sufficiently notified
+        state.data.datasets[0].data[1] = action.payload.chartInfo[1];
+        }
+
+
+        console.log("Returned Chart Info " + action.payload.chartInfo);
+            return {
+                ...state
+            }
+		        case managerChartTypes.SET_CANVAS:
+
+			//set the canvas ref
             return {
                 ...state,
-                chartInfo: action.payload.chartInfo,
+				canvas: action.payload.canvas
             }
+				
         default:
             return state
     }
