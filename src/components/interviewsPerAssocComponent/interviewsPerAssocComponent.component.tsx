@@ -75,6 +75,7 @@ export class InterviewPerAssoc extends React.Component<any, any> {
             return (
                 <tr>
                     <td>{Assoc.AssociateName}</td>
+                    <td>{Assoc.associateEmail}</td>
                     <td>{Assoc.interviewCount}</td>
                 </tr>
             );
@@ -85,7 +86,8 @@ export class InterviewPerAssoc extends React.Component<any, any> {
                 <table>
                     <thead>
                         <tr>
-                            <th>Associate</th>
+                            <th>Associate Name</th>
+                            <th>Associate Email</th>
                             <th>Interviews</th>
                         </tr>
                     </thead>
