@@ -54,7 +54,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 associateEmail: selectedAssociate.email,
                 date: (new Date(dateString)).valueOf(),
                 location: location,
-                //client: client
+                client: client
             };
             interviewClient.addNewInterview(newInterviewData).then((res) => {
                 console.log('submitted')
