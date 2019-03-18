@@ -25,7 +25,6 @@ export class SurveyRespondentsComponent extends React.Component<any, any> {
             historyData: historyData,
             historyDataLoaded: true
         });
-        console.log("It should be true now ", this.state.historyDataLoaded);
     }
 
     render() {

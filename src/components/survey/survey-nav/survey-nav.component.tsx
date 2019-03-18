@@ -6,7 +6,6 @@ import { IAuthState } from '../../../reducers/management';
 import { connect } from 'react-redux';
 import { IState } from '../../../reducers';
 
-
 interface ISurveyNavComponentProps extends RouteComponentProps {
   updateSurveyTable: (group: string) => void,
   toggleCreateUserModal: () => void,
