@@ -34,7 +34,8 @@ export class FeedBack extends React.Component<ISurveyBuildProps, any> {
 
       <div>
 
-        <button value="5" id="feedback" className="form-control" name="type" >Feedback</button>
+        {/* <button value="5" id="feedback" className="form-control" name="type" >Feedback</button> */}
+        <label htmlFor="" style={{ marginBottom: 0, textAlign:'center' }} id="feedback" className="form-control" > Feedback </label>
 
           <div className="new" id="t5">
 
