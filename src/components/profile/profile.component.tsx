@@ -141,7 +141,7 @@ class Profile extends Component<IProfileProps, any> {
                   isOpen={this.props.locationDropdownActive}
                   toggle={this.props.toggleTrainingLocationsDropdown}>
                   <DropdownToggle caret>
-                    {userToView.trainingAddress.alias || 'Location'}
+                    {userToView.trainingAddress && userToView.trainingAddress.alias}
                   </DropdownToggle>
                   <DropdownMenu name={inputNames.TRAINING_ALIASES}>
                   {
