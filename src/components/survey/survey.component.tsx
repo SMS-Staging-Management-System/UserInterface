@@ -9,6 +9,7 @@ import AllSurveysComponent from './all-surveys/all-surveys.component';
 import TemplatesComponent from './templates/templates.component';
 import SurveyRespondentsComponent from './survey-respondents/survey-respondents.component';
 
+
 export class SurveyComponent extends React.Component<any, any> {
 
   constructor(props: any) {
@@ -27,10 +28,10 @@ export class SurveyComponent extends React.Component<any, any> {
           toggleCreateUserModal={this.props.toggleCreateUserModal}
           updateSurveyTable={this.updateSurveyTable}
           manage={this.props.match.params.manage}
-          history={this.props.history} 
+          history={this.props.history}
           location={this.props.location}
-          match={this.props.match}/>
-
+          match={this.props.match} />
+        
         <Switch>
             <Route exact path={`${path}`} component={AssignedSurveysComponent} />
             <Route path={`${path}/assigned`} component={AssignedSurveysComponent} />
@@ -42,7 +43,7 @@ export class SurveyComponent extends React.Component<any, any> {
             <Route path={`${path}/respondents-data/:surveyId`} component={SurveyRespondentsComponent} />
         </Switch>
       </div>
-    ) 
+    )
   }
 }
 

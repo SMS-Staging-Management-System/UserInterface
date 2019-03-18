@@ -4,7 +4,7 @@ import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
-import { FaInfoCircle } from 'react-icons/fa'
+import { FaInfoCircle, FaHandPointRight } from 'react-icons/fa'
 import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
@@ -28,13 +28,23 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         super(props);
         this.state = {
             templates: [],
-            survey: {},
             templatesLoaded: false,
+            newTitle: '',	
+            newDescription: '',
             showModal: false,
             surveyId: 0,
             surveyLoaded: false,
             openedTemplate: [],
-
+            dateCreated: Date.now(),	
+            survey: {	
+                surveyId: 0,	
+                title: '',	
+                description: '',	
+                dateCreated: new Date(),	
+                closingDate: null,	
+                template: false,	
+                published: true	
+            }
         }
 
     }
@@ -60,16 +70,30 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
     };
 
 
+    changeSurveyTitle = (event) => {	
+        this.setState({	
+            newTitle: event.target.value,	
+        })	
+        console.log('NEW TITLE ', this.state.newTitle);	
+    }	
+    changeSurveyDescription = (event) => {	
+        this.setState({	
+            newDescription: event.target.value,	
+        })	
+        console.log('NEW DESCRIPTION ', this.state.newDescription);	
+    }
 
-    handleShow = async (id) => {
+    handleShow = async (id: number, description: string) => {
         this.setState({
             showModal: true
         })
         const openedTemplate = await surveyClient.findSurveyById(id);
         this.setState({
             survey: openedTemplate,
-            //surveyId: id,
-            surveyLoaded: true
+            newTitle: openedTemplate.title,	            //surveyId: id,
+            surveyLoaded: true,	            
+            description: description	
+
 
         })
 
@@ -228,8 +252,9 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         // console.log('this.state', this.state);
         return (
             <Fragment>
+                
                 {this.state.templatesLoaded ? (
-                    this.state.templates ? (
+                    this.state.templates.length ? (
                         <Table striped id="manage-users-table" className="tableUsers">
                             <thead className="rev-background-color">
                                 <tr>
@@ -241,7 +266,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                             <tbody>
                                 {this.state.templates.map(template => (
                                     <tr key={template.surveyId} className="rev-table-row"
-                                        onClick={() => this.handleShow(template.surveyId)}>
+                                    onClick={() => this.handleShow(template.surveyId, template.description)}>
                                         <td>{template.title}</td>
                                         <td>{template.description}</td>
                                         <td>{template.dateCreated && new Date(template.dateCreated).toDateString()}</td>
@@ -249,13 +274,16 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
                                 ))}
                             </tbody>
+                            
                         </Table>
+                        
                     ) : (
                             <div>No Templates to Display</div>
                         )
                 ) : (
                         <Loader/>
                     )}
+                    
                 <Modal show={this.state.showModal} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>
@@ -263,8 +291,20 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                    <div ><FaHandPointRight /> <i><span className="noteDiv">Note that you can edit both the survey title and description</span></i></div>
                         <div className="modalHeading">
-                            <strong>Survey Title</strong>: {this.state.survey.title}</div>
+                        <strong>Survey Title</strong>:&nbsp;	                           
+                            <input type="text"	
+                                className="surveyName"	
+                                defaultValue={this.state.survey.title}	
+                                onChange={this.changeSurveyTitle} />&nbsp;	
+                            <strong>Description</strong>:&nbsp;	
+                                <input	
+                                type="text"	
+                                className="surveyDescription"	
+                                defaultValue={this.state.survey.description}	
+                                onChange={this.changeSurveyDescription} />	
+                        </div>
                         <div className="container" id="containerTemplate">
 
                             {this.state.surveyLoaded ?
@@ -290,14 +330,11 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                     <Loader/>
                                 )}
                         </div>
-                        
+                       
                     </Modal.Body>
                     <Modal.Footer>
-                        {/* <Button className="buttonEdit" onClick={() => this.handleClose()}>
-                            Edit</Button> */}
-                        <Button className="buttonCreate" onClick={() => this.handleCreateClose()}>
-                            Create
-            </Button>
+                    <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>	                        
+                        <Button className="buttonCreate" onClick={() => this.handleCreateClose()}>Create</Button>
                     </Modal.Footer>
                 </Modal>
 
