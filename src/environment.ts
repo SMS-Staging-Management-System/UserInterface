@@ -25,7 +25,7 @@ const prod = {
   surveyContext:      'http://ec2-18-224-20-187.us-east-2.compute.amazonaws.com:8092'
 };
 
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 
 export let environment = dev;
 

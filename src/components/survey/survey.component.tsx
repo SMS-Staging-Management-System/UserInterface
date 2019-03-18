@@ -21,7 +21,6 @@ export class SurveyComponent extends React.Component<any, any> {
 
   render() {
     let {path} = this.props.match;
-    console.log(path);
     return (
       <div id="manage-users-container">
         <SurveyNavComponent

@@ -36,7 +36,6 @@ class SurveyNavComponent extends React.Component<ISurveyNavComponentProps, any> 
 
   render() {
     let { path } = this.props.match
-     console.log(this.props.auth.currentUser);
     return (
       <Fragment>
         {
