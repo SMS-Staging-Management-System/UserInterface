@@ -112,6 +112,8 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     })
   }
 
+  
+
 
 
 
@@ -144,7 +146,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
     let dummyAnswerArray: IAnswer[] = [];
 
-    // console.log(frmData);
+    console.log('this is the frm Data ',frmData);
 
 
     let questionindex = 0;
@@ -193,7 +195,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
           dummyAnswers.questionId = questionindex;//if not then use questionindex
           dummyAnswers.answer = frmData[index].value;
           dummyAnswerArray.push(dummyAnswers);
-          console.log('This is the quesion index: '+questionindex);
+          // console.log('This is the quesion index: '+questionindex);
           break;
         case 'template?':
           dummySurvey.template = true;
@@ -246,7 +248,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       junctionTable.surveyId.surveyId = surveyId;
 
 
-
+// console.log('This is the Question ',dummyQuestionArray[index]);
       surveyClient.saveToQuestionJunction(junctionTable);
       //console.log(JSON.stringify(junctionTable));
     }
@@ -273,11 +275,11 @@ class surveyBuild extends React.Component<IComponentProps, any>{
         dummyAnswers.answer = choice
 
         //console.log("change outtttt the if statement "+ change)
-        console.log(change + " the change" + dummyAnswerArray[index].questionId + " questionid ")
+        // console.log(change + " the change" + dummyAnswerArray[index].questionId + " questionid ")
         // for (let j = 0; j < dummyAnswerArray.length; j++) {
         if (change != dummyAnswerArray[index].id) {
           //console.log("change in the if statement "+ change)
-          console.log("QUESTION ORDER CHANGED")
+          // console.log("QUESTION ORDER CHANGED")
 
           change = dummyAnswerArray[index].id;
           questionOrder++;
@@ -289,7 +291,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
         dummyAnswerArray[index].questionId = questionid[questionOrder];
         dummyAnswers.questionId = questionid[questionOrder];
         // console.log("ID IN THE LOOP "+ dummyAnswers.questionId)
-        console.log(JSON.stringify(dummyAnswers) + " MY ANSWERS")
+        // console.log(JSON.stringify(dummyAnswers) + " MY ANSWERS")
         surveyClient.saveAnswer(dummyAnswers);
         //        }
 
@@ -366,6 +368,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                   </div>
                 </div>
                 <br /><br /><button type="submit" className="btn btn-primary">Create Survey</button>
+
 
               </div>
 
