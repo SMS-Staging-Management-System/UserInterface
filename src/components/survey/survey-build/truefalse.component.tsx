@@ -1,19 +1,6 @@
 import React from 'react';
 
-
-
-
-export interface ISurveyBuildProps {
-  //   user: IUserState,
-  //   surveyTitle: string,
-  //   type: string,
-  //   errorMessage: string,
-  //   newSurvey: {},
-  //   handleSubmit(newSurvey: {}, userId: number): void
-}
-
-
-export class TrueFalse extends React.Component<ISurveyBuildProps, any> {
+export class TrueFalse extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -25,9 +12,6 @@ export class TrueFalse extends React.Component<ISurveyBuildProps, any> {
     return (
 
       <div>
-
-
-        {/* <button value="7" id="tf" className="form-control" name="type"  > True/False  </button> */}
         <label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="tf" className="form-control" > True/False </label>
 
         <div className="new" id="t7">
