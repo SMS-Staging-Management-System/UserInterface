@@ -19,6 +19,7 @@ interface IComponentState {
     surveyLoaded: boolean,
     responses: any,
     newFeedback: any,
+    anonymousResponses: boolean,
     redirectTo: any
 };
 
@@ -38,6 +39,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
             surveyLoaded: false,
             responses: [],
             newFeedback: [],
+            anonymousResponses: false,
             redirectTo: null
         };
     };
@@ -76,6 +78,16 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
         }));
     };
 
+    // Updates state when the user selects to have anonymous responses
+    handleAnonymousCheckbox = event => {
+        const { name, checked } = event.target;
+        this.setState(prevState => ({
+            ...prevState,
+            [name]: checked
+
+        }));
+    };
+
     // Submits responses to the database
     handleSubmitResponses = async (event) => {
         event.preventDefault();
@@ -96,7 +108,16 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
         }
         // If the user is assigned the survey, update the history to mark it as complete, and submit the responses
         else {
+            // Update the history item as complete
             surveyClient.updateHistoryAsComplete(historiesForThisSurvey[0].historyId);
+            let email;
+            // If the user checked the anonymous box, don't submit their email with the responses
+            if (this.state.anonymousResponses) {
+                email = '';
+            } else {
+                // Otherwise, grab their email from the auth
+                email = this.props.auth.currentUser.email;
+            }
             // Submit the Responses
             for (let key in this.state.responses) {
                 const responseToSubmit: IResponse = {
@@ -115,7 +136,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                         "template": true,
                         "title": ''
                     },
-                    "userEmailString": this.props.auth.currentUser.email
+                    "userEmailString": email
                 }
                 surveyClient.saveResponse(responseToSubmit);
             }
@@ -187,6 +208,17 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                                             </div>
                                         ))
                                     }
+                                    <div className="form-check">
+                                        <input
+                                            className="form-check-input position-static"
+                                            type="checkbox"
+                                            checked={this.state.anonymousResponses}
+                                            name="anonymousResponses"
+                                            onChange={this.handleAnonymousCheckbox} />
+                                        <label className="form-check-label" htmlFor="gridCheck">
+                                            Make my responses anonymous
+                                        </label>
+                                    </div>
                                     <button type="submit" className="submitSurveyButton" onClick={this.handleSubmitResponses}>Submit</button>
                                 </form>
                             }
