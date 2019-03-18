@@ -24,6 +24,9 @@ const initialState : IAssociateChartState = {
         ],
 
     },
+	canvas: undefined,
+
+	
 }
 
 export const associateChartReducer = (state = initialState, action : any): IAssociateChartState => {
@@ -37,13 +40,24 @@ export const associateChartReducer = (state = initialState, action : any): IAsso
             state.data.datasets[0].data[0] = action.payload.chartInfo[0]-action.payload.chartInfo[1];
             //people who were sufficiently notified
             state.data.datasets[0].data[1] = action.payload.chartInfo[1];
+
+			if (action.payload.canvas)
+			action.payload.canvas.update();
         }
 
-
+		
         console.log("Returned Chart Info " + action.payload.chartInfo);
             return {
                 ...state
             }
+        case associateChartTypes.SET_CANVAS:
+
+			//set the canvas ref
+            return {
+                ...state,
+				canvas: action.payload.canvas
+            }
+			
         default:
             return state
     }

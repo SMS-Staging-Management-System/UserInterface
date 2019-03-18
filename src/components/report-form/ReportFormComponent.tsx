@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../reducers';
 import { ChartComponent } from './charts/ChartComponent';
-import {getInfoAssociate} from '../../actions/assoc-24-chart/assoc24chart.actions';
-import {getInfoManager} from '../../actions/manager-24-chart/manager24chart.actions';
+import {setCanvasAssociate, getInfoAssociate} from '../../actions/assoc-24-chart/assoc24chart.actions';
+import {setCanvasManager, getInfoManager} from '../../actions/manager-24-chart/manager24chart.actions';
 
 interface IManagerChartProps
 {
@@ -153,7 +153,7 @@ export class ReportForm extends React.Component<any, any> {
         return ( 
         <React.Fragment>
              <h1>Interviews receiving 24 Hour Notice</h1>
-	<ChartComponent chart1 = {this.associateC} chart2 = {this.managerC} />
+	<ChartComponent chart1 = {this.associateC} chart2 = {this.managerC} chartAction1 = {getInfoAssociate} chartAction2 = {getInfoManager} canvas1 = {setCanvasAssociate} canvas2 = {setCanvasManager}/>
         </React.Fragment>
          );
     }
@@ -169,7 +169,9 @@ const mapStateToProps = (state: IState) => {
   
   const mapDispatchToProps = {
     getInfoAssociate,
-    getInfoManager
+    getInfoManager,
+	setCanvasAssociate,
+	setCanvasManager
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportForm);

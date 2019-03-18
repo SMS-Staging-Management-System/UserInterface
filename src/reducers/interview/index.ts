@@ -33,6 +33,7 @@ export interface IManagerChartState {
         ],
 
     },
+	canvas: any
 }
 
 export interface IInterviewFeedbackComponentState {
@@ -65,6 +66,7 @@ export interface IAssociateChartState {
         ],
 
     },
+	canvas: any
 }
 
 

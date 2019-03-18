@@ -4,6 +4,8 @@ import Chart from 'chart.js';
 
 interface IChartDisplayProps {
 chart:any,
+chartAction:any,
+setCanvas:any
 }
 
 export class ManagerChartComponent extends React.Component<IChartDisplayProps, any> { //the first argument should be IReportFormProps
@@ -32,9 +34,11 @@ componentDidMount()
 
 	if (!myChart) return;
 	//this.props.chartAction(myChart);
-	
+	this.props.setCanvas(myChart);
+	this.props.chartAction(myChart);
+	console.log(myChart);
 	myChart.update();
-
+	setTimeout((() => {myChart.update();}),5000);
 }
 
 render() {

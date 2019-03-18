@@ -3,8 +3,9 @@ import Chart from 'chart.js';
 
 
 interface IChartDisplayProps {
-chart:any
-
+chart:any,
+chartAction:any,
+setCanvas:any
 }
 
 export class AssociateChartComponent extends React.Component<IChartDisplayProps, any> { //the first argument should be IReportFormProps
@@ -25,9 +26,16 @@ componentDidMount()
         type: 'doughnut',
 });
 if (!myChart) return;
-	//this.props.chartAction(myChart);
-
+	
+  console.log(this.props.setCanvas);
+  console.log(this.props.chartAction);
+	this.props.chartAction(myChart);
+	this.props.setCanvas(myChart);
+	
+	setTimeout((() => {myChart.update();}),5000);
+    // console.log(this.props.chartAction);
 	myChart.update();
+	this.setState(null)
 }
 
 render() {

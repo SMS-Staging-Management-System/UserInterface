@@ -23,6 +23,8 @@ const initialState : IManagerChartState = {
         ],
 
     },
+	canvas: undefined,
+	
 }
 
 export const managerChartReducer = (state = initialState, action : any): IManagerChartState => {
@@ -43,6 +45,14 @@ export const managerChartReducer = (state = initialState, action : any): IManage
             return {
                 ...state
             }
+		        case managerChartTypes.SET_CANVAS:
+
+			//set the canvas ref
+            return {
+                ...state,
+				canvas: action.payload.canvas
+            }
+				
         default:
             return state
     }
