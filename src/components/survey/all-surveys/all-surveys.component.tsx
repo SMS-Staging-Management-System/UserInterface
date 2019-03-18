@@ -7,6 +7,7 @@ import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { connect } from 'react-redux';
+import Loader from '../Loader/Loader';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState;
@@ -38,6 +39,13 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
     handleLoadSurveyData = (surveyId: number) => {
         this.setState({
             redirectTo: `/surveys/survey-data/${surveyId}`
+        })
+    }
+
+    // When the user clicks a users button for a survey, redirect to the respondents page for that survey
+    loadSurveyRespondents = (surveyId: number) => {
+        this.setState({
+            redirectTo: `/surveys/respondents-data/${surveyId}`
         })
     }
 
@@ -89,9 +97,10 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                             <th>Description</th>
                                             <th>Date Created</th>
                                             <th>Closing Date</th>
-                                            <th>Template</th>
+                                            {/* <th>Template</th> */}
                                             <th>Published</th>
                                             <th>Analytics</th>
+                                            <th>Respondents</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -102,10 +111,12 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                                 <td>{survey.description}</td>
                                                 <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
                                                 <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
-                                                <td>{survey.template ? 'Yes' : 'No'}</td>
+                                                {/* <td>{survey.template ? 'Yes' : 'No'}</td> */}
                                                 <td>{survey.published ? 'Yes' : 'No'}</td>
                                                 <td><Button className='assignSurveyBtn' onClick={() =>
                                                     this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
+                                                <td><Button className='assignSurveyBtn' onClick={() =>
+                                                    this.loadSurveyRespondents(survey.surveyId)}>Users</Button></td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -121,7 +132,7 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                             )}
                     </Fragment>
                 ) : (
-                        <div>Loading...</div>
+                        <Loader/>
                     )}
             </>
         );
