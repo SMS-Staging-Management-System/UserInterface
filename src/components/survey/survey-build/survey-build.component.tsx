@@ -182,7 +182,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
         case 'description':
           dummySurvey.description = frmData[index].value;
           if (dummySurvey.description != '' && dummySurvey.title != '') {
-            console.log('this is the description ',dummySurvey.description);
+            console.log('this is the description ', dummySurvey.description);
             this.setState({
               isSuccessfullySubmitted: true
             })
@@ -337,6 +337,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
   }
   render() {
     const { todos, completedTasks } = this.state;
+    
     return (
       <>
         {/* Used for dragging */}
@@ -350,12 +351,13 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
               )
             }</div></div>
+            
 
 
 
 
         <div className="container" >
-
+        
           <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
 
             <form onSubmit={this.handleSubmit} >
@@ -368,7 +370,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                 <label htmlFor="description">Survey Description</label>
                 <textarea className="form-control" name="description" placeholder="Survey Description" required></textarea><br />
 
-
+               
 
 
                 <label htmlFor="type">Add Question Types</label><br />
@@ -391,13 +393,14 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                     }
                   </div>
                 </div>
+               
                 <br /><br /><button type="submit" className="createSurveyButton" >Create Survey</button>
 
               </div>
               <div id="alertSubmission" className="alert alert-success" role="alert">
-                 Your survey has been successfully submitted!</div>
+                Your survey has been successfully submitted!</div>
             </form>
-            
+           
           </div>
         </div>
       </>

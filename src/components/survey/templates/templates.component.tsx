@@ -260,6 +260,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         // console.log('this.state', this.state);
         return (
             <Fragment>
+                
                 {this.state.templatesLoaded ? (
                     this.state.templates.length ? (
                         <Table striped id="manage-users-table" className="tableUsers">
@@ -281,13 +282,16 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
                                 ))}
                             </tbody>
+                            
                         </Table>
+                        
                     ) : (
                             <div>No Templates to Display</div>
                         )
                 ) : (
                         <Loader/>
                     )}
+                    
                 <Modal show={this.state.showModal} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>
@@ -333,7 +337,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                 )}
 
                         </div>
-                        
+                       
                     </Modal.Body>
                     <Modal.Footer>
                         <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>
