@@ -7,6 +7,7 @@ import { ICognitoUser } from '../../model/cognito-user.model';
 import Amplify, { Auth } from 'aws-amplify';
 import { refreshJwt } from '../../axios/sms-clients';
 import { getUserByEmail } from '../current-sms-user/current-sms-user.actions';
+import { updateLocations } from '../address/address.actions';
 // import Axios from 'axios';
 
 Amplify.configure({
@@ -20,7 +21,7 @@ Amplify.configure({
 
 export const authTypes = {
   LOGOUT: 'LOGOUT',
-  UPDATE_CURRENT_USER: 'UPDATE_CURRENT_USER',
+  UPDATE_CURRENT_USER: 'UPDATE_CURRENT_USER'
 }
 
 export const cognitoLogin = (username: string, password: string, history: History) => (dispatch: (action: any) => void) => {
@@ -63,8 +64,9 @@ export const setup = () => (dispatch: ((action: any) => void)) => {
             roles: userAttributes['cognito:groups'] || [],
           }
           // Set redux cognito data
+          // TODO Refactor to a trigger LOGIN action
+          dispatch(updateLocations());
           dispatch(updateCurrentUser(currentUser));
-          console.log('calling to get user by emil')
           getUserByEmail(userAttributes.email)(dispatch);
         })
 
