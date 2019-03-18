@@ -8,6 +8,7 @@ import { createUserReducer } from "./create-user.reducer";
 import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
+<<<<<<< HEAD
 import { loginReducer } from "./login.reducer";
 
 export interface IAuthState {
@@ -82,3 +83,86 @@ export const managementState = combineReducers<IManagementState>({
   manageUsers: manageUsersReducer,
   login: loginReducer,
 })
+=======
+import { viewUserReducer } from "./view-user.reducer";
+import { currentSMSUserReducer } from "./current-sms-user.reducer";
+import { manageCohortsReducer} from './manage-cohorts.reducer'
+import { ICohort } from "../../model/cohort";
+import { profileViewReducer } from "./profile-view.reducer";
+
+
+export interface IAuthState {
+    currentUser: ICognitoUser
+  }
+  
+  export interface IClickerState {
+    clicks: number
+  }
+  
+  export interface ICreateUserState {
+    enabled: boolean,
+    newUser: IUser,
+    locationDropdownActive: false
+  }
+  
+  export interface IViewUserState {
+    enabled: boolean,
+    newUser: IUser
+  }
+
+  export interface ICreateCohortState {
+    enabled: boolean,
+    isSaved: boolean,
+    newCohort: ICohort,
+    locationDropdownActive: false,
+    trainerDropdownActive: false
+  }
+  
+  export interface IAddressState {
+    trainingAddresses: IAddress[]
+  }
+  
+  export interface IManageUsersState {
+    manageUsers: ICognitoUser[];
+  }
+
+  export interface ICurrentSMSUserState {
+    currentSMSUser: IUser
+  }
+
+
+  export interface IManageCohortsState {
+    cohorts: ICohort[]
+  }
+  export interface IProfileViewState {
+    user: IUser,
+    bUserInfoChanged: boolean,
+    locationDropdownActive: boolean
+  }
+
+  export interface IManagementState {
+    viewUser: IViewUserState;
+    clicker: IClickerState,
+    createUser: ICreateUserState,
+    createCohort: ICreateCohortState,
+    auth: IAuthState,
+    manageUsers: IManageUsersState,
+    manageCohorts: IManageCohortsState,
+    addresses: IAddressState,
+    currentSMSUser: ICurrentSMSUserState,
+    currentProfile: IProfileViewState
+  }
+
+  export const managementState = combineReducers<IManagementState>({
+    addresses: addressReducer,
+    auth: authReducer,
+    clicker: clickerReducer,
+    viewUser: viewUserReducer,
+    createUser: createUserReducer,
+    createCohort: createCohortReducer,
+    manageUsers: manageUsersReducer,
+    currentSMSUser: currentSMSUserReducer,
+    manageCohorts: manageCohortsReducer,
+    currentProfile: profileViewReducer,
+  })
+>>>>>>> be512af81b57dc0c0307296a81624dd642b5a07e

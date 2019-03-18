@@ -1,21 +1,35 @@
 import * as React from "react";
 import { Route } from 'react-router';
+<<<<<<< HEAD
 import { connect } from "react-redux";
 import LoginComponent from "../login/login.container";
+=======
+import { connect, ConnectedComponentClass } from "react-redux";
+import LoginComponent from "../login/login.component";
+>>>>>>> be512af81b57dc0c0307296a81624dd642b5a07e
 import { IState } from "../../reducers";
 
 
 const mapStateToProps = (state: IState) => ({ auth: state.managementState.auth });
 
+export interface IProtectedRouteProps {
+  component: ConnectedComponentClass<any, any>,
+  allowedRoles: string[],
+  auth: any,
+  path: any
+}
+
+
 /*
  *The protected route component
  */
-export const ProtectedRoute = ({ component: Component, auth, allowedRoles, ...rest }: any) => {
+export const ProtectedRoute = (props: IProtectedRouteProps) => {
+  const {component, auth, allowedRoles} = props;
+  const Component = component as any;
   return (
     <Route
-      {...rest}
       render={props => {
-        if (allowedRoles.some(allowedRole => auth.currentUser.roles.includes(allowedRole))) {
+        if (allowedRoles.some((allowedRole: string) => auth.currentUser.roles.includes(allowedRole))) {
           return <Component {...props} />;
         } else {
           return (

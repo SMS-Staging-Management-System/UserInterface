@@ -12,38 +12,40 @@ const inputNames = {
   NAME: 'NEW_COHORT_NAME',
 }
 
-
 export class CreateCohortModal extends React.Component<ICreateCohortModal, any> {
-  constructor(props) {
+  constructor(props: ICreateCohortModal) {
     super(props);
   }
 
   componentDidMount() {
     this.props.updateLocations();
+    this.props.manageGetUsersByGroup('trainer');
   }
 
-  updateNewCohortInfo = (e) => {
+  updateNewCohortInfo = (e: React.FormEvent) => {
     let updatedNewCohort = this.props.createCohort.newCohort;
-    switch (e.target.name) {
+    const target = e.target as HTMLSelectElement;
+    switch (target.name) {
       case inputNames.DESCRIPTION:
         updatedNewCohort = {
           ...updatedNewCohort,
-          cohortDescription: e.target.value
+          cohortDescription: target.value
         }
         break;
       case inputNames.NAME:
         updatedNewCohort = {
           ...updatedNewCohort,
-          cohortName: e.target.value
+          cohortName: target.value
         }
         break;
       default:
         break;
     }
     this.props.updateNewCohort(updatedNewCohort)
+    console.log(updatedNewCohort);
   }
 
-  saveNewCohort = (e) => {
+  saveNewCohort = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('saving')
     this.props.saveCohort(this.props.createCohort.newCohort);
@@ -53,9 +55,9 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
 
   render() {
 
-    const { createCohort, addresses } = this.props;
+    const { createCohort, addresses , manageUsers} = this.props;
     return (
-      <Modal isOpen={this.props.createCohort.enabled}>
+      <Modal isOpen={createCohort.enabled}>
         <form onSubmit={this.saveNewCohort}>
           <ModalHeader className="rev-background-color">Create Cohort</ModalHeader>
           <ModalBody>
@@ -98,10 +100,37 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, any> 
                 value={createCohort.newCohort.cohortDescription}
                 required />
             </div>
+            <div>
+            <Dropdown color="success" className="responsive-modal-row-item rev-btn"
+                isOpen={this.props.createCohort.trainerDropdownActive}
+                toggle={this.props.toggleTrainerDropdown}>
+                <DropdownToggle caret>
+                  {createCohort.newCohort.trainer.email || 'Trainer'}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {
+                    manageUsers.manageUsers.length === 0
+                      ? <>
+                        <DropdownItem>No trainers available</DropdownItem>
+                        <DropdownItem divider />
+                      </>
+                      : manageUsers.manageUsers.map(trainer =>
+                        <DropdownItem key={trainer.email} onClick={() => this.props.updateNewCohortTrainer(trainer)}>{trainer.email}</DropdownItem>
+                      )
+                  }
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+            <div>
+              { ((createCohort.isSaved && 'Token: ') || '') + ((createCohort.isSaved && createCohort.newCohort.cohortToken ) || '')} <br/>
+            </div>
           </ModalBody>
           <ModalFooter id="create-Cohort-modal-footer">
-            <Button type="submit" className="rev-btn">Save</Button>{' '}
-            <Button color="secondary" onClick={this.props.toggleModal}>Cancel</Button>
+            <div>{createCohort.isSaved &&'saved'}</div>
+            <Button type="submit" 
+              className="rev-btn" 
+              disabled = {createCohort.isSaved}>Save</Button>{' '}
+            <Button color="secondary" onClick={this.props.toggleModal}>{createCohort.isSaved?'Close': 'Cancel'}</Button>
           </ModalFooter>
         </form>
       </Modal >

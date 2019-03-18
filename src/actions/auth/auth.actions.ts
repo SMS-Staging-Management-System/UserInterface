@@ -6,6 +6,8 @@ import { ICognitoUser } from '../../model/cognito-user.model';
 // import { toast } from 'react-toastify';
 import Amplify, { Auth } from 'aws-amplify';
 import { refreshJwt } from '../../axios/sms-clients';
+import { getUserByEmail } from '../current-sms-user/current-sms-user.actions';
+import { updateLocations } from '../address/address.actions';
 // import Axios from 'axios';
 
 Amplify.configure({
@@ -19,10 +21,10 @@ Amplify.configure({
 
 export const authTypes = {
   LOGOUT: 'LOGOUT',
-  UPDATE_CURRENT_USER: 'UPDATE_CURRENT_USER',
+  UPDATE_CURRENT_USER: 'UPDATE_CURRENT_USER'
 }
 
-export const cognitoLogin = (username: string, password: string, history: History) => (dispatch) => {
+export const cognitoLogin = (username: string, password: string, history: History) => (dispatch: (action: any) => void) => {
 
   Auth.signIn({
     password, // Optional, the password
@@ -49,7 +51,7 @@ export const updateCurrentUser = (currentUser: ICognitoUser) => {
 /**
  * Get current login user info from the server
  */
-export const setup = () => (dispatch) => {
+export const setup = () => (dispatch: ((action: any) => void)) => {
   Auth.currentAuthenticatedUser()
     .then(user => {
       // initialize the jwt for axios
@@ -62,7 +64,10 @@ export const setup = () => (dispatch) => {
             roles: userAttributes['cognito:groups'] || [],
           }
           // Set redux cognito data
+          // TODO Refactor to a trigger LOGIN action
+          dispatch(updateLocations());
           dispatch(updateCurrentUser(currentUser));
+          getUserByEmail(userAttributes.email)(dispatch);
         })
 
       // create interval to refresh the jwt periodically

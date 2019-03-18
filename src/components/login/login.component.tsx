@@ -1,4 +1,5 @@
 import * as React from 'react';
+<<<<<<< HEAD
 import { ILoginState } from '../../reducers/management';
 import { RouteComponentProps} from 'react-router';
 import ResetPasswordComponent from '../resetPassword/reset-password.container';
@@ -24,6 +25,38 @@ interface ILoginProps extends RouteComponentProps<{}> {
 
 
 
+=======
+import {  IAuthState } from '../../reducers/management';
+import {IState} from '../../reducers'
+import { connect } from 'react-redux';
+// import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPassword.component';
+// import * as userActions from '../../actions/user/user.actions';
+import { setup } from '../../actions/auth/auth.actions';
+
+import { Auth } from 'aws-amplify';
+import { RouteComponentProps } from 'react-router';
+import { cognitoClient } from '../../axios/sms-clients/cognito-client';
+import { toast } from 'react-toastify';
+import Popover from 'reactstrap/lib/Popover';
+import PopoverHeader from 'reactstrap/lib/PopoverHeader';
+import PopoverBody from 'reactstrap/lib/PopoverBody';
+
+interface IComponentState {
+  cogUser: any,
+  username: string,
+  password: string,
+  confirmationPassword: string,
+  newPassword: string,
+  passwordNeedsReset: boolean,
+  incorrectUserPass: boolean,
+  verificationCode: string,
+  needsVerificationCode: boolean,
+  showPasswordTip: boolean
+}
+
+interface IComponentProps extends IAuthState, RouteComponentProps<{}> {
+  setup: () => void
+>>>>>>> be512af81b57dc0c0307296a81624dd642b5a07e
 }
 
 
@@ -78,8 +111,40 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
   }
 
 
+<<<<<<< HEAD
   /* submitPasswordReset = async (e: any) => {
+=======
+  private login = async (username: string, password: string) => {
+    try {
+      //what does cogUSer actually look like?
+      const user = await Auth.signIn({
+        password,
+        username, // Required, the username
+      })
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        this.setState({
+          ...this.state,
+          cogUser: user,
+          passwordNeedsReset: true,
+
+        });
+      } else {
+        //Should probably go somewhere else
+        this.props.history.push('/check-ins');
+        this.props.setup();
+      }
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        incorrectUserPass: true
+      })
+    }
+  }
+
+  public submitPasswordReset = async (e: any) => {
+>>>>>>> be512af81b57dc0c0307296a81624dd642b5a07e
     e.preventDefault();
+    //Make sure our two password fields are equal
     if (this.state.newPassword === this.state.confirmationPassword) {
       // You need to get the new password and required attributes from the UI inputs
       // and then trigger the following function with a button click
@@ -99,6 +164,7 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
             }
           );
           this.props.setup();
+          //Same as above, probably shouldn't go here anymore
           this.props.history.push('/check-ins');
         }
 
