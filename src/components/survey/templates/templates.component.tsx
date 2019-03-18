@@ -9,6 +9,7 @@ import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-
 import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
+import Loader from '../Loader/Loader';
 
 
 
@@ -120,22 +121,31 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         if (this.state.survey.title !== this.state.newTitle) {
             this.setState({
                 newTitle: this.state.newTitle,
-                showModal: false,
-                surveyId: 0,
-                description: this.state.newDescription,
-                dateCreated: this.state.dateCreated
+            })
+        }
+        else {
+            this.setState({
+                newTitle: this.state.survey.title,
+            })
+        }
+
+        if (this.state.survey.description !== this.state.newDescription) {
+            this.setState({
+                newDescription: this.state.newDescription
             })
         } else {
             this.setState({
-                showModal: false,
-                surveyId: 0,
-                newTitle: this.state.survey.title,
-                description: this.state.newDescription,
-                dateCreated: this.state.dateCreated
-                //redirectTo: `/surveys/build/${this.state.survey.surveyId}`
-
+                newDescription: this.state.survey.description
             })
+
         }
+        this.setState({
+            showModal: false,
+            surveyId: 0,
+            dateCreated: this.state.dateCreated
+        })
+
+
 
         // else {
         //     this.setState({
@@ -149,14 +159,14 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         let dummySurvey: ISurvey = {
             surveyId: 1,
             title: this.state.newTitle,
-            description: this.state.description,
+            description: this.state.newDescription,
             dateCreated: this.state.dateCreated,
             closingDate: this.state.survey.closingDate,
             template: false,
             published: true
         };
         for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
-
+            // console.log('THESE ARE THE QUESTION JUNCTIONS', this.state.survey.questionJunctions[i]);
             let dummyquestion: IQuestion | any = {
                 questionId: {
                     questionId: 0,
@@ -167,7 +177,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             dummyquestion.questionId.questionId = this.state.survey.questionJunctions[i].questionId.questionId;
             dummyquestion.questionId.typeId = this.state.survey.questionJunctions[i].questionId.typeId;
             dummyquestion.questionId.question = this.state.survey.questionJunctions[i].questionId.question;
-
+            // console.log(dummyquestion);
             for (let j = 0; j < this.state.survey.questionJunctions[i].questionId.answerChoices.length; j++) {
 
                 let dummyAnswers: IAnswer | any = {
@@ -178,6 +188,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                 dummyAnswers.id = this.state.survey.questionJunctions[i].questionId.answerChoices[j].id;
                 dummyAnswers.answer = this.state.survey.questionJunctions[i].questionId.answerChoices[j].answer;
                 dummyAnswers.questionId = this.state.survey.questionJunctions[i].questionId.answerChoices[j].questionId;
+                // console.log(dummyAnswers);
                 answers.push(dummyAnswers);
             }
             questions.push(dummyquestion);
@@ -200,7 +211,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             questionid.push(num);
 
             for (let j = 0; j < answers.length; j++) {
-                console.log('this is the answer id ', answers[j].questionId, 'this is a question ', questions[index])
+                // console.log('this is the answer id ', answers[j].questionId, 'this is a question ', questions[index])
                 if (answers[j].questionId === questions[index].questionId.questionId) {
                     answers[j].questionId = questionid[index];
                     surveyClient.saveAnswer(answers[j]);
@@ -210,21 +221,24 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         }
 
 
-        let junctionTable: IJunctionSurveyQuestion = {
 
-            id: 0,
-
-            questionId: {
-                questionId: 0,
-                question: 'string',
-                typeId: 0,
-            },
-            questionOrder: 0,
-
-            surveyId: dummySurvey,
-
-        }
         for (let index = 0; index < questions.length; index++) {
+            console.log('this is the Junction questions ', questions[index]);
+            let junctionTable: IJunctionSurveyQuestion = {
+
+                id: 0,
+
+                questionId: {
+                    questionId: 0,
+                    question: 'string',
+                    typeId: 0,
+                },
+                questionOrder: 0,
+
+                surveyId: dummySurvey,
+
+            }
+
             junctionTable.questionId.question = questions[index].questionId.question;
             junctionTable.questionId.questionId = questionid[index];
             junctionTable.questionId.typeId = questions[index].questionId.typeId;
@@ -232,7 +246,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             junctionTable.surveyId = dummySurvey;
             junctionTable.surveyId.surveyId = dummySurvey.surveyId;
             surveyClient.saveToQuestionJunction(junctionTable);
-            console.log(junctionTable);
+            // console.log(junctionTable);
         }
         // console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
     }
@@ -243,7 +257,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
-        console.log('this.state', this.state);
+        // console.log('this.state', this.state);
         return (
             <Fragment>
                 {this.state.templatesLoaded ? (
@@ -272,7 +286,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                             <div>No Templates to Display</div>
                         )
                 ) : (
-                        <div>Loading...</div>
+                        <Loader/>
                     )}
                 <Modal show={this.state.showModal} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
@@ -315,7 +329,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
                                     </div>
                                 )) : (
-                                    <div>Loading...Please wait</div>
+                                    <Loader/>
                                 )}
 
                         </div>

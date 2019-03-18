@@ -7,6 +7,7 @@ import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { connect } from 'react-redux';
+import Loader from '../Loader/Loader';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState;
@@ -131,7 +132,7 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                             )}
                     </Fragment>
                 ) : (
-                        <div>Loading...</div>
+                        <Loader/>
                     )}
             </>
         );

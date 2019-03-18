@@ -61,12 +61,18 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                       <li className="nav-item active">
                         <Link to="/interview/reports" className="unset-anchor nav-link">Reports</Link>
                       </li>
+                      
                     </>
                   }
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt/>  {props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
                       <Link to="/management/profile" className=" dropdown-item nav-dropdown">Profile</Link>
+                     
+                      {
+                        this.props.auth.currentUser.roles.length===0 ?
+                        <Link to="/surveys" className=" dropdown-item nav-dropdown">Assigned Surveys</Link>: null
+                      }
                       <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                     </div>
                   </li>
