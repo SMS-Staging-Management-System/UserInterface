@@ -7,6 +7,7 @@ import SurveyAnalyticsComponent from './survey-analytics/survey-analytics.compon
 import SurveyTakingComponent from './survey-taking/survey-taking.component';
 import AllSurveysComponent from './all-surveys/all-surveys.component';
 import TemplatesComponent from './templates/templates.component';
+import SurveyRespondentsComponent from './survey-respondents/survey-respondents.component';
 
 export class SurveyComponent extends React.Component<any, any> {
 
@@ -39,6 +40,7 @@ export class SurveyComponent extends React.Component<any, any> {
             <Route path={`${path}/templates`} component={TemplatesComponent} />
             <Route path={`${path}/survey-data/:surveyId`} component={SurveyAnalyticsComponent} />
             <Route path={`${path}/survey-taking/:surveyId`} component={SurveyTakingComponent} />
+            <Route path={`${path}/respondents-data/:surveyId`} component={SurveyRespondentsComponent} />
         </Switch>
       </div>
     ) 
