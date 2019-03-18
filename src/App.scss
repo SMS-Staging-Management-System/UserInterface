@@ -708,6 +708,36 @@ TEMPLATE MODAL
   color:#565D61;
   border: 1px solid black;
 }
+.createSurveyButton{
+  background-color: $revature-orange-light; 
+  color:black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
+}
+.createSurveyButton:hover,
+.createSurveyButton:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
+}
+.submitSurveyButton{
+  background-color: $revature-orange-light; 
+  color:black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
+}
+.submitSurveyButton:hover,
+.submitSurveyButton:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
+}
 .buttonEdit{
   border-radius: 10px;
   background-color: white;

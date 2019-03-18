@@ -333,6 +333,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                 )}
 
                         </div>
+                        
                     </Modal.Body>
                     <Modal.Footer>
                         <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>

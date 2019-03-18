@@ -187,7 +187,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                                             </div>
                                         ))
                                     }
-                                    <button type="submit" className="btn btn-primary" onClick={this.handleSubmitResponses}>Submit</button>
+                                    <button type="submit" className="submitSurveyButton" onClick={this.handleSubmitResponses}>Submit</button>
                                 </form>
                             }
                         </>
