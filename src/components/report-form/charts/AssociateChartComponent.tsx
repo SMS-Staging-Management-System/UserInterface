@@ -35,7 +35,6 @@ if (!myChart) return;
 	setTimeout((() => {myChart.update();}),5000);
     // console.log(this.props.chartAction);
 	myChart.update();
-	this.setState(null)
 }
 
 render() {
