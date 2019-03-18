@@ -6,6 +6,7 @@ import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { IResponse } from '../../../model/surveys/response.model';
+import Loader from '../Loader/Loader';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState,
@@ -106,6 +107,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
             }
             surveyClient.saveAnswer(newAnswer);
         }
+        // surveyClient.updateHistoryAsComplete()
         this.setState({
             redirectTo: '/surveys'
         })
@@ -168,7 +170,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                             }
                         </>
                     ) : (
-                            <div>Loading...</div>
+                            <Loader/>
                         )}
                 </div>
             </div >
