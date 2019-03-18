@@ -280,5 +280,17 @@ export const surveyClient = {
       "userEmail": email
     }
     surveyContext.post(historyBaseRoute, postObject);
+  },
+
+  findHistoriesBySurveyId: async (id: number) => {
+    let histories;
+    await surveyContext.get(`${historyBaseRoute}/survey/${id}`)
+      .then(response => {
+        histories = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    return histories;
   }
 }
