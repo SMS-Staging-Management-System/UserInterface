@@ -1,6 +1,5 @@
 import React from 'react'
 import ReportForm from "../components/report-form/ReportFormComponent"
-import { AssociatesFeedbackRequest } from "../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component"
 import { Switch, Route } from 'react-router';
 import InterviewList from '../components/InterviewList/InterviewList';
 import createInterviewComponent from '../components/creaInterviewComponent/createInterview.component';
