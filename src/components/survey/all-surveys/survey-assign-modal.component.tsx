@@ -17,6 +17,7 @@ interface IComponentState {
     cohortIdsToAssign: number[],
     cohortsLoaded: boolean,
     userArray: IUserCohortIdAndEmail[],
+    emailsToAssign: string[],
     modal: boolean
 }
 
@@ -33,7 +34,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
       cohorts: [],
       cohortsLoaded: false,
       userArray: [],
-      cohortIdsToAssign: []
+      cohortIdsToAssign: [],
+      emailsToAssign: []
     };
   }
 
@@ -90,11 +92,22 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             }
         }
 
-        for ( const surveyId of this.props.surveysToAssign) {
-            for ( const email of emailArray) {
-               surveyClient.assignSurveyByIdAndEmail(surveyId, email);
+        // for ( const surveyId of this.props.surveysToAssign) {
+        //     for ( const email of emailArray) {
+        //        surveyClient.assignSurveyByIdAndEmail(surveyId, email);
+        //     }
+        // }
+
+        this.setState({
+            emailsToAssign: emailArray
+        }, () => {
+            for ( const surveyId of this.props.surveysToAssign) {
+                for ( const email of this.state.emailsToAssign) {
+                surveyClient.assignSurveyByIdAndEmail(surveyId, email);
+                }
             }
         }
+        );
     
     }
 
@@ -110,11 +123,35 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }  else {
             if (this.state.cohortIdsToAssign.includes(id)) {
                 this.setState({
-                    cohortIdsToAssign: this.state.cohortIdsToAssign.filter((cohortId) => { 
-                        return cohortId !== id 
-                })});
+                    cohortIdsToAssign: this.state.cohortIdsToAssign.filter(cohortId => { 
+                        return cohortId !== id;
+                    })
+                });
             }
         }
+    }
+
+    checkUserFunc = (e) => {
+        const { id: email, checked } = e.target;
+        if (checked) {
+            if (!this.state.emailsToAssign.includes(email)) {
+                this.setState({
+                    emailsToAssign: [...this.state.emailsToAssign, email]
+                });
+            }
+        } else {
+            if (this.state.emailsToAssign.includes(email)) {
+                this.setState({
+                    emailsToAssign: this.state.emailsToAssign.filter(emailToAssign => {
+                        return emailToAssign !== email;
+                    })
+                });
+            }
+        }
+    }
+
+    componentDidUpdate() {
+        console.log(this.state.emailsToAssign);
     }
 
     postSurveyToCohort = () => {
@@ -159,7 +196,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                         {this.state.userArray.filter(user => {
                                             return user.id === cohort.cohortId;
                                         }).map(user => (
-                                            <p><input className="userDropInput" type="checkbox" checked/>{user.email}</p>
+                                            <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" onChange={e=>this.checkUserFunc(e)}/>{user.email}</p>
                                             )
                                         )}
                                     </div>
