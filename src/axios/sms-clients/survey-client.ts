@@ -235,10 +235,10 @@ export const surveyClient = {
   //-- Answer Methods --//
   //--------------------//
 
-  saveAnswer: (answer: IAnswer) => {
+  async saveAnswer (answer: IAnswer) {
     answer.id = 0;
-    console.log('this is the asnwer ',answer);
-    return surveyContext.post(answerBaseRoute, answer)
+   // console.log('this is the asnwer ',answer);
+    return await surveyContext.post(answerBaseRoute, answer)
   },
 
   saveAllAnswer(answer: IAnswer[]) {
