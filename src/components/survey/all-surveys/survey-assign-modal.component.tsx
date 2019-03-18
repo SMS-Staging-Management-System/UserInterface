@@ -84,23 +84,23 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     checkFunc = (e) => {
         const { checked } = e.target;
         const id = +e.target.id;
-        const emailArray:string[] = [];
+        let emailArray:string[] = [];
         const { emailsToAssign: emAssign } = this.state;
         if (checked) {
 
             this.state.userArray.filter(user => {
                 return user.id === id
             }).map(user => {
-                emailArray.push(user.email);
-                
-                
-            });
+                if (!this.state.emailsToAssign.includes(user.email)) {
+                    emailArray.push(user.email);
+                }
+                let el = document.getElementById(user.email) as HTMLInputElement;
+                if (el) { el.checked = true; }
+            }); 
 
             this.setState({
                 emailsToAssign: this.state.emailsToAssign.concat(emailArray)
-            })
-
-
+            });
 
         }  else {
 
@@ -108,6 +108,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 return user.id === id
             }).map(user => {
                 emailArray.push(user.email);
+                let el = document.getElementById(user.email) as HTMLInputElement;
+                if (el) { el.checked = false; }
             });
 
             this.setState({
@@ -140,6 +142,18 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                         return emailToAssign !== email;
                     })
                 });
+
+                
+                let cohortId = '';
+                for (const user of this.state.userArray) {
+                    if (user.email === email) {
+                        cohortId = user.id.toString();
+                    }
+                }
+                console.log(`cohortId`);
+                console.log(cohortId)
+                let el = document.getElementById(cohortId) as HTMLInputElement;
+                if (el) { el.checked = false; }
             }
         }
     }
@@ -192,7 +206,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                   <tbody>
                     {this.state.cohorts.map(cohort => (
                         <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                            <td>All: <input type="checkbox"  id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} />
+                            <td>All: <input type="checkbox" id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} />
                                 <div className="dropdown userDropdown">
                                     <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         By Member
