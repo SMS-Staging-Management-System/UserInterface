@@ -2,19 +2,19 @@ import { IInterviewFormat } from '../../model/Interview.format.model';
 
 const FORMATS: IInterviewFormat[] = [
     {
-        interviewFormatId: 1,
+        id: 1,
         formatDesc: 'On Site'
     },
     {
-        interviewFormatId: 2,
+        id: 2,
         formatDesc: 'In Person'
     },
     {
-        interviewFormatId: 3,
+        id: 3,
         formatDesc: 'Video Call'
     },
     {
-        interviewFormatId: 4,
+        id: 4,
         formatDesc: 'Phone Call'
     }
 ];

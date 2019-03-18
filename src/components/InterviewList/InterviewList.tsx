@@ -42,7 +42,6 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
     // }
 
     render() { 
-        console.log(this.props.listOfInterviews)
         return ( 
             <Jumbotron>
                 <Table>

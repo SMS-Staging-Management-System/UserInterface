@@ -6,6 +6,8 @@ import { interviewFeedbackReducer } from './interviewFeedback.reducer';
 import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
+import { assocInputReducer } from './assoc-input.reducer';
+import { IAssociateInput } from '../../model/Associateinput.model';
 
 export interface IReportFormState {
     
@@ -91,6 +93,7 @@ export interface IInterviewState {
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
     managerChart: IManagerChartState,
     associateChart: IAssociateChartState,
+    associateInput: IAssociateInput
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -100,4 +103,5 @@ export const interviewState = combineReducers<IInterviewState>({
    interviewFeedbackComponentState: interviewFeedbackReducer,
    managerChart: managerChartReducer,
    associateChart: associateChartReducer,
+   associateInput: assocInputReducer
 })

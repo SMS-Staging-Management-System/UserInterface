@@ -6,8 +6,6 @@ import * as actions from '../../actions/assoc-input/assoc-input.action';
 import { connect } from 'react-redux';
 import { getFormatNames } from './temp.util';
 import { IState } from '../../reducers';
-//import './radio.style.css';
-
 
 interface IProps {
     fields: IAssociateInput;
@@ -15,7 +13,7 @@ interface IProps {
     updateDescProvided: (value: string, id: number) => void;
     updateActualFormat: (value: string, id: number) => void;
     updateProposedFormat: (value: string, id: number) => void;
-    submitInput: (fields: IAssociateInput) => void;
+    submitInput: (interviewId: number, fields: IAssociateInput) => void;
     ownProps: any;
 }
 
@@ -65,7 +63,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
     drawRedirect = () => {
         if(this.state.redirect) {
-            return (<Redirect to='/interview' />);
+            return (<Redirect to='/interview/list' />);
         }
         return (<></>);
     };
@@ -81,15 +79,15 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
     render() {
         const {
+            fields,
             updateDayNotified,
             updateDescProvided,
             updateActualFormat,
-            updateProposedFormat
+            updateProposedFormat,
+            submitInput
         } = this.props;
         
-        // This is the interviewId from the previous page that you will need Ben.
         const {interviewId} = this.props.ownProps.location.state;
-        console.log(interviewId);
 
         return (
             <form id='assoc-questionaire'>
@@ -117,7 +115,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
                 }} onClick={e => { 
                     e.preventDefault();
                     if(this.validate()) {
-                        console.log(this.props.fields);
+                        submitInput(interviewId, fields);
                         this.toggleRedirect();
                     } else {
                         this.toggleError();
@@ -132,8 +130,8 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
 const mapStateToProps = (state: IState, ownProps) => {
     return {
-        ownProps: ownProps
-    //    fields: state.interviewState.associateInput
+        ownProps: ownProps,
+        fields: state.interviewState.associateInput
     };
 };
 
