@@ -254,14 +254,14 @@ class surveyBuild extends React.Component<IComponentProps, any>{
             questionOrder++;
 
           }
-
-
+       
+       //    console.log( dummyAnswers.answer+ "MY ANSWER")
           dummyAnswerArray[index].questionId = questionid[questionOrder];
           dummyAnswers.questionId = questionid[questionOrder];
           surveyClient.saveAnswer(dummyAnswers);
 
 
-
+      
 
         }
       }
