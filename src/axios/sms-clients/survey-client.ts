@@ -118,11 +118,9 @@ export const surveyClient = {
   findSurveyByIdWithResponses: async (id: number) => {
     // Get the Survey
     let survey = await surveyClient.findSurveyById(id);
-    console.log('findSurveyById survey:', survey);
 
     // Get the Responses
     const responseCount = await surveyClient.countResponses(id);
-    console.log('findSurveyById responseCount', responseCount);
 
     // Add the response count to each question
     survey.questionJunctions.forEach(question => {
