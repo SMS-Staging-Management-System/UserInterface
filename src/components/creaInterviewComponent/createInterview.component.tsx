@@ -48,12 +48,13 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
     }
 
     sendInputToDB = async() => {
-        let { selectedAssociate, date: dateString, location} = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
-        if(selectedAssociate && dateString && location ){
+        let { selectedAssociate, date: dateString, location, client} = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
+        if(selectedAssociate && dateString && location && client ){
             const newInterviewData: INewInterviewData = {
                 associateEmail: selectedAssociate.email,
                 date: (new Date(dateString)).valueOf(),
-                location: location
+                location: location,
+                //client: client
             };
             interviewClient.addNewInterview(newInterviewData).then((res) => {
                 console.log('submitted')
@@ -70,7 +71,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
     // private int managerId;
     const state = this.props.createInterviewComponentState;
     const setState = this.props.setState;
-    const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location} = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
+    const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location, client} = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
     const cohortOptions = allCohorts && allCohorts.map((val) => {return  <option value={JSON.stringify(val)}>{val.cohortName}</option>})
     const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val) => {return <option value={JSON.stringify(val)}>{`${val.firstName} ${val.lastName}`}</option> })
    
@@ -98,6 +99,11 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
             <InputGroup>
                 <InputGroupAddon addonType="prepend">location</InputGroupAddon>
                 <Input placeholder="enter location of interview" value={location} onChange={(e)=>{setState({...state, location: e.target.value })}} />
+            </InputGroup>
+            < br/>
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">client</InputGroupAddon>
+                <Input placeholder="enter client name" value={client} onChange={(e)=>{setState({...state, client: e.target.value })}} />
             </InputGroup>
             < br/>
             <Button color="secondary" size="lg" block onClick={this.sendInputToDB}>SUBMIT</Button>

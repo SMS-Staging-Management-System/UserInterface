@@ -131,6 +131,7 @@ export interface ICreateInterviewComponentState {
     selectedAssociate: any | undefined,
     date: string,
     location: string,
+    client: string,
 }
 
 export interface IInterviewListState {
