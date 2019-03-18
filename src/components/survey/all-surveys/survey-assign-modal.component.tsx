@@ -4,6 +4,7 @@ import { ICohort } from '../../../model/cohort';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { userClient } from '../../../axios/sms-clients/user-client';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
+// import Loader from '../Loader/Loader';
 // import createCohortModalContainer from '../../manage/create-cohort-modal/create-cohort-modal.container';
 
 
@@ -80,54 +81,47 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }
     }
 
-    loadCohortUsersToAssign = async () => {
-        const { cohortIdsToAssign : ids } = this.state;
-        const emailArray:string[] = [];
-        if (ids.length > 0) {
-            for (const id of ids) {
-                const users = await userClient.findAllByCohortId(id);
-                for (const user of users.data) {
-                    emailArray.push(user.email);
-                }
-            }
-        }
-
-        // for ( const surveyId of this.props.surveysToAssign) {
-        //     for ( const email of emailArray) {
-        //        surveyClient.assignSurveyByIdAndEmail(surveyId, email);
-        //     }
-        // }
-
-        this.setState({
-            emailsToAssign: emailArray
-        }, () => {
-            for ( const surveyId of this.props.surveysToAssign) {
-                for ( const email of this.state.emailsToAssign) {
-                surveyClient.assignSurveyByIdAndEmail(surveyId, email);
-                }
-            }
-        }
-        );
-    
-    }
-
     checkFunc = (e) => {
         const { checked } = e.target;
         const id = +e.target.id;
+        const emailArray:string[] = [];
+        const { emailsToAssign: emAssign } = this.state;
         if (checked) {
-            if (!this.state.cohortIdsToAssign.includes(id)) {
-                this.setState({
-                    cohortIdsToAssign: [...this.state.cohortIdsToAssign, id]
-                });
-            }
+
+            this.state.userArray.filter(user => {
+                return user.id === id
+            }).map(user => {
+                emailArray.push(user.email);
+                
+                
+            });
+
+            this.setState({
+                emailsToAssign: this.state.emailsToAssign.concat(emailArray)
+            })
+
+
+
         }  else {
-            if (this.state.cohortIdsToAssign.includes(id)) {
-                this.setState({
-                    cohortIdsToAssign: this.state.cohortIdsToAssign.filter(cohortId => { 
-                        return cohortId !== id;
-                    })
-                });
-            }
+
+            this.state.userArray.filter(user => {
+                return user.id === id
+            }).map(user => {
+                emailArray.push(user.email);
+            });
+
+            this.setState({
+                emailsToAssign: emAssign.filter(em => {
+                    let inArr:boolean = true;
+                    for (const email of emailArray) {
+                        if (em === email) {
+                            inArr = false;
+                        }
+                    }
+                    return inArr;
+                })
+            })
+
         }
     }
 
@@ -157,14 +151,25 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     postSurveyToCohort = () => {
         console.log(`survey ids: ${this.props.surveysToAssign}`);
         console.log(`cohort ids: ${this.state.cohortIdsToAssign}`);
-        this.loadCohortUsersToAssign();
+        // this.loadCohortUsersToAssign();
+
+        for ( const surveyId of this.props.surveysToAssign) {
+            for ( const email of this.state.emailsToAssign) {
+            surveyClient.assignSurveyByIdAndEmail(surveyId, email);
+            }
+        }
     }
 
   toggle = () => {
     this.setState(prevState => ({
-      modal: !prevState.modal
+      modal: !prevState.modal,
+      emailsToAssign: []
     }));
   }
+
+//   toggleDropdown = (i) => {
+
+//   }
 
   render() {
     return (
@@ -214,7 +219,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 <div className="buttonDiv">
                     <Button 
                         className='assignSurveyBtn' 
-                        onClick={()=>{this.postSurveyToCohort(); this.toggle()}
+                        onClick={()=>{this.postSurveyToCohort(); this.toggle(); }
                         }>Submit</Button>
                 </div>
           </ModalBody>
