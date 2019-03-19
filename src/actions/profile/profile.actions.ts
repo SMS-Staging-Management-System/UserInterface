@@ -81,9 +81,10 @@ export const updateUser = (userToUpdate: IUser) => async (dispatch: (action: any
     }
 }
 
-export const handleCheckboxChange = () => {
-    return {
+export const handleCheckboxChange = (status:IStatus) => (dispatch)=>{
+    dispatch({
         payload: {},
         type: profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX
-    }
+    });
+    dispatch(updateUserStatus(status))
 }

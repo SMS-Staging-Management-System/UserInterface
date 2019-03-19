@@ -27,7 +27,7 @@ export interface IProfileProps {
     toggleTrainingLocationsDropdown(): void
     updateUserStatus(status: IStatus): void
     toggleStatusDropdown(): void
-    handleCheckboxChange(): void
+    handleCheckboxChange(status:IStatus): void
   }
 
 const mapStateToProps = (state: IState) => ({
