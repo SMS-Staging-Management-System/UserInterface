@@ -296,7 +296,7 @@ class Profile extends Component<IProfileProps, any> {
             <Label>Virtual:</Label>
               <Input
                 type="checkbox"
-                checked={this.props.userToView.userStatus.virtual}
+                checked={this.props.userToView.userStatus && this.props.userToView.userStatus.virtual}
                 onChange={this.props.handleCheckboxChange}
                 />
                 
