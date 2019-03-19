@@ -15,10 +15,11 @@ export interface IProfileProps {
     currentSMSUser: IUser
     userToView: IUser
     trainingAddresses: IAddressState
-    currentStatus: IStatusState
+    allStatus: IStatusState
     locationDropdownActive: boolean
     statusDropdownActive: boolean
     bUserInfoChanged: boolean
+    virtual:boolean
     updateUserInfo(updatedUser: IUser): void
     setToCurrentSMSUser(currentSMSUser: IUser): void
     updateUser(userToUpdate: IUser): void
@@ -35,7 +36,8 @@ const mapStateToProps = (state: IState) => ({
     trainingAddresses: state.managementState.addresses,
     currentStatus: state.managementState.statuses,
     statusDropdownActive: state.managementState.currentProfile.statusDropdownActive,
-    bUserInfoChanged: state.managementState.currentProfile.bUserInfoChanged
+    bUserInfoChanged: state.managementState.currentProfile.bUserInfoChanged,
+    virtual: state.managementState.currentProfile.virtual
 })
 
 const mapDispatchToProps = {

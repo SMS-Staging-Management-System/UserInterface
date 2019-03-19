@@ -67,7 +67,7 @@ export const setup = () => (dispatch: ((action: any) => void)) => {
           // Set redux cognito data
           // TODO Refactor to a trigger LOGIN action
           dispatch(updateLocations());
-          dispatch(updateStatuses());
+          updateStatuses()(dispatch);
           dispatch(updateCurrentUser(currentUser));
           getUserByEmail(userAttributes.email)(dispatch);
         })
