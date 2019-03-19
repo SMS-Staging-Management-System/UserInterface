@@ -1,8 +1,4 @@
 import React from 'react';
-//import { Draggable, Droppable } from 'react-drag-and-drop'
-
-
-
 import $ from 'jquery'
 import { MultipleChoice } from './multiplechoice.component';
 import { YesNoMaybe } from './yes_no_question.component';
@@ -20,21 +16,6 @@ import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-
 import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
-
-// import { IEditor } from '../../../model/editor.model';
-
-// import { ISurveyBuildState, ISurveyState } from '../../../reducers/survey';
-// import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
-// import { connect } from 'react-redux';
-
-
-
-
-// export interface ISurveyBuildProps {
-//   surveyBuild: ISurveyBuildState,
-//   CreatSurvey: (survey: ISurvey) => void,
-
-// }
 
 interface IComponentProps extends RouteComponentProps<{}> {
   auth: IAuthState,
@@ -101,7 +82,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
     this.setState({
       completedTasks: [...completedTasks, draggedTask],
-      // todos: todos.filter(task => task.questionID !== draggedTask.questionID),
       draggedTask: {},
     })
   }
@@ -123,9 +103,11 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    //if no question are in the drag on drop block then skip creation of survey
     if (this.state.completedTasks.length > 0) {
 
       let frmData = $(":input").serializeArray();
+      //frm data takes in too much data so splice until only title is received
       frmData.splice(0, 13);
 
       let dummySurvey: ISurvey = {
@@ -137,15 +119,15 @@ class surveyBuild extends React.Component<IComponentProps, any>{
         template: false,
         published: true
       };
-
       let dummyQuestionArray: IQuestion[] = [];
-
       let dummyAnswerArray: IAnswer[] = [];
+      //beacuse there was a bug of sending data to the api(answers were out of order) 
+      //we had to create another answer array that carried all of the parsed answers
+      let parsedAnswers : IAnswer[] = [];
 
-      console.log('this is the frm Data ', frmData);
+      let questionindex = 0;// used for connecting answers to their temp question index
 
-
-      let questionindex = 0;
+      //loop through all the data from the survey
       for (let index = 0; index < frmData.length; index++) {
 
         let dummyquestion: IQuestion = {
@@ -161,6 +143,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
           questionId: 0
         }
 
+        //switch between the types of data from the survey
         switch (frmData[index].name) {
           case 'title':
             dummySurvey.title = frmData[index].value;
@@ -175,10 +158,9 @@ class surveyBuild extends React.Component<IComponentProps, any>{
             dummyquestion.questionId.typeId = this.state.completedTasks[questionindex].questionID;
             dummyquestion.questionId.question = frmData[index].value;
             dummyQuestionArray.push(dummyquestion);
-            questionindex += 1
+            questionindex += 1//update the group of answers to this question
             break;
           case 'answerText':
-          console.log('im the asnwer text');
             dummyAnswers.id = questionindex;
             dummyAnswers.questionId = questionindex;//if not then use questionindex
             dummyAnswers.answer = frmData[index].value;
@@ -193,29 +175,28 @@ class surveyBuild extends React.Component<IComponentProps, any>{
             break;
         }
       }
+
       let junctionTable: IJunctionSurveyQuestion = {
-
         id: 0,
-
         questionId: {
           questionId: 0,
           question: 'string',
           typeId: 0,
         },
         questionOrder: 0,
-
         surveyId: dummySurvey,
-
       }
 
-      console.log('Im the aNSWER ', dummyAnswerArray);
-
       let surveyId = await surveyClient.saveSurvey(dummySurvey);
-      let questionid = new Array;
+      let questionid = new Array; // used to connect the answers to the database question id
 
-
+        //loop through the question array that was filled during the frmdata loop
       for (let index = 0; index < dummyQuestionArray.length; index++) {
+        //grab the questions id from the database
+        //and push the id into the questionid array
         let num = await surveyClient.saveQuestion(dummyQuestionArray[index]);
+        //beacuase feedback question has no answer we need to skip the question
+        //in order to keep the correct structor 
         if (dummyQuestionArray[index].questionId.typeId != 5) {
           questionid.push(num);
         }
@@ -230,13 +211,14 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
         surveyClient.saveToQuestionJunction(junctionTable);
       }
-      let change = dummyAnswerArray[0].id;//keep a temp variable to check if the surveys answer questionid changes
+
+      let change = dummyAnswerArray[0].id;//keep a temp variable to check if the answer block is connected to its question
       let questionOrder = 0;
 
       for (let index = 0; index < dummyAnswerArray.length; index++) {
 
-        let match = dummyAnswerArray[index].answer.split(",")
-        for (let a in match) {
+        let match = dummyAnswerArray[index].answer.split(",")//splits the answer choices by comma
+        for (let a in match) {//gets each individual answer and creates an answer model to be submitted to the database
 
 
           let dummyAnswers: IAnswer = {
@@ -248,6 +230,8 @@ class surveyBuild extends React.Component<IComponentProps, any>{
           let choice = match[a]
           dummyAnswers.answer = choice
 
+          //if the answer block has reached a new question
+          //update to the next answer block
           if (change != dummyAnswerArray[index].id) {
 
             change = dummyAnswerArray[index].id;
@@ -255,21 +239,21 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
           }
        
-       //    console.log( dummyAnswers.answer+ "MY ANSWER")
           dummyAnswerArray[index].questionId = questionid[questionOrder];
           dummyAnswers.questionId = questionid[questionOrder];
-          surveyClient.saveAnswer(dummyAnswers);
-
-
-      
-
+          
+          parsedAnswers.push(dummyAnswers);
         }
+      }
+
+      for (let index = 0; index < parsedAnswers.length; index++) {
+        await surveyClient.saveAnswer(parsedAnswers[index]);
       }
     }
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
     }
-    this.handleShow();
+    this.handleShow();//user styleing for creating a survey
   }
 
   testaxois = async (event) => {

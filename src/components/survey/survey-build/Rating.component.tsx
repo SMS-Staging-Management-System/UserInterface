@@ -1,31 +1,10 @@
 import React from 'react';
 
-
-
-
-export interface ISurveyBuildProps {
-    //   user: IUserState,
-    //   surveyTitle: string,
-    //   type: string,
-    //   errorMessage: string,
-    //   newSurvey: {},
-    //   handleSubmit(newSurvey: {}, userId: number): void
-}
-
-
-export class Rating extends React.Component<ISurveyBuildProps, any> {
+export class Rating extends React.Component<any, any> {
     constructor(props) {
         super(props);
 
     }
-
-
-    //   handleChange = (event) => { 
-
-    //   }
-
-
-
 
     render() {
 
@@ -33,7 +12,6 @@ export class Rating extends React.Component<ISurveyBuildProps, any> {
 
             <div>
 
-                {/* <button value="4" id="rating" className="form-control" name="type" >Rating  </button> */}
                 <label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="rating" className="form-control" > Rating </label>
 
                 <div className="new" id="t4">

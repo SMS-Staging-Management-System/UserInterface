@@ -1,39 +1,16 @@
 import React from 'react';
 
-
-
-
-export interface ISurveyBuildProps {
-  //   user: IUserState,
-  //   surveyTitle: string,
-  //   type: string,
-  //   errorMessage: string,
-  //   newSurvey: {},
-  //   handleSubmit(newSurvey: {}, userId: number): void
-}
-
-
-export class CheckBox extends React.Component<ISurveyBuildProps, any> {
+export class CheckBox extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
-
-
   }
-
-
-  //   handleChange = (event) => { 
-
-  //   }
-
-
 
   render() {
 
     return (
 
       <div>
-        {/* <button value="6" id="checkbox" className="form-control" name="type"   > Checkboxes for Multiple Answers </button> */}
         <label htmlFor="" id="checkbox" style={{ marginBottom: 0, textAlign:'center' }} className="form-control" > Checkboxes for Multiple Answers </label>
 
         <div className="new" id="t6">
