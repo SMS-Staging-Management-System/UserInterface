@@ -109,6 +109,10 @@ class Profile extends Component<IProfileProps, any> {
     this.props.updateUserTrainingLocation(location)
   }
 
+  // onStatusChangeHandler = (status: IStatus) => {
+  //   this.props.updateUserStatus(status)
+  // }
+
   onSubmitHandler = (event: FormEvent) => {
     event.preventDefault();
     if (this.props.bUserInfoChanged) {
@@ -120,9 +124,9 @@ class Profile extends Component<IProfileProps, any> {
     this.props.toggleTrainingLocationsDropdown();
   }
 
-  handleCheckboxChange = (status) =>{
-  this.props.updateUserStatus(status.virtual);
-  }
+  // handleCheckboxChange = (status) =>{
+  // this.props.updateUserStatus(status.virtual);
+  // }
   render() {
     const {userToView, trainingAddresses, currentStatus} = this.props;
     // const Checkbox = props => (
@@ -262,7 +266,7 @@ class Profile extends Component<IProfileProps, any> {
                             : currentStatus.userStatus.map(status =>
                             <DropdownItem 
                             key={status.statusId}
-                            onClick={() => this.props.updateUserStatus(status)} >{currentStatus.userStatus}</DropdownItem>
+                            onClick={() => this.props.updateUserStatus(status)} >{status.specificStatus}</DropdownItem>
                             )
                         } 
                         </DropdownMenu>
