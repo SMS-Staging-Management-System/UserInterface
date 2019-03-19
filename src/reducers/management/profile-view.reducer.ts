@@ -37,7 +37,8 @@ const initialState: IProfileViewState = {
     },
     bUserInfoChanged: false,
     locationDropdownActive: false,
-    statusDropdownActive: false
+    statusDropdownActive: false,
+    virtual: false
 }
 
 export const profileViewReducer = (state = initialState, action: any) => {

@@ -5,7 +5,7 @@ import { statusTypes } from '../../actions/status/status.actions';
 
 const initialState: IStatusState = {
     userStatus: [],
-    virtual: false
+    
 }
 
 export const statusReducer = (state = initialState, action: any): IStatusState => {
