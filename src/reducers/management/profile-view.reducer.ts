@@ -37,7 +37,7 @@ const initialState: IProfileViewState = {
     },
     bUserInfoChanged: false,
     locationDropdownActive: false,
-    statusDropdownActive: false
+    statusDropdownActive: false,
 }
 
 export const profileViewReducer = (state = initialState, action: any) => {
@@ -84,6 +84,11 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 ...state,
                 statusDropdownActive: !state.statusDropdownActive,
                 bUserInfoChanged: true
+            }
+        case profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX:
+            return {
+                ...state,
+
             }
     }
     return state;
