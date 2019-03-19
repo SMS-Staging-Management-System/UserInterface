@@ -10,6 +10,7 @@ import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
 import { viewUserReducer } from "./view-user.reducer";
 import { currentSMSUserReducer } from "./current-sms-user.reducer";
+import { joinCohortReducer } from "./join-cohort.reducer";
 import { manageCohortsReducer} from './manage-cohorts.reducer'
 import { ICohort } from "../../model/cohort";
 import { profileViewReducer } from "./profile-view.reducer";
@@ -55,6 +56,12 @@ export interface IAuthState {
   }
 
 
+  export interface IJoinCohortState {
+    validToken:boolean,
+    userToJoin:IUser
+  }
+
+
   export interface IManageCohortsState {
     cohorts: ICohort[]
   }
@@ -74,6 +81,7 @@ export interface IAuthState {
     manageCohorts: IManageCohortsState,
     addresses: IAddressState,
     currentSMSUser: ICurrentSMSUserState,
+    joinCohort: IJoinCohortState
     currentProfile: IProfileViewState
   }
 
@@ -86,6 +94,7 @@ export interface IAuthState {
     createCohort: createCohortReducer,
     manageUsers: manageUsersReducer,
     currentSMSUser: currentSMSUserReducer,
-    manageCohorts: manageCohortsReducer,
+    joinCohort: joinCohortReducer,
     currentProfile: profileViewReducer,
+    manageCohorts: manageCohortsReducer,
   })

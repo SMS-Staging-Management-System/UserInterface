@@ -16,6 +16,8 @@ export interface IManageComponentProps extends RouteComponentProps<{manage: stri
   toggleViewUserModal: () => void,
 }
 
+
+
 const mapStateToProps = (state:IState) => ({
   manageUsers: state.managementState.manageUsers
 });

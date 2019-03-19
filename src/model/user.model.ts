@@ -9,6 +9,6 @@ export interface IUser {
   phoneNumber:     string;
   trainingAddress:    IAddress;
   personalAddress:    IAddress;
-  status:     IStatus
+  userStatus:     IStatus
   roles: string[];
 }
