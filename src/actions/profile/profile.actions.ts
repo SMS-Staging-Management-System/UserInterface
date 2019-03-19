@@ -2,7 +2,11 @@ import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { toast } from "react-toastify";
+
 import { IStatus } from "../../model/status.model";
+
+import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
+
 
 export const profileTypes = {
     UPDATE_USER_TRAINING_LOCATION: 'PROFILE_UPDATE_USER_TRAINING_LOCATION',
@@ -58,6 +62,7 @@ export const toggleTrainingLocationsDropdown = () => {
     }
 }
 
+
 export const toggleStatusDropdown = () => {
     return {
         payload: {},
@@ -65,10 +70,11 @@ export const toggleStatusDropdown = () => {
     }
 }
 
-export const updateUser = (userToUpdate: IUser) => async (dispatch: (action: any) => void) => {
+
+export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean) => async (dispatch: (action: any) => void) => {
+
     try {
         const resp = await userClient.updateSMSUserInfo(userToUpdate);
-        console.log(resp.data);
         toast.success('Info updated successfully');
         dispatch ({
             payload: {
@@ -76,6 +82,9 @@ export const updateUser = (userToUpdate: IUser) => async (dispatch: (action: any
             },
             type: profileTypes.USER_UPDATE_SUCCESSFUL
         })
+        if (bIsCurrentUser) {
+            dispatch(updateCurrentSMSUser(resp.data));
+        }
     } catch (error) {
         toast.error('Failed to update');
     }

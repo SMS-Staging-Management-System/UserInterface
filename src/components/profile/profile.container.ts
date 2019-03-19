@@ -22,7 +22,7 @@ export interface IProfileProps {
     virtual:boolean
     updateUserInfo(updatedUser: IUser): void
     setToCurrentSMSUser(currentSMSUser: IUser): void
-    updateUser(userToUpdate: IUser): void
+    updateUser(userToUpdate: IUser, bIsCurrentUser: boolean): void
     updateUserTrainingLocation(location: IAddress): void
     toggleTrainingLocationsDropdown(): void
     updateUserStatus(status: IStatus): void

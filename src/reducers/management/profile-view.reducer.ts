@@ -15,7 +15,7 @@ const initialState: IProfileViewState = {
             alias: '',
             city: '',
             state: '',
-            country: '',
+            country: 'United States',
             zip: ''
         },
         trainingAddress: {
