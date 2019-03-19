@@ -125,9 +125,9 @@ class Profile extends Component<IProfileProps, any> {
   }
   render() {
     const {userToView, trainingAddresses, currentStatus} = this.props;
-    const Checkbox = props => (
-      <input type="checkbox" {...props} />
-    )
+    // const Checkbox = props => (
+    //   <input type="checkbox" {...props} />
+    // )
     return (
       <Container>
         <Form onSubmit={(event) => this.onSubmitHandler(event)}>
@@ -250,7 +250,7 @@ class Profile extends Component<IProfileProps, any> {
                     isOpen={this.props.statusDropdownActive}
                     toggle={this.props.toggleStatusDropdown}>
                     <DropdownToggle caret>
-                        {userToView.status && userToView.status.genericStatus && userToView.status.specificStatus || 'No Status'}
+                        {userToView.userStatus && userToView.userStatus.generalStatus && userToView.userStatus.specificStatus || 'No Status'}
                     </DropdownToggle>
                     <DropdownMenu name={inputNames.STATUS_ALIASES}>
                         {
@@ -269,16 +269,17 @@ class Profile extends Component<IProfileProps, any> {
                     </Dropdown> 
                 </Col>
             </Col>
-            <Col md={4}>
+            {/* <Col md={4}>
             <Label>Virtual:</Label>
                 <Label>
                 <Checkbox
-            checked={this.props.userToView.status.virtual}
+            checked={this.props.userToView.userStatus.virtual}
             onChange={this.handleCheckboxChange}
           />
                 </Label>
-            </Col>
+            </Col> */}
         </Row>  
+        <br/>
         <Button>Update</Button>
       </Form>
       </Container>
