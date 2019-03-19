@@ -8,60 +8,57 @@ import { createUserReducer } from "./create-user.reducer";
 import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
-<<<<<<< HEAD
 import { loginReducer } from "./login.reducer";
+import { viewUserReducer } from "./view-user.reducer";
+import { currentSMSUserReducer } from "./current-sms-user.reducer";
+import { manageCohortsReducer } from './manage-cohorts.reducer'
+import { ICohort } from "../../model/cohort";
+import { profileViewReducer } from "./profile-view.reducer";
+import { resetPasswordReducer } from "./reset-password.reducer";
+import { resetPasswordUsernameReducer } from "./reset-password-username.reducer";
 
+export interface IAddressState {
+  trainingAddresses: IAddress[],
+}
 export interface IAuthState {
-  currentUser: ICognitoUser
+  currentUser: ICognitoUser,
 }
 
 export interface IClickerState {
-  clicks: number
+  clicks: number,
+}
+export interface ICreateCohortState {
+  enabled: boolean,
+  newCohort: ICohort,
+  locationDropdownActive: boolean,
+  trainerDropdownActive: boolean,
+  isSaved: boolean,
 }
 
 export interface ICreateUserState {
   enabled: boolean,
-  newUser: {
-    address: IAddress,
-    email: string,
-    firstName: string,
-    lastName: string,
-    phoneNumber: string
-  },
-  locationDropdownActive: false
+  newUser: IUser,
+  locationDropdownActive: false,
 }
 
-export interface ICreateCohortState {
-  enabled: boolean,
-  newCohort: {
-    address: IAddress,
-    cohortDescription: string,
-    cohortName: string,
-    trainer: IUser,
-    startDate: string,
-    endDate: string
-  },
-  locationDropdownActive: false
+export interface ICurrentSMSUserState {
+  currentSMSUser: IUser,
 }
 
-export interface IAddressState {
-  trainingAddresses: IAddress[]
-}
+
 export interface ILoginState {
   username: string,
   password: string,
   cogUser: ICognitoUser,
-  confirmationPassword: string,
-  newPassword: string,
-  passwordNeedsReset,
   incorrectUserPass: boolean,
-  verificationCode: string,
-  needsVerificationCode: boolean,
-  showPasswordTip: boolean,
+}
+
+export interface IManageCohortsState {
+  cohorts: ICohort[],
 }
 
 export interface IManageUsersState {
-  manageUsers: ICognitoUser[];
+  manageUsers: ICognitoUser[],
 }
 
 export interface IManagementState {
@@ -71,7 +68,13 @@ export interface IManagementState {
   auth: IAuthState,
   manageUsers: IManageUsersState,
   addresses: IAddressState
-  login: ILoginState
+  login: ILoginState,
+  viewUser: IViewUserState,
+  manageCohorts: IManageCohortsState,
+  currentSMSUser: ICurrentSMSUserState,
+  currentProfile: IProfileViewState,
+  resetPassword: IResetPasswordState,
+  resetPasswordUsername: IResetPasswordUsernameState,
 }
 
 export const managementState = combineReducers<IManagementState>({
@@ -82,87 +85,41 @@ export const managementState = combineReducers<IManagementState>({
   createCohort: createCohortReducer,
   manageUsers: manageUsersReducer,
   login: loginReducer,
+  viewUser: viewUserReducer,
+  currentSMSUser: currentSMSUserReducer,
+  manageCohorts: manageCohortsReducer,
+  currentProfile: profileViewReducer,
+  resetPassword: resetPasswordReducer,
+  resetPasswordUsername: resetPasswordUsernameReducer,
 })
-=======
-import { viewUserReducer } from "./view-user.reducer";
-import { currentSMSUserReducer } from "./current-sms-user.reducer";
-import { manageCohortsReducer} from './manage-cohorts.reducer'
-import { ICohort } from "../../model/cohort";
-import { profileViewReducer } from "./profile-view.reducer";
+
+export interface IProfileViewState {
+  user: IUser,
+  bUserInfoChanged: boolean,
+  locationDropdownActive: boolean,
+}
+
+export interface IResetPasswordState {
+  showPasswordTip: boolean,
+  confirmationPassword: string,
+  newPassword: string,
+  verificationCode: string,
+}
+export interface IResetPasswordUsernameState {
+  username: string,
+  needsVerificationCode: boolean,
+}
+
+export interface IViewUserState {
+  enabled: boolean,
+  newUser: IUser,
+}
 
 
-export interface IAuthState {
-    currentUser: ICognitoUser
-  }
-  
-  export interface IClickerState {
-    clicks: number
-  }
-  
-  export interface ICreateUserState {
-    enabled: boolean,
-    newUser: IUser,
-    locationDropdownActive: false
-  }
-  
-  export interface IViewUserState {
-    enabled: boolean,
-    newUser: IUser
-  }
-
-  export interface ICreateCohortState {
-    enabled: boolean,
-    isSaved: boolean,
-    newCohort: ICohort,
-    locationDropdownActive: false,
-    trainerDropdownActive: false
-  }
-  
-  export interface IAddressState {
-    trainingAddresses: IAddress[]
-  }
-  
-  export interface IManageUsersState {
-    manageUsers: ICognitoUser[];
-  }
-
-  export interface ICurrentSMSUserState {
-    currentSMSUser: IUser
-  }
 
 
-  export interface IManageCohortsState {
-    cohorts: ICohort[]
-  }
-  export interface IProfileViewState {
-    user: IUser,
-    bUserInfoChanged: boolean,
-    locationDropdownActive: boolean
-  }
 
-  export interface IManagementState {
-    viewUser: IViewUserState;
-    clicker: IClickerState,
-    createUser: ICreateUserState,
-    createCohort: ICreateCohortState,
-    auth: IAuthState,
-    manageUsers: IManageUsersState,
-    manageCohorts: IManageCohortsState,
-    addresses: IAddressState,
-    currentSMSUser: ICurrentSMSUserState,
-    currentProfile: IProfileViewState
-  }
 
-  export const managementState = combineReducers<IManagementState>({
-    addresses: addressReducer,
-    auth: authReducer,
-    clicker: clickerReducer,
-    viewUser: viewUserReducer,
-    createUser: createUserReducer,
-    createCohort: createCohortReducer,
-    manageUsers: manageUsersReducer,
-    currentSMSUser: currentSMSUserReducer,
-    manageCohorts: manageCohortsReducer,
-    currentProfile: profileViewReducer,
-  })
->>>>>>> be512af81b57dc0c0307296a81624dd642b5a07e
+
+
+

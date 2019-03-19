@@ -1,12 +1,7 @@
 import * as React from "react";
 import { Route } from 'react-router';
-<<<<<<< HEAD
-import { connect } from "react-redux";
-import LoginComponent from "../login/login.container";
-=======
 import { connect, ConnectedComponentClass } from "react-redux";
-import LoginComponent from "../login/login.component";
->>>>>>> be512af81b57dc0c0307296a81624dd642b5a07e
+import LoginComponent from "../login/login.container";
 import { IState } from "../../reducers";
 
 

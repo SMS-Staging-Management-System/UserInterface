@@ -8,13 +8,7 @@ const initialState: ILoginState = {
         email: '',
         roles: [],
     },
-    confirmationPassword: '',
-    newPassword: '',
-    passwordNeedsReset: false,
     incorrectUserPass: false,
-    verificationCode: '',
-    needsVerificationCode: false,
-    showPasswordTip: false,
 }
 
 export const loginReducer = (state = initialState, action: any) => {
@@ -22,7 +16,6 @@ export const loginReducer = (state = initialState, action: any) => {
         case loginTypes.UPDATE_USERNAME:
         return{
             ...state,
-            
             username: action.payload.username
 
         }
@@ -31,22 +24,6 @@ export const loginReducer = (state = initialState, action: any) => {
             ...state,
             password: action.payload.password
             
-        }
-         case loginTypes.UPDATE_CONFIRMATION_PASSWORD:
-        return{
-            ...state,
-            confirmationPassword: action.payload.confirmationPassword
-            
-        }
-        case loginTypes.UPDATE_NEW_PASSWORD:
-        return{
-            ...state,
-            newPassword: action.payload.newPassword
-        }
-        case loginTypes.UPDATE_VERIFICATION_CODE:
-        return{
-            ...state,
-            verificationCode: action.payload.verificationCode
         } 
         case loginTypes.LOGIN:
         const username = '';
@@ -75,7 +52,6 @@ export const loginReducer = (state = initialState, action: any) => {
         
 
     }
-    return{
-           state 
-    }
+    return state 
+    
 }

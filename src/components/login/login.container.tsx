@@ -2,8 +2,7 @@ import { IState } from "../../reducers";
 import { connect } from "react-redux";
 import { LoginComponent } from "./login.component";
 import { setup } from "../../actions/auth/auth.actions";
-import { updateUsername, updatePassword, updateConfirmationPassword, updateNewPassword, updateVerificationCode, loginRequest } from "../../actions/login/login.action";
-import { resetPassword } from "../../actions/reset-password/reset-password.actions";
+import { updateUsername, updatePassword, updateConfirmationPassword, updateNewPassword, updateVerificationCode, loginRequest} from "../../actions/login/login.action";
 
 const mapStateToProps = (state: IState, ownProps) =>({
   login: state.managementState.login,
@@ -20,7 +19,6 @@ const mapDispatchToProps = {
   updateVerificationCode,
   loginRequest,
   setup,
-  resetPassword,
   
 }
 

@@ -11,6 +11,7 @@ export const loginTypes = {
     UPDATE_VERIFICATION_CODE: "L_UPDATE_VERIFICATION_CODE",
     LOGIN: "L_LOGIN",
     FAILED_LOGIN: "L_FAILED_LOGIN",
+    RESET_PASSWORD_MODAL: "L_RESET_PASSWORD_MODAL"
 }
 
 export const updateUsername = (username: string) => {
@@ -66,7 +67,7 @@ export const loginRequest = (username: string, password: string, history) => asy
         type: loginTypes.LOGIN,
         })
         setup()(dispatch);
-        history.push('/');
+        history.push('/interview/list');
     } catch (error) {
         console.log(error);
         dispatch({
@@ -74,5 +75,14 @@ export const loginRequest = (username: string, password: string, history) => asy
             },
             type: loginTypes.FAILED_LOGIN
         })
+    }
+    
+}
+export const resetPasswordModal = (passwordNeedsResetModal: boolean) => {
+    return {
+        payload: {
+            passwordNeedsResetModal: passwordNeedsResetModal,
+        },
+        type: loginTypes.RESET_PASSWORD_MODAL
     }
 }

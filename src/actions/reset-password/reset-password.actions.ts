@@ -3,14 +3,15 @@ import { Auth } from "aws-amplify";
 import { setup } from "../auth/auth.actions";
 import { toast } from "react-toastify";
 import { ICognitoUser } from "../../model/cognito-user.model";
-import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 
 export const resetPasswordTypes = {
     UPDATE_CONFIRMATION_PASSWORD: "R_UPDATE_CONFIRMATION_PASSWORD",
     UPDATE_NEW_PASSWORD: "R_UPDATE_NEW_PASSWORD",
     UPDATE_VERIFICATION_CODE: "R_UPDATE_VERIFICATION_CODE",
     RESET_PASSWORD: "R_RESET_PASSWORD",
-    SUBMIT_PASSWORD_RESET: "R_SUBMIT_PASSWORD_RESET"
+    SUBMIT_PASSWORD_RESET: "R_SUBMIT_PASSWORD_RESET",
+    RESET_PASSWORD_MODAL: "R_RESET_PASSWORD_MODAL",
+    TOGGLE_PASSWORD_TIP: "R_TOGGLE_PASSWORD_TIP",
 
 }
 
@@ -38,8 +39,10 @@ export const updateVerificationCode = (verificationCode: string) => {
         type: resetPasswordTypes.UPDATE_VERIFICATION_CODE
     }
 }
-export const submitPasswordReset = (needsVerificationCode: boolean, username: string, verificationCode: string, newPassword: string, history, cogUser: ICognitoUser) => async (dispatch) => {
+export const submitPasswordReset = (needsVerificationCode: boolean, username: string, verificationCode: string, newPassword: string, history, cogUser: ICognitoUser ) => async (dispatch) => {
     try {
+        console.log(`needsverifictioncode: ${needsVerificationCode}, username: ${username}, verificationCode: ${verificationCode}, newpassword: ${newPassword}`
+        )
         if (needsVerificationCode) {
             console.log('submitting code')
             await Auth.forgotPasswordSubmit(username, verificationCode, newPassword);
@@ -54,31 +57,19 @@ export const submitPasswordReset = (needsVerificationCode: boolean, username: st
                 }
             );
             setup();
-            //this.props.history.push('/check-ins');
-        }
 
+        }
     } catch (err) {
         toast.error('failed to set new password');
         console.log(err);
     }
 }
-export const resetPassword = (username) => async (dispatch) => {
-    try {
-        await cognitoClient.resetPassword(username);
-        dispatch({
-            payload: {
-                needsVerificationCode: true,
-                passwordNeedsReset: true
-            }
 
-        })
-        console.log('password reset');
-    } catch (err) {
-        if (err.response && err.response.data.code === 'LimitExceededException') {
-            toast.error('Too Many Password Reset Attempts');
-        } else {
-            console.log(err);
-            toast.error('Failed to Reset Password');
-        }
+export const togglePasswordTip = (showPasswordTip) => {
+    return {
+        payload: {
+            showPasswordTip: showPasswordTip,
+        },
+        type: resetPasswordTypes.TOGGLE_PASSWORD_TIP
     }
 }
