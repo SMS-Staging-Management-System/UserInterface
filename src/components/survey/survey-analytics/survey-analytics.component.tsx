@@ -5,7 +5,7 @@ import { Bar, Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-annotation';
 import Loader from '../Loader/Loader';
 
-export class SurveyAnalyticsComponent extends React.Component<any, any> {
+class SurveyAnalyticsComponent extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,10 +15,6 @@ export class SurveyAnalyticsComponent extends React.Component<any, any> {
         }
     }
 
-    random_rgba = () => {
-        let o = Math.round, r = Math.random, s = 255;
-        return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ', 0.6)';
-    }
 
     componentWillMount() {
         this.loadSurveyData();
@@ -48,7 +44,6 @@ export class SurveyAnalyticsComponent extends React.Component<any, any> {
                 }
             };
 
-
             // If it's a feedback question, just grab the answer choices
             if (survey.questionJunctions[questionKey].questionId.typeId === 5) {
                 surveyData.questions[questionKey].answerChoices = survey.questionJunctions[questionKey].questionId.answerChoices;
@@ -70,7 +65,12 @@ export class SurveyAnalyticsComponent extends React.Component<any, any> {
             surveyData: surveyData,
             surveyDataLoaded: true
         });
-        console.log("It should be true now ", this.state.surveyDataLoaded);
+    }
+
+    // Generate a random color
+    random_rgba = () => {
+        let o = Math.round, r = Math.random, s = 255;
+        return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ', 0.6)';
     }
 
     render() {

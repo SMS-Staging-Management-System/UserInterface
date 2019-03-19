@@ -21,13 +21,6 @@ export const surveyClient = {
   //-- Survey Methods --//
   //--------------------//
 
-  // saveSurvey(survey: ISurvey, question: IQuestion[], answer: IAnswer[]) { // this will be taking in ISurvey,IQuestion, and IAnswer and will enter seperate endpoints
-  //   surveyContext.post(surveyBaseRoute, survey);
-  //   // this.saveQuestion(question);
-  //   // this.saveAnswer(answer);
-
-  // },
-
   findAllSurveys: async () => {
     let surveysAndTemplates;
     let surveys: any = [];
@@ -92,11 +85,15 @@ export const surveyClient = {
     // Append Answers to the Questions
     // If statement prevents crashing if the API server is down
     if (survey) {
-      console.log('Answers are being retrieved...');
       for (const questionJunction of survey.questionJunctions) {
         await surveyContext.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
           .then(response => {
-            questionJunction.questionId.answerChoices = response.data;
+            let answerChoices = response.data;
+            // If it is a rating question, sort the ratings
+            if (questionJunction.typeId === 4) {
+              answerChoices.sort((a, b) => (a.answer > b.answer) ? 1 : -1);
+            }
+            questionJunction.questionId.answerChoices = answerChoices;
           })
           .catch(err => {
             console.log(err);
@@ -121,11 +118,9 @@ export const surveyClient = {
   findSurveyByIdWithResponses: async (id: number) => {
     // Get the Survey
     let survey = await surveyClient.findSurveyById(id);
-    console.log("Full survey output: ", survey);
 
     // Get the Responses
     const responseCount = await surveyClient.countResponses(id);
-    console.log("The count array is: ", responseCount);
 
     // Add the response count to each question
     survey.questionJunctions.forEach(question => {
@@ -139,9 +134,9 @@ export const surveyClient = {
         });
       }
     });
-
     return survey;
   },
+
   findSurveysAssignedToUser: async (email: String) => {
     let allSurveys: any[] = [];
     let myAssignedSurveys: any[] = [];
@@ -180,9 +175,7 @@ export const surveyClient = {
 
   async saveSurvey(survey: ISurvey) {
     let resp = await surveyContext.post(surveyBaseRoute, survey);
-
     let sID = resp.data.surveyId;      // return ID; 
-    console.log('THIS IS SURVEY  ID : ' + sID);
     return sID;
   },
 
@@ -191,29 +184,10 @@ export const surveyClient = {
   //----------------------//
 
   async saveQuestion(question: IQuestion) {
-    //let ID = new Array;
-    //  await surveyContext.post(questionBaseRoute, question.questionId).then(response => {
-    //     this.answArray(  parseInt(response.data.questionId));
-
-    //     });
-
     let resp = await surveyContext.post(questionBaseRoute, question.questionId);
     let qID = parseInt(resp.data.questionId);      // return ID; 
-    console.log('THIS IS ID: ' + qID);
     return qID;
-
   },
-
-  //    answArray( ID : number) {
-
-  //     let anArray=new Array;
-  //     anArray.push(ID)
-
-
-  //     console.log(anArray)
-  //   return anArray;
-
-  // },
 
   saveAllQuestion(question: IQuestion[]) {
 
@@ -227,7 +201,6 @@ export const surveyClient = {
 
     let resp = await surveyContext.get(questionTypeBaseRoute);
     const body = resp.data;
-    console.log(body[index].questionType);
     return body[index].questionType;
   },
 
@@ -235,9 +208,8 @@ export const surveyClient = {
   //-- Answer Methods --//
   //--------------------//
 
-  async saveAnswer (answer: IAnswer) {
+  async saveAnswer(answer: IAnswer) {
     answer.id = 0;
-   // console.log('this is the asnwer ',answer);
     return await surveyContext.post(answerBaseRoute, answer)
   },
 
@@ -246,7 +218,6 @@ export const surveyClient = {
       surveyContext.post(answerBaseRoute, answer[index]);
     }
   },
-
 
   //----------------------//
   //-- Response Methods --//

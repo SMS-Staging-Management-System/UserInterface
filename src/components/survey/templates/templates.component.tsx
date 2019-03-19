@@ -1,6 +1,5 @@
 import React, { Fragment, Component } from 'react';
 import { Table } from 'reactstrap';
-//import { ISurvey } from '../../../model/surveys/survey.model';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
@@ -11,17 +10,9 @@ import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import Loader from '../Loader/Loader';
 
-
-
 interface TemplatesProps extends RouteComponentProps<{}> {
     match: any
 }
-
-
-// interface ITemplatesState {
-
-//     //redirectTo: any
-// }
 
 class TemplatesComponent extends Component<TemplatesProps, any> {
     constructor(props) {
@@ -29,34 +20,29 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         this.state = {
             templates: [],
             templatesLoaded: false,
-            newTitle: '',	
+            newTitle: '',
             newDescription: '',
             showModal: false,
             surveyId: 0,
             surveyLoaded: false,
             openedTemplate: [],
-            dateCreated: Date.now(),	
-            survey: {	
-                surveyId: 0,	
-                title: '',	
-                description: '',	
-                dateCreated: new Date(),	
-                closingDate: null,	
-                template: false,	
-                published: true	
+            dateCreated: Date.now(),
+            survey: {
+                surveyId: 0,
+                title: '',
+                description: '',
+                dateCreated: new Date(),
+                closingDate: null,
+                template: false,
+                published: true
             }
         }
 
     }
 
-
     componentDidMount() {
         this.loadTemplates();
-        //this.handleShow(this.state.survey.surveyId);
-
     }
-
-
 
     // Load the templates into the state
     loadTemplates = async () => {
@@ -65,22 +51,17 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             templates: templates,
             templatesLoaded: true
         })
-        console.log(templates);
-        console.log("Template Loaded", this.state.templatesLoaded);
     };
 
-
-    changeSurveyTitle = (event) => {	
-        this.setState({	
-            newTitle: event.target.value,	
-        })	
-        console.log('NEW TITLE ', this.state.newTitle);	
-    }	
-    changeSurveyDescription = (event) => {	
-        this.setState({	
-            newDescription: event.target.value,	
-        })	
-        console.log('NEW DESCRIPTION ', this.state.newDescription);	
+    changeSurveyTitle = (event) => {
+        this.setState({
+            newTitle: event.target.value,
+        })
+    }
+    changeSurveyDescription = (event) => {
+        this.setState({
+            newDescription: event.target.value,
+        })
     }
 
     handleShow = async (id: number, description: string) => {
@@ -91,14 +72,11 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
         this.setState({
             survey: openedTemplate,
             newTitle: openedTemplate.title,	            //surveyId: id,
-            surveyLoaded: true,	            
-            description: description	
+            surveyLoaded: true,
+            description: description
 
 
         })
-
-        console.log("open template", openedTemplate, this.state.survey.questionJunctions[0].questionId.question);
-
     }
     handleClose = () => {
         this.setState({
@@ -106,13 +84,9 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             surveyLoaded: false,
             showModal: false
         })
-
-
-
     }
 
     handleCreateClose = async () => {
-        console.log('Current title', this.state.survey.title, '   New title', this.state.newTitle);
         if (this.state.survey.title !== this.state.newTitle) {
             this.setState({
                 newTitle: this.state.newTitle,
@@ -140,15 +114,6 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             dateCreated: this.state.dateCreated
         })
 
-
-
-        // else {
-        //     this.setState({
-        //         newTitle: this.state.survey.title
-        //     })
-        // }
-
-
         let questions: IQuestion[] = [];
         let answers: IAnswer[] = [];
         let dummySurvey: ISurvey = {
@@ -161,7 +126,6 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             published: true
         };
         for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
-            // console.log('THESE ARE THE QUESTION JUNCTIONS', this.state.survey.questionJunctions[i]);
             let dummyquestion: IQuestion | any = {
                 questionId: {
                     questionId: 0,
@@ -172,7 +136,6 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             dummyquestion.questionId.questionId = this.state.survey.questionJunctions[i].questionId.questionId;
             dummyquestion.questionId.typeId = this.state.survey.questionJunctions[i].questionId.typeId;
             dummyquestion.questionId.question = this.state.survey.questionJunctions[i].questionId.question;
-            // console.log(dummyquestion);
             for (let j = 0; j < this.state.survey.questionJunctions[i].questionId.answerChoices.length; j++) {
 
                 let dummyAnswers: IAnswer | any = {
@@ -183,27 +146,19 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                 dummyAnswers.id = this.state.survey.questionJunctions[i].questionId.answerChoices[j].id;
                 dummyAnswers.answer = this.state.survey.questionJunctions[i].questionId.answerChoices[j].answer;
                 dummyAnswers.questionId = this.state.survey.questionJunctions[i].questionId.answerChoices[j].questionId;
-                // console.log(dummyAnswers);
                 answers.push(dummyAnswers);
             }
             questions.push(dummyquestion);
         }
 
-
-        // if (this.state.redirectTo) {
-        //     return <Redirect push to={this.state.redirectTo} />
-        // }
-        // console.log('Survey', this.state.survey.questionJunctions);
         dummySurvey.surveyId = await surveyClient.saveSurvey(dummySurvey);
         let questionid = new Array;
 
         for (let index = 0; index < questions.length; index++) {
-            // console.log('this is a question ',questions[index]);
             let num = await surveyClient.saveQuestion(questions[index]);
             questionid.push(num);
 
             for (let j = 0; j < answers.length; j++) {
-                // console.log('this is the answer id ', answers[j].questionId, 'this is a question ', questions[index])
                 if (answers[j].questionId === questions[index].questionId.questionId) {
                     answers[j].questionId = questionid[index];
                     surveyClient.saveAnswer(answers[j]);
@@ -212,10 +167,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
         }
 
-
-
         for (let index = 0; index < questions.length; index++) {
-            console.log('this is the Junction questions ', questions[index]);
             let junctionTable: IJunctionSurveyQuestion = {
 
                 id: 0,
@@ -238,21 +190,16 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             junctionTable.surveyId = dummySurvey;
             junctionTable.surveyId.surveyId = dummySurvey.surveyId;
             surveyClient.saveToQuestionJunction(junctionTable);
-            // console.log(junctionTable);
         }
-        // console.log('NEW QUESTIONS', questions, 'AND ANSWERS', answers)
     }
-
-
 
     render() {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
-        // console.log('this.state', this.state);
         return (
             <Fragment>
-                
+
                 {this.state.templatesLoaded ? (
                     this.state.templates.length ? (
                         <Table striped id="manage-users-table" className="tableUsers">
@@ -266,7 +213,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                             <tbody>
                                 {this.state.templates.map(template => (
                                     <tr key={template.surveyId} className="rev-table-row"
-                                    onClick={() => this.handleShow(template.surveyId, template.description)}>
+                                        onClick={() => this.handleShow(template.surveyId, template.description)}>
                                         <td>{template.title}</td>
                                         <td>{template.description}</td>
                                         <td>{template.dateCreated && new Date(template.dateCreated).toDateString()}</td>
@@ -274,16 +221,16 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 
                                 ))}
                             </tbody>
-                            
+
                         </Table>
-                        
+
                     ) : (
                             <div>No Templates to Display</div>
                         )
                 ) : (
-                        <Loader/>
+                        <Loader />
                     )}
-                    
+
                 <Modal show={this.state.showModal} onHide={() => this.handleClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>
@@ -291,19 +238,19 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <div ><FaHandPointRight /> <i><span className="noteDiv">Note that you can edit both the survey title and description</span></i></div>
+                        <div ><FaHandPointRight /> <i><span className="noteDiv">Note that you can edit both the survey title and description</span></i></div>
                         <div className="modalHeading">
-                        <strong>Survey Title</strong>:&nbsp;	                           
-                            <input type="text"	
-                                className="surveyName"	
-                                defaultValue={this.state.survey.title}	
-                                onChange={this.changeSurveyTitle} />&nbsp;	
-                            <strong>Description</strong>:&nbsp;	
-                                <input	
-                                type="text"	
-                                className="surveyDescription"	
-                                defaultValue={this.state.survey.description}	
-                                onChange={this.changeSurveyDescription} />	
+                            <strong>Survey Title</strong>:&nbsp;
+                            <input type="text"
+                                className="surveyName"
+                                defaultValue={this.state.survey.title}
+                                onChange={this.changeSurveyTitle} />&nbsp;
+                            <strong>Description</strong>:&nbsp;
+                                <input
+                                type="text"
+                                className="surveyDescription"
+                                defaultValue={this.state.survey.description}
+                                onChange={this.changeSurveyDescription} />
                         </div>
                         <div className="container" id="containerTemplate">
 
@@ -327,13 +274,13 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                                         <hr />
                                     </div>
                                 )) : (
-                                    <Loader/>
+                                    <Loader />
                                 )}
                         </div>
-                       
+
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>	                        
+                        <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>
                         <Button className="buttonCreate" onClick={() => this.handleCreateClose()}>Create</Button>
                     </Modal.Footer>
                 </Modal>
@@ -344,41 +291,3 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
 }
 
 export default TemplatesComponent;
-
-// const dummyTemplates = [{
-        // surveyId: 1,
-        // title: 'Example Template 1',
-        // description: 'Example Template 1 Description',
-        // dateCreated: new Date('03-09-2019'),
-        // closingDate: new Date('03-25-2019'),
-        // template: false,
-        // published: true
-        // },
-        // {
-        // surveyId: 2,
-        // title: 'Example Template 2',
-        // description: 'Example Template 2 Description',
-        // dateCreated: new Date('02-15-2019'),
-        // closingDate: new Date('03-15-2019'),
-        // template: true,
-        // published: true
-        // },
-        // {
-        // surveyId: 3,
-        // title: 'Example Template 3',
-        // description: 'Example Template 3 Description',
-        // dateCreated: new Date('03-05-2019'),
-        // closingDate: new Date('03-22-2019'),
-        // template: false,
-        // published: false
-        // },
-        // {
-        // surveyId: 4,
-        // title: 'Example Template 4',
-        // description: 'Example Template 4 Description',
-        // dateCreated: new Date('03-10-2019'),
-        // closingDate: new Date('03-20-2019'),
-        // template: false,
-        // published: true
-        // }
-        //]

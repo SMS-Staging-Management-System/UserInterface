@@ -97,7 +97,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                             <th>Description</th>
                                             <th>Date Created</th>
                                             <th>Closing Date</th>
-                                            {/* <th>Template</th> */}
                                             <th>Published</th>
                                             <th>Analytics</th>
                                             <th>Respondents</th>
@@ -111,12 +110,11 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                                 <td>{survey.description}</td>
                                                 <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
                                                 <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
-                                                {/* <td>{survey.template ? 'Yes' : 'No'}</td> */}
                                                 <td>{survey.published ? 'Yes' : 'No'}</td>
                                                 <td><Button className='assignSurveyBtn' onClick={() =>
                                                     this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
                                                 <td><Button className='assignSurveyBtn' onClick={() =>
-                                                    this.loadSurveyRespondents(survey.surveyId)}>Users</Button></td>
+                                                    this.loadSurveyRespondents(survey.surveyId)}>Status</Button></td>
                                             </tr>
                                         ))}
                                     </tbody>
