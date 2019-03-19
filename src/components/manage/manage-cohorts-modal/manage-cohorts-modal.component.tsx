@@ -29,7 +29,7 @@ import { IManageCohortsModalProps } from './manage-cohorts-modal.container';
  * |                                                                            |       |    Complete                       [] |
  * |____________________________________________________________________________|       | -Staging-                         || |
  * |                                                                            |       |    Staging                        || |
- * |    "Saved"?                                    [ "Close" | "Cancel" ]      |       |    Bench                          || |
+ * |    "Saved"?                         [ "Save" ] [ "Close" | "Cancel" ]      |       |    Bench                          || |
  * |                                                                            |       |    Waiting for Paperwork          \/ |
  * |----------------------------------------------------------------------------/       |______________________________________|
  *                                                                                      
@@ -44,8 +44,8 @@ export class ManageCohortsModal extends React.Component<IManageCohortsModalProps
     render() {
         const {viewCohort} = this.props;
         return (
-            <Modal isOpen = {true}>
-                <ModalHeader className="rev-background-color">Cohort info for {viewCohort.cohort.cohortName}</ModalHeader>
+            <Modal isOpen = {viewCohort && viewCohort.modalVisible}>
+                <ModalHeader className="rev-background-color">Cohort info for {viewCohort && viewCohort.cohort.cohortName}</ModalHeader>
                 <ModalFooter id="manage-Cohort-modal-footer">
                 </ModalFooter>
 

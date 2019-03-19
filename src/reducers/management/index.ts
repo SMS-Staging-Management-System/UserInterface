@@ -14,6 +14,7 @@ import { manageCohortsReducer} from './manage-cohorts.reducer'
 import { ICohort } from "../../model/cohort";
 import { profileViewReducer } from "./profile-view.reducer";
 import { IStatus } from "../../model/status.model";
+import { viewCohortReducer } from "./view-cohort.reducer";
 
 
 export interface IAuthState {
@@ -69,15 +70,16 @@ export interface ICohortModalState {
      * The status that we would like to
      * change all of the selected users to.
      */
-    selectedStatus: IStatus;
+    selectedStatus: IStatus,
     /**
      * Whether the modal is visible or not.
      */
-    modalVisible: boolean;
+    modalVisible: boolean,
     /**
      * Whether the modal is in the 'saved' state or not
      */
-    isSaved: boolean;
+    isSaved: boolean,
+    statusDropdownActive: boolean
  }
 
   export interface IManageCohortsState {
@@ -114,4 +116,5 @@ export interface ICohortModalState {
     currentSMSUser: currentSMSUserReducer,
     manageCohorts: manageCohortsReducer,
     currentProfile: profileViewReducer,
+    viewCohort: viewCohortReducer
   })
