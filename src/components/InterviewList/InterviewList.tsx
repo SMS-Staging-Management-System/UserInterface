@@ -2,7 +2,7 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { getInterviewPages } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages, markAsReviewed } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
@@ -23,7 +23,8 @@ export interface InterviewListProps {
         pageNumber? : number, 
         pageSize? : number,
         ordeyBy?: string, 
-        direction? : string) => void
+        direction? : string) => void,
+    markAsReviewed : (interviewId : number) => void
 }
  
 export interface InterviewListState {
@@ -46,10 +47,6 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
             this.props.direction);
     }
     
-    componentDidUpdate() {
-        console.log(this.props);
-    }
-
     handlePageClick = (data) => {
         this.props.getInterviewPages(data.selected, 
             this.props.pageSize, 
@@ -93,12 +90,17 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         }
     }
 
+    markAsReviewed = (event : any) => {
+        this.props.markAsReviewed(event.currentTarget.id);
+    }
+
     render() { 
         return ( 
             <Jumbotron>
                 <Table>
                     <thead>
                         <tr>
+                            <th>Reviewed</th> 
                             <th id='associateEmail' onClick={this.changeOrderCriteria}>Associate Email 
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
@@ -136,6 +138,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                     <tbody>
                         {this.props.listOfInterviews.map((entry) => {
                             return (<tr>
+                                <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td>
                                 <td>{entry.associateEmail}</td>
                                 <td>{entry.managerEmail}</td>
                                 <td>{entry.place}</td>
@@ -195,7 +198,8 @@ const mapStateToProps = (state: IState) => {
 }
  
 const mapDispatchToProps = {
-    getInterviewPages
+    getInterviewPages,
+    markAsReviewed
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterviewList);
