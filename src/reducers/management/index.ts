@@ -139,4 +139,5 @@ export interface ILoginState {
   password: string,
   cogUser: ICognitoUser,
   incorrectUserPass: boolean,
+  passwordNeedsReset: boolean,
 }

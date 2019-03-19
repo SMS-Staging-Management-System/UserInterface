@@ -9,6 +9,7 @@ const initialState: ILoginState = {
         roles: [],
     },
     incorrectUserPass: false,
+    passwordNeedsReset: false,
 }
 
 export const loginReducer = (state = initialState, action: any) => {

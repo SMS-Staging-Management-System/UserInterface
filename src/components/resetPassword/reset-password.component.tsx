@@ -95,9 +95,6 @@ export class ResetPasswordComponent extends React.Component<IResetPasswordProps,
                 {!this.props.resetPasswordUsernameProps.needsVerificationCode &&
                     <form id="login-form" onSubmit={this.submitPasswordResetNewUser}  >
 
-                        <input name="verification-code" type="text" className="form-control txt-bx" placeholder="Verification Code"
-                            onChange={this.updateVerificationCode} value={this.props.resetPasswordProps.verificationCode} />
-
 
                         <input id="new-password-input" name="password" type="password" className="form-control txt-bx" placeholder="New Password"
                             onMouseLeave={this.togglePasswordTip} onMouseEnter={this.togglePasswordTip}

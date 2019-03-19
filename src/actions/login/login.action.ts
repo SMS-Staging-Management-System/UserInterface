@@ -67,7 +67,11 @@ export const loginRequest = (username: string, password: string, history) => asy
         type: loginTypes.LOGIN,
         })
         setup()(dispatch);
-        history.push('/interview/list');
+        if(credentials.challengeName === 'NEW_PASSWORD_REQUIRED'){
+            history.push('/management/reset-password')
+        }else{
+            history.push('/interview/list');
+        }
     } catch (error) {
         console.log(error);
         dispatch({

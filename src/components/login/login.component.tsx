@@ -42,45 +42,9 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
   submitLogin = (event) => {
     event.preventDefault();
     const username = this.props.login.username;
-    const password = this.props.login.password // destructuring
+    const password = this.props.login.password 
     this.props.loginRequest(username, password, this.props.history);
   }
-
-
-  /* submitPasswordReset = async (e: any) => {
-    e.preventDefault();
-    //Make sure our two password fields are equal
-    if (this.state.newPassword === this.state.confirmationPassword) {
-      // You need to get the new password and required attributes from the UI inputs
-      // and then trigger the following function with a button click
-      // For example, the email and phone_number are required attributes
-      try {
-        if (this.state.needsVerificationCode) {
-          console.log('submitting code')
-          await Auth.forgotPasswordSubmit(this.state.username, this.state.verificationCode, this.state.newPassword);
-          this.loginRequest(this.state.username, this.state.newPassword);
-        } else {
-          await Auth.completeNewPassword(
-            this.state.cogUser,               // the Cognito User Object
-            this.state.newPassword,       // the new password
-            // OPTIONAL, the required attributes
-            {
-              email: this.state.username,
-            }
-          );
-          this.props.setup();
-          //Same as above, probably shouldn't go here anymore
-          this.props.history.push('/check-ins');
-        }
-
-      } catch (err) {
-        toast.error('failed to set new password');
-        console.log(err);
-      }
-    }
-  } */
-
-  
 
   render() {
     const username = this.props.login.username;
@@ -99,6 +63,7 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
               <button className="btn rev-btn" type="submit">Login</button>
             </form>
             <div className="row resetDiv">
+            
               <Link to="/management/send-email">
                 <button id="forgot-pass-btn">Forgot Password</button>
               </Link>
