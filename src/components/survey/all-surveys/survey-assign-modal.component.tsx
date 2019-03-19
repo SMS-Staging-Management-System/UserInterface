@@ -200,62 +200,64 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
   render() {
     return (
-        <> {this.state.usersLoaded ? (
+        <> 
             <div>
                 <Button className='assignSurveyBtn mb-3' color="black" onClick={this.toggle}>{this.props.buttonLabel}</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                 <ModalHeader className='assignSurveyModalHeader' toggle={this.toggle}>Cohorts</ModalHeader>
-                <ModalBody>
-                    <Table striped id="manage-users-table" className="tableUsers">
-                        <thead>
-                            <tr>
-                                <th>Select</th>
-                                <th colSpan={5}>Cohort</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.cohorts.map(cohort => (
-                                <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                                    <td>All: <input type="checkbox" id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} />
-                                        <div className="dropdown userDropdown">
-                                            <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                By Member
-                                            </Button>
-                                            <div className="dropdown-menu" id="userDropdownWidth" aria-labelledby="dropdownMenu2">
-                                                {this.state.userArray.filter(user => {
-                                                    return user.id === cohort.cohortId;
-                                                }).map(user => (
-                                                    <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" onChange={e=>this.checkUserFunc(e)}/>{user.email}</p>
-                                                    )
-                                                )}
+                {/* ensure users in cohorts do not show until they are loaded to avoid assign survey bug */}
+                {this.state.usersLoaded ? (
+                    <ModalBody >
+                        <Table striped id="manage-users-table" className="tableUsers">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th colSpan={5}>Cohort</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.cohorts.map(cohort => (
+                                    <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
+                                        <td>All: <input type="checkbox" id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} />
+                                            <div className="dropdown userDropdown">
+                                                <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    By Member
+                                                </Button>
+                                                <div className="dropdown-menu" id="userDropdownWidth" aria-labelledby="dropdownMenu2">
+                                                    {this.state.userArray.filter(user => {
+                                                        return user.id === cohort.cohortId;
+                                                    }).map(user => (
+                                                        <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" onChange={e=>this.checkUserFunc(e)}/>{user.email}</p>
+                                                        )
+                                                    )}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td colSpan={5}>{cohort.cohortName}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>  
-                            ))}
-                        </tbody>
-                        </Table>
-                        <div className="buttonDiv">
-                            <Button 
-                                className='assignSurveyBtn' 
-                                onClick={()=>{this.postSurveyToCohort(); this.toggle(); }
-                                }>Submit</Button>
-                        </div>
-                </ModalBody>
+                                        </td>
+                                        <td colSpan={5}>{cohort.cohortName}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>  
+                                ))}
+                            </tbody>
+                            </Table>
+                            <div className="buttonDiv">
+                                <Button 
+                                    className='assignSurveyBtn' 
+                                    onClick={()=>{this.postSurveyToCohort(); this.toggle(); }
+                                    }>Submit</Button>
+                            </div>
+                    </ModalBody>) : (
+                        <Loader />
+                    )}
                 </Modal>
             </div>
-        ) : (
-            <Loader />
-        )}
+        
     </>
     );
   }
