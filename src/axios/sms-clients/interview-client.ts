@@ -48,4 +48,8 @@ export const interviewClient = {
     fetchAssoc24: async () => {
         return await smsClient.get(interviewContext+`/reports/request24/associate`);
     },
+
+    submitAssocInput: async (payload: any) => {
+        return await smsClient.post(interviewContext +'/associateInput', payload);
+    }
 }

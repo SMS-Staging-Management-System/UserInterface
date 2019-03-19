@@ -6,6 +6,8 @@ import { interviewFeedbackReducer } from './interviewFeedback.reducer';
 import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
+import { assocInputReducer } from './assoc-input.reducer';
+import { IAssociateInput } from '../../model/Associateinput.model';
 import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
 import { Interview } from '../../model/Interview.model'
@@ -151,6 +153,7 @@ export interface IInterviewState {
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
     managerChart: IManagerChartState,
     associateChart: IAssociateChartState,
+    associateInput: IAssociateInput,
     feedbackRequestedChart: IFeedbackRequestedChartState,
     feedbackDeliveredChart: IFeedbackDeliveredChartState
 }
@@ -162,6 +165,7 @@ export const interviewState = combineReducers<IInterviewState>({
    interviewFeedbackComponentState: interviewFeedbackReducer,
    managerChart: managerChartReducer,
    associateChart: associateChartReducer,
+   associateInput: assocInputReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
    feedbackDeliveredChart: feedbackDeliveredChartReducer
 })
