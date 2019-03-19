@@ -151,6 +151,9 @@ class Profile extends Component<IProfileProps, any> {
              </Col>
              <Col md={4}>
                 <Label>Training Location</Label>
+                {this.props.currentSMSUser.roles.length === 0 ?
+                  <p><strong>{userToView.trainingAddress && userToView.trainingAddress.alias}</strong></p> 
+                :
                 <Dropdown
                   color="success" className="responsive-modal-row-item rev-btn"
                   isOpen={this.props.locationDropdownActive}
@@ -173,6 +176,7 @@ class Profile extends Component<IProfileProps, any> {
                   } 
                   </DropdownMenu>
                 </Dropdown>
+                }
              </Col>
           </Row>
           <Row>
