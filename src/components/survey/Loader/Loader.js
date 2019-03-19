@@ -7,7 +7,7 @@ const Loader = () => (
     <SyncLoader
       sizeUnit={"px"}
       size={20}
-      color={'orange'}
+      color={"#f3a55d"}
     />
   </div>
 )
