@@ -39,7 +39,7 @@ export const updateVerificationCode = (verificationCode: string) => {
         type: resetPasswordTypes.UPDATE_VERIFICATION_CODE
     }
 }
-export const submitPasswordReset = (needsVerificationCode: boolean, username: string, verificationCode: string, newPassword: string, history, cogUser: ICognitoUser ) => async (dispatch) => {
+export const submitPasswordReset = (needsVerificationCode: boolean, username: string, verificationCode: string, newPassword: string, history, cogUser?: ICognitoUser ) => async (dispatch) => {
     try {
         console.log(`needsverifictioncode: ${needsVerificationCode}, username: ${username}, verificationCode: ${verificationCode}, newpassword: ${newPassword}`
         )
