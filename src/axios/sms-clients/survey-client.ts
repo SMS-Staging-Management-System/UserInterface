@@ -90,9 +90,9 @@ export const surveyClient = {
           .then(response => {
             let answerChoices = response.data;
             // If it is a rating question, sort the ratings
-            if (questionJunction.typeId === 4) {
-              answerChoices.sort((a, b) => (a.answer > b.answer) ? 1 : -1);
-            }
+            // if (questionJunction.typeId === 4) {
+            //   answerChoices.sort((a, b) => (a.answer > b.answer) ? 1 : -1);
+            // }
             questionJunction.questionId.answerChoices = answerChoices;
           })
           .catch(err => {
