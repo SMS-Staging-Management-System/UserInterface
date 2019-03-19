@@ -57,7 +57,8 @@ export interface IAuthState {
 
 
   export interface IJoinCohortState {
-    validToken:boolean
+    validToken:boolean,
+    userToJoin:IUser
   }
 
 

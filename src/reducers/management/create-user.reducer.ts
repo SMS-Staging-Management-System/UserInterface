@@ -7,10 +7,10 @@ const initialState: ICreateUserState = {
   locationDropdownActive: false,
   newUser: {
     userId: 0,
-    status: {
-      statusId: 0,
-      genericStatus: '',
-      specificStatus: '',
+    userStatus: {
+      statusId: 2,
+      generalStatus: 'Training',
+      specificStatus: 'Training',
       virtual: false
     },
     roles: [],
@@ -23,15 +23,7 @@ const initialState: ICreateUserState = {
       state: '',
       zip: ''
     },
-    personalAddress: {
-      addressId: 0,
-      street: '',
-      alias: '',
-      city: '',
-      country: '',
-      state: '',
-      zip: ''
-    },
+    personalAddress: null,
     email: '',
     firstName: '',
     lastName: '',
@@ -56,7 +48,7 @@ export const createUserReducer = (state = initialState, action: any) => {
         ...state,
         newUser: {
           ...state.newUser,
-          address: action.payload.location
+          trainingAddress: action.payload.location
         }
       }
     case createUserTypes.UPDATE_NEW_USER:

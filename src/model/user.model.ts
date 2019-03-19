@@ -8,7 +8,7 @@ export interface IUser {
   lastName:   string;
   phoneNumber:     string;
   trainingAddress:    IAddress;
-  personalAddress:    IAddress;
-  status:     IStatus
+  personalAddress:    IAddress|null;
+  userStatus:     IStatus
   roles: string[];
 }

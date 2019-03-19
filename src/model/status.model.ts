@@ -2,7 +2,7 @@
 
 export interface IStatus{
     statusId: number;
-    genericStatus: string;
+    generalStatus: string;
     specificStatus: string;
     virtual: boolean;
 }
