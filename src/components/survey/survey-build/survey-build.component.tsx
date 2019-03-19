@@ -121,6 +121,9 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       };
       let dummyQuestionArray: IQuestion[] = [];
       let dummyAnswerArray: IAnswer[] = [];
+      //beacuse there was a bug of sending data to the api(answers were out of order) 
+      //we had to create another answer array that carried all of the parsed answers
+      let parsedAnswers : IAnswer[] = [];
 
       let questionindex = 0;// used for connecting answers to their temp question index
 
@@ -238,8 +241,13 @@ class surveyBuild extends React.Component<IComponentProps, any>{
        
           dummyAnswerArray[index].questionId = questionid[questionOrder];
           dummyAnswers.questionId = questionid[questionOrder];
-          surveyClient.saveAnswer(dummyAnswers);
+          
+          parsedAnswers.push(dummyAnswers);
         }
+      }
+
+      for (let index = 0; index < parsedAnswers.length; index++) {
+        await surveyClient.saveAnswer(parsedAnswers[index]);
       }
     }
     else {
