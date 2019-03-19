@@ -86,6 +86,13 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 statusDropdownActive: !state.statusDropdownActive,
                 bUserInfoChanged: true
             }
+        case profileTypes.UPDATE_USER_STATUS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    userStatus: action.payload.status}
+            }
     }
     return state;
 }
