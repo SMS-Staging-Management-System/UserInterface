@@ -10,7 +10,8 @@ import { assocInputReducer } from './assoc-input.reducer';
 import { IAssociateInput } from '../../model/Associateinput.model';
 import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
-import { Interview } from '../../model/Interview.model'
+import { Client } from '../../model/Client.model';
+import { Interview } from '../../model/Interview.model';
 
 export interface IReportFormState {
     
@@ -135,6 +136,7 @@ export interface ICreateInterviewComponentState {
     date: string,
     location: string,
     client: string,
+    clientArr: Client[]
 }
 
 export interface IInterviewListState {

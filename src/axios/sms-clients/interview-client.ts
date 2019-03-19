@@ -10,6 +10,7 @@ export const interviewClient = {
     },
   
     addNewInterview: async (newInterview: INewInterviewData) => {
+        console.log(newInterview);
         return await smsClient.post(interviewContext + '/new', newInterview);
     },
     
@@ -47,6 +48,10 @@ export const interviewClient = {
 
     fetchAssoc24: async () => {
         return await smsClient.get(interviewContext+`/reports/request24/associate`);
+    },
+
+    fetchClient: async () => {
+        return await smsClient.get(interviewContext+`/client`);
     },
 
     submitAssocInput: async (payload: any) => {
