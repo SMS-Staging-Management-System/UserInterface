@@ -71,7 +71,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
 
     changeOrderCriteria = (event : any) => {
         this.props.getInterviewPages(
-            this.props.currentPage, 
+            0, 
             this.props.pageSize, 
             event.currentTarget.id, 
             this.state.direction);
@@ -127,7 +127,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
                             </th>
-                            <th id='feedback' onClick={this.changeOrderCriteria}>Associate Feedback 
+                            <th id='associateInput' onClick={this.changeOrderCriteria}>Associate Feedback 
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
                             </th>
@@ -153,28 +153,28 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 previousLabel={'Prev'}
                 nextLabel={'Next'}
                 breakLabel={'...'}
-                breakClassName={'page-item no-select'}
+                breakClassName={'page-item no-select justify-content-center'}
                 breakLinkClassName={'break-me-link page-link'}
                 pageCount={this.props.numberOfPages}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
-                containerClassName={'pagination page-navigator'}
+                containerClassName={'pagination page-navigator justify-content-center'}
                 activeClassName={'active'}
                 pageClassName={'page-item cursor-hover'}
-                pageLinkClassName={'paginate-link page-link no-select'}
+                pageLinkClassName={'paginate-link page-link no-select justify-content-center'}
                 nextClassName={'page-item cursor-hover'}
-                nextLinkClassName={'paginate-next page-link no-select'}
+                nextLinkClassName={'paginate-next page-link no-select justify-content-center'}
                 previousClassName={'page-item cursor-hover'}
-                previousLinkClassName={'paginate-previous page-link no-select'}/>
+                previousLinkClassName={'paginate-previous page-link no-select justify-content-center'}/>
 
                 <form>
-                    <Label>Page Size: </Label>
-                    <select value={this.props.pageSize} onChange={this.changePageSize}>
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
+                    <Label className={'justify-content-center'}>Page Size: </Label>
+                    <select value={this.props.pageSize} onChange={this.changePageSize} className={'justify-content-center'}>
+                        <option value={5} className={'justify-content-center'}>5</option>
+                        <option value={10} className={'justify-content-center'}>10</option>
+                        <option value={25} className={'justify-content-center'}>25</option>
+                        <option value={50} className={'justify-content-center'}>50</option>
                     </select>
                 </form>
             </Jumbotron>
