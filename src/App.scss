@@ -568,7 +568,9 @@ color:#565D61;
     width: 100%;
 }
 
-
+.modal-content {
+    min-height: 300px;
+}
 
 /*****************
 User Dropdown
@@ -907,6 +909,6 @@ Alert
 /****************
 Fa Circle
 ****************/ 
-.faCircle{
-  color: $revature-orange-light;
-}
+.faCircle {
+    color: $revature-orange-light;
+  }
