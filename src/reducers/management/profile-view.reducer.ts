@@ -36,7 +36,9 @@ const initialState: IProfileViewState = {
         roles: []
     },
     bUserInfoChanged: false,
-    locationDropdownActive: false
+    locationDropdownActive: false,
+    statusDropdownActive: false,
+    virtual: false
 }
 
 export const profileViewReducer = (state = initialState, action: any) => {
@@ -78,6 +80,26 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 user: action.payload.updatedUser,
                 bUserInfoChanged: false
             }
+        case profileTypes.TOGGLE_STATUS_DROPDOWN:
+            return {
+                ...state,
+                statusDropdownActive: !state.statusDropdownActive,
+                bUserInfoChanged: true
+            }
+        case profileTypes.UPDATE_USER_STATUS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    userStatus: action.payload.status}
+            }
+        case profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX:
+            return {
+                ...state,
+                virtual: !state.virtual
+            }
+    
+    
     }
     return state;
 }

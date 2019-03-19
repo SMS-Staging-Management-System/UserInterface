@@ -2,6 +2,7 @@ import { ICognitoUser } from "../../model/cognito-user.model";
 import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
 import { addressReducer } from "./address.reducer";
+import { statusReducer } from "./status.reducer";
 import { authReducer } from "./auth.reducer";
 import { clickerReducer } from "./clicker.reducer";
 import { createUserReducer } from "./create-user.reducer";
@@ -14,6 +15,7 @@ import { joinCohortReducer } from "./join-cohort.reducer";
 import { manageCohortsReducer} from './manage-cohorts.reducer'
 import { ICohort } from "../../model/cohort";
 import { profileViewReducer } from "./profile-view.reducer";
+import { IStatus } from "../../model/status.model";
 
 
 export interface IAuthState {
@@ -46,6 +48,11 @@ export interface IAuthState {
   export interface IAddressState {
     trainingAddresses: IAddress[]
   }
+
+  export interface IStatusState {
+    userStatus: IStatus[],
+    
+  }
   
   export interface IManageUsersState {
     manageUsers: ICognitoUser[];
@@ -68,7 +75,9 @@ export interface IAuthState {
   export interface IProfileViewState {
     user: IUser,
     bUserInfoChanged: boolean,
-    locationDropdownActive: boolean
+    locationDropdownActive: boolean,
+    statusDropdownActive: boolean,
+    virtual:boolean,
   }
 
   export interface IManagementState {
@@ -80,6 +89,7 @@ export interface IAuthState {
     manageUsers: IManageUsersState,
     manageCohorts: IManageCohortsState,
     addresses: IAddressState,
+    statuses: IStatusState,
     currentSMSUser: ICurrentSMSUserState,
     joinCohort: IJoinCohortState
     currentProfile: IProfileViewState
@@ -87,6 +97,7 @@ export interface IAuthState {
 
   export const managementState = combineReducers<IManagementState>({
     addresses: addressReducer,
+    statuses: statusReducer,
     auth: authReducer,
     clicker: clickerReducer,
     viewUser: viewUserReducer,
