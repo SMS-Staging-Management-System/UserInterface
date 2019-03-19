@@ -35,7 +35,7 @@ const mapStateToProps = (state: IState) => ({
     userToView: state.managementState.currentProfile.user,
     locationDropdownActive: state.managementState.currentProfile.locationDropdownActive,
     trainingAddresses: state.managementState.addresses,
-    currentStatus: state.managementState.statuses,
+    allStatus: state.managementState.statuses,
     statusDropdownActive: state.managementState.currentProfile.statusDropdownActive,
     bUserInfoChanged: state.managementState.currentProfile.bUserInfoChanged,
     virtual: state.managementState.currentProfile.virtual
