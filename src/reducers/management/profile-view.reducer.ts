@@ -79,6 +79,12 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 user: action.payload.updatedUser,
                 bUserInfoChanged: false
             }
+        case profileTypes.TOGGLE_STATUS_DROPDOWN:
+            return {
+                ...state,
+                statusDropdownActive: !state.statusDropdownActive,
+                bUserInfoChanged: true
+            }
     }
     return state;
 }

@@ -8,6 +8,7 @@ import Amplify, { Auth } from 'aws-amplify';
 import { refreshJwt } from '../../axios/sms-clients';
 import { getUserByEmail } from '../current-sms-user/current-sms-user.actions';
 import { updateLocations } from '../address/address.actions';
+import { updateStatuses } from '../status/status.actions';
 // import Axios from 'axios';
 
 Amplify.configure({
@@ -66,6 +67,7 @@ export const setup = () => (dispatch: ((action: any) => void)) => {
           // Set redux cognito data
           // TODO Refactor to a trigger LOGIN action
           dispatch(updateLocations());
+          dispatch(updateStatuses());
           dispatch(updateCurrentUser(currentUser));
           getUserByEmail(userAttributes.email)(dispatch);
         })
