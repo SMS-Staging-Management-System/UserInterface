@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { Table } from 'reactstrap';
+import { connect } from 'react-redux';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
@@ -9,12 +10,27 @@ import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import Loader from '../Loader/Loader';
+import { IState } from '../../../reducers';
 
 interface TemplatesProps extends RouteComponentProps<{}> {
     match: any
 }
+interface IComponentState {
+    templates: any,
+    templatesLoaded: boolean,
+    newTitle: string,
+    newDescription: string,
+    description: string,
+    showModal: boolean,
+    surveyId: number,
+    surveyLoaded: boolean,
+    openedTemplate: any,
+    dateCreated: any,
+    survey: any,
+    redirectTo: any
+};
 
-class TemplatesComponent extends Component<TemplatesProps, any> {
+class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,6 +38,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             templatesLoaded: false,
             newTitle: '',
             newDescription: '',
+            description: '',
             showModal: false,
             surveyId: 0,
             surveyLoaded: false,
@@ -35,7 +52,8 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                 closingDate: null,
                 template: false,
                 published: true
-            }
+            },
+            redirectTo: null
         }
 
     }
@@ -212,11 +230,11 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
                             </thead>
                             <tbody>
                                 {this.state.templates.map(template => (
-                                    <tr key={template.surveyId} className="rev-table-row"
-                                        onClick={() => this.handleShow(template.surveyId, template.description)}>
-                                        <td>{template.title}</td>
-                                        <td>{template.description}</td>
-                                        <td>{template.dateCreated && new Date(template.dateCreated).toDateString()}</td>
+                                    <tr key={template['surveyId']} className="rev-table-row"
+                                        onClick={() => this.handleShow(template['surveyId'], template['description'])}>
+                                        <td>{template['title']}</td>
+                                        <td>{template['description']}</td>
+                                        <td>{template['dateCreated'] && new Date(template['dateCreated']).toDateString()}</td>
                                     </tr>
 
                                 ))}
@@ -290,4 +308,8 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
     }
 }
 
-export default TemplatesComponent;
+const mapStateToProps = (state: IState) => ({
+    auth: state.managementState.auth
+});
+
+export default connect(mapStateToProps)(TemplatesComponent);

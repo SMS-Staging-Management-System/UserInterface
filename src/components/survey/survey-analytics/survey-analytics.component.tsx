@@ -3,9 +3,22 @@ import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { Redirect } from 'react-router';
 import { Bar, Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-annotation';
+import { IState } from '../../../reducers';
+import { RouteComponentProps } from 'react-router';
 import Loader from '../Loader/Loader';
+import { connect } from 'react-redux';
 
-class SurveyAnalyticsComponent extends React.Component<any, any> {
+interface IComponentProps extends RouteComponentProps<{}> {
+    match: any
+};
+
+interface IComponentState {
+    surveyData: any,
+    surveyDataLoaded: boolean,
+    redirectTo: any
+};
+
+class SurveyAnalyticsComponent extends React.Component<IComponentProps, IComponentState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -145,4 +158,8 @@ class SurveyAnalyticsComponent extends React.Component<any, any> {
     }
 }
 
-export default SurveyAnalyticsComponent;
+const mapStateToProps = (state: IState) => ({
+    auth: state.managementState.auth
+});
+
+export default connect(mapStateToProps)(SurveyAnalyticsComponent);

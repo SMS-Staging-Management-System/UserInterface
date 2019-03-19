@@ -1,10 +1,22 @@
 import React, { Fragment } from 'react';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
-import { Redirect } from 'react-router';
 import { Table } from 'reactstrap';
 import Loader from '../Loader/Loader';
+import { Redirect, RouteComponentProps } from 'react-router';
+import { IState } from '../../../reducers';
+import { connect } from 'react-redux';
 
-export class SurveyRespondentsComponent extends React.Component<any, any> {
+interface IComponentProps extends RouteComponentProps<{}> {
+    match: any
+};
+
+interface IComponentState {
+    historyData: any,
+    historyDataLoaded: boolean,
+    redirectTo: any
+};
+
+class SurveyRespondentsComponent extends React.Component<IComponentProps, IComponentState> {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,8 +31,9 @@ export class SurveyRespondentsComponent extends React.Component<any, any> {
     }
 
     loadSurveyRespondents = async () => {
+        console.log("The surveyId is ", this.props);
         const historyData = await surveyClient.findHistoriesBySurveyId(this.props.match.params.surveyId);
-
+        console.log("The history data brought in is: ", historyData);
         this.setState({
             historyData: historyData,
             historyDataLoaded: true
@@ -35,7 +48,7 @@ export class SurveyRespondentsComponent extends React.Component<any, any> {
             <>
                 {this.state.historyDataLoaded ? (
                     <Fragment>
-                        {this.state.historyData.length ? (
+                        {this.state.historyData ? (
                             <>
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">
@@ -61,11 +74,15 @@ export class SurveyRespondentsComponent extends React.Component<any, any> {
                             )}
                     </Fragment>
                 ) : (
-                        <Loader/>
+                        <Loader />
                     )}
             </>
         );
     }
 }
 
-export default SurveyRespondentsComponent;
+const mapStateToProps = (state: IState) => ({
+    auth: state.managementState.auth
+});
+
+export default connect(mapStateToProps)(SurveyRespondentsComponent);
