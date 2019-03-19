@@ -329,7 +329,7 @@ class Profile extends Component<IProfileProps, any> {
             <br/>
               <Input
                 type="checkbox"
-                checked={this.props.virtual}
+                checked={this.props.userToView.userStatus.virtual}
                 onChange={() => this.props.handleCheckboxChange(this.props.allStatus.userStatus.filter(status=>{
                   if(status.specificStatus === userToView.userStatus.specificStatus && status.virtual !== userToView.userStatus.virtual){
                     return true;
