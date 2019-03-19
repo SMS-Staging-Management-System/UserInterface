@@ -122,7 +122,11 @@ class Profile extends Component<IProfileProps, any> {
   onSubmitHandler = (event: FormEvent) => {
     event.preventDefault();
     if (this.props.bUserInfoChanged) {
-      this.props.updateUser(this.props.userToView); 
+      if (this.props.currentSMSUser.email === this.props.userToView.email) {
+        this.props.updateUser(this.props.userToView, true);
+      } else {
+        this.props.updateUser(this.props.userToView, false);
+      }
     }
   }
 

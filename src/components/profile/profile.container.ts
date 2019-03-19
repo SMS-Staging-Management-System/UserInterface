@@ -18,7 +18,7 @@ export interface IProfileProps {
     bUserInfoChanged: boolean
     updateUserInfo(updatedUser: IUser): void
     setToCurrentSMSUser(currentSMSUser: IUser): void
-    updateUser(userToUpdate: IUser): void
+    updateUser(userToUpdate: IUser, bIsCurrentUser: boolean): void
     updateUserTrainingLocation(location: IAddress): void
     toggleTrainingLocationsDropdown(): void
   }
