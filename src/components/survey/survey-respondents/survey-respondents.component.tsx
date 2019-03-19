@@ -31,8 +31,9 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
     }
 
     loadSurveyRespondents = async () => {
+        console.log("The surveyId is ", this.props);
         const historyData = await surveyClient.findHistoriesBySurveyId(this.props.match.params.surveyId);
-
+        console.log("The history data brought in is: ", historyData);
         this.setState({
             historyData: historyData,
             historyDataLoaded: true
@@ -47,7 +48,7 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
             <>
                 {this.state.historyDataLoaded ? (
                     <Fragment>
-                        {this.state.historyData.length ? (
+                        {this.state.historyData ? (
                             <>
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">

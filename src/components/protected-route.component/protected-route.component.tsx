@@ -24,6 +24,7 @@ export const ProtectedRoute = (props: IProtectedRouteProps) => {
   const Component = component as any;
   return (
     <Route
+      path={props.path}
       render={props => {
         if (allowedRoles.some((allowedRole: string) => auth.currentUser.roles.includes(allowedRole))) {
           return <Component {...props} />;
