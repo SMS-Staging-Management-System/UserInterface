@@ -9,17 +9,21 @@ import { FeedBack } from './feedback.component';
 import { CheckBox } from './checkbox.component';
 import { TrueFalse } from './truefalse.component';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
-import { ISurvey } from '../../../model/surveys/survey.model';
-import { IQuestion } from '../../../model/surveys/question.model';
-import { IAnswer } from '../../../model/surveys/answer.model';
-import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
+// import { ISurvey } from '../../../model/surveys/survey.model';
+// import { IQuestion } from '../../../model/surveys/question.model';
+// import { IAnswer } from '../../../model/surveys/answer.model';
+// import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
 import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
+import { ISurveyState } from '../../../reducers/survey';
+import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
 
 interface IComponentProps extends RouteComponentProps<{}> {
   auth: IAuthState,
-  match: any
+  match: any,
+  surveyState: ISurveyState
+  CreatSurvey: (frmData: any, completedTasks: any[]) => void
 };
 
 class surveyBuild extends React.Component<IComponentProps, any>{
@@ -103,156 +107,20 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    //if no question are in the drag on drop block then skip creation of survey
-    if (this.state.completedTasks.length > 0) {
 
+    if (this.state.completedTasks.length > 0) {
       let frmData = $(":input").serializeArray();
       //frm data takes in too much data so splice until only title is received
       frmData.splice(0, 13);
 
-      let dummySurvey: ISurvey = {
-        surveyId: 1,
-        title: frmData,
-        description: 'Example Survey 1 Description',
-        dateCreated: new Date(),
-        closingDate: null,
-        template: false,
-        published: true
-      };
-      let dummyQuestionArray: IQuestion[] = [];
-      let dummyAnswerArray: IAnswer[] = [];
-      //beacuse there was a bug of sending data to the api(answers were out of order) 
-      //we had to create another answer array that carried all of the parsed answers
-      let parsedAnswers : IAnswer[] = [];
-
-      let questionindex = 0;// used for connecting answers to their temp question index
-
-      //loop through all the data from the survey
-      for (let index = 0; index < frmData.length; index++) {
-
-        let dummyquestion: IQuestion = {
-          questionId: {
-            questionId: 0,
-            question: 'string',
-            typeId: 0,
-          }
-        }
-        let dummyAnswers: IAnswer = {
-          id: 0,
-          answer: "string",
-          questionId: 0
-        }
-
-        //switch between the types of data from the survey
-        switch (frmData[index].name) {
-          case 'title':
-            dummySurvey.title = frmData[index].value;
-            dummySurvey.description = frmData[index].value;
-            break;
-
-          case 'description':
-            dummySurvey.description = frmData[index].value;
-            break;
-
-          case 'questionText':
-            dummyquestion.questionId.typeId = this.state.completedTasks[questionindex].questionID;
-            dummyquestion.questionId.question = frmData[index].value;
-            dummyQuestionArray.push(dummyquestion);
-            questionindex += 1//update the group of answers to this question
-            break;
-          case 'answerText':
-            dummyAnswers.id = questionindex;
-            dummyAnswers.questionId = questionindex;//if not then use questionindex
-            dummyAnswers.answer = frmData[index].value;
-            dummyAnswerArray.push(dummyAnswers);
-            break;
-          case 'template?':
-            dummySurvey.template = true;
-            dummySurvey.published = false;
-            break;
-
-          default:
-            break;
-        }
-      }
-
-      let junctionTable: IJunctionSurveyQuestion = {
-        id: 0,
-        questionId: {
-          questionId: 0,
-          question: 'string',
-          typeId: 0,
-        },
-        questionOrder: 0,
-        surveyId: dummySurvey,
-      }
-
-      let surveyId = await surveyClient.saveSurvey(dummySurvey);
-      let questionid = new Array; // used to connect the answers to the database question id
-
-        //loop through the question array that was filled during the frmdata loop
-      for (let index = 0; index < dummyQuestionArray.length; index++) {
-        //grab the questions id from the database
-        //and push the id into the questionid array
-        let num = await surveyClient.saveQuestion(dummyQuestionArray[index]);
-        //beacuase feedback question has no answer we need to skip the question
-        //in order to keep the correct structor 
-        if (dummyQuestionArray[index].questionId.typeId != 5) {
-          questionid.push(num);
-        }
-
-        junctionTable.questionId = dummyQuestionArray[index].questionId;
-        junctionTable.questionId.questionId = num;
-
-        junctionTable.questionOrder = index + 1;
-        junctionTable.surveyId = dummySurvey;
-        junctionTable.surveyId.surveyId = surveyId;
-
-
-        surveyClient.saveToQuestionJunction(junctionTable);
-      }
-
-      let change = dummyAnswerArray[0].id;//keep a temp variable to check if the answer block is connected to its question
-      let questionOrder = 0;
-
-      for (let index = 0; index < dummyAnswerArray.length; index++) {
-
-        let match = dummyAnswerArray[index].answer.split(",")//splits the answer choices by comma
-        for (let a in match) {//gets each individual answer and creates an answer model to be submitted to the database
-
-
-          let dummyAnswers: IAnswer = {
-            id: 0,
-            answer: "string",
-            questionId: 0
-          }
-
-          let choice = match[a]
-          dummyAnswers.answer = choice
-
-          //if the answer block has reached a new question
-          //update to the next answer block
-          if (change != dummyAnswerArray[index].id) {
-
-            change = dummyAnswerArray[index].id;
-            questionOrder++;
-
-          }
-       
-          dummyAnswerArray[index].questionId = questionid[questionOrder];
-          dummyAnswers.questionId = questionid[questionOrder];
-          
-          parsedAnswers.push(dummyAnswers);
-        }
-      }
-
-      for (let index = 0; index < parsedAnswers.length; index++) {
-        await surveyClient.saveAnswer(parsedAnswers[index]);
-      }
+      this.props.CreatSurvey(frmData, this.state.completedTasks);
     }
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
     }
+
+
+
     this.handleShow();//user styleing for creating a survey
   }
 
@@ -280,7 +148,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
   }
   render() {
     const { todos, completedTasks } = this.state;
-    
+
     return (
       <>
         {/* Used for dragging */}
@@ -294,13 +162,13 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
               )
             }</div></div>
-            
+
 
 
 
 
         <div className="container" >
-        
+
           <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
 
             <form onSubmit={this.handleSubmit} >
@@ -313,7 +181,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                 <label htmlFor="description">Survey Description</label>
                 <textarea className="form-control" name="description" placeholder="Survey Description" required></textarea><br />
 
-               
+
 
 
                 <label htmlFor="type">Add Question Types</label><br />
@@ -336,7 +204,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                     }
                   </div>
                 </div>
-               
+
                 <br /><br /><button type="submit" className="createSurveyButton" >Create Survey</button>
 
 
@@ -344,7 +212,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
               <div id="alertSubmission" className="alert alert-success" role="alert">
                 Your survey has been successfully submitted!</div>
             </form>
-           
+
           </div>
         </div>
       </>
@@ -356,7 +224,10 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 }
 
 const mapStateToProps = (state: IState) => ({
-  auth: state.managementState.auth
+  auth: state.managementState.auth,
+  surveyBuildState: state.surveyState
 });
-
-export default connect(mapStateToProps)(surveyBuild);
+const mapDispatchToProps = {
+  CreatSurvey
+}
+export default connect(mapStateToProps, mapDispatchToProps)(surveyBuild);
