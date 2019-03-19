@@ -2,6 +2,7 @@ import { ICognitoUser } from "../../model/cognito-user.model";
 import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
 import { addressReducer } from "./address.reducer";
+import { statusReducer } from "./status.reducer";
 import { authReducer } from "./auth.reducer";
 import { clickerReducer } from "./clicker.reducer";
 import { createUserReducer } from "./create-user.reducer";
@@ -13,6 +14,7 @@ import { currentSMSUserReducer } from "./current-sms-user.reducer";
 import { manageCohortsReducer} from './manage-cohorts.reducer'
 import { ICohort } from "../../model/cohort";
 import { profileViewReducer } from "./profile-view.reducer";
+import { IStatus } from "../../model/status.model";
 
 
 export interface IAuthState {
@@ -45,6 +47,10 @@ export interface IAuthState {
   export interface IAddressState {
     trainingAddresses: IAddress[]
   }
+
+  export interface IStatusState {
+    userStatus: IStatus[]
+  }
   
   export interface IManageUsersState {
     manageUsers: ICognitoUser[];
@@ -62,6 +68,7 @@ export interface IAuthState {
     user: IUser,
     bUserInfoChanged: boolean,
     locationDropdownActive: boolean
+    statusDropdownActive: boolean
   }
 
   export interface IManagementState {
@@ -73,12 +80,14 @@ export interface IAuthState {
     manageUsers: IManageUsersState,
     manageCohorts: IManageCohortsState,
     addresses: IAddressState,
+    statuses: IStatusState,
     currentSMSUser: ICurrentSMSUserState,
     currentProfile: IProfileViewState
   }
 
   export const managementState = combineReducers<IManagementState>({
     addresses: addressReducer,
+    statuses: statusReducer,
     auth: authReducer,
     clicker: clickerReducer,
     viewUser: viewUserReducer,

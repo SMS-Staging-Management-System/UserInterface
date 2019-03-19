@@ -13,7 +13,8 @@ export const inputNames = {
   CITY: 'CITY',
   STATE: 'STATE',
   ZIP: 'ZIP',
-  TRAINING_ALIASES: 'TRAINING_ALIASES'
+  TRAINING_ALIASES: 'TRAINING_ALIASES',
+  STATUS_ALIASES: 'STATUS_ALIASES'
 }
 
 class Profile extends Component<IProfileProps, any> {
@@ -119,8 +120,14 @@ class Profile extends Component<IProfileProps, any> {
     this.props.toggleTrainingLocationsDropdown();
   }
 
+  handleCheckboxChange = (status) =>{
+  this.props.updateUserStatus(status.virtual);
+  }
   render() {
-    const {userToView, trainingAddresses} = this.props;
+    const {userToView, trainingAddresses, currentStatus} = this.props;
+    const Checkbox = props => (
+      <input type="checkbox" {...props} />
+    )
     return (
       <Container>
         <Form onSubmit={(event) => this.onSubmitHandler(event)}>
@@ -141,7 +148,7 @@ class Profile extends Component<IProfileProps, any> {
                   isOpen={this.props.locationDropdownActive}
                   toggle={this.props.toggleTrainingLocationsDropdown}>
                   <DropdownToggle caret>
-                    {userToView.trainingAddress && userToView.trainingAddress.alias}
+                    {userToView.trainingAddress && userToView.trainingAddress.alias || 'No Location'}
                   </DropdownToggle>
                   <DropdownMenu name={inputNames.TRAINING_ALIASES}>
                   {
@@ -234,6 +241,44 @@ class Profile extends Component<IProfileProps, any> {
             </FormGroup>  
           </Col>
         </Row>
+        <Row>
+                <Col md={4}>
+                <Col>
+                    <Label>Status:</Label>
+                    <Dropdown
+                        color="success" className="responsive-modal-row-item rev-btn"
+                    isOpen={this.props.statusDropdownActive}
+                    toggle={this.props.toggleStatusDropdown}>
+                    <DropdownToggle caret>
+                        {userToView.status && userToView.status.genericStatus && userToView.status.specificStatus || 'No Status'}
+                    </DropdownToggle>
+                    <DropdownMenu name={inputNames.STATUS_ALIASES}>
+                        {
+                            currentStatus.userStatus.length === 0
+                            ? <>
+                            <DropdownItem>Unable To Find Any Statuses</DropdownItem>
+                            <DropdownItem divider />
+                            </>
+                            : currentStatus.userStatus.map(status =>
+                            <DropdownItem 
+                            key={status.statusId}
+                            onClick={() => this.props.updateUserStatus(status)} >{currentStatus.userStatus}</DropdownItem>
+                            )
+                        } 
+                        </DropdownMenu>
+                    </Dropdown> 
+                </Col>
+            </Col>
+            <Col md={4}>
+            <Label>Virtual:</Label>
+                <Label>
+                <Checkbox
+            checked={this.props.userToView.status.virtual}
+            onChange={this.handleCheckboxChange}
+          />
+                </Label>
+            </Col>
+        </Row>  
         <Button>Update</Button>
       </Form>
       </Container>
