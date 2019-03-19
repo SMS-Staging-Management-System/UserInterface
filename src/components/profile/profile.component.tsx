@@ -294,9 +294,10 @@ class Profile extends Component<IProfileProps, any> {
             </Col>
             { <Col md={4}>
             <Label>Virtual:</Label>
+            <br/>
               <Input
                 type="checkbox"
-                checked={this.props.userToView.userStatus && this.props.userToView.userStatus.virtual}
+                checked={this.props.virtual}
                 onChange={this.props.handleCheckboxChange}
                 />
                 
