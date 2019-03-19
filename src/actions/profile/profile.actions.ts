@@ -80,3 +80,10 @@ export const updateUser = (userToUpdate: IUser) => async (dispatch: (action: any
         toast.error('Failed to update');
     }
 }
+
+export const handleCheckboxChange = () => {
+    return {
+        payload: {},
+        type: profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX
+    }
+}

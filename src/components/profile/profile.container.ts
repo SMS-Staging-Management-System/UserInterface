@@ -3,7 +3,7 @@ import { IState } from '../../reducers/index';
 import Profile from './profile.component';
 import { hoveredUser } from '../../actions/view-user/view-user.actions';
 import { updateLocations } from '../../actions/address/address.actions';
-import { updateUserTrainingLocation, updateUserInfo, setToCurrentSMSUser, toggleTrainingLocationsDropdown, updateUser, updateUserStatus, toggleStatusDropdown } from '../../actions/profile/profile.actions';
+import { updateUserTrainingLocation, updateUserInfo, setToCurrentSMSUser, toggleTrainingLocationsDropdown, updateUser, updateUserStatus, toggleStatusDropdown, handleCheckboxChange } from '../../actions/profile/profile.actions';
 import { IUser } from '../../model/user.model';
 import { IAddressState, IStatusState } from '../../reducers/management';
 import { IAddress } from '../../model/address.model';
@@ -27,6 +27,7 @@ export interface IProfileProps {
     toggleTrainingLocationsDropdown(): void
     updateUserStatus(status: IStatus): void
     toggleStatusDropdown(): void
+    handleCheckboxChange(): void
   }
 
 const mapStateToProps = (state: IState) => ({
@@ -34,7 +35,7 @@ const mapStateToProps = (state: IState) => ({
     userToView: state.managementState.currentProfile.user,
     locationDropdownActive: state.managementState.currentProfile.locationDropdownActive,
     trainingAddresses: state.managementState.addresses,
-    currentStatus: state.managementState.statuses,
+    allStatus: state.managementState.statuses,
     statusDropdownActive: state.managementState.currentProfile.statusDropdownActive,
     bUserInfoChanged: state.managementState.currentProfile.bUserInfoChanged,
     virtual: state.managementState.currentProfile.virtual
@@ -49,7 +50,8 @@ const mapDispatchToProps = {
    updateUserInfo,
    toggleTrainingLocationsDropdown,
    updateUserStatus,
-   toggleStatusDropdown
+   toggleStatusDropdown,
+   handleCheckboxChange
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

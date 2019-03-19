@@ -93,6 +93,13 @@ export const profileViewReducer = (state = initialState, action: any) => {
                     ...state.user,
                     userStatus: action.payload.status}
             }
+        case profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX:
+            return {
+                ...state,
+                virtual: !state.virtual
+            }
+    
+    
     }
     return state;
 }

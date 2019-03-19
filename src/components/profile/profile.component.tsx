@@ -292,16 +292,15 @@ class Profile extends Component<IProfileProps, any> {
                     </Dropdown> 
                 </Col>
             </Col>
-            <Col md={4}>
+            { <Col md={4}>
             <Label>Virtual:</Label>
-                <Label>
-                <Input
-                type = 'checkbox'
-            checked={this.props.userToView.userStatus.virtual}
-            onChange={this.handleCheckboxChange}
-            />
-                </Label>
-            </Col>
+              <Input
+                type="checkbox"
+                checked={this.props.userToView.userStatus.virtual}
+                onChange={this.props.handleCheckboxChange}
+                />
+                
+            </Col>}
         </Row>  
         <br/>
         <Button>Update</Button>
