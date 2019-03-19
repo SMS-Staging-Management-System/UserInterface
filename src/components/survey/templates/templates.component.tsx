@@ -161,7 +161,7 @@ class TemplatesComponent extends Component<TemplatesProps, any> {
             for (let j = 0; j < answers.length; j++) {
                 if (answers[j].questionId === questions[index].questionId.questionId) {
                     answers[j].questionId = questionid[index];
-                    surveyClient.saveAnswer(answers[j]);
+                    await surveyClient.saveAnswer(answers[j]);
                 }
             }
 
