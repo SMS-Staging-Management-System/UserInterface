@@ -1,10 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { FeedbackRequestedChartComponent } from './FeedbackRequestedChartComponent';
-import { FeedbackDeliveredChartComponent } from './FeedbackDeliveredChartComponent';
-// import {getInfoAssociate} from '../../../actions/assoc-24-chart/assoc24chart.actions';
-// import {getInfoManager} from '../../../actions/manager-24-chart/manager24chart.actions';
-import { IState } from '../../../reducers';
+import {FeedbackRequestedChartComponent} from './FeedbackRequestedChartComponent'
+import {FeedbackDeliveredChartComponent} from './FeedbackDeliveredChartComponent'
 
 export class FeedbackChartComponent extends React.Component<any, any> {
   constructor(props) {
@@ -12,31 +8,17 @@ export class FeedbackChartComponent extends React.Component<any, any> {
   }
 
   render() {
-    return (
-    <div>
-      <div id='FeedbackRequestedChart'>
-        <FeedbackRequestedChartComponent/><br/>
-        <h2>Feedback requested for interviews.<hr/></h2>
+    return(
+      <div>
+        <div id='FeedbackRequestedChart'>
+          <FeedbackRequestedChartComponent chart = {this.props.chart1} chartAction = {this.props.chartAction1} setCanvas = {this.props.canvas1}/><br/>
+          <h2>Interviews with Feedback Requested<hr/></h2>
+        </div>
+        <div id='FeedbackReceivedChart'>
+          <FeedbackDeliveredChartComponent chart = {this.props.chart2} chartAction = {this.props.chartAction2} setCanvas = {this.props.canvas2} /><br/>
+          <h2>Interviews with Feedback Delivered<hr/></h2>
+        </div>
       </div>
-      <div id='ManagerChart'>
-        <FeedbackDeliveredChartComponent/><br/>
-        <h2>Feedback delivered to associates.<hr/></h2>
-      </div>
-    </div>
     )
   }
 }
-
-const mapStateToProps = (state: IState) => {
-  return {
-    // managersChart : state.interviewState.managerChart,
-    // associatesChart : state.interviewState.associateChart
-  }
-}
-
-const mapDispatchToProps = {
-  // getInfoAssociate,
-  // getInfoManager
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FeedbackChartComponent);

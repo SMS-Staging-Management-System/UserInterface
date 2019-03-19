@@ -1,8 +1,7 @@
 import { interviewClient } from "../../axios/sms-clients/interview-client";
 
 export const interviewListTypes = {
-    GET_PAGES :'GET_PAGES',
-    GET_NUMBER_OF_PAGES : "GET_NUMBER_OF_PAGES"
+    GET_PAGES :'GET_PAGES'
 }
 
 export const getInterviewPages = (
@@ -13,19 +12,13 @@ export const getInterviewPages = (
     const resp = await interviewClient.fetchPage(pageNumber, pageSize, orderBy, direction)
     dispatch({
         payload : {
-            listOfInterviews : resp.data.content
+            listOfInterviews : resp.data.content,
+            numberOfPages : resp.data.totalPages,
+            currentPage : pageNumber,
+            pageSize : pageSize,
+            orderBy : orderBy,
+            direction : direction
         },
         type: interviewListTypes.GET_PAGES
     })
-}
-
-export const getNumberOfPages = (pageSize = 5) => async (dispatch) => {
-    const resp = await interviewClient.fetchPage(0, pageSize);
-
-    dispatch({
-         payload : {
-             numberOfPages : resp.data.totalPages
-         },
-         type: interviewListTypes.GET_NUMBER_OF_PAGES
-     })
 }

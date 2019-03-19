@@ -8,6 +8,9 @@ import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { assocInputReducer } from './assoc-input.reducer';
 import { IAssociateInput } from '../../model/Associateinput.model';
+import { feedbackDeliveredChartReducer } from './feedbackdelivered';
+import { feedbackRequestedChartReducer } from './feedbackrequested';
+import { Interview } from '../../model/Interview.model'
 
 export interface IReportFormState {
     
@@ -72,6 +75,58 @@ export interface IAssociateChartState {
 }
 
 
+export interface IFeedbackRequestedChartState {
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+	canvas: any
+}
+
+
+export interface IFeedbackDeliveredChartState {
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+	canvas: any
+}
+
+
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
     selectedCohort: any | undefined,
@@ -79,11 +134,16 @@ export interface ICreateInterviewComponentState {
     selectedAssociate: any | undefined,
     date: string,
     location: string,
+    client: string,
 }
 
 export interface IInterviewListState {
-    listOfInterviews : any[],
-    numberOfPages : number
+    listOfInterviews : Interview[],
+    numberOfPages : number,
+    orderBy : string,
+    direction : string,
+    pageSize : number,
+    currentPage : number
 }
     
 export interface IInterviewState {
@@ -93,7 +153,9 @@ export interface IInterviewState {
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
     managerChart: IManagerChartState,
     associateChart: IAssociateChartState,
-    associateInput: IAssociateInput
+    associateInput: IAssociateInput,
+    feedbackRequestedChart: IFeedbackRequestedChartState,
+    feedbackDeliveredChart: IFeedbackDeliveredChartState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -103,5 +165,7 @@ export const interviewState = combineReducers<IInterviewState>({
    interviewFeedbackComponentState: interviewFeedbackReducer,
    managerChart: managerChartReducer,
    associateChart: associateChartReducer,
-   associateInput: assocInputReducer
+   associateInput: assocInputReducer,
+   feedbackRequestedChart: feedbackRequestedChartReducer,
+   feedbackDeliveredChart: feedbackDeliveredChartReducer
 })

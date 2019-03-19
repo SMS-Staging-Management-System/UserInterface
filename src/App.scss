@@ -718,6 +718,29 @@ text-align:center;
   text-align:center;
 }
 
+#FeedbackRequestedChart{
+  width:50vw;
+  height:100vh;
+  display:inline-block;
+  top:180px;
+  left:0%;
+  position:fixed;
+ z-index:12;
+ text-align:center;
+ }
+ 
+ #FeedbackReceivedChart{
+   width:50vw;
+   height:100vh;
+   display:inline-block;
+   top:180px;
+   left:50vw;
+   position:fixed;
+   z-index:10;
+   text-align:center;
+ }
+
+ 
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

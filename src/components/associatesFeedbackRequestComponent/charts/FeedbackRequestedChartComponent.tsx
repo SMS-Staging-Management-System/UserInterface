@@ -2,11 +2,14 @@ import React from 'react';
 import Chart from 'chart.js';
 
 interface IChartDisplayProps {
-
+  chart:any,
+  chartAction:any,
+  setCanvas:any
 }
 
 export class FeedbackRequestedChartComponent extends React.Component<IChartDisplayProps, any> {
   canvasRef : any;
+  
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
@@ -15,26 +18,15 @@ export class FeedbackRequestedChartComponent extends React.Component<IChartDispl
   componentDidMount() {
     var ctx = this.canvasRef.current.getContext('2d');
     let myChart = new Chart(ctx, {
+      ...this.props.chart,
       type: 'doughnut',
-      data: {
-        datasets: [{
-          data: [2, 2],         
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 255, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 255, 1)',
-          ],
-        }],
-        labels: [
-          'Feedback not requested',
-          'Feedback requested',
-        ],
-      },
     });
+
     if (!myChart) return;
+    this.props.chartAction(myChart);
+    this.props.setCanvas(myChart);
+    setInterval((() => {myChart.update();}),5000);
+    myChart.update();
   }
 
   render() {
