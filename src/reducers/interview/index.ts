@@ -8,6 +8,7 @@ import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
+import { Interview } from '../../model/Interview.model'
 
 export interface IReportFormState {
     
@@ -135,8 +136,12 @@ export interface ICreateInterviewComponentState {
 }
 
 export interface IInterviewListState {
-    listOfInterviews : any[],
-    numberOfPages : number
+    listOfInterviews : Interview[],
+    numberOfPages : number,
+    orderBy : string,
+    direction : string,
+    pageSize : number,
+    currentPage : number
 }
     
 export interface IInterviewState {
