@@ -50,7 +50,8 @@ export interface IAuthState {
   }
 
   export interface IStatusState {
-    userStatus: IStatus[]
+    userStatus: IStatus[],
+    
   }
   
   export interface IManageUsersState {
@@ -74,8 +75,9 @@ export interface IAuthState {
   export interface IProfileViewState {
     user: IUser,
     bUserInfoChanged: boolean,
-    locationDropdownActive: boolean
-    statusDropdownActive: boolean
+    locationDropdownActive: boolean,
+    statusDropdownActive: boolean,
+    virtual:boolean,
   }
 
   export interface IManagementState {

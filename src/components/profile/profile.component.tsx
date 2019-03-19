@@ -4,6 +4,7 @@ import { Container, Form, Row, FormGroup, Label, Input,
 import { IAddress } from '../../model/address.model';
 import { IProfileProps } from './profile.container';
 
+
 export const inputNames = {
   EMAIL: 'NEW_USER_EMAIL',
   FIRST_NAME: 'NEW_USER_FIRST_NAME',
@@ -128,7 +129,7 @@ class Profile extends Component<IProfileProps, any> {
   // this.props.updateUserStatus(status.virtual);
   // }
   render() {
-    const {userToView, trainingAddresses, currentStatus} = this.props;
+    const {userToView, trainingAddresses, allStatus} = this.props;
     // const Checkbox = props => (
     //   <input type="checkbox" {...props} />
     // )
@@ -258,14 +259,32 @@ class Profile extends Component<IProfileProps, any> {
                     </DropdownToggle>
                     <DropdownMenu name={inputNames.STATUS_ALIASES}>
                         {
-                            currentStatus.userStatus.length === 0
+                            allStatus.userStatus.length === 0
                             ? <>
                             <DropdownItem>Unable To Find Any Statuses</DropdownItem>
                             <DropdownItem divider />
                             </>
-                            : currentStatus.userStatus.map(status =>
+                            : allStatus.userStatus.filter(status =>{
+                              if(status.specificStatus === 'Training' || status.specificStatus === 'Dropped'|| status.specificStatus === 'Complete'){
+                                return true;
+                              }
+                              if(this.props.virtual){
+                                if(status.virtual){
+                                  return true;
+                                }else{
+                                  return false
+                                }
+                              }else{
+                                if(!status.virtual){
+                                  return true;
+                                } else {
+                                  return false;
+                                }
+                              }
+                            }).map(status =>
                             <DropdownItem 
                             key={status.statusId}
+                            statusValue = {status.specificStatus}
                             onClick={() => this.props.updateUserStatus(status)} >{status.specificStatus}</DropdownItem>
                             )
                         } 
