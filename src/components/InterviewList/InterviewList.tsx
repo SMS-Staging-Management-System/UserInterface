@@ -12,6 +12,7 @@ import { IoIosArrowUp } from 'react-icons/io'
 import { Label } from 'reactstrap';
 
 export interface InterviewListProps {
+    email : string,
     listOfInterviews : any[],
     numberOfPages : number,
     currentPage : number,
@@ -84,6 +85,14 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
             this.props.direction);
     }
 
+    renderDate = (date : number) => {
+        if (date > 0){
+            return new Date(date).toDateString()
+        } else {
+            return '-';
+        }
+    }
+
     render() { 
         return ( 
             <Jumbotron>
@@ -131,9 +140,9 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <td>{entry.managerEmail}</td>
                                 <td>{entry.place}</td>
                                 <td>{entry.client.clientName}</td>
-                                <td>{new Date(entry.notified).toDateString()}</td>
-                                <td>{new Date(entry.scheduled).toDateString()}</td>
-                                <td>{new Date(entry.reviewed).toDateString()}</td>
+                                <td>{this.renderDate(entry.notified)}</td>
+                                <td>{this.renderDate(entry.scheduled)}</td>
+                                <td>{this.renderDate(entry.reviewed)}</td>
                                 <td>{entry.associateInput ? "Associate Input filled!" : <Button>
                                     <Link to={{ pathname: '/interview/associateInput', state: { interviewId: entry.id } }} >Add Associate Input</Link></Button>}</td>
                             </tr>)
@@ -175,6 +184,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
 
 const mapStateToProps = (state: IState) => {
     return {
+        email : state.managementState.auth.currentUser.email,
         listOfInterviews : state.interviewState.interviewList.listOfInterviews,
         numberOfPages : state.interviewState.interviewList.numberOfPages,
         currentPage : state.interviewState.interviewList.currentPage,
