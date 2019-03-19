@@ -22,3 +22,7 @@ export const getInterviewPages = (
         type: interviewListTypes.GET_PAGES
     })
 }
+
+export const markAsReviewed = (id : number) => (dispatch) => {
+    interviewClient.markInterviewAsReviewed(id);
+}

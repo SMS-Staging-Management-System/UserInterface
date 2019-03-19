@@ -56,5 +56,9 @@ export const interviewClient = {
 
     submitAssocInput: async (payload: any) => {
         return await smsClient.post(interviewContext +'/associateInput', payload);
+    },
+
+    markInterviewAsReviewed : (id : number) => {
+        return smsClient.get(interviewContext + '/markReviewed/' + id);
     }
 }
