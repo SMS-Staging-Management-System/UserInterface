@@ -2,7 +2,7 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
@@ -12,90 +12,85 @@ import { IoIosArrowUp } from 'react-icons/io'
 import { Label } from 'reactstrap';
 
 export interface InterviewListProps {
+    email : string,
     listOfInterviews : any[],
     numberOfPages : number,
+    currentPage : number,
+    pageSize : number,
+    orderBy : string,
+    direction : string,
     getInterviewPages : (
         pageNumber? : number, 
         pageSize? : number,
         ordeyBy?: string, 
-        direction? : string) => void,
-    getNumberOfPages : (pageSize? : number) => void
+        direction? : string) => void
 }
  
 export interface InterviewListState {
-    orderBy : string,
-    direction : string,
-    pageSize : number,
-    currentPage : number
+    direction : string
 }
  
 class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
         super(props);
-
         this.state = {
-            orderBy : 'id',
-            direction : 'ASC',
-            pageSize : 5,
-            currentPage : 0
+            direction : this.props.direction
         }
     }
 
     async componentDidMount() {
         this.props.getInterviewPages(
-            this.state.currentPage, 
-            this.state.pageSize, 
-            this.state.orderBy, 
-            this.state.direction);
-        this.props.getNumberOfPages(this.state.pageSize);
+            this.props.currentPage, 
+            this.props.pageSize, 
+            this.props.orderBy, 
+            this.props.direction);
+    }
+    
+    componentDidUpdate() {
+        console.log(this.props);
     }
 
     handlePageClick = (data) => {
-        this.setState({
-            currentPage : data.slected
-        })
-        this.props.getInterviewPages(this.state.currentPage);
+        this.props.getInterviewPages(data.selected, 
+            this.props.pageSize, 
+            this.props.orderBy, 
+            this.props.direction);
     }
 
     changeOrderAsc = () => {
         this.setState({
             direction : 'ASC'
-        });
+        })
     }
 
     changeOrderDesc = () => {
         this.setState({
             direction : 'DESC'
-        });
+        })
     }
 
     changeOrderCriteria = (event : any) => {
-        this.setState({
-            orderBy : event.currentTarget.id
-        });
         this.props.getInterviewPages(
-            this.state.currentPage, 
-            this.state.pageSize, 
-            this.state.orderBy, 
+            0, 
+            this.props.pageSize, 
+            event.currentTarget.id, 
             this.state.direction);
-        this.props.getNumberOfPages(this.state.pageSize);
     }
 
     changePageSize = (event : any) => {
-        console.log(event.target.value);
-        this.setState({
-            pageSize : event.currentTarget.value
-        });
+        this.props.getInterviewPages(
+            this.props.currentPage, 
+            event.currentTarget.value, 
+            this.props.orderBy, 
+            this.props.direction);
     }
 
-    getNewPages = (event : any) => {
-        event.preventDefault();
-        this.props.getInterviewPages(
-            this.state.currentPage, 
-            this.state.pageSize, 
-            this.state.orderBy, 
-            this.state.direction);
-        this.props.getNumberOfPages(this.state.pageSize);
+    renderDate = (date : number) => {
+        if (date > 0){
+            return new Date(date).toDateString()
+        } else {
+            return '-';
+        }
     }
 
     render() { 
@@ -116,6 +111,10 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
                             </th>
+                            <th id='client' onClick={this.changeOrderCriteria}>Client 
+                                <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
+                                <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
+                            </th>
                             <th id='notified' onClick={this.changeOrderCriteria}>Date Notified 
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
@@ -128,7 +127,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
                             </th>
-                            <th id='feedback' onClick={this.changeOrderCriteria}>Associate Feedback 
+                            <th id='associateInput' onClick={this.changeOrderCriteria}>Associate Feedback 
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
                             </th>
@@ -140,9 +139,10 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <td>{entry.associateEmail}</td>
                                 <td>{entry.managerEmail}</td>
                                 <td>{entry.place}</td>
-                                <td>{new Date(entry.notified).toDateString()}</td>
-                                <td>{new Date(entry.scheduled).toDateString()}</td>
-                                <td>{new Date(entry.reviewed).toDateString()}</td>
+                                <td>{entry.client.clientName}</td>
+                                <td>{this.renderDate(entry.notified)}</td>
+                                <td>{this.renderDate(entry.scheduled)}</td>
+                                <td>{this.renderDate(entry.reviewed)}</td>
                                 <td>{entry.associateInput ? "Associate Input filled!" : <Button>
                                     <Link to={{ pathname: '/interview/associateInput', state: { interviewId: entry.id } }} >Add Associate Input</Link></Button>}</td>
                             </tr>)
@@ -153,23 +153,29 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 previousLabel={'Prev'}
                 nextLabel={'Next'}
                 breakLabel={'...'}
-                breakClassName={'page-item no-select'}
+                breakClassName={'page-item no-select justify-content-center'}
                 breakLinkClassName={'break-me-link page-link'}
                 pageCount={this.props.numberOfPages}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
-                containerClassName={'pagination page-navigator'}
+                containerClassName={'pagination page-navigator justify-content-center'}
                 activeClassName={'active'}
                 pageClassName={'page-item cursor-hover'}
-                pageLinkClassName={'paginate-link page-link no-select'}
+                pageLinkClassName={'paginate-link page-link no-select justify-content-center'}
                 nextClassName={'page-item cursor-hover'}
-                nextLinkClassName={'paginate-next page-link no-select'}
+                nextLinkClassName={'paginate-next page-link no-select justify-content-center'}
                 previousClassName={'page-item cursor-hover'}
-                previousLinkClassName={'paginate-previous page-link no-select'}/>
-                <form onSubmit={this.getNewPages}>
-                    <Label>Page Size</Label>
-                    <input value={this.state.pageSize} onChange={this.changePageSize} />
+                previousLinkClassName={'paginate-previous page-link no-select justify-content-center'}/>
+
+                <form>
+                    <Label className={'justify-content-center'}>Page Size: </Label>
+                    <select value={this.props.pageSize} onChange={this.changePageSize} className={'justify-content-center'}>
+                        <option value={5} className={'justify-content-center'}>5</option>
+                        <option value={10} className={'justify-content-center'}>10</option>
+                        <option value={25} className={'justify-content-center'}>25</option>
+                        <option value={50} className={'justify-content-center'}>50</option>
+                    </select>
                 </form>
             </Jumbotron>
          );
@@ -178,14 +184,18 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
 
 const mapStateToProps = (state: IState) => {
     return {
+        email : state.managementState.auth.currentUser.email,
         listOfInterviews : state.interviewState.interviewList.listOfInterviews,
-        numberOfPages : state.interviewState.interviewList.numberOfPages
+        numberOfPages : state.interviewState.interviewList.numberOfPages,
+        currentPage : state.interviewState.interviewList.currentPage,
+        pageSize : state.interviewState.interviewList.pageSize,
+        orderBy : state.interviewState.interviewList.orderBy,
+        direction : state.interviewState.interviewList.direction
     }
 }
  
 const mapDispatchToProps = {
-    getInterviewPages,
-    getNumberOfPages
+    getInterviewPages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterviewList);

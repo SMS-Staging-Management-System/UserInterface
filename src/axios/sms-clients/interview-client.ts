@@ -52,5 +52,9 @@ export const interviewClient = {
 
     fetchClient: async () => {
         return await smsClient.get(interviewContext+`/client`);
+    },
+
+    submitAssocInput: async (payload: any) => {
+        return await smsClient.post(interviewContext +'/associateInput', payload);
     }
 }
