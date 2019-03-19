@@ -8,6 +8,7 @@ import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
 import {updateNewUser, updateNewUserLocation, toggleLocationDropdown} from '../../actions/create-user/create-user.actions'
 import { updateLocations } from '../../actions/address/address.actions';
+import { History } from "history";
 
 
 //This is experimental interfacing of a future design pattern for better type checking
@@ -17,10 +18,11 @@ export interface IJoinCohortStateToProps {
     login: IAuthState,
     joinCohortState: IJoinCohortState,
     createUser: ICreateUserState,
-    addresses: IAddressState
+    addresses: IAddressState,
+    history:History
 }
 export interface IJoinCohortDispatchToProps{
-    joinCohort:(user:IUser, token:string) => void
+    joinCohort:(user:IUser, token:string, history:History) => void
     updateNewUserLocation: (location: IAddress) => void,
     updateNewUser: (user: IUser) => void,
     updateLocations: () => void,
@@ -35,7 +37,8 @@ const mapStateToProps = (state:IState, ownProps):IJoinCohortStateToProps => ({
     login: state.managementState.auth,
     joinCohortState: state.managementState.joinCohort,
     createUser: state.managementState.createUser,
-    addresses: state.managementState.addresses
+    addresses: state.managementState.addresses,
+    history: ownProps.history
 })
 
 

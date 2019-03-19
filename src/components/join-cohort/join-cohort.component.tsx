@@ -92,7 +92,7 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
 
 
     joinCohort = () => {
-        this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token)
+        this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history)
     }
    
 

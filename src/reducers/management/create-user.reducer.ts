@@ -23,7 +23,15 @@ const initialState: ICreateUserState = {
       state: '',
       zip: ''
     },
-    personalAddress: null,
+    personalAddress: {
+      addressId: 0,
+      street: '',
+      alias: '',
+      city: '',
+      country: '',
+      state: '',
+      zip: '',
+    },
     email: '',
     firstName: '',
     lastName: '',
