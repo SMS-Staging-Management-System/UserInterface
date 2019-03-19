@@ -27,9 +27,9 @@ const initialState: IProfileViewState = {
             country: '',
             zip: ''
         },
-        status: {
+        userStatus: {
             statusId: 0,
-            genericStatus: '',
+            generalStatus: '',
             specificStatus: '',
             virtual: false     
         },
