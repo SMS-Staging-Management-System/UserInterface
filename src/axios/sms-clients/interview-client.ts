@@ -22,7 +22,6 @@ export const interviewClient = {
         if (pageSize) {
             url += '&pageSize=' + pageSize;
         }
-        console.log(url);
         return smsClient.get(url);
     },
       

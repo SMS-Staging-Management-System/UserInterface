@@ -2,7 +2,7 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { getInterviewPages, getNumberOfPages, setDirection, setOrderBy, setCurrentPage, setPageSize } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
@@ -22,20 +22,19 @@ export interface InterviewListProps {
         pageNumber? : number, 
         pageSize? : number,
         ordeyBy?: string, 
-        direction? : string) => void,
-    getNumberOfPages : (pageSize? : number) => void,
-    setDirection : (direction : string) => void,
-    setOrderBy : (criteria : string) => void,
-    setPageSize : (pageSize : number) => void,
-    setCurrentPage : (currentPage : number) => void
+        direction? : string) => void
 }
  
 export interface InterviewListState {
+    direction : string
 }
  
 class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
         super(props);
+        this.state = {
+            direction : this.props.direction
+        }
     }
 
     async componentDidMount() {
@@ -44,43 +43,45 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
             this.props.pageSize, 
             this.props.orderBy, 
             this.props.direction);
-        this.props.getNumberOfPages(this.props.pageSize);
+    }
+    
+    componentDidUpdate() {
+        console.log(this.props);
     }
 
     handlePageClick = (data) => {
-        this.props.setCurrentPage(data.selected);
+        this.props.getInterviewPages(data.selected, 
+            this.props.pageSize, 
+            this.props.orderBy, 
+            this.props.direction);
     }
 
     changeOrderAsc = () => {
-        this.props.setDirection('ASC');
+        this.setState({
+            direction : 'ASC'
+        })
     }
 
     changeOrderDesc = () => {
-        this.props.setDirection('DESC');
+        this.setState({
+            direction : 'DESC'
+        })
     }
 
     changeOrderCriteria = (event : any) => {
-        this.props.setOrderBy(event.currentTarget.id);
         this.props.getInterviewPages(
             this.props.currentPage, 
             this.props.pageSize, 
-            this.props.orderBy, 
-            this.props.direction);
-        this.props.getNumberOfPages(this.props.pageSize);
+            event.currentTarget.id, 
+            this.state.direction);
     }
 
     changePageSize = (event : any) => {
-        this.props.setPageSize(event.target.value);
-    }
-
-    getNewPages = (event : any) => {
-        event.preventDefault();
         this.props.getInterviewPages(
             this.props.currentPage, 
-            this.props.pageSize, 
+            event.currentTarget.value, 
             this.props.orderBy, 
             this.props.direction);
-        this.props.getNumberOfPages(this.props.pageSize);
     }
 
     render() { 
@@ -158,9 +159,14 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 previousClassName={'page-item cursor-hover'}
                 previousLinkClassName={'paginate-previous page-link no-select'}/>
 
-                <form onSubmit={this.getNewPages}>
-                    <Label>Page Size</Label>
-                    <input value={this.props.pageSize} onChange={this.changePageSize} />
+                <form>
+                    <Label>Page Size: </Label>
+                    <select value={this.props.pageSize} onChange={this.changePageSize}>
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                    </select>
                 </form>
             </Jumbotron>
          );
@@ -179,13 +185,7 @@ const mapStateToProps = (state: IState) => {
 }
  
 const mapDispatchToProps = {
-    getInterviewPages,
-    getNumberOfPages,
-    setDirection,
-    setOrderBy,
-    setCurrentPage,
-    setPageSize,
-
+    getInterviewPages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterviewList);

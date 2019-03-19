@@ -17,31 +17,6 @@ export const interviewListReducer = (state = initialState, action : any): IInter
                 ...state,
                 ...action.payload
             }
-        case interviewListTypes.GET_NUMBER_OF_PAGES :
-            return {
-                ...state,
-                ...action.payload
-            }
-        case interviewListTypes.SET_ORDER_BY : 
-            return {
-                ...state,
-                ...action.payload
-            }
-        case interviewListTypes.SET_DIRECTION : 
-            return {
-                ...state,
-                ...action.payload
-            }
-        case interviewListTypes.SET_CURRENT_PAGE : 
-            return {
-                ...state,
-                ...action.payload
-            }
-        case interviewListTypes.SET_PAGE_SIZE :
-            return {
-                ...state,
-                ...action.payload
-            }
         default:
             return state
     }
