@@ -8,6 +8,7 @@ import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
+import { Client } from '../../model/Client.model';
 
 export interface IReportFormState {
     
@@ -132,6 +133,7 @@ export interface ICreateInterviewComponentState {
     date: string,
     location: string,
     client: string,
+    clientArr: Client[]
 }
 
 export interface IInterviewListState {
