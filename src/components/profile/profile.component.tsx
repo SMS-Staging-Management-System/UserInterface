@@ -12,6 +12,7 @@ export const inputNames = {
   STREET: 'STREET',
   CITY: 'CITY',
   STATE: 'STATE',
+  COUNTRY: 'COUNTRY',
   ZIP: 'ZIP',
   TRAINING_ALIASES: 'TRAINING_ALIASES'
 }
@@ -19,7 +20,7 @@ export const inputNames = {
 class Profile extends Component<IProfileProps, any> {
 
 
-  componentWillMount() {
+  componentDidMount() {
     // If looking at profile page, set info to current SMS User
     let endOfPath = location.pathname.split('/').pop();
     if (endOfPath && endOfPath === 'profile') {
@@ -89,12 +90,22 @@ class Profile extends Component<IProfileProps, any> {
             state: target.value
           }
         }
+        break;
         case inputNames.ZIP:
         updatedUser = {
           ...updatedUser,
           personalAddress: {
             ...updatedUser.personalAddress,
             zip: target.value
+          }
+        }
+        break;
+        case inputNames.COUNTRY:
+        updatedUser = {
+          ...updatedUser,
+          personalAddress: {
+            ...updatedUser.personalAddress,
+            country: target.value
           }
         }
         break;
@@ -232,6 +243,18 @@ class Profile extends Component<IProfileProps, any> {
                 value={userToView.personalAddress && userToView.personalAddress.zip}
                 onChange={(event) => this.onUserInfoChangeHandler(event)} />
             </FormGroup>  
+          </Col>
+        </Row>
+        <Row>
+          <Col md={3}>
+          <FormGroup>
+            <Label>Country</Label>
+            <Input
+              type="text"
+              name={inputNames.COUNTRY}
+              value={userToView.personalAddress && userToView.personalAddress.country}
+              onChange={(event) => this.onUserInfoChangeHandler(event)} />
+          </FormGroup>
           </Col>
         </Row>
         <Button>Update</Button>

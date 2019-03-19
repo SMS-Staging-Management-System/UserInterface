@@ -2,7 +2,6 @@ import { ICurrentSMSUserState } from ".";
 import { authTypes } from "../../actions/auth/auth.actions";
 import { currentSMSUserTypes } from "../../actions/current-sms-user/current-sms-user.actions";
 
-
 const initialState: ICurrentSMSUserState = {
     currentSMSUser:  {
         trainingAddress: {

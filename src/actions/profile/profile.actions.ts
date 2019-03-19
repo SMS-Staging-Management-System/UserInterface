@@ -48,7 +48,6 @@ export const toggleTrainingLocationsDropdown = () => {
 export const updateUser = (userToUpdate: IUser) => async (dispatch: (action: any) => void) => {
     try {
         const resp = await userClient.updateSMSUserInfo(userToUpdate);
-        console.log(resp.data);
         toast.success('Info updated successfully');
         dispatch ({
             payload: {
