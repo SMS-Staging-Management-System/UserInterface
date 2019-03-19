@@ -39,6 +39,7 @@ export const updateProposedFormat = (value: string, id: number) => {
 };
 
 export const submitInput = (interviewId: number, fields: IAssociateInput) => async (dispatch) => {
+    // Better f***ing work.
     try {
         const res = await interviewClient.submitAssocInput({
             interviewId: interviewId,
