@@ -13,7 +13,7 @@ import ProtectedRoute from '../protected-route.component/protected-route.compone
 
 export class SurveyComponent extends React.Component<any, any> {
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
   }
 

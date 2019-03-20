@@ -2,7 +2,6 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { IUser } from '../../model/user.model';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
-import { Link } from 'react-router-dom';
 
 export interface associatesFeedbackRequestProps {
     Users:IUser[]
@@ -75,9 +74,6 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
 
         return (
             <div>
-			<h1> Feedback Given Report</h1>
-            <hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/feedback" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/feedback/charts" >Visual Data</Link></div></h2><hr/>
-                     
                 <table>
                     <thead>
                         <tr>
