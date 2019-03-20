@@ -72,7 +72,6 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                           <Link to="/interview/report/24hour" className=" dropdown-item nav-dropdown"><FaClock /> Given 24 Hour Notice Report...</Link>
                           <Link to="/interview/report/jobDesc" className=" dropdown-item nav-dropdown"><FaComment /> Job Description Given Report...</Link>
                           <Link to="/interview/report/AssociateInterviews" className=" dropdown-item nav-dropdown"><FaListOl /> Interviews Per Associate Report...</Link>
-                          <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                         </div>
                       </li>
                     </>
