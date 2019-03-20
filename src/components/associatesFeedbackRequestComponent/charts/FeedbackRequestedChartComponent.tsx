@@ -7,9 +7,9 @@ interface IChartDisplayProps {
   setCanvas:any
 }
 
-export class ManagerChartComponent extends React.Component<IChartDisplayProps, any> {
+export class FeedbackRequestedChartComponent extends React.Component<IChartDisplayProps, any> {
   canvasRef : any;
-
+  
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
@@ -23,15 +23,15 @@ export class ManagerChartComponent extends React.Component<IChartDisplayProps, a
     });
 
     if (!myChart) return;
-    this.props.setCanvas(myChart);
     this.props.chartAction(myChart);
-    myChart.update();
+    this.props.setCanvas(myChart);
     setInterval((() => {myChart.update();}),5000);
+    myChart.update();
   }
 
   render() {
     return (
-      <canvas ref={this.canvasRef}></canvas>
+      <canvas  ref={this.canvasRef}></canvas>
     )
   }
 }

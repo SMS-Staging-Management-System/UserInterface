@@ -7,7 +7,9 @@ const initialState: ICreateInterviewComponentState = {
   associatesInSelectedCohort: undefined,
   selectedAssociate: undefined,
   date: '',
-  location: ''
+  location: '',
+  client: '',
+  clientArr: []
 }
 
 // export interface IReduxAction {

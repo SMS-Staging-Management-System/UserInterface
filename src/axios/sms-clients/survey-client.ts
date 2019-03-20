@@ -3,7 +3,6 @@ import { ISurvey } from "../../model/surveys/survey.model";
 import { IQuestion } from "../../model/surveys/question.model";
 import { IAnswer } from "../../model/surveys/answer.model";
 import { IResponse } from "../../model/surveys/response.model";
-import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
 
 const surveyBaseRoute = '/surveys';
 const questionBaseRoute = '/questions';
@@ -184,18 +183,42 @@ export const surveyClient = {
   //----------------------//
 
   async saveQuestion(question: IQuestion) {
+   //let ID = new Array;
+  //  await surveyContext.post(questionBaseRoute, question.questionId).then(response => {
+  //     this.answArray(  parseInt(response.data.questionId));
+
+  //     });
+     
+      let resp = await surveyContext.post(questionBaseRoute, question.questionId);
+      let ID = parseInt(resp.data.questionId);      // return ID; 
+console.log('THIS IS ID: '+ID);
+return ID;
+
+},
+
+//    answArray( ID : number) {
+
+//     let anArray=new Array;
+//     anArray.push(ID)
+
+    
+//     console.log(anArray)
+//   return anArray;
+
+// },
+
     let resp = await surveyContext.post(questionBaseRoute, question.questionId);
     let qID = parseInt(resp.data.questionId);      // return ID; 
     return qID;
   },
 
   saveAllQuestion(question: IQuestion[]) {
-
-    surveyContext.post(questionAllBaseRoute, question);
+  
+      surveyContext.post(questionAllBaseRoute, question);
   },
-  saveToQuestionJunction(junction: IJunctionSurveyQuestion) {
-    surveyContext.post(questionJunctionBaseRoute, junction);
-  },
+  saveToQuestionJunction(question: IQuestion) {
+    surveyContext.post(questionJunctionBaseRoute, question);
+},
 
   async getQuestionType(index: number) {
 

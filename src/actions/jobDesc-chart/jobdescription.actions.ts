@@ -1,27 +1,27 @@
 import { interviewClient } from "../../axios/sms-clients/interview-client";
 
-export const managerChartTypes = {
+export const jobDescriptionChartTypes = {
     GET_INFO :'GET_INFO',
     SET_CANVAS :'SET_CANVAS',
 }
 
-export const setCanvasManager = (canvasRef) => async (dispatch) => {
+export const setCanvasJD = (canvasRef) => async (dispatch) => {
     dispatch({
         payload: {
             canvas: canvasRef
         },
-        type: managerChartTypes.SET_CANVAS
+        type: jobDescriptionChartTypes.SET_CANVAS
     })
 }
 
-export const getInfoManager = (chartRef) => async (dispatch) => {
-    const resp = await interviewClient.fetchManager24();
-
+export const getInfoJD = (chartRef) => async (dispatch) => {
+    const resp = await interviewClient.interviewJDChart();
+    
     dispatch({
          payload : {             
 			 chartInfo : resp.data,
 			 canvas: chartRef
          },
-         type: managerChartTypes.GET_INFO
+         type: jobDescriptionChartTypes.GET_INFO
     })
 }
