@@ -29,7 +29,8 @@ export interface InterviewListProps {
 }
  
 export interface InterviewListState {
-    direction : string
+    direction : string,
+    loaded : boolean
 }
 
 // More comments 
@@ -37,16 +38,22 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
     constructor(props: InterviewListProps) {
         super(props);
         this.state = {
-            direction : this.props.direction
+            direction : this.props.direction,
+            loaded : false
         }
     }
 
     async componentDidUpdate() {
-        this.props.getInterviewPages(
-            this.props.currentPage, 
-            this.props.pageSize, 
-            this.props.orderBy, 
-            this.props.direction);
+        if(!this.state.loaded){
+            this.setState ({
+                loaded:true
+            });
+            this.props.getInterviewPages(
+                this.props.currentPage, 
+                this.props.pageSize, 
+                this.props.orderBy, 
+                this.props.direction);
+        }
     }
     
     handlePageClick = (data) => {
