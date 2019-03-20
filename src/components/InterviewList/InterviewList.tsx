@@ -2,14 +2,15 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { getInterviewPages } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
-import Button from 'reactstrap/lib/Button';
 import { IoIosArrowDown } from 'react-icons/io'
 import { IoIosArrowUp } from 'react-icons/io'
 import { Label } from 'reactstrap';
+
+
 
 export interface InterviewListProps {
     email : string,
@@ -23,13 +24,16 @@ export interface InterviewListProps {
         pageNumber? : number, 
         pageSize? : number,
         ordeyBy?: string, 
-        direction? : string) => void
+        direction? : string) => void,
+    markAsReviewed : (interviewId : number) => void,
+    setSelected: (current: any) => void;
 }
  
 export interface InterviewListState {
     direction : string
 }
- 
+
+// More comments 
 class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
         super(props);
@@ -46,10 +50,6 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
             this.props.direction);
     }
     
-    componentDidUpdate() {
-        console.log(this.props);
-    }
-
     handlePageClick = (data) => {
         this.props.getInterviewPages(data.selected, 
             this.props.pageSize, 
@@ -93,12 +93,34 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         }
     }
 
+    markAsReviewed = (event : any) => {
+        this.props.markAsReviewed(event.currentTarget.id);
+    }
+
+    getAssocInput = (entry: any) => {
+        let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
+        let text = (entry.associateInput ? 'View' : 'Add');
+        return (
+            <td>
+                {
+                    <Link onClick={e => {
+                        this.props.setSelected(entry.associateInput);
+                        }} to = {{
+                            pathname: `/interview/${url}`, 
+                            state: { interviewId: entry.id } }} >{`${text} Associate Input`}
+                    </Link>
+                }
+            </td>
+        );
+    };
+
     render() { 
         return ( 
             <Jumbotron>
                 <Table>
                     <thead>
                         <tr>
+                            <th>Reviewed</th> 
                             <th id='associateEmail' onClick={this.changeOrderCriteria}>Associate Email 
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
@@ -131,11 +153,15 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
                             </th>
+                            <th>
+                                Interview Feedback
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.props.listOfInterviews.map((entry) => {
-                            return (<tr>
+                            return (<tr key={entry.id}>
+                                <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td>
                                 <td>{entry.associateEmail}</td>
                                 <td>{entry.managerEmail}</td>
                                 <td>{entry.place}</td>
@@ -143,8 +169,10 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <td>{this.renderDate(entry.notified)}</td>
                                 <td>{this.renderDate(entry.scheduled)}</td>
                                 <td>{this.renderDate(entry.reviewed)}</td>
-                                <td>{entry.associateInput ? "Associate Input filled!" : <Button>
-                                    <Link to={{ pathname: '/interview/associateInput', state: { interviewId: entry.id } }} >Add Associate Input</Link></Button>}</td>
+                                {this.getAssocInput(entry)}
+                                <td>{entry.feedback ? <Link to={{pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link> :
+                                    <Link to={{pathname: `/interview/${entry.id}/feedback`}}>Complete Interview Feedback</Link>
+                                }</td>
                             </tr>)
                         })}
                     </tbody>
@@ -195,7 +223,9 @@ const mapStateToProps = (state: IState) => {
 }
  
 const mapDispatchToProps = {
-    getInterviewPages
+    getInterviewPages,
+    markAsReviewed,
+    setSelected
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterviewList);

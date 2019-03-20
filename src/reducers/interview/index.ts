@@ -10,6 +10,7 @@ import { assocInputReducer } from './assoc-input.reducer';
 import { IAssociateInput } from '../../model/Associateinput.model';
 import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
+import { jobDescriptionChartReducer } from './jobdesc.reducer';
 import { Client } from '../../model/Client.model';
 import { Interview } from '../../model/Interview.model';
 
@@ -127,6 +128,30 @@ export interface IFeedbackDeliveredChartState {
 	canvas: any
 }
 
+export interface IJobDescriptionChartState {
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+	canvas: any
+}
 
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
@@ -145,7 +170,8 @@ export interface IInterviewListState {
     orderBy : string,
     direction : string,
     pageSize : number,
-    currentPage : number
+    currentPage : number,
+    assocInput: any
 }
     
 export interface IInterviewState {
@@ -157,7 +183,8 @@ export interface IInterviewState {
     associateChart: IAssociateChartState,
     associateInput: IAssociateInput,
     feedbackRequestedChart: IFeedbackRequestedChartState,
-    feedbackDeliveredChart: IFeedbackDeliveredChartState
+    feedbackDeliveredChart: IFeedbackDeliveredChartState,
+	jobDescriptionChart: IJobDescriptionChartState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -169,5 +196,6 @@ export const interviewState = combineReducers<IInterviewState>({
    associateChart: associateChartReducer,
    associateInput: assocInputReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
-   feedbackDeliveredChart: feedbackDeliveredChartReducer
+   feedbackDeliveredChart: feedbackDeliveredChartReducer,
+   jobDescriptionChart: jobDescriptionChartReducer
 })
