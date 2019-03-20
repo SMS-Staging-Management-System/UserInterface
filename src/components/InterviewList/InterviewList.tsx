@@ -32,7 +32,8 @@ export interface InterviewListProps {
 export interface InterviewListState {
     direction : string
 }
- 
+
+// More comments 
 class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
         super(props);
