@@ -56,6 +56,7 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
         const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat, noInterviewFound } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
         const buttonDisabledState = !(feedbackRequestedDate && feedbackText && feedbackReceivedDate && feedbackDeliveredDate && interviewFormat) || noInterviewFound
         const buttonText = (noInterviewFound)? "loading interview..." : (buttonDisabledState)? "Please fill out all fields" : "SUBMIT";
+        const buttonOnClick = async ()=>{const success = await this.sendFeedbackToDB(); console.log("successfully sent?:" + success); if(success)this.props.history.push("/interview/list");};
         return (
             <div id='new-interview-full'>
                 <span>EDIT FEEDBACK FOR AN INTERVIEW</span>
@@ -87,7 +88,7 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
                     </Input>
                 </InputGroup>
                 < br />
-                <Button color="secondary" size="lg" block disabled={buttonDisabledState}  onClick={async ()=>{const success = await this.sendFeedbackToDB(); console.log("successfully sent?:" + success); if(success)this.props.history.goBack();} }>{buttonText}</Button>
+                <Button color="secondary" size="lg" block disabled={buttonDisabledState}  onClick={buttonOnClick}>{buttonText}</Button>
             </div>
         );
     }

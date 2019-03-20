@@ -62,7 +62,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log(res);
     }
 
-    sendInputToDB = async () => {
+    sendInputToDB = async (): Promise<boolean> => {
         let { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
         if (selectedAssociate && dateString && location && client) {
             const newInterviewData: INewInterviewData = {
@@ -72,11 +72,11 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 client: client
             };
             console.log(newInterviewData);
-            interviewClient.addNewInterview(newInterviewData).then((res) => {
-                console.log('submitted')
-                console.log(res);
-            }).catch((e) => { console.log('didnt submit successfully'), console.log(e) });
-        }
+            const res = await interviewClient.addNewInterview(newInterviewData)
+            console.log('submitted')
+            console.log(res);
+            return (res.status >= 200 && res.status < 300); 
+        } else return false;
     }
 
     render() {
@@ -93,6 +93,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val) => { return <option value={JSON.stringify(val)}>{`${val.firstName} ${val.lastName}`}</option> })
         const buttonDisabledState = !(selectedAssociate && date && location && client);
         const buttonText = (buttonDisabledState)? "Please fill out all fields" : "SUBMIT";
+        const buttonOnClick = async ()=>{const success = await this.sendInputToDB(); console.log("successfully sent?:" + success); if(success)this.props.history.push("/interview/list");};
         
         return (
             <div id='new-interview-full'>
@@ -133,7 +134,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                             </datalist>
                     </InputGroup>
                     < br />
-                    <Button color="secondary" size="lg" block disabled={buttonDisabledState} onClick={this.sendInputToDB}>{buttonText}</Button>
+                    <Button color="secondary" size="lg" block disabled={buttonDisabledState} onClick={buttonOnClick}>{buttonText}</Button>
                 </Form>
             </div>
         );
