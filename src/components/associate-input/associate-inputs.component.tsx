@@ -6,6 +6,9 @@ import * as actions from '../../actions/assoc-input/assoc-input.action';
 import { connect } from 'react-redux';
 import { getFormatNames } from './temp.util';
 import { IState } from '../../reducers';
+import InputGroup from 'reactstrap/lib/InputGroup';
+import InputGroupAddon from 'reactstrap/lib/InputGroupAddon';
+import Input from 'reactstrap/lib/Input';
 
 interface IProps {
     fields: IAssociateInput;
@@ -90,7 +93,15 @@ export class AssociateInput extends Component<IProps, IInputState> {
         const {interviewId} = this.props.ownProps.location.state;
 
         return (
-            <form id='assoc-questionaire'>
+            <form style={{
+                padding: '1rem',
+                backgroundColor: 'rgb(255,194,137)'
+            }}>
+                <InputGroup >
+                    <InputGroupAddon addonType="prepend">When did you recieve a notification?</InputGroupAddon>
+                    <Input type='text' />
+                </InputGroup>
+                
                 <Question value='When did you recieve a notification?' >
                     <input className='tab-once' type="date" onChange={updateDayNotified} />
                 </Question>
