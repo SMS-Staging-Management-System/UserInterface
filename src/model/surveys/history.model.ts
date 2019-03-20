@@ -1,5 +1,5 @@
 export interface IHistory {
-    id: number;
+    historyId: number;
     surveyId: number;
     userEmail: string;
     dateAssigned: Date;

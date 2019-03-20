@@ -5,6 +5,7 @@ import { ICohort } from '../../../model/cohort';
 import { updateCohorts} from '../../../actions/manage-cohorts/manage-cohorts.actions'
 
 import * as createCohortActions from '../../../actions/create-cohort/create-cohort.actions';
+import * as viewCohortActions from '../../../actions/view-cohort/view-cohort.actions';
 
 
 /**
@@ -14,8 +15,15 @@ import * as createCohortActions from '../../../actions/create-cohort/create-coho
 
 export interface IManageCohortsComponentProps {
   cohorts: ICohort[];
+  updateCohorts: (cohorts: ICohort[]) => void;
   toggleCreateCohortModal: () => void;
-  updateCohorts : (cohorts: ICohort[])  => void;
+  toggleViewCohortModal: () => void;
+  /**
+   * Handles what happens when a cohort is hovered
+   * 
+   * @param cohort: The cohort that is currently being hovered
+   */
+  hoveredCohort: (cohorts: ICohort)  => void;
 }
 
 const mapStateToProps= ( state: IState) => {
@@ -25,8 +33,10 @@ const mapStateToProps= ( state: IState) => {
 }
 
 const mapDispatchToProps =  {
-        updateCohorts,
-        toggleCreateCohortModal: createCohortActions.toggleModal
+        toggleCreateCohortModal: createCohortActions.toggleModal,
+        toggleViewCohortModal: viewCohortActions.toggleViewCohortModal,
+        hoveredCohort: viewCohortActions.hoveredCohort,
+        updateCohorts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCohortsComponenent)

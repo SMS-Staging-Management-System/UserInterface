@@ -76,7 +76,6 @@ export const updateNewCohort = (newCohort: ICohort) => {
   }
 }
 
-
 export const saveCohort = (newCohort: ICohort) => (dispatch: (action: any)=> void) => {
   cohortClient.save(newCohort)
     .then(async resp => {
