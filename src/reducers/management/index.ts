@@ -21,8 +21,6 @@ import { joinCohortReducer } from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
 
-import { IStatus } from "../../model/status.model";
-
 export interface IAddressState {
   trainingAddresses: IAddress[],
 }
@@ -127,7 +125,6 @@ export interface ICohortModalState {
     currentProfile: IProfileViewState,
     viewCohort: ICohortModalState,
     joinCohort: IJoinCohortState,
-    currentProfile: IProfileViewState,
     resetPassword: IResetPasswordState,
     resetPasswordUsername: IResetPasswordUsernameState,
     login: ILoginState,
@@ -145,7 +142,7 @@ export interface ICohortModalState {
     currentSMSUser: currentSMSUserReducer,
     joinCohort: joinCohortReducer,
     currentProfile: profileViewReducer,
-    viewCohort: viewCohortReducer
+    viewCohort: viewCohortReducer,
     manageCohorts: manageCohortsReducer,
     resetPassword: resetPasswordReducer,
     resetPasswordUsername: resetPasswordUsernameReducer,
