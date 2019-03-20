@@ -19,6 +19,17 @@ const initialState : IAssociateChartState = {
             'Sufficient Notice',
         ],
     },
+    options: {
+        legend: {
+            labels: {
+                defaultFontSize: 18,
+                fontSize: 18
+            }
+        },
+        pointLabels: {
+            fontSize: 18
+        }
+    },
     canvas: undefined,
 }
 

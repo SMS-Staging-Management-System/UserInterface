@@ -849,31 +849,66 @@ Info Circle
 }
 
 /***********************************
-  Chart
+  tabular data
 ***********************************/
 
-#ManagerChart{
- width:50vw;
- height:100vh;
- display:inline-block;
- top:180px;
- left:0%;
- position:fixed;
-z-index:12;
-text-align:center;
+.tableholder{
+  background-color: #ffc289;
+  padding: 1rem;
+  
+  form{
+    width: max-content;
+  }
+
+  table{
+    background:       #ffffff;
+    margin-left:      auto;
+    margin-right:     auto;
+    max-width:        100%;
+
+    tr{
+      border-bottom: #333333 solid 1px;
+
+      td, th{
+        padding:          5px;
+        text-align:       center;
+        word-wrap:        break-word;
+      }
+    }
+  }
 }
 
-#AssociateChart{
-  width:50vw;
-  height:100vh;
+/***********************************
+  Chart
+***********************************/
+#ManagerChart,
+#AssociateChart,
+#FeedbackRequestedChart,
+#FeedbackReceivedChart,
+#JDChartComponent{
+  width:40vw;
+  height:60vh;
   display:inline-block;
   top:180px;
-  left:50vw;
   position:fixed;
-  z-index:10;
   text-align:center;
+  z-index:10;
 }
 
+#ManagerChart,
+#FeedbackRequestedChart{
+  left:10vw;
+}
+
+#AssociateChart,
+#FeedbackReceivedChart{
+  left:50vw;
+}
+
+ #JDChartComponent{
+  left:30vw;
+ }
+ 
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -963,10 +998,20 @@ Fa Circle
   border: 2px solid #f26925;
   position:absolute;
   width:40%;
-  left:5%;
   bottom:5%;
   display:block;
   text-align:center;
+  z-index: 100;
+
+  a{
+    color:#000000;
+    text-decoration: underline;
+    font-size: 2em;
+  }
+}
+
+.paginateddata{
+  left:5%;
 }
 
  .visualdata{

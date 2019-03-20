@@ -48,8 +48,10 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log(this.props.createInterviewComponentState.clientArr);
     }
 
-    fetchAssociatesInSelectedCohort = async () => {
-        const selectedCohort = this.props.createInterviewComponentState.selectedCohort;
+    fetchAssociatesInSelectedCohort = async (selectedCohort) => {
+        //const selectedCohort = this.props.createInterviewComponentState.selectedCohort;
+        console.log("selected cohort");
+        console.log(selectedCohort);
         const res = selectedCohort && await userClient.findAllByCohortId(selectedCohort.cohortId);
         if (res && res.data) {
             this.props.setState({
@@ -62,7 +64,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log(res);
     }
 
-    sendInputToDB = async () => {
+    sendInputToDB = async (): Promise<boolean> => {
         let { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
         if (selectedAssociate && dateString && location && client) {
             const newInterviewData: INewInterviewData = {
@@ -72,11 +74,11 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 client: client
             };
             console.log(newInterviewData);
-            interviewClient.addNewInterview(newInterviewData).then((res) => {
-                console.log('submitted')
-                console.log(res);
-            }).catch((e) => { console.log('didnt submit successfully'), console.log(e) });
-        }
+            const res = await interviewClient.addNewInterview(newInterviewData)
+            console.log('submitted')
+            console.log(res);
+            return (res.status >= 200 && res.status < 300); 
+        } else return false;
     }
 
     render() {
@@ -85,19 +87,23 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         // private String Place;
         // private int interview_format;
         // private int managerId;
+        
         const state = this.props.createInterviewComponentState;
         const setState = this.props.setState;
         const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location, client } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
         const cohortOptions = allCohorts && allCohorts.map((val) => { return <option value={JSON.stringify(val)}>{val.cohortName}</option> })
         const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val) => { return <option value={JSON.stringify(val)}>{`${val.firstName} ${val.lastName}`}</option> })
-
+        const buttonDisabledState = !(selectedAssociate && date && location && client);
+        const buttonText = (buttonDisabledState)? "Please fill out all fields" : "SUBMIT";
+        const buttonOnClick = async ()=>{const success = await this.sendInputToDB(); console.log("successfully sent?:" + success); if(success)this.props.history.push("/interview/list");};
+        
         return (
             <div id='new-interview-full'>
                 <span>CREATE A NEW INTERVIEW FOR AN ASSOCIATE</span>
                 <hr />
                 <Form>
                     <InputGroup>
-                        <Input type='select' value={JSON.stringify(selectedCohort)} disabled={!allCohorts || allCohorts.length == 0} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, selectedCohort: JSON.parse(e.target.value), selectedAssociate: undefined }); this.fetchAssociatesInSelectedCohort(); }} >
+                        <Input type='select' value={JSON.stringify(selectedCohort)} disabled={!allCohorts || allCohorts.length == 0} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, selectedCohort: JSON.parse(e.target.value), selectedAssociate: undefined }); this.fetchAssociatesInSelectedCohort( JSON.parse(e.target.value)); }} >
                             <option value={undefined} style={{ display: 'none' }}>select a cohort...</option>
                             {cohortOptions}
                         </Input>
@@ -130,7 +136,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                             </datalist>
                     </InputGroup>
                     < br />
-                    <Button color="secondary" size="lg" block onClick={this.sendInputToDB}>SUBMIT</Button>
+                    <Button color="secondary" size="lg" block disabled={buttonDisabledState} onClick={buttonOnClick}>{buttonText}</Button>
                 </Form>
             </div>
         );

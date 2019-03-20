@@ -20,10 +20,7 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
         super(props);
         this.state = {
             Users: [
-                { email: 'test@test.com', userId: -1, firstName: 'Aaron', lastName:'Anderson', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
-                { email: 'test@test.com', userId: -1, firstName: 'Betty', lastName:'Bronte', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
-                { email: 'test@test.com', userId: -1, firstName: 'Charles', lastName:'Cromwell', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
-                { email: 'test@test.com', userId: -1, firstName: 'Delta', lastName:'Dawn', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
+                { undefined },
               ],
             totalPages:0,
             currentPage:0,
@@ -74,36 +71,45 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
 
         return (
             <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {assocInterviewRows}
-                    </tbody>
-                </table>
-                <ReactPaginate
-                    previousLabel={'Prev'}
-                    nextLabel={'Next'}
-                    breakLabel={'...'}
-                    breakClassName={'page-item no-select'}
-                    breakLinkClassName={'break-me-link page-link'}
-                    pageCount={this.state.totalPages}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={'pagination page-navigator'}
-                    activeClassName={'active'}
-                    pageClassName={'page-item cursor-hover'}
-                    pageLinkClassName={'paginate-link page-link no-select'}
-                    nextClassName={'page-item cursor-hover'}
-                    nextLinkClassName={'paginate-next page-link no-select'}
-                    previousClassName={'page-item cursor-hover'}
-                    previousLinkClassName={'paginate-previous page-link no-select'}
-                />
+                <div className='tableholder'>
+                    <h1> Feedback Given Report</h1>     
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {assocInterviewRows}
+                        </tbody>
+                    </table>
+                    <ReactPaginate
+                        previousLabel={'Prev'}
+                        nextLabel={'Next'}
+                        breakLabel={'...'}
+                        breakClassName={'page-item no-select justify-content-center'}
+                        breakLinkClassName={'break-me-link page-link'}
+                        pageCount={this.state.totalPages}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={'pagination page-navigator justify-content-center'}
+                        activeClassName={'active justify-content-center'}
+                        pageClassName={'page-item cursor-hover justify-content-center'}
+                        pageLinkClassName={'paginate-link page-link no-select'}
+                        nextClassName={'page-item cursor-hover justify-content-center'}
+                        nextLinkClassName={'paginate-next page-link no-select'}
+                        previousClassName={'page-item cursor-hover justify-content-center'}
+                        previousLinkClassName={'paginate-previous page-link no-select'}
+                    />
+                </div>
+                <div className = {"paginateddata"}>
+                    <Link to="/interview/report/feedback" >Paginated Data</Link>
+                </div>
+                <div className = {"visualdata"}>
+                    <Link to="/interview/report/feedback/charts" >Visual Data</Link>
+                </div>
             </div>
         );
     }

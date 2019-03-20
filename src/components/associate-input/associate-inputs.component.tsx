@@ -6,7 +6,7 @@ import * as actions from '../../actions/assoc-input/assoc-input.action';
 import { connect } from 'react-redux';
 import { getFormatNames } from './temp.util';
 import { IState } from '../../reducers';
-//import './radio.style.css';
+import Button from 'reactstrap/lib/Button';
 
 
 interface IProps {
@@ -91,7 +91,10 @@ export class AssociateInput extends Component<IProps, IInputState> {
         const { interviewId } = this.props.ownProps.location.state;
 
         return (
-            <form id='assoc-questionaire'>
+            <form style={{
+                padding: '1rem',
+                backgroundColor: 'rgb(255,194,137)'
+            }}>
                 <Question value='When did you recieve a notification?' >
                     <input className='tab-once' type="date" onChange={updateDayNotified} />
                 </Question>
@@ -110,11 +113,11 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
                 {this.drawError()}
 
-                <button style={{
-                    width: '50%',
-                    display: 'block',
-                    margin: '0 auto'
-                }} onClick={e => {
+                <Button color="secondary" size="sm" block onClick={(e) => {
+                    this.toggleRedirect();
+                }}>Back</Button>
+
+                <Button color="secondary" size="lg" block onClick={(e) => {
                     e.preventDefault();
                     if (this.validate()) {
                         submitInput(interviewId, fields);
@@ -122,7 +125,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
                     } else {
                         this.toggleError();
                     }
-                }}>Submit</button>
+                }}>SUBMIT</Button>
 
                 {this.drawRedirect()}
             </form>

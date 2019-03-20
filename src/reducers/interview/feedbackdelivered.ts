@@ -1,10 +1,10 @@
 import { IManagerChartState } from ".";
 import { feedbackDeliveredChartTypes } from "../../actions/feedbackDel-chart/feedbackdelivered.actions"
 
-const initialState: IManagerChartState = {
+const initialState : IManagerChartState = {
     data: {
         datasets: [{
-            data: [0, 0],
+            data: [0,0],
             backgroundColor: [
                 'rgba(190, 213, 3, 0.2)',
                 'rgba(89, 243, 132, 0.2)',
@@ -19,10 +19,21 @@ const initialState: IManagerChartState = {
             'No Feedback',
         ],
     },
+    options: {
+        legend: {
+            labels: {
+                defaultFontSize: 18,
+                fontSize: 18
+            }
+        },
+        pointLabels: {
+            fontSize: 18
+        }
+    },
     canvas: undefined,
 }
 
-export const feedbackDeliveredChartReducer = (state = initialState, action: any): IManagerChartState => {
+export const feedbackDeliveredChartReducer = (state = initialState, action : any): IManagerChartState => {
     switch (action.type) {
         case feedbackDeliveredChartTypes.GET_INFO:
             if (action.payload.chartInfo) {

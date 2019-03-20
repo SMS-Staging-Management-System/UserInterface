@@ -1,4 +1,5 @@
 import { INewInterviewData } from "../../model/INewInterviewData";
+import { store } from "../../Store";
 import { smsClient } from ".";
 
 const interviewContext = '/interview';
@@ -11,16 +12,31 @@ export const interviewClient = {
     addNewInterview: async (newInterview: INewInterviewData) => {
         return await smsClient.post(interviewContext + '/new', newInterview);
     },
+  
+    getInterview: async (interviewId: number) => {
+        return await smsClient.get(`${interviewContext}/${interviewId}`);
+    },
+    
+    fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC') => {
+        const currentUser = store.getState().managementState.auth.currentUser;
+        console.log(currentUser);
+        const roles = currentUser.roles
+        const email = currentUser.email
+        const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
 
-    fetchPage: (pageNumber?: number, pageSize?: number, orderBy = 'id', direction = 'ASC') => {
         let url = interviewContext;
-        url += '/page?orderBy=' + orderBy + '&direction=' + direction;
+        url += '/page'
+        if(!isAdmin) url += 's'
+        url += '?orderBy=' + orderBy + '&direction=' + direction;
         if (pageNumber) {
             url += '&pageNumber=' + pageNumber;
         }
         if (pageSize) {
             url += '&pageSize=' + pageSize;
         }
+        if(!isAdmin)
+            url += '&email=' + email;
+        
         return smsClient.get(url);
     },
 
@@ -48,16 +64,17 @@ export const interviewClient = {
         return await smsClient.get(interviewContext + `/reports/request24/associate`);
     },
 
-    fetch24: async (pageNumber: number, PageSize: number) => {
-        return await smsClient.get(interviewContext + `/interview/reports/interview24/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    fetch24: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/reports/interview24/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
 
-    interviewJD: async (pageNumber: number, PageSize: number) => {
-        return await smsClient.get(interviewContext + `/interview/reports/interviewJD/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    interviewJD: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/reports/interviewJD/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
 
     interviewJDChart: async () => {
-        return await smsClient.get(interviewContext + `/interview/reports/interviewJD/`);
+        return await smsClient.get(interviewContext+`/reports/interviewJD/`);
+
     },
     fetchClient: async () => {
         return await smsClient.get(interviewContext + `/client`);
