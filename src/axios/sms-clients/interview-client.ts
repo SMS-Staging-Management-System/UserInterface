@@ -48,4 +48,16 @@ export const interviewClient = {
     fetchAssoc24: async () => {
         return await smsClient.get(interviewContext+`/reports/request24/associate`);
     },
+
+    fetch24: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/interview/reports/interview24/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    },
+
+    interviewJD: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/interview/reports/interviewJD/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    },
+
+    interviewJDChart: async () => {
+        return await smsClient.get(interviewContext+`/interview/reports/interviewJD/`);
+    },
 }

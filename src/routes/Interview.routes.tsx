@@ -8,6 +8,10 @@ import createInterviewComponent from '../components/creaInterviewComponent/creat
 import interviewFeedbackComponent from '../components/interviewFeedbackComponent/interviewFeedback.component';
 import AssociateInput from '../components/associate-input/associate-inputs.component';
 import { AssociatesFeedbackRequest } from '../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component';
+import { interview24Request } from '../components/interview24/interview24.component';
+import { interviewJDRequest } from '../components/interviewJD/interviewJD.component';
+import JDReportForm from '../components/interviewJD/ReportFormComponent';
+
 
 import { InterviewPerAssoc } from '../components/interviewsPerAssocComponent/interviewsPerAssocComponent.component';
 
@@ -23,7 +27,10 @@ export class InterviewRoutes extends React.Component<any, any> {
         let {path} =this.props.match
         return (
             <Switch>
-                <Route path={`${path}/reports`} component={ReportForm} />
+                <Route path={`${path}/report/24hour/charts`} component={ReportForm} />
+                <Route path={`${path}/report/24hour`} component={interview24Request} />
+				<Route path={`${path}/report/jobDesc/charts`} component={JDReportForm} />
+				<Route path={`${path}/report/jobDesc`} component={interviewJDRequest} />
                 <Route path={`${path}/report/feedback/charts`} component={FeedbackReportForm} />
                 <Route path={`${path}/report/AssociateInterviews`} component={InterviewPerAssoc} />
                 <Route path={`${path}/report/feedback`} component={AssociatesFeedbackRequest} />

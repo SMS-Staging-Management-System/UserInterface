@@ -740,6 +740,18 @@ text-align:center;
    text-align:center;
  }
 
+ #JDChartComponent{
+   width:50vw;
+   height:100vh;
+   display:inline-block;
+   top:180px;
+   left:25vw;
+   position:fixed;
+   z-index:10;
+   text-align:center;
+ }
+
+ 
  
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -759,4 +771,32 @@ text-align:center;
 .editButton:hover {
   background-color: white;
   color: #f26925;
+}
+
+/////////////////////////////////////////////////
+// CHARTS
+/////////////////////////////////////////////////
+
+.paginateddata{
+  background-color: #f26925; 
+  color: white; 
+  border: 2px solid #f26925;
+  position:absolute;
+  width:40%;
+  left:5%;
+  bottom:5%;
+  display:block;
+  text-align:center;
+}
+
+.visualdata{
+  background-color: #f26925; 
+  color: white; 
+  border: 2px solid #f26925;
+  position:absolute;
+  width:40%;
+  left:55%;
+  bottom:5%;
+  display:block;
+  text-align:center;
 }

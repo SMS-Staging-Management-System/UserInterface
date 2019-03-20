@@ -8,6 +8,8 @@ import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
+import { jobDescriptionChartReducer } from './jobdesc.reducer';
+import { Interview } from '../../model/Interview.model'
 
 export interface IReportFormState {
     
@@ -123,6 +125,30 @@ export interface IFeedbackDeliveredChartState {
 	canvas: any
 }
 
+export interface IJobDescriptionChartState {
+    data: {
+        datasets: [{
+            data: number[],
+    
+        backgroundColor: [
+            string,
+            string
+        ],
+        borderColor: [
+            string,
+            string
+        ],
+        
+        }],
+    
+        labels: [
+          string,
+          string
+        ],
+
+    },
+	canvas: any
+}
 
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
@@ -135,8 +161,12 @@ export interface ICreateInterviewComponentState {
 }
 
 export interface IInterviewListState {
-    listOfInterviews : any[],
-    numberOfPages : number
+    listOfInterviews : Interview[],
+    numberOfPages : number,
+    orderBy : string,
+    direction : string,
+    pageSize : number,
+    currentPage : number
 }
     
 export interface IInterviewState {
@@ -147,7 +177,8 @@ export interface IInterviewState {
     managerChart: IManagerChartState,
     associateChart: IAssociateChartState,
     feedbackRequestedChart: IFeedbackRequestedChartState,
-    feedbackDeliveredChart: IFeedbackDeliveredChartState
+    feedbackDeliveredChart: IFeedbackDeliveredChartState,
+	jobDescriptionChart: IJobDescriptionChartState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -158,5 +189,6 @@ export const interviewState = combineReducers<IInterviewState>({
    managerChart: managerChartReducer,
    associateChart: associateChartReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
-   feedbackDeliveredChart: feedbackDeliveredChartReducer
+   feedbackDeliveredChart: feedbackDeliveredChartReducer,
+   jobDescriptionChart: jobDescriptionChartReducer
 })
