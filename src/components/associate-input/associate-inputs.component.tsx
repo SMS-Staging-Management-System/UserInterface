@@ -15,7 +15,8 @@ interface IProps {
     updateDescProvided: (value: string, id: number) => void;
     updateActualFormat: (value: string, id: number) => void;
     updateProposedFormat: (value: string, id: number) => void;
-    submitInput: (fields: IAssociateInput) => void;
+    submitInput: (interviewId: number, fields: IAssociateInput) => void;
+    ownProps: any;
 }
 
 interface IInputState {
@@ -53,24 +54,24 @@ export class AssociateInput extends Component<IProps, IInputState> {
     };
 
     drawError = () => {
-        if(this.state.error) {
+        if (this.state.error) {
             return (
-                <p style={{color: 'red'}}>*All Fields Required</p>
+                <p style={{ color: 'red' }}>*All Fields Required</p>
             );
         }
         return (<></>);
     };
 
     drawRedirect = () => {
-        if(this.state.redirect) {
-            return (<Redirect to='/interview' />);
+        if (this.state.redirect) {
+            return (<Redirect to='/interview/list' />);
         }
         return (<></>);
     };
 
     validate = () => {
-        for(let prop in this.props.fields) {
-            if(this.props.fields[prop] === undefined) {
+        for (let prop in this.props.fields) {
+            if (this.props.fields[prop] === undefined) {
                 return false;
             }
         }
@@ -79,11 +80,15 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
     render() {
         const {
+            fields,
             updateDayNotified,
             updateDescProvided,
             updateActualFormat,
-            updateProposedFormat
+            updateProposedFormat,
+            submitInput
         } = this.props;
+
+        const { interviewId } = this.props.ownProps.location.state;
 
         return (
             <form id='assoc-questionaire'>
@@ -109,10 +114,10 @@ export class AssociateInput extends Component<IProps, IInputState> {
                     width: '50%',
                     display: 'block',
                     margin: '0 auto'
-                }} onClick={e => { 
+                }} onClick={e => {
                     e.preventDefault();
-                    if(this.validate()) {
-                        console.log(this.props.fields);
+                    if (this.validate()) {
+                        submitInput(interviewId, fields);
                         this.toggleRedirect();
                     } else {
                         this.toggleError();
@@ -125,13 +130,14 @@ export class AssociateInput extends Component<IProps, IInputState> {
     }
 }
 
-const mapStateToProps = (state: IState) => {
+const mapStateToProps = (state: IState, ownProps) => {
     return {
-    //    fields: state.interviewState.associateInput
+        ownProps: ownProps,
+        fields: state.interviewState.associateInput
     };
 };
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
     ...actions
 };
 

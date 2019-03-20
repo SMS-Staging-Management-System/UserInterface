@@ -1,13 +1,13 @@
-// Temp import
 import { IAssociateInput } from '../../model/Associateinput.model';
 import { getFormatById } from '../../components/associate-input/temp.util';
+import { interviewClient } from '../../axios/sms-clients/interview-client';
 
 export const AssocInputActions = {
     UPDATE_DAY_NOTIFIED: 'UPDATE_DAY_NOTIFIED',
     UPDATE_DESC_PROVIDED: 'UPDATE_DESC_PROVIDED',
     UPDATE_ACTUAL: 'UPDATE_ACTUAL',
     UPDATE_PROPOSED: 'UPDATE_PROPOSED',
-    SUBMIT: 'SUBMIT' 
+    SUBMIT: 'SUBMIT'
 };
 export const updateDayNotified = (event: any) => {
     return {
@@ -38,14 +38,26 @@ export const updateProposedFormat = (value: string, id: number) => {
     };
 };
 
-export const submit = (fields: IAssociateInput) => (dispatch) => {
-    // interview id
-    // recieved notification
-    // description provided
-    // interview format
-    // proposed format.
-    dispatch({
-        type: AssocInputActions.SUBMIT,
-        payload: fields
-    });
+export const submitInput = (interviewId: number, fields: IAssociateInput) => async (dispatch) => {
+    // Better f***ing work.
+    try {
+        const res = await interviewClient.submitAssocInput({
+            interviewId: interviewId,
+            associateInputId: fields.id,
+            receivedNotifications: fields.dateNotified,
+            descriptionProvided: fields.descriptionProvided,
+            interviewFormat: fields.interviewFormat,
+            proposedFormat: fields.proposedFormat
+        });
+        if (res.status === 200) {
+            console.log('Associate Input Submission: Success');
+            dispatch({
+                type: AssocInputActions.SUBMIT,
+                payload: fields
+            });
+        }
+    }
+    catch {
+        console.log('Associate Input Submission: Failed');
+    }
 };
