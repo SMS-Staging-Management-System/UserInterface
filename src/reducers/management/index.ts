@@ -23,6 +23,7 @@ import { viewCohortReducer } from "./view-cohort.reducer";
 
 
 
+
 export interface IAddressState {
   trainingAddresses: IAddress[],
 }
