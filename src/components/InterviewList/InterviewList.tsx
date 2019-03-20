@@ -131,11 +131,14 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                 <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
                             </th>
+                            <th>
+                                Interview Feedback
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.props.listOfInterviews.map((entry) => {
-                            return (<tr>
+                            return (<tr key={entry.id}>
                                 <td>{entry.associateEmail}</td>
                                 <td>{entry.managerEmail}</td>
                                 <td>{entry.place}</td>
@@ -145,6 +148,9 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <td>{this.renderDate(entry.reviewed)}</td>
                                 <td>{entry.associateInput ? "Associate Input filled!" : <Button>
                                     <Link to={{ pathname: '/interview/associateInput', state: { interviewId: entry.id } }} >Add Associate Input</Link></Button>}</td>
+                                <td>{entry.feedback ? <Link to={{pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link> : <Button>
+                                    <Link to={{pathname: `/interview/${entry.id}/feedback`}}>Complete Interview Feedback</Link>
+                                </Button>}</td>
                             </tr>)
                         })}
                     </tbody>
