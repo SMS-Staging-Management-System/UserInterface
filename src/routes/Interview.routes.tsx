@@ -14,6 +14,7 @@ import JDReportForm from '../components/interviewJD/ReportFormComponent';
 
 
 import { InterviewPerAssoc } from '../components/interviewsPerAssocComponent/interviewsPerAssocComponent.component';
+import ViewAssociateInput from '../components/view-assoc-input/view-assoc-input.component';
 import { ViewInterviewFeedbackComponent } from '../components/interviewFeedbackComponent/ViewInterviewFeedbackComponent';
 
 
@@ -42,6 +43,7 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/new`} component={createInterviewComponent} />
                 <Route path={`${path}/:interviewId/feedback`} component={ interviewFeedbackComponent} />
                 <Route path={`${path}/list`} component={InterviewList} />
+                <Route path={`${path}/viewAssocInput`} component={ViewAssociateInput} />
              </Switch>
         )
     }
