@@ -120,7 +120,10 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
           <tbody>
             {
               this.props.cohorts.map((cohort) =>
-                <tr key={cohort.cohortToken} className="rev-table-row">
+                <tr key={cohort.cohortToken} className="rev-table-row"
+                    onClick={this.props.toggleViewCohortModal}
+                    onMouseEnter={()=>this.props.hoveredCohort(cohort)}
+                >
                   <td>{cohort.cohortName}</td>
                   <td>{cohort.address? cohort.address.alias: ''}</td>
                   <td>{cohort.cohortToken}</td>
