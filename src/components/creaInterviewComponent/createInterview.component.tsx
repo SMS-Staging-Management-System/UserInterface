@@ -48,8 +48,10 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log(this.props.createInterviewComponentState.clientArr);
     }
 
-    fetchAssociatesInSelectedCohort = async () => {
-        const selectedCohort = this.props.createInterviewComponentState.selectedCohort;
+    fetchAssociatesInSelectedCohort = async (selectedCohort) => {
+        //const selectedCohort = this.props.createInterviewComponentState.selectedCohort;
+        console.log("selected cohort");
+        console.log(selectedCohort);
         const res = selectedCohort && await userClient.findAllByCohortId(selectedCohort.cohortId);
         if (res && res.data) {
             this.props.setState({
@@ -101,7 +103,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 <hr />
                 <Form>
                     <InputGroup>
-                        <Input type='select' value={JSON.stringify(selectedCohort)} disabled={!allCohorts || allCohorts.length == 0} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, selectedCohort: JSON.parse(e.target.value), selectedAssociate: undefined }); this.fetchAssociatesInSelectedCohort(); }} >
+                        <Input type='select' value={JSON.stringify(selectedCohort)} disabled={!allCohorts || allCohorts.length == 0} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, selectedCohort: JSON.parse(e.target.value), selectedAssociate: undefined }); this.fetchAssociatesInSelectedCohort( JSON.parse(e.target.value)); }} >
                             <option value={undefined} style={{ display: 'none' }}>select a cohort...</option>
                             {cohortOptions}
                         </Input>
