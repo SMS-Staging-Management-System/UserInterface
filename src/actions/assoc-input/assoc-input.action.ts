@@ -7,7 +7,7 @@ export const AssocInputActions = {
     UPDATE_DESC_PROVIDED: 'UPDATE_DESC_PROVIDED',
     UPDATE_ACTUAL: 'UPDATE_ACTUAL',
     UPDATE_PROPOSED: 'UPDATE_PROPOSED',
-    SUBMIT: 'SUBMIT' 
+    SUBMIT: 'SUBMIT'
 };
 export const updateDayNotified = (event: any) => {
     return {
@@ -49,7 +49,7 @@ export const submitInput = (interviewId: number, fields: IAssociateInput) => asy
             interviewFormat: fields.interviewFormat,
             proposedFormat: fields.proposedFormat
         });
-        if(res.status === 200) {
+        if (res.status === 200) {
             console.log('Associate Input Submission: Success');
             dispatch({
                 type: AssocInputActions.SUBMIT,

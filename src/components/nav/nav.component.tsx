@@ -45,15 +45,18 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
             <ul className="navbar-nav ml-auto margin-nav">
               {props.auth.currentUser.email
                 ? // if ther is a email show the nav elements 
+
                 <>
                   {
+                    this.props.auth.currentUser.roles.length === 0 ?
+                      <li className="nav-item active"><Link to="/surveys" className="unset-anchor nav-link">Surveys</Link></li> : null
+                  }
+                  {
+
                     this.props.auth.currentUser.roles.some(role => role === 'staging-manager' || role === 'admin' || role === 'trainer') &&
                     <>
                       <li className="nav-item active">
                         <Link to="/surveys" className="unset-anchor nav-link">Surveys</Link>
-                      </li>
-                      <li className="nav-item active">
-                        <Link to="/checkins" className="unset-anchor nav-link">Checkins</Link>
                       </li>
                       <li className="nav-item active">
                         <Link to="/management/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
@@ -74,6 +77,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                           <Link to="/interview/report/AssociateInterviews" className=" dropdown-item nav-dropdown"><FaListOl /> Interviews Per Associate Report...</Link>
                         </div>
                       </li>
+
                     </>
                   }
                   {
@@ -86,6 +90,8 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt />  {props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
                       <Link to="/management/profile" className=" dropdown-item nav-dropdown">Profile</Link>
+
+
                       <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                     </div>
                   </li>

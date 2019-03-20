@@ -1,3 +1,4 @@
+
 import { IInterviewFormat } from "./Interview.format.model"
 
 export interface IAssociateInput {

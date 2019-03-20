@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Button from "reactstrap/lib/Button";
 
 interface IProps {
-    data: any
+  data: any
 }
 
 interface IViewState {
@@ -33,6 +33,7 @@ class ViewAssociateInput extends Component<IProps, IViewState> {
             return '-';
         }
     }
+  }
 
     renderItem = (question: string, answer: string) => {
         return (
@@ -79,9 +80,9 @@ class ViewAssociateInput extends Component<IProps, IViewState> {
 }
 
 const mapStateToProps = (state: IState) => {
-    return {
-        data: state.interviewState.interviewList.assocInput
-    };
+  return {
+    data: state.interviewState.interviewList.assocInput
+  };
 };
 
 export default connect(mapStateToProps)(ViewAssociateInput);

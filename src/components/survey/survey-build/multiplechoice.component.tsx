@@ -1,19 +1,6 @@
 import React from 'react';
 
-
-
-
-export interface ISurveyBuildProps {
-  //   user: IUserState,
-  //   surveyTitle: string,
-  //   type: string,
-  //   errorMessage: string,
-  //   newSurvey: {},
-  //   handleSubmit(newSurvey: {}, userId: number): void
-}
-
-
-export class MultipleChoice extends React.Component<ISurveyBuildProps, any> {
+export class MultipleChoice extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -21,20 +8,12 @@ export class MultipleChoice extends React.Component<ISurveyBuildProps, any> {
 
   }
 
-
-  //   handleChange = (event) => { 
-
-  //   }
-
-
-
   render() {
 
     return (
 
       <div>
-        <button value="1" id="multi" className="form-control" name="type" type="button"   > Multiple Choice </button>
-
+        <label htmlFor="" style={{ marginBottom: 0, textAlign:'center' }} id="multi" className="form-control" > Multiple Choice </label>
      
           <div className="new" id="t1">
 

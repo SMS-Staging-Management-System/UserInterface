@@ -4,30 +4,28 @@ import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/in
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
-import { IoIosArrowDown } from 'react-icons/io'
-import { IoIosArrowUp } from 'react-icons/io'
+import { IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowUp } from 'react-icons/io';
 import { Label } from 'reactstrap';
 import { store } from '../../Store';
 
-
-
 export interface InterviewListProps {
-    email : string,
-    listOfInterviews : any[],
-    numberOfPages : number,
-    currentPage : number,
-    pageSize : number,
-    orderBy : string,
-    direction : string,
-    getInterviewPages : (
-        pageNumber? : number, 
-        pageSize? : number,
-        ordeyBy?: string, 
-        direction? : string) => void,
-    markAsReviewed : (interviewId : number) => void,
+    email: string,
+    listOfInterviews: any[],
+    numberOfPages: number,
+    currentPage: number,
+    pageSize: number,
+    orderBy: string,
+    direction: string,
+    getInterviewPages: (
+        pageNumber?: number,
+        pageSize?: number,
+        ordeyBy?: string,
+        direction?: string) => void,
+    markAsReviewed: (interviewId: number) => void,
     setSelected: (current: any) => void;
 }
- 
+
 export interface InterviewListState {
     direction : string,
     loaded : boolean
@@ -54,52 +52,53 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 this.props.orderBy, 
                 this.props.direction);
         }
+
     }
-    
+
     handlePageClick = (data) => {
-        this.props.getInterviewPages(data.selected, 
-            this.props.pageSize, 
-            this.props.orderBy, 
+        this.props.getInterviewPages(data.selected,
+            this.props.pageSize,
+            this.props.orderBy,
             this.props.direction);
     }
 
     changeOrderAsc = () => {
         this.setState({
-            direction : 'ASC'
+            direction: 'ASC'
         })
     }
 
     changeOrderDesc = () => {
         this.setState({
-            direction : 'DESC'
+            direction: 'DESC'
         })
     }
 
-    changeOrderCriteria = (event : any) => {
+    changeOrderCriteria = (event: any) => {
         this.props.getInterviewPages(
-            0, 
-            this.props.pageSize, 
-            event.currentTarget.id, 
+            0,
+            this.props.pageSize,
+            event.currentTarget.id,
             this.state.direction);
     }
 
-    changePageSize = (event : any) => {
+    changePageSize = (event: any) => {
         this.props.getInterviewPages(
-            this.props.currentPage, 
-            event.currentTarget.value, 
-            this.props.orderBy, 
+            this.props.currentPage,
+            event.currentTarget.value,
+            this.props.orderBy,
             this.props.direction);
     }
 
-    renderDate = (date : number) => {
-        if (date > 0){
+    renderDate = (date: number) => {
+        if (date > 0) {
             return new Date(date).toDateString()
         } else {
             return '-';
         }
     }
 
-    markAsReviewed = (event : any) => {
+    markAsReviewed = (event: any) => {
         this.props.markAsReviewed(event.currentTarget.id);
     }
 
@@ -111,9 +110,10 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 {
                     <Link onClick={e => {
                         this.props.setSelected(entry.associateInput);
-                        }} to = {{
-                            pathname: `/interview/${url}`, 
-                            state: { interviewId: entry.id } }} >{`${text} Associate Input`}
+                    }} to={{
+                        pathname: `/interview/${url}`,
+                        state: { interviewId: entry.id }
+                    }} >{`${text} Associate Input`}
                     </Link>
                 }
             </td>
@@ -227,16 +227,16 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
 
 const mapStateToProps = (state: IState) => {
     return {
-        email : state.managementState.auth.currentUser.email,
-        listOfInterviews : state.interviewState.interviewList.listOfInterviews,
-        numberOfPages : state.interviewState.interviewList.numberOfPages,
-        currentPage : state.interviewState.interviewList.currentPage,
-        pageSize : state.interviewState.interviewList.pageSize,
-        orderBy : state.interviewState.interviewList.orderBy,
-        direction : state.interviewState.interviewList.direction
+        email: state.managementState.auth.currentUser.email,
+        listOfInterviews: state.interviewState.interviewList.listOfInterviews,
+        numberOfPages: state.interviewState.interviewList.numberOfPages,
+        currentPage: state.interviewState.interviewList.currentPage,
+        pageSize: state.interviewState.interviewList.pageSize,
+        orderBy: state.interviewState.interviewList.orderBy,
+        direction: state.interviewState.interviewList.direction
     }
 }
- 
+
 const mapDispatchToProps = {
     getInterviewPages,
     markAsReviewed,

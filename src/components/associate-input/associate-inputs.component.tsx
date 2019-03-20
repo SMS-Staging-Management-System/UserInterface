@@ -8,6 +8,7 @@ import { getFormatNames } from './temp.util';
 import { IState } from '../../reducers';
 import Button from 'reactstrap/lib/Button';
 
+
 interface IProps {
     fields: IAssociateInput;
     updateDayNotified: (event: any) => void;
@@ -30,7 +31,6 @@ export class AssociateInput extends Component<IProps, IInputState> {
             error: false,
             redirect: false
         };
-        
     }
 
     toDateString = (): string => {
@@ -54,24 +54,24 @@ export class AssociateInput extends Component<IProps, IInputState> {
     };
 
     drawError = () => {
-        if(this.state.error) {
+        if (this.state.error) {
             return (
-                <p style={{color: 'red'}}>*All Fields Required</p>
+                <p style={{ color: 'red' }}>*All Fields Required</p>
             );
         }
         return (<></>);
     };
 
     drawRedirect = () => {
-        if(this.state.redirect) {
+        if (this.state.redirect) {
             return (<Redirect to='/interview/list' />);
         }
         return (<></>);
     };
 
     validate = () => {
-        for(let prop in this.props.fields) {
-            if(this.props.fields[prop] === undefined) {
+        for (let prop in this.props.fields) {
+            if (this.props.fields[prop] === undefined) {
                 return false;
             }
         }
@@ -87,8 +87,8 @@ export class AssociateInput extends Component<IProps, IInputState> {
             updateProposedFormat,
             submitInput
         } = this.props;
-        
-        const {interviewId} = this.props.ownProps.location.state;
+
+        const { interviewId } = this.props.ownProps.location.state;
 
         return (
             <form style={{
@@ -98,6 +98,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
                 <Question value='When did you recieve a notification?' >
                     <input className='tab-once' type="date" onChange={updateDayNotified} />
                 </Question>
+
                 <Question value='Were you provided a job description?' >
                     <MultipleChoice name='q3' choices={['Yes', 'No']} onChange={updateDescProvided} />
                 </Question>
@@ -139,7 +140,7 @@ const mapStateToProps = (state: IState, ownProps) => {
     };
 };
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
     ...actions
 };
 

@@ -24,7 +24,7 @@ export const getFormatById = (id: number) => {
 };
 
 export const getFormatNames = () => {
-    let temp = [ '<-select->' ];
+    let temp = ['<-select->'];
     FORMATS.forEach(e => {
         temp.push(e.formatDesc);
     });
