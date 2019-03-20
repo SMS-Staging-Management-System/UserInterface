@@ -28,10 +28,7 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         super(props);
         this.state = {
             assocInterviewArr: [
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Aaron Anderson' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Betty Bronte' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Charles Cromwell' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Delta Dawn' },
+                { associateEmail: ' ', interviewCount: undefined, AssociateName: '' },
               ],
             totalPages:0,
             currentPage:0,
@@ -82,7 +79,7 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         });
 
         return (
-            <div><h1> Interviews per Associate Report </h1>
+            <div className="tableholder"><h1> Interviews per Associate Report </h1>
 			
                  <table>
                     <thead>
@@ -100,19 +97,19 @@ export class InterviewPerAssoc extends React.Component<any, any> {
                     previousLabel={'Prev'}
                     nextLabel={'Next'}
                     breakLabel={'...'}
-                    breakClassName={'page-item no-select'}
+                    breakClassName={'page-item no-select justify-content-center'}
                     breakLinkClassName={'break-me-link page-link'}
                     pageCount={this.state.totalPages}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={this.handlePageClick}
-                    containerClassName={'pagination page-navigator'}
-                    activeClassName={'active'}
-                    pageClassName={'page-item cursor-hover'}
+                    containerClassName={'pagination page-navigator justify-content-center'}
+                    activeClassName={'active justify-content-center'}
+                    pageClassName={'page-item cursor-hover justify-content-center'}
                     pageLinkClassName={'paginate-link page-link no-select'}
-                    nextClassName={'page-item cursor-hover'}
+                    nextClassName={'page-item cursor-hover justify-content-center'}
                     nextLinkClassName={'paginate-next page-link no-select'}
-                    previousClassName={'page-item cursor-hover'}
+                    previousClassName={'page-item cursor-hover justify-content-center'}
                     previousLinkClassName={'paginate-previous page-link no-select'}
                 />
             </div>

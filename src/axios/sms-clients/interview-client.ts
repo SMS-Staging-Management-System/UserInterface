@@ -51,15 +51,15 @@ export const interviewClient = {
     },
 
     fetch24: async (pageNumber:number, PageSize:number) => {
-        return await smsClient.get(interviewContext+`/interview/reports/interview24/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+        return await smsClient.get(interviewContext+`/reports/interview24/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
 
     interviewJD: async (pageNumber:number, PageSize:number) => {
-        return await smsClient.get(interviewContext+`/interview/reports/interviewJD/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+        return await smsClient.get(interviewContext+`/reports/interviewJD/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
 
     interviewJDChart: async () => {
-        return await smsClient.get(interviewContext+`/interview/reports/interviewJD/`);
+        return await smsClient.get(interviewContext+`/reports/interviewJD/`);
     },
     fetchClient: async () => {
         return await smsClient.get(interviewContext+`/client`);

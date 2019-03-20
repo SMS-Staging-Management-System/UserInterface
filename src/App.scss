@@ -693,65 +693,75 @@ TEMPLATE MODAL
 }
 
 /***********************************
-  Chart
+  tabular data
 ***********************************/
 
-#ManagerChart{
- width:50vw;
- height:100vh;
- display:inline-block;
- top:180px;
- left:0%;
- position:fixed;
-z-index:12;
-text-align:center;
+.tableholder{
+  background-color: #ffc289;
+  padding: 1rem;
+  
+  form{
+    width: max-content;
+  }
+
+  table{
+    background:       #ffffff;
+    margin-left:      auto;
+    margin-right:     auto;
+    max-width:        100%;
+
+    tr{
+      border-bottom: #333333 solid 1px;
+
+      td, th{
+        padding:          5px;
+        text-align:       center;
+        word-wrap:        break-word;
+      }
+    }
+  }
 }
 
-#AssociateChart{
+/***********************************
+  Chart
+***********************************/
+#ManagerChart,
+#AssociateChart,
+#FeedbackRequestedChart,
+#FeedbackReceivedChart,
+#JDChartComponent{
   width:50vw;
-  height:100vh;
+  height:80vh;
   display:inline-block;
   top:180px;
-  left:50vw;
   position:fixed;
-  z-index:10;
   text-align:center;
 }
 
+#ManagerChart{
+ left:0%;
+z-index:12;
+}
+
+#AssociateChart{
+  left:50vw;
+  z-index:10;
+}
+
 #FeedbackRequestedChart{
-  width:50vw;
-  height:100vh;
-  display:inline-block;
-  top:180px;
   left:0%;
-  position:fixed;
  z-index:12;
- text-align:center;
  }
  
  #FeedbackReceivedChart{
-   width:50vw;
-   height:100vh;
-   display:inline-block;
-   top:180px;
    left:50vw;
-   position:fixed;
    z-index:10;
-   text-align:center;
  }
 
  #JDChartComponent{
-   width:50vw;
-   height:100vh;
-   display:inline-block;
-   top:180px;
    left:25vw;
-   position:fixed;
    z-index:10;
-   text-align:center;
  }
-
- 
  
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -777,26 +787,28 @@ text-align:center;
 // CHARTS
 /////////////////////////////////////////////////
 
-.paginateddata{
+.paginateddata, .visualdata{
   background-color: #f26925; 
   color: white; 
   border: 2px solid #f26925;
   position:absolute;
   width:40%;
-  left:5%;
   bottom:5%;
   display:block;
   text-align:center;
+  z-index: 100;
+
+  a{
+    color:#000000;
+    text-decoration: underline;
+    font-size: 2em;
+  }
+}
+
+.paginateddata{
+  left:5%;
 }
 
 .visualdata{
-  background-color: #f26925; 
-  color: white; 
-  border: 2px solid #f26925;
-  position:absolute;
-  width:40%;
   left:55%;
-  bottom:5%;
-  display:block;
-  text-align:center;
 }
