@@ -10,6 +10,7 @@ export const interviewClient = {
     },
   
     addNewInterview: async (newInterview: INewInterviewData) => {
+        console.log(newInterview);
         return await smsClient.post(interviewContext + '/new', newInterview);
     },
     
@@ -60,4 +61,16 @@ export const interviewClient = {
     interviewJDChart: async () => {
         return await smsClient.get(interviewContext+`/interview/reports/interviewJD/`);
     },
+    fetchClient: async () => {
+        return await smsClient.get(interviewContext+`/client`);
+    },
+
+    submitAssocInput: async (payload: any) => {
+        return await smsClient.post(interviewContext +'/associateInput', payload);
+        ;
+    },
+
+    markInterviewAsReviewed : (id : number) => {
+        return smsClient.get(interviewContext + '/markReviewed/' + id);
+    }
 }

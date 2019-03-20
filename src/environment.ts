@@ -2,9 +2,9 @@ const dev = {
   awsRegion:          'us-east-1',
   cognitoClientId:    '4mafdnad6u1o1ugokulsmbrl96',
   cognitoUserPoolId:  'us-east-1_6hCFlGZHZ',
-  mgtContext:         'http://10.226.49.179:8090',
-  surveyContext:       'http://10.226.49.179:8092',
-  smsContext:         'http://10.226.49.179:8091'
+  //mgtContext:         'http://10.226.50.166:8090',
+  //surveyContext:       'http://10.226.50.166:8092',
+  smsContext:         'http://localhost:8765'
 };
 
 const uat = {
