@@ -11,7 +11,7 @@ export const smsClient = axios.create({
 });
 
 export const surveyContext = axios.create({
-  baseURL: environment.smsContext,
+  baseURL: environment.surveyContext,
   headers: {
     'Content-Type': 'application/json'
   }
