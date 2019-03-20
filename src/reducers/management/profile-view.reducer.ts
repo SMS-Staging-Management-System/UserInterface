@@ -1,5 +1,6 @@
 import { IProfileViewState } from ".";
 import { viewUserTypes } from "../../actions/view-user/view-user.actions";
+import { profileTypes } from "../../actions/profile/profile.actions";
 
 const initialState: IProfileViewState = {
     user: {
@@ -14,7 +15,7 @@ const initialState: IProfileViewState = {
             alias: '',
             city: '',
             state: '',
-            country: '',
+            country: 'United States',
             zip: ''
         },
         trainingAddress: {
@@ -26,23 +27,79 @@ const initialState: IProfileViewState = {
             country: '',
             zip: ''
         },
-        status: {
+        userStatus: {
             statusId: 0,
-            genericStatus: '',
+            generalStatus: '',
             specificStatus: '',
             virtual: false     
         },
         roles: []
-    }
+    },
+    bUserInfoChanged: false,
+    locationDropdownActive: false,
+    statusDropdownActive: false,
+    virtual: false
 }
 
 export const profileViewReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case (viewUserTypes.VIEW_USER):
+        case viewUserTypes.VIEW_USER:
             return {
                 ...state,
                 user: action.payload.newUser
             }
+        case profileTypes.UPDATE_USER_TRAINING_LOCATION:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    trainingAddress: action.payload.location,
+                    bUserInfoChanged: true
+                }
+            }
+        case profileTypes.UPDATE_USER_INFO:
+            return {
+                ...state,
+                user: action.payload.user,
+                bUserInfoChanged: true
+            }
+        case profileTypes.SET_TO_CURRENT_SMS_USER:
+            return {
+                ...state,
+                user: action.payload.currentSMSUser
+            }
+        case profileTypes.TOGGLE_TRAINING_LOCATIONS_DROPDOWN:
+            return {
+                ...state,
+                locationDropdownActive: !state.locationDropdownActive,
+                bUserInfoChanged: true
+            }
+        case profileTypes.USER_UPDATE_SUCCESSFUL:
+            return {
+                ...state,
+                user: action.payload.updatedUser,
+                bUserInfoChanged: false
+            }
+        case profileTypes.TOGGLE_STATUS_DROPDOWN:
+            return {
+                ...state,
+                statusDropdownActive: !state.statusDropdownActive,
+                bUserInfoChanged: true
+            }
+        case profileTypes.UPDATE_USER_STATUS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    userStatus: action.payload.status}
+            }
+        case profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX:
+            return {
+                ...state,
+                virtual: !state.virtual
+            }
+    
+    
     }
     return state;
 }

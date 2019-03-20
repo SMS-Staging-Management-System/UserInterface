@@ -11,7 +11,6 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
   }
 
   render() {
-
     let currentModalDisplay = (<><div className="responsive-modal-row">
     <p>First Name: {this.props.viewUser.newUser.firstName || 'Unknown'}</p>
   </div>
@@ -39,7 +38,11 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
           <ModalHeader className="rev-background-color">User info</ModalHeader>
           <ModalBody>
           
-          {this.props.user.roles.some(role => (role === 'admin')) ?  <Profile/> : currentModalDisplay }
+          {this.props.user.roles.some(role => (role === 'admin'))
+           ?  
+            <Profile/> 
+              :
+            currentModalDisplay }
             
           </ModalBody>
           <ModalFooter id="create-user-modal-footer">

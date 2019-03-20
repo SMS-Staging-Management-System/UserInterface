@@ -6,19 +6,15 @@ import { interviewFeedbackReducer } from './interviewFeedback.reducer';
 import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
-import { assocInputReducer } from './assoc-input.reducer';
-import { IAssociateInput } from '../../model/Associateinput.model';
-import { feedbackDeliveredChartReducer } from './feedbackdelivered';
-import { feedbackRequestedChartReducer } from './feedbackrequested';
-import { jobDescriptionChartReducer } from './jobdesc.reducer';
-import { Client } from '../../model/Client.model';
-import { Interview } from '../../model/Interview.model';
+//import { assocInputReducer } from '../reducers/assoc-input.reducer';
+//import { IAssociateInput } from '../model/Associateinput.model';
 
 export interface IReportFormState {
     
 }
 
 export interface IManagerChartState {
+    type: string,
     data: {
         datasets: [{
             data: number[],
@@ -40,7 +36,7 @@ export interface IManagerChartState {
         ],
 
     },
-	canvas: any
+    chartInfo:[number, number]
 }
 
 export interface IInterviewFeedbackComponentState {
@@ -52,6 +48,7 @@ export interface IInterviewFeedbackComponentState {
 }
 
 export interface IAssociateChartState {
+    type: string,
     data: {
         datasets: [{
             data: number[],
@@ -73,85 +70,9 @@ export interface IAssociateChartState {
         ],
 
     },
-	canvas: any
+    chartInfo:[number, number]
 }
 
-
-export interface IFeedbackRequestedChartState {
-    data: {
-        datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
-        }],
-    
-        labels: [
-          string,
-          string
-        ],
-
-    },
-	canvas: any
-}
-
-
-export interface IFeedbackDeliveredChartState {
-    data: {
-        datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
-        }],
-    
-        labels: [
-          string,
-          string
-        ],
-
-    },
-	canvas: any
-}
-
-export interface IJobDescriptionChartState {
-    data: {
-        datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
-        }],
-    
-        labels: [
-          string,
-          string
-        ],
-
-    },
-	canvas: any
-}
 
 export interface ICreateInterviewComponentState {
     allCohorts: any[] | undefined,
@@ -160,18 +81,11 @@ export interface ICreateInterviewComponentState {
     selectedAssociate: any | undefined,
     date: string,
     location: string,
-    client: string,
-    clientArr: Client[]
 }
 
 export interface IInterviewListState {
-    listOfInterviews : Interview[],
-    numberOfPages : number,
-    orderBy : string,
-    direction : string,
-    pageSize : number,
-    currentPage : number,
-    assocInput: any
+    listOfInterviews : any[],
+    numberOfPages : number
 }
     
 export interface IInterviewState {
@@ -181,10 +95,6 @@ export interface IInterviewState {
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
     managerChart: IManagerChartState,
     associateChart: IAssociateChartState,
-    associateInput: IAssociateInput,
-    feedbackRequestedChart: IFeedbackRequestedChartState,
-    feedbackDeliveredChart: IFeedbackDeliveredChartState,
-	jobDescriptionChart: IJobDescriptionChartState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -194,8 +104,4 @@ export const interviewState = combineReducers<IInterviewState>({
    interviewFeedbackComponentState: interviewFeedbackReducer,
    managerChart: managerChartReducer,
    associateChart: associateChartReducer,
-   associateInput: assocInputReducer,
-   feedbackRequestedChart: feedbackRequestedChartReducer,
-   feedbackDeliveredChart: feedbackDeliveredChartReducer,
-   jobDescriptionChart: jobDescriptionChartReducer
 })
