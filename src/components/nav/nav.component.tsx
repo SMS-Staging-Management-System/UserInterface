@@ -77,9 +77,9 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                     </>
                   }
                   {
-                    // this.props.auth.currentUser.roles.some(role => role === "associate") &&
+                    (this.props.auth.currentUser.roles.length === 0) &&
                     <li>
-                      <Link to="/interview/list" className=" dropdown-item nav-dropdown"> Interview List </Link>
+                      <Link to="/interview/list" className=" dropdown-item"> Interview List </Link>
                     </li>
                   }
                   <li className="nav-item active dropdown">
