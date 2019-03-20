@@ -11,7 +11,7 @@ import { IoIosArrowUp } from 'react-icons/io'
 import { Label } from 'reactstrap';
 
 
-
+// This is the props for the interview list page 
 export interface InterviewListProps {
     email : string,
     listOfInterviews : any[],
