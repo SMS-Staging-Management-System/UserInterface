@@ -1,7 +1,8 @@
 
+
 export interface IInterviewFormat {
-  interviewFormatId:      number,
-  formatDesc:             string
+  id: number,
+  formatDesc: string
 }
 
 export enum InterviewFormat {
