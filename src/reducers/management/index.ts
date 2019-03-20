@@ -21,6 +21,9 @@ import { joinCohortReducer } from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
 
+
+
+
 export interface IAddressState {
   trainingAddresses: IAddress[],
 }

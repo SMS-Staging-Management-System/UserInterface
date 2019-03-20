@@ -9,6 +9,7 @@ const mapStateToProps = (state: IState, ownProps) =>({
   history: ownProps.history,
   location: ownProps.location,
   match: ownProps.match,
+  login: state.managementState.login,
   resetPasswordProps: state.managementState.resetPassword,
   resetPasswordUsernameProps: state.managementState.resetPasswordUsername,
 })
