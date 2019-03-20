@@ -37,8 +37,6 @@ export const assocInputReducer = (state = initalState, action: any) => {
         case AssocInputActions.SUBMIT:
             return { ...action.payload };
 
-        
-
         default: return state;
     }
 };

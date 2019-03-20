@@ -6,6 +6,8 @@ import * as actions from '../../actions/assoc-input/assoc-input.action';
 import { connect } from 'react-redux';
 import { getFormatNames } from './temp.util';
 import { IState } from '../../reducers';
+//import './radio.style.css';
+
 
 interface IProps {
     fields: IAssociateInput;
@@ -13,8 +15,7 @@ interface IProps {
     updateDescProvided: (value: string, id: number) => void;
     updateActualFormat: (value: string, id: number) => void;
     updateProposedFormat: (value: string, id: number) => void;
-    submitInput: (interviewId: number, fields: IAssociateInput) => void;
-    ownProps: any;
+    submitInput: (fields: IAssociateInput) => void;
 }
 
 interface IInputState {
@@ -29,7 +30,6 @@ export class AssociateInput extends Component<IProps, IInputState> {
             error: false,
             redirect: false
         };
-        
     }
 
     toDateString = (): string => {
@@ -63,7 +63,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
     drawRedirect = () => {
         if(this.state.redirect) {
-            return (<Redirect to='/interview/list' />);
+            return (<Redirect to='/interview' />);
         }
         return (<></>);
     };
@@ -79,21 +79,18 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
     render() {
         const {
-            fields,
             updateDayNotified,
             updateDescProvided,
             updateActualFormat,
-            updateProposedFormat,
-            submitInput
+            updateProposedFormat
         } = this.props;
-        
-        const {interviewId} = this.props.ownProps.location.state;
 
         return (
             <form id='assoc-questionaire'>
                 <Question value='When did you recieve a notification?' >
                     <input className='tab-once' type="date" onChange={updateDayNotified} />
                 </Question>
+
                 <Question value='Were you provided a job description?' >
                     <MultipleChoice name='q3' choices={['Yes', 'No']} onChange={updateDescProvided} />
                 </Question>
@@ -115,7 +112,7 @@ export class AssociateInput extends Component<IProps, IInputState> {
                 }} onClick={e => { 
                     e.preventDefault();
                     if(this.validate()) {
-                        submitInput(interviewId, fields);
+                        console.log(this.props.fields);
                         this.toggleRedirect();
                     } else {
                         this.toggleError();
@@ -128,10 +125,9 @@ export class AssociateInput extends Component<IProps, IInputState> {
     }
 }
 
-const mapStateToProps = (state: IState, ownProps) => {
+const mapStateToProps = (state: IState) => {
     return {
-        ownProps: ownProps,
-        fields: state.interviewState.associateInput
+    //    fields: state.interviewState.associateInput
     };
 };
 

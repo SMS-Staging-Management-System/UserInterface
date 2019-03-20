@@ -5,6 +5,7 @@ import CreateCohortModal from './create-cohort-modal/create-cohort-modal.contain
 import ManageCohortsComponent from './manage-cohorts/manage-cohorts.container';
 import CreateUserModal from './create-user-modal/create-user-modal.container';
 import ManageInternalComponenet  from './manage-internal/manage-internal.container';
+import ViewCohortModal from './manage-cohorts-modal/manage-cohorts-modal.container';
 
 
 
@@ -42,6 +43,7 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
         }
         <CreateCohortModal />
         <CreateUserModal />
+        <ViewCohortModal />
       </div>
     )
   }

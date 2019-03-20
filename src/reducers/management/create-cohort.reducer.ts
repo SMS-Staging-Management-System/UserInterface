@@ -49,9 +49,9 @@ const initialState: ICreateCohortState = {
       phoneNumber: '',
       userId: 0,
       roles: [],
-      status: {
+      userStatus: {
         statusId: 0,
-        genericStatus: '',
+        generalStatus: '',
         specificStatus: '',
         virtual: false
       }
