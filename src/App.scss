@@ -730,37 +730,27 @@ TEMPLATE MODAL
 #FeedbackRequestedChart,
 #FeedbackReceivedChart,
 #JDChartComponent{
-  width:50vw;
-  height:80vh;
+  width:40vw;
+  height:60vh;
   display:inline-block;
   top:180px;
   position:fixed;
   text-align:center;
-}
-
-#ManagerChart{
- left:0%;
-z-index:12;
-}
-
-#AssociateChart{
-  left:50vw;
   z-index:10;
 }
 
+#ManagerChart,
 #FeedbackRequestedChart{
-  left:0%;
- z-index:12;
- }
- 
- #FeedbackReceivedChart{
-   left:50vw;
-   z-index:10;
- }
+  left:10vw;
+}
+
+#AssociateChart,
+#FeedbackReceivedChart{
+  left:50vw;
+}
 
  #JDChartComponent{
-   left:25vw;
-   z-index:10;
+  left:30vw;
  }
  
 .no-select {

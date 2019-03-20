@@ -97,8 +97,12 @@ export class ReportForm extends React.Component<any, any> {
         return ( 
             <React.Fragment>
                 <h1>Interviews receiving 24 Hour Notice</h1>
-                <hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/24hour" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/24hour/charts" >Visual Data</Link></div></h2><hr/>
-                <hr/>
+                <div className = {"paginateddata"}>
+                    <Link to="/interview/report/24hour" >Paginated Data</Link>
+                </div>
+                <div className = {"visualdata"}>
+                    <Link to="/interview/report/24hour/charts" >Visual Data</Link>
+                </div>
                 <ChartComponent chart1 = {this.associateC} chart2 = {this.managerC} chartAction1 = {getInfoAssociate} chartAction2 = {getInfoManager} canvas1 = {setCanvasAssociate} canvas2 = {setCanvasManager}/>
             </React.Fragment>
         );

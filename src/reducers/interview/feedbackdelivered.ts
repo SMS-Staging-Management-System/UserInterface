@@ -19,6 +19,17 @@ const initialState : IManagerChartState = {
             'No Feedback',
         ],
     },
+    options: {
+        legend: {
+            labels: {
+                defaultFontSize: 18,
+                fontSize: 18
+            }
+        },
+        pointLabels: {
+            fontSize: 18
+        }
+    },
     canvas: undefined,
 }
 

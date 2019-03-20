@@ -96,7 +96,12 @@ export class FeedbackReportForm extends React.Component<any, any> {
         return ( 
             <React.Fragment>
                 <h1>Interview Feedback Information</h1>
-                <hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/feedback" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/feedback/charts" >Visual Data</Link></div></h2><hr/>
+                <div className = {"paginateddata"}>
+                    <Link to="/interview/report/feedback" >Paginated Data</Link>
+                </div>
+                <div className = {"visualdata"}>
+                    <Link to="/interview/report/feedback/charts" >Visual Data</Link>
+                </div>
                 <FeedbackChartComponent chart1 = {this.associateC} chart2 = {this.managerC} chartAction1 = {getInfoAssociate} chartAction2 = {getInfoManager} canvas1 = {setCanvasAssociate} canvas2 = {setCanvasManager}/>
             </React.Fragment>
         );

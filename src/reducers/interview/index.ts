@@ -21,24 +21,15 @@ export interface IReportFormState {
 export interface IManagerChartState {
     data: {
         datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
+            data: number[],    
+            backgroundColor: [ string, string ],
+            borderColor: [ string, string ],
         }],
-    
-        labels: [
-          string,
-          string
-        ],
-
+        labels: [ string, string ],
+    },
+    options: {
+        legend: {labels:{}},
+        pointLabels: {}
     },
 	canvas: any
 }
@@ -54,76 +45,47 @@ export interface IInterviewFeedbackComponentState {
 export interface IAssociateChartState {
     data: {
         datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
+            data: number[],    
+            backgroundColor: [ string, string ],
+            borderColor: [ string, string ],
         }],
-    
-        labels: [
-          string,
-          string
-        ],
-
+        labels: [ string, string ],
+    },
+    options: {
+        legend: {labels:{}},
+        pointLabels: {}
     },
 	canvas: any
 }
-
 
 export interface IFeedbackRequestedChartState {
     data: {
         datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
+            data: number[],    
+            backgroundColor: [ string, string ],
+            borderColor: [ string, string ],
         }],
-    
-        labels: [
-          string,
-          string
-        ],
-
+        labels: [ string, string ],
+    },
+    options: {
+        legend: {labels:{}},
+        pointLabels: {}
     },
 	canvas: any
 }
 
-
 export interface IFeedbackDeliveredChartState {
     data: {
         datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
+            data: number[],    
+            backgroundColor: [ string, string ],
+            borderColor: [ string, string ],
         }],
-    
-        labels: [
-          string,
-          string
-        ],
-
+        labels: [ string, string ],
+    },
+    options: {
+        legend: {labels:{}},
+        pointLabels: {}
     },
 	canvas: any
 }
@@ -131,24 +93,15 @@ export interface IFeedbackDeliveredChartState {
 export interface IJobDescriptionChartState {
     data: {
         datasets: [{
-            data: number[],
-    
-        backgroundColor: [
-            string,
-            string
-        ],
-        borderColor: [
-            string,
-            string
-        ],
-        
+            data: number[],    
+            backgroundColor: [ string, string ],
+            borderColor: [ string, string ],
         }],
-    
-        labels: [
-          string,
-          string
-        ],
-
+        labels: [ string, string ],
+    },
+    options: {
+        legend: {labels:{}},
+        pointLabels: {}
     },
 	canvas: any
 }

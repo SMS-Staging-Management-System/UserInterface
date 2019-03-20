@@ -95,8 +95,13 @@ export class JDReportForm extends React.Component<any, any> {
     render() { 
         return ( 
             <React.Fragment>
-                                <h1>Job Description Information</h1>
-                			<hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/jobDesc" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/jobDesc/charts" >Visual Data</Link></div></h2><hr/>
+                <h1>Job Description Information</h1>
+                <div className = {"paginateddata"}>
+                    <Link to="/interview/report/jobDesc" >Paginated Data</Link>
+                </div>
+                <div className = {"visualdata"}>
+                    <Link to="/interview/report/jobDesc/charts" >Visual Data</Link>
+                </div>
                 <ChartComponent chart1 = {this.associateC} chartAction1 = {getInfoJD} canvas1 = {setCanvasJD}/>
             </React.Fragment>
 			
@@ -115,8 +120,6 @@ const mapStateToProps = (state: IState) => {
 const mapDispatchToProps = {
     getInfoJD,
     setCanvasJD,
-
-	
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(JDReportForm);
