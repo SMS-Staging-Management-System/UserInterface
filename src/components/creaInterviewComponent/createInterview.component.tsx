@@ -85,12 +85,15 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         // private String Place;
         // private int interview_format;
         // private int managerId;
+        
         const state = this.props.createInterviewComponentState;
         const setState = this.props.setState;
         const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location, client } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
         const cohortOptions = allCohorts && allCohorts.map((val) => { return <option value={JSON.stringify(val)}>{val.cohortName}</option> })
         const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val) => { return <option value={JSON.stringify(val)}>{`${val.firstName} ${val.lastName}`}</option> })
-
+        const buttonDisabledState = !(selectedAssociate && date && location && client);
+        const buttonText = (buttonDisabledState)? "Please fill out all fields" : "SUBMIT";
+        
         return (
             <div id='new-interview-full'>
                 <span>CREATE A NEW INTERVIEW FOR AN ASSOCIATE</span>
@@ -130,7 +133,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                             </datalist>
                     </InputGroup>
                     < br />
-                    <Button color="secondary" size="lg" block onClick={this.sendInputToDB}>SUBMIT</Button>
+                    <Button color="secondary" size="lg" block disabled={buttonDisabledState} onClick={this.sendInputToDB}>{buttonText}</Button>
                 </Form>
             </div>
         );
