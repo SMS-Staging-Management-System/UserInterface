@@ -62,7 +62,6 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                         <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaDatabase /> Interviews </a>
                         <div className="dropdown-menu" aria-labelledby="examples-dropdown">
                           <Link to="/interview/new" className=" dropdown-item nav-dropdown"> New Interview</Link>
-                          <Link to="/interview/list" className=" dropdown-item nav-dropdown"> Interview List </Link>
                         </div>
                       </li>
                       <li className="nav-item active dropdown">
@@ -76,6 +75,9 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                       </li>
                     </>
                   }
+                  <li>
+                    <Link to="/interview/list" className=" dropdown-item nav-dropdown"> Interview List </Link>
+                  </li>
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt />  {props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
