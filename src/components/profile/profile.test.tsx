@@ -11,6 +11,7 @@ function setup() {
         locationDropdownActive: false,
         statusDropdownActive: false,
         bUserInfoChanged: false,
+        virtual: false,
         updateUserInfo: jest.fn(),
         setToCurrentSMSUser: jest.fn(),
         updateUser: jest.fn(),
@@ -18,6 +19,7 @@ function setup() {
         updateUserStatus: jest.fn(),
         toggleTrainingLocationsDropdown: jest.fn(),
         toggleStatusDropdown: jest.fn(),
+        handleCheckboxChange: jest.fn(),
         currentSMSUser:  {
             trainingAddress: {
               addressId: 0,
@@ -103,7 +105,7 @@ function setup() {
                 zip: ''
               }
           ]},
-        currentStatus:{
+        allStatus:{
           userStatus: [
             {
               statusId: 1,
