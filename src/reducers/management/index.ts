@@ -18,6 +18,8 @@ import { profileViewReducer } from "./profile-view.reducer";
 import { resetPasswordReducer } from "./reset-password.reducer";
 import { resetPasswordUsernameReducer } from "./reset-password-username.reducer";
 import { joinCohortReducer } from "./join-cohort.reducer";
+import { IStatus } from "../../model/status.model";
+import { viewCohortReducer } from "./view-cohort.reducer";
 
 import { IStatus } from "../../model/status.model";
 
@@ -67,7 +69,32 @@ export interface IAuthState {
   export interface ICurrentSMSUserState {
     currentSMSUser: IUser
   }
-
+export interface ICohortModalState {
+    /**
+     * The currently selected cohort
+     */
+    cohort: ICohort,
+    /**
+     * List of users in the cohort
+     * that are currently selected for
+     * changes
+     */
+    selectedUsers: IUser[],
+    /**
+     * The status that we would like to
+     * change all of the selected users to.
+     */
+    selectedStatus: IStatus,
+    /**
+     * Whether the modal is visible or not.
+     */
+    modalVisible: boolean,
+    /**
+     * Whether the modal is in the 'saved' state or not
+     */
+    isSaved: boolean,
+    statusDropdownActive: boolean
+ }
 
   export interface IJoinCohortState {
     validToken:boolean,
@@ -97,11 +124,13 @@ export interface IAuthState {
     addresses: IAddressState,
     statuses: IStatusState,
     currentSMSUser: ICurrentSMSUserState,
-    joinCohort: IJoinCohortState
-    currentProfile: IProfileViewState
+    currentProfile: IProfileViewState,
+    viewCohort: ICohortModalState,
+    joinCohort: IJoinCohortState,
+    currentProfile: IProfileViewState,
     resetPassword: IResetPasswordState,
     resetPasswordUsername: IResetPasswordUsernameState,
-    login: ILoginState
+    login: ILoginState,
   }
 
   export const managementState = combineReducers<IManagementState>({
@@ -116,6 +145,7 @@ export interface IAuthState {
     currentSMSUser: currentSMSUserReducer,
     joinCohort: joinCohortReducer,
     currentProfile: profileViewReducer,
+    viewCohort: viewCohortReducer
     manageCohorts: manageCohortsReducer,
     resetPassword: resetPasswordReducer,
     resetPasswordUsername: resetPasswordUsernameReducer,
