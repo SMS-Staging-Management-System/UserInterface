@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowDown } from 'react-icons/io'
 import { IoIosArrowUp } from 'react-icons/io'
 import { Label } from 'reactstrap';
+import { store } from '../../Store';
 
 
 
@@ -40,7 +41,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         }
     }
 
-    async componentDidMount() {
+    async componentDidUpdate() {
         this.props.getInterviewPages(
             this.props.currentPage, 
             this.props.pageSize, 
@@ -113,13 +114,15 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
     };
 
     render() { 
+        const roles = (store.getState().managementState.auth.currentUser.roles);
+        const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
         return ( 
             <div>
                 <div className='tableholder'>
                     <table>
                         <thead>
                             <tr>
-                                <th>Reviewed</th> 
+                                {isAdmin? <th>Reviewed</th> : <></>}
                                 <th id='associateEmail' onClick={this.changeOrderCriteria}>Associate Email 
                                     <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                     <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>
@@ -160,7 +163,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                         <tbody>
                             {this.props.listOfInterviews.map((entry) => {
                                 return (<tr key={entry.id}>
-                                    <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td>
+                                    {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>}
                                     <td>{entry.associateEmail}</td>
                                     <td>{entry.managerEmail}</td>
                                     <td>{entry.place}</td>
@@ -169,8 +172,14 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                     <td>{this.renderDate(entry.scheduled)}</td>
                                     <td>{this.renderDate(entry.reviewed)}</td>
                                     {this.getAssocInput(entry)}
-                                    <td>{entry.feedback ? <Link to={{pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link> :
+                                    <td>{
+                                        entry.feedback ?
+                                        <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link>
+                                        :
+                                        isAdmin?   
                                         <Link to={{pathname: `/interview/${entry.id}/feedback`}}>Complete Interview Feedback</Link>
+                                        :
+                                        <></>
                                     }</td>
                                 </tr>)
                             })}
