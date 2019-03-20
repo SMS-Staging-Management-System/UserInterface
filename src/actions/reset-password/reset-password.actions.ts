@@ -46,7 +46,7 @@ export const submitPasswordReset = (needsVerificationCode: boolean, username: st
         if (needsVerificationCode) {
             console.log('submitting code')
             await Auth.forgotPasswordSubmit(username, verificationCode, newPassword);
-            loginRequest(username, newPassword, history);
+            loginRequest(username, newPassword, history)(dispatch);
         } else {
             await Auth.completeNewPassword(
                 cogUser,               // the Cognito User Object
@@ -57,7 +57,7 @@ export const submitPasswordReset = (needsVerificationCode: boolean, username: st
                 }
             );
             setup();
-            loginRequest(username, newPassword, history)
+            loginRequest(username, newPassword, history)(dispatch)
         }
     } catch (err) {
         toast.error('failed to set new password');
