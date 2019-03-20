@@ -18,7 +18,7 @@ export interface InterviewPerAssocState {
 }
 
 export interface InterviewPAssoc {
-    associateEmail:String,
+    associateId:number,
     interviewCount:number,
     AssociateName:String
 }
@@ -28,10 +28,10 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         super(props);
         this.state = {
             assocInterviewArr: [
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Aaron Anderson' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Betty Bronte' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Charles Cromwell' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Delta Dawn' },
+                { associateId: 2001, interviewCount: -1, AssociateName: 'Aaron Anderson' },
+                { associateId: 2002, interviewCount: -1, AssociateName: 'Betty Bronte' },
+                { associateId: 2003, interviewCount: -1, AssociateName: 'Charles Cromwell' },
+                { associateId: 2004, interviewCount: -1, AssociateName: 'Delta Dawn' },
               ],
             totalPages:0,
             currentPage:0,
@@ -75,20 +75,17 @@ export class InterviewPerAssoc extends React.Component<any, any> {
             return (
                 <tr>
                     <td>{Assoc.AssociateName}</td>
-                    <td>{Assoc.associateEmail}</td>
                     <td>{Assoc.interviewCount}</td>
                 </tr>
             );
         });
 
         return (
-            <div><h1> Interviews per Associate Report </h1>
-			
-                 <table>
+            <div>
+                <table>
                     <thead>
                         <tr>
-                            <th>Associate Name</th>
-                            <th>Associate Email</th>
+                            <th>Associate</th>
                             <th>Interviews</th>
                         </tr>
                     </thead>

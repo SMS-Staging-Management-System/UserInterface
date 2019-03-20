@@ -9,10 +9,10 @@ import { FeedBack } from './feedback.component';
 import { CheckBox } from './checkbox.component';
 import { TrueFalse } from './truefalse.component';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
-import { ISurvey } from '../../../model/surveys/survey.model';
-import { IQuestion } from '../../../model/surveys/question.model';
-import { IAnswer } from '../../../model/surveys/answer.model';
-
+// import { ISurvey } from '../../../model/surveys/survey.model';
+// import { IQuestion } from '../../../model/surveys/question.model';
+// import { IAnswer } from '../../../model/surveys/answer.model';
+// import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
 import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
@@ -118,6 +118,9 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
     }
+
+
+
     this.handleShow();//user styleing for creating a survey
   }
 
