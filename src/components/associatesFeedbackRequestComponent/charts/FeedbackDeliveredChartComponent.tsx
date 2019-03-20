@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Chart from 'chart.js';
 
@@ -8,7 +7,7 @@ interface IChartDisplayProps {
   setCanvas:any
 }
 
-export class ManagerChartComponent extends React.Component<IChartDisplayProps, any> {
+export class FeedbackDeliveredChartComponent extends React.Component<IChartDisplayProps, any> {
   canvasRef : any;
 
   constructor(props) {
@@ -16,8 +15,9 @@ export class ManagerChartComponent extends React.Component<IChartDisplayProps, a
     this.canvasRef = React.createRef();
   }
 
-  componentDidMount() {
+  componentDidMount(){
     var ctx = this.canvasRef.current.getContext('2d');
+
     let myChart = new Chart(ctx, {
       ...this.props.chart,
       type: 'doughnut',
