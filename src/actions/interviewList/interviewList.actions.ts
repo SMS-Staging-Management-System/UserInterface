@@ -1,7 +1,8 @@
 import { interviewClient } from "../../axios/sms-clients/interview-client";
 
 export const interviewListTypes = {
-    GET_PAGES :'GET_PAGES'
+    GET_PAGES :'GET_PAGES',
+    SET_SELECTED: 'SET_SELECTED'
 }
 
 export const getInterviewPages = (
@@ -26,3 +27,11 @@ export const getInterviewPages = (
 export const markAsReviewed = (id : number) => (dispatch) => {
     interviewClient.markInterviewAsReviewed(id);
 }
+
+export const setSelected = (current: any) => {
+    console.log(current);
+    return {
+        type: interviewListTypes.SET_SELECTED,
+        payload: current
+    };
+};

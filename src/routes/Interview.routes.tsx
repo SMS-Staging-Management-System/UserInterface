@@ -10,6 +10,7 @@ import AssociateInput from '../components/associate-input/associate-inputs.compo
 import { AssociatesFeedbackRequest } from '../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component';
 
 import { InterviewPerAssoc } from '../components/interviewsPerAssocComponent/interviewsPerAssocComponent.component';
+import ViewAssociateInput from '../components/view-assoc-input/view-assoc-input.component';
 
 
 export class InterviewRoutes extends React.Component<any, any> {
@@ -29,12 +30,11 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/report/feedback`} component={AssociatesFeedbackRequest} />
                 <Route path={`${path}/report/AssociatesFeedbackRequest`}/>
                 <Route path={`${path}/list`} component={InterviewList} />
-                {/* This is for Ben, please don't delete */}
-                {/* <Route path={`${path}/testing`} component={Testing} /> */}
                 <Route path={`${path}/associateInput`} component={AssociateInput} />
                 <Route path={`${path}/new`} component={createInterviewComponent} />
                 <Route path={`${path}/:interviewId/feedback`} component={ interviewFeedbackComponent} />
                 <Route path={`${path}/list`} component={InterviewList} />
+                <Route path={`${path}/viewAssocInput`} component={ViewAssociateInput} />
              </Switch>
         )
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import Jumbotron from 'reactstrap/lib/Jumbotron';
 import Table from 'reactstrap/lib/Table';
 import { connect } from 'react-redux';
-import { getInterviewPages, markAsReviewed } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,8 @@ import Button from 'reactstrap/lib/Button';
 import { IoIosArrowDown } from 'react-icons/io'
 import { IoIosArrowUp } from 'react-icons/io'
 import { Label } from 'reactstrap';
+
+
 
 export interface InterviewListProps {
     email : string,
@@ -24,7 +26,8 @@ export interface InterviewListProps {
         pageSize? : number,
         ordeyBy?: string, 
         direction? : string) => void,
-    markAsReviewed : (interviewId : number) => void
+    markAsReviewed : (interviewId : number) => void,
+    setSelected: (current: any) => void;
 }
  
 export interface InterviewListState {
@@ -94,6 +97,23 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         this.props.markAsReviewed(event.currentTarget.id);
     }
 
+    getAssocInput = (entry: any) => {
+        let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
+        let text = (entry.associateInput ? 'View' : 'Add');
+        return (
+            <td>
+                {<Button>
+                    <Link onClick={e => {
+                        this.props.setSelected(entry.associateInput);
+                        }} to = {{
+                            pathname: `/interview/${url}`, 
+                            state: { interviewId: entry.id } }} >{`${text} Associate Input`}
+                    </Link>
+                </Button>}
+            </td>
+        );
+    };
+
     render() { 
         return ( 
             <Jumbotron>
@@ -146,8 +166,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <td>{this.renderDate(entry.notified)}</td>
                                 <td>{this.renderDate(entry.scheduled)}</td>
                                 <td>{this.renderDate(entry.reviewed)}</td>
-                                <td>{entry.associateInput ? "Associate Input filled!" : <Button>
-                                    <Link to={{ pathname: '/interview/associateInput', state: { interviewId: entry.id } }} >Add Associate Input</Link></Button>}</td>
+                                {this.getAssocInput(entry)}
                             </tr>)
                         })}
                     </tbody>
@@ -199,7 +218,8 @@ const mapStateToProps = (state: IState) => {
  
 const mapDispatchToProps = {
     getInterviewPages,
-    markAsReviewed
+    markAsReviewed,
+    setSelected
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InterviewList);

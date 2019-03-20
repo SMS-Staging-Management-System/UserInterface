@@ -145,7 +145,8 @@ export interface IInterviewListState {
     orderBy : string,
     direction : string,
     pageSize : number,
-    currentPage : number
+    currentPage : number,
+    assocInput: any
 }
     
 export interface IInterviewState {
