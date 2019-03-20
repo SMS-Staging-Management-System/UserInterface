@@ -50,6 +50,17 @@ export const interviewClient = {
         return await smsClient.get(interviewContext+`/reports/request24/associate`);
     },
 
+    fetch24: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/interview/reports/interview24/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    },
+
+    interviewJD: async (pageNumber:number, PageSize:number) => {
+        return await smsClient.get(interviewContext+`/interview/reports/interviewJD/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    },
+
+    interviewJDChart: async () => {
+        return await smsClient.get(interviewContext+`/interview/reports/interviewJD/`);
+    },
     fetchClient: async () => {
         return await smsClient.get(interviewContext+`/client`);
     },
@@ -59,6 +70,10 @@ export const interviewClient = {
     }, 
 
     fetchInterviewFeedback: async (interviewId: number) => {
-        return await smsClient.get(interviewContext+`/Feedback/InterviewId/${interviewId}`);
+        return await smsClient.get(interviewContext+`/Feedback/InterviewId/${interviewId}`);        ;
+    },
+
+    markInterviewAsReviewed : (id : number) => {
+        return smsClient.get(interviewContext + '/markReviewed/' + id);
     }
 }

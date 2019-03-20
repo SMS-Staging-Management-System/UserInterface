@@ -2,8 +2,8 @@ import { IInterviewListState } from ".";
 import { interviewListTypes } from "../../actions/interviewList/interviewList.actions";
 
 const initialState : IInterviewListState = {
-    listOfInterviews : [],
     numberOfPages : 0,
+    listOfInterviews : [],
     orderBy : 'id',
     direction : 'ASC',
     pageSize : 5,

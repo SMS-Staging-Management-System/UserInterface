@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
-import { FaUserAlt } from 'react-icons/fa';
+import { FaUserAlt, FaDatabase, FaClock, FaThumbsUp, FaComment, FaListOl } from 'react-icons/fa';
 
 interface IProps extends RouteComponentProps<{}> {
   logout: () => void;
@@ -58,12 +58,19 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                       <li className="nav-item active">
                         <Link to="/management/manage/cohorts" className="unset-anchor nav-link">Manage</Link>
                       </li>
-                      <li className="nav-item active">
-                        <Link to="/interview/reports" className="unset-anchor nav-link">Reports</Link>
-                      </li>
                       <li className="nav-item active"><Link to="/interview/list" className="unset-anchor nav-link">Interview List</Link></li>
                       <li className="nav-item active"><Link to="/interview/new" className="unset-anchor nav-link">New Interview</Link></li>
-                    </>
+                    <li className="nav-item active dropdown">
+                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaDatabase/> Reports</a>
+                    <div className="dropdown-menu" aria-labelledby="examples-dropdown">
+                      <Link to="/interview/report/feedback" className=" dropdown-item nav-dropdown"><FaThumbsUp/> Feedback Given Report...</Link>
+					  <Link to="/interview/report/24hour" className=" dropdown-item nav-dropdown"><FaClock/> Given 24 Hour Notice Report...</Link>
+					  <Link to="/interview/report/jobDesc" className=" dropdown-item nav-dropdown"><FaComment/> Job Description Given Report...</Link>
+					  <Link to="/interview/report/AssociateInterviews" className=" dropdown-item nav-dropdown"><FaListOl/> Interviews Per Associate Report...</Link>
+                      <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
+                    </div>
+                  </li>
+					</>
                   }
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt/>  {props.auth.currentUser.email}</a>

@@ -1,39 +1,33 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
+import { IUser } from '../../model/user.model';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
+import { Link } from 'react-router-dom';
 
-
-export interface InterviewPerAssocProps {
-    assocInterviewArr: InterviewPAssoc[],
-    totalPages: number,
-    currentPage: number,
-    pageSize: number
+export interface interviewJDRequestProps {
+    Users:IUser[]
 }
  
-export interface InterviewPerAssocState {
-    assocInterviewArr,
-    totalpages,
-    currentPage,
-    pageSize
+export interface interviewJDState {
+    Users
 }
 
-export interface InterviewPAssoc {
-    associateEmail:String,
-    interviewCount:number,
-    AssociateName:String
+export interface interviewJDFAssoc {
+    Users:IUser[]
 }
  
-export class InterviewPerAssoc extends React.Component<any, any> {
-    constructor(props: InterviewPerAssocProps) {
+export class interviewJDRequest extends React.Component<any, any> {
+    constructor(props: interviewJDRequestProps) {
         super(props);
         this.state = {
-            assocInterviewArr: [
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Aaron Anderson' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Betty Bronte' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Charles Cromwell' },
-                { associateEmail: 'test@test.test', interviewCount: -1, AssociateName: 'Delta Dawn' },
+            Users: [
+                { email: 'test@test.com', userId: -1, firstName: 'Aaron', lastName:'Anderson', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
+                { email: 'test@test.com', userId: -1, firstName: 'Betty', lastName:'Bronte', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
+                { email: 'test@test.com', userId: -1, firstName: 'Charles', lastName:'Cromwell', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
+                { email: 'test@test.com', userId: -1, firstName: 'Delta', lastName:'Dawn', mobile: '(000)000-0000', address:{addressId:-1, alias:'test', city:'test', country:'test', state:'test', zip:'test'} },
               ],
-            totalPages:0,
+			  
+            totalPages :0,
             currentPage:0,
             pageSize:4
         };
@@ -56,10 +50,10 @@ export class InterviewPerAssoc extends React.Component<any, any> {
           async () => {
               try {
                   console.log(pageNumber+'x'+this.state.pageSize)
-                  const res = await interviewClient.interviewPerAssoc(pageNumber, this.state.pageSize);
+                  const res = await interviewClient.interviewJD(pageNumber, this.state.pageSize);
                   console.log(res.data);
                   this.setState({
-                    assocInterviewArr: res.data.content,
+                    Users: res.data.content,
                     totalPages: res.data.totalPages,
                     currentPage: pageNumber
                   });
@@ -71,25 +65,27 @@ export class InterviewPerAssoc extends React.Component<any, any> {
     }
 
     render() { 
-        const assocInterviewRows = this.state.assocInterviewArr.map((Assoc) => {
+        const assocInterviewRows = this.state.Users.map((User) => {
             return (
                 <tr>
-                    <td>{Assoc.AssociateName}</td>
-                    <td>{Assoc.associateEmail}</td>
-                    <td>{Assoc.interviewCount}</td>
+                    <td>{User.assocName}</td>
+                    <td>{User.assocEmail}</td>
+					<td>{User.jd ? "Yes" : "No"}</td>
                 </tr>
             );
         });
 
         return (
-            <div><h1> Interviews per Associate Report </h1>
-			
-                 <table>
+            <div>
+            
+			<h1> Interviews receiving Job Descriptions Report</h1>
+            <hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/jobDesc" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/jobDesc/charts" >Visual Data</Link></div></h2><hr/>
+                   <table>
                     <thead>
                         <tr>
-                            <th>Associate Name</th>
-                            <th>Associate Email</th>
-                            <th>Interviews</th>
+                            <th>  Interviewee  </th>
+                            <th>  Email  </th>
+							<th>  Job Description? </th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../reducers';
-import { FeedbackChartComponent } from './charts/FeedbackChartComponent';
-import {setCanvasAssociate, getInfoAssociate} from '../../actions/feedbackReq-chart/feedbackrequested.actions';
-import {setCanvasManager, getInfoManager} from '../../actions/feedbackDel-chart/feedbackdelivered.actions';
 import { Link } from 'react-router-dom';
+import { ChartComponent } from './charts/ChartComponent';
+import {setCanvasJD, getInfoJD} from '../../actions/jobDesc-chart/jobdescription.actions';
 
 interface IManagerChartProps {
     data: {
@@ -30,18 +29,20 @@ interface IAssociateChartProps {
     },
 }
 
-export class FeedbackReportForm extends React.Component<any, any> {
+export class JDReportForm extends React.Component<any, any> {
     constructor(props) {
         super(props);
     }
 
+    
     _getInfoAssociate() {
-        this.props.getInfoAssociate()
+        this.props.getInfoJD()
     }
 
     _getInfoManager() {
-        this.props.getInfoManager()
+        this.props.getInfoJD()
     }
+
 
     associateC : IAssociateChartProps = {
         data: {
@@ -60,7 +61,7 @@ export class FeedbackReportForm extends React.Component<any, any> {
                 'Insufficient Notice',
                 'Sufficient Notice',
             ],
-            chartAction: getInfoManager
+            chartAction: getInfoJD
         },
     }
 
@@ -81,24 +82,24 @@ export class FeedbackReportForm extends React.Component<any, any> {
                 'Insufficient Notice',
                 'Sufficient Notice',
             ],
-            chartAction: getInfoAssociate
+            chartAction: getInfoJD
         },
     }
 
     componentWillMount(){
-        this._getInfoAssociate();
+		this._getInfoAssociate();
         this._getInfoManager();
-        this.associateC = this.props.associatesChart;
-        this.managerC = this.props.managersChart;
+        this.associateC = this.props.jobDescriptionsChart;
     }
 
     render() { 
         return ( 
             <React.Fragment>
-                <h1>Interview Feedback Information</h1>
-                <hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/feedback" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/feedback/charts" >Visual Data</Link></div></h2><hr/>
-                <FeedbackChartComponent chart1 = {this.associateC} chart2 = {this.managerC} chartAction1 = {getInfoAssociate} chartAction2 = {getInfoManager} canvas1 = {setCanvasAssociate} canvas2 = {setCanvasManager}/>
+                                <h1>Job Description Information</h1>
+                			<hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/jobDesc" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/jobDesc/charts" >Visual Data</Link></div></h2><hr/>
+                <ChartComponent chart1 = {this.associateC} chartAction1 = {getInfoJD} canvas1 = {setCanvasJD}/>
             </React.Fragment>
+			
         );
     }
 }
@@ -106,15 +107,16 @@ export class FeedbackReportForm extends React.Component<any, any> {
 const mapStateToProps = (state: IState) => {
     return {
         managersChart : state.interviewState.feedbackRequestedChart,
-        associatesChart : state.interviewState.feedbackDeliveredChart
+        associatesChart : state.interviewState.feedbackDeliveredChart,
+		jobDescriptionsChart : state.interviewState.jobDescriptionChart,
     }
 }
 
 const mapDispatchToProps = {
-    getInfoAssociate,
-    getInfoManager,
-    setCanvasAssociate,
-    setCanvasManager
+    getInfoJD,
+    setCanvasJD,
+
+	
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedbackReportForm);
+export default connect(mapStateToProps, mapDispatchToProps)(JDReportForm);
