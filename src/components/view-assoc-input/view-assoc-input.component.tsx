@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
-// import { IAssociateInput } from '../../model/Associateinput.model';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
+import Button from "reactstrap/lib/Button";
 
 interface IProps {
     data: any
 }
 
-export class ViewAssociateInput extends Component<IProps, any> {
+interface IViewState {
+    redirect: boolean;
+}
+
+class ViewAssociateInput extends Component<IProps, IViewState> {
     constructor(props: any) {
         super(props);
+        this.state = {
+            redirect: false
+        };
     }
+
+    setRedirect = (value: boolean) => {
+        this.setState({
+            redirect: value
+        });
+    };
 
     renderDate = (date: number) => {
         if (date > 0) {
@@ -21,22 +34,45 @@ export class ViewAssociateInput extends Component<IProps, any> {
         }
     }
 
+    renderItem = (question: string, answer: string) => {
+        return (
+            <div style={{
+                backgroundColor: 'white',
+                padding: '1rem',
+                borderRadius: '5px',
+                marginBottom: '1rem'
+            }} className='assoc-input-item'>
+                <p style={{ margin: '0' }}><strong>{question}</strong></p>
+                <p style={{ margin: '0' }}>{answer}</p>
+            </div>
+        );
+    };
+
     render() {
         const { data } = this.props;
         console.log(data);
+        if(!data || this.state.redirect) { 
+            this.setRedirect(false);
+            return(
+                <Redirect to='/interview/list' />
+            );
+        }
         return (
-            <div>
-                <dl>
-                    <dt>When did you recieve a notification?</dt>
-                    <dd>{this.renderDate(data.receivedNotifications)}</dd>
-                    <dt>Were you provided a job description?</dt>
-                    <dd>{data.descriptionProvided ? 'True' : 'False'}</dd>
-                    <dt>What was the proposed interview format?</dt>
-                    <dd>{(data.proposedFormat ? data.proposedFormat.formatDesc : '')}</dd>
-                    <dt>What was the actual interview format?</dt>
-                    <dd>{(data.interviewFormat ? data.interviewFormat.formatDesc : '')}</dd>
-                </dl>
-                <Link to='/interview/list'>BACK</Link>
+            <div style={{
+                padding: '1rem',
+                backgroundColor: 'rgb(255,194,137)'
+            }}>
+                <h3 style={{textAlign: 'center'}}>Associate Input</h3>
+                <hr/>
+
+                {this.renderItem('When did you recieve a notification?', this.renderDate(data.receivedNotifications))}
+                {this.renderItem('Were you provided a job description?', (data.descriptionProvided ? 'Yes' : 'No'))}
+                {this.renderItem('What was the proposed interview format?', (data.proposedFormat ? data.proposedFormat.formatDesc : ''))}
+                {this.renderItem('What was the actual interview format?', (data.interviewFormat ? data.interviewFormat.formatDesc : ''))}
+
+                <Button color="secondary" size="lg" block onClick={(e) => {
+                    this.setRedirect(true);
+                }}>Back</Button>
             </div>
         );
     }
