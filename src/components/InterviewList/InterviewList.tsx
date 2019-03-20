@@ -6,7 +6,6 @@ import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/in
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
-import Button from 'reactstrap/lib/Button';
 import { IoIosArrowDown } from 'react-icons/io'
 import { IoIosArrowUp } from 'react-icons/io'
 import { Label } from 'reactstrap';
@@ -102,14 +101,14 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         let text = (entry.associateInput ? 'View' : 'Add');
         return (
             <td>
-                {<Button>
+                {
                     <Link onClick={e => {
                         this.props.setSelected(entry.associateInput);
                         }} to = {{
                             pathname: `/interview/${url}`, 
                             state: { interviewId: entry.id } }} >{`${text} Associate Input`}
                     </Link>
-                </Button>}
+                }
             </td>
         );
     };
@@ -170,11 +169,9 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                                 <td>{this.renderDate(entry.scheduled)}</td>
                                 <td>{this.renderDate(entry.reviewed)}</td>
                                 {this.getAssocInput(entry)}
-                                <td>{entry.associateInput ? "Associate Input filled!" : <Button>
-                                    <Link to={{ pathname: '/interview/associateInput', state: { interviewId: entry.id } }} >Add Associate Input</Link></Button>}</td>
-                                <td>{entry.feedback ? <Link to={{pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link> : <Button>
+                                <td>{entry.feedback ? <Link to={{pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link> :
                                     <Link to={{pathname: `/interview/${entry.id}/feedback`}}>Complete Interview Feedback</Link>
-                                </Button>}</td>
+                                }</td>
                             </tr>)
                         })}
                     </tbody>
