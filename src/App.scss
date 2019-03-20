@@ -255,7 +255,12 @@ body {
   }
 }
 
-
+.loader {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 100px;
+}
 
 /*****************************
   NAV
@@ -535,6 +540,10 @@ Survey Component
   
 }
 
+.assignButtonDiv{
+    width: 100%;  
+}
+
 .assignSurveyBtn{
   color: black;
   border-radius: 10px;
@@ -559,13 +568,47 @@ color:#565D61;
     width: 100%;
 }
 
+.modal-content {
+    min-height: 300px;
+}
+
+/*****************
+User Dropdown
+*****************/
+
+.userDropdown {
+    // background-color: $revature-orange-light;
+    float: right;
+}
+
+.userDropdownBtn {
+    color: black;
+    border-radius: 10px;
+    background-color: $revature-orange-light;
+    height: 40px;
+    width: 100%;
+    border: none;
+}
+
+.userDropdownBtn:hover,
+.userDropdownBtn:active {
+    background-color: $revature-orange-light;
+    color:#565D61;
+}
+
+.userDropInput {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#userDropdownWidth {
+    width: 335px;
+}
+
+
 /*****************
 Drag and Drop
 *****************/ 
-.container{
-  //position: absolute;
-}
-
 .todos {
   float: top;
   background: #f3a55d;
@@ -594,52 +637,61 @@ float: left;
   width: auto;
   margin: 10px;
 }
-.jumbotron{
+#jumbotronSurveyBuild{
   height: auto;
   margin-top: 3em;
-  margin-left: 20em;
   border: 3px solid black;
   box-shadow: 0 16px 16px black;
   letter-spacing: 0.2pc;
   font-weight: bold;
   background-color: #eee;
 }
+.survey-build-jumbotron{
+    margin-left: 20em;
+}
 #multi{
   background-color: black;
   color: white;
-  letter-spacing: 0.5pc;
+  letter-spacing: 0.1pc;
   display: inline-block;
+  font-size: 14.9px;
  
 }
 #yn{
   background-color: black;
   color: white;
-  letter-spacing: 0.5pc;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
 #agree{
   background-color: black;
   color: white;
-  letter-spacing: 0.5pc;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
 #rating{
   background-color: black;
   color: white;
-  letter-spacing: 0.5pc;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
 #feedback{
   background-color: black;
   color: white;
-  letter-spacing: 0.5pc;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
 #checkbox{
   background-color: black;
   color: white;
-  letter-spacing: 0.5pc;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
 #tf{
   background-color: black;
   color: white;
-  letter-spacing: 0.5pc;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
 // .labelTitle{
 //   font-family: Helvetica;
@@ -671,11 +723,58 @@ TEMPLATE MODAL
   height: 40px;
   border: none;
   color: black;
+  width: 50%;
+}
+.buttonBack{
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 40px;
+  border: none;
+  color: black;
+  width: 50%;
+}
+.buttonBack:hover,
+.buttonBack:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
 }
 .buttonCreate:hover,
 .buttonCreate:active{
   background-color: $revature-orange-light; 
   color:#565D61;
+  border: 1px solid black;
+}
+.createSurveyButton{
+  background-color: $revature-orange-light; 
+  color:black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
+}
+.createSurveyButton:hover,
+.createSurveyButton:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
+}
+.submitSurveyButton{
+  background-color: $revature-orange-light; 
+  color:black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
+}
+.submitSurveyButton:hover,
+.submitSurveyButton:active{
+  background-color: $revature-orange-light; 
+  color:#565D61;
+  border: 1px solid black;
 }
 .buttonEdit{
   border-radius: 10px;
@@ -697,6 +796,56 @@ TEMPLATE MODAL
   background-color: $revature-orange-light; 
   color:black;
   border: none;
+}
+
+.modalHeading{
+  width: 100%;
+  text-align: left;
+  height: 60px;
+  background-color: $revature-orange-light;
+  color: black;
+  padding: 10px;
+  
+  
+  text-align: center;
+  font-size: 22px;
+  font-family: Helvetica;
+  border-radius: 10px 10px 0px 0px;
+}
+#jumbotronTemplate{
+  margin: auto;
+}
+.surveyName{
+  width: 20%;
+  border: 1px solid black;
+  padding: 5px;
+ 
+  
+}
+.surveyDescription{
+  width: 45%;
+  border: 1px solid black;
+  padding: 5px;
+}
+.noteDiv{
+  color: green;
+  font-weight: bold;
+}
+/*******************
+Info Circle
+*******************/ 
+.surveyInfoCircle{
+  font-size: 17px;
+  text-align: center;
+  width: 100%;
+}
+.modalSuccessHeading{
+  height: 40px;
+  width: 100%;
+  background-color: $revature-orange-light;
+  color: white;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
 }
 
 /***********************************
@@ -744,3 +893,29 @@ text-align:center;
   background-color: white;
   color: #f26925;
 }
+
+/***********
+Container
+***********/ 
+#containerTemplate{
+  background: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+  padding: 15px;
+  
+}
+/**************
+Alert
+**************/ 
+#alertSubmission{
+  width: auto;
+  text-align: center;
+  display: none;
+  border:  1px solid black;
+  color: black;
+}
+/****************
+Fa Circle
+****************/ 
+.faCircle {
+    color: $revature-orange-light;
+  }

@@ -8,24 +8,24 @@ const dev = {
 };
 
 const uat = {
-  awsRegion: 'us-east-1',
-  cognitoClientId: '4mafdnad6u1o1ugokulsmbrl96',
-  cognitoUserPoolId: 'us-east-1_6hCFlGZHZ',
-  mgtContext: 'http://localhost:8090',
-  smsContext: 'https://7i6rudc3m2.execute-api.us-east-1.amazonaws.com/uat',
-  surveyContext: 'NEEDTOADD' // NEED TO ADD EC2 ADDRESS
+  awsRegion:          'us-east-1',
+  cognitoClientId:    '4mafdnad6u1o1ugokulsmbrl96',
+  cognitoUserPoolId:  'us-east-1_6hCFlGZHZ',
+  mgtContext:         'http://localhost:8090',
+  smsContext:         'https://7i6rudc3m2.execute-api.us-east-1.amazonaws.com/uat',
+  surveyContext:      'http://localhost:8092'
 };
 
 const prod = {
-  awsRegion: 'us-east-1',
-  cognitoClientId: 'n09bpbndlp78jrbv6rbar4d13',
-  cognitoUserPoolId: 'us-east-1_xavxFp1nr',
-  mgtContext: 'http://localhost:8090',
-  smsContext: 'https://7i6rudc3m2.execute-api.us-east-1.amazonaws.com/prod',
-  surveyContext: 'NEEDTOADD' // NEED TO ADD EC2 ADDRESS
+  awsRegion:          'us-east-1',
+  cognitoClientId:    'n09bpbndlp78jrbv6rbar4d13',
+  cognitoUserPoolId:  'us-east-1_xavxFp1nr',
+  mgtContext:         'http://localhost:8090',
+  smsContext:         'https://7i6rudc3m2.execute-api.us-east-1.amazonaws.com/prod',
+  surveyContext:      'http://localhost:8092'
 };
 
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 
 export let environment = dev;
 
