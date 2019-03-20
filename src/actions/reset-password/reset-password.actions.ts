@@ -57,7 +57,7 @@ export const submitPasswordReset = (needsVerificationCode: boolean, username: st
                 }
             );
             setup();
-
+            loginRequest(username, newPassword, history)
         }
     } catch (err) {
         toast.error('failed to set new password');

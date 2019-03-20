@@ -54,7 +54,7 @@ export class ResetPasswordComponent extends React.Component<IResetPasswordProps,
             // You need to get the new password and required attributes from the UI inputs
             // and then trigger the following function with a button click
             // For example, the email and phone_number are required attributes
-            this.props.submitPasswordReset(this.props.resetPasswordUsernameProps.needsVerificationCode, this.props.resetPasswordUsernameProps.username,
+            this.props.submitPasswordReset(this.props.resetPasswordUsernameProps.needsVerificationCode, this.props.login.username,
                 this.props.resetPasswordProps.verificationCode, this.props.resetPasswordProps.newPassword, this.props.history, this.props.login.cogUser)
         }
     }
