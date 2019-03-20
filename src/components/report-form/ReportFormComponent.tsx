@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../reducers';
+//import { Link } from 'react-router-dom';
 import { ChartComponent } from './charts/ChartComponent';
 import {setCanvasAssociate, getInfoAssociate} from '../../actions/assoc-24-chart/assoc24chart.actions';
 import {setCanvasManager, getInfoManager} from '../../actions/manager-24-chart/manager24chart.actions';
+import { Link } from 'react-router-dom';
 
 interface IManagerChartProps {
     data :  {
@@ -95,6 +97,8 @@ export class ReportForm extends React.Component<any, any> {
         return ( 
             <React.Fragment>
                 <h1>Interviews receiving 24 Hour Notice</h1>
+                <hr/><h2><div className = {"paginateddata"}><Link to="/interview/report/24hour" >Paginated Data</Link></div><div className = {"visualdata"}><Link to="/interview/report/24hour/charts" >Visual Data</Link></div></h2><hr/>
+                <hr/>
                 <ChartComponent chart1 = {this.associateC} chart2 = {this.managerC} chartAction1 = {getInfoAssociate} chartAction2 = {getInfoManager} canvas1 = {setCanvasAssociate} canvas2 = {setCanvasManager}/>
             </React.Fragment>
         );
@@ -104,7 +108,7 @@ export class ReportForm extends React.Component<any, any> {
 const mapStateToProps = (state: IState) => {
     return {
         managersChart : state.interviewState.managerChart,
-        associatesChart : state.interviewState.associateChart
+        associatesChart : state.interviewState.associateChart,
     }
 }
 
@@ -112,7 +116,7 @@ const mapDispatchToProps = {
     getInfoAssociate,
     getInfoManager,
     setCanvasAssociate,
-    setCanvasManager
+    setCanvasManager,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReportForm);
