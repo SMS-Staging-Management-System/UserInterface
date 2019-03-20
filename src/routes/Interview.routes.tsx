@@ -14,6 +14,7 @@ import JDReportForm from '../components/interviewJD/ReportFormComponent';
 
 
 import { InterviewPerAssoc } from '../components/interviewsPerAssocComponent/interviewsPerAssocComponent.component';
+import { ViewInterviewFeedbackComponent } from '../components/interviewFeedbackComponent/ViewInterviewFeedbackComponent';
 
 
 export class InterviewRoutes extends React.Component<any, any> {
@@ -36,9 +37,8 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/report/feedback`} component={AssociatesFeedbackRequest} />
                 <Route path={`${path}/report/AssociatesFeedbackRequest`}/>
                 <Route path={`${path}/list`} component={InterviewList} />
-                {/* This is for Ben, please don't delete */}
-                {/* <Route path={`${path}/testing`} component={Testing} /> */}
                 <Route path={`${path}/associateInput`} component={AssociateInput} />
+                <Route path={`${path}/viewFeedback`} component={ViewInterviewFeedbackComponent} />
                 <Route path={`${path}/new`} component={createInterviewComponent} />
                 <Route path={`${path}/:interviewId/feedback`} component={ interviewFeedbackComponent} />
                 <Route path={`${path}/list`} component={InterviewList} />
