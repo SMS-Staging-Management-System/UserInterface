@@ -16,7 +16,6 @@ const initialState: ISurveyBuildState = {
     parsedAnswers: [],
     junctionTable: {
         id: 0,
-
         questionId: {
             questionId: 0,
             question: 'not filled',
