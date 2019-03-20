@@ -7,7 +7,8 @@ const initialState: IInterviewFeedbackComponentState = {
   feedbackText: '',
   feedbackReceivedDate: '',
   feedbackDeliveredDate: '',
-  interviewFormat: InterviewFormat.none
+  interviewFormat: InterviewFormat.none,
+  noInterviewFound: true,
 }
 
 export const interviewFeedbackReducer = (state = initialState, action: any) => {

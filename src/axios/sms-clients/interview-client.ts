@@ -13,6 +13,10 @@ export const interviewClient = {
         console.log(newInterview);
         return await smsClient.post(interviewContext + '/new', newInterview);
     },
+  
+    getInterview: async (interviewId: number) => {
+        return await smsClient.get(`${interviewContext}/${interviewId}`);
+    },
     
     fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC') => {
         let url = interviewContext;

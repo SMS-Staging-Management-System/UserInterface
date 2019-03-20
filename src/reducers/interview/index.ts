@@ -49,6 +49,7 @@ export interface IInterviewFeedbackComponentState {
     feedbackReceivedDate: string
     feedbackDeliveredDate: string
     interviewFormat: InterviewFormat
+    noInterviewFound: boolean
 }
 
 export interface IAssociateChartState {
