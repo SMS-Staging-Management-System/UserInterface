@@ -41,7 +41,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         }
     }
 
-    async componentDidMount() {
+    async componentDidUpdate() {
         this.props.getInterviewPages(
             this.props.currentPage, 
             this.props.pageSize, 

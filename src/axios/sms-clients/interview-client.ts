@@ -1,5 +1,6 @@
 import { smsClient } from ".";
 import { INewInterviewData } from "../../model/INewInterviewData";
+import { store } from "../../Store";
 
 const interviewContext = '/interview';
 
@@ -19,14 +20,25 @@ export const interviewClient = {
     },
     
     fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC') => {
+        const currentUser = store.getState().managementState.auth.currentUser;
+        console.log(currentUser);
+        const roles = currentUser.roles
+        const email = currentUser.email
+        const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
+
         let url = interviewContext;
-        url += '/page?orderBy=' + orderBy + '&direction=' + direction;
+        url += '/page'
+        if(!isAdmin) url += 's'
+        url += '?orderBy=' + orderBy + '&direction=' + direction;
         if (pageNumber) {
             url+='&pageNumber=' + pageNumber;
         }
         if (pageSize) {
             url += '&pageSize=' + pageSize;
         }
+        if(!isAdmin)
+            url += '&email=' + email;
+        
         return smsClient.get(url);
     },
       
