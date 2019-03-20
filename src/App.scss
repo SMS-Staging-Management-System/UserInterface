@@ -952,3 +952,31 @@ Fa Circle
      z-index:10;
      text-align:center;
    }
+
+   /////////////////////////////////////////////////
+// CHARTS
+/////////////////////////////////////////////////
+
+ .paginateddata{
+  background-color: #f26925; 
+  color: white; 
+  border: 2px solid #f26925;
+  position:absolute;
+  width:40%;
+  left:5%;
+  bottom:5%;
+  display:block;
+  text-align:center;
+}
+
+ .visualdata{
+  background-color: #f26925; 
+  color: white; 
+  border: 2px solid #f26925;
+  position:absolute;
+  width:40%;
+  left:55%;
+  bottom:5%;
+  display:block;
+  text-align:center;
+}

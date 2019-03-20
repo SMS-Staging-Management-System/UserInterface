@@ -4,21 +4,21 @@ import { environment } from '../../environment';
 let jwt = '';
 
 export const smsClient = axios.create({
-  baseURL: environment.mgtContext,
+  baseURL: environment.smsContext,
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
 export const surveyContext = axios.create({
-  baseURL: environment.surveyContext,
+  baseURL: environment.smsContext,
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
 export const interviewContext = axios.create({
-  baseURL: environment.smsContext, 
+  baseURL: environment.smsContext,
   headers: {
     'Content-Type': 'application/json'
   }
