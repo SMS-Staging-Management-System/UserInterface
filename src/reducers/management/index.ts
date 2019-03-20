@@ -9,17 +9,23 @@ import { createUserReducer } from "./create-user.reducer";
 import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
 import { combineReducers } from "redux";
+import { loginReducer } from "./login.reducer";
 import { viewUserReducer } from "./view-user.reducer";
 import { currentSMSUserReducer } from "./current-sms-user.reducer";
-import { joinCohortReducer } from "./join-cohort.reducer";
-import { manageCohortsReducer} from './manage-cohorts.reducer'
+import { manageCohortsReducer } from './manage-cohorts.reducer'
 import { ICohort } from "../../model/cohort";
 import { profileViewReducer } from "./profile-view.reducer";
+import { resetPasswordReducer } from "./reset-password.reducer";
+import { resetPasswordUsernameReducer } from "./reset-password-username.reducer";
+import { joinCohortReducer } from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
 
+import { IStatus } from "../../model/status.model";
 
-
+export interface IAddressState {
+  trainingAddresses: IAddress[],
+}
 export interface IAuthState {
     currentUser: ICognitoUser
   }
@@ -120,7 +126,11 @@ export interface ICohortModalState {
     currentSMSUser: ICurrentSMSUserState,
     currentProfile: IProfileViewState,
     viewCohort: ICohortModalState,
-    joinCohort: IJoinCohortState
+    joinCohort: IJoinCohortState,
+    currentProfile: IProfileViewState,
+    resetPassword: IResetPasswordState,
+    resetPasswordUsername: IResetPasswordUsernameState,
+    login: ILoginState,
   }
 
   export const managementState = combineReducers<IManagementState>({
@@ -137,4 +147,27 @@ export interface ICohortModalState {
     currentProfile: profileViewReducer,
     viewCohort: viewCohortReducer
     manageCohorts: manageCohortsReducer,
+    resetPassword: resetPasswordReducer,
+    resetPasswordUsername: resetPasswordUsernameReducer,
+    login: loginReducer,
   })
+
+
+export interface IResetPasswordState {
+  showPasswordTip: boolean,
+  confirmationPassword: string,
+  newPassword: string,
+  verificationCode: string,
+}
+export interface IResetPasswordUsernameState {
+  username: string,
+  needsVerificationCode: boolean,
+}
+
+export interface ILoginState {
+  username: string,
+  password: string,
+  cogUser: ICognitoUser,
+  incorrectUserPass: boolean,
+  passwordNeedsReset: boolean,
+}

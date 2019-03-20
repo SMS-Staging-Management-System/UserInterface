@@ -8,7 +8,7 @@ const initialState: ICohortModalState = {
     isSaved: false,
     selectedStatus: {
         statusId: 0,
-        genericStatus: "",
+        generalStatus: "",
         specificStatus: "",
         virtual: false
     },
@@ -55,9 +55,9 @@ const initialState: ICohortModalState = {
           phoneNumber: '',
           userId: 0,
           roles: [],
-          status: {
+          userStatus: {
             statusId: 0,
-            genericStatus: '',
+            generalStatus: '',
             specificStatus: '',
             virtual: false
           }
