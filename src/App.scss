@@ -784,6 +784,13 @@ TEMPLATE MODAL
   border: 1px solid $revature-orange-light;
   color: $revature-orange;
 }
+.horizontal-scroll{
+  overflow: scroll;
+  direction: ltr;
+  width: 200px;
+  flex-wrap: nowarp;
+  white-space: nowarp;
+}
 .buttonEdit:hover,
 .buttonEdit:active{
   background-color: $revature-orange-light; 
