@@ -5,7 +5,13 @@ import { connect } from 'react-redux';
 import { getInterviewPages, getNumberOfPages } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
+import { Link } from 'react-router-dom';
+import { IoIosArrowDown } from 'react-icons/io'
+import { IoIosArrowUp } from 'react-icons/io'
+import { Label } from 'reactstrap';
 
+
+// This is the props for the interview list page 
 export interface InterviewListProps {
     listOfInterviews : any[],
     numberOfPages : number,
