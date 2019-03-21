@@ -33,7 +33,6 @@ class ViewAssociateInput extends Component<IProps, IViewState> {
             return '-';
         }
     }
-  }
 
     renderItem = (question: string, answer: string) => {
         return (
@@ -47,7 +46,7 @@ class ViewAssociateInput extends Component<IProps, IViewState> {
                 <p style={{ margin: '0' }}>{answer}</p>
             </div>
         );
-    };
+    }
 
     render() {
         const { data } = this.props;
