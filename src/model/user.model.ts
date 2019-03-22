@@ -1,10 +1,14 @@
 import { IAddress } from "./address.model";
+import { IStatus } from "./status.model";
 
 export interface IUser {
   email:      string;
   userId:     number;
   firstName:  string;
   lastName:   string;
-  mobile:     string,
-  address:    IAddress
+  phoneNumber:     string;
+  trainingAddress:    IAddress;
+  personalAddress:    IAddress;
+  userStatus:     IStatus
+  roles: string[];
 }

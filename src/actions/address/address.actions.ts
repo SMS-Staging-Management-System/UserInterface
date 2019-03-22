@@ -4,7 +4,7 @@ export const addressTypes = {
   UPDATE_TRAINING_ADDRESSES: 'UPDATE_TRAINING_ADDRESSES'
 }
 
-export const updateLocations = () => (dispatch) => {
+export const updateLocations = () => (dispatch: (action: any) => void) => {
   addressesClient.findByIsTrainingLocation(true)
     .then(resp => {
       dispatch({

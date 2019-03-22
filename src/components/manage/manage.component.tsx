@@ -2,14 +2,16 @@ import * as React from 'react';
 import { ManageNavComponent } from './manage-nav/manage-nav.component';
 import { IManageComponentProps } from './manage.container';
 import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
-import { ManageInternalComponenet } from './manage-internal/manage-internal.component';
-import { ManageCohortsComponenet } from './manage-cohorts/manage-cohorts.component';
+import ManageCohortsComponent from './manage-cohorts/manage-cohorts.container';
 import CreateUserModal from './create-user-modal/create-user-modal.container';
+import ManageInternalComponenet  from './manage-internal/manage-internal.container';
+import ViewCohortModal from './manage-cohorts-modal/manage-cohorts-modal.container';
+
 
 
 export class ManageComponenet extends React.Component<IManageComponentProps, any> {
 
-  constructor(props) {
+  constructor(props:IManageComponentProps) {
     super(props);
   }
 
@@ -30,14 +32,18 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
         <ManageNavComponent
           toggleCreateUserModal={this.props.toggleCreateUserModal}
           updateManageUsersTable={this.updateManageUsersTable}
-          manage={this.props.match.params.manage} />
+          manage={this.props.match.params.manage}
+          history={this.props.history} 
+          location={this.props.location}
+          match={this.props.match}/>
 
-        {this.props.match.params.manage === 'cohorts'
-          ? <ManageCohortsComponenet manageUsers={this.props.manageUsers.manageUsers} toggleCreateCohortModal={this.props.toggleCreateCohortModal}/>
-          : <ManageInternalComponenet manageUsers={this.props.manageUsers.manageUsers} />
+        {/cohorts/.test(this.props.location.pathname)?
+        <ManageCohortsComponent />:
+        <ManageInternalComponenet/>
         }
         <CreateCohortModal />
         <CreateUserModal />
+        <ViewCohortModal />
       </div>
     )
   }
