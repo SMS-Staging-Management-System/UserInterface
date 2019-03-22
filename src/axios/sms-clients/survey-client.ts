@@ -103,7 +103,7 @@ export const surveyClient = {
     return survey;
   },
   countResponses: async (id: number) => {
-    const allResponses = await smsClient.get(`responses/surveyId/${id}`);
+    const allResponses = await smsClient.get(`${responseBaseRoute}/surveyId/${id}`);
     const responseCount = {};
     allResponses.data.forEach(element => {
       const answerChosen = element.answerId.id;
