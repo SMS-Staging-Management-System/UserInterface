@@ -13,7 +13,7 @@ const questionTypeBaseRoute = '/survey-service/questiontype';
 const questionJunctionBaseRoute = '/survey-service/junction_survey_questions';
 const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
-const junctionSurveyQuestionsBaseRoute = '/survey-service1/junction_survey_questions';
+const junctionSurveyQuestionsBaseRoute = '/survey-service/junction_survey_questions';
 
 export const surveyClient = {
 
