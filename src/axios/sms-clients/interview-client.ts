@@ -2,7 +2,7 @@ import { INewInterviewData } from "../../model/INewInterviewData";
 import { store } from "../../Store";
 import { smsClient } from ".";
 
-const interviewContext = '/interview';
+const interviewContext = '/interview-service/interview';
 
 export const interviewClient = {
     testfetch: async () => {

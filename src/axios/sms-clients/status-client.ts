@@ -1,6 +1,6 @@
 import { smsClient } from ".";
 
-const statusContext = '/status'
+const statusContext = '/user-service/status'
 
 export const statusClient = {
   findAllStatuses() {

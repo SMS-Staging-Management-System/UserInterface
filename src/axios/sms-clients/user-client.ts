@@ -1,7 +1,7 @@
 import { smsClient } from ".";
 import { IUser } from "../../model/user.model";
 
-const usersContext = '/users'
+const usersContext = '/user-service/users'
 
 export const userClient = {
   saveUser(newUser: IUser) {

@@ -2,7 +2,7 @@ import { smsClient } from ".";
 import { ICohort } from "../../model/cohort";
 import { IUser } from "../../model/user.model";
 
-const cohortContext = '/cohorts'
+const cohortContext = '/user-service/cohorts'
 
 export const cohortClient = {
   save(cohort: ICohort) {

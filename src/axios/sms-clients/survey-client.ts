@@ -1,19 +1,19 @@
-import { surveyContext } from ".";
 import { ISurvey } from "../../model/surveys/survey.model";
 import { IQuestion } from "../../model/surveys/question.model";
 import { IAnswer } from "../../model/surveys/answer.model";
 import { IResponse } from "../../model/surveys/response.model";
 import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
+import { smsClient } from ".";
 
-const surveyBaseRoute = '/surveys';
-const questionBaseRoute = '/questions';
-const answerBaseRoute = '/answers';
-const responseBaseRoute = '/responses';
-const questionTypeBaseRoute = '/questiontype';
-const questionJunctionBaseRoute = '/junction_survey_questions';
-const questionAllBaseRoute = '/questions/multi-question';
-const historyBaseRoute = '/history';
-const junctionSurveyQuestionsBaseRoute = '/junction_survey_questions';
+const surveyBaseRoute = '/survey-service/surveys';
+const questionBaseRoute = '/survey-service/questions';
+const answerBaseRoute = '/survey-service/answers';
+const responseBaseRoute = '/survey-service/responses';
+const questionTypeBaseRoute = '/survey-service/questiontype';
+const questionJunctionBaseRoute = '/survey-service/junction_survey_questions';
+const questionAllBaseRoute = '/survey-service/questions/multi-question';
+const historyBaseRoute = '/survey-service/history';
+const junctionSurveyQuestionsBaseRoute = '/survey-service1/junction_survey_questions';
 
 export const surveyClient = {
 
@@ -24,7 +24,7 @@ export const surveyClient = {
   findAllSurveys: async () => {
     let surveysAndTemplates;
     let surveys: any = [];
-    await surveyContext.get(surveyBaseRoute)
+    await smsClient.get(surveyBaseRoute)
       .then(response => {
         surveysAndTemplates = response.data;
       })
@@ -43,7 +43,7 @@ export const surveyClient = {
   findAllTemplates: async () => {
     let surveysAndTemplates;
     let templates: any = [];
-    await surveyContext.get(surveyBaseRoute)
+    await smsClient.get(surveyBaseRoute)
       .then(response => {
         surveysAndTemplates = response.data;
       })
@@ -63,7 +63,7 @@ export const surveyClient = {
   findSurveyById: async (id: number) => {
     // Get the Survey
     let survey;
-    await surveyContext.get(`${surveyBaseRoute}/${id}`)
+    await smsClient.get(`${surveyBaseRoute}/${id}`)
       .then(response => {
         survey = response.data;
       })
@@ -72,7 +72,7 @@ export const surveyClient = {
       });
     // Get the Junctions of Survey Questions
     let junctions;
-    await surveyContext.get(`${junctionSurveyQuestionsBaseRoute}/surveyId/${id}`)
+    await smsClient.get(`${junctionSurveyQuestionsBaseRoute}/surveyId/${id}`)
       .then(response => {
         junctions = response.data;
         // Sort the junction by question order
@@ -86,7 +86,7 @@ export const surveyClient = {
     // If statement prevents crashing if the API server is down
     if (survey) {
       for (const questionJunction of survey.questionJunctions) {
-        await surveyContext.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
+        await smsClient.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
           .then(response => {
             let answerChoices = response.data;
             // If it is a rating question, sort the ratings
@@ -103,7 +103,7 @@ export const surveyClient = {
     return survey;
   },
   countResponses: async (id: number) => {
-    const allResponses = await surveyContext.get(`responses/surveyId/${id}`);
+    const allResponses = await smsClient.get(`responses/surveyId/${id}`);
     const responseCount = {};
     allResponses.data.forEach(element => {
       const answerChosen = element.answerId.id;
@@ -175,7 +175,7 @@ export const surveyClient = {
   },
 
   async saveSurvey(survey: ISurvey) {
-    let resp = await surveyContext.post(surveyBaseRoute, survey);
+    let resp = await smsClient.post(surveyBaseRoute, survey);
     let sID = resp.data.surveyId;      // return ID; 
     return sID;
   },
@@ -185,22 +185,22 @@ export const surveyClient = {
   //----------------------//
 
   async saveQuestion(question: IQuestion) {
-    let resp = await surveyContext.post(questionBaseRoute, question.questionId);
+    let resp = await smsClient.post(questionBaseRoute, question.questionId);
     let qID = parseInt(resp.data.questionId);      // return ID; 
     return qID;
   },
 
   saveAllQuestion(question: IQuestion[]) {
 
-    surveyContext.post(questionAllBaseRoute, question);
+    smsClient.post(questionAllBaseRoute, question);
   },
   saveToQuestionJunction(junction: IJunctionSurveyQuestion) {
-    surveyContext.post(questionJunctionBaseRoute, junction);
+    smsClient.post(questionJunctionBaseRoute, junction);
   },
 
   async getQuestionType(index: number) {
 
-    let resp = await surveyContext.get(questionTypeBaseRoute);
+    let resp = await smsClient.get(questionTypeBaseRoute);
     const body = resp.data;
     return body[index].questionType;
   },
@@ -211,12 +211,12 @@ export const surveyClient = {
 
   async saveAnswer(answer: IAnswer) {
     answer.id = 0;
-    return await surveyContext.post(answerBaseRoute, answer)
+    return await smsClient.post(answerBaseRoute, answer)
   },
 
   saveAllAnswer(answer: IAnswer[]) {
     for (let index = 0; index < answer.length; index++) {
-      surveyContext.post(answerBaseRoute, answer[index]);
+      smsClient.post(answerBaseRoute, answer[index]);
     }
   },
 
@@ -225,7 +225,7 @@ export const surveyClient = {
   //----------------------//  
 
   saveResponse: (response: IResponse) => {
-    return surveyContext.post(responseBaseRoute, response)
+    return smsClient.post(responseBaseRoute, response)
   },
 
   //---------------------//
@@ -234,7 +234,7 @@ export const surveyClient = {
 
   findHistoriesByEmail: async (email: String) => {
     let histories;
-    await surveyContext.post(`${historyBaseRoute}/email`, email)
+    await smsClient.post(`${historyBaseRoute}/email`, email)
       .then(response => {
         histories = response.data;
       })
@@ -251,12 +251,12 @@ export const surveyClient = {
       "surveyId": id,
       "userEmail": email
     }
-    surveyContext.post(historyBaseRoute, postObject);
+    smsClient.post(historyBaseRoute, postObject);
   },
 
   findHistoriesBySurveyId: async (id: number) => {
     let histories;
-    await surveyContext.get(`${historyBaseRoute}/survey/${id}`)
+    await smsClient.get(`${historyBaseRoute}/survey/${id}`)
       .then(response => {
         histories = response.data;
       })
@@ -274,6 +274,6 @@ export const surveyClient = {
       "dateAssigned": new Date(),
       "dateCompleted": new Date()
     }
-    surveyContext.patch(`${historyBaseRoute}/taken`, historyUpdate);
+    smsClient.patch(`${historyBaseRoute}/taken`, historyUpdate);
   }
 }

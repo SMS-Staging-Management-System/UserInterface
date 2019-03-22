@@ -1,6 +1,6 @@
 import { smsClient } from ".";
 
-const addressesContext = '/addresses'
+const addressesContext = '/user-service/addresses'
 
 export const addressesClient = {
   findByIsTrainingLocation(isTrainingLocation: boolean) {
