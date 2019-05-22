@@ -17,4 +17,5 @@ export class ClickerDisplay extends React.Component<IProps, {}> {
       </p>
     )
   }
+
 }

@@ -1,220 +1,82 @@
 import * as React from 'react';
-import * as awsCognito from 'amazon-cognito-identity-js';
-import { IState } from '../../reducers';
-import { connect } from 'react-redux';
-import ResetFirstPasswordComponent from '../resetFirstPassword/ResetFirstPassword.component';
-import * as userActions from '../../actions/user/user.actions';
-import { History } from 'history';
+import { ILoginState } from '../../reducers/management';
+import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 
-interface IComponentState {
-	cogUser: object,
-	username: string,
-	password: string,
-	confirmationPassword: string,
-	newPassword: string,
-	isFirstSignin,
-	incorrectUserPass
+interface ILoginProps extends RouteComponentProps<{}> {
+  login: ILoginState,
+  match: any,
+  location: any;
+  history: any;
+  staticContext?: any;
+  updateUsername: (username: string) => void,
+  updatePassword: (password: string) => void,
+  loginRequest: (username: string, password: string, history) => void,
+
+
+
+
+
+
 }
 
-interface IComponentProps {
-	cognitoLogin: (username: string, password: string, history: History) => { void },
-	initUser: () => { void },
-	isFirstSignin: boolean,
-	cogUser: any,
-	history: History
+
+export class LoginComponent extends React.Component<ILoginProps, any> {
+
+  constructor(props) {
+    super(props);
+
+  }
+
+  updateUsername = (event) => {
+    event.preventDefault();
+    this.props.updateUsername(event.target.value)
+  }
+
+  updatePassword = (event) => {
+    event.preventDefault();
+    this.props.updatePassword(event.target.value);
+  }
+
+
+  submitLogin = (event) => {
+    event.preventDefault();
+    const username = this.props.login.username;
+    const password = this.props.login.password 
+    this.props.loginRequest(username, password, this.props.history);
+  }
+
+  render() {
+    const username = this.props.login.username;
+    const password = this.props.login.password;
+    return (
+      <div className="centered shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
+        
+          <>
+            <h4 id="titleHead">Sign in to SMS</h4>
+            <form id="login-form" onSubmit={this.submitLogin}>
+              <input name="username" type="text" className="form-control txt-bx" placeholder="Username" onChange={this.updateUsername} value={username} required />
+
+              <input name="password" type="password" className="form-control txt-bx" id="login-pass" placeholder="Password" 
+              onChange={this.updatePassword} value={password} required />
+
+              <button className="btn rev-btn" type="submit">Login</button>
+            </form>
+            <div className="row resetDiv">
+            
+              <Link to="/management/send-email">
+                <button id="forgot-pass-btn">Forgot Password</button>
+              </Link>
+            </div>
+            {this.props.login.incorrectUserPass &&
+              <h6 id="invalidCredHead">Invalid Credentials</h6>
+            }
+
+          </>
+      </div>
+    );
+  }
 }
 
-export class LoginComponent extends React.Component<IComponentProps, IComponentState> {
-
-	constructor(props: any) {
-		super(props);
-		this.state = {
-			cogUser: {},
-			confirmationPassword: '',
-			incorrectUserPass: false,
-			isFirstSignin: false,
-			newPassword: '',
-			password: '',
-			username: '',
-		}
-	}
-
-	public updateUsername = (e: any) => {
-		const username = e.target.value;
-		this.setState({
-			...this.state,
-			username
-
-		})
-	}
-
-	public updatePassword = (e: any) => {
-		const password = e.target.value;
-		this.setState({
-			...this.state,
-			password
-		})
-	}
-	public updateConfirmationPassword = (e: any) => {
-		const password = e.target.value;
-		this.setState({
-			...this.state,
-			confirmationPassword: password
-		})
-	}
-	public updateNewPassword = (e: any) => {
-		const password = e.target.value;
-		this.setState({
-			...this.state,
-			newPassword: password
-		})
-	}
-
-	public onSuccess = (result: awsCognito.CognitoUserSession) => {
-		// console.log(userPool.getCurrentUser());
-		// console.log(result.getIdToken().decodePayload())
-		// const idtok: any = result.getIdToken();
-		// console.log(idtok.payload['cognito:groups']) //payload has the user info on it
-
-		// navigate pages now that we have successfully logged in
-		// Call setup whenevr yo are ready for the app to go away from login page
-		this.props.initUser();
-	}
-
-	public onFailure = (err: any) => {
-		console.log(err);
-		if (err.code === 'UserNotFoundException' || err.code === 'NotAuthorizedException') {
-			this.setState({
-				incorrectUserPass: true
-			})
-			// todo: add error message to state
-			//   this.props.updateError('Invalid Credentials, try again.');
-		} else if (err.code === 'PasswordResetRequiredException') {
-			// todo: ensure reset password works
-			//   this.props.resetPassword(this.props.password);
-		} else {
-			// todo: update the states error message instead
-			//   this.props.updateError('Unable to login at this time, please try again later');
-		}
-	}
-
-	public submit = (e: any) => {
-		e.preventDefault();
-		const { username, password } = this.state; // destructuring
-		this.props.cognitoLogin(username, password, this.props.history);
-	}
-
-	public handlePassChange(event) {
-		this.setState({
-			...this.state,
-			password: event.target.value
-		})
-	}
-
-	public handleChange(event) {
-		const movePassBox = (document.getElementById('pass') as HTMLElement);
-		// const usrBtn = (document.getElementById("userBut") as HTMLElement);
-		const passBtn = (document.getElementById("passBut") as HTMLElement);
-
-		if (event.target.value === "") {
-			// usrBtn.style.opacity = "1";
-			passBtn.style.opacity = "0";
-			movePassBox.style.opacity = "0";
-			movePassBox.style.marginTop = "0";
-		}
-		else {
-			movePassBox.style.marginTop = "35px";
-			movePassBox.style.opacity = "1";
-			// usrBtn.style.opacity = "0";
-			passBtn.style.opacity = "1";
-		}
-		
-		this.setState({
-			...this.state,
-			username: event.target.value
-		})
-	}
-
-	public moveTextBox = (e: any) => {
-		e.preventDefault();
-		const movePassBox = (document.getElementById('pass') as HTMLElement);
-		// const usrBtn = (document.getElementById("userBut") as HTMLElement);
-		const passBtn = (document.getElementById("passBut") as HTMLElement);
-		const userText = (document.getElementById("user") as HTMLInputElement);
-		if (userText.value === "") {
-			movePassBox.style.opacity = "0";
-			// usrBtn.style.opacity = "1";
-			passBtn.style.opacity = "0";
-			movePassBox.style.marginTop = "0";
-		}
-		else {
-			movePassBox.style.marginTop = "35px";
-			movePassBox.style.opacity = "1";
-			// usrBtn.style.opacity = "0";
-			passBtn.style.opacity = "1";
-		}
-
-	}
-
-	public render() {
-		return (
-			<>
-				{!this.props.isFirstSignin &&
-					<>
-						<div className="centered shadow-lg p-3 mb-5 bg-white rounded top-lev-div">
-
-							<h4 id="titleHead">Sign in to SMS</h4>
-							<form className="form-inline" onSubmit={this.moveTextBox}>
-								<div className="frontDiv">
-									<input id="user" type="text" className="form-control txt-bx" placeholder="Username" onChange={this.handleChange.bind(this)} />
-								</div>
-							</form>
-							<form className="form-inline shift" onSubmit={this.submit}>
-								<div className="behindDiv">
-									<div className="box">
-										<input type="password" className="form-control txt-bx" id="pass" placeholder="Password" onChange={this.handlePassChange.bind(this)} />
-										<button id="passBut"><h6 className="text-muted">Go</h6></button>
-									</div>
-								</div>
-							</form>
-
-							{this.state.incorrectUserPass &&
-								<h6 id="invalidCredHead">Invalid Credentials</h6>
-							}
-							<div className="rememberDiv">
-								<div className="row">
-									<div className="col-sm-4"><input type="checkbox" id="rememberCheck" /></div>
-									<div className="col-sm-4">
-										<h6 id="h6-rem">Remember Me</h6>
-									</div>
-								</div>
-
-							</div>
-							<div className="row resetDiv">
-								<button id="forgotBut">Forgot Username or Password</button>
-							</div>
 
 
-
-						</div>
-						 
-					</>
-				
-				}
-				
-				{this.props.isFirstSignin &&
-					<ResetFirstPasswordComponent
-						cognitUser={this.props.cogUser}
-						code={this.state.password}
-						setup={this.props.initUser} />
-				}
-			</>
-		);
-	}
-}
-
-const mapStateToProps = (state: IState) => (state.user)
-const mapDispatchToProps = {
-	...userActions
-}
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent)

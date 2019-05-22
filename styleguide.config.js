@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  ignore: ['**/*.container.tsx', '**/*.test.tsx'],
+  ignore: ['**/*.container.tsx', '**/*.test.tsx', '**/build/**', '**/styleguide/**'],
   propsParser: require('react-docgen-typescript').parse,
   webpackConfig: require('react-scripts-ts/config/webpack.config.dev'),
   require: [
