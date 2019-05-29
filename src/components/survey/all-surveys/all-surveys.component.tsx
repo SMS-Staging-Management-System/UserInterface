@@ -100,7 +100,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                             <th>Published</th>
                                             <th>Analytics</th>
                                             <th>Respondents</th>
-                                            <th>Duplicate/Edit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -116,8 +115,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                                     this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
                                                 <td><Button className='assignSurveyBtn' onClick={() =>
                                                     this.loadSurveyRespondents(survey.surveyId)}>Status</Button></td>
-                                                <td><Button className='assignSurveyBtn' onClick={() =>
-                                                    this.loadSurveyRespondents(survey.surveyId)}>Duplicate</Button></td>
                                             </tr>
                                         ))}
                                     </tbody>
