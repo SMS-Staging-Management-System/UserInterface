@@ -1,42 +1,39 @@
 import * as React from 'react';
 import './include/bootstrap';
-import './App.css';
-import AppNav from './components/nav/nav.component';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.scss';
 import { store } from './Store';
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import LoadingComponent from './components/loading/loading.component';
-import DashboardComponent from './components/dashboard/dashboard.component';
-import LoginComponent from './components/login/login.component';
-import ProtectedRoute from './components/protected/protected-route.component';
-import UserProfileComponent from './components/userProfile/userProfile.component';
-import PageNotFoundComponent from './components/404/page-not-found.component';
+import AppNav from './components/nav/nav.component';
+import { BrowserRouter,  Switch, Route } from 'react-router-dom';
+
+import { Provider } from 'react-redux';
+
+import { ToastContainer, toast } from 'react-toastify';
+import { ManagementRoutes } from './routes/Management.routes';
+import { SurveyRoutes } from './routes/Survey.routes';
+import { InterviewRoutes } from './routes/Interview.routes';
 
 class App extends React.Component {
   public render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <>
+          <div>
             <AppNav />
+            
             <div id="main-content-container">
               <Switch>
-                <ProtectedRoute path="/dashboard" component={DashboardComponent} />
-                <ProtectedRoute exact path="/profile" component={UserProfileComponent} />
-                <Route exact path="/sign-in" component={LoginComponent} />
-                <ProtectedRoute exact path="/" component={DashboardComponent} />
-                <Route component={PageNotFoundComponent} />
+                  <Route path='/management' component={ManagementRoutes}/>
+                  <Route path='/interview' component={InterviewRoutes}/>
+                  <Route path='/surveys' component ={SurveyRoutes}/>
+                 
               </Switch>
             </div>
-            <ToastContainer autoClose={2000} />
-            <LoadingComponent />
-          </>
+            <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_RIGHT}/>
+          </div>
         </BrowserRouter>
       </Provider>
     );
   }
 }
-
 export default App;
