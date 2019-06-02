@@ -662,51 +662,67 @@ Drag and Drop
   background-color: #eee;
 }
 .survey-build-jumbotron {
-  margin-left: 20em;
+  margin: 1em;
 }
 #multi {
-  background-color: black;
-  color: white;
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   display: inline-block;
   font-size: 14.9px;
 }
 #yn {
-  background-color: black;
-  color: white;
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
 #agree {
-  background-color: black;
-  color: white;
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
 #rating {
-  background-color: black;
-  color: white;
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
 #feedback {
-  background-color: black;
-  color: white;
+    background-color: $revature-orange;
+    color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
 #checkbox {
-  background-color: black;
-  color: white;
+    background-color: $revature-orange;
+    color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
 #tf {
-  background-color: black;
-  color: white;
+    background-color: $revature-orange;
+    color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
+.typeSelect{
+    margin: 0.5em;
+}
+.questionTableRow{
+    width: 100%;
+}	
+.myTr{	
+    width: 100%;	
+  }	
+  .trashCan{	
+    align-content: right;	
+    width: 50px;	
+    border-color: $revature-orange;	
+    border-style: solid;	
+    border-width: thick;	
+  }
 // .labelTitle{
 //   font-family: Helvetica;
 //   font-weight: bold;
@@ -727,6 +743,12 @@ Drag and Drop
   color: white;
 }
 
+.form-control2 {	
+    &:focus {	
+      border-color: $revature-orange-light;	
+      box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;	
+    }	
+  }
 /***************
 TEMPLATE MODAL
 ***************/
