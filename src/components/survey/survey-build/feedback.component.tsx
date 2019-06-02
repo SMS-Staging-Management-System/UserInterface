@@ -5,7 +5,8 @@ import AddOther from './add.other.component';
 interface PropsPlease{
   parentFunction?: any,
   selfDestruct?: any,
-  index?: number
+  index?: number,
+  defaultQuestion?: string
 }
 
 export class FeedBack extends React.Component<PropsPlease, any> {
@@ -30,7 +31,7 @@ export class FeedBack extends React.Component<PropsPlease, any> {
         </table>
           <div className="new" id="t5">
 
-            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }}    >
+            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }}  defaultValue={this.props.defaultQuestion}  >
             </input>
 
           </div>

@@ -5,7 +5,8 @@ import AddOther from './add.other.component';
 interface PropsPlease{
     parentFunction?: any,
     selfDestruct?: any,
-    index?: number
+    index?: number,
+    defaultQuestion?: string
   }
 
 export class Rating extends React.Component<PropsPlease, any> {
@@ -30,7 +31,7 @@ export class Rating extends React.Component<PropsPlease, any> {
                 </table>
                 <div className="new" id="t4">
 
-                    <input name="questionText" type="text" placeholder="Question Title (i.e. How likely are you to recommend our product to a friend? )" style={{ width: '100%' }}   ></input>
+                    <input name="questionText" type="text" placeholder="Question Title (i.e. How likely are you to recommend our product to a friend? )" style={{ width: '100%' }} defaultValue={this.props.defaultQuestion}  ></input>
                     <input name="answerText" value="1,2,3,4,5" readOnly hidden />
 
                 </div>

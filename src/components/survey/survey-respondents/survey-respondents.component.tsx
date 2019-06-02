@@ -5,6 +5,7 @@ import Loader from '../Loader/Loader';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { IState } from '../../../reducers';
 import { connect } from 'react-redux';
+import Button from 'reactstrap/lib/Button';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     match: any
@@ -13,30 +14,55 @@ interface IComponentProps extends RouteComponentProps<{}> {
 interface IComponentState {
     historyData: any,
     historyDataLoaded: boolean,
-    redirectTo: any
+    redirectTo: any,
+    pageNumber: number,
+    totalPage: number
 };
 
 class SurveyRespondentsComponent extends React.Component<IComponentProps, IComponentState> {
-    constructor(props) {
+    constructor(props: IComponentProps) {
         super(props);
         this.state = {
             historyData: [],
             historyDataLoaded: false,
-            redirectTo: null
+            redirectTo: null,
+            pageNumber: 0,
+            totalPage: 0
         }
     }
 
     componentWillMount() {
-        this.loadSurveyRespondents();
+        this.loadSurveyRespondents(this.state.pageNumber);
     }
 
-    loadSurveyRespondents = async () => {
-        console.log("The surveyId is ", this.props);
-        const historyData = await surveyClient.findHistoriesBySurveyId(this.props.match.params.surveyId);
+    incrementCounter = async () => {
+        if (this.state.pageNumber < this.state.totalPage - 1) {
+            this.setState({
+                pageNumber: this.state.pageNumber + 1
+            })
+            await this.loadSurveyRespondents(this.state.pageNumber + 1);
+        }
+
+    }
+
+    decrementCounter = async () => {
+        if (this.state.pageNumber > 0) {
+            this.setState({
+                pageNumber: this.state.pageNumber - 1
+            })
+            await this.loadSurveyRespondents(this.state.pageNumber - 1);
+        }
+    }
+
+    loadSurveyRespondents = async (page: number) => {
+        const history = await surveyClient.findHistoriesBySurveyId(this.props.match.params.surveyId, page);
+        const historyData = history.content;
         console.log("The history data brought in is: ", historyData);
+
         this.setState({
             historyData: historyData,
-            historyDataLoaded: true
+            historyDataLoaded: true,
+            totalPage: history.totalPages
         });
     }
 
@@ -50,6 +76,7 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
                     <Fragment>
                         {this.state.historyData ? (
                             <>
+
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">
                                         <tr>
@@ -68,6 +95,15 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
                                         ))}
                                     </tbody>
                                 </Table>
+                                <ul>
+                                    <div className="div-fixed">
+                                        <tr className= "row-border">
+                                            <td><Button variant="button-color" className="rev-background-color div-child" onClick={this.decrementCounter}>Prev</Button></td>
+                                            <td><h6 className="div-child text-style" >Page {this.state.pageNumber + 1} of {this.state.totalPage}</h6></td>
+                                            <td><Button variant="button-color" className="rev-background-color div-child" onClick={this.incrementCounter}>Next</Button></td>
+                                        </tr>
+                                    </div>
+                                </ul>
                             </>
                         ) : (
                                 <div>No Respondents to Display</div>

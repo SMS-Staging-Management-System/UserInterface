@@ -5,7 +5,8 @@ import AddOther from './add.other.component';
 interface PropsPlease{
   parentFunction?: any,
   selfDestruct?: any,
-  index?: number
+  index?: number,
+  defaultQuestion?: string
 }
 
 export class TrueFalse extends React.Component<PropsPlease, any> {
@@ -30,7 +31,7 @@ export class TrueFalse extends React.Component<PropsPlease, any> {
           </tbody>
         </table>
             <div className="new" id="t7">
-              <input name="questionText" type="text" placeholder="Question Title (i.e. The sky is blue) " style={{ width: '100%' }}   ></input>
+              <input name="questionText" type="text" placeholder="Question Title (i.e. The sky is blue) " style={{ width: '100%' }}  defaultValue={this.props.defaultQuestion} ></input>
               <input name="answerText" value="True,False" readOnly hidden />
             </div>
             <hr />

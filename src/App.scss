@@ -186,7 +186,7 @@ li > a.rev-btn-tab {
 
 .modal-dialog {
   width: 100%;
-  max-width: no;
+  max-width: none;
   margin: 0 auto;
 
   @include sm {
@@ -529,7 +529,11 @@ body {
 /*****************
 Survey Component
 *****************/ 
+.inputWrapper {
+  display:flex;
+  justify-content: flex-start;
 
+}
 .tableUsers{
   text-align: center;
   margin-top: 4em;
@@ -1033,4 +1037,86 @@ Fa Circle
 
  .visualdata{
   left:55%;
+}
+
+.option-box:hover {
+  background-color: $revature-orange-light;
+  cursor: pointer;
+}
+
+.pagination-button{
+  position: absolute;
+  right: 0;
+  width: 120px;
+  transform: translateY(-50%);
+}
+
+.div-fixed{
+  height:500px;
+  width:300px;
+  top: 55vh;
+  right: 40vw; 
+  margin-left: 40%;
+  margin-top : 120px;
+}
+
+.div-child {
+  border-radius: 10%;
+  display: inline-block;
+  border:orange
+}
+
+.text-style{
+  background-color:white;
+  color:  gray; 
+  padding: 1rem;
+  border: white 1px solid;
+}   
+
+.div-center {
+  display: flex;
+  justify-content: center;
+  color: #f26925;
+  font-size: 1.5rem
+}
+
+@keyframes lightSpeedIn {
+  from {
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+  }
+
+  60% {
+    transform: skewX(20deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: skewX(-5deg);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.lightSpeedIn {
+  animation: lightSpeedIn 3s normal;
+  animation-timing-function: ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 2s normal;
 }
