@@ -547,6 +547,19 @@ body {
   }
 }
 
+.manage-user-nav {
+    display: flex;
+    padding: 0.25em 0.75rem;
+    align-items: center;
+    justify-content: initial;
+    @include rounded-top();
+  }
+  
+.no-backround-image {
+    background-image:''
+}
+  
+  
 /*****************
 Survey Component
 *****************/
@@ -1068,16 +1081,3 @@ body {
 .futurafont {
   font-family: "FuturaSTDBook";
 }
-
-.manage-user-nav {
-  display: flex;
-  padding: 0.25em 0.75rem;
-  align-items: center;
-  justify-content: initial;
-  @include rounded-top();
-}
-
-.no-backround-image {
-    background-image:''
-}
-
