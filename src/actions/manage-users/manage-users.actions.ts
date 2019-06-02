@@ -2,17 +2,18 @@ import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { toast } from "react-toastify";
 import { ICognitoUser, cognitoRoles } from "../../model/cognito-user.model";
 import { userClient } from "../../axios/sms-clients/user-client";
+import { sortTypes } from "../../components/manage/manage-internal/manage-internal.component";
 
 export const manageUsersTypes = {
     GET_USERS: 'MANAGE_GET_USERS',
     UPDATE_SEARCH_EMAIL: 'UPDATE_SEARCH_EMAIL',
-    UPDATE_SEARCH_OPTION: 'UPDATE_SEARCH_OPTION'
+    UPDATE_SEARCH_OPTION: 'UPDATE_SEARCH_OPTION',
+    GET_USERS_SORTED: 'GET_USERS_SORTED'
 }
 
 export const manageGetUsersByGroup = (groupName: string, email: string, page?: number) => async (dispatch: any) => {
-    console.log('groupName = ' + email)
-    console.log('groupName = ' + groupName)
     page || (page = 0);
+    groupName || (groupName = 'all');
     groupName && (groupName = groupName.toLocaleLowerCase());
     try {
         let userMap = new Map<string, ICognitoUser>();
@@ -137,6 +138,18 @@ export const updateSearchOption = (newSearchOption: string) => async (dispatch: 
     });
 }
 
+export const sortUsers = (userArray: ICognitoUser[], sortKey) => (dispatch: any) => {
+    userArray = userArray.sort((a, b) => sortBy(a, b, sortKey));
+
+     dispatch({
+        payload: {
+            manageUsers: userArray,
+            userTableSort: sortKey
+        },
+        type: manageUsersTypes.GET_USERS_SORTED
+    })
+}
+
 function addUserRolesToMap(role: string, users, userMap: Map<string, ICognitoUser>) {
     for (let i = 0; i < users.length; i++) {
         const currentCognitoUser = users[i];
@@ -149,4 +162,52 @@ function addUserRolesToMap(role: string, users, userMap: Map<string, ICognitoUse
         newUser.roles.push(role);
         userMap.set(newUser.email, newUser);
     }
+}
+
+function sortBy(user1, user2, sortKey) {
+    if (user1 === user2) {
+        return 0;
+    }
+    if (!user2) {
+        return 1;
+    }
+    if (!user1) {
+        return -1;
+    }
+    switch (sortKey) {
+        case sortTypes.FIRST_NAME:
+            return sortByString(user1.firstName, user2.firstName)
+        case sortTypes.LAST_NAME:
+            return sortByString(user1.lastName, user2.lastName)
+        case sortTypes.EMAIL:
+            return sortByString(user1.email, user2.email)
+        case sortTypes.FIRST_NAME_REVERSE:
+            return sortByString(user1.firstName, user2.firstName) * (-1)
+        case sortTypes.LAST_NAME_REVERSE:
+            return sortByString(user1.lastName, user2.lastName) * (-1)
+        case sortTypes.EMAIL_REVERSE:
+            return sortByString(user1.email, user2.email) * (-1)
+        default:
+            return 0;
+    }
+
+ }
+
+ function sortByString(a, b) {
+    if (a === b) {
+        return 0;
+    }
+    if (!b) {
+        return 1;
+    }
+    if (!a) {
+        return -1;
+    }
+    if (a < b) {
+        return -1;
+    }
+    if (a > b) {
+        return 1;
+    }
+    return 0;
 }

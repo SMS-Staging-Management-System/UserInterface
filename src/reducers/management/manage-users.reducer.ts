@@ -7,7 +7,9 @@ const initialState: IManageUsersState = {
     manageUsersCurrentPage: 0,
     manageUsersPageTotal: 0,
     emailSearch: '',
-    option: 'all'
+    option: 'all',
+    componentLoaded: false,
+    userTableSort: 'sorted'
 }
 
 export const manageUsersReducer = (state = initialState, action: any) => {
@@ -17,12 +19,20 @@ export const manageUsersReducer = (state = initialState, action: any) => {
                 ...state,
                 manageUsers: action.payload.manageUsers,
                 manageUsersCurrentPage: action.payload.manageUsersCurrentPage,
-                manageUsersPageTotal: action.payload.manageUsersPageTotal
+                manageUsersPageTotal: action.payload.manageUsersPageTotal,
+                componentLoaded: true
             }
         case manageUsersTypes.UPDATE_SEARCH_EMAIL:
             return {
                 ...state,
                 emailSearch: action.payload.newEmailSearch
+            }
+        case manageUsersTypes.GET_USERS_SORTED:
+            return {
+                ...state,
+                manageUsers: action.payload.manageUsers,
+                componentLoaded: true,
+                userTableSort: action.payload.userTableSort
             }
         case manageUsersTypes.UPDATE_SEARCH_OPTION:
             return {

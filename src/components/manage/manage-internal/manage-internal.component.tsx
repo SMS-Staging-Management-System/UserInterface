@@ -40,7 +40,25 @@ import { IManageInternalComponentProps } from './manage-internal.container';
 
 interface ManageInternalState {
     roleDropdownList: boolean;
-    selectedRole: string;
+    trackProps: string;
+    colOneSortImage: string;
+    colTwoSortImage: string;
+    colThreeSortImage: string;
+}
+
+export const sortTypes = {
+    FIRST_NAME: 'firstName',
+    LAST_NAME: 'lastName',
+    EMAIL: 'email',
+    FIRST_NAME_REVERSE: 'firstNameReverse',
+    LAST_NAME_REVERSE: 'lastNameReverse',
+    EMAIL_REVERSE: 'emailReverse',
+}
+
+const sortImages = {
+    SORT_IMAGE: 'https://img.icons8.com/android/24/000000/sort-down.png',
+    SORT_IMAGE_REVERSE: 'https://img.icons8.com/android/24/000000/sort-up.png',
+    DEFAULT_SORT_IMAGE: 'https://img.icons8.com/android/24/000000/sort.png'
 }
 
 export class ManageInternalComponenet extends React.Component<IManageInternalComponentProps, ManageInternalState> {
@@ -49,15 +67,25 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         super(props);
         this.state = {
             roleDropdownList: false,
-            selectedRole: ''
+            trackProps: 'sort',
+            colOneSortImage: sortImages.DEFAULT_SORT_IMAGE,
+            colTwoSortImage: sortImages.DEFAULT_SORT_IMAGE,
+            colThreeSortImage: sortImages.DEFAULT_SORT_IMAGE
         };
     }
-    componentDidMount() {
-        this.props.updateManageUsersTable("all", '', this.props.manageUsers.manageUsersCurrentPage);
 
+    componentDidMount() {
+        if (this.props.componentLoaded === false) {
+
+            this.props.updateManageUsersTable("all", '', this.props.manageUsers.manageUsersCurrentPage);
+        }
+        if (this.props.userTableSort !== "sorted") {
+            this.sort(this.props.userTableSort);
+        }
     }
+
     displayUserModal = async (selectedUser: ICognitoUser) => {
-        await this.props.selectUserForDisplay(selectedUser);
+        this.props.selectUserForDisplay(selectedUser);
         this.props.toggleViewUserModal();
     }
 
@@ -70,10 +98,51 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         console.log('test')
         this.props.updateManageUsersTable(option, this.props.manageUsers.emailSearch, page);
         this.props.updateSearchOption(option);
+        this.sort('sorted');
     }
 
     getUserByEmail = (page: number) => {
         this.props.updateManageUsersTable('All', this.props.manageUsers.emailSearch, page);
+    }
+
+    //Sort the table by columns
+    sort = (sortKey) => {
+
+        //first Name
+        if (sortKey === sortTypes.FIRST_NAME || sortKey === sortTypes.FIRST_NAME_REVERSE) {
+            if (sortKey === this.state.trackProps || sortKey.includes('Reverse')) {
+                sortKey = sortTypes.FIRST_NAME_REVERSE
+                this.setState({ colOneSortImage: sortImages.SORT_IMAGE_REVERSE })
+            } else {
+                this.setState({ colOneSortImage: sortImages.SORT_IMAGE })
+            }
+        } else {
+            this.setState({ colOneSortImage: sortImages.DEFAULT_SORT_IMAGE })
+        }
+        //last name
+        if (sortKey === sortTypes.LAST_NAME || sortKey === sortTypes.LAST_NAME_REVERSE) {
+            if (sortKey === this.state.trackProps || sortKey.includes('Reverse')) {
+                sortKey = sortTypes.LAST_NAME_REVERSE
+                this.setState({ colTwoSortImage: sortImages.SORT_IMAGE_REVERSE })
+            } else {
+                this.setState({ colTwoSortImage: sortImages.SORT_IMAGE })
+            }
+        } else {
+            this.setState({ colTwoSortImage: sortImages.DEFAULT_SORT_IMAGE })
+        }
+        //email
+        if (sortKey === sortTypes.EMAIL || sortKey === sortTypes.EMAIL_REVERSE) {
+            if (sortKey === this.state.trackProps || sortKey.includes('Reverse')) {
+                sortKey = sortTypes.EMAIL_REVERSE
+                this.setState({ colThreeSortImage: sortImages.SORT_IMAGE_REVERSE })
+            } else {
+                this.setState({ colThreeSortImage: sortImages.SORT_IMAGE })
+            }
+        } else {
+            this.setState({ colThreeSortImage: sortImages.DEFAULT_SORT_IMAGE })
+        }
+        this.props.sortUsers(this.props.manageUsers.manageUsers, sortKey)
+        this.setState({ trackProps: sortKey })
     }
 
     updateValueOfSearchEmail = (e: React.FormEvent) => {
@@ -105,7 +174,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
 
 
     // returns active if the role provided in the route is the routeName provided
-    isActive = (routeName: string) => ((this.state.selectedRole === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
+    isActive = (routeName: string) => ((this.props.manageUsers.option === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 
     render() {
         let path = '/management';
@@ -164,10 +233,10 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                     <ViewUserModal />
                     <thead className="rev-background-color">
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Roles</th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.FIRST_NAME)}>First Name<img src={this.state.colOneSortImage} /> </th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.LAST_NAME)}>Last Name <img src={this.state.colTwoSortImage} /></th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.EMAIL)}>Email<img src={this.state.colThreeSortImage} /></th>
+                            <th className="pointer-table" >Roles</th>
                         </tr>
                     </thead>
                     <tbody>
