@@ -33,7 +33,7 @@ const initialState: IViewUserState = {
           specificStatus: '',
           virtual: false     
       },
-      roles: [],
+      roles: []
   }
 }
 
