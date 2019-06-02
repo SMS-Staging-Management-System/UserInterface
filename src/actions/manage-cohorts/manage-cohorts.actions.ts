@@ -9,9 +9,22 @@ export const updateCohorts = (cohorts: ICohort[]) => {
     console.log('cohorts = ', cohorts)
     return {
         payload: {
-            cohorts
+            cohorts: cohorts,
+            currentPage: 0,
+            totalPages: 0
         },
         type: manageCohortsTypes.UPDATE_COHORTS
     }
-
+}
+export const updateCohortsByPage = (cohortsPage, currentPage: number) => {
+    console.log('updateCohorts action created')
+    console.log('cohorts = ', cohortsPage)
+    return {
+        payload: {
+            cohorts: cohortsPage.content,
+            currentPage: currentPage,
+            totalPages: cohortsPage.totalPages
+        },
+        type: manageCohortsTypes.UPDATE_COHORTS
+    }
 }

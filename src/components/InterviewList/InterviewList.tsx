@@ -8,6 +8,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { Label } from 'reactstrap';
 import { store } from '../../Store';
+import { cognitoRoles } from '../../model/cognito-user.model';
 
 export interface InterviewListProps {
     email: string,
@@ -122,7 +123,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
 
     render() { 
         const roles = (store.getState().managementState.auth.currentUser.roles);
-        const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
+        const isAdmin = (roles.includes(cognitoRoles.ADMIN) || roles.includes(cognitoRoles.STAGING_MANAGER) || roles.includes(cognitoRoles.TRAINER));
         return ( 
             <div>
                 <div className='tableholder'>

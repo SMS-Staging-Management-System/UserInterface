@@ -17,50 +17,50 @@ const initialState: ICohortModalState = {
         users: [],
         cohortToken: '',
         address: {
-          addressId: 0,
-          street: '',
-          alias: '',
-          city: '',
-          country: '',
-          state: '',
-          zip: ''
+            addressId: 0,
+            street: '',
+            alias: '',
+            city: '',
+            country: '',
+            state: '',
+            zip: ''
         },
         cohortDescription: '',
         cohortName: '',
         endDate: '2019-03-21',
         startDate: '2019-01-10',
         cohortId: 0,
-     trainer: {
-          trainingAddress: {
-            addressId: 0,
-            street: '',
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            zip: '',
-          },
-          personalAddress: {
-            addressId: 0,
-            street: '',
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            zip: '',
-          },
-          email: '',
-          firstName: '',
-          lastName: '',
-          phoneNumber: '',
-          userId: 0,
-          roles: [],
-          userStatus: {
-            statusId: 0,
-            generalStatus: '',
-            specificStatus: '',
-            virtual: false
-          }
+        trainer: {
+            trainingAddress: {
+                addressId: 0,
+                street: '',
+                alias: '',
+                city: '',
+                country: '',
+                state: '',
+                zip: '',
+            },
+            personalAddress: {
+                addressId: 0,
+                street: '',
+                alias: '',
+                city: '',
+                country: '',
+                state: '',
+                zip: '',
+            },
+            email: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            userId: 0,
+            roles: [],
+            userStatus: {
+                statusId: 0,
+                generalStatus: '',
+                specificStatus: '',
+                virtual: false
+            }
         }
     }
 }
@@ -79,14 +79,14 @@ const {
     HOVERED_COHORT,
 } = viewCohortTypes;
 
-export const viewCohortReducer = (state = {...initialState, isSaved:false}, action: any): ICohortModalState => {
+export const viewCohortReducer = (state = { ...initialState, isSaved: false }, action: any): ICohortModalState => {
     switch (action.type) {
         case TOGGLE:
             return {
                 ...state,
                 modalVisible: !state.modalVisible
             };
-         case TOGGLE_STATUS_DROPDOWN:
+        case TOGGLE_STATUS_DROPDOWN:
             return {
                 ...state,
                 statusDropdownActive: !state.statusDropdownActive
@@ -123,7 +123,7 @@ export const viewCohortReducer = (state = {...initialState, isSaved:false}, acti
                 cohort: {
                     ...state.cohort,
                     users: state.cohort.users.filter(user => {
-                        return state.selectedUsers.some(userWithSameEmail => { 
+                        return state.selectedUsers.some(userWithSameEmail => {
                             return userWithSameEmail.email === user.email
                         });
                     })
@@ -135,7 +135,7 @@ export const viewCohortReducer = (state = {...initialState, isSaved:false}, acti
                 ...state,
                 isSaved: true
             };
-        case HOVERED_COHORT: 
+        case HOVERED_COHORT:
             //toast.success("cohort action hit reducer");
             return {
                 ...state,

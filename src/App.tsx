@@ -16,7 +16,7 @@ import { InterviewRoutes } from './routes/Interview.routes';
 class App extends React.Component {
   public render() {
     return (
-      <Provider store={store}>
+      <Provider store={store} >
         <BrowserRouter>
           <div>
             <AppNav />
