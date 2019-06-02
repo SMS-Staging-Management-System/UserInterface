@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 import { IStatus } from "../../model/status.model";
 
 import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
+import { cognitoClient } from "../../axios/sms-clients/cognito-client";
+import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
+import { cognitoRoles } from "../../model/cognito-user.model";
 
 
 export const profileTypes = {
@@ -16,6 +19,7 @@ export const profileTypes = {
     USER_UPDATE_SUCCESSFUL: 'PROFILE_USER_UPDATE_SUCCESSFUL',
     UPDATE_USER_STATUS: 'UPDATE_USER_STATUS',
     TOGGLE_STATUS_DROPDOWN: 'TOGGLE_STATUS_DROPDOWN',
+    TOGGLE_COHORT_DROPDOWN: 'TOGGLE_COHORT_DROPDOWN',
     UPDATE_VIRTUAL_STATUS_CHECKBOX: 'UPDATE_VIRTUAL_STATUS_CHECKBOX',
 }
 
@@ -70,13 +74,60 @@ export const toggleStatusDropdown = () => {
     }
 }
 
+export const toggleCohortDropdown = () => {
+    return {
+        payload: {},
+        type: profileTypes.TOGGLE_COHORT_DROPDOWN
+    }
+}
 
-export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean) => async (dispatch: (action: any) => void) => {
 
+export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean, roles: boolean[]) => async (dispatch: (action: any) => void) => {
+    let roleNames = [
+        cognitoRoles.ADMIN,
+        cognitoRoles.TRAINER,
+        cognitoRoles.STAGING_MANAGER
+    ]
     try {
+        console.log(userToUpdate);
         const resp = await userClient.updateSMSUserInfo(userToUpdate);
-        toast.success('Info updated successfully');
-        dispatch ({
+        console.log(roles);
+
+        
+        console.log(userToUpdate.roles);
+        for (let i = 0; i < roles.length; i++) {
+            let newCogUser: ICognitoUserAddGroup = {
+                email: userToUpdate.email,
+                groupName: roleNames[i]
+            };
+            console.log(userToUpdate.roles);
+            console.log(roles[i]);
+            console.log(`${roles[i]} && ${userToUpdate.roles.includes(roleNames[i])}`);
+            try {
+                if (roles[i] && !userToUpdate.roles.includes(roleNames[i])) {
+                    console.log('adding');
+                    console.log(roleNames[i]);
+                    await cognitoClient.addUserToGroup(newCogUser);
+                    userToUpdate.roles.push(roleNames[i]);
+                }
+            } catch (error) {
+                toast.error('Failed to add role');
+            }
+            try {
+                if (!roles[i] && userToUpdate.roles.includes(roleNames[i])) {
+                    console.log('adding');
+                    console.log(roleNames[i]);
+                    await cognitoClient.removeUserFromGroup(newCogUser);
+                    userToUpdate.roles.splice(i,1);
+                }
+            } catch (error) {
+                toast.error('Failed to remove role');
+            }
+        }
+        console.log(userToUpdate.roles);
+        const updatedUser = resp.data;
+        updatedUser.roles = userToUpdate.roles;
+        dispatch({
             payload: {
                 updatedUser: resp.data as IUser
             },
@@ -85,12 +136,13 @@ export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean) => asyn
         if (bIsCurrentUser) {
             dispatch(updateCurrentSMSUser(resp.data));
         }
+        toast.success('Info updated successfully');
     } catch (error) {
-        toast.error('Failed to update');
+        toast.error('Failed to update user info');
     }
 }
 
-export const handleCheckboxChange = (status:IStatus) => (dispatch)=>{
+export const handleCheckboxChange = (status: IStatus) => (dispatch) => {
     dispatch({
         payload: {},
         type: profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX

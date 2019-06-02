@@ -8,6 +8,7 @@ import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
 import { FaUserAlt, FaDatabase, FaClock, FaThumbsUp, FaComment, FaListOl } from 'react-icons/fa';
+import { cognitoRoles } from '../../model/cognito-user.model';
 
 interface IProps extends RouteComponentProps<{}> {
   logout: () => void;
@@ -53,7 +54,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                   }
                   {
 
-                    this.props.auth.currentUser.roles.some(role => role === 'staging-manager' || role === 'admin' || role === 'trainer') &&
+                    this.props.auth.currentUser.roles.some(role => role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN || role === cognitoRoles.TRAINER) &&
                     <>
                       <li className="nav-item active">
                         <Link to="/surveys" className="unset-anchor nav-link">Surveys</Link>

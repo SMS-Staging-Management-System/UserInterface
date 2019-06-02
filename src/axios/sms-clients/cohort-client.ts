@@ -14,10 +14,11 @@ export const cohortClient = {
   joinCohort(user:IUser, token:string){
     return smsClient.post(cohortContext + `/token/${token.toString()}`, user)
   },
-  getAll: () => {
-    return smsClient.get(cohortContext + "/cohorts");
+  
+  findAllByPage(page: number) {
+    return smsClient.get(cohortContext+`/page/${page}`)
   },
-
+  
   findAll() {
     return smsClient.get(cohortContext)
   }
