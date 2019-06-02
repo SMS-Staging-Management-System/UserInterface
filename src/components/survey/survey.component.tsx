@@ -9,7 +9,6 @@ import AllSurveysComponent from './all-surveys/all-surveys.component';
 import TemplatesComponent from './templates/templates.component';
 import SurveyRespondentsComponent from './survey-respondents/survey-respondents.component';
 import ProtectedRoute from '../protected-route.component/protected-route.component';
-import { cognitoRoles } from '../../model/cognito-user.model';
 
 
 export class SurveyComponent extends React.Component<any, any> {
@@ -37,12 +36,12 @@ export class SurveyComponent extends React.Component<any, any> {
         <Switch>
           <Route exact path={`${path}`} component={AssignedSurveysComponent} />
           <Route path={`${path}/assigned`} component={AssignedSurveysComponent} />
-          <ProtectedRoute allowedRoles={[cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]} path={`${path}/all-surveys`} component={AllSurveysComponent} />
-          <ProtectedRoute allowedRoles={[cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]} path={`${path}/build`} component={SurveyBuildComponent} />
-          <ProtectedRoute allowedRoles={[cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]} path={`${path}/templates`} component={TemplatesComponent} />
-          <ProtectedRoute allowedRoles={[cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]} path={`${path}/survey-data/:surveyId`} component={SurveyAnalyticsComponent} />
+          <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/all-surveys`} component={AllSurveysComponent} />
+          <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/build`} component={SurveyBuildComponent} />
+          <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/templates`} component={TemplatesComponent} />
+          <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/survey-data/:surveyId`} component={SurveyAnalyticsComponent} />
           <Route path={`${path}/survey-taking/:surveyId`} component={SurveyTakingComponent} />
-          <ProtectedRoute allowedRoles={[cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]} path={`${path}/respondents-data/:surveyId`} component={SurveyRespondentsComponent} />
+          <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/respondents-data/:surveyId`} component={SurveyRespondentsComponent} />
         </Switch>
       </div>
     )
