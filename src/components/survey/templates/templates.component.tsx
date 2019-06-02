@@ -76,6 +76,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             newTitle: event.target.value,
         })
     }
+    
     changeSurveyDescription = (event) => {
         this.setState({
             newDescription: event.target.value,
@@ -96,6 +97,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
         })
     }
+
     handleClose = () => {
         this.setState({
             survey: {},
@@ -237,6 +239,10 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             surveyId: 0,
             dateCreated: this.state.dateCreated
         })
+        this.props.history.push({
+        pathname: '/surveys/build',
+        state: { displaySurvey: this.state.survey }});
+
         
     }
     render() {
