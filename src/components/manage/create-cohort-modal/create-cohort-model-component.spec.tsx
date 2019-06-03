@@ -259,68 +259,68 @@ describe('CreateCohortModal', () => {
         expect(createCohort.find(Modal)).toHaveLength(1);
     })
 
-    // test('There are only 2 buttons', () => {
-    //     const propAddress: IAddress = {
-    //         addressId: 1,
-    //         street: 'string',
-    //         alias: 'string',
-    //         city: 'string',
-    //         country: 'string',
-    //         state: 'string',
-    //         zip: 'stri'
-    //     }
+    test('This is the resolves', () => {
+        const propAddress: IAddress = {
+            addressId: 1,
+            street: 'string',
+            alias: 'string',
+            city: 'string',
+            country: 'string',
+            state: 'string',
+            zip: 'stri'
+        }
 
-    //     const props: ICreateCohortModal = {
-    //         toggleModal: () => {},
-    //         toggleLocationDropdown: () => {},
-    //         toggleTrainerDropdown: () => {},
-    //         saveCohort: () => {},
-    //         updateNewCohortLocation: () => {},
-    //         updateNewCohort: () => {},
-    //         updateLocations: () => {},
-    //         updateNewCohortTrainer: () => {},
-    //         manageGetUsersByGroup: () => {},
+        const props: ICreateCohortModal = {
+            toggleModal: () => {},
+            toggleLocationDropdown: () => {},
+            toggleTrainerDropdown: () => {},
+            saveCohort: () => {},
+            updateNewCohortLocation: () => {},
+            updateNewCohort: () => {},
+            updateLocations: () => {},
+            updateNewCohortTrainer: () => {},
+            manageGetUsersByGroup: () => {},
 
-    //         createCohort: {
-    //             enabled: true,
-    //             isSaved: false,
-    //             newCohort: {
-    //                 cohortId: 1,
-    //                 cohortName: 'string',
-    //                 cohortDescription: 'string',
-    //                 cohortToken: 'ring',
-    //                 address: propAddress,
-    //                 startDate: 'string', // 2019-01-15
-    //                 endDate: 'string', // yyyy-MM-dd
-    //                 users: [],
-    //                 trainer: {
-    //                     email: 'string',
-    //                     userId: 1,
-    //                     firstName: 'string',
-    //                     lastName: 'string',
-    //                     phoneNumber: 'string',
-    //                     trainingAddress: propAddress,
-    //                     personalAddress: propAddress,
-    //                     userStatus: {
-    //                         statusId: 1,
-    //                         generalStatus: 'string',
-    //                         specificStatus: 'string',
-    //                         virtual: false,
-    //                     },
-    //                     roles: ['trainer'],
-    //                 },
-    //             },
-    //             locationDropdownActive: false,
-    //             trainerDropdownActive: false
-    //         },
-    //         addresses: {
-    //             trainingAddresses: [propAddress]
-    //         }
-    //     }
+            createCohort: {
+                enabled: true,
+                isSaved: false,
+                newCohort: {
+                    cohortId: 1,
+                    cohortName: 'string',
+                    cohortDescription: 'string',
+                    cohortToken: 'ring',
+                    address: propAddress,
+                    startDate: 'string', // 2019-01-15
+                    endDate: 'string', // yyyy-MM-dd
+                    users: [],
+                    trainer: {
+                        email: 'string',
+                        userId: 1,
+                        firstName: 'string',
+                        lastName: 'string',
+                        phoneNumber: 'string',
+                        trainingAddress: propAddress,
+                        personalAddress: propAddress,
+                        userStatus: {
+                            statusId: 1,
+                            generalStatus: 'string',
+                            specificStatus: 'string',
+                            virtual: false,
+                        },
+                        roles: ['trainer'],
+                    },
+                },
+                locationDropdownActive: false,
+                trainerDropdownActive: false
+            },
+            addresses: {
+                trainingAddresses: [propAddress]
+            }
+        }
 
-    //     const createCohort = shallow(<CreateCohortModal {...props} />);
-    //     expect(createCohort).resolves();
-    // })
+        const createCohort = shallow(<CreateCohortModal {...props} />);
+        expect(createCohort).resolves;
+    })
 
     // test('There are only 2 buttons', () => {
     //     const propAddress: IAddress = {
