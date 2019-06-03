@@ -2,7 +2,9 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { IUser } from '../../model/user.model';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
+import './JobReport.scss';
+import { Redirect } from 'react-router';
 
 export interface interviewJDRequestProps {
     Users:IUser[]
@@ -26,7 +28,8 @@ export class interviewJDRequest extends React.Component<any, any> {
 			  
             totalPages:0,
             currentPage:0,
-            pageSize:4
+            pageSize:4,
+            redirect: false
         };
     }
 
@@ -61,6 +64,11 @@ export class interviewJDRequest extends React.Component<any, any> {
         );
     }
 
+    updateRedirecrt = (redirecting:boolean) => {
+        console.log('redirect');
+          this.setState({redirect:redirecting})
+      }
+
     render() { 
         const assocInterviewRows = this.state.Users.map((User) => {
             return (
@@ -72,22 +80,34 @@ export class interviewJDRequest extends React.Component<any, any> {
             );
         });
 
+        if (this.state.redirect) {
+            this.updateRedirecrt(false)
+            return <Redirect push to="/interview/report/jobDesc/charts" />;
+          }
+
         return (
-            <div>
-                <div className='tableholder'>
-                    <h1> Interviews receiving Job Descriptions Report</h1>
-                    <table>
+            <div className= 'img-fluid'>
+
+                <div className='tableholder3 scrollX scrollY'>
+                    <h1> <b>Interviews</b> </h1> 
+                    <h1> <b>Job Descriptions</b> </h1>
+
+                    <div className="scrollX scrollY">
+
+                    <table className = 'table table-striped'>
                         <thead>
                             <tr>
-                                <th>Interviewee</th>
-                                <th>Email</th>
-                                <th>Job Description?</th>
+                                <th scope="col">Interviewee</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Job Description?</th>
                             </tr>
                         </thead>
                         <tbody>
                             {assocInterviewRows}
                         </tbody>
                     </table>
+
+                    </div>
                     <ReactPaginate
                         previousLabel={'Prev'}
                         nextLabel={'Next'}
@@ -108,12 +128,11 @@ export class interviewJDRequest extends React.Component<any, any> {
                         previousLinkClassName={'paginate-previous page-link no-select'}
                     />
                 </div>
-                <div className = {"paginateddata"}>
-                    <Link to="/interview/report/jobDesc">Paginated Data</Link>
-                </div>
-                <div className = {"visualdata"}>
+                <button className = "btn btn-lg btn-primary btn-block" onClick={ () => this.updateRedirecrt(true)}>Visual Data</button>
+              
+                {/* <div className = {""}>
                     <Link to="/interview/report/jobDesc/charts">Visual Data</Link>
-                </div>
+                </div> */}
             </div>
         );
     }

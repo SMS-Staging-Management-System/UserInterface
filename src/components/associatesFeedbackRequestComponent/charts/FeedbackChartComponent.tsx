@@ -10,13 +10,14 @@ export class FeedbackChartComponent extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <div id='FeedbackRequestedChart'>
+        <div className='FeedbackRequestedChart'>
+        <h4 className="chart-title">Interviews with Feedback Requested<hr /></h4>
           <FeedbackRequestedChartComponent chart={this.props.chart1} chartAction={this.props.chartAction1} setCanvas={this.props.canvas1} /><br />
-          <h2>Interviews with Feedback Requested<hr /></h2>
         </div>
-        <div id='FeedbackReceivedChart'>
+        <div className='FeedbackReceivedChart'>
+        <h4 className="chart-title">Interviews with Feedback Requested<hr /></h4>
           <FeedbackDeliveredChartComponent chart={this.props.chart2} chartAction={this.props.chartAction2} setCanvas={this.props.canvas2} /><br />
-          <h2>Interviews with Feedback Delivered<hr /></h2>
+
         </div>
       </div>
     )
