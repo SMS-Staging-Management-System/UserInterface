@@ -21,7 +21,8 @@ interface IComponentState {
     closingFilter: boolean,
     listFiltered: ISurvey[],
     title: string,
-    description: string
+    description: string,
+    filterOption: string
 }
 
 export class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
@@ -35,7 +36,8 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
             closingFilter: false,
             listFiltered: [],
             title: "",
-            description: ""
+            description: "",
+            filterOption: "Filter By"
         }
     }
 
@@ -94,7 +96,8 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
 
     filterListByClosing = () => {
         this.setState({
-            closingFilter: true
+            closingFilter: true,
+            filterOption: "Closed"
         });
         console.log("In filter list by closing");
         this.returnPassedSurveys(this.state.surveys);
@@ -102,14 +105,16 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
 
     filterListByActive = () => {
         this.setState({
-            closingFilter: true
+            closingFilter: true,
+            filterOption: "Active"
         });
         this.returnActiveSurveys(this.state.surveys);
     }
 
     unFilterList = () => {
         this.setState({
-            closingFilter: false
+            closingFilter: false,
+            filterOption: "Filter By"
         });
     }
 
@@ -189,6 +194,8 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
             case "Closed":
                 this.filterListByClosing();
                 break;
+            case "None":
+                this.unFilterList();
             default:
                 break;
         }
@@ -199,13 +206,12 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
             return <Redirect push to={this.state.redirectTo} />
         }
         console.log(this.state.surveys);
-        const sortOptions = ["Active", "Closed"];
+        const sortOptions = ["Active", "Closed", "None"];
         return (
             <>
                 {this.state.surveysLoaded ? (
                     <Fragment>
-                        {this.state.surveys.length ? (
-                            <>
+                        
                             <div className="filterSelect">
                                 <div className="dropdown userDropdown">
                                     <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -221,7 +227,6 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                         </ul>
                                     </div>
                                 </div>
-                                <button onClick={this.unFilterList} className="btn btn-secondary"> Remove filter </button>
                             </div>
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">
@@ -313,10 +318,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                         surveysToAssign={this.state.surveysToAssign} />
                                 </div>
                                 
-                            </>
-                        ) : (
-                                <div>No Surveys to Display</div>
-                            )}
+                            
                     </Fragment>
                 ) : (
                         <Loader/>
