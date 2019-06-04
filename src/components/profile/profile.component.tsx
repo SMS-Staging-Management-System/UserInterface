@@ -60,8 +60,9 @@ class Profile extends Component<IProfileProps, IProfileState> {
     async onUpdateClick() {
         await this.props.updateUser(this.props.userToView, this.props.bUserInfoChanged,
             [this.state.isAdmin, this.state.isTrainer, this.state.isStagingManager]);
+        const resetRolesPromise = this.resetRoleState();
         await this.props.manageGetUsersByGroup(this.props.manageUsers.option, this.props.manageUsers.emailSearch, this.props.manageUsers.manageUsersCurrentPage);
-        await this.resetRoleState();
+        await resetRolesPromise;
     }
 
 

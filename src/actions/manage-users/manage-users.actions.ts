@@ -48,6 +48,24 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
         }
 
+
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log(emailList)
+        console.log(email)
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
+        console.log('test')
         if (emailList.length) {
             if (email) {
                 emailList = emailList.filter((currentEmail) => currentEmail.toLocaleLowerCase().includes(email));
@@ -90,7 +108,6 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             };
             if (potentialUser) {
                 altenateUser.roles = potentialUser.roles
-                console.log(altenateUser.roles);
             }
 
             // add user only if group filter allows
@@ -109,7 +126,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
                 manageUsersPageTotal: pageTotal
             },
             type: manageUsersTypes.GET_USERS
-        })
+        });
     } catch (e) {
         toast.warn('Unable to retreive users')
         dispatch({

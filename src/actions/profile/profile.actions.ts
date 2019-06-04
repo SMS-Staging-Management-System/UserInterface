@@ -89,24 +89,16 @@ export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean, roles: 
         cognitoRoles.STAGING_MANAGER
     ]
     try {
-        console.log(userToUpdate);
         const resp = await userClient.updateSMSUserInfo(userToUpdate);
-        console.log(roles);
 
         
-        console.log(userToUpdate.roles);
         for (let i = 0; i < roles.length; i++) {
             let newCogUser: ICognitoUserAddGroup = {
                 email: userToUpdate.email,
                 groupName: roleNames[i]
             };
-            console.log(userToUpdate.roles);
-            console.log(roles[i]);
-            console.log(`${roles[i]} && ${userToUpdate.roles.includes(roleNames[i])}`);
             try {
                 if (roles[i] && !userToUpdate.roles.includes(roleNames[i])) {
-                    console.log('adding');
-                    console.log(roleNames[i]);
                     await cognitoClient.addUserToGroup(newCogUser);
                     userToUpdate.roles.push(roleNames[i]);
                 }
@@ -115,8 +107,6 @@ export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean, roles: 
             }
             try {
                 if (!roles[i] && userToUpdate.roles.includes(roleNames[i])) {
-                    console.log('adding');
-                    console.log(roleNames[i]);
                     await cognitoClient.removeUserFromGroup(newCogUser);
                     userToUpdate.roles.splice(i,1);
                 }
@@ -124,7 +114,6 @@ export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean, roles: 
                 toast.error('Failed to remove role');
             }
         }
-        console.log(userToUpdate.roles);
         const updatedUser = resp.data;
         updatedUser.roles = userToUpdate.roles;
         dispatch({
