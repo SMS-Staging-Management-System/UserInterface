@@ -76,6 +76,10 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
         }
     }
 
+    displaySingleCohort = (cohort: ICohort) => {
+        this.props.toggleViewCohortModal(cohort);
+    }
+
     render() {
         return (
             <>
@@ -117,7 +121,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         {
                             this.props.cohorts.map((cohort) =>
                                 <tr key={cohort.cohortToken} className="rev-table-row"
-                                    onClick={this.props.toggleViewCohortModal}
+                                    onClick={() => this.displaySingleCohort(cohort)}
                                     onMouseEnter={() => this.props.hoveredCohort(cohort)}
                                 >
                                     <td>{cohort.cohortName}</td>

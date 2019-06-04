@@ -67,6 +67,7 @@ const initialState: ICohortModalState = {
 
 const {
     TOGGLE,
+    TOGGLE_CLOSE,
     TOGGLE_STATUS_DROPDOWN,
     SELECT_ONE,
     SELECT_ALL,
@@ -84,7 +85,13 @@ export const viewCohortReducer = (state = { ...initialState, isSaved: false }, a
         case TOGGLE:
             return {
                 ...state,
+                cohort: action.payload.cohort,
                 modalVisible: !state.modalVisible
+            };
+        case TOGGLE_CLOSE:
+            return {
+                ...state,
+                modalVisible: false
             };
         case TOGGLE_STATUS_DROPDOWN:
             return {

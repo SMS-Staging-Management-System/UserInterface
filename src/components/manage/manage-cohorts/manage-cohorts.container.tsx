@@ -20,7 +20,7 @@ export interface IManageCohortsComponentProps {
   updateCohorts: (cohorts: ICohort[]) => void;
   updateCohortsByPage: (cohortsPage, currentPage: number) => void;
   toggleCreateCohortModal: () => void;
-  toggleViewCohortModal: () => void;
+  toggleViewCohortModal: (cohort: ICohort) => void;
   /**
    * Handles what happens when a cohort is hovered
    * 
