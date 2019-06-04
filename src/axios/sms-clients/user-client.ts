@@ -27,6 +27,12 @@ export const userClient = {
                 page: page
             });
     },
+    findAllByEmailsNotPageable(emails: string[]) {
+        return smsClient.post(usersContext + `/emailsnotpageable`,
+            {
+                emailList: emails
+            });
+    },
     findUsersByPartialEmail(email: string, page: number = 0) {
         return smsClient.post(`${usersContext}/email/partial`,
             {

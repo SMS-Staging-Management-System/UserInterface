@@ -63,7 +63,9 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
 
             //add user names
             const emailList: string[] = userArray.map(user => user.email)
-            const userInfoResp = await userClient.findAllByEmails(emailList);
+            const userInfoResp = await userClient.findAllByEmailsNotPageable(emailList);
+            
+            console.log(userInfoResp);
 
             for (let i = 0; i < userInfoResp.data.length; i++) {
                 const respEmail = userInfoResp.data[i].email;
@@ -141,6 +143,8 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
     render() {
 
         const { createCohort, addresses, /*manageUsers*/ } = this.props;
+
+        console.log(this.state.trainers);
 
         return (
             <Modal isOpen={createCohort.enabled}>
