@@ -47,33 +47,17 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER);
             trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
         }
-
-
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log(emailList)
-        console.log(email)
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
+        
         if (emailList.length) {
             if (email) {
                 emailList = emailList.filter((currentEmail) => currentEmail.toLocaleLowerCase().includes(email));
             }
             userInfoRespPromise = userClient.findAllByEmails(emailList, page);
-        } else if (email) {
+        }
+        else if (email) {
             userInfoRespPromise = userClient.findUsersByPartialEmail(email, page);
-        } else {
+        }
+        else {
             userInfoRespPromise = userClient.findAllUsers(page);
         }
 

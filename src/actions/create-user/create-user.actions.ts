@@ -105,7 +105,6 @@ export const saveUser = (newUser: IUser, cohort?: ICohort) => async (dispatch: (
                 }
             }
             if (cohort){
-                console.log(cohort);
                 await cohortClient.joinCohort(newUser, cohort.cohortToken);
             }
         })

@@ -101,22 +101,6 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     }
 
     getUserByEmail = (page: number) => {
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log(this.props.manageUsers.emailSearch)
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
-        console.log('test')
         this.props.updateManageUsersTable('All', this.props.manageUsers.emailSearch, page);
     }
 
