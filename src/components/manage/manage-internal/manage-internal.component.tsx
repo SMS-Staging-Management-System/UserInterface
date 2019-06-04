@@ -38,7 +38,7 @@ import { IManageInternalComponentProps } from './manage-internal.container';
  * }
  */
 
-interface ManageInternalState {
+export interface ManageInternalState {
     roleDropdownList: boolean;
     trackProps: string;
     colOneSortImage: string;
