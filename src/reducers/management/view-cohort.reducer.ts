@@ -83,7 +83,6 @@ const {
 export const viewCohortReducer = (state = { ...initialState, isSaved: false }, action: any): ICohortModalState => {
     switch (action.type) {
         case TOGGLE:
-            console.log(action.payload)
             return {
                 ...state,
                 cohort: action.payload.cohort,
