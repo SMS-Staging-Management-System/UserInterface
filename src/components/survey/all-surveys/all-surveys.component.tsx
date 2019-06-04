@@ -240,6 +240,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <th>Analytics</th>
                                             <th>Respondents</th>
                                         </tr>
+                                        {(this.state.surveys.length > 0) &&
                                         <tr style={secondHeadFilter}>
                                             <td></td>
                                             <td>
@@ -279,8 +280,17 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                    </thead>
+                                        }
+                                    </thead>  
                                     <tbody>
+                                        {(!this.state.surveys || !(this.state.surveys.length))? 
+                                        
+                                            <tr className="rev-table-row">
+                                            <td colSpan={8} ><div className='div-center fadeInUp'>You don't have any surveys. <>
+                                         {console.log("I HAPPEN")}   
+                                        </></div></td>
+                                            </tr>
+                                            :<>
                                         {!this.state.closingFilter ? this.state.surveys.map(survey => (
                                         <tr key={survey.surveyId} className="rev-table-row">
                                             <td><input type="checkbox" onChange={e => this.checkFunc(e)} id={survey.surveyId.toString()} /></td>
@@ -310,14 +320,16 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                                 this.loadSurveyRespondents(filtered.surveyId)}>Status</Button></td>
                                         </tr>
                                     ))}
+                                    </>}
                                     </tbody>
                                 </Table>
+                                {(this.state.surveys.length > 0) &&
                                 <div className="assignButtonDiv">
                                     <SurveyModal
                                         buttonLabel='Assign To Cohorts'
                                         surveysToAssign={this.state.surveysToAssign} />
                                 </div>
-                                
+                                }
                             
                     </Fragment>
                 ) : (
