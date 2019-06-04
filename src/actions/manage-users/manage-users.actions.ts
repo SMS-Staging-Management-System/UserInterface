@@ -47,15 +47,17 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER);
             trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
         }
-
+        
         if (emailList.length) {
             if (email) {
                 emailList = emailList.filter((currentEmail) => currentEmail.toLocaleLowerCase().includes(email));
             }
             userInfoRespPromise = userClient.findAllByEmails(emailList, page);
-        } else if (email) {
+        }
+        else if (email) {
             userInfoRespPromise = userClient.findUsersByPartialEmail(email, page);
-        } else {
+        }
+        else {
             userInfoRespPromise = userClient.findAllUsers(page);
         }
 
@@ -90,7 +92,6 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             };
             if (potentialUser) {
                 altenateUser.roles = potentialUser.roles
-                console.log(altenateUser.roles);
             }
 
             // add user only if group filter allows
@@ -109,7 +110,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
                 manageUsersPageTotal: pageTotal
             },
             type: manageUsersTypes.GET_USERS
-        })
+        });
     } catch (e) {
         toast.warn('Unable to retreive users')
         dispatch({

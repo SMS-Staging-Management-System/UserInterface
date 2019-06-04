@@ -25,7 +25,7 @@ export const manageUsersReducer = (state = initialState, action: any) => {
         case manageUsersTypes.UPDATE_SEARCH_EMAIL:
             return {
                 ...state,
-                emailSearch: action.payload.newEmailSearch
+                emailSearch: action.payload.emailSearch
             }
         case manageUsersTypes.GET_USERS_SORTED:
             return {

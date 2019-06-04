@@ -104,8 +104,9 @@ export const saveUser = (newUser: IUser, cohort?: ICohort) => async (dispatch: (
                     await cognitoClient.addUserToGroup(newCogUser);
                 }
             }
-            if (cohort)
+            if (cohort){
                 await cohortClient.joinCohort(newUser, cohort.cohortToken);
+            }
         })
         .catch(e => {
             toast.error('Failed To Save User')

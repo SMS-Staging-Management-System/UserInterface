@@ -85,7 +85,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     }
 
     displayUserModal = async (selectedUser: ICognitoUser) => {
-        this.props.selectUserForDisplay(selectedUser);
+        await this.props.selectUserForDisplay(selectedUser);
         this.props.toggleViewUserModal();
     }
 
@@ -95,9 +95,8 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         });
     }
     updateDropdown = (option: string, page: number) => {
-        console.log('test')
-        this.props.updateManageUsersTable(option, this.props.manageUsers.emailSearch, page);
         this.props.updateSearchOption(option);
+        this.props.updateManageUsersTable(option, this.props.manageUsers.emailSearch, page);
         this.sort('sorted');
     }
 
@@ -230,7 +229,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
 
 
                 <Table striped id="manage-users-table">
-                    <ViewUserModal />
+                    <ViewUserModal manageGetUsersByGroup={this.props.updateManageUsersTable} />
                     <thead className="rev-background-color">
                         <tr>
                             <th className="pointer-table" onClick={() => this.sort(sortTypes.FIRST_NAME)}>First Name<img src={this.state.colOneSortImage} /> </th>
