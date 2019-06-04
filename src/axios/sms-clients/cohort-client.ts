@@ -24,6 +24,19 @@ export const cohortClient = {
   findAll() {
     return smsClient.get(cohortContext)
   },
+
+  async getUsers(id: number) {
+    let cohortUsers: IUser[] = [];
+    await smsClient.get(`${cohortContext}/users/id/${id}`)
+      .then(response => {
+        cohortUsers = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    return cohortUsers;
+  },
+
   async getName(cohortName: string){
     if(!cohortName){
       return [];
@@ -38,6 +51,7 @@ export const cohortClient = {
       });
     return cohortNames;
   },
+  
   async getAlias(alias: string){
     let aliases;
     await smsClient.get(`${aliasNameSort}/address/${alias}`)
