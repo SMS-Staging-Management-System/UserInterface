@@ -7,37 +7,8 @@ import ViewUserModal from '../view-user-modal/view-user-modal.container';
 import { IManageInternalComponentProps } from './manage-internal.container';
 //import Label from 'reactstrap/lib/Label';
 
-/**
- * {v}: dropdown with further info
- * #: hoverable props
- * [... ]: button
- * 
- * `Row headers:
- * |-----------\|---------------------\|-------------\|----------\
- * |--'Admins'--|--'Staging Managers'--|--'Trainers'--|--Cohorts--|                              [*+ ]
- * [ *********************************************************************************************** ]
- * [--Cohort.Name--|--Address.alias{v}--|--Token.(){v}-- |--StartMonth--|--trainer email-v--         ]
- * [=================================================================================================|
- * [  1901-blake   |  USF               | [Get token  v] | March 2019   | [blake.kruppa@gmail.com v] |
- * [-------------------------------------------------------------------------------------------------|
- * [  1902-flake   |  Reston            | [Get token  v] | March 2019   | [flake@gmail.com v       ] |
- * [-------------------------------------------------------------------------------------------------|
- * [  1903-fake    |  USF               | [Get token  v] | March 2019   | [abatson@gmail.com v     ] |
- * [-------------------------------------------------------------------------------------------------|
- * [  1904-bake    |  Reston            | [Get token  v] | March 2019   | [fllorida.man@gmail.com v] |
- * [-------------------------------------------------------------------------------------------------|
- * [  1905-make    |  USF               | [Get token  v] | March 2019   | [blake.kruppa@gmail.com v] |
- * [ *********************************************************************************************** |
- *                                                                         [p1 ] [p2 ] ... [p4 ] [p5 ]                
- * `
- * {
- *   Cohort # {
- *     cohortDescription,
- *   }
- * 
- * }
- */
 
+ //Track this components individual state
 export interface ManageInternalState {
     roleDropdownList: boolean;
     trackProps: string;
@@ -55,6 +26,7 @@ export const sortTypes = {
     EMAIL_REVERSE: 'emailReverse',
 }
 
+//Store the sort images
 const sortImages = {
     SORT_IMAGE: 'https://img.icons8.com/android/24/000000/sort-down.png',
     SORT_IMAGE_REVERSE: 'https://img.icons8.com/android/24/000000/sort-up.png',
@@ -75,10 +47,11 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     }
 
     componentDidMount() {
+        //If component is loading for the first time, load all users
         if (this.props.componentLoaded === false) {
-
             this.props.updateManageUsersTable("all", '', this.props.manageUsers.manageUsersCurrentPage);
         }
+        //If component was sorted before, make sure to turn to that sorted state.
         if (this.props.userTableSort !== "sorted") {
             this.sort(this.props.userTableSort);
         }
@@ -97,9 +70,13 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     updateDropdown = (option: string, page: number) => {
         this.props.updateSearchOption(option);
         this.props.updateManageUsersTable(option, this.props.manageUsers.emailSearch, page);
+        //reset sorting 
         this.sort('sorted');
     }
 
+    //This is for handleing event raised by Search button
+    //That is added for input box
+    //id="Search-user-by-partial-email-input" (ss)
     getUserByEmail = (page: number) => {
         this.props.updateManageUsersTable('All', this.props.manageUsers.emailSearch, page);
     }
@@ -144,6 +121,8 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         this.setState({ trackProps: sortKey })
     }
 
+    // this is event handler for events raised by inputbox
+    //id="Search-user-by-partial-email-input" (ss)
     updateValueOfSearchEmail = (e: React.FormEvent) => {
         const target = e.target as HTMLSelectElement;
         this.props.updateSearchEmail(target.value);
@@ -212,6 +191,12 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                             </DropdownMenu>
                         </Dropdown>
                     </div>
+                    
+                    {/* The following input box and search botton is added
+                        for sending the search by partial email request to the
+                        @PostMapping(path = "email/partial")
+                        end point in UserServices/UserController. (ss)
+                    */}
                     <div>
                         <Input
                             id="Search-user-by-partial-email-input"
@@ -239,6 +224,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                         </tr>
                     </thead>
                     <tbody>
+                        {/* Map user information to the table */}
                         {
                             this.props.manageUsers.manageUsers.map((user) =>
                                 <tr key={user.email} className="rev-table-row" onClick={() => this.displayUserModal(user)}>

@@ -87,6 +87,7 @@ export const updateNewUser = (newUser: IUser) => {
 }
 
 export const saveUser = (newUser: IUser, cohort?: ICohort) => async (dispatch: (action: any) => void) => {
+    //save the user on the client
     await userClient.saveUser(newUser)
         .then(async resp => {
             toast.success('User Created')
@@ -94,16 +95,21 @@ export const saveUser = (newUser: IUser, cohort?: ICohort) => async (dispatch: (
                 payload: {},
                 type: createUserTypes.USER_SAVED
             });
+
+            // roles must be sent to cognito, not the user service
             for (let i = 0; i < newUser.roles.length; i++) {
                 const newRole = newUser.roles[i];
+                // prevent display only roles from being sent
                 if (newRole !== 'associate') {
                     let newCogUser: ICognitoUserAddGroup = {
                         email: newUser.email,
                         groupName: newRole
                     };
+                    //adding user to the group on cognito
                     await cognitoClient.addUserToGroup(newCogUser);
                 }
             }
+            // send join cohort only if cohort has actually been sent
             if (cohort){
                 await cohortClient.joinCohort(newUser, cohort.cohortToken);
             }

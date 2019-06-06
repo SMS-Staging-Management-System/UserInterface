@@ -20,10 +20,13 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         let emailList: string[] = [];
         let userInfoRespPromise;
 
+        // declared here because whether they are acutally used or not varies
         let adminResponsePromise;
         let stagingManagerResponsePromise;
         let trainerResponsePromise;
 
+        // only request the groups required
+        // if caching is implemented for the cognito users this can be simplified
         if (groupName === cognitoRoles.ADMIN) {
             adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN);
             const adminResponse = await adminResponsePromise;
@@ -48,19 +51,24 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
         }
         
+        // if the email list has any elements then whatever the parameters of the action are
+        // they specify only requesting information for specific users
         if (emailList.length) {
             if (email) {
                 emailList = emailList.filter((currentEmail) => currentEmail.toLocaleLowerCase().includes(email));
             }
             userInfoRespPromise = userClient.findAllByEmails(emailList, page);
         }
+        // if email exists then users are supposed to be filted by that email
         else if (email) {
             userInfoRespPromise = userClient.findUsersByPartialEmail(email, page);
         }
+        // default to retrieving all users
         else {
             userInfoRespPromise = userClient.findAllUsers(page);
         }
 
+        // if the data has been retrieved then parse it from the promises into the map
         if (adminResponsePromise) {
             const adminResponse = await adminResponsePromise;
             addUserRolesToMap(cognitoRoles.ADMIN, adminResponse.data.Users, userMap);
@@ -74,13 +82,13 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             addUserRolesToMap(cognitoRoles.TRAINER, trainerResponse.data.Users, userMap);
         }
 
-
-        //add user names
+        // parse the response from the user service
         let userInfoResp = await userInfoRespPromise;
         const userServiceUserList = userInfoResp.data.content;
         const pageTotal = userInfoResp.data.totalPages;
 
 
+        // merge the user service and cognito information
         let listOfUsers = new Array<ICognitoUser>();
         for (let i = 0; i < userServiceUserList.length; i++) {
             let potentialUser = userMap.get(userServiceUserList[i].email)
@@ -139,6 +147,7 @@ export const updateSearchOption = (newSearchOption: string) => async (dispatch: 
     });
 }
 
+//Action to Sort user table
 export const sortUsers = (userArray: ICognitoUser[], sortKey) => (dispatch: any) => {
     userArray = userArray.sort((a, b) => sortBy(a, b, sortKey));
 
@@ -154,6 +163,7 @@ export const sortUsers = (userArray: ICognitoUser[], sortKey) => (dispatch: any)
 function addUserRolesToMap(role: string, users, userMap: Map<string, ICognitoUser>) {
     for (let i = 0; i < users.length; i++) {
         const currentCognitoUser = users[i];
+        // cognito users store emails in a map of attributes
         const currentEmail = currentCognitoUser.Attributes.find((attr: any) => attr.Name === 'email').Value;
         const mapUser = userMap.get(currentEmail)
         let newUser: ICognitoUser = mapUser ? mapUser : {
@@ -164,7 +174,7 @@ function addUserRolesToMap(role: string, users, userMap: Map<string, ICognitoUse
         userMap.set(newUser.email, newUser);
     }
 }
-
+//Function that does the sorting by fields
 function sortBy(user1, user2, sortKey) {
     if (user1 === user2) {
         return 0;
@@ -193,7 +203,7 @@ function sortBy(user1, user2, sortKey) {
     }
 
  }
-
+//Function that does comparing for the sorting
  function sortByString(a, b) {
     if (a === b) {
         return 0;

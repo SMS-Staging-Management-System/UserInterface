@@ -16,9 +16,12 @@ export const updateCohorts = (cohorts: ICohort[]) => {
         type: manageCohortsTypes.UPDATE_COHORTS
     }
 }
+
+// recieves a list of cohorts and a page number
+// axios request must be made outside and prior to action
 export const updateCohortsByPage = (cohortsPage, currentPage: number) => {
-    console.log('updateCohorts action created')
-    console.log('cohorts = ', cohortsPage)
+    console.log('updateCohorts action created');
+    console.log('cohorts = ', cohortsPage);
     return {
         payload: {
             cohorts: cohortsPage.content,

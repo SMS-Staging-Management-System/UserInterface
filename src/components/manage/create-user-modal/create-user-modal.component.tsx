@@ -26,6 +26,7 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
     this.props.updateLocations();
   }
 
+  //This updates the user when the input data
   updateNewUserInfo = (e: React.FormEvent) => {
     let updatedNewUser = this.props.createUser.newUser;
 
@@ -82,10 +83,13 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
       },
       roles: [updatedNewUser.role],
     }
+    //This function is what updates the temp user on the redux store
     this.props.updateNewUser(tempUser)
+    //This function is what updates the temp user's cohort.
     this.props.updateNewUserCohort(updatedNewUser.cohort);
   }
 
+  //This is saving the new user.
   saveNewUser = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('saving')
@@ -113,6 +117,8 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
       },
       roles: [this.props.createUser.newUser.role],
     }
+
+    //This function saves the user on redux store.
     this.props.saveUser(tempUser, this.props.createUser.newUser.cohort);
   }
 
@@ -198,6 +204,7 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
                   </DropdownMenu>
                 </Dropdown>
               </div>
+              {/* Checkbox to manage the user's roles */}
               <div className="responsive-modal-column create-user-margin">
                 <Label for="create-user-role-dropdown">Role</Label>
                 <Dropdown color="success" className="responsive-modal-row-item rev-btn"
