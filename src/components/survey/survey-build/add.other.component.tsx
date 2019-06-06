@@ -13,14 +13,13 @@ export class AddOther extends React.Component<AddProps, any> {
     super(props);
 
   }
-
+  // pass in function call for destroying the component and rendering a new one in its place. 
   selectType = (event) => {
     if(this.props.selfDestruct)this.props.selfDestruct(this.props.index);
     this.props.parentFunction(event.target.value);
   }
 
   render() {
-
     return (
         <div>
             <button type="button" className="btn rev-btn dropdown-toggle typeSelect" data-toggle="dropdown" >Select Question Type</button>

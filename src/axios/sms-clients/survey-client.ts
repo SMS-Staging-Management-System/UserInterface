@@ -21,6 +21,10 @@ export const surveyClient = {
   //--------------------//
   //-- Survey Methods --//
   //--------------------//
+
+  // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyTitle
+  // this is our fetch call on which if dont have a body back we will return
+  // the empty array declare on the first line.
   findSurveyByTitle: async (title: string) => {
     //  let surveyFound;
     let surveys: any = [];
@@ -42,6 +46,9 @@ export const surveyClient = {
     return surveys;
   },
 
+    // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyDescription
+  // this is our fetch call on which if dont have a body back we will return
+  // the empty array declare on the first line.
   findSurveyByDescription: async (description: string) => {
     let surveys: any = [];
 

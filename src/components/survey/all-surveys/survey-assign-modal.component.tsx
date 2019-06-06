@@ -65,6 +65,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     //         }
     //     }
     // }
+    //Function responsible for searching our cohorts by name , with the help of LIKE query to search anything that matches cohorts.
     searchByName = async (e) => {
         this.setState({
             nameTextBox: e.target.value
@@ -75,6 +76,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             console.log("Hi")
             newCohorts = await cohortClient.getName(e.target.value);
         }
+        //If no match occurs, and nothing is present in the textbox, list all the cohorts that currently exist.
         else {
             console.log("hello")
             const newCohortsResponse = await cohortClient.findAll();
@@ -85,6 +87,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             sortCohorts: newCohorts
         });
     }
+    //Function responsible for seearching our cohorts by address, based on where the cohorts are located.
 
     searchByAddressName = async (e) => {
         this.setState({
@@ -96,6 +99,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             console.log("Hi")
             newCohorts = await cohortClient.getAlias(e.target.value);
         }
+        //If no match occurs, and nothing is present in the textbox, list all the cohorts that currently exist.
         else {
             console.log("hello")
             const newCohortsResponse = await cohortClient.findAll();

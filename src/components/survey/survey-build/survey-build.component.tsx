@@ -121,11 +121,6 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
     })
   }
 
-
-
-
-
-
   handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -136,9 +131,6 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
     }
-
-
-
     this.handleShow();//user styleing for creating a survey
   }
 
@@ -150,13 +142,12 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
   }
   componentDidMount (){
     this.testaxois(event);
-     
-   
       this.setState({
         notRenderedFirstTime: false
       })
     
   }
+  // test if there is a survey passed into the builder to start with, and if so add it to the proper array for rendering. 
   addSpecificSurvey = async() => {
     if(this.props.history.location.state != undefined){
       console.log("Received Template From /templates");
@@ -192,7 +183,7 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
   addClick = () =>{
     this.setState({displayChoice : true});
   }
-
+  // adds specific question of a specific type to the the render array
   toAddFunction = (type:string) => {
     this.setState({displayChoice : false});
     const { completedTasks, todos } = this.state;
@@ -237,6 +228,7 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
     }
     //console.log(this.state.completedTasks)
   }
+  // renders components within the render array with given initial properties for props to be controled per question via multiple switch statements
   renderComponent = (type: number, index:number) =>{
     let showme ;
     if(this.props.history.location.state != undefined){
@@ -370,6 +362,7 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
                 <label htmlFor="title">Survey Title</label>
+                {/*conditional rendering*/}
                 {this.props.history.location.state && <input type="text" className="form-control" name="title" required defaultValue={this.props.history.location.state.displaySurvey.title}/>}
                 {!this.props.history.location.state && <input type="text" className="form-control" name="title" required/>}
                 <br />

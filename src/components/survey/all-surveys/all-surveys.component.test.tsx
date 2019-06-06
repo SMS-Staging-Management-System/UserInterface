@@ -11,6 +11,7 @@ import { IAuthState } from '../../../reducers/management';
 import { createBrowserHistory } from 'history';
 import React, { Fragment, Component } from 'react';
 
+/*  Mock Survey Data */
 let exampleArr:ISurvey[] = [
     {
         surveyId: 4,
@@ -135,6 +136,8 @@ let allPassedSurveys:ISurvey[] = [
 
 ]
 
+/* Mock Survey Data */
+
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState;
 }
@@ -150,6 +153,7 @@ let d:IComponentProps = {auth: {
                         match: filler
                     }
 
+// Render test suite
 describe('Testing component rendering', () => {
     test('All surveys will be rendered', () => {
         
@@ -158,7 +162,7 @@ describe('Testing component rendering', () => {
     })
 })
 
-
+// Filter functions test suite
 describe('All surveys should return active and closed surveys', () => {
 
     beforeAll(() => {

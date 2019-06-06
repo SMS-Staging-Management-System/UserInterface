@@ -59,10 +59,13 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         })
     }
 
+     // Added this code because I was having issues accessing this property in a later function
+     // Used to return closing date by the index provided in the array that is passed
     getClosingDate = (array, index) => {
         return array[index].closingDate;
     }
 
+    // Purpose of this function is to set a property of the state to only the surveys whose closing dates have passed
     returnPassedSurveys = (arr) => {
         let closingSurvey = arr;
         let filtered:ISurvey[] = [];
@@ -78,6 +81,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         });
     }
 
+    // Returns surveys that are still active and sets the listFiltered array to this data.
     returnActiveSurveys = (arr) => {
         let activeSurvey = arr;
         let filtered:ISurvey[] = [];
@@ -94,6 +98,8 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         });
     }
 
+    // Function called when user filters surveys by closing date if surveys had passed.
+    // Sets a boolean check to decide whether a filtered or non-filtered list is rendered
     filterListByClosing = () => {
         this.setState({
             closingFilter: true,
@@ -103,6 +109,8 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         this.returnPassedSurveys(this.state.surveys);
     }
 
+    // Function called when user filters surveys by closing date if surveys are still active.
+    // Sets a boolean check to decide whether a filtered or non-filtered list is rendered
     filterListByActive = () => {
         this.setState({
             closingFilter: true,
@@ -111,6 +119,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         this.returnActiveSurveys(this.state.surveys);
     }
 
+    // Method used to remove filter from data list
     unFilterList = () => {
         this.setState({
             closingFilter: false,
@@ -138,12 +147,14 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
             }
         }
     }
+// this function set the state after the input box has been unselected after this, 
 
     setTitleChange = async (event) => {
         this.setState({
             title: event.target.value
         });
     }
+// the getsurvey button would sent the state to the surveyClient as parameter
     getSurveysByTitle = async (event) => {
         event.preventDefault();
         if (this.state.title) {
@@ -156,12 +167,14 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         else { this.loadAllSurveys(); }
     }
 
+    // this function set the state after the input box has been unselected after this, 
     setDescriptionChange = (event) => {
         this.setState({
             description: event.target.value
         });
     }
 
+    // the getdescription button would sent the state to the surveyClient as paramerter
     getSurveysByDescription = async (event) => {
         event.preventDefault();
         if (this.state.description) {
@@ -185,6 +198,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         })
     }
 
+    // Used to route user filter selection to appropriate function
     filterCheck = (e) => {
         const {id:option} = e.target;
         switch(option){
@@ -291,7 +305,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                         </></div></td>
                                             </tr>
                                             :<>
-                                        {!this.state.closingFilter ? this.state.surveys.map(survey => (
+                                        {!this.state.closingFilter ? this.state.surveys.map(survey => (             // This.state.surveys is rendered if there is no filter
                                         <tr key={survey.surveyId} className="rev-table-row">
                                             <td><input type="checkbox" onChange={e => this.checkFunc(e)} id={survey.surveyId.toString()} /></td>
                                             <td>{survey.title}</td>
@@ -306,7 +320,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                         </tr>
                                     ))
                                     : 
-                                    this.state.listFiltered.map(filtered => (
+                                    this.state.listFiltered.map(filtered => (                           // This.state.listFiltered is rendered if there is a filter.
                                         <tr key={filtered.surveyId} className="rev-table-row">
                                             <td><input type="checkbox" onChange={e => this.checkFunc(e)} id={filtered.surveyId.toString()} /></td>
                                             <td>{filtered.title}</td>

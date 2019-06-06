@@ -11,6 +11,7 @@ export class DeleteButton extends React.Component<MyProps, any>{
         super(props);
         this.clicking = this.clicking.bind(this);
     }
+    //call for destroying the component.
     clicking = () => {
         this.props.selfDestruct(this.props.index);
     }
