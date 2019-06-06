@@ -21,6 +21,7 @@ export class ManageNavComponent extends React.Component<IManageNavComponentProps
   // returns active if the role provided in the route is the routeName provided
   isActive = (routeName: string) => ((this.props.manage === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 
+  //displays User and Cohort tabs
   render() {
     let path = '/management'
     return (

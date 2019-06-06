@@ -35,6 +35,8 @@ const { TOGGLE,
     HOVERED_COHORT
 } = viewCohortTypes;
 
+// toggle both reverses the open/close state of the modal and
+// makes the request for the required cohort information
 export const toggleViewCohortModal = (cohort: ICohort)  => async (dispatch: any) => {
     const newUserList: IUser[] = await cohortClient.getUsers(cohort.cohortId);
     cohort.users = newUserList;
@@ -44,6 +46,7 @@ export const toggleViewCohortModal = (cohort: ICohort)  => async (dispatch: any)
     });
 }
 
+// close sets the state of the modal to closed
 export const closeViewCohortModal = ()  => async (dispatch: any) => {
     dispatch({
         payload: {},
