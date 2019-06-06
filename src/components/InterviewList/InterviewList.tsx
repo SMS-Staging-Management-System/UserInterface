@@ -49,7 +49,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    async componentWillReceiveProps(nextProps) {
+    async componentWillReceiveProps(nextProps) { //Move props into state here
         this.setState({
             listOfInterviews: nextProps.listOfInterviews
         });
@@ -129,7 +129,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.props.direction);
     }
 
-    filterByAssociateEmail = (event: any) => {
+    filterByAssociateEmail = (event: any) => { //handle filter click by associate email
         if(event.currentTarget.value === 'associateEmail') {
             this.setState({
                 listOfInterviews: this.props.listOfInterviews
@@ -144,7 +144,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    filterByManagerEmail = (event: any) => {
+    filterByManagerEmail = (event: any) => { //handle filter click by manager email
         if(event.currentTarget.value === 'managerEmail') {
             this.setState({
                 listOfInterviews: this.props.listOfInterviews
@@ -159,7 +159,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    filterByPlace = (event: any) => {
+    filterByPlace = (event: any) => { //handle filter click by place
         if(event.currentTarget.value === 'placeName') {
             this.setState({
                 listOfInterviews: this.props.listOfInterviews
@@ -174,7 +174,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    filterByClient = (event: any) => {
+    filterByClient = (event: any) => { //handle filter click by client
         if(event.currentTarget.value === 'clientName') {
             this.setState({
                 listOfInterviews: this.props.listOfInterviews
@@ -257,7 +257,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             <tr>
                                 {isAdmin? <th>Reviewed</th> : <></>}
                                 <th id='associateEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                    {this.state.tableHeaderId==='associateEmail' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
+                                    {this.state.tableHeaderId==='associateEmail' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>} //guard operator to toggle arrow up and down
                                     {this.state.tableHeaderId==='associateEmail' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
                                     Associate Email
                                 </th>

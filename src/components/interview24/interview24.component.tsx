@@ -27,7 +27,7 @@ export class interview24Request extends React.PureComponent<any, any> {
             totalPages: 0,
             currentPage: 0,
             pageSize: 4,
-            redirect: false
+            redirect: false// redirect boolean variable set to false
         };
 
     }
@@ -63,7 +63,8 @@ export class interview24Request extends React.PureComponent<any, any> {
         );
     }
 
-    updateRedirecrt = (redirecting: boolean) => {
+    updateRedirecrt = (redirecting: boolean) => {// create a redirecting boolean variable
+        //put in the passed in value to redirect
         console.log('redirect');
         this.setState({ redirect: redirecting })
     }
@@ -81,17 +82,19 @@ export class interview24Request extends React.PureComponent<any, any> {
             );
         });
         console.log(assocInterviewRows);
-
+        // if redirect is true send false into updateRedirect
         if (this.state.redirect) {
             this.updateRedirecrt(false)
+            // send a new page to the front
             return <Redirect push to="/interview/report/24hour/charts" />;
         }
         return (
             <div className='img-fluid'>
 
-
+                {/* Responsive sass classNames scrolling on X and Y  */}
                 <div className='tableholder3 scrollX scrollY'>
 
+               
                     <h1><b>  Interviews  </b> </h1>
                     <h1><b> 24 Hour Notice </b> </h1>
                     {/* <table> */}
@@ -102,6 +105,7 @@ export class interview24Request extends React.PureComponent<any, any> {
                             <thead>
 
                                 <tr>
+                                   
                                     <th scope="col">  Name  </th>
                                     <th scope="col">  Email  </th>
                                     <th scope="col">  Associate's Claim  </th>
@@ -138,6 +142,7 @@ export class interview24Request extends React.PureComponent<any, any> {
 
 
                 <div>
+                    {/* button called visual data that is Onclick and sends a value to updateRedirect*/}
                     <button className="btn btn-lg btn-primary btn-block" onClick={() => this.updateRedirecrt(true)}>Visual Data</button>
                 </div>
 

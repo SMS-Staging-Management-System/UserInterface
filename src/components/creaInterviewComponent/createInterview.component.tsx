@@ -26,6 +26,7 @@ interface ICreateInterviewComponentProps extends RouteComponentProps {
 class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps> {
 
     componentDidMount() {
+        //This will find all cohorts to check if any exist
         cohortClient.findAll().then((res) => {
             if (res.data) {
                 this.props.setState({ ...this.props.createInterviewComponentState, allCohorts: res.data })
@@ -36,6 +37,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
             console.trace();
             console.log(e);
         });
+        //This will grab all the clients
         this.getAllClients();
     }
 
@@ -93,6 +95,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location, client } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
         const cohortOptions = allCohorts && allCohorts.map((val) => { return <option value={JSON.stringify(val)}>{val.cohortName}</option> })
         const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val) => { return <option value={JSON.stringify(val)}>{`${val.firstName} ${val.lastName}`}</option> })
+        
+        // Button to submit when all input fields are filled out. (Disabled if all input not filled)
         const buttonDisabledState = !(selectedAssociate && date && location && client);
         const buttonText = (buttonDisabledState)? "Please fill out all fields" : "SUBMIT";
         const buttonOnClick = async ()=>{

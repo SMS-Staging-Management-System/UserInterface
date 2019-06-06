@@ -29,7 +29,7 @@ export class interviewJDRequest extends React.Component<any, any> {
             totalPages:0,
             currentPage:0,
             pageSize:4,
-            redirect: false
+            redirect: false// creatting and setting the value of redirect
         };
     }
 
@@ -64,6 +64,7 @@ export class interviewJDRequest extends React.Component<any, any> {
         );
     }
 
+    //updateRedirecting taking in a boolean value then updating the state of redirect
     updateRedirecrt = (redirecting:boolean) => {
         console.log('redirect');
           this.setState({redirect:redirecting})
@@ -88,6 +89,7 @@ export class interviewJDRequest extends React.Component<any, any> {
         return (
             <div className= 'img-fluid'>
 
+                {/* responsive sass scrolling feature*/}
                 <div className='tableholder3 scrollX scrollY'>
                     <h1> <b>Interviews</b> </h1> 
                     <h1> <b>Job Descriptions</b> </h1>
@@ -128,6 +130,7 @@ export class interviewJDRequest extends React.Component<any, any> {
                         previousLinkClassName={'paginate-previous page-link no-select'}
                     />
                 </div>
+                {/* button called visiual data that sends a value to updateRedirect */}
                 <button className = "btn btn-lg btn-primary btn-block" onClick={ () => this.updateRedirecrt(true)}>Visual Data</button>
               
                 {/* <div className = {""}>

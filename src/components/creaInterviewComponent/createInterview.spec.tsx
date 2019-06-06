@@ -2,6 +2,7 @@ import React from 'react';
 import shallow from 'enzyme';
 // import { CreateInterviewComponent } from './createInterview.component';
 
+// This will test CreateInterview Component
 it('<CreateInterview />', () => {
         const ICreateInterviewComponentProps = {
             createInterviewComponentState: {
