@@ -163,6 +163,7 @@ export const sortUsers = (userArray: ICognitoUser[], sortKey) => (dispatch: any)
 function addUserRolesToMap(role: string, users, userMap: Map<string, ICognitoUser>) {
     for (let i = 0; i < users.length; i++) {
         const currentCognitoUser = users[i];
+        // cognito users store emails in a map of attributes
         const currentEmail = currentCognitoUser.Attributes.find((attr: any) => attr.Name === 'email').Value;
         const mapUser = userMap.get(currentEmail)
         let newUser: ICognitoUser = mapUser ? mapUser : {
