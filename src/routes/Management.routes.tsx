@@ -9,6 +9,7 @@ import  JoinCohortComponent from '../components/join-cohort/join-cohort.containe
 import profileContainer from '../components/profile/profile.container';
 import resetPasswordContainer from '../components/resetPassword/reset-password.container';
 import resetPasswordUsernameContainer from '../components/resetPasswordUsername/reset-password-username.container'
+import { cognitoRoles } from '../model/cognito-user.model';
 
 export class ManagementRoutes extends React.Component<any, any> {
     constructor(props:any){
@@ -26,7 +27,7 @@ export class ManagementRoutes extends React.Component<any, any> {
                 <Route path={`${path}/reset-password`} component={resetPasswordContainer}/>
                 <Route path={`${path}/send-email`} component={resetPasswordUsernameContainer}/>
                 <Route path={`${path}/joincohort/:token`} component={JoinCohortComponent}/>
-                <ProtectedRoute allowedRoles={['admin', 'staging-manager', 'trainer']} path={`${path}/manage/:manage`} component={ManageComponent} />
+                <ProtectedRoute allowedRoles={[cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]} path={`${path}/manage/:manage`} component={ManageComponent} />
                 <Route component={HomeComponent} />
             </Switch>
 

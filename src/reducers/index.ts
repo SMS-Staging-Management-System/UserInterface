@@ -9,7 +9,6 @@ export interface IState {
     managementState: IManagementState,
     interviewState: IInterviewState,
     surveyState : ISurveyState
-    // surveyState: ISurveyState
 }
 
 export const state = combineReducers<IState>({

@@ -1,0 +1,223 @@
+.tableholder2{
+  background-color: #04e016;
+  padding: 1rem;
+  
+  form{
+    width: max-content;
+    text-align:   center;
+  }
+
+  table{
+  
+    // border-radius: 25px;
+    // background:      #ffffff;
+    // padding: 20px; 
+    // max-width:        100%;
+    // height: 150px; 
+    // margin-left:      auto;
+    // margin-right:     auto;
+
+    background:       #ffffff;
+    margin-left:      auto;
+    margin-right:     auto;
+    max-width:        100%;
+    
+
+    tr{
+      border-bottom: #333333 solid 1px;
+
+      td, th{
+        padding:          5px;
+        text-align:       center;
+        word-wrap:        break-word;
+        //font-family: Futura-Std-Book;
+      }
+    }
+  }
+}
+
+.scrollX {
+  overflow-x:auto;
+}
+
+.scrollY {
+  overflow-y:auto;
+}
+
+//.canvas-wrap { position:relative }
+
+.tableholder3 {
+  background-color: #ffc289;
+  padding: 1rem;
+  box-shadow: 3px 3px 8px grey;
+  //border: 2px solid #f26925;
+  bottom: 400px;
+
+  form{
+    width: max-content;
+    //box-shadow: 3px 3px 8px grey;  
+  }
+  h1{
+    text-align: center;
+  }
+
+  table{
+    background:       #ffffff;
+    margin-left:      auto;
+    margin-right:     auto;
+    max-width:        100%;
+    font-family: Futura-Std-Book;
+  
+  //  box-shadow: 3px 3px 8px grey;
+
+    tr{
+      //border-bottom: #333333 solid 1px;
+
+      td, th{
+        padding:          5px;
+        text-align:       center;
+        word-wrap:        break-word;
+       
+      }
+    }
+  }
+}
+
+
+
+.clickMe{
+  position:relative;
+ // top: 80%;
+ bottom: -102.7px;
+  width: 50%;
+  left: -30px;
+}
+
+
+.btn-primary {
+  color: white;
+  background-color: #f3a55d;
+  border: 2px solid #f26925;
+  box-shadow: 3px 3px 8px grey;
+  //font-family: Futura-Std-Book;
+  //width: 50%;
+}
+
+.btn-primary:hover {
+  color: #212529;
+  background-color: #52bebe;
+  border-color: #8ad3d3
+}
+
+// .tableholderorigin{
+//   background-color: #ffc289;
+//   padding: 1rem;
+  
+//   form{
+//     width: max-content;
+//   }
+
+//   table{
+//     background:       #ffffff;
+//     margin-left:      auto;
+//     margin-right:     auto;
+//     max-width:        100%;
+
+//     tr{
+//       border-bottom: #333333 solid 1px;
+
+//       td, th{
+//         padding:          5px;
+//         text-align:       center;
+//         word-wrap:        break-word;
+//       }
+//     }
+//   }
+// }
+
+// #new-interview-full{
+//   background-color: rgb(255, 194, 137);
+//   padding: 1.2rem;
+//   border-top-left-radius: 5px;
+//   border-top-right-radius: 5px;
+//   box-shadow: 3px 3px 8px grey;
+  
+// }
+
+// .new-interview-input-group {
+//   font-family: Futura-Std-Book;
+//   display: flex;
+//   justify-content: space-around;
+//   padding: 10px;
+  
+// }
+
+
+
+  
+  // .tableholder3 {
+  //   font-family: Futura-Std-Book;
+  //   display: flex;
+  //   justify-content: space-around;
+  //   padding: 10px;
+
+  //   background-color: rgb(255, 194, 137);
+  //   padding: 1.2rem;
+  //   border-top-left-radius: 5px;
+  //   border-top-right-radius: 5px;
+  //   box-shadow: 3px 3px 8px grey;
+  // }
+  
+
+// .tableholder2{
+//   background-color: #04e016;
+//   padding: 1rem;
+  
+//   form{
+//     width: max-content;
+//   }
+
+//   table{
+  
+//     border-radius: 25px;
+//     background:      #ffffff;
+//     padding: 20px; 
+//     max-width:        100%;
+//     height: 150px; 
+//     margin-left:      auto;
+//     margin-right:     auto;
+
+//     tr{
+//       border-bottom: #333333 solid 1px;
+
+//       td, th{
+//         padding:          5px;
+//         text-align:       center;
+//         word-wrap:        break-word;
+//         //font-family: Futura-Std-Book;
+//       }
+//     }
+//   }
+// }
+
+
+// #new-interview-full{
+//   background-color: rgb(255, 194, 137);
+//   padding: 1.2rem;
+//   border-top-left-radius: 5px;
+//   border-top-right-radius: 5px;
+//   box-shadow: 3px 3px 8px grey;
+  
+// }
+
+// .new-interview-input-group {
+//   font-family: Futura-Std-Book;
+//   display: flex;
+//   justify-content: space-around;
+//   padding: 10px;
+  
+// }
+
+// .input-group-interview {
+//   border: 100px;
+// }

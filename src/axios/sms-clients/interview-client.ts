@@ -1,6 +1,7 @@
 import { INewInterviewData } from "../../model/INewInterviewData";
 import { store } from "../../Store";
 import { smsClient } from ".";
+import { cognitoRoles } from "../../model/cognito-user.model";
 
 const interviewContext = '/interview-service/interview';
 
@@ -22,7 +23,7 @@ export const interviewClient = {
         console.log(currentUser);
         const roles = currentUser.roles
         const email = currentUser.email
-        const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
+        const isAdmin = (roles.includes(cognitoRoles.ADMIN) || roles.includes(cognitoRoles.STAGING_MANAGER) || roles.includes(cognitoRoles.TRAINER));
 
         let url = interviewContext;
         url += '/page'

@@ -20,6 +20,7 @@ import { resetPasswordUsernameReducer } from "./reset-password-username.reducer"
 import { joinCohortReducer } from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
+import { ICreateUser } from "../../model/create-user.model";
 
 
 
@@ -37,8 +38,10 @@ export interface IAuthState {
   
   export interface ICreateUserState {
     enabled: boolean,
-    newUser: IUser,
-    locationDropdownActive: false
+    newUser: ICreateUser,
+    locationDropdownActive: false,
+    roleDropdownActive: false,
+    cohortDropdownActive: false,
   }
   
   export interface IViewUserState {
@@ -62,11 +65,17 @@ export interface IAuthState {
     userStatus: IStatus[],
     
   }
-  
+  //list of emails and roles for users used to populate table
   export interface IManageUsersState {
-    manageUsers: ICognitoUser[];
+    manageUsers: ICognitoUser[],
+    manageUsersCurrentPage: number,
+    manageUsersPageTotal: number,
+    emailSearch: string,
+    option: string,
+    componentLoaded: boolean,
+    userTableSort: string
   }
-
+ //current user logged in
   export interface ICurrentSMSUserState {
     currentSMSUser: IUser
   }
@@ -104,13 +113,17 @@ export interface ICohortModalState {
 
 
   export interface IManageCohortsState {
-    cohorts: ICohort[]
+    cohorts: ICohort[],
+    currentPage: number,
+    totalPages: number
   }
+  
   export interface IProfileViewState {
     user: IUser,
     bUserInfoChanged: boolean,
     locationDropdownActive: boolean,
     statusDropdownActive: boolean,
+    cohortDropdownActive: boolean,
     virtual:boolean,
   }
 
@@ -131,6 +144,7 @@ export interface ICohortModalState {
     resetPassword: IResetPasswordState,
     resetPasswordUsername: IResetPasswordUsernameState,
     login: ILoginState,
+    statusDropdownActive: boolean;
   }
 
   export const managementState = combineReducers<IManagementState>({

@@ -2,14 +2,14 @@ import React from 'react';
 import Chart from 'chart.js';
 
 interface IChartDisplayProps {
-  chart:any,
-  chartAction:any,
-  setCanvas:any
+  chart: any,
+  chartAction: any,
+  setCanvas: any
 }
 
 export class JDChartComponent extends React.Component<IChartDisplayProps, any> {
-  canvasRef : any;
-  
+  canvasRef: any;
+
   constructor(props) {
     super(props);
     this.canvasRef = React.createRef();
@@ -25,13 +25,16 @@ export class JDChartComponent extends React.Component<IChartDisplayProps, any> {
     if (!myChart) return;
     this.props.chartAction(myChart);
     this.props.setCanvas(myChart);
-    setInterval((() => {myChart.update();}),5000);
+    setInterval((() => { myChart.update(); }), 5000);
     myChart.update();
   }
 
   render() {
     return (
-      <canvas  ref={this.canvasRef}></canvas>
+      
+
+        <canvas ref={this.canvasRef}></canvas>
+ 
     )
   }
 }

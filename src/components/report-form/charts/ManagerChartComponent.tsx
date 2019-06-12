@@ -15,7 +15,15 @@ export class ManagerChartComponent extends React.Component<IChartDisplayProps, a
     super(props);
     this.canvasRef = React.createRef();
   }
+  // resizeCanvasWidth = (e) => {
+  //   let associateCanvasWidth = 10;
+  
+  // }
 
+  // resizeCanvasLength = () => {
+  //   let associateCanvasLength = 10;
+
+  // }
   componentDidMount() {
     var ctx = this.canvasRef.current.getContext('2d');
     let myChart = new Chart(ctx, {
