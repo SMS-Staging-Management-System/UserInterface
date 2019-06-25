@@ -257,7 +257,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             <tr>
                                 {isAdmin? <th>Reviewed</th> : <></>}
                                 <th id='associateEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                    {this.state.tableHeaderId==='associateEmail' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>} //guard operator to toggle arrow up and down
+                                {/* guard operator to toggle arrow up and down */}
+        {this.state.tableHeaderId==='associateEmail' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>} 
                                     {this.state.tableHeaderId==='associateEmail' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
                                     Associate Email
                                 </th>
