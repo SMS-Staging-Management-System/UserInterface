@@ -8,8 +8,6 @@ import { IManageInternalComponentProps, } from './manage-internal.container';
 //import { IViewUserModal } from '../view-user-modal/view-user-modal.container';
 //import { IUser } from '../../../model/user.model';
 //import { FaSearch } from 'react-icons/fa';
-//import { updateClicks } from '../../actions/view-user/view-user.actions.ts';
-//import { IncrementerComponent } from './clicker-incrementer/clicker-incrementer.component';
 
 describe('<ManageInternalComponenet />', () => {
 
