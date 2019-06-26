@@ -49,7 +49,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    async componentDidMount() { //Move props into state here
+    async componentDidMount() { 
         this.setState({
             listOfInterviews: this.props.listOfInterviews
         });
