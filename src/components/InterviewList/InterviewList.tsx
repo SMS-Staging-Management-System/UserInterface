@@ -49,6 +49,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
+    async componentDidMount() { //Move props into state here
+        this.setState({
+            listOfInterviews: this.props.listOfInterviews
+        });
+    }
+
     async componentWillReceiveProps(nextProps) { //Move props into state here
         this.setState({
             listOfInterviews: nextProps.listOfInterviews
