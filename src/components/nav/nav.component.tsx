@@ -57,6 +57,9 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                     this.props.auth.currentUser.roles.some(role => role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN || role === cognitoRoles.TRAINER) &&
                     <>
                       <li className="nav-item active">
+                        <Link to="/dashboard" className="unset-anchor nav-link">Dashboard</Link>
+                      </li>
+                      <li className="nav-item active">
                         <Link to="/surveys" className="unset-anchor nav-link">Surveys</Link>
                       </li>
                       <li className="nav-item active">
