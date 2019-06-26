@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { ManagementRoutes } from './routes/Management.routes';
 import { SurveyRoutes } from './routes/Survey.routes';
 import { InterviewRoutes } from './routes/Interview.routes';
+import { DashboardRoutes } from './routes/Dashboard.routes';
 
 class App extends React.Component {
   public render() {
@@ -26,6 +27,7 @@ class App extends React.Component {
                   <Route path='/management' component={ManagementRoutes}/>
                   <Route path='/interview' component={InterviewRoutes}/>
                   <Route path='/surveys' component ={SurveyRoutes}/>
+                  <Route path='/dashboard' component ={DashboardRoutes}/>
                  
               </Switch>
             </div>
