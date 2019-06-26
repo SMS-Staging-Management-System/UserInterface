@@ -16,6 +16,8 @@ import { userClient } from '../../axios/sms-clients/user-client';
 import { IState } from '../../reducers';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
 import { Client } from '../../model/Client.model';
+import { ICohort } from '../../model/cohort';
+import { IUser } from '../../model/user.model';
 
 
 interface ICreateInterviewComponentProps extends RouteComponentProps {
@@ -93,8 +95,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         const state = this.props.createInterviewComponentState;
         const setState = this.props.setState;
         const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location, client } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
-        const cohortOptions = allCohorts && allCohorts.map((val) => { return <option value={JSON.stringify(val)}>{val.cohortName}</option> })
-        const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val) => { return <option value={JSON.stringify(val)}>{`${val.firstName} ${val.lastName}`}</option> })
+        const cohortOptions = allCohorts && allCohorts.map((val:ICohort) => { return <option value={JSON.stringify(val)} key={val.cohortId}>{val.cohortName}</option> })
+        const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val:IUser) => { return <option value={JSON.stringify(val)} key={val.userId}>{`${val.firstName} ${val.lastName}`}</option> })
         
         // Button to submit when all input fields are filled out. (Disabled if all input not filled)
         const buttonDisabledState = !(selectedAssociate && date && location && client);
