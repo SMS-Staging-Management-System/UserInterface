@@ -21,9 +21,7 @@ export class interview24Request extends React.PureComponent<any, any> {
     constructor(props: interview24RequestProps) {
         super(props);
         this.state = {
-            Users: [
-                { undefined },
-            ],
+            Users: [],
             totalPages: 0,
             currentPage: 0,
             pageSize: 4,
@@ -43,24 +41,20 @@ export class interview24Request extends React.PureComponent<any, any> {
     }
 
     async fetchDbInfo(pageNumber: number) {
-        this.setState({
-            ...this.state
-        },
-            async () => {
-                try {
-                    console.log(pageNumber + 'x' + this.state.pageSize)
-                    const res = await interviewClient.fetch24(pageNumber, this.state.pageSize);
-                    console.log(res.data);
-                    this.setState({
-                        Users: res.data.content,
-                        totalPages: res.data.totalPages,
-                        currentPage: pageNumber
-                    });
-                } catch (err) {
-                    console.log(err);
-                }
+        (async () => {
+            try {
+                console.log(pageNumber + 'x' + this.state.pageSize)
+                const res = await interviewClient.fetch24(pageNumber, this.state.pageSize);
+                console.log(res.data);
+                this.setState({
+                    Users: res.data.content,
+                    totalPages: res.data.totalPages,
+                    currentPage: pageNumber
+                });
+            } catch (err) {
+                console.log(err);
             }
-        );
+        })()
     }
 
     updateRedirecrt = (redirecting: boolean) => {// create a redirecting boolean variable
@@ -71,9 +65,9 @@ export class interview24Request extends React.PureComponent<any, any> {
 
 
     render() {
-        const assocInterviewRows = this.state.Users.map((User) => {
+        const assocInterviewRows = this.state.Users.map((User, index) => {
             return (
-                <tr>
+                <tr key={index}>
                     <td>{User.assocName}</td>
                     <td>{User.assocEmail}</td>
                     <td>{User.twentyFourAssoc ? "Yes" : "No"}</td>
@@ -94,7 +88,7 @@ export class interview24Request extends React.PureComponent<any, any> {
                 {/* Responsive sass classNames scrolling on X and Y  */}
                 <div className='tableholder3 scrollX scrollY'>
 
-               
+
                     <h1><b>  Interviews  </b> </h1>
                     <h1><b> 24 Hour Notice </b> </h1>
                     {/* <table> */}
@@ -105,7 +99,7 @@ export class interview24Request extends React.PureComponent<any, any> {
                             <thead>
 
                                 <tr>
-                                   
+
                                     <th scope="col">  Name  </th>
                                     <th scope="col">  Email  </th>
                                     <th scope="col">  Associate's Claim  </th>
@@ -149,7 +143,7 @@ export class interview24Request extends React.PureComponent<any, any> {
                 {/* <div className = {""}>
                     <Link to="/interview/report/24hour" >Form Data</Link>
                 </div> */}
-        
+
             </div>
         );
     }

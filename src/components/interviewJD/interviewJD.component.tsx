@@ -7,33 +7,32 @@ import './JobReport.scss';
 import { Redirect } from 'react-router';
 
 export interface interviewJDRequestProps {
-    Users:IUser[]
+    Users: IUser[]
 }
- 
+
 export interface interviewJDState {
     Users
 }
 
 export interface interviewJDFAssoc {
-    Users:IUser[]
+    Users: IUser[]
 }
- 
+
 export class interviewJDRequest extends React.Component<any, any> {
     constructor(props: interviewJDRequestProps) {
         super(props);
         this.state = {
             Users: [
-                { email: '', userId: undefined, firstName: '', lastName:'', mobile: '', address:{undefined} },
-              ],
-			  
-            totalPages:0,
-            currentPage:0,
-            pageSize:4,
+            ],
+
+            totalPages: 0,
+            currentPage: 0,
+            pageSize: 4,
             redirect: false// creatting and setting the value of redirect
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchDbInfo(0);
     }
 
@@ -43,40 +42,34 @@ export class interviewJDRequest extends React.Component<any, any> {
         this.fetchDbInfo(selected);
     }
 
-    async fetchDbInfo(pageNumber:number){
-        this.setState({
-            ...this.state
-          },
-          async () => {
-              try {
-                  console.log(pageNumber+'x'+this.state.pageSize)
-                  const res = await interviewClient.interviewJD(pageNumber, this.state.pageSize);
-                  console.log(res.data);
-                  this.setState({
-                    Users: res.data.content,
-                    totalPages: res.data.totalPages,
-                    currentPage: pageNumber
-                  });
-              } catch (err) {
-                  console.log(err);
-              }
-          }
-        );
+    fetchDbInfo = async (pageNumber: number) => {
+        try {
+            console.log(pageNumber + 'x' + this.state.pageSize)
+            const res = await interviewClient.interviewJD(pageNumber, this.state.pageSize);
+            console.log(res.data);
+            this.setState({
+                Users: res.data.content,
+                totalPages: res.data.totalPages,
+                currentPage: pageNumber
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     //updateRedirecting taking in a boolean value then updating the state of redirect
-    updateRedirecrt = (redirecting:boolean) => {
+    updateRedirecrt = (redirecting: boolean) => {
         console.log('redirect');
-          this.setState({redirect:redirecting})
-      }
+        this.setState({ redirect: redirecting })
+    }
 
-    render() { 
-        const assocInterviewRows = this.state.Users.map((User) => {
+    render() {
+        const assocInterviewRows = this.state.Users.map((User, index) => {
             return (
-                <tr>
+                <tr key={index}>
                     <td>{User.assocName}</td>
                     <td>{User.assocEmail}</td>
-					<td>{User.jd ? "Yes" : "No"}</td>
+                    <td>{User.jd ? "Yes" : "No"}</td>
                 </tr>
             );
         });
@@ -84,30 +77,30 @@ export class interviewJDRequest extends React.Component<any, any> {
         if (this.state.redirect) {
             this.updateRedirecrt(false)
             return <Redirect push to="/interview/report/jobDesc/charts" />;
-          }
+        }
 
         return (
-            <div className= 'img-fluid'>
+            <div className='img-fluid'>
 
                 {/* responsive sass scrolling feature*/}
                 <div className='tableholder3 scrollX scrollY'>
-                    <h1> <b>Interviews</b> </h1> 
+                    <h1> <b>Interviews</b> </h1>
                     <h1> <b>Job Descriptions</b> </h1>
 
                     <div className="scrollX scrollY">
 
-                    <table className = 'table table-striped'>
-                        <thead>
-                            <tr>
-                                <th scope="col">Interviewee</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Job Description?</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {assocInterviewRows}
-                        </tbody>
-                    </table>
+                        <table className='table table-striped'>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Interviewee</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Job Description?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {assocInterviewRows}
+                            </tbody>
+                        </table>
 
                     </div>
                     <ReactPaginate
@@ -131,8 +124,8 @@ export class interviewJDRequest extends React.Component<any, any> {
                     />
                 </div>
                 {/* button called visiual data that sends a value to updateRedirect */}
-                <button className = "btn btn-lg btn-primary btn-block" onClick={ () => this.updateRedirecrt(true)}>Visual Data</button>
-              
+                <button className="btn btn-lg btn-primary btn-block" onClick={() => this.updateRedirecrt(true)}>Visual Data</button>
+
                 {/* <div className = {""}>
                     <Link to="/interview/report/jobDesc/charts">Visual Data</Link>
                 </div> */}
