@@ -22,9 +22,7 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
     constructor(props: associatesFeedbackRequestProps) {
         super(props);
         this.state = {
-            Users: [
-                { undefined },
-            ],
+            Users: [],
             totalPages: 0,
             currentPage: 0,
             pageSize: 4,
@@ -42,25 +40,19 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
         this.fetchDbInfo(selected);
     }
 
-    async fetchDbInfo(pageNumber: number) {
-        this.setState({
-            ...this.state
-        },
-            async () => {
-                try {
-                    console.log(pageNumber + 'x' + this.state.pageSize)
-                    const res = await interviewClient.assocNeedFeedback(pageNumber, this.state.pageSize);
-                    console.log(res.data);
-                    this.setState({
-                        Users: res.data.content,
-                        totalPages: res.data.totalPages,
-                        currentPage: pageNumber
-                    });
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-        );
+    fetchDbInfo = async (pageNumber: number) => {
+        try {
+            console.log(pageNumber + 'x' + this.state.pageSize)
+            const res = await interviewClient.assocNeedFeedback(pageNumber, this.state.pageSize);
+            console.log(res.data);
+            this.setState({
+                Users: res.data.content,
+                totalPages: res.data.totalPages,
+                currentPage: pageNumber
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     updateRedirecrt = (redirecting: boolean) => {
@@ -69,9 +61,9 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
     }
 
     render() {
-        const assocInterviewRows = this.state.Users.map((User) => {
+        const assocInterviewRows = this.state.Users.map((User: IUser) => {
             return (
-                <tr>
+                <tr key={User.userId}>
                     <td>{User.firstName} {User.lastName}</td>
                     <td>{User.email}</td>
                 </tr>
@@ -80,7 +72,7 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
 
         if (this.state.redirect) {
             this.updateRedirecrt(false)
-            return <Redirect push to="/interview/report/feedback/charts"/>;
+            return <Redirect push to="/interview/report/feedback/charts" />;
         }
 
         return (
@@ -130,7 +122,7 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
                 {/* <div className = {""}>
                     <Link to="/interview/report/feedback" >Form Data</Link>
                 </div> */}
-            
+
             </div>
         );
     }

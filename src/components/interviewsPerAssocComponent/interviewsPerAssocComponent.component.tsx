@@ -9,7 +9,7 @@ export interface InterviewPerAssocProps {
     currentPage: number,
     pageSize: number
 }
- 
+
 export interface InterviewPerAssocState {
     assocInterviewArr,
     totalpages,
@@ -18,25 +18,23 @@ export interface InterviewPerAssocState {
 }
 
 export interface InterviewPAssoc {
-    associateEmail:String,
-    interviewCount:number,
-    associateName:String
+    associateEmail: String,
+    interviewCount: number,
+    associateName: String
 }
- 
+
 export class InterviewPerAssoc extends React.Component<any, any> {
     constructor(props: InterviewPerAssocProps) {
         super(props);
         this.state = {
-            assocInterviewArr: [
-                { associateEmail: ' ', interviewCount: undefined, associateName: '' },
-              ],
-            totalPages:0,
-            currentPage:0,
-            pageSize:5
+            assocInterviewArr: [],
+            totalPages: 0,
+            currentPage: 0,
+            pageSize: 5
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchDbInfo(0);
     }
 
@@ -46,36 +44,30 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         this.fetchDbInfo(selected);
     }
 
-    async fetchDbInfo(pageNumber:number){
-        this.setState({
-            ...this.state
-          },
-          async () => {
-              try {
-                  console.log(pageNumber+'x'+this.state.pageSize)
-                  const res = await interviewClient.interviewPerAssoc(pageNumber, this.state.pageSize);
-                  console.log(`res.data = ${res.data}`);
-                  console.log(`res.data.content = ${res.data.content}`);
-                  console.log(`res.data.content[0] = ${res.data.content[0]}`);
-                  console.log(`res.data.content[0].AssociateName = ${res.data.content[0].associateName}`);
-                  console.log(`res.data.content[0].associateEmail = ${res.data.content[0].associateEmail}`);
-                  console.log(`res.data.content[0].interviewCount = ${res.data.content[0].interviewCount}`);
-                  this.setState({
-                    assocInterviewArr: res.data.content,
-                    totalPages: res.data.totalPages,
-                    currentPage: pageNumber
-                  });
-              } catch (err) {
-                  console.log(err);
-              }
-          }
-        );
+    fetchDbInfo = async (pageNumber: number) => {
+        try {
+            console.log(pageNumber + 'x' + this.state.pageSize)
+            const res = await interviewClient.interviewPerAssoc(pageNumber, this.state.pageSize);
+            console.log(`res.data = ${res.data}`);
+            console.log(`res.data.content = ${res.data.content}`);
+            console.log(`res.data.content[0] = ${res.data.content[0]}`);
+            console.log(`res.data.content[0].AssociateName = ${res.data.content[0].associateName}`);
+            console.log(`res.data.content[0].associateEmail = ${res.data.content[0].associateEmail}`);
+            console.log(`res.data.content[0].interviewCount = ${res.data.content[0].interviewCount}`);
+            this.setState({
+                assocInterviewArr: res.data.content,
+                totalPages: res.data.totalPages,
+                currentPage: pageNumber
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
-    render() { 
-        const assocInterviewRows = this.state.assocInterviewArr.map((Assoc) => {
+    render() {
+        const assocInterviewRows = this.state.assocInterviewArr.map((Assoc, index) => {
             return (
-                <tr>
+                <tr key={index}>
                     <td>{Assoc.associateName}</td>
                     <td>{Assoc.associateEmail}</td>
                     <td>{Assoc.interviewCount}</td>
@@ -85,27 +77,27 @@ export class InterviewPerAssoc extends React.Component<any, any> {
 
         return (
             <div>
-            <h2 className='text-center'> Interviews per Associate Report </h2>
-            <div className='container'>
-            <div className='row'>
-            <div>
-            <div className='table-responsive-xl'>
-                <table className='table table-striped mx-auto w-auto'>
-                    <thead className='rev-background-color'>
-                        <tr>
-                            <th>Associate Name</th>
-                            <th>Associate Email</th>
-                            <th>Interviews</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {assocInterviewRows}
-                    </tbody>
-                </table>
-            </div>
-            </div>
-            </div>
-            </div>
+                <h2 className='text-center'> Interviews per Associate Report </h2>
+                <div className='container'>
+                    <div className='row'>
+                        <div>
+                            <div className='table-responsive-xl'>
+                                <table className='table table-striped mx-auto w-auto'>
+                                    <thead className='rev-background-color'>
+                                        <tr>
+                                            <th>Associate Name</th>
+                                            <th>Associate Email</th>
+                                            <th>Interviews</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {assocInterviewRows}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <ReactPaginate
                     previousLabel={'Prev'}
                     nextLabel={'Next'}

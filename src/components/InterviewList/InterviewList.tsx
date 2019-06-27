@@ -349,9 +349,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                         <div className='col-3'>
                             <select onChange={this.filterByAssociateEmail} className='form-control'>
                                 <option value='associateEmail'>Associate Email</option>
-                                {arrAssociateEmail2.map((entry) => {
+                                {arrAssociateEmail2.map((entry, index) => {
                                     return (
-                                        <option value={entry}>{entry}</option>
+                                        <option value={entry} key={index}>{entry}</option>
                                     );
                                 })}
                             </select>
@@ -359,9 +359,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                         <div className='col-3'>
                             <select onChange={this.filterByManagerEmail} className='form-control'>
                                 <option value='managerEmail'>Manager Email</option>
-                                {arrManagerEmail2.map((entry) => {
+                                {arrManagerEmail2.map((entry, index) => {
                                     return (
-                                        <option value={entry}>{entry}</option>
+                                        <option value={entry} key={index}>{entry}</option>
                                     );
                                 })}
                             </select>
@@ -369,9 +369,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                         <div className='col-2'>
                             <select onChange={this.filterByPlace} className='form-control'>
                                 <option value='placeName'>Location</option>
-                                {arrPlace2.map((entry) => {
+                                {arrPlace2.map((entry, index) => {
                                     return (
-                                        <option value={entry}>{entry}</option>
+                                        <option value={entry} key={index}>{entry}</option>
                                     );
                                 })}
                             </select>
@@ -379,9 +379,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                         <div className='col-2'>
                             <select onChange={this.filterByClient} className='form-control'>
                                 <option value='clientName'>Client</option>
-                                {arrClientName2.map((entry) => {
+                                {arrClientName2.map((entry, index) => {
                                     return (
-                                        <option value={entry}>{entry}</option>
+                                        <option value={entry} key={index}>{entry}</option>
                                     );
                                 })}
                             </select>
