@@ -8,6 +8,8 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { Label } from 'reactstrap';
 import { store } from '../../Store';
+// import { Button } from 'react-bootstrap'; 
+import ReviewButton from './ActionButtons/ReviewButton';
 // import { cognitoRoles } from '../../model/cognito-user.model';
 
 export interface InterviewListProps {
@@ -203,10 +205,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    markAsReviewed = (event: any) => {
-        this.props.markAsReviewed(event.currentTarget.id);
-    }
-
     getAssocInput = (entry: any) => {
         let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
         let text = (entry.associateInput ? 'View' : 'Add');
@@ -310,8 +308,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                         <tbody>
                             {this.state.listOfInterviews.map((entry) => {
                                 return (<tr key={entry.id}>
-                                    {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>}
-                                    {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} /></td> : <></>} */}
+                                    {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
+                                    {/* {isAdmin? <td><ReviewButton className="text-warning" interviewId = {entry.id}/></td> : <></>} */}
+                                    <td><ReviewButton className="text-success" interview = {entry}/></td>
                                     <td>{entry.associateEmail}</td>
                                     <td>{entry.managerEmail}</td>
                                     <td>{entry.place}</td>
