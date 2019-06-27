@@ -29,7 +29,7 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/:interviewId/feedback`} component={interviewFeedbackComponent} />
                 <Route path={`${path}/list`} component={InterviewList} />
                 <Route path={`${path}/viewAssocInput`} component={ViewAssociateInput} />
-                <Route exact path={`${path}/report`} component={ReportsPage} />
+                <Route path={`${path}/reports`} component={ReportsPage} />
             </Switch>
         )
     }

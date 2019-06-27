@@ -73,7 +73,7 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                         </div>
                       </li>
                       <li className="nav-item active">
-                        <Link to="/interview/report" className="unset-anchor nav-link"><FaDatabase />Reports</Link>
+                        <Link to="/interview/reports" className="unset-anchor nav-link"><FaDatabase />Reports</Link>
                       </li>
 
                     </>
