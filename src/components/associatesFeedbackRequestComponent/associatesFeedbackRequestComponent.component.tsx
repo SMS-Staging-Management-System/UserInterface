@@ -2,7 +2,6 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { IUser } from '../../model/user.model';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
-import { Redirect } from 'react-router';
 
 //import { Link } from 'react-router-dom';
 
@@ -35,16 +34,13 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
     }
 
     handlePageClick = (data) => {
-        console.log(data);
         let selected = data.selected;
         this.fetchDbInfo(selected);
     }
 
     fetchDbInfo = async (pageNumber: number) => {
         try {
-            console.log(pageNumber + 'x' + this.state.pageSize)
             const res = await interviewClient.assocNeedFeedback(pageNumber, this.state.pageSize);
-            console.log(res.data);
             this.setState({
                 Users: res.data.content,
                 totalPages: res.data.totalPages,
@@ -54,12 +50,6 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
             console.log(err);
         }
     }
-
-    updateRedirecrt = (redirecting: boolean) => {
-        console.log('redirect');
-        this.setState({ redirect: redirecting })
-    }
-
     render() {
         const assocInterviewRows = this.state.Users.map((User: IUser) => {
             return (
@@ -69,18 +59,10 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
                 </tr>
             );
         });
-
-        if (this.state.redirect) {
-            this.updateRedirecrt(false)
-            return <Redirect push to="/interview/report/feedback/charts" />;
-        }
-
         return (
             <div className='img-fluid'>
                 <div className='tableholder3 scrollX scrollY'>
                     <h1><b> Feedback Given </b></h1>
-                    <h1><b> Reports </b></h1>
-
                     <div className="scrollX scrollY">
                         <table className='table table-striped'>
                             <thead>
@@ -115,14 +97,6 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
                         previousLinkClassName={'paginate-previous page-link no-select'}
                     />
                 </div>
-
-                <div>
-                    <button className="btn btn-lg btn-primary btn-block" onClick={() => this.updateRedirecrt(true)}>Visual Data</button>
-                </div>
-                {/* <div className = {""}>
-                    <Link to="/interview/report/feedback" >Form Data</Link>
-                </div> */}
-
             </div>
         );
     }

@@ -4,7 +4,6 @@ import { IUser } from '../../model/user.model';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
 //import { Link } from 'react-router-dom';
 import './JobReport.scss';
-import { Redirect } from 'react-router';
 
 export interface interviewJDRequestProps {
     Users: IUser[]
@@ -18,7 +17,7 @@ export interface interviewJDFAssoc {
     Users: IUser[]
 }
 
-export class interviewJDRequest extends React.Component<any, any> {
+export class InterviewJDRequest extends React.Component<any, any> {
     constructor(props: interviewJDRequestProps) {
         super(props);
         this.state = {
@@ -37,16 +36,13 @@ export class interviewJDRequest extends React.Component<any, any> {
     }
 
     handlePageClick = (data) => {
-        console.log(data);
         let selected = data.selected;
         this.fetchDbInfo(selected);
     }
 
     fetchDbInfo = async (pageNumber: number) => {
         try {
-            console.log(pageNumber + 'x' + this.state.pageSize)
             const res = await interviewClient.interviewJD(pageNumber, this.state.pageSize);
-            console.log(res.data);
             this.setState({
                 Users: res.data.content,
                 totalPages: res.data.totalPages,
@@ -57,11 +53,6 @@ export class interviewJDRequest extends React.Component<any, any> {
         }
     }
 
-    //updateRedirecting taking in a boolean value then updating the state of redirect
-    updateRedirecrt = (redirecting: boolean) => {
-        console.log('redirect');
-        this.setState({ redirect: redirecting })
-    }
 
     render() {
         const assocInterviewRows = this.state.Users.map((User, index) => {
@@ -73,12 +64,6 @@ export class interviewJDRequest extends React.Component<any, any> {
                 </tr>
             );
         });
-
-        if (this.state.redirect) {
-            this.updateRedirecrt(false)
-            return <Redirect push to="/interview/report/jobDesc/charts" />;
-        }
-
         return (
             <div className='img-fluid'>
 
@@ -123,9 +108,6 @@ export class interviewJDRequest extends React.Component<any, any> {
                         previousLinkClassName={'paginate-previous page-link no-select'}
                     />
                 </div>
-                {/* button called visiual data that sends a value to updateRedirect */}
-                <button className="btn btn-lg btn-primary btn-block" onClick={() => this.updateRedirecrt(true)}>Visual Data</button>
-
                 {/* <div className = {""}>
                     <Link to="/interview/report/jobDesc/charts">Visual Data</Link>
                 </div> */}

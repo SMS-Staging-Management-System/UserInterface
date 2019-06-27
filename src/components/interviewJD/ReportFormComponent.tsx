@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IState } from '../../reducers';
-import { Redirect } from 'react-router-dom';
 import { ChartComponent } from './charts/ChartComponent';
 import {setCanvasJD, getInfoJD} from '../../actions/jobDesc-chart/jobdescription.actions';
 
@@ -29,15 +28,7 @@ interface IAssociateChartProps {
     },
 }
 
-export class JDReportForm extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: false
-        }
-    }
-
-    
+export class JDReportForm extends React.PureComponent<any> {    
     _getInfoAssociate() {
         this.props.getInfoJD()
     }
@@ -94,32 +85,11 @@ export class JDReportForm extends React.Component<any, any> {
         this._getInfoManager();
         this.associateC = this.props.jobDescriptionsChart;
     }
-
-    
-    updateRedirecrt = (redirecting: boolean) => {
-        console.log('redirect');
-        this.setState({ redirect: redirecting })
-    }
-
     render() { 
-
-        if (this.state.redirect) {
-            this.updateRedirecrt(false)
-            return <Redirect push to="/interview/report/jobDesc" />;
-        }
-
         return ( 
             <React.Fragment>
-              
-                {/* <div className = {""}>
-                    <Link to="/interview/report/jobDesc" >Form Data</Link>
-                </div> */}
                 <ChartComponent chart1 = {this.associateC} chartAction1 = {getInfoJD} canvas1 = {setCanvasJD}/>
-                <div>
-                    <button className="btn btn-lg btn-primary btn-block" onClick={() => this.updateRedirecrt(true)}>Form Data</button>
-                </div>
-            </React.Fragment>
-			
+            </React.Fragment>		
         );
     }
 }

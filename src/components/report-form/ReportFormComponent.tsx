@@ -5,7 +5,6 @@ import { IState } from '../../reducers';
 import { ChartComponent } from './charts/ChartComponent';
 import {setCanvasAssociate, getInfoAssociate} from '../../actions/assoc-24-chart/assoc24chart.actions';
 import {setCanvasManager, getInfoManager} from '../../actions/manager-24-chart/manager24chart.actions';
-import { Redirect } from 'react-router-dom';
 
 interface IManagerChartProps {
     data :  {
@@ -31,14 +30,7 @@ interface IAssociateChartProps {
     },
 }
 
-export class ReportForm extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: false
-        }
-    }
-
+export class ReportForm extends React.Component<any> {
     _getInfoAssociate(){
         this.props.getInfoAssociate()
     }
@@ -110,37 +102,17 @@ export class ReportForm extends React.Component<any, any> {
     //     },
     // }
 
-    componentWillMount() {
+    componentDidMount() {
         this._getInfoAssociate();
         this._getInfoManager();
         this.associateC = this.props.associatesChart;
         this.managerC = this.props.managersChart;
     }
-
-    updateRedirecrt = (redirecting: boolean) => {
-        console.log('redirect');
-        this.setState({ redirect: redirecting })
-    }
-
     render() { 
-
-        if (this.state.redirect) {
-            this.updateRedirecrt(false)
-            return <Redirect push to="/interview/report/24hour" />;
-        }
-
         return ( 
             <React.Fragment>
                 <h1><b>Interviews 24 Hour Notice</b></h1>
-
-                 {/* <div className = {""}>
-                    <Link to="/interview/report/24hour" >Paginated Data</Link>
-                </div> */}
-
                 <ChartComponent chart1 = {this.associateC} chart2 = {this.managerC} chartAction1 = {getInfoAssociate} chartAction2 = {getInfoManager} canvas1 = {setCanvasAssociate} canvas2 = {setCanvasManager}/>
-                <div>
-                <button className="btn btn-lg btn-primary btn-block" onClick={() => this.updateRedirecrt(true)}>Form Data</button>
-                </div>
             </React.Fragment>
         );
     }
