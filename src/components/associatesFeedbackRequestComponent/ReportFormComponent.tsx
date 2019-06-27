@@ -4,7 +4,6 @@ import { IState } from '../../reducers';
 import { FeedbackChartComponent } from './charts/FeedbackChartComponent';
 import { setCanvasAssociate, getInfoAssociate } from '../../actions/feedbackReq-chart/feedbackrequested.actions';
 import { setCanvasManager, getInfoManager } from '../../actions/feedbackDel-chart/feedbackdelivered.actions';
-import { Redirect } from 'react-router';
 //import { Link, Redirect } from 'react-router-dom';
 
 interface IManagerChartProps {
@@ -31,14 +30,7 @@ interface IAssociateChartProps {
     },
 }
 
-export class FeedbackReportForm extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: false
-        }
-        
-    }
+export class FeedbackReportForm extends React.PureComponent<any> {
 
     _getInfoAssociate() {
         this.props.getInfoAssociate()
@@ -90,39 +82,18 @@ export class FeedbackReportForm extends React.Component<any, any> {
         },
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._getInfoAssociate();
         this._getInfoManager();
         this.associateC = this.props.associatesChart;
         this.managerC = this.props.managersChart;
     }
 
-    updateRedirecrt = (redirecting: boolean) => {
-        console.log('redirect');
-        this.setState({ redirect: redirecting })
-    }
-
     render() {
-
-        if (this.state.redirect) {
-            this.updateRedirecrt(false)
-            return <Redirect push to="/interview/report/feedback" />;
-        }
-
         return (
-
-
             <React.Fragment>
-
                 <h1><b>Interview Feedback Information</b></h1>
-                {/* <div className={""}>
-                    <Link to="/interview/report/feedback" >Form Data</Link>
-
-                </div> */}
                 <FeedbackChartComponent chart1={this.associateC} chart2={this.managerC} chartAction1={getInfoAssociate} chartAction2={getInfoManager} canvas1={setCanvasAssociate} canvas2={setCanvasManager} />
-                <div>
-                    <button className="btn btn-lg btn-primary btn-block" onClick={() => this.updateRedirecrt(true)}>Form Data</button>
-                </div>
             </React.Fragment>
         );
     }

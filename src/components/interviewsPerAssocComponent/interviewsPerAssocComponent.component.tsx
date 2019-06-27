@@ -39,21 +39,13 @@ export class InterviewPerAssoc extends React.Component<any, any> {
     }
 
     handlePageClick = (data) => {
-        console.log(data);
         let selected = data.selected;
         this.fetchDbInfo(selected);
     }
 
     fetchDbInfo = async (pageNumber: number) => {
         try {
-            console.log(pageNumber + 'x' + this.state.pageSize)
             const res = await interviewClient.interviewPerAssoc(pageNumber, this.state.pageSize);
-            console.log(`res.data = ${res.data}`);
-            console.log(`res.data.content = ${res.data.content}`);
-            console.log(`res.data.content[0] = ${res.data.content[0]}`);
-            console.log(`res.data.content[0].AssociateName = ${res.data.content[0].associateName}`);
-            console.log(`res.data.content[0].associateEmail = ${res.data.content[0].associateEmail}`);
-            console.log(`res.data.content[0].interviewCount = ${res.data.content[0].interviewCount}`);
             this.setState({
                 assocInterviewArr: res.data.content,
                 totalPages: res.data.totalPages,
@@ -77,7 +69,7 @@ export class InterviewPerAssoc extends React.Component<any, any> {
 
         return (
             <div>
-                <h2 className='text-center'> Interviews per Associate Report </h2>
+                <h1 className='text-center'><b>Interviews per Associate</b></h1>
                 <div className='container'>
                     <div className='row'>
                         <div>

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
-import { FaUserAlt, FaDatabase, FaClock, FaThumbsUp, FaComment, FaListOl } from 'react-icons/fa';
+import { FaUserAlt, FaDatabase } from 'react-icons/fa';
 import { cognitoRoles } from '../../model/cognito-user.model';
 
 interface IProps extends RouteComponentProps<{}> {
@@ -72,14 +72,8 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                           <Link to="/interview/list" className=" dropdown-item nav-dropdown"> Interview List </Link>
                         </div>
                       </li>
-                      <li className="nav-item active dropdown">
-                        <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaDatabase /> Reports</a>
-                        <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                          <Link to="/interview/report/feedback" className=" dropdown-item nav-dropdown"><FaThumbsUp /> Feedback Given Report...</Link>
-                          <Link to="/interview/report/24hour" className=" dropdown-item nav-dropdown"><FaClock /> Given 24 Hour Notice Report...</Link>
-                          <Link to="/interview/report/jobDesc" className=" dropdown-item nav-dropdown"><FaComment /> Job Description Given Report...</Link>
-                          <Link to="/interview/report/AssociateInterviews" className=" dropdown-item nav-dropdown"><FaListOl /> Interviews Per Associate Report...</Link>
-                        </div>
+                      <li className="nav-item active">
+                        <Link to="/interview/report" className="unset-anchor nav-link"><FaDatabase />Reports</Link>
                       </li>
 
                     </>
