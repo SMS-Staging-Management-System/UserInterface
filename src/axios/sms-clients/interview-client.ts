@@ -99,6 +99,6 @@ export const interviewClient = {
         // either one for convenience or to account for user error
         let epochDate = typeof date === 'number' ? date : date.getTime();
 
-        return await smsClient.get(`${interviewContext}/${epochDate}`);
+        return await smsClient.get(`${interviewContext}/CalendarWeek/${epochDate}`);
     }
 }
