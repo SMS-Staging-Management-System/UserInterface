@@ -6,10 +6,11 @@ import { markAsReviewed } from '../../../actions/interviewList/interviewList.act
 import {  FaCheckSquare, FaTimes } from 'react-icons/fa';
 
 
-interface myProps{
+interface IReviewButtonProps{
     interview:any,
     markAsReviewed: (interviewId: number) => void,
-    assocInput:any
+    assocInput:any,
+    disabled:any
 
 }
 
@@ -17,7 +18,7 @@ interface myProps{
 //   feedbackRequestedDate
 // }
 
-class ReviewButton extends Component<myProps,any> {
+class ReviewButton extends Component<IReviewButtonProps,any> {
     state = {
         modal:false
     }
@@ -72,15 +73,16 @@ class ReviewButton extends Component<myProps,any> {
       }
     render() {
         const isReviewed = (this.props.interview.reviewed)
+        console.log(this.props.disabled)
         return (
             <div >
-            {isReviewed? <i onClick={this.toggle}><FaCheckSquare className='btn-success'/></i>: <i onClick={this.toggle}><FaTimes className='btn-danger'/></i>}
+            {isReviewed? <i onClick={this.props.disabled? this.toggle: undefined}><FaCheckSquare className='btn-success'/></i>: <i onClick={this.props.disabled? this.toggle: undefined}><FaTimes className='btn-danger'/></i>}
           <Modal isOpen={this.state.modal} fade={false} toggle={this.toggle} >
             <ModalHeader  className='rev-background-color' toggle={this.toggle}>Review Interview</ModalHeader>
             <ModalBody>
             <form  onSubmit={this.markAsReviewed} className=''>
                 <div>
-                    <p className='col-12'><h3 className='text-center'>Associate Input</h3></p>
+                    <h3 className='text-center col-12'>Associate Input</h3>
                 </div>
                     <div className="form-group">
                     <div className='form-row'>
@@ -107,7 +109,7 @@ class ReviewButton extends Component<myProps,any> {
                     </div>
                     </div>
                 <div>
-                    <p className='col-12'><h3 className='text-center'>Interview Feedback</h3></p>
+                    <h3 className='text-center col-12'>Interview Feedback</h3>
                 </div>
                     <div className="form-group">
                     <div className='form-row'>
