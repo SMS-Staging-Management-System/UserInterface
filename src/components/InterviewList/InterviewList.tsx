@@ -208,6 +208,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     getAssocInput = (entry: any) => {
         let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
         let text = (entry.associateInput ? 'View' : 'Add');
+        console.log(entry.associateInput)
         return (
             <td>
                 {
@@ -307,10 +308,11 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                         </thead>
                         <tbody>
                             {this.state.listOfInterviews.map((entry) => {
+                                console.log(entry.associateInput)
                                 return (<tr key={entry.id}>
                                     {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
                                     {/* {isAdmin? <td><ReviewButton className="text-warning" interviewId = {entry.id}/></td> : <></>} */}
-                                    <td><ReviewButton className="text-success" interview = {entry}/></td>
+                                    <td><ReviewButton interview = {entry} assocInput={entry.associateInput || 'bleh'}/></td>
                                     <td>{entry.associateEmail}</td>
                                     <td>{entry.managerEmail}</td>
                                     <td>{entry.place}</td>
