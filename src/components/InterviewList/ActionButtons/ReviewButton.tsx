@@ -2,15 +2,27 @@ import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { connect } from 'react-redux';
 import { interviewClient } from '../../../axios/sms-clients/interview-client';
-import { markAsReviewed } from '../../../actions/interviewList/interviewList.actions';
-import {  FaCheckSquare, FaTimes } from 'react-icons/fa';
+import { markAsReviewed, getInterviewPages } from '../../../actions/interviewList/interviewList.actions';
+import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
+import { IState } from '../../../reducers';
 
 
 interface IReviewButtonProps{
     interview:any,
     markAsReviewed: (interviewId: number) => void,
     assocInput:any,
-    disabled:any
+    disabled:any,
+    currentPage:any,
+    pageSize:any,
+    orderBy:any,
+    direction:any,
+    getInterviewPages: (
+      pageNumber?: number,
+      pageSize?: number,
+      ordeyBy?: string,
+      direction?: string) => void;
+    
+    
 
 }
 
@@ -27,6 +39,7 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
     feedbackReceivedDate:any;
     feedbackDeliveredDate:any;
     interviewId:any;
+    feedbackStatus:any;
 
     constructor(props) {
       super(props);
@@ -40,20 +53,25 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
     let interviewId = this.props.interview.id;
     // console.log('interviewid::::::::',interviewId);
     let interviewFeedback = await interviewClient.fetchInterviewFeedback(interviewId);
-    // console.log(interviewFeedback);
+    // console.log('STATUS BABEY::::::',interviewFeedback.data.status);
     this.interviewId = interviewId,
     this.feedbackRequestedDate = new Date(interviewFeedback.data.feedbackRequested),
     this.feedbackText = interviewFeedback.data.feedback,
     this.feedbackReceivedDate = new Date(interviewFeedback.data.feedbackReceived),
     this.feedbackDeliveredDate = new Date(interviewFeedback.data.feedbackDelivered)
+    this.feedbackStatus = interviewFeedback.data.status? interviewFeedback.data.status.feedback_status_desc:undefined
 
   }
   
 
     markAsReviewed = (event: any) => {
       event.preventDefault()
-      // console.log(this.interviewId)
       this.props.markAsReviewed(this.interviewId);
+      this.props.getInterviewPages(
+        this.props.currentPage, 
+        this.props.pageSize, 
+        this.props.orderBy, 
+        this.props.direction);
       this.toggle()
     }
 
@@ -67,16 +85,15 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
 
     toggle = () =>{
       console.log(this.interviewId)
-        this.setState(prevState => ({
-          modal: !prevState.modal
-        }));
-      }
+      this.setState(prevState => ({
+        modal: !prevState.modal
+      }));
+    }
     render() {
         const isReviewed = (this.props.interview.reviewed)
-        console.log(this.props.disabled)
         return (
             <div >
-            {isReviewed? <i onClick={this.props.disabled? this.toggle: undefined}><FaCheckSquare className='btn-success'/></i>: <i onClick={this.props.disabled? this.toggle: undefined}><FaTimes className='btn-danger'/></i>}
+            {isReviewed? <i onClick={this.props.disabled? this.toggle: undefined}><FaRegCheckSquare className='btn-success'/></i>: <i onClick={this.props.disabled? this.toggle: undefined}><FaRegSquare className='btn-light'/></i>}
           <Modal isOpen={this.state.modal} fade={false} toggle={this.toggle} >
             <ModalHeader  className='rev-background-color' toggle={this.toggle}>Review Interview</ModalHeader>
             <ModalBody>
@@ -135,6 +152,12 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
                         <span className='col-9'><input value={this.feedbackDeliveredDate} readOnly className='form-control'></input></span>
                     </div>
                     </div>
+                    <div className="form-group">
+                    <div className='form-row'>
+                        <div className='col-3'><label>Feedback Status</label></div>
+                        <span className='col-9'><input value={this.feedbackStatus} readOnly className='form-control'></input></span>
+                    </div>
+                    </div>
                     <Button className='btn btn-block ' type='submit' color="warning" >Review</Button>
 
 
@@ -147,15 +170,20 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
     }
 }
 
-const mapStateToProps = () =>{
-    
+const mapStateToProps = (state: IState) =>{
+  console.log('currentpage:::::::',state.interviewState.interviewList.currentPage)
+  
     return {
-        
+      currentPage: state.interviewState.interviewList.currentPage,
+      pageSize: state.interviewState.interviewList.pageSize,
+      orderBy: state.interviewState.interviewList.orderBy,
+      direction: state.interviewState.interviewList.direction
     }
 }
 
 const mapDispatchToProps = {
-    markAsReviewed
+    markAsReviewed,
+    getInterviewPages
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewButton);

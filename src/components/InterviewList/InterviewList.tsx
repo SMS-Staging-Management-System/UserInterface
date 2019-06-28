@@ -74,7 +74,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.props.orderBy, 
                 this.props.direction);
         }
-
     }
 
     handlePageClick = (data) => {
@@ -100,8 +99,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         await this.setState({
             tableHeaderId: event.currentTarget.id
         });
-        console.log(`tableHeaderId=${this.state.tableHeaderId}`);
-        console.log(`previousTableHeaderId=${this.state.previousTableHeaderId}`);
         if(this.state.tableHeaderId === this.state.previousTableHeaderId) { //if click same header -> toggle ASC/DESC
             if(this.state.direction === 'ASC') {
                 this.setState({
@@ -120,7 +117,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         this.setState({
             previousTableHeaderId: this.state.tableHeaderId
         });
-        console.log(`previousTableHeaderId after setState = ${this.state.previousTableHeaderId}`);
         await this.props.getInterviewPages(
             0,
             this.props.pageSize,
