@@ -19,19 +19,7 @@ export interface IReportFormState {
 }
 
 export interface IManagerChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
+    managerNoticeData: number[]
 }
 
 export interface IInterviewFeedbackComponentState {
@@ -44,19 +32,7 @@ export interface IInterviewFeedbackComponentState {
 }
 
 export interface IAssociateChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
+    assocNoticeData: number[]
 }
 
 export interface IFeedbackRequestedChartState {
@@ -72,7 +48,7 @@ export interface IFeedbackRequestedChartState {
         legend: {labels:{}},
         pointLabels: {}
     },
-	canvas: any
+    canvas: any
 }
 
 export interface IFeedbackDeliveredChartState {
@@ -92,19 +68,7 @@ export interface IFeedbackDeliveredChartState {
 }
 
 export interface IJobDescriptionChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
+    JDdata: number[]
 }
 
 export interface ICreateInterviewComponentState {
