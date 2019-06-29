@@ -130,7 +130,10 @@ export interface IInterviewListState {
 }
 
 export interface ITotalWeeklyState {
-    interviewList: Interview[]
+    interviewList: Interview[];
+    totalScheduled: number;
+    totalNotified: number;
+    totalReviewed: number;
 }
     
 export interface IInterviewState {

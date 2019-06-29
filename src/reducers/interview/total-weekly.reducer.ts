@@ -2,7 +2,10 @@ import { ITotalWeeklyState } from ".";
 import { TOTAL_WEEKLY_TYPES } from "../../actions/total-weekly/total-weekly.actions";
 
 const initialState: ITotalWeeklyState = {
-  interviewList: []
+  interviewList: [],
+  totalScheduled: 0,
+  totalNotified: 0,
+  totalReviewed: 0
 }
 
 export const totalWeeklyReducer = (state = initialState, action: any) => {
@@ -10,7 +13,10 @@ export const totalWeeklyReducer = (state = initialState, action: any) => {
     case TOTAL_WEEKLY_TYPES.SET_INTERVIEW_LIST:
       return {
         ...state,
-        interviewList: action.payload
+        interviewList: action.payload.interviewList,
+        totalScheduled: action.payload.totalScheduled,
+        totalNotified: action.payload.totalNotified,
+        totalReviewed: action.payload.totalReviewed
       }
 
     default:
