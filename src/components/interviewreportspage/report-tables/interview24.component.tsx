@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { IUser } from '../../model/user.model';
-import { interviewClient } from '../../axios/sms-clients/interview-client';
-import './24Hreport.scss';
+import { IUser } from '../../../model/user.model';
+import { interviewClient } from '../../../axios/sms-clients/interview-client';
+import './report-table.scss';
 export interface interview24RequestProps {
     Users: IUser[]
 }
