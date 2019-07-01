@@ -38,22 +38,26 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
         console.log("this.props.match.params");
         console.log((this.props.match.params as any).interviewId);
         const state = this.props.interviewFeedbackComponentState;
-        const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat } = state;
+        const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat, interviewStatus } = state;
+        // const {interviewFormat} = state;
+        console.log(state)
+        console.log('interviewformat::::::::',InterviewFormat[interviewFormat])
         const res = await interviewClient.sendFeedback({
             interviewId: (this.props.match.params as any).interviewId,
             feedbackRequestedDate: (new Date(feedbackRequestedDate)).valueOf(),
             feedbackText: feedbackText,
             feedbackReceivedDate: (new Date(feedbackReceivedDate)).valueOf(),
             feedbackDeliveredDate: (new Date(feedbackDeliveredDate)).valueOf(),
-            interviewFormat: InterviewFormat[interviewFormat],
+            statusId : interviewStatus,
+            format: interviewFormat,
         });
-        return (res.status >= 200 && res.status < 300);            
+        return (res.status >= 200 && res.status < 300);
     }
 
     render() {        
         const state = this.props.interviewFeedbackComponentState;
         const setState = this.props.setState;
-        const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat, noInterviewFound } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
+        const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat, noInterviewFound, interviewStatus } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
         const buttonDisabledState = !(feedbackRequestedDate && feedbackText && feedbackReceivedDate && feedbackDeliveredDate && interviewFormat) || noInterviewFound
         const buttonText = (noInterviewFound)? "loading interview..." : (buttonDisabledState)? "Please fill out all fields" : "SUBMIT";
         const buttonOnClick = async ()=>{const success = await this.sendFeedbackToDB(); console.log("successfully sent?:" + success); if(success)this.props.history.push("/interview/list");};
@@ -82,12 +86,27 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
                 </InputGroup>
                 < br />
                 <InputGroup>
-                    <Input type='select' value={interviewFormat} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, interviewFormat: e.target.value as InterviewFormat }); }} >
+                    <Input type='select' value={interviewFormat} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, interviewFormat: parseInt(e.target.value) }); }} >
                         <option value={InterviewFormat.none} style={{ display: 'none' }}>select an interview format...</option>
-                        {Object.keys(InterviewFormat).map((key) => { return (key !== 'none') ? <option value={key}>{InterviewFormat[key]}</option> : undefined })}
+                        <option value={1} >On Site</option>
+                        <option value={2}>In Person</option>
+                        <option value={3}>Video Call</option>
+                        <option value={4}>Phone Call</option>
+                        {/* {Object.keys(InterviewFormat).map((key) => { return (key !== 'none') ? <option value={key}>{InterviewFormat[key]}</option> : undefined })} */}
                     </Input>
                 </InputGroup>
                 < br />
+                <InputGroup>
+                    <Input type='select' value={interviewStatus} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, interviewStatus: parseInt(e.target.value) }); }} >
+                        <option value = {InterviewFormat.none} style={{display:'none'}}>select an feedback status...</option>
+                        <option value ={1}>Pending</option>
+                        <option value={2}>No Feedback</option>
+                        <option value={3}>Selected for Second Round</option>
+                        <option value={4}>Direct Hire</option>
+                        <option value={5}>Selected</option>
+                    </Input>
+                </InputGroup>
+                <br/>
                 <Button color="secondary" size="lg" block disabled={buttonDisabledState}  onClick={buttonOnClick}>{buttonText}</Button>
             </div>
         );

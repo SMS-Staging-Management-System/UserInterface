@@ -3,7 +3,7 @@ import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
 import { interviewFeedbackReducer } from './interviewFeedback.reducer';
-import { InterviewFormat } from '../../model/Interview.format.model';
+// import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { assocInputReducer } from './assoc-input.reducer';
@@ -39,8 +39,9 @@ export interface IInterviewFeedbackComponentState {
     feedbackText: string
     feedbackReceivedDate: string
     feedbackDeliveredDate: string
-    interviewFormat: InterviewFormat
+    interviewFormat: number
     noInterviewFound: boolean
+    interviewStatus: number
 }
 
 export interface IAssociateChartState {
