@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { IUser } from '../../model/user.model';
-import { interviewClient } from '../../axios/sms-clients/interview-client';
-
-//import { Link } from 'react-router-dom';
+import { IUser } from '../../../model/user.model';
+import { interviewClient } from '../../../axios/sms-clients/interview-client';
 
 export interface associatesFeedbackRequestProps {
     Users: IUser[]

@@ -1,16 +1,16 @@
-import { IManagerChartState } from ".";
+import { ISimpleChartDataState } from ".";
 import { managerChartTypes } from "../../actions/manager-24-chart/manager24chart.actions"
 
-const initialState : IManagerChartState = {
-    managerNoticeData: [0, 0]
+const initialState : ISimpleChartDataState = {
+    chartData: [0, 0]
 }
 
-export const managerChartReducer = (state = initialState, action : any): IManagerChartState => {
+export const managerChartReducer = (state = initialState, action : any): ISimpleChartDataState => {
     switch (action.type) {
         case managerChartTypes.SET_MANAGER_NOTICE_DATA:
             return {
                 ...state,
-                managerNoticeData: action.payload
+                chartData: action.payload
             }
         default:
             return state
