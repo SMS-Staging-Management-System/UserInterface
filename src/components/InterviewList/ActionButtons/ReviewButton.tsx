@@ -40,6 +40,7 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
     feedbackDeliveredDate:any;
     interviewId:any;
     feedbackStatus:any;
+    format: any;
 
     constructor(props) {
       super(props);
@@ -58,8 +59,9 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
     this.feedbackRequestedDate = new Date(interviewFeedback.data.feedbackRequested),
     this.feedbackText = interviewFeedback.data.feedback,
     this.feedbackReceivedDate = new Date(interviewFeedback.data.feedbackReceived),
-    this.feedbackDeliveredDate = new Date(interviewFeedback.data.feedbackDelivered)
+    this.feedbackDeliveredDate = new Date(interviewFeedback.data.feedbackDelivered),
     this.feedbackStatus = interviewFeedback.data.status? interviewFeedback.data.status.feedback_status_desc:undefined
+    this.format = interviewFeedback.data.format? interviewFeedback.data.format.formatDesc:undefined
 
   }
   
@@ -150,6 +152,12 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
                     <div className='form-row'>
                         <div className='col-3'><label>Feedback Delivered Date</label></div>
                         <span className='col-9'><input value={this.feedbackDeliveredDate} readOnly className='form-control'></input></span>
+                    </div>
+                    </div>
+                    <div className="form-group">
+                    <div className='form-row'>
+                        <div className='col-3'><label>Interview Format</label></div>
+                        <span className='col-9'><input value={this.format} readOnly className='form-control'></input></span>
                     </div>
                     </div>
                     <div className="form-group">
