@@ -64,8 +64,8 @@ export class Interview24Chart extends PureComponent<IInterview24ChartProps> {
 }
 
 const mapStateToProps = (state: IState) => ({
-  dataAssoc: state.interviewState.associateChart.assocNoticeData,
-  dataManager: state.interviewState.managerChart.managerNoticeData
+  dataAssoc: state.interviewState.associateChart.chartData,
+  dataManager: state.interviewState.managerChart.chartData
 })
 
 const mapDispatchToProps = {

@@ -8,19 +8,18 @@ import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { assocInputReducer } from './assoc-input.reducer';
 import { IAssociateInput } from '../../model/Associateinput.model';
-import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
 import { jobDescriptionChartReducer } from './jobdesc.reducer';
 import { Client } from '../../model/Client.model';
 import { Interview } from '../../model/Interview.model';
 import { totalWeeklyReducer } from './total-weekly.reducer';
 
-export interface IReportFormState {
-    
+// the reportform reducer seems to do nothing. remove later
+export interface IReportFormState {   
 }
 
-export interface IManagerChartState {
-    managerNoticeData: number[]
+export interface ISimpleChartDataState {
+    chartData: number[]
 }
 
 export interface IInterviewFeedbackComponentState {
@@ -30,46 +29,6 @@ export interface IInterviewFeedbackComponentState {
     feedbackDeliveredDate: string
     interviewFormat: InterviewFormat
     noInterviewFound: boolean
-}
-
-export interface IAssociateChartState {
-    assocNoticeData: number[]
-}
-
-export interface IFeedbackRequestedChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-    canvas: any
-}
-
-export interface IFeedbackDeliveredChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
-}
-
-export interface IJobDescriptionChartState {
-    JDdata: number[]
 }
 
 export interface ICreateInterviewComponentState {
@@ -105,13 +64,12 @@ export interface IInterviewState {
     reportForm : IReportFormState,
     createInterviewComponentState: ICreateInterviewComponentState,
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
-    managerChart: IManagerChartState,
-    associateChart: IAssociateChartState,
+    managerChart: ISimpleChartDataState,
+    associateChart: ISimpleChartDataState,
     associateInput: IAssociateInput,
-    feedbackRequestedChart: IFeedbackRequestedChartState,
-    feedbackDeliveredChart: IFeedbackDeliveredChartState,
-    jobDescriptionChart: IJobDescriptionChartState,
-    totalWeekly: ITotalWeeklyState
+    feedbackRequestedChart: ISimpleChartDataState,
+	jobDescriptionChart: ISimpleChartDataState,
+   totalWeekly: ITotalWeeklyState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -123,7 +81,6 @@ export const interviewState = combineReducers<IInterviewState>({
    associateChart: associateChartReducer,
    associateInput: assocInputReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
-   feedbackDeliveredChart: feedbackDeliveredChartReducer,
    jobDescriptionChart: jobDescriptionChartReducer,
    totalWeekly: totalWeeklyReducer
 })

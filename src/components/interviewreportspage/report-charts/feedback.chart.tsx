@@ -1,19 +1,19 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux';
 import { IState } from '../../../reducers';
-import { setInfoJD } from '../../../actions/jobDesc-chart/jobdescription.actions'
-import { IChartProps, baseChartColors, ReportChart } from '.';
+import { setInfoAssoc } from '../../../actions/feedbackReq-chart/feedbackrequested.actions'
+import { IChartProps, ReportChart } from '.';
 
 
 interface IFeedbackChartProps {
   data: any
-  setInfoJD: () => void
+  setInfoAssoc: () => void
 }
 
 export class FeedbackChart extends PureComponent<IFeedbackChartProps> {
 
   componentDidMount() {
-    this.props.setInfoJD()
+    this.props.setInfoAssoc()
   }
 
   render() {
@@ -21,11 +21,22 @@ export class FeedbackChart extends PureComponent<IFeedbackChartProps> {
       data: {
         datasets: [{
           data: this.props.data,
-          ...baseChartColors
+          // typescript does not like the spread operator
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(01, 01, 01, 0.2)',
+            'rgba(54, 162, 255, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(01, 01, 01, 1)',
+            'rgba(54, 162, 255, 1)'
+          ]
         }],
         labels: [
-          'Placeholder chart',
-          'Placeholder chart'
+          'Feedback not Requested',
+          'Feedback Requested and not Delivered',
+          'Feedback Requested and Delivered'
         ]
       },
       type: 'doughnut'
@@ -34,9 +45,9 @@ export class FeedbackChart extends PureComponent<IFeedbackChartProps> {
       <>
         {
           // the following .reduce finds whether there is some data to show
-          this.props.data.reduce((prev, curr) => (prev + curr), 0)?
-          <ReportChart chartTitle={'Placeholder Chart'} chartProps={chartProps} />
-          : <>put spinner here</>
+          this.props.data.reduce((prev, curr) => (prev + curr), 0) ?
+            <ReportChart chartTitle={'Interviews And Feedback'} chartProps={chartProps} />
+            : <>put spinner here</>
         }
       </>
     )
@@ -44,11 +55,11 @@ export class FeedbackChart extends PureComponent<IFeedbackChartProps> {
 }
 
 const mapStateToProps = (state: IState) => ({
-  data: state.interviewState.jobDescriptionChart.JDdata,
+  data: state.interviewState.feedbackRequestedChart.chartData,
 })
 
 const mapDispatchToProps = {
-  setInfoJD
+  setInfoAssoc
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedbackChart)

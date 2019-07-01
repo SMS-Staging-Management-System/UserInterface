@@ -1,16 +1,16 @@
-import { IJobDescriptionChartState } from ".";
+import { ISimpleChartDataState } from ".";
 import { jobDescriptionChartTypes } from "../../actions/jobDesc-chart/jobdescription.actions"
 
-const initialState : IJobDescriptionChartState = {
-    JDdata: [0, 0]
+const initialState : ISimpleChartDataState = {
+    chartData: [0, 0]
 }
 
-export const jobDescriptionChartReducer = (state = initialState, action : any): IJobDescriptionChartState => {
+export const jobDescriptionChartReducer = (state = initialState, action : any): ISimpleChartDataState => {
     switch (action.type) {
         case jobDescriptionChartTypes.SET_JD_CHART_INFO:
             return {
                 ...state,
-                JDdata: action.payload
+                chartData: action.payload
             }
         default:
             return state

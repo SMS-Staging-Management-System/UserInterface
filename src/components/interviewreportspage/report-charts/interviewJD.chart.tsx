@@ -44,7 +44,7 @@ export class JDInterviewChart extends PureComponent<IJDInterviewChartProps> {
 }
 
 const mapStateToProps = (state: IState) => ({
-  data: state.interviewState.jobDescriptionChart.JDdata,
+  data: state.interviewState.jobDescriptionChart.chartData,
 })
 
 const mapDispatchToProps = {

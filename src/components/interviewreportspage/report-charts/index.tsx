@@ -4,11 +4,11 @@ import Chart from 'chart.js'
 export interface IChartProps {
   data: {
     datasets: [{
-      data: [number, number],
+      data: number[],
       backgroundColor: string[],
       borderColor: string[],
     }],
-    labels: [string, string]
+    labels: string[]
   }
   type: string
 }

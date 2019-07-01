@@ -1,8 +1,8 @@
 import React from 'react'
 import { FaThumbsUp, FaClock, FaComment, FaListOl } from 'react-icons/fa';
-import { AssociatesFeedbackRequest } from '../associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component';
-import { Interview24Request } from '../interview24/interview24.component';
-import { InterviewJDRequest } from '../interviewJD/interviewJD.component';
+import { AssociatesFeedbackRequest } from './report-tables/associatesFeedbackRequestComponent.component';
+import { Interview24Request } from './report-tables/interview24.component';
+import { InterviewJDRequest } from './report-tables/interviewJD.component';
 import JDInterviewChart from './report-charts/interviewJD.chart';
 import { InterviewPerAssoc } from '../interviewsPerAssocComponent/interviewsPerAssocComponent.component';
 import Interview24Chart from './report-charts/interview24.chart'
