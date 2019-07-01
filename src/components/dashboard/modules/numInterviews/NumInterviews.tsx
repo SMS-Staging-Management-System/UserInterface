@@ -7,7 +7,7 @@ import { Interview } from '../../../../model/Interview.model';
 import NumInterviewsChart from './NumInterviewsChart';
 import './NumInterviews.scss';
 
-interface myProps extends RouteComponentProps<{}> {
+interface INumInterviewsProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
     interviewList: Interview[];
     totalScheduled: number;
@@ -16,14 +16,14 @@ interface myProps extends RouteComponentProps<{}> {
     getWeeklyInterviews: (date: number | Date) => void;
 }
 
-interface myState {
+interface INumInterviewsState {
     currentWeek: Date;
     places: object;
     clients: object;
 }
 
-class NumInterviews extends Component<myProps,myState> {
-    constructor(props: myProps) {
+class NumInterviews extends Component<INumInterviewsProps,INumInterviewsState> {
+    constructor(props: INumInterviewsProps) {
         super(props);
         this.state = {
             currentWeek: new Date(),
