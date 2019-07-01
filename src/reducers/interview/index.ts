@@ -13,6 +13,7 @@ import { feedbackRequestedChartReducer } from './feedbackrequested';
 import { jobDescriptionChartReducer } from './jobdesc.reducer';
 import { Client } from '../../model/Client.model';
 import { Interview } from '../../model/Interview.model';
+import { totalWeeklyReducer } from './total-weekly.reducer';
 
 export interface IReportFormState {
     
@@ -91,6 +92,13 @@ export interface IInterviewListState {
     currentPage : number,
     assocInput: any
 }
+
+export interface ITotalWeeklyState {
+    interviewList: Interview[];
+    totalScheduled: number;
+    totalNotified: number;
+    totalReviewed: number;
+}
     
 export interface IInterviewState {
     interviewList : IInterviewListState,
@@ -102,7 +110,8 @@ export interface IInterviewState {
     associateInput: IAssociateInput,
     feedbackRequestedChart: IFeedbackRequestedChartState,
     feedbackDeliveredChart: IFeedbackDeliveredChartState,
-	jobDescriptionChart: IJobDescriptionChartState
+    jobDescriptionChart: IJobDescriptionChartState,
+    totalWeekly: ITotalWeeklyState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -115,5 +124,6 @@ export const interviewState = combineReducers<IInterviewState>({
    associateInput: assocInputReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
    feedbackDeliveredChart: feedbackDeliveredChartReducer,
-   jobDescriptionChart: jobDescriptionChartReducer
+   jobDescriptionChart: jobDescriptionChartReducer,
+   totalWeekly: totalWeeklyReducer
 })

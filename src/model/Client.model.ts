@@ -8,3 +8,8 @@ export class Client {
         this.name = name;
     }
 }
+
+export interface IClient {
+    clientId: number;
+    clientName: string;
+}
