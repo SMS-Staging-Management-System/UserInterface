@@ -177,7 +177,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
     render() {        
         const { userToView, trainingAddresses, allStatus, currentSMSUser } = this.props;
         let userToViewDetails
-        if (this.props.location.state && this.props.location.state.currentUser) 
+        if (this.props.location && this.props.location.state && this.props.location.state.currentUser) 
             userToViewDetails = currentSMSUser
         else userToViewDetails = userToView
         return (
