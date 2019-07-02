@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Switch, Route } from 'react-router';
 import ProtectedRoute from '../protected-route.component/protected-route.component';
 import DashboardNav from './dashboard-nav/DashboardNav';
-import ByVirtual from './modules/byVirtual/ByVirtual';
+import ByStaging from './modules/byStaging/ByStaging';
 import Dropped from './modules/dropped/Dropped';
 import ToStaging from './modules/toStaging/ToStaging';
 import FiveOrMore from './modules/fiveOrMore/FiveOrMore';
@@ -35,9 +35,9 @@ export class Dashboard extends React.Component<any, any> {
           match={this.props.match} />
 
         <Switch>
-          <Route exact path={`${path}`} component={ByVirtual} />
-          <Route path={`${path}/home`} component={ByVirtual} />
-          <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/byVirtual`} component={ByVirtual} />
+          <Route exact path={`${path}`} component={ByStaging} />
+          <Route path={`${path}/home`} component={ByStaging} />
+          <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/byStaging`} component={ByStaging} />
           <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/dropped`} component={Dropped} />
           <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/toStaging`} component={ToStaging} />
           <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/fiveOrMore`} component={FiveOrMore} />

@@ -42,5 +42,8 @@ export const userClient = {
     },
     findAllUsers(page: number = 0) {
         return smsClient.get(`${usersContext}/allUsers/page/${page}`);
+    },
+    getAllVirtualListUser(){
+        return smsClient.get(`${usersContext}/invirtual`);
     }
 }
