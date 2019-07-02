@@ -39,7 +39,10 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
             feedbackRequestedDate: new Date(interviewFeedback.data.feedbackRequested),
             feedbackText: interviewFeedback.data.feedback,
             feedbackReceivedDate: new Date(interviewFeedback.data.feedbackReceived),
-            feedbackDeliveredDate: new Date(interviewFeedback.data.feedbackDelivered)
+            feedbackDeliveredDate: new Date(interviewFeedback.data.feedbackDelivered),
+            feedbackStatus : interviewFeedback.data.status? interviewFeedback.data.status.feedback_status_desc:undefined,
+            format : interviewFeedback.data.format? interviewFeedback.data.format.formatDesc:undefined
+            // interviewFormat: interviewFeedback.data.        
         });
     }
 
@@ -76,33 +79,18 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                         <span className='col-9'><input value={this.state.feedbackDeliveredDate} readOnly className='form-control'></input></span>
                     </div>
                     <br />
+                    <div className='form-row'>
+                        <div className='col-3'><label>Interview Format</label></div>
+                        <span className='col-9'><input value={this.state.format} readOnly className='form-control'></input></span>
+                    </div>
+                    <br />
+                    <div className='form-row'>
+                        <div className='col-3'><label>Feedback Status</label></div>
+                        <span className='col-9'><input value={this.state.feedbackStatus} readOnly className='form-control'></input></span>
+                    </div>
+                    <br />
                     <input type='submit' className='btn btn-success' value='back' onClick={() => this.redirectTo()}></input>
                 </form>
-                {/* <span>Interview Feedback</span>
-                <hr />
-                <Form>
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback Requested</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackRequestedDate} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackText} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback Received Date</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackReceivedDate} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback Delievered Date</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackDeliveredDate} />
-                    </InputGroup>
-                    <br />
-                    <Button color="secondary" size="lg" block onClick={() => this.redirectTo()}>Back</Button>
-                </Form> */}
             </div>
             </div>
             );
