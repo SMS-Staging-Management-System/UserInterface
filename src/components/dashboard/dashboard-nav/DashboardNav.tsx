@@ -6,10 +6,12 @@ import Navbar from 'reactstrap/lib/Navbar';
 import { IAuthState } from '../../../reducers/management';
 import { connect } from 'react-redux';
 import { IState } from '../../../reducers';
+import { getInterviews } from '../../../actions/total-weekly/total-weekly.actions';
 
 interface ISurveyNavComponentProps extends RouteComponentProps {
   updateSurveyTable: (group: string) => void,
   toggleCreateUserModal: () => void,
+  getWeeklyInterviews: (date: number | Date) => void,
   manage: string,
   auth: IAuthState
 }
@@ -20,7 +22,7 @@ class DashboardNav extends React.Component<ISurveyNavComponentProps, any> {
   }
 
   componentDidMount() {
-    
+    this.props.getWeeklyInterviews(new Date());
   
   }
   // returns active if the role provided in the route is the routeName provided
@@ -38,9 +40,9 @@ class DashboardNav extends React.Component<ISurveyNavComponentProps, any> {
             <Navbar className="manage-users-nav" color="faded" light>
               <Nav tabs className="align-start">
                 <NavItem>
-                  <Link to={path + "/byVirtual"}
-                    className={`nav-link ${this.isActive('byVirtual')}`}
-                  >By Virtual</Link>
+                  <Link to={path + "/byStaging"}
+                    className={`nav-link ${this.isActive('byStaging')}`}
+                  >By Staging</Link>
                 </NavItem>
                 <NavItem>
                   <Link to={path + "/dropped"}
@@ -85,4 +87,8 @@ const mapStateToProps = (state: IState)  => ({
   auth: state.managementState.auth
 })
 
-export default connect(mapStateToProps)(DashboardNav);
+const mapDispatchToProps = {
+  getWeeklyInterviews: getInterviews
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardNav);

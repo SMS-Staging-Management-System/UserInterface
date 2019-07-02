@@ -174,8 +174,12 @@ class Profile extends Component<IProfileProps, IProfileState> {
         }
     }
 
-    render() {
-        const { userToView, trainingAddresses, allStatus } = this.props;
+    render() {        
+        const { userToView, trainingAddresses, allStatus, currentSMSUser } = this.props;
+        let userToViewDetails
+        if (this.props.location && this.props.location.state && this.props.location.state.currentUser) 
+            userToViewDetails = currentSMSUser
+        else userToViewDetails = userToView
         return (
             <Container>
                 <Form onSubmit={(event) => this.onSubmitHandler(event)}>
@@ -186,20 +190,20 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <Input
                                     type="email"
                                     name={inputNames.EMAIL}
-                                    value={userToView.email} readOnly />
+                                    value={userToViewDetails.email} readOnly />
                             </FormGroup>
                         </Col>
                         <Col md={4}>
                             <Label>Training Location</Label>
                             {this.props.currentSMSUser.roles.length === 0 ?
-                                <p><strong>{userToView.trainingAddress && userToView.trainingAddress.alias}</strong></p>
+                                <p><strong>{userToViewDetails.trainingAddress && userToViewDetails.trainingAddress.alias}</strong></p>
                                 :
                                 <Dropdown
                                     color="success" className="responsive-modal-row-item rev-btn"
                                     isOpen={this.props.locationDropdownActive}
                                     toggle={this.props.toggleTrainingLocationsDropdown}>
                                     <DropdownToggle caret>
-                                        {userToView.trainingAddress && userToView.trainingAddress.alias || 'No Location'}
+                                        {userToViewDetails.trainingAddress && userToViewDetails.trainingAddress.alias || 'No Location'}
                                     </DropdownToggle>
                                     <DropdownMenu name={inputNames.TRAINING_ALIASES}>
                                         {
@@ -226,7 +230,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <Input
                                     type="text"
                                     name={inputNames.FIRST_NAME}
-                                    value={userToView.firstName}
+                                    value={userToViewDetails.firstName}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} required />
                             </FormGroup>
                         </Col>
@@ -236,7 +240,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <Input
                                     type="text"
                                     name={inputNames.LAST_NAME}
-                                    value={userToView.lastName}
+                                    value={userToViewDetails.lastName}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} required />
                             </FormGroup>
                         </Col>
@@ -247,7 +251,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                     type="tel"
                                     pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
                                     name={inputNames.PHONE}
-                                    value={userToView.phoneNumber}
+                                    value={userToViewDetails.phoneNumber}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -257,7 +261,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                         <Input
                             type="text"
                             name={inputNames.STREET}
-                            value={userToView.personalAddress && userToView.personalAddress.street}
+                            value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.street}
                             onChange={(event) => this.onUserInfoChangeHandler(event)} />
                     </FormGroup>
                     <Row>
@@ -267,7 +271,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <Input
                                     type="text"
                                     name={inputNames.CITY}
-                                    value={userToView.personalAddress && userToView.personalAddress.city}
+                                    value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.city}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -277,7 +281,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <Input
                                     type="text"
                                     name={inputNames.STATE}
-                                    value={userToView.personalAddress && userToView.personalAddress.state}
+                                    value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.state}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -287,7 +291,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <Input
                                     type="text"
                                     name={inputNames.ZIP}
-                                    value={userToView.personalAddress && userToView.personalAddress.zip}
+                                    value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.zip}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -297,7 +301,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <Input
                                     type="text"
                                     name={inputNames.COUNTRY}
-                                    value={userToView.personalAddress && userToView.personalAddress.country}
+                                    value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.country}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -312,7 +316,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                         isOpen={this.props.statusDropdownActive}
                                         toggle={this.props.toggleStatusDropdown}>
                                         <DropdownToggle caret>
-                                            {userToView.userStatus && userToView.userStatus.generalStatus && userToView.userStatus.specificStatus || 'No Status'}
+                                            {userToViewDetails.userStatus && userToViewDetails.userStatus.generalStatus && userToViewDetails.userStatus.specificStatus || 'No Status'}
                                         </DropdownToggle>
                                         <DropdownMenu name={inputNames.STATUS_ALIASES}>
                                             {
@@ -354,9 +358,9 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 <br />
                                 <Input
                                     type="checkbox"
-                                    checked={this.props.userToView.userStatus.virtual}
+                                    checked={userToViewDetails.userStatus.virtual}
                                     onChange={() => this.props.handleCheckboxChange(this.props.allStatus.userStatus.filter(status => {
-                                        if (status.specificStatus === userToView.userStatus.specificStatus && status.virtual !== userToView.userStatus.virtual) {
+                                        if (status.specificStatus === userToViewDetails.userStatus.specificStatus && status.virtual !== userToView.userStatus.virtual) {
                                             return true;
                                         } else
                                             return false;

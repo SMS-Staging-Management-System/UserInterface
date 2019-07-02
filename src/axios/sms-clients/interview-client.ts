@@ -86,10 +86,19 @@ export const interviewClient = {
     },
 
     fetchInterviewFeedback: async (interviewId: number) => {
-        return await smsClient.get(interviewContext + `/Feedback/InterviewId/${interviewId}`);;
+        return await smsClient.get(interviewContext + `/Feedback/InterviewId/${interviewId}`);
     },
 
     markInterviewAsReviewed: (id: number) => {
         return smsClient.get(interviewContext + '/markReviewed/' + id);
+    },
+    
+    getCalendarWeek: async (date: number | Date) => {
+
+        // Pass an epoch date number instead of a Date object, but accept
+        // either one for convenience or to account for user error
+        let epochDate = typeof date === 'number' ? date : date.getTime();
+
+        return await smsClient.get(`${interviewContext}/CalendarWeek/${epochDate}`);
     }
 }
