@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IState } from '../../../../reducers';
-import { getInterviews } from '../../../../actions/total-weekly/total-weekly.actions';
+import { getInterviews } from '../../../../actions/dashboardActions/total-weekly.actions';
 import { Interview } from '../../../../model/Interview.model';
 import NumInterviewsChart from './NumInterviewsChart';
 import './NumInterviews.scss';
@@ -162,10 +162,10 @@ class NumInterviews extends Component<INumInterviewsProps,INumInterviewsState> {
 }
 const mapStateToProps = (state: IState) => ({
     auth: state.managementState.auth,
-    interviewList: state.interviewState.totalWeekly.interviewList,
-    totalScheduled: state.interviewState.totalWeekly.totalScheduled,
-    totalNotified: state.interviewState.totalWeekly.totalNotified,
-    totalReviewed: state.interviewState.totalWeekly.totalReviewed
+    interviewList: state.dashboardState.totalWeekly.interviewList,
+    totalScheduled: state.dashboardState.totalWeekly.totalScheduled,
+    totalNotified: state.dashboardState.totalWeekly.totalNotified,
+    totalReviewed: state.dashboardState.totalWeekly.totalReviewed
 });
 
 const mapDispatchToProps = {

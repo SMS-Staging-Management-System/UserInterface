@@ -12,7 +12,6 @@ import { feedbackRequestedChartReducer } from './feedbackrequested';
 import { jobDescriptionChartReducer } from './jobdesc.reducer';
 import { Client } from '../../model/Client.model';
 import { Interview } from '../../model/Interview.model';
-import { totalWeeklyReducer } from './total-weekly.reducer';
 
 // the reportform reducer seems to do nothing. remove later
 export interface IReportFormState {   
@@ -52,13 +51,6 @@ export interface IInterviewListState {
     currentPage : number,
     assocInput: any
 }
-
-export interface ITotalWeeklyState {
-    interviewList: Interview[];
-    totalScheduled: number;
-    totalNotified: number;
-    totalReviewed: number;
-}
     
 export interface IInterviewState {
     interviewList : IInterviewListState,
@@ -70,7 +62,6 @@ export interface IInterviewState {
     associateInput: IAssociateInput,
     feedbackRequestedChart: ISimpleChartDataState,
 	jobDescriptionChart: ISimpleChartDataState,
-   totalWeekly: ITotalWeeklyState
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -82,6 +73,5 @@ export const interviewState = combineReducers<IInterviewState>({
    associateChart: associateChartReducer,
    associateInput: assocInputReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
-   jobDescriptionChart: jobDescriptionChartReducer,
-   totalWeekly: totalWeeklyReducer
+   jobDescriptionChart: jobDescriptionChartReducer
 })

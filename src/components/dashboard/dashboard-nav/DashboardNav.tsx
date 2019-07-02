@@ -6,7 +6,7 @@ import Navbar from 'reactstrap/lib/Navbar';
 import { IAuthState } from '../../../reducers/management';
 import { connect } from 'react-redux';
 import { IState } from '../../../reducers';
-import { getInterviews } from '../../../actions/total-weekly/total-weekly.actions';
+import { getInterviews } from '../../../actions/dashboardActions/total-weekly.actions';
 
 interface ISurveyNavComponentProps extends RouteComponentProps {
   updateSurveyTable: (group: string) => void,
