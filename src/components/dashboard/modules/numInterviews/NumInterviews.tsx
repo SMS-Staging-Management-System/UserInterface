@@ -75,7 +75,7 @@ class NumInterviews extends Component<INumInterviewsProps,INumInterviewsState> {
         let values: number[] = Object.values(buildable);
         let possibleColors = [
             'rgba(127, 255, 63, 0.6)',
-            'rgba(63, 127, 255, 0.6)',
+            'rgba(63, 127, 255, 0.6)', 
             'rgba(255, 63, 127, 0.6)',
             'rgba(63, 255, 127, 0.6)',
             'rgba(127, 63, 255, 0.6)',
