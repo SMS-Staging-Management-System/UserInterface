@@ -135,19 +135,26 @@ class NumInterviews extends Component<INumInterviewsProps,INumInterviewsState> {
         return (
             <div className="NumInterviews">
                 <div className="title rev-background-color">
-                    Total number of interviews for the week of {this.getWeekOf(this.state.currentWeek)}
+                    Total number of interviews for the week of <u>{this.getWeekOf(this.state.currentWeek)}</u>
+                </div>
+                <br />
+                <div className="nav">
+                    <button type="button" className="rev-background-color div-child btn btn-secondary" onClick={() => this.getPreviousWeeklySummary(this.state.currentWeek)}>Prev</button>&nbsp;
+                    <button type="button" className="rev-background-color div-child btn btn-secondary" onClick={() => this.getWeeklySummary(new Date())}>Current Week</button>&nbsp;
+                    <button type="button" className="rev-background-color div-child btn btn-secondary" onClick={() => this.getNextWeeklySummary(this.state.currentWeek)}>Next</button>
                 </div>
                 <div className="content">
+                    {this.props.interviewList.length <= 0 ?
+                    <div className="no-data">
+                        <h1 className="no-data">No data to display</h1>
+                        <p>There is no interview information for this week.</p>
+                        <p>Use the <b>Prev</b> and <b>Next</b> buttons to go to other weeks.</p>
+                    </div> :
                     <div className="chart">
                         <NumInterviewsChart info={this.buildBarProps(this.listToBuildable(), "Weekly Interview Summary", "Total Weekly Interview Summary")} />
                         <NumInterviewsChart info={this.buildBarProps(places, "Branch Information", "Interview Reporting By Branch")} />
                         <NumInterviewsChart info={this.buildBarProps(clients, "Client Breakdown", "Weekly Client Interviews")} />
-                    </div>
-                </div>
-                <div className="footer-nav">
-                    <button type="button" className="rev-background-color div-child btn btn-secondary" onClick={() => this.getPreviousWeeklySummary(this.state.currentWeek)}>Prev</button>&nbsp;
-                    <button type="button" className="rev-background-color div-child btn btn-secondary" onClick={() => this.getWeeklySummary(new Date())}>Current Week</button>&nbsp;
-                    <button type="button" className="rev-background-color div-child btn btn-secondary" onClick={() => this.getNextWeeklySummary(this.state.currentWeek)}>Next</button>
+                    </div>}
                 </div>
             </div>
         )
