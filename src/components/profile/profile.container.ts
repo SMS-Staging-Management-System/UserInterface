@@ -22,6 +22,7 @@ export interface IProfileProps {
     cohortDropdownActive: boolean,
     bUserInfoChanged: boolean,
     virtual: boolean,
+    location: any,
     manageGetUsersByGroup: (groupName: string, email:string, page?: number) => void,
     updateUserInfo(updatedUser: IUser): void,
     setToCurrentSMSUser(currentSMSUser: IUser): void,
@@ -35,6 +36,7 @@ export interface IProfileProps {
 }
 
 const mapStateToProps = (state: IState) => ({
+    allState: state,
     manageUsers: state.managementState.manageUsers,
     currentSMSUser: state.managementState.currentSMSUser.currentSMSUser,
     userToView: state.managementState.currentProfile.user,
