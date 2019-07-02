@@ -51,6 +51,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 
         console.log(this.props.createInterviewComponentState.clientArr);
     }
+    
 
     fetchAssociatesInSelectedCohort = async (selectedCohort) => {
         //const selectedCohort = this.props.createInterviewComponentState.selectedCohort;
@@ -149,9 +150,15 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                         {associateOptions}
                     </Input>
                 </InputGroup>
-                <span className="span-select-interview-associate">Assoicate Selected</span>
+                <span className="span-select-interview">Enter  or Select client name</span>
                 <InputGroup className="new-interview-input-group">
-                    <Input placeholder="" disabled={true} value={selectedAssociate ? `${selectedAssociate.firstName} ${selectedAssociate.lastName}` : ''} />
+                    <InputGroupAddon addonType="prepend">client</InputGroupAddon>
+                    <Input type="text" placeholder="....." list="clients" value={client} onChange={(e) => { setState({ ...state, client: e.target.value }) }} />
+                    <datalist id="clients">
+                        {this.props.createInterviewComponentState.clientArr.map((ele: any) => (
+                            <option value={ele.clientName} />
+                        ))}
+                    </datalist>
                 </InputGroup>
                 </div>
 
@@ -162,20 +169,16 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                     <InputGroupAddon addonType="prepend">date </InputGroupAddon>
                     <Input type="date" placeholder="date" value={date} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, date: e.target.value }); }} />
                 </InputGroup>
+                <span className="span-select-interview">Enter Time</span>
+                <InputGroup size="md" className="new-interview-input-group">
+                    <InputGroupAddon addonType="prepend">time </InputGroupAddon>
+                    {/* so not done yet, trying to figure out how to deal with time*/}
+                    <Input type="time" placeholder="time" />
+                </InputGroup>
                 <span className="span-select-interview">Enter a location</span>
                 <InputGroup size="md" className="new-interview-input-group">
                     <InputGroupAddon addonType="prepend">location</InputGroupAddon>
                     <Input placeholder="....." value={location} onChange={(e) => { setState({ ...state, location: e.target.value }) }} />
-                </InputGroup>
-                <span className="span-select-interview">Enter  or Select client name</span>
-                <InputGroup size="md" className="new-interview-input-group">
-                    <InputGroupAddon addonType="prepend">client</InputGroupAddon>
-                    <Input type="text" placeholder="....." list="clients" value={client} onChange={(e) => { setState({ ...state, client: e.target.value }) }} />
-                    <datalist id="clients">
-                        {this.props.createInterviewComponentState.clientArr.map((ele: any) => (
-                            <option value={ele.clientName} />
-                        ))}
-                    </datalist>
                 </InputGroup>
                 </div>
                 </div>
