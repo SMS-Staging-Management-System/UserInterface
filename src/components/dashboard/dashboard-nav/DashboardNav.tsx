@@ -40,9 +40,9 @@ class DashboardNav extends React.Component<ISurveyNavComponentProps, any> {
             <Navbar className="manage-users-nav" color="faded" light>
               <Nav tabs className="align-start">
                 <NavItem>
-                  <Link to={path + "/byVirtual"}
-                    className={`nav-link ${this.isActive('byVirtual')}`}
-                  >By Virtual</Link>
+                  <Link to={path + "/byStaging"}
+                    className={`nav-link ${this.isActive('byStaging')}`}
+                  >By Staging</Link>
                 </NavItem>
                 <NavItem>
                   <Link to={path + "/dropped"}
