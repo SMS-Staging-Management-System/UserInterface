@@ -1,5 +1,7 @@
 .title {
   text-align: center;
+  padding: .75rem;
+  font-weight: bold;
 }
 
 .content {
@@ -7,7 +9,11 @@
   justify-content: space-evenly;
 }
 
-.footer-nav {
+.nav {
   display: flex;
   justify-content: center;
+}
+
+.no-data {
+  margin-top: 1rem;
 }

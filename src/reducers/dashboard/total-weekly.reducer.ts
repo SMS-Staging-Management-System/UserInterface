@@ -1,5 +1,5 @@
 import { ITotalWeeklyState } from ".";
-import { TOTAL_WEEKLY_TYPES } from "../../actions/total-weekly/total-weekly.actions";
+import { TOTAL_WEEKLY_TYPES } from "../../actions/dashboardActions/total-weekly.actions";
 
 const initialState: ITotalWeeklyState = {
   interviewList: [],

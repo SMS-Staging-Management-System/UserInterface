@@ -89,6 +89,11 @@ export const interviewClient = {
         return await smsClient.get(interviewContext + `/Feedback/InterviewId/${interviewId}`);
     },
 
+    fetchFeedbackStats: async (pageNumber:number, pageSize:number) => {
+        return await smsClient.get(interviewContext + '/reports/FeedbackStats/page', {
+            params: { pageNumber, pageSize } })
+    },
+
     markInterviewAsReviewed: (id: number) => {
         return smsClient.get(interviewContext + '/markReviewed/' + id);
     },
