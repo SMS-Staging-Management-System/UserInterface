@@ -27,6 +27,7 @@ export interface IInterviewFeedbackComponentState {
     feedbackText: string
     feedbackReceivedDate: string
     feedbackDeliveredDate: string
+    feedbackStatus: number
     interviewFormat: number
     noInterviewFound: boolean
     interviewStatus: number
