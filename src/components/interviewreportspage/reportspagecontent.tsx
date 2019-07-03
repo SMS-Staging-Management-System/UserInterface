@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaThumbsUp, FaClock, FaComment, FaListOl } from 'react-icons/fa';
+import { FaThumbsUp, FaClock, FaComment, FaListOl, FaBook } from 'react-icons/fa';
 import { AssociatesFeedbackRequest } from './report-tables/associatesFeedbackRequestComponent.component';
 import { Interview24Request } from './report-tables/interview24.component';
 import { InterviewJDRequest } from './report-tables/interviewJD.component';
@@ -7,6 +7,7 @@ import JDInterviewChart from './report-charts/interviewJD.chart';
 import { InterviewPerAssoc } from '../interviewsPerAssocComponent/interviewsPerAssocComponent.component';
 import Interview24Chart from './report-charts/interview24.chart'
 import FeedbackChart from './report-charts/feedback.chart';
+import { FeedbackStatsTable } from './report-tables/feedbackStats.component';
 
 interface IPageItem {
   title: any
@@ -36,5 +37,10 @@ export const pageContent: IPageItem[] = [
     chart: <><h4>There is not available visual data for this report</h4>
       <InterviewPerAssoc />
     </>
+  },
+  {
+    title: <><FaBook /> Feedback Stats</>,
+    table: <FeedbackStatsTable />,
+    chart: <FeedbackChart />
   }
 ]
