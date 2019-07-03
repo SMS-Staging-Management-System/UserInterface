@@ -7,6 +7,7 @@ const initialState: IInterviewFeedbackComponentState = {
   feedbackText: '',
   feedbackReceivedDate: '',
   feedbackDeliveredDate: '',
+  feedbackStatus: 0,
   interviewFormat: 0,
   interviewStatus: 0,
   noInterviewFound: true,

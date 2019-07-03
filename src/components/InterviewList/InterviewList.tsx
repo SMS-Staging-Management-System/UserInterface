@@ -330,7 +330,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     {this.getAssocInput(entry)}
                                     <td>{
                                         entry.feedback ?
-                                        <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link>
+                                        <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>Edit Interview Feedback</Link>
                                         :
                                         isAdmin?   
                                         <Link to={{pathname: `/interview/${entry.id}/feedback`}}>Complete Interview Feedback</Link>

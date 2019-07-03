@@ -57,6 +57,10 @@ export const interviewClient = {
         return await smsClient.post(interviewContext + `/feedback`, feedback);
     },
 
+    updateFeedback: async (interviewId:any, feedback:any) => {
+        return await smsClient.patch(interviewContext + `/Feedback/InterviewId/${interviewId}`, feedback)
+    },
+
     fetchManager24: async () => {
         return await smsClient.get(interviewContext + `/reports/request24/manager`);
     },
