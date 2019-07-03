@@ -147,7 +147,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                             <br />
                             <div className='form-row'>
                                 <div className='col-3'><label>Feedback Status</label></div>
-                                <span className='col-9'><select value={this.state.feedbackStatus} className='form-control' onChange={(e) => { this.setState({ ...this.state, interviewStatus: parseInt(e.target.value) }); }}>
+                                <span className='col-9'><select value={this.state.feedbackStatus} className='form-control' onChange={(e) => { this.setState({ ...this.state, feedbackStatus: parseInt(e.target.value) }); }}>
                                     <option value={1}>Pending</option>
                                     <option value={2}>No Feedback</option>
                                     <option value={3}>Selected for Second Round</option>
