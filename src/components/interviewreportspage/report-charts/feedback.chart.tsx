@@ -23,20 +23,20 @@ export class FeedbackChart extends PureComponent<IFeedbackChartProps> {
           data: this.props.data,
           // typescript does not like the spread operator
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
             'rgba(01, 01, 01, 0.2)',
-            'rgba(54, 162, 255, 0.2)'
+            'rgba(54, 162, 255, 0.2)',
+            'rgba(255, 99, 132, 0.2)',
           ],
           borderColor: [
-            'rgba(255,99,132,1)',
             'rgba(01, 01, 01, 1)',
-            'rgba(54, 162, 255, 1)'
+            'rgba(54, 162, 255, 1)',
+            'rgba(255,99,132,1)',
           ]
         }],
         labels: [
           'Feedback not Requested',
+          'Feedback Requested and Delivered',
           'Feedback Requested and not Delivered',
-          'Feedback Requested and Delivered'
         ]
       },
       type: 'doughnut'
