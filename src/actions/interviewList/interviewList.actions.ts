@@ -9,8 +9,14 @@ export const getInterviewPages = (
     pageNumber?: number,
     pageSize?: number,
     orderBy?: string,
-    direction?: string) => async (dispatch) => {
-        const resp = await interviewClient.fetchPage(pageNumber, pageSize, orderBy, direction)
+    direction?: string,
+    associateEmail?: string,
+    managerEmail?: string,
+    place?: string,
+    clientName?: string,
+    staging?: string) => async (dispatch) => {
+        const resp = await interviewClient.fetchPage(pageNumber, pageSize, orderBy, direction,
+                                            associateEmail, managerEmail, place, clientName, staging)
 
         dispatch({
             payload: {

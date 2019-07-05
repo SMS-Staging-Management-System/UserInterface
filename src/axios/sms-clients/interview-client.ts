@@ -18,7 +18,9 @@ export const interviewClient = {
         return await smsClient.get(`${interviewContext}/${interviewId}`);
     },
     
-    fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC') => {
+    fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC',
+                associateEmail='associateEmail', managerEmail='managerEmail',
+                place="placeName", clientName="clientName", staging='no') => {
         const currentUser = store.getState().managementState.auth.currentUser;
         console.log(currentUser);
         const roles = currentUser.roles
@@ -37,6 +39,12 @@ export const interviewClient = {
         }
         if(!isAdmin)
             url += '&email=' + email;
+        url += '&associateEmail=' + associateEmail;
+        url += '&managerEmail=' + managerEmail;
+        url += '&place=' + place;
+        url += '&clientName=' + clientName;
+        url += '&staging=' + staging;
+        console.log(url);
         
         return smsClient.get(url);
     },
