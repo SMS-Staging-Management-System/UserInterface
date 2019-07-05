@@ -3,14 +3,14 @@ import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IState } from '../../../../reducers';
 
-interface myProps extends RouteComponentProps<{}> {
+interface IToStagingProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
 }
-class ToStaging extends Component<myProps,any> {
+class ToStaging extends Component<IToStagingProps,any> {
     render() {
         return (
-            <div>
-                ●	Cohorts/batches about to move to staging
+            <div className="ToStaging">
+                To Staging
             </div>
         )
     }
