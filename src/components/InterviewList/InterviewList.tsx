@@ -46,7 +46,8 @@ export interface InterviewListState {
     associateEmail: string,
     managerEmail: string,
     place: string,
-    clientName:string
+    clientName:string,
+    staging:string
 }
 
 // More comments 
@@ -63,7 +64,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             associateEmail: 'associateEmail',
             managerEmail: 'managerEmail',
             place: 'placeName',
-            clientName: 'clientName'
+            clientName: 'clientName',
+            staging: 'stagingOff'
         }
     }
 
@@ -95,7 +97,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.associateEmail,
                 this.state.managerEmail,
                 this.state.place,
-                this.state.clientName);
+                this.state.clientName,
+                this.state.staging);
         }
     }
 
@@ -109,7 +112,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
-            this.state.clientName);
+            this.state.clientName,
+            this.state.staging);
     }
 
     changeOrderAsc = () => {
@@ -155,7 +159,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
-            this.state.clientName);
+            this.state.clientName,
+            this.state.staging);
     }
 
     changePageSize = (event: any) => {
@@ -167,7 +172,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
-            this.state.clientName);
+            this.state.clientName,
+            this.state.staging);
     }
 
     filterByAssociateEmail = (event: any) => { //handle filter click by associate email
@@ -186,7 +192,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 event.currentTarget.value,
                 this.state.managerEmail,
                 this.state.place,
-                this.state.clientName);
+                this.state.clientName,
+                this.state.staging);
                 
         } else {
             // this.props.listOfInterviews.filter((entry) => {
@@ -205,7 +212,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 event.currentTarget.value,
                 this.state.managerEmail,
                 this.state.place,
-                this.state.clientName);          
+                this.state.clientName,
+                this.state.staging);          
         }
     }
 
@@ -223,7 +231,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.associateEmail,
                 event.currentTarget.value,
                 this.state.place,
-                this.state.clientName); 
+                this.state.clientName,
+                this.state.staging); 
         } else {
             // const filteredList = this.props.listOfInterviews.filter((entry) => {
             //     return (entry.managerEmail === event.currentTarget.value);
@@ -240,7 +249,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.associateEmail,
                 event.currentTarget.value,
                 this.state.place,
-                this.state.clientName); 
+                this.state.clientName,
+                this.state.staging); 
         }
     }
 
@@ -258,7 +268,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.associateEmail,
                 this.state.managerEmail,
                 event.currentTarget.value,
-                this.state.clientName); 
+                this.state.clientName,
+                this.state.staging); 
         } else {
             // const filteredList = this.props.listOfInterviews.filter((entry) => {
             //     return (entry.place === event.currentTarget.value);
@@ -275,7 +286,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.associateEmail,
                 this.state.managerEmail,
                 event.currentTarget.value,
-                this.state.clientName); 
+                this.state.clientName,
+                this.state.staging); 
         }
     }
 
@@ -293,7 +305,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.associateEmail,
                 this.state.managerEmail,
                 this.state.place,
-                event.currentTarget.value); 
+                event.currentTarget.value,
+                this.state.staging); 
         } else {
             // const filteredList = this.props.listOfInterviews.filter((entry) => {
             //     return (entry.client.clientName === event.currentTarget.value);
@@ -310,7 +323,51 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.associateEmail,
                 this.state.managerEmail,
                 this.state.place,
-                event.currentTarget.value); 
+                event.currentTarget.value,
+                this.state.staging); 
+        }
+    }
+
+    filterByStaging = (event: any) => { //handle filter click by associate email
+        console.log(event.currentTarget.value);
+        
+        if(event.currentTarget.value === 'stagingOff') {
+            this.setState({
+                staging: event.currentTarget.value
+            //listOfInterviews: this.props.listOfInterviews
+        });
+        console.log("staging Off");
+        
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                event.currentTarget.value);
+                
+        } else {
+            // this.props.listOfInterviews.filter((entry) => {
+            //     return (entry.associateEmail === event.currentTarget.value);
+            // });
+            this.setState({
+                staging: event.currentTarget.value
+                //listOfInterviews: this.props.listOfInterviews
+                //listOfInterviews: filteredList
+            });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                event.currentTarget.value);          
         }
     }
 
@@ -517,6 +574,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         <option value={entry} key={index}>{entry}</option>
                                     );
                                 })}
+                            </select>
+                        </div>
+                        <div className='col-2'>
+                            <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
+                                <option value='stagingOff'>Staging Off</option>
+                                <option value='stagingOn'>Staging On</option>
                             </select>
                         </div>
                         </div>
