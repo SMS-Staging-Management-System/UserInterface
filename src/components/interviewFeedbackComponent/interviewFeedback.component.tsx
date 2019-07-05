@@ -44,12 +44,12 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
         console.log('interviewformat::::::::',InterviewFormat[interviewFormat])
         const res = await interviewClient.sendFeedback({
             interviewId: (this.props.match.params as any).interviewId,
-            feedbackRequestedDate: (new Date(feedbackRequestedDate)).valueOf(),
-            feedbackText: feedbackText,
-            feedbackReceivedDate: (new Date(feedbackReceivedDate)).valueOf(),
-            feedbackDeliveredDate: (new Date(feedbackDeliveredDate)).valueOf(),
-            statusId : interviewStatus,
-            format: interviewFormat,
+            feedbackRequestedDate: feedbackRequestedDate? (new Date(feedbackRequestedDate+'T00:00:00')).valueOf():0,
+            feedbackText: feedbackText? feedbackText:null,
+            feedbackReceivedDate: feedbackReceivedDate? (new Date(feedbackReceivedDate+'T00:00:00')).valueOf():0,
+            feedbackDeliveredDate: feedbackDeliveredDate? (new Date(feedbackDeliveredDate+'T00:00:00')).valueOf():0,
+            statusId : interviewStatus? interviewStatus:0,
+            format: interviewFormat? interviewFormat:0,
         });
         return (res.status >= 200 && res.status < 300);
     }
@@ -58,7 +58,7 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
         const state = this.props.interviewFeedbackComponentState;
         const setState = this.props.setState;
         const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat, noInterviewFound, interviewStatus } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
-        const buttonDisabledState = !(feedbackRequestedDate && feedbackText && feedbackReceivedDate && feedbackDeliveredDate && interviewFormat) || noInterviewFound
+        const buttonDisabledState = noInterviewFound
         const buttonText = (noInterviewFound)? "loading interview..." : (buttonDisabledState)? "Please fill out all fields" : "SUBMIT";
         const buttonOnClick = async ()=>{const success = await this.sendFeedbackToDB(); console.log("successfully sent?:" + success); if(success)this.props.history.push("/interview/list");};
         return (
