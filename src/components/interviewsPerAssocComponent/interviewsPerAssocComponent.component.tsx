@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
+import { InterviewPerAssociate } from '../../model/dashboard/interviewPerAssociate';
 
 
 export interface InterviewPerAssocProps {
-    assocInterviewArr: InterviewPAssoc[],
+    assocInterviewArr: InterviewPerAssociate[],
     totalPages: number,
     currentPage: number,
     pageSize: number
@@ -15,12 +16,6 @@ export interface InterviewPerAssocState {
     totalpages,
     currentPage,
     pageSize
-}
-
-export interface InterviewPAssoc {
-    associateEmail: String,
-    interviewCount: number,
-    associateName: String
 }
 
 export class InterviewPerAssoc extends React.Component<any, any> {

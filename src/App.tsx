@@ -24,10 +24,12 @@ class App extends React.Component {
             
             <div id="main-content-container">
               <Switch>
+                 
                   <Route path='/management' component={ManagementRoutes}/>
                   <Route path='/interview' component={InterviewRoutes}/>
                   <Route path='/surveys' component ={SurveyRoutes}/>
                   <Route path='/dashboard' component ={DashboardRoutes}/>
+                  <Route path='/' component ={DashboardRoutes}/>
                  
               </Switch>
             </div>

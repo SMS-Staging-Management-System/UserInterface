@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Switch, Route } from 'react-router-dom';
-import { Dashboard } from '../components/dashboard/Dashboard';
+import  Dashboard  from '../components/dashboard/Dashboard';
 
 export class DashboardRoutes extends React.Component<any, any> {
     constructor(props: any) {

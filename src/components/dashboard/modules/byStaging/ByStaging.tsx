@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { IUser } from '../../../../model/user.model';
 import {getUserListStaging} from '../../../../actions/dashboardActions/byStaging.actions'
 import { Bar } from 'react-chartjs-2';
+import './ByStaging.scss'
 
 
 interface myProps extends RouteComponentProps<{}> {
@@ -17,10 +18,10 @@ class ByStaging extends Component<myProps,any> {
         virtual:0,
         notVirtual:0,
         chartData:{
-            labels:['Virtual','NotVirtual'],
+            labels:['Virtual','Not Virtual'],
             datasets:[
                 {
-                    label:['Associates'],
+                    label:['Associates in staging'],
                     backgroundColor:'rgb(243,165,93,0.6)',
                     data:[0,0]
                 },
@@ -29,14 +30,7 @@ class ByStaging extends Component<myProps,any> {
     }
     componentDidMount(){
             this.props.getUserListStaging();
-        
-    
-       
-        
-        
-        
-        
-    }
+        }
     componentDidUpdate(){
         if(this.props.byStagingUserList[0] != null && this.state.virtual ==0 && this.state.notVirtual==0 )
         {
@@ -59,7 +53,7 @@ class ByStaging extends Component<myProps,any> {
                 notVirtual:notVirtual,
                 chartData:{...this.state.chartData,
                     datasets:[{...this.state.chartData.datasets[0],
-                        data:[virtual,notVirtual,0]
+                        data:[virtual ,notVirtual,0]
                     }]}
             });
         }
@@ -68,18 +62,22 @@ class ByStaging extends Component<myProps,any> {
 
 
     render() {
+        if(this.props.byStagingUserList[0]==null){
+            return <>waiting...</>
+        }else{
+            return (
+                <div className='StagingContainer border border-gray p-3'>
+                    <Bar 
+                    data = {this.state.chartData}
+                    options = {{
+                        maintainAspectRatio:false
+                    }}
+                    
+                    />
+                </div>
+            )
+        }
         
-        return (
-            <div className='container border border-gray p-3'>
-                <Bar 
-                data = {this.state.chartData}
-                options = {{
-                    maintainAspectRatio:false
-                }}
-                
-                />
-            </div>
-        )
     }
 }
 export const mapDispatchProps = {
