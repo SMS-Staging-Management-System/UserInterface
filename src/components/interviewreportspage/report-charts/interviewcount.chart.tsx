@@ -29,7 +29,7 @@ export class InterviewCountChart extends PureComponent<IInterviewCountChartProps
             `rgba(${(index * 89) % 255}, ${(index * 56) % 255}, ${(index * 25) % 255}, 1)`
           )),
         }],
-        labels: this.props.data.map((counting, index) => index + ' interviews')
+        labels: this.props.data.map((counting, index) => index + ` interview${index === 1?'': 's'}`)
       },
       type: 'doughnut'
     }
