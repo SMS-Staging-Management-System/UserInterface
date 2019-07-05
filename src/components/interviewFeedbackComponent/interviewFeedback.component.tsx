@@ -60,8 +60,8 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
         return (
             <div className='container'>
 
-                    <div>
-                        <div className='rev-background-color'>
+                    <div id='new-interview-full'>
+                        <div>
                             <p className='col-12'><h1 className='text-center'>Create Interview Feedback</h1></p>
                         </div>
                         <form onSubmit={buttonOnClick}>
@@ -109,7 +109,7 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
                             <br />
                             <div className='row'>
                                 <div className='col-5'></div>
-                                <Button type='submit' className='btn btn-warning col'>{buttonText}</Button>
+                                <Button type='submit' className='btn btn-secondary col'>{buttonText}</Button>
                                 <div className='col-5'></div>
                             </div>
                         </form>

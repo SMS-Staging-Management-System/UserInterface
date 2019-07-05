@@ -110,8 +110,8 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
 
                 <div className='container'>
 
-                    <div>
-                        <div className='rev-background-color'>
+                    <div id='new-interview-full'>
+                        <div>
                             <p className='col-12'><h1 className='text-center'>Interview Feedback</h1></p>
                         </div>
                         <form onSubmit={this.sendFeedbackToDB}>
@@ -159,9 +159,9 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                             </div>
                             <br />
                             <div className='row'>
-                                <Button className='btn btn-success col-sm' value='back' onClick={() => this.redirectTo()}>Back</Button>
+                                <Button className='btn btn-secondary col-sm' value='back' onClick={() => this.redirectTo()}>Back</Button>
                                 <div className='col-3'></div>
-                                <Button type='submit' className='btn btn-warning col'>SUBMIT</Button>
+                                <Button type='submit' className='btn btn-secondary col'>SUBMIT</Button>
                                 <div className='col-5'></div>
                             </div>
                         </form>
