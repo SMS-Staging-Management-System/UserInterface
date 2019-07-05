@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { IState } from '../../../../reducers';
 import { ICohort } from '../../../../model/cohort';
 import { getCohorts } from '../../../../actions/dashboardActions/to-staging.actions'
+import { Table } from 'react-bootstrap';
 
 interface IToStagingProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
@@ -26,7 +27,32 @@ class ToStaging extends Component<IToStagingProps,any> {
     render() {
         return (
             <div className="ToStaging">
-                Cohorts graduating in the next two weeks: {this.props.cohortList.length}
+                {this.props.cohortList.length >= 1 ?
+                    <Table className="table table-striped mx-auto w-auto">
+                        <thead className="rev-background-color">
+                            <tr>
+                                <th>Cohort Name</th>
+                                <th>Trainer</th>
+                                <th>Location</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.props.cohortList.map(cohort => (
+                                <tr key={cohort.cohortId} className="rev-table-row">
+                                    <td>{cohort.cohortName}</td>
+                                    <td>{cohort.trainer.firstName + " " + cohort.trainer.lastName}</td>
+                                    <td>{cohort.address.alias}</td>
+                                    <td>{cohort.endDate}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table> : 
+                <>
+                <h1>No Data</h1>
+                <p>No cohorts are ending in the next 2 weeks.</p>
+                <p>Please check back in later.</p>
+                </>} 
             </div>
         )
     }
