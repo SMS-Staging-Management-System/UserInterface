@@ -20,7 +20,7 @@ export const interviewClient = {
     
     fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC',
                 associateEmail='associateEmail', managerEmail='managerEmail',
-                place="placeName", clientName="clientName", staging='no') => {
+                place="placeName", clientName="clientName", staging='stagingOff') => {
         const currentUser = store.getState().managementState.auth.currentUser;
         console.log(currentUser);
         const roles = currentUser.roles
