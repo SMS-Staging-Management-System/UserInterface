@@ -11,15 +11,22 @@ interface IToStagingProps extends RouteComponentProps<{}> {
     getCohorts: (date: Date | number) => void;
 }
 class ToStaging extends Component<IToStagingProps,any> {
+    constructor(props: IToStagingProps) {
+        super(props);
+    }
 
-    onComponentDidUpdate = () => {
+    componentDidMount() {
+        this.setCohortList();
+    }
+
+    setCohortList = () => {
         this.props.getCohorts(new Date());
     }
     
     render() {
         return (
             <div className="ToStaging">
-                To Staging
+                Cohorts graduating in the next two weeks: {this.props.cohortList.length}
             </div>
         )
     }
@@ -34,4 +41,4 @@ const mapDispatchToProps = {
     getCohorts
 }
 
-export default connect(mapStateToProps)(ToStaging);
+export default connect(mapStateToProps, mapDispatchToProps)(ToStaging);
