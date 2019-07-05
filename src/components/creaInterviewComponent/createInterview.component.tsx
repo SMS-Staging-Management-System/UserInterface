@@ -18,10 +18,12 @@ import { interviewClient } from '../../axios/sms-clients/interview-client';
 import { Client } from '../../model/Client.model';
 import { ICohort } from '../../model/cohort';
 import { IUser } from '../../model/user.model';
+import { smsClient } from '../../axios/sms-clients';
 
 
 interface ICreateInterviewComponentProps extends RouteComponentProps {
     createInterviewComponentState: ICreateInterviewComponentState;
+    currentUser: IUser
     setState: (newCreateInterviewComponentState: ICreateInterviewComponentState) => void;
 }
 
@@ -41,6 +43,20 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         });
         //This will grab all the clients
         this.getAllClients();
+
+        //
+        smsClient.get(`/user-service/users/email/${this.props.currentUser.email}`).then((res)=>{
+            //function returns a page instead of just user, but due to being
+            //just a big javascript object, can just grab username and password from it
+            if(res.data){
+                this.props.setState({...this.props.createInterviewComponentState, 
+                    selectedAssociate: res.data
+                })
+            }
+        }).catch((err)=>{
+            console.log(err)
+        })
+        
     }
 
     getAllClients = async () => {
@@ -58,7 +74,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log("selected cohort");
         console.log(selectedCohort);
         const res = selectedCohort && await userClient.findAllByCohortId(selectedCohort.cohortId);
-        if (res && res.data) {
+        if (res && res.data && this.props.currentUser.roles.length !== 0) {
             this.props.setState({
                 ...this.props.createInterviewComponentState,
                 associatesInSelectedCohort: res.data,
@@ -69,8 +85,21 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log(res);
     }
 
+    fetchCurrentUserName = (currentEmail) => {
+        let name
+        smsClient.get(`/user-service/users/email/${currentEmail}`).then((res)=>{
+            //function returns a page instead of just user, but due to being
+            //just a big javascript object, can just grab username and password from it
+            name = res.data.firstName + ' ' + res.data.lastName
+        }).catch((err)=>{
+            console.log(err)
+        })
+        return name
+    }
+
     sendInputToDB = async (): Promise<boolean> => {
-        let { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState; // { firstName:'', lastName:'', date:'', location:'', format:''}
+        // { firstName:'', lastName:'', date:'', location:'', format:''}
+        let { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState;
         if (selectedAssociate && dateString && location && client) {
             const newInterviewData: INewInterviewData = {
                 associateEmail: selectedAssociate.email,
@@ -95,9 +124,13 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         
         const state = this.props.createInterviewComponentState;
         const setState = this.props.setState;
-        const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location, client } = state; // { firstName:'', lastName:'', date:'', location:'', format:''}
-        const cohortOptions = allCohorts && allCohorts.map((val:ICohort) => { return <option value={JSON.stringify(val)} key={val.cohortId}>{val.cohortName}</option> })
-        const associateOptions = associatesInSelectedCohort && associatesInSelectedCohort.map((val:IUser) => { return <option value={JSON.stringify(val)} key={val.userId}>{`${val.firstName} ${val.lastName}`}</option> })
+        const { allCohorts, selectedCohort, associatesInSelectedCohort, selectedAssociate, date, location, client } = state;
+        const cohortOptions = allCohorts && allCohorts.map((val:ICohort) => { 
+            return <option value={JSON.stringify(val)} key={val.cohortId}>{val.cohortName}</option> 
+        })
+        const associateOptions = this.props.currentUser.roles.includes('staging-manager') && associatesInSelectedCohort && associatesInSelectedCohort.map((val:IUser) => { 
+            return <option value={JSON.stringify(val)} key={val.userId}>{`${val.firstName} ${val.lastName}`}</option> 
+        })
         
         // Button to submit when all input fields are filled out. (Disabled if all input not filled)
         const buttonDisabledState = !(selectedAssociate && date && location && client);
@@ -137,6 +170,9 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 
                 <span className="span-select-interview-associate">Select a Associate </span>
                 <InputGroup className="new-interview-input-group">
+
+                    {/* To choose different input types due to if user is an associate or not. Did not want to do it this way */}
+                    {this.props.currentUser.roles.length !== 0 ? 
                     <Input className='input-group-interview' type='select'
                         value={selectedAssociate ? JSON.stringify(selectedAssociate) : ''}
                         disabled={!associatesInSelectedCohort || associatesInSelectedCohort.length == 0}
@@ -149,6 +185,12 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                         <option value={undefined} style={{ display: 'none' }}>.....</option>
                         {associateOptions}
                     </Input>
+                    :
+                    <Input className='input-group-interview' type='text' value={selectedAssociate ? 
+                    selectedAssociate.firstName + ' ' + selectedAssociate.lastName : ''} readOnly>
+                    </Input>}
+                    {console.log(selectedAssociate)}
+
                 </InputGroup>
                 <span className="span-select-interview">Enter  or Select client name</span>
                 <InputGroup className="new-interview-input-group">
@@ -173,7 +215,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 <InputGroup size="md" className="new-interview-input-group">
                     <InputGroupAddon addonType="prepend">time </InputGroupAddon>
                     {/* so not done yet, trying to figure out how to deal with time*/}
-                    <Input type="time" placeholder="time" />
+                    <Input type="time" placeholder="time" min="8:00" max="20:00" />
                 </InputGroup>
                 <span className="span-select-interview">Enter a location</span>
                 <InputGroup size="md" className="new-interview-input-group">
@@ -195,7 +237,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 }
 
 const mapStateToProps = (state: IState) => ({
-    createInterviewComponentState: state.interviewState.createInterviewComponentState
+    createInterviewComponentState: state.interviewState.createInterviewComponentState,
+    currentUser: state.managementState.currentSMSUser.currentSMSUser
 });
 const mapDispatchToProps = {
     setState: setCreateState
