@@ -40,7 +40,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
         // console.log(state)
         // console.log('interviewformat::::::::',InterviewFormat[interviewFormat])
         await interviewClient.updateFeedback(
-            interviewId,
+            this.state.feedbackId,
             {
                 interviewId: interviewId,
                 feedbackRequestedDate: (new Date(feedbackRequestedDate + 'T00:00:00')).valueOf(),
@@ -84,6 +84,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
         let deliveredDate = this.convertDate(del)
         // console.log('fooooooooooooooorrrrrrr ',interviewFeedback.data.format.id)
         this.setState({
+            feedbackId: interviewFeedback.data.id,
             feedbackRequestedDate: requestedDate,
             feedbackText: interviewFeedback.data.feedback,
             feedbackReceivedDate: recievedDate,
@@ -138,6 +139,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                                 <div className='col-3'><label>Interview Format</label></div>
                                 <span className='col-9'><select value={this.state.interviewFormat} className='form-control' onChange={(e) => { this.setState({ ...this.state, interviewFormat: parseInt(e.target.value) }); }}>
                                     {/* <option value={''} style={{ display: 'none' }}>select an interview format...</option> */}
+                                    <option value={0} style={{ display: 'none' }}>select an interview format...</option>
                                     <option value={1}>On Site</option>
                                     <option value={2}>In Person</option>
                                     <option value={3}>Video Call</option>
@@ -159,7 +161,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                             <div className='row'>
                                 <Button className='btn btn-success col-sm' value='back' onClick={() => this.redirectTo()}>Back</Button>
                                 <div className='col-3'></div>
-                                <Button type='submit' className='btn btn-warning col'>Submit</Button>
+                                <Button type='submit' className='btn btn-warning col'>SUBMIT</Button>
                                 <div className='col-5'></div>
                             </div>
                         </form>
