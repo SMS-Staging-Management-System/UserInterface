@@ -60,6 +60,11 @@ export const interviewClient = {
     interviewPerAssoc: async (pageNumber: number, PageSize: number) => {
         return await smsClient.get(interviewContext + `/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
+
+    interviewPerAssocStats: async () => await smsClient.get(
+        interviewContext + '/reports/InterviewsPerAssociate/chart'
+    ),
+
     getAssocMoreThanFiveInterviews: async (pageNumber: number, PageSize: number) => {
         return await smsClient.get(interviewContext + `/dashboard/interviews/associate/fiveormore/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
