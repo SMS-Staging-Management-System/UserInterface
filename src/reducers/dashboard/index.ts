@@ -16,11 +16,12 @@ export interface ITotalWeeklyState {
 export interface IDashboardState{
     byStagingUserList: IUser[];
     totalWeekly: ITotalWeeklyState;
+    droppedAssoc: IUser[];
 }
 
 
 //Asigning part of the global state to the right reducer 
 export const dashboardState = combineReducers<IDashboardState>({
     byStagingUserList: byStagingReducer,
-    totalWeekly: totalWeeklyReducer
+    totalWeekly: totalWeeklyReducer,
  })
