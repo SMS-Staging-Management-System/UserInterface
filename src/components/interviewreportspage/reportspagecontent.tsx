@@ -8,6 +8,7 @@ import { InterviewPerAssoc } from '../interviewsPerAssocComponent/interviewsPerA
 import Interview24Chart from './report-charts/interview24.chart'
 import FeedbackChart from './report-charts/feedback.chart';
 import { FeedbackStatsTable } from './report-tables/feedbackStats.component';
+import InterviewCountChart from './report-charts/interviewcount.chart';
 
 interface IPageItem {
   title: any
@@ -34,9 +35,7 @@ export const pageContent: IPageItem[] = [
   {
     title: <><FaListOl /> Interviews Per Associate</>,
     table: <InterviewPerAssoc />,
-    chart: <><h4>There is not available visual data for this report</h4>
-      <InterviewPerAssoc />
-    </>
+    chart: <><InterviewCountChart /></>
   },
   {
     title: <><FaBook /> Feedback Stats</>,

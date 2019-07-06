@@ -20,7 +20,7 @@ export const interviewClient = {
     
     fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC',
                 associateEmail='associateEmail', managerEmail='managerEmail',
-                place="placeName", clientName="clientName", staging='no') => {
+                place="placeName", clientName="clientName", staging='stagingOff') => {
         const currentUser = store.getState().managementState.auth.currentUser;
         console.log(currentUser);
         const roles = currentUser.roles
@@ -60,6 +60,11 @@ export const interviewClient = {
     interviewPerAssoc: async (pageNumber: number, PageSize: number) => {
         return await smsClient.get(interviewContext + `/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
+
+    interviewPerAssocStats: async () => await smsClient.get(
+        interviewContext + '/reports/InterviewsPerAssociate/chart'
+    ),
+
     getAssocMoreThanFiveInterviews: async (pageNumber: number, PageSize: number) => {
         return await smsClient.get(interviewContext + `/dashboard/interviews/associate/fiveormore/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
