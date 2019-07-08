@@ -485,14 +485,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     {this.state.tableHeaderId==='reviewed' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
                                     {this.state.tableHeaderId==='reviewed' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>} 
                                 </th>
-                                <th id='associateInput' onClick={this.changeOrderCriteria}>
+                                <th id='associateInput' className='cursor-hover' onClick={this.changeOrderCriteria}>
                                 Associate Input 
                                     {this.state.tableHeaderId==='associateInput' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
                                     {this.state.tableHeaderId==='associateInput' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
                                     {/* <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                     <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/> */}
                                 </th>
-                                <th id='feedback' onClick={this.changeOrderCriteria} style={{backgroundColor: '#f3a55d'}}>
+                                <th id='feedback' className='cursor-hover' onClick={this.changeOrderCriteria} style={{backgroundColor: '#f3a55d'}}>
                                 Interview Feedback
                                     {this.state.tableHeaderId==='feedback' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
                                     {this.state.tableHeaderId==='feedback' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
