@@ -102,11 +102,10 @@ input:invalid:not(:valid) {
 .rev-btn:not(.dropdown),
 .rev-btn > button.dropdown-toggle {
   background-color: $revature-orange-light;
-  border-color: $revature-orange-light;
+  border-color: $revature-orange;
   color: black !important;
   &:hover {
-    border-bottom-color: #565d61;
-    color: $revature-orange-light;
+    background-color: $revature-orange;
   }
   &:active {
     background-color: $revature-orange-light;
