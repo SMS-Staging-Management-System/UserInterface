@@ -62,8 +62,17 @@ export const cohortClient = {
       console.log(err);
     });
     return aliases;
-    }
+  },
+    
+  getEndingCohorts: async (date: number | Date) => {
+
+      // Pass an epoch date number instead of a Date object, but accept
+      // either one for convenience or to account for user error
+      let epochDate = typeof date === 'number' ? date : date.getTime();
+
+      return await smsClient.get(`${cohortContext}/prestaging/${epochDate}`);
   }
+}
 
 
 

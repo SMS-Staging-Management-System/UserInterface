@@ -27,7 +27,12 @@ export interface InterviewListProps {
         pageNumber?: number,
         pageSize?: number,
         ordeyBy?: string,
-        direction?: string) => void,
+        direction?: string,
+        associateEmail?: string,
+        managerEmail?: string,
+        place?: string,
+        clientName?: string,
+        staging?: string) => void,
     markAsReviewed: (interviewId: number) => void,
     setSelected: (current: any) => void;
 }
@@ -37,23 +42,34 @@ export interface InterviewListState {
     loaded : boolean,
     tableHeaderId: string,
     previousTableHeaderId: string,
-    listOfInterviews: any[]
+    listOfInterviews: any[],
+    associateEmail: string,
+    managerEmail: string,
+    place: string,
+    clientName:string,
+    staging:string
 }
 
 // More comments 
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
         super(props);
+        
         this.state = {
             direction : this.props.direction,
             loaded : false,
             tableHeaderId: '0',
             previousTableHeaderId: '1', //init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
-            listOfInterviews: []
+            listOfInterviews: [],
+            associateEmail: 'associateEmail',
+            managerEmail: 'managerEmail',
+            place: 'placeName',
+            clientName: 'clientName',
+            staging: 'stagingOff'
         }
     }
 
-    async componentDidMount() { 
+    async componentDidMount() {         
         this.setState({
             listOfInterviews: this.props.listOfInterviews
         });
@@ -61,11 +77,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
     async componentWillReceiveProps(nextProps) { //Move props into state here
         this.setState({
-            listOfInterviews: nextProps.listOfInterviews
+            listOfInterviews: nextProps.listOfInterviews,
+            //listOfInterviewsInitial: nextProps.listOfInterviews
         });
     }
 
     async componentDidUpdate() {
+        console.log(this.state);
+        
         if(!this.state.loaded){
             this.setState ({
                 loaded:true
@@ -74,15 +93,27 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.props.currentPage, 
                 this.props.pageSize, 
                 this.props.orderBy, 
-                this.props.direction);
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                this.state.staging);
         }
     }
 
     handlePageClick = (data) => {
+        console.log(data);
+        
         this.props.getInterviewPages(data.selected,
             this.props.pageSize,
             this.props.orderBy,
-            this.props.direction);
+            this.props.direction,
+            this.state.associateEmail,
+            this.state.managerEmail,
+            this.state.place,
+            this.state.clientName,
+            this.state.staging);
     }
 
     changeOrderAsc = () => {
@@ -124,7 +155,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.props.pageSize,
             // event.currentTarget.id,
             this.state.tableHeaderId,
-            this.state.direction);
+            this.state.direction,
+            this.state.associateEmail,
+            this.state.managerEmail,
+            this.state.place,
+            this.state.clientName,
+            this.state.staging);
     }
 
     changePageSize = (event: any) => {
@@ -132,66 +168,206 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.props.currentPage,
             event.currentTarget.value,
             this.props.orderBy,
-            this.props.direction);
+            this.props.direction,
+            this.state.associateEmail,
+            this.state.managerEmail,
+            this.state.place,
+            this.state.clientName,
+            this.state.staging);
     }
 
     filterByAssociateEmail = (event: any) => { //handle filter click by associate email
+        console.log(event.currentTarget.value);
+        
         if(event.currentTarget.value === 'associateEmail') {
             this.setState({
-                listOfInterviews: this.props.listOfInterviews
-            });
+                associateEmail: event.currentTarget.value
+            //listOfInterviews: this.props.listOfInterviews
+        });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                event.currentTarget.value,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                this.state.staging);
+                
         } else {
-            const filteredList = this.props.listOfInterviews.filter((entry) => {
-                return (entry.associateEmail === event.currentTarget.value);
-            });
+            // this.props.listOfInterviews.filter((entry) => {
+            //     return (entry.associateEmail === event.currentTarget.value);
+            // });
             this.setState({
-                listOfInterviews: filteredList
+                associateEmail: event.currentTarget.value
+                //listOfInterviews: this.props.listOfInterviews
+                //listOfInterviews: filteredList
             });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                event.currentTarget.value,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                this.state.staging);          
         }
     }
 
     filterByManagerEmail = (event: any) => { //handle filter click by manager email
         if(event.currentTarget.value === 'managerEmail') {
             this.setState({
-                listOfInterviews: this.props.listOfInterviews
+                managerEmail: event.currentTarget.value
+                //listOfInterviews: this.props.listOfInterviews
             });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                event.currentTarget.value,
+                this.state.place,
+                this.state.clientName,
+                this.state.staging); 
         } else {
-            const filteredList = this.props.listOfInterviews.filter((entry) => {
-                return (entry.managerEmail === event.currentTarget.value);
-            });
+            // const filteredList = this.props.listOfInterviews.filter((entry) => {
+            //     return (entry.managerEmail === event.currentTarget.value);
+            // });
             this.setState({
-                listOfInterviews: filteredList
+                managerEmail: event.currentTarget.value,
+                //listOfInterviews: filteredList
             });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                event.currentTarget.value,
+                this.state.place,
+                this.state.clientName,
+                this.state.staging); 
         }
     }
 
     filterByPlace = (event: any) => { //handle filter click by place
         if(event.currentTarget.value === 'placeName') {
             this.setState({
-                listOfInterviews: this.props.listOfInterviews
+                place: event.currentTarget.value
+                //listOfInterviews: this.props.listOfInterviews
             });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                event.currentTarget.value,
+                this.state.clientName,
+                this.state.staging); 
         } else {
-            const filteredList = this.props.listOfInterviews.filter((entry) => {
-                return (entry.place === event.currentTarget.value);
-            });
+            // const filteredList = this.props.listOfInterviews.filter((entry) => {
+            //     return (entry.place === event.currentTarget.value);
+            // });
             this.setState({
-                listOfInterviews: filteredList
+                place: event.currentTarget.value,
+                //listOfInterviews: filteredList
             });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                event.currentTarget.value,
+                this.state.clientName,
+                this.state.staging); 
         }
     }
 
     filterByClient = (event: any) => { //handle filter click by client
         if(event.currentTarget.value === 'clientName') {
             this.setState({
-                listOfInterviews: this.props.listOfInterviews
+                clientName: event.currentTarget.value
+                //listOfInterviews: this.props.listOfInterviews
             });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                event.currentTarget.value,
+                this.state.staging); 
         } else {
-            const filteredList = this.props.listOfInterviews.filter((entry) => {
-                return (entry.client.clientName === event.currentTarget.value);
-            });
+            // const filteredList = this.props.listOfInterviews.filter((entry) => {
+            //     return (entry.client.clientName === event.currentTarget.value);
+            // });
             this.setState({
-                listOfInterviews: filteredList
+                clientName: event.currentTarget.value,
+                //listOfInterviews: filteredList
             });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                event.currentTarget.value,
+                this.state.staging); 
+        }
+    }
+
+    filterByStaging = (event: any) => { //handle filter click by associate email
+        console.log(event.currentTarget.value);
+        
+        if(event.currentTarget.value === 'stagingOff') {
+            this.setState({
+                staging: event.currentTarget.value
+            //listOfInterviews: this.props.listOfInterviews
+        });
+        console.log("staging Off");
+        
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                event.currentTarget.value);
+                
+        } else {
+            // this.props.listOfInterviews.filter((entry) => {
+            //     return (entry.associateEmail === event.currentTarget.value);
+            // });
+            this.setState({
+                staging: event.currentTarget.value
+                //listOfInterviews: this.props.listOfInterviews
+                //listOfInterviews: filteredList
+            });
+            this.props.getInterviewPages(
+                0,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                event.currentTarget.value);          
         }
     }
 
@@ -223,6 +399,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     };
 
     render() { 
+        // console.log(this.state.listOfInterviewsInitial);
+        // console.log(this.state.listOfInterviews);
+        console.log(this.state.associateEmail);
+        
+
+        //let interviewsInitial = this.props.
+        
+        
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
         const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
@@ -301,15 +485,17 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     {this.state.tableHeaderId==='reviewed' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
                                     {this.state.tableHeaderId==='reviewed' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>} 
                                 </th>
-
-                                <th id='associateInput'>
+                                <th id='associateInput' className='cursor-hover' onClick={this.changeOrderCriteria}>
                                 Associate Input 
+                                    {this.state.tableHeaderId==='associateInput' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
+                                    {this.state.tableHeaderId==='associateInput' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
                                     {/* <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                     <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/> */}
                                 </th>
-
-                                <th>
+                                <th id='feedback' className='cursor-hover' onClick={this.changeOrderCriteria} style={{backgroundColor: '#f3a55d'}}>
                                 Interview Feedback
+                                    {this.state.tableHeaderId==='feedback' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
+                                    {this.state.tableHeaderId==='feedback' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
                                 </th>
                             </tr>
                         </thead>
@@ -330,7 +516,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     {this.getAssocInput(entry)}
                                     <td>{
                                         entry.feedback ?
-                                        <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link>
+                                        <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>Edit Interview Feedback</Link>
                                         :
                                         isAdmin?   
                                         <Link to={{pathname: `/interview/${entry.id}/feedback`}}>Complete Interview Feedback</Link>
@@ -343,10 +529,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     </table>
                     <form>
                         <div className='form-row'>
-                        <div className='col'>
+                        <div className='col-1'>
                         <Label>Page Size: </Label>
                         </div>
-                        <div className='col'>
+                        <div className='col-0.5'>
                         <select value={this.props.pageSize} onChange={this.changePageSize} className='form-control'>
                             <option value={5} className={'justify-content-center'}>5</option>
                             <option value={10} className={'justify-content-center'}>10</option>
@@ -355,7 +541,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                         </select>
                         </div>
                         <div className='col-3'>
-                            <select onChange={this.filterByAssociateEmail} className='form-control'>
+                            <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
                                 <option value='associateEmail'>Associate Email</option>
                                 {arrAssociateEmail2.map((entry, index) => {
                                     return (
@@ -365,7 +551,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             </select>
                         </div>
                         <div className='col-3'>
-                            <select onChange={this.filterByManagerEmail} className='form-control'>
+                            <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
                                 <option value='managerEmail'>Manager Email</option>
                                 {arrManagerEmail2.map((entry, index) => {
                                     return (
@@ -374,8 +560,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 })}
                             </select>
                         </div>
-                        <div className='col-2'>
-                            <select onChange={this.filterByPlace} className='form-control'>
+                        <div className='col'>
+                            <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
                                 <option value='placeName'>Location</option>
                                 {arrPlace2.map((entry, index) => {
                                     return (
@@ -384,14 +570,20 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 })}
                             </select>
                         </div>
-                        <div className='col-2'>
-                            <select onChange={this.filterByClient} className='form-control'>
+                        <div className='col-1'>
+                            <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
                                 <option value='clientName'>Client</option>
                                 {arrClientName2.map((entry, index) => {
                                     return (
                                         <option value={entry} key={index}>{entry}</option>
                                     );
                                 })}
+                            </select>
+                        </div>
+                        <div className='col-2'>
+                            <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
+                                <option value='stagingOff'>Staging Off</option>
+                                <option value='stagingOn'>Staging On</option>
                             </select>
                         </div>
                         </div>
