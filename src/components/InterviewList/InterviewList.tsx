@@ -485,14 +485,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     {this.state.tableHeaderId==='reviewed' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
                                     {this.state.tableHeaderId==='reviewed' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>} 
                                 </th>
-                                <th id='associateInput' onClick={this.changeOrderCriteria}>
+                                <th id='associateInput' className='cursor-hover' onClick={this.changeOrderCriteria}>
                                 Associate Input 
                                     {this.state.tableHeaderId==='associateInput' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
                                     {this.state.tableHeaderId==='associateInput' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
                                     {/* <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
                                     <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/> */}
                                 </th>
-                                <th id='feedback' onClick={this.changeOrderCriteria} style={{backgroundColor: '#f3a55d'}}>
+                                <th id='feedback' className='cursor-hover' onClick={this.changeOrderCriteria} style={{backgroundColor: '#f3a55d'}}>
                                 Interview Feedback
                                     {this.state.tableHeaderId==='feedback' && this.state.direction==='DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>}
                                     {this.state.tableHeaderId==='feedback' && this.state.direction==='ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/>}
@@ -529,10 +529,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     </table>
                     <form>
                         <div className='form-row'>
-                        <div className='col'>
+                        <div className='col-1'>
                         <Label>Page Size: </Label>
                         </div>
-                        <div className='col'>
+                        <div className='col-0.5'>
                         <select value={this.props.pageSize} onChange={this.changePageSize} className='form-control'>
                             <option value={5} className={'justify-content-center'}>5</option>
                             <option value={10} className={'justify-content-center'}>10</option>
@@ -560,7 +560,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 })}
                             </select>
                         </div>
-                        <div className='col-2'>
+                        <div className='col'>
                             <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
                                 <option value='placeName'>Location</option>
                                 {arrPlace2.map((entry, index) => {
@@ -570,7 +570,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 })}
                             </select>
                         </div>
-                        <div className='col-2'>
+                        <div className='col-1'>
                             <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
                                 <option value='clientName'>Client</option>
                                 {arrClientName2.map((entry, index) => {
