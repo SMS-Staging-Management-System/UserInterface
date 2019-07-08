@@ -36,16 +36,15 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
 
         return (
             <Modal isOpen={this.props.viewUser.enabled}>
-                <ModalHeader className="rev-background-color">User Info</ModalHeader>
+                <ModalHeader className="rev-background-color">User Info
+                <Button color="$revature-orange-light" className="close-sign" onClick={this.props.toggleViewUserModal}>x</Button>
+                </ModalHeader>
                 <ModalBody>
 
                     {this.props.user.roles.some(role => (role === cognitoRoles.ADMIN))
                         ? <Profile manageGetUsersByGroup={this.props.manageGetUsersByGroup}/> : currentModalDisplay}
 
                 </ModalBody>
-                <ModalFooter id="create-user-modal-footer">
-                    <Button color="secondary" onClick={this.props.toggleViewUserModal}>Close</Button>
-                </ModalFooter>
             </Modal>
 
         );
