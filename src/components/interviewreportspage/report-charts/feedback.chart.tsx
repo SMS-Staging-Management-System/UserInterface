@@ -47,7 +47,7 @@ export class FeedbackChart extends PureComponent<IFeedbackChartProps> {
           // the following .reduce finds whether there is some data to show
           this.props.data.reduce((prev, curr) => (prev + curr), 0) ?
             <ReportChart chartTitle={'Interviews And Feedback'} chartProps={chartProps} />
-            : <>put spinner here</>
+            : <>Loading...</>
         }
       </>
     )

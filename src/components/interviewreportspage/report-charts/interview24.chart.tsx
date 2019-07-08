@@ -50,13 +50,13 @@ export class Interview24Chart extends PureComponent<IInterview24ChartProps> {
           // the following .reduce finds whether there is some data to show
           this.props.dataAssoc.reduce((prev, curr) => (prev + curr), 0) ?
             <ReportChart chartTitle={'Associate\'s Claims'} chartProps={chartAssocProps} />
-            : <>put spinner here</>
+            : <>Loading...</>
         }
         {
           // the following .reduce finds whether there is some data to show
           this.props.dataManager.reduce((prev, curr) => (prev + curr), 0) ?
             <ReportChart chartTitle={'Manager\'s Claims'} chartProps={chartManagerProps} />
-            : <>put spinner here</>
+            : <>Loading...</>
         }
       </>
     )

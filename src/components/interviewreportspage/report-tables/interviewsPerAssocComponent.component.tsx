@@ -67,8 +67,7 @@ export class InterviewPerAssoc extends React.Component<any, any> {
 
                 {/* responsive sass scrolling feature*/}
                 <div className='tableholder3 scrollX scrollY'>
-                    <h1> <b>Interviews</b> </h1>
-                    <h1> <b>Job Descriptions</b> </h1>
+                    <h2> <b>Interviews Per Associate</b> </h2>
 
                     <div className="scrollX scrollY">
 
