@@ -74,6 +74,14 @@ class Dropped extends Component<myProps, IdroppedState> {
 
         return (
             <div>
+                {this.state.totalassoc ==1 ? 
+                <>
+                <h1>No Data</h1>
+                <p>No cohorts are ending in the next 2 weeks.</p>
+                <p>Please check back in later.</p>
+                </>
+                :<>
+                <div>
                 <div className="title rev-background-color">
                     Total number of associates dropped last week: <u>{this.state.totalassoc}</u>
                 </div>
@@ -120,6 +128,7 @@ class Dropped extends Component<myProps, IdroppedState> {
                     previousLinkClassName={'paginate-previous page-link no-select'}
                 />
             </div>
+            </>} </div>
 
         )
 
