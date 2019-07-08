@@ -12,7 +12,7 @@ import { feedbackRequestedChartReducer } from './feedbackrequested';
 import { jobDescriptionChartReducer } from './jobdesc.reducer';
 import { Client } from '../../model/Client.model';
 import { Interview } from '../../model/Interview.model';
-import { totalWeeklyReducer } from './total-weekly.reducer';
+import { interviewsCountReducer } from './interviewscount.reducer';
 
 // the reportform reducer seems to do nothing. remove later
 export interface IReportFormState {   
@@ -22,11 +22,16 @@ export interface ISimpleChartDataState {
     chartData: number[]
 }
 
+export interface IAveragedChartDataState extends ISimpleChartDataState {
+    totalNumber: number
+}
+
 export interface IInterviewFeedbackComponentState {
     feedbackRequestedDate: string
     feedbackText: string
     feedbackReceivedDate: string
     feedbackDeliveredDate: string
+    feedbackStatus: number
     interviewFormat: number
     noInterviewFound: boolean
     interviewStatus: number
@@ -52,13 +57,6 @@ export interface IInterviewListState {
     currentPage : number,
     assocInput: any
 }
-
-export interface ITotalWeeklyState {
-    interviewList: Interview[];
-    totalScheduled: number;
-    totalNotified: number;
-    totalReviewed: number;
-}
     
 export interface IInterviewState {
     interviewList : IInterviewListState,
@@ -69,8 +67,8 @@ export interface IInterviewState {
     associateChart: ISimpleChartDataState,
     associateInput: IAssociateInput,
     feedbackRequestedChart: ISimpleChartDataState,
-	jobDescriptionChart: ISimpleChartDataState,
-   totalWeekly: ITotalWeeklyState
+    jobDescriptionChart: ISimpleChartDataState,
+    interviewsCountChart: IAveragedChartDataState,
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -83,5 +81,5 @@ export const interviewState = combineReducers<IInterviewState>({
    associateInput: assocInputReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
    jobDescriptionChart: jobDescriptionChartReducer,
-   totalWeekly: totalWeeklyReducer
+   interviewsCountChart: interviewsCountReducer,
 })

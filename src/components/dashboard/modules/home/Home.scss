@@ -1,0 +1,17 @@
+.wrapper{
+    padding:0px !important;
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    grid-auto-rows: minmax(100px,auto);
+    grid-gap: 1em;
+    justify-items: center;
+    align-items: center;
+}
+
+@media (max-width:900px){
+    .wrapper{
+        width: 100% !important;
+        grid-template-columns:1fr ;
+        padding: 0 1em 0 2em;
+    }
+}

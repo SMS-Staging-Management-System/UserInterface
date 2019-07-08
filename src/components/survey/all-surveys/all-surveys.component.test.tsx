@@ -12,6 +12,7 @@ import { createBrowserHistory } from 'history';
 import React, { Fragment, Component } from 'react';
 
 /*  Mock Survey Data */
+const today = new Date('5/30/2019')
 let exampleArr:ISurvey[] = [
     {
         surveyId: 4,
@@ -171,7 +172,7 @@ describe('All surveys should return active and closed surveys', () => {
             let filtered:ISurvey[] = [];
             for(let i = 0; i < closingSurvey.length; i++) {
                 if(closingSurvey[i].closingDate !== null) {
-                    if(new Date(closingSurvey[i].closingDate) < new Date()) {
+                    if(new Date(closingSurvey[i].closingDate) < today) {
                         filtered.push(closingSurvey[i]);
                     }
                 }
@@ -183,7 +184,7 @@ describe('All surveys should return active and closed surveys', () => {
             let activeSurvey = arr;
             let filtered:ISurvey[] = [];
             filtered = activeSurvey.filter((survey) => {
-                if(new Date(survey.closingDate) > new Date()){
+                if(new Date(survey.closingDate) > today){
                     return true;
                 } else if(survey.closingDate === null){
                     return true;

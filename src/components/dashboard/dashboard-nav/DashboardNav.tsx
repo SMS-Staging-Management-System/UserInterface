@@ -6,17 +6,15 @@ import Navbar from 'reactstrap/lib/Navbar';
 import { IAuthState } from '../../../reducers/management';
 import { connect } from 'react-redux';
 import { IState } from '../../../reducers';
-import { getInterviews } from '../../../actions/total-weekly/total-weekly.actions';
+import { getInterviews } from '../../../actions/dashboardActions/total-weekly.actions';
 
-interface ISurveyNavComponentProps extends RouteComponentProps {
-  updateSurveyTable: (group: string) => void,
-  toggleCreateUserModal: () => void,
+interface Props extends RouteComponentProps {
   getWeeklyInterviews: (date: number | Date) => void,
   manage: string,
   auth: IAuthState
 }
 
-class DashboardNav extends React.Component<ISurveyNavComponentProps, any> {
+class DashboardNav extends React.Component<Props, any> {
   constructor(props) {
     super(props);
   }
@@ -29,7 +27,7 @@ class DashboardNav extends React.Component<ISurveyNavComponentProps, any> {
   isActive = (routeName: string) => ((this.props.manage === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 
   render() {
-    let { path } = this.props.match
+    let { path } = this.props.match || `/dashboard`
     return (
       <Fragment>
         {
@@ -39,6 +37,11 @@ class DashboardNav extends React.Component<ISurveyNavComponentProps, any> {
             :
             <Navbar className="manage-users-nav" color="faded" light>
               <Nav tabs className="align-start">
+              <NavItem>
+                  <Link to={path + "/home"}
+                    className={`nav-link ${this.isActive('home')}`}
+                  >Home</Link>
+                </NavItem>
                 <NavItem>
                   <Link to={path + "/byStaging"}
                     className={`nav-link ${this.isActive('byStaging')}`}
