@@ -4,7 +4,7 @@ import { AssociatesFeedbackRequest } from './report-tables/associatesFeedbackReq
 import { Interview24Request } from './report-tables/interview24.component';
 import { InterviewJDRequest } from './report-tables/interviewJD.component';
 import JDInterviewChart from './report-charts/interviewJD.chart';
-import { InterviewPerAssoc } from '../interviewsPerAssocComponent/interviewsPerAssocComponent.component';
+import { InterviewPerAssoc } from './report-tables/interviewsPerAssocComponent.component';
 import Interview24Chart from './report-charts/interview24.chart'
 import FeedbackChart from './report-charts/feedback.chart';
 import { FeedbackStatsTable } from './report-tables/feedbackStats.component';

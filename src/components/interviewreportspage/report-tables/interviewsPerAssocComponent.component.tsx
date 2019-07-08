@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { interviewClient } from '../../axios/sms-clients/interview-client';
-import { InterviewPerAssociate } from '../../model/dashboard/interviewPerAssociate';
+import { interviewClient } from '../../../axios/sms-clients/interview-client';
+import { InterviewPerAssociate } from '../../../model/dashboard/interviewPerAssociate';
 
 
 export interface InterviewPerAssocProps {
@@ -63,28 +63,29 @@ export class InterviewPerAssoc extends React.Component<any, any> {
         });
 
         return (
-            <div>
-                <h1 className='text-center'><b>Interviews per Associate</b></h1>
-                <div className='container'>
-                    <div className='row'>
-                        <div>
-                            <div className='table-responsive-xl'>
-                                <table className='table table-striped mx-auto w-auto'>
+            <div className='img-fluid'>
+
+                {/* responsive sass scrolling feature*/}
+                <div className='tableholder3 scrollX scrollY'>
+                    <h1> <b>Interviews</b> </h1>
+                    <h1> <b>Job Descriptions</b> </h1>
+
+                    <div className="scrollX scrollY">
+
+                        <table className='table table-striped'>
                                     <thead className='rev-background-color'>
                                         <tr>
-                                            <th>Associate Name</th>
-                                            <th>Associate Email</th>
-                                            <th>Interviews</th>
+                                            <th scope="col">Associate Name</th>
+                                            <th scope="col">Associate Email</th>
+                                            <th scope="col">Interviews</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {assocInterviewRows}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                        </tbody>
+                            </table>
+
                     </div>
-                </div>
                 <ReactPaginate
                     previousLabel={'Prev'}
                     nextLabel={'Next'}
@@ -104,6 +105,7 @@ export class InterviewPerAssoc extends React.Component<any, any> {
                     previousClassName={'page-item cursor-hover justify-content-center'}
                     previousLinkClassName={'paginate-previous page-link no-select'}
                 />
+            </div>
             </div>
         );
     }
