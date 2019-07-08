@@ -77,7 +77,7 @@ class Dropped extends Component<myProps, IdroppedState> {
                 {this.state.totalassoc ==1 ? 
                 <>
                 <h1>No Data</h1>
-                <p>No cohorts are ending in the next 2 weeks.</p>
+                <p>No associates found in the last week.</p>
                 <p>Please check back in later.</p>
                 </>
                 :<>

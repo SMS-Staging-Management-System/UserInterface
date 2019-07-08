@@ -50,7 +50,7 @@ class ToStaging extends Component<IToStagingProps,any> {
                     </Table> : 
                 <>
                 <h1>No Data</h1>
-                <p>No associates found in the last week.</p>
+                <p>No cohorts are ending in the next 2 weeks.</p>
                 <p>Please check back in later.</p>
                 </>} 
             </div>
