@@ -27,16 +27,19 @@ import { cognitoRoles } from '../../model/cognito-user.model';
     
   }
   componentDidUpdate(){
-    if(this.props.auth.currentUser.roles.some(role => role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN || role === cognitoRoles.TRAINER)){
-      console.log(this.props.match.path,'::::thi is');
+    if(this.props.auth.currentUser.roles.some(role => role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN )){
       if(this.props.match.path =='/'){
         this.props.history.push(`dashboard/home`);
       }
       if(`${this.props.match.path}/home` !='/dashboard/home' && this.props.match.path !='/' ){
         this.props.history.push(`${this.props.match.path}/home`);
       }
-    }else{
-      //if there are not managaers ,we send then to other place away from dashboard
+    }else if(this.props.auth.currentUser.roles.some(role => role === cognitoRoles.TRAINER)){
+
+      this.props.history.push(`management/manage/cohorts`);
+    }
+    else{
+      this.props.history.push(`surveys`);
     }
   }
 
@@ -65,6 +68,7 @@ import { cognitoRoles } from '../../model/cognito-user.model';
           <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/numInterviews`} component={NumInterviews} />
           <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/pausedAssociates`} component={PausedAssociates} />
           <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/threeInterviews`} component={ThreeInterviews} />
+          <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/`} component={Home} />
         </Switch>
       </div>
     )
