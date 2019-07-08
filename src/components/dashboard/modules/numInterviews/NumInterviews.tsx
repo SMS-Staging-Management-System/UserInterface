@@ -61,6 +61,7 @@ class NumInterviews extends Component<INumInterviewsProps,INumInterviewsState> {
             currentWeek: date
         });
     }
+    
 
     listToBuildable = (): object => {
         let buildable = {};

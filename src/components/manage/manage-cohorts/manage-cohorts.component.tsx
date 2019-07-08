@@ -59,7 +59,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         <Dropdown color="success" className="responsive-modal-row-item rev-btn"
                             isOpen={false}>
                             {/* toggle={this.props.toggleLocationDropdown}> */}
-                            <DropdownToggle caret>
+                            <DropdownToggle className ="ml-1"caret>
                                 Selection
                 </DropdownToggle>
                             <DropdownMenu>

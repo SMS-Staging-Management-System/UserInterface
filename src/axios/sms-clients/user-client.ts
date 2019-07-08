@@ -45,5 +45,8 @@ export const userClient = {
     },
     getAllVirtualListUser(){
         return smsClient.get(`${usersContext}/invirtual`);
+    },
+    findAllDroppedAssociate: async(pageNumber:number, PageSize:number) =>{
+        return smsClient.get(usersContext + `/dropped/page?pageNumber=${pageNumber}&pageSize=${PageSize}`)
     }
 }

@@ -165,7 +165,9 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                             <div className='row'>
                                 <Button className='btn btn-secondary col-sm' value='back' onClick={() => this.redirectTo()}>Back</Button>
                                 <div className='col-3'></div>
+
                                 <Button type='submit' disabled={!isAdmin} className='btn btn-secondary col'>SUBMIT</Button>
+
                                 <div className='col-5'></div>
                             </div>
                         </form>

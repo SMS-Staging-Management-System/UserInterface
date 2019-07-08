@@ -31,6 +31,7 @@ class FiveOrMore extends Component<myProps,myState> {
     componentDidMount() {
         this.getFiveOrMore(0);
     }
+    
     handlePageClick = (data) => {
         let selected = data.selected;
         this.getFiveOrMore(selected);

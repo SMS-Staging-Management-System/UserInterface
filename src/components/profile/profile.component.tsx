@@ -407,7 +407,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                         type="checkbox"
                                         value="associtate"
                                         checked={this.state.isAssociate}
-                                    />Associtate
+                                    />Associate
                                 </Label>
                             </FormGroup>
                         </Col>
