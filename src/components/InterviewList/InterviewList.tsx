@@ -529,12 +529,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     </table>
                     <form>
                         <div className='form-row'>
-                        <div className='col'>
+                        {/* <div className='col'>
                         <Label>Page Size: </Label>
-                        </div>
+                        </div> */}
                         <div className='col'>
                         <select value={this.props.pageSize} onChange={this.changePageSize} className='form-control'>
-                            <option value={5} className={'justify-content-center'}>5</option>
+                            <option value={5} className={'justify-content-center'}>Page</option>
+                            {/* <option value={5} className={'justify-content-center'}>5</option> */}
                             <option value={10} className={'justify-content-center'}>10</option>
                             <option value={25} className={'justify-content-center'}>25</option>
                             <option value={50} className={'justify-content-center'}>50</option>
