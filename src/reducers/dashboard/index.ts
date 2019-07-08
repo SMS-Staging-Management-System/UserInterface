@@ -22,11 +22,7 @@ export interface IToStagingState {
 export interface IDashboardState{
     byStagingUserList: IUser[];
     totalWeekly: ITotalWeeklyState;
-<<<<<<< HEAD
-    droppedAssoc: IUser[];
-=======
     toStaging: IToStagingState;
->>>>>>> 473826ae98f0f2d52896809b69803c3099e2d7f9
 }
 
 
@@ -34,8 +30,5 @@ export interface IDashboardState{
 export const dashboardState = combineReducers<IDashboardState>({
     byStagingUserList: byStagingReducer,
     totalWeekly: totalWeeklyReducer,
-<<<<<<< HEAD
-=======
     toStaging: toStagingReducer
->>>>>>> 473826ae98f0f2d52896809b69803c3099e2d7f9
  })
