@@ -1251,5 +1251,20 @@ body {
   color: white;
 }
 .update-model {
-  float:right
+  float: right
+}
+
+.list-group-item.active {
+  background-color: $revature-orange-light;
+  border-color: grey;
+  border: 1px solid grey
+}
+
+.page-item.active .page-link {
+  background-color: $revature-orange-light;
+  border-color: $revature-orange-light;
+}
+
+.page-link {
+  color: black;
 }
