@@ -36,7 +36,7 @@ export class JDInterviewChart extends PureComponent<IJDInterviewChartProps> {
           // the following .reduce finds whether there is some data to show
           this.props.data.reduce((prev, curr) => (prev + curr), 0) ?
           <ReportChart chartTitle={'Job Description Information'} chartProps={chartProps} />
-          : <>put spinner here</>
+          : <>Loading...</>
         }
       </>
     )

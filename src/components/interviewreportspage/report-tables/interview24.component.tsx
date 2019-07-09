@@ -78,8 +78,7 @@ export class Interview24Request extends React.Component<any, interview24State> {
 
                 {/* Responsive sass classNames scrolling on X and Y  */}
                 <div className='tableholder3 scrollX scrollY'>
-                    <h1><b>  Interviews  </b> </h1>
-                    <h1><b> 24 Hour Notice </b> </h1>
+                    <h2><b> 24 Hours Notice </b> </h2>
                     <div className="scrollX scrollY">
                         <table className='table table-striped'>
                             <thead>

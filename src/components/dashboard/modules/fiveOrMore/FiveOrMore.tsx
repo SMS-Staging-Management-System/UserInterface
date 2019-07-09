@@ -31,6 +31,7 @@ class FiveOrMore extends Component<myProps,myState> {
     componentDidMount() {
         this.getFiveOrMore(0);
     }
+    
     handlePageClick = (data) => {
         let selected = data.selected;
         this.getFiveOrMore(selected);
@@ -65,7 +66,7 @@ class FiveOrMore extends Component<myProps,myState> {
             <div className="fiveOrMoreContainer text-center  pt-4">
                 <h1 className=' lead'><b>Associates with five or more interviews</b></h1>
                 <div className='container my-3'>
-                            <div className='table-responsive border border-gray'>
+                            <div className='table-responsive '>
                                 <table className='table table-striped m-auto '>
                                     <thead className='rev-background-color'>
                                         <tr>

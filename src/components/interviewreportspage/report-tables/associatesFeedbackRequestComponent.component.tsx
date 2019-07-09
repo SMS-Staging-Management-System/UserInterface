@@ -60,7 +60,7 @@ export class AssociatesFeedbackRequest extends React.Component<any, any> {
         return (
             <div className='img-fluid'>
                 <div className='tableholder3 scrollX scrollY'>
-                    <h1><b> Feedback Given </b></h1>
+                    <h2><b> Feedback Given </b></h2>
                     <div className="scrollX scrollY">
                         <table className='table table-striped'>
                             <thead>
