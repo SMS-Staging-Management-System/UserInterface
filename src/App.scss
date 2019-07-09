@@ -1240,3 +1240,33 @@ body {
 .futurafont {
   font-family: "FuturaSTDBook";
 }
+
+.close-sign {
+  margin-left: 740px;
+  border: 2px solid black;
+}
+
+.close-sign:hover {
+  background-color:grey;
+  color: white;
+}
+.update-model {
+  float: right
+}
+
+.list-group-item.active {
+  background-color: $revature-orange-light;
+  border-color: grey;
+  border: 1px solid grey
+}
+
+.page-item.active .page-link {
+  background-color: $revature-orange-light;
+  border-color: $revature-orange-light;
+}
+
+.page-link {
+  color: black;
+}
+
+

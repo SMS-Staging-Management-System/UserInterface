@@ -46,7 +46,7 @@ export class FeedbackStatsTable extends Component<any, IFeedbackStatsTableState>
     return (
       <div className="img-fluid">
         <div className="tableholder3 scrollX scrollY">
-          <h1><b>Feedback Stats</b></h1>
+          <h2><b>Feedback Stats</b></h2>
           <table className="table table-striped">
             <thead>
               <tr>

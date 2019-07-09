@@ -413,7 +413,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                         </Col>
                     </Row>
                     <br />
-                    <Button
+                    <Button className="update-model"
                         onClick={this.onUpdateClick}>Update</Button>
                 </Form>
             </Container>
