@@ -17,29 +17,30 @@ interface IPageItem {
 }
 
 export const pageContent: IPageItem[] = [
-  {
-    title: <><FaThumbsUp /> Feedback Given</>,
-    table: <AssociatesFeedbackRequest />,
-    chart: <FeedbackChart />
-  },
-  {
-    title: <><FaClock /> 24 Hours Notice Given</>,
-    table: <Interview24Request />,
-    chart: <Interview24Chart />
-  },
-  {
-    title: <><FaComment /> Job Description Given</>,
-    table: <InterviewJDRequest />,
-    chart: <JDInterviewChart />
-  },
+
   {
     title: <><FaListOl /> Interviews Per Associate</>,
     table: <InterviewPerAssoc />,
     chart: <><InterviewCountChart /></>
   },
   {
+    title: <><FaComment /> Job Description</>,
+    table: <InterviewJDRequest />,
+    chart: <JDInterviewChart />
+  },
+  {
+    title: <><FaClock /> 24 Hours Notice</>,
+    table: <Interview24Request />,
+    chart: <Interview24Chart />
+  },
+  {
     title: <><FaBook /> Feedback Stats</>,
     table: <FeedbackStatsTable />,
+    chart: <FeedbackChart />
+  },
+  {
+    title: <><FaThumbsUp /> Feedback Given</>,
+    table: <AssociatesFeedbackRequest />,
     chart: <FeedbackChart />
   }
 ]
