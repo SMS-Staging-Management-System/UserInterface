@@ -18,7 +18,7 @@ class ByStaging extends Component<myProps,any> {
         virtual:0,
         notVirtual:0,
         chartData:{
-            labels:['Virtual','Not Virtual'],
+            labels:[`Virtual`,`Not Virtual`],
             datasets:[
                 {
                     label:['Associates in staging'],
@@ -52,6 +52,7 @@ class ByStaging extends Component<myProps,any> {
                 virtual:virtual,
                 notVirtual:notVirtual,
                 chartData:{...this.state.chartData,
+                    labels:[`Virtual( ${virtual} )`,`Not Virtual( ${notVirtual} )`],
                     datasets:[{...this.state.chartData.datasets[0],
                         data:[virtual ,notVirtual,0]
                     }]}

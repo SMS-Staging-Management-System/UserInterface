@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
+import './NumInterviews.scss'
 
 interface INumIntervewsChartProps {
   info: {
@@ -35,15 +36,9 @@ interface INumIntervewsChartProps {
 
 class NumInterviewsChart extends Component<INumIntervewsChartProps, any> {
   render() {
-    const graphStyle = {
-      maxWidth: 700,
-      height: 350,
-      margin: '0 auto',
-      padding: 30,
-      display: 'inline-block',
-    }
+    
     return (
-      <div style = {graphStyle} className="summary">
+      <div className="graphicContainer">
         <Bar data={this.props.info.data} options={this.props.info.options} />
       </div>
     )

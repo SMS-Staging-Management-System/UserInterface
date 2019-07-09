@@ -2,6 +2,7 @@
   text-align: center;
   padding: .75rem;
   font-weight: bold;
+  border-radius: 20px;
 }
 
 .content {
@@ -16,4 +17,19 @@
 
 .no-data {
   margin-top: 1rem;
+}
+.NumInterviews{
+  margin-top: 20px;
+  border: 1px solid ;
+  border-color: rgb(243,165,93);
+  border-radius: 20px;
+  width: 100%;
+}
+.chart{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.chart >*{
+  height: 300px;
 }
