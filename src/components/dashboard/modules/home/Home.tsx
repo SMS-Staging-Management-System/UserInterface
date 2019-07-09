@@ -6,6 +6,8 @@ import ByStaging from '../byStaging/ByStaging';
 import FiveOrMore from '../fiveOrMore/FiveOrMore';
 import './Home.scss'
 import NumInterviews from '../numInterviews/NumInterviews';
+import Dropped from '../dropped/Dropped';
+import ToStaging from '../toStaging/ToStaging';
 
 interface myProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
@@ -13,16 +15,23 @@ interface myProps extends RouteComponentProps<{}> {
 class Home extends Component<myProps,any> {
     render() {
         return (
-            <>
-                <div className='wrapper'>
+            <div className='wrapper'>
+                <div className='byStaging'>
                     <ByStaging {...this.props} />
-                    <FiveOrMore {...this.props} />
-                    
                 </div>
-                <div className= 'wrapper2'>
+                <div className= 'fiveOrMore'>
+                <FiveOrMore {...this.props} />
+                </div>
+                <div className= 'numInterviews'>
                     <NumInterviews {...this.props} />
                 </div>
-            </>
+                <div className='toStaging'>
+                    <ToStaging {...this.props} />
+                </div>
+                <div className='dropped'>
+                    <Dropped {...this.props} />
+                </div>
+            </div>
             
         )
     }
