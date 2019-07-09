@@ -35,8 +35,8 @@
         grid-template-columns: repeat(4,1fr );
         grid-auto-rows: minmax(200px,auto);
         grid-template-areas: 
-        " dropped dropped byStaging byStaging"
         "numInterviews numInterviews numInterviews numInterviews"
+        " dropped dropped byStaging byStaging"
         "fiveOrMore fiveOrMore toStaging toStaging"
         ;
     }

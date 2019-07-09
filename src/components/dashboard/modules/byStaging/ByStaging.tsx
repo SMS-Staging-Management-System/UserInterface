@@ -21,7 +21,7 @@ class ByStaging extends Component<myProps,any> {
             labels:[`Virtual`,`Not Virtual`],
             datasets:[
                 {
-                    label:['Associates in staging'],
+                    label:['Associates'],
                     backgroundColor:'rgb(243,165,93,0.6)',
                     data:[0,0]
                 },
@@ -68,6 +68,7 @@ class ByStaging extends Component<myProps,any> {
         }else{
             return (
                 <div className='StagingContainer border border-gray p-3'>
+                    <h1 className=' lead text-center w-100'><b>Associates in Staging</b></h1>
                     <Bar 
                     data = {this.state.chartData}
                     options = {{
