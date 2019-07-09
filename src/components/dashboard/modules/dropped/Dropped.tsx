@@ -60,6 +60,7 @@ class Dropped extends Component<myProps, IdroppedState> {
     }
 
     render() {
+
         const droppedAssociatesRows = this.state.dropped.map((droppedAssoc) => {
             return (
                 <tr key={String(droppedAssoc.userId)}>
@@ -76,9 +77,10 @@ class Dropped extends Component<myProps, IdroppedState> {
             <div>
                 {this.state.totalassoc == 0 ? 
                 <>
-                <h1>No Data</h1>
-                <p>No associates found in the last week.</p>
-                <p>Please check back in later.</p>
+                <div className="no-data">
+                        <h1 className="no-data">No data to display</h1>
+                        <p id="pStyle">No associate found in the last week.</p>
+                    </div>
                 </>
                 :<>
                 <div>
