@@ -74,7 +74,7 @@ class Dropped extends Component<myProps, IdroppedState> {
 
         return (
             <div>
-                {this.state.totalassoc ==1 ? 
+                {this.state.totalassoc == 0 ? 
                 <>
                 <h1>No Data</h1>
                 <p>No associates found in the last week.</p>
