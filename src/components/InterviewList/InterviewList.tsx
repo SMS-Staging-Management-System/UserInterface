@@ -182,7 +182,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         if (event.currentTarget.value === 'associateEmail') {
             this.setState({
                 associateEmail: event.currentTarget.value
-                //listOfInterviews: this.props.listOfInterviews
             });
             this.props.getInterviewPages(
                 0,
@@ -196,13 +195,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.staging);
 
         } else {
-            // this.props.listOfInterviews.filter((entry) => {
-            //     return (entry.associateEmail === event.currentTarget.value);
-            // });
             this.setState({
                 associateEmail: event.currentTarget.value
-                //listOfInterviews: this.props.listOfInterviews
-                //listOfInterviews: filteredList
             });
             this.props.getInterviewPages(
                 0,
@@ -221,7 +215,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         if (event.currentTarget.value === 'managerEmail') {
             this.setState({
                 managerEmail: event.currentTarget.value
-                //listOfInterviews: this.props.listOfInterviews
             });
             this.props.getInterviewPages(
                 0,
@@ -234,12 +227,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.clientName,
                 this.state.staging);
         } else {
-            // const filteredList = this.props.listOfInterviews.filter((entry) => {
-            //     return (entry.managerEmail === event.currentTarget.value);
-            // });
             this.setState({
-                managerEmail: event.currentTarget.value,
-                //listOfInterviews: filteredList
+                managerEmail: event.currentTarget.value
             });
             this.props.getInterviewPages(
                 0,
@@ -258,7 +247,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         if (event.currentTarget.value === 'placeName') {
             this.setState({
                 place: event.currentTarget.value
-                //listOfInterviews: this.props.listOfInterviews
             });
             this.props.getInterviewPages(
                 0,
@@ -271,12 +259,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.clientName,
                 this.state.staging);
         } else {
-            // const filteredList = this.props.listOfInterviews.filter((entry) => {
-            //     return (entry.place === event.currentTarget.value);
-            // });
             this.setState({
-                place: event.currentTarget.value,
-                //listOfInterviews: filteredList
+                place: event.currentTarget.value
             });
             this.props.getInterviewPages(
                 0,
@@ -295,7 +279,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         if (event.currentTarget.value === 'clientName') {
             this.setState({
                 clientName: event.currentTarget.value
-                //listOfInterviews: this.props.listOfInterviews
             });
             this.props.getInterviewPages(
                 0,
@@ -308,12 +291,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 event.currentTarget.value,
                 this.state.staging);
         } else {
-            // const filteredList = this.props.listOfInterviews.filter((entry) => {
-            //     return (entry.client.clientName === event.currentTarget.value);
-            // });
             this.setState({
-                clientName: event.currentTarget.value,
-                //listOfInterviews: filteredList
+                clientName: event.currentTarget.value
             });
             this.props.getInterviewPages(
                 0,
@@ -334,7 +313,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         if (event.currentTarget.value === 'stagingOff') {
             this.setState({
                 staging: event.currentTarget.value
-                //listOfInterviews: this.props.listOfInterviews
             });
             console.log("staging Off");
 
@@ -350,13 +328,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 event.currentTarget.value);
 
         } else {
-            // this.props.listOfInterviews.filter((entry) => {
-            //     return (entry.associateEmail === event.currentTarget.value);
-            // });
             this.setState({
                 staging: event.currentTarget.value
-                //listOfInterviews: this.props.listOfInterviews
-                //listOfInterviews: filteredList
             });
             this.props.getInterviewPages(
                 0,
@@ -399,13 +372,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     };
 
     render() {
-        // console.log(this.state.listOfInterviewsInitial);
-        // console.log(this.state.listOfInterviews);
         console.log(this.state.associateEmail);
-
-
-        //let interviewsInitial = this.props.
-
 
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
