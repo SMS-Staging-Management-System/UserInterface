@@ -57,7 +57,6 @@ class NumInterviewsSummary extends Component<INumInterviewsSummaryProps, INumInt
     });
   }
     
-
   listToBuildable = (): object => {
       let buildable = {};
       buildable["Total Scheduled"] = this.props.totalScheduled;
@@ -109,6 +108,10 @@ class NumInterviewsSummary extends Component<INumInterviewsSummaryProps, INumInt
         }
       }
     return {data, options};
+  }
+
+  componentDidMount() {
+    this.props.getWeeklyInterviews(new Date());
   }
 
   render() {
