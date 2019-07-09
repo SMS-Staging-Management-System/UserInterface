@@ -5,6 +5,7 @@ import { IState } from '../../../../reducers';
 import ByStaging from '../byStaging/ByStaging';
 import FiveOrMore from '../fiveOrMore/FiveOrMore';
 import './Home.scss'
+import NumInterviewsSummary from '../numInterviews/NumInterviewsSummary';
 
 interface myProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
@@ -15,6 +16,7 @@ class Home extends Component<myProps,any> {
             <div className='wrapper'>
                 <ByStaging {...this.props} />
                 <FiveOrMore {...this.props} />
+                <NumInterviewsSummary {...this.props} />
             </div>
         )
     }
