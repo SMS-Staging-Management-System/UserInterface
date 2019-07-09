@@ -5,6 +5,7 @@ import { IState } from '../../../../reducers';
 import { ICohort } from '../../../../model/cohort';
 import { getCohorts } from '../../../../actions/dashboardActions/to-staging.actions'
 import { Table } from 'react-bootstrap';
+import './ToStaging.scss'
 
 interface IToStagingProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
@@ -27,8 +28,10 @@ class ToStaging extends Component<IToStagingProps,any> {
     render() {
         return (
             <div className="ToStaging">
+                <h1 className='lead text-center w-100'><b>Cohorts graduating in the  next 2 weeks</b></h1>
                 {this.props.cohortList.length >= 1 ?
-                    <Table className="table table-striped mx-auto w-auto">
+                    <div className='table-responsive border border-gray '>
+                    <table className='table table-striped m-auto '>
                         <thead className="rev-background-color">
                             <tr>
                                 <th>Cohort Name</th>
@@ -39,7 +42,7 @@ class ToStaging extends Component<IToStagingProps,any> {
                         </thead>
                         <tbody>
                             {this.props.cohortList.map(cohort => (
-                                <tr key={cohort.cohortId} className="rev-table-row">
+                                <tr key={cohort.cohortId}>
                                     <td>{cohort.cohortName}</td>
                                     <td>{cohort.trainer.firstName + " " + cohort.trainer.lastName}</td>
                                     <td>{cohort.address.alias}</td>
@@ -47,7 +50,8 @@ class ToStaging extends Component<IToStagingProps,any> {
                                 </tr>
                             ))}
                         </tbody>
-                    </Table> : 
+                    </table> 
+                    </div> : 
                 <>
                 <h1>No Data</h1>
                 <p>No cohorts are ending in the next 2 weeks.</p>

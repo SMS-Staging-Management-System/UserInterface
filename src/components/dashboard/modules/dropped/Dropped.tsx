@@ -82,8 +82,8 @@ class Dropped extends Component<myProps, IdroppedState> {
                 </>
                 :<>
                 <div>
-                <div className="title rev-background-color">
-                    Total number of associates dropped last week: <u>{this.state.totalassoc}</u>
+                <div className="lead text-center w-100 ">
+                    Total number of associates dropped last week: {this.state.totalassoc}
                 </div>
                 <div className='container my-3'>
                     <div className='table-responsive border border-gray'>
