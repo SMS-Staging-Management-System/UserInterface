@@ -35,7 +35,11 @@ export class ReportsPage extends Component {
           <Col xs="3">
             <h2>Reports</h2>
           </Col>
-          <Col xs="9">
+
+          <Col xs="7">
+          </Col>
+
+          <Col xs="2">
             <button className="btn btn-lg btn-primary btn-block" onClick={() => this.changeReportType()}>
               {this.state.table ? 'Visual Data' : 'Form Data'}
             </button>

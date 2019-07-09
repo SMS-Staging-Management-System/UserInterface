@@ -41,7 +41,7 @@ export class InterviewCountChart extends PureComponent<IInterviewCountChartProps
             chartProps={interviewcountChartProps}
           />
         </>
-        :<>{/*put spinner here*/}</>}
+        :<>Loading...</>}
       </>
     )
   }
