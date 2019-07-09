@@ -5,11 +5,7 @@ import { IState } from '../../../../reducers';
 import ByStaging from '../byStaging/ByStaging';
 import FiveOrMore from '../fiveOrMore/FiveOrMore';
 import './Home.scss'
-<<<<<<< HEAD
 import NumInterviews from '../numInterviews/NumInterviews';
-=======
-import NumInterviewsSummary from '../numInterviews/NumInterviewsSummary';
->>>>>>> d6996faeca3b4598b440ab6c941bd75c8a192c94
 
 interface myProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
@@ -17,7 +13,6 @@ interface myProps extends RouteComponentProps<{}> {
 class Home extends Component<myProps,any> {
     render() {
         return (
-<<<<<<< HEAD
             <>
                 <div className='wrapper'>
                     <ByStaging {...this.props} />
@@ -29,13 +24,6 @@ class Home extends Component<myProps,any> {
                 </div>
             </>
             
-=======
-            <div className='wrapper'>
-                <ByStaging {...this.props} />
-                <FiveOrMore {...this.props} />
-                <NumInterviewsSummary {...this.props} />
-            </div>
->>>>>>> d6996faeca3b4598b440ab6c941bd75c8a192c94
         )
     }
 }
