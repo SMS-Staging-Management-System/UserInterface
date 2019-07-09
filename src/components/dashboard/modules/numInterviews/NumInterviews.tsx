@@ -61,7 +61,6 @@ class NumInterviews extends Component<INumInterviewsProps,INumInterviewsState> {
             currentWeek: date
         });
     }
-    
 
     listToBuildable = (): object => {
         let buildable = {};
@@ -114,6 +113,10 @@ class NumInterviews extends Component<INumInterviewsProps,INumInterviewsState> {
             }
         }
         return {data, options};
+    }
+
+    componentDidMount() {
+        this.props.getWeeklyInterviews(new Date());
     }
 
     render() {
