@@ -19,6 +19,7 @@ import { Client } from '../../model/Client.model';
 import { ICohort } from '../../model/cohort';
 import { IUser } from '../../model/user.model';
 import { smsClient } from '../../axios/sms-clients';
+import { managersClient } from '../../axios/sms-clients/managers-client';
 
 
 interface ICreateInterviewComponentProps extends RouteComponentProps {
@@ -27,7 +28,18 @@ interface ICreateInterviewComponentProps extends RouteComponentProps {
     setState: (newCreateInterviewComponentState: ICreateInterviewComponentState) => void;
 }
 
-class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps> {
+interface ICreateNewInterviewComponentProps{
+    //Because I cant get date and time individually alone and cant use props setState
+    date: string
+    time: string
+}
+
+class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps, ICreateNewInterviewComponentProps> {
+
+    state = {
+        date: '',
+        time: ''
+    }
 
     componentDidMount() {
         //This will find all cohorts to check if any exist
@@ -57,6 +69,14 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
             console.log(err)
         })
         
+    }
+
+    componentWillUpdate(){
+        if(this.props.createInterviewComponentState.date !== (this.state.date + ' ' + this.state.time)){
+            this.createDate()
+        }
+        let testDate: Date = new Date(this.props.createInterviewComponentState.date)
+        console.log(testDate)
     }
 
     getAllClients = async () => {
@@ -97,22 +117,78 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         return name
     }
 
+    grabManagerEmail = (alias) => {
+        let managerEmail 
+        managersClient.findManagersByLocation(alias).then((res) =>{
+            managerEmail = res.data
+        })
+        return managerEmail
+    }
+
     sendInputToDB = async (): Promise<boolean> => {
         // { firstName:'', lastName:'', date:'', location:'', format:''}
         let { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState;
+        let selecetedManagerEmail = this.grabManagerEmail(location)
         if (selectedAssociate && dateString && location && client) {
-            const newInterviewData: INewInterviewData = {
-                associateEmail: selectedAssociate.email,
-                date: (new Date(dateString)).valueOf(),
-                location: location,
-                client: client
-            };
+            let newInterviewData: INewInterviewData
+            if(this.props.currentUser.roles.length === 0){
+                newInterviewData = {
+                    associateEmail: selectedAssociate.email,
+                    managerEmail: selecetedManagerEmail,
+                    date: (new Date(dateString)).valueOf(),
+                    location: location,
+                    client: client
+                };   
+            }else{
+                newInterviewData = {
+                    associateEmail: selectedAssociate.email,
+                    managerEmail: '',
+                    date: (new Date(dateString)).valueOf(),
+                    location: location,
+                    client: client
+                };   
+            }
+            
+            
             console.log(newInterviewData);
             const res = await interviewClient.addNewInterview(newInterviewData)
             console.log('submitted')
             console.log(res);
             return (res.status >= 200 && res.status < 300); 
         } else return false;
+    }
+
+
+    createDate = () => {
+        let newDate = this.state.date + ' ' + this.state.time
+
+        console.log(newDate)
+        this.props.setState({
+            ...this.props.createInterviewComponentState, 
+            date : newDate
+        })
+    }
+
+    updateDate = (event) =>{
+        event.preventDefault()
+
+        console.log(event.target.value)
+
+        this.setState({
+            ...this.state,
+            date : event.target.value
+        })
+    }
+
+    updateTime = (event) =>{
+        event.preventDefault()
+
+        console.log(event.target.value)
+
+        this.setState({
+            ...this.state,
+            time : event.target.value
+        })
     }
 
     render() {
@@ -209,13 +285,13 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 <span className="span-select-interview">Select a Date </span>
                 <InputGroup size="md" className="new-interview-input-group">
                     <InputGroupAddon addonType="prepend">date </InputGroupAddon>
-                    <Input type="date" placeholder="date" value={date} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setState({ ...state, date: e.target.value }); }} />
+                    <Input type="date" placeholder="date" value={this.state.date} onChange={this.updateDate} />
                 </InputGroup>
                 <span className="span-select-interview">Enter Time</span>
                 <InputGroup size="md" className="new-interview-input-group">
                     <InputGroupAddon addonType="prepend">time </InputGroupAddon>
                     {/* so not done yet, trying to figure out how to deal with time*/}
-                    <Input type="time" placeholder="time" min="8:00" max="20:00" />
+                    <Input type="time" placeholder="time" min="8:00" max="20:00" value={this.state.time} onChange={this.updateTime}/>
                 </InputGroup>
                 <span className="span-select-interview">Enter a location</span>
                 <InputGroup size="md" className="new-interview-input-group">
