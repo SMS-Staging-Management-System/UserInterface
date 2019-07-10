@@ -79,10 +79,15 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                     </>
                   }
                   {
+                    //needs for all users to be able to see and didnt want to make the above code any more complicated looking
                     (this.props.auth.currentUser.roles.length === 0) &&
-                    <li>
-                      <Link to="/interview/list" className=" dropdown-item"> Interview List </Link>
-                    </li>
+                    <li className="nav-item active dropdown">
+                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaDatabase /> Interviews </a>
+                    <div className="dropdown-menu" aria-labelledby="examples-dropdown">
+                      <Link to="/interview/new" className=" dropdown-item nav-dropdown"> New Interview</Link>
+                      <Link to="/interview/list" className=" dropdown-item nav-dropdown"> Interview List </Link>
+                    </div>
+                  </li>
                   }
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt />  {props.auth.currentUser.email}</a>
