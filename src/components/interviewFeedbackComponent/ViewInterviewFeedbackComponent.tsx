@@ -35,12 +35,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
     sendFeedbackToDB = async (event) => {
         event.preventDefault()
         let { interviewId } = this.props.location.state;
-        // console.log((this.props.match.params as any).interviewId);
-        // const state = this.props.interviewFeedbackComponentState;
-        const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat, interviewStatus } = this.state;
-        // const {interviewFormat} = state;
-        // console.log(state)
-        // console.log('interviewformat::::::::',InterviewFormat[interviewFormat])
+        const { feedbackRequestedDate, feedbackText, feedbackReceivedDate, feedbackDeliveredDate, interviewFormat, feedbackStatus } = this.state;
         await interviewClient.updateFeedback(
             this.state.feedbackId,
             {
@@ -49,7 +44,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                 feedbackText: feedbackText,
                 feedbackReceivedDate: (new Date(feedbackReceivedDate + 'T00:00:00')).valueOf(),
                 feedbackDeliveredDate: (new Date(feedbackDeliveredDate + 'T00:00:00')).valueOf(),
-                statusId: interviewStatus,
+                statusId: feedbackStatus,
                 format: interviewFormat,
             });
         this.redirectTo()
