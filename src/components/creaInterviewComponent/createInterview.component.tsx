@@ -28,17 +28,19 @@ interface ICreateInterviewComponentProps extends RouteComponentProps {
     setState: (newCreateInterviewComponentState: ICreateInterviewComponentState) => void;
 }
 
-interface ICreateNewInterviewComponentProps{
+interface ICreateNewInterviewComponentState{
     //Because I cant get date and time individually alone and cant use props setState
     date: string
     time: string
+    managerEmail: string
 }
 
-class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps, ICreateNewInterviewComponentProps> {
+class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps, ICreateNewInterviewComponentState> {
 
     state = {
         date: '',
-        time: ''
+        time: '',
+        managerEmail: ''
     }
 
     componentDidMount() {
@@ -117,24 +119,25 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         return name
     }
 
-    grabManagerEmail = (alias) => {
-        let managerEmail 
-        managersClient.findManagersByLocation(alias).then((res) =>{
-            managerEmail = res.data
+    grabManagerEmail = async (alias) => { 
+        await managersClient.findManagersByLocation(alias).then((res) =>{
+            console.log(res.data)
+            this.setState({...this.state,
+                managerEmail: res.data[0].email
+            })
         })
-        return managerEmail
     }
 
     sendInputToDB = async (): Promise<boolean> => {
         // { firstName:'', lastName:'', date:'', location:'', format:''}
         let { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState;
-        let selecetedManagerEmail = this.grabManagerEmail(location)
         if (selectedAssociate && dateString && location && client) {
             let newInterviewData: INewInterviewData
+            await this.grabManagerEmail(location)
             if(this.props.currentUser.roles.length === 0){
                 newInterviewData = {
                     associateEmail: selectedAssociate.email,
-                    managerEmail: selecetedManagerEmail,
+                    managerEmail: this.state.managerEmail,
                     date: (new Date(dateString)).valueOf(),
                     location: location,
                     client: client
@@ -296,7 +299,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 <span className="span-select-interview">Enter a location</span>
                 <InputGroup size="md" className="new-interview-input-group">
                     <InputGroupAddon addonType="prepend">location</InputGroupAddon>
-                    <Input placeholder="....." value={location} onChange={(e) => { setState({ ...state, location: e.target.value }) }} />
+                    <Input placeholder="....." value={location} onChange={(e) => { setState({ ...state, location: e.target.value })} } />
                 </InputGroup>
                 </div>
                 </div>
