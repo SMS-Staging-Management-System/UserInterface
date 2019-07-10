@@ -108,24 +108,17 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         console.log(res);
     }
 
-    fetchCurrentUserName = (currentEmail) => {
+    fetchCurrentUserName = async (currentEmail) => {
         let name
-        smsClient.get(`/user-service/users/email/${currentEmail}`).then((res)=>{
-            //function returns a page instead of just user, but due to being
-            //just a big javascript object, can just grab username and password from it
-            name = res.data.firstName + ' ' + res.data.lastName
-        }).catch((err)=>{
-            console.log(err)
-        })
+        const res = await smsClient.get(`/user-service/users/email/${currentEmail}`)
+        name = res.data.firstName + ' ' + res.data.lastName
         return name
     }
 
     grabManagerEmail = async (alias) => { 
-        await managersClient.findManagersByLocation(alias).then((res) =>{
-            console.log(res.data)
+        const res = await managersClient.findManagersByLocation(alias)
             this.setState({...this.state,
                 managerEmail: res.data[0].email
-            })
         })
     }
 
