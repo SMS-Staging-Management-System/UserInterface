@@ -53,11 +53,11 @@ import { cognitoRoles } from '../../model/cognito-user.model';
     let { path } = this.props.match;
     return (
       <div id="manage-users-container">
-        <DashboardNav
+        {/* <DashboardNav
           manage={this.props.match.params.manage}
           history={this.props.history}
           location={this.props.location}
-          match={this.props.match} />
+          match={this.props.match} /> */}
 
         <Switch>
           <ProtectedRoute allowedRoles={['admin', 'staging-manager']} path={`${path}/home`} component={Home} />
