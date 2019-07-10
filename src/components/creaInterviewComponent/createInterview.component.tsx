@@ -30,6 +30,7 @@ interface ICreateInterviewComponentProps extends RouteComponentProps {
 
 interface ICreateNewInterviewComponentState{
     //Because I cant get date and time individually alone and cant use props setState
+    //to allow date and time to be pu tinto the props date
     date: string
     time: string
     managerEmail: string
@@ -134,6 +135,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         if (selectedAssociate && dateString && location && client) {
             let newInterviewData: INewInterviewData
             await this.grabManagerEmail(location)
+            //to tell if a user is an associate or not. if not, then managerEmail is blank and the endpoint will take care of that
             if(this.props.currentUser.roles.length === 0){
                 newInterviewData = {
                     associateEmail: selectedAssociate.email,
@@ -250,7 +252,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 <span className="span-select-interview-associate">Select a Associate </span>
                 <InputGroup className="new-interview-input-group">
 
-                    {/* To choose different input types due to if user is an associate or not. Did not want to do it this way */}
+                    {/* To choose different input types due to if user is an associate or not. */}
                     {this.props.currentUser.roles.length !== 0 ? 
                     <Input className='input-group-interview' type='select'
                         value={selectedAssociate ? JSON.stringify(selectedAssociate) : ''}
