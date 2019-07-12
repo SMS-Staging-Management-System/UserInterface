@@ -1,5 +1,5 @@
 import { IInterviewFeedbackComponentState } from '.';
-import { InterviewFormat } from '../../model/Interview.format.model';
+// import { InterviewFormat } from '../../model/Interview.format.model';
 import { interviewFeedbackTypes } from '../../actions/interviewFeedback/interviewFeedback.actions';
 
 const initialState: IInterviewFeedbackComponentState = {
@@ -7,7 +7,9 @@ const initialState: IInterviewFeedbackComponentState = {
   feedbackText: '',
   feedbackReceivedDate: '',
   feedbackDeliveredDate: '',
-  interviewFormat: InterviewFormat.none,
+  feedbackStatus: 0,
+  interviewFormat: 0,
+  interviewStatus: 0,
   noInterviewFound: true,
 }
 

@@ -54,7 +54,7 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 currentSMSUser: {
-                    ...state.currentSMSUser,
+                    //...state.currentSMSUser,
                     ...action.payload.user,
                     roles: state.currentSMSUser.roles
                 }
