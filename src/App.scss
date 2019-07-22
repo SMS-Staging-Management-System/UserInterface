@@ -1,5 +1,3 @@
-// @import 'components/pokemon/pokemon-card/pokemon-card.scss';
-
 // variables can be declared and later reused
 $revature-orange-light: #f3a55d;
 $revature-orange: #f26925;
@@ -104,11 +102,10 @@ input:invalid:not(:valid) {
 .rev-btn:not(.dropdown),
 .rev-btn > button.dropdown-toggle {
   background-color: $revature-orange-light;
-  border-color: $revature-orange-light;
+  border-color: $revature-orange;
   color: black !important;
   &:hover {
-    border-bottom-color: #565d61;
-    color: $revature-orange-light;
+    background-color: $revature-orange;
   }
   &:active {
     background-color: $revature-orange-light;
@@ -345,9 +342,6 @@ body {
   cursor: pointer;
 }
 
-/*****************************
-  Clicker
-*****************************/
 .blue {
   color: blue;
 }
@@ -1246,3 +1240,33 @@ body {
 .futurafont {
   font-family: "FuturaSTDBook";
 }
+
+.close-sign {
+  margin-left: 740px;
+  border: 2px solid black;
+}
+
+.close-sign:hover {
+  background-color:grey;
+  color: white;
+}
+.update-model {
+  float: right
+}
+
+.list-group-item.active {
+  background-color: $revature-orange-light;
+  border-color: grey;
+  border: 1px solid grey
+}
+
+.page-item.active .page-link {
+  background-color: $revature-orange-light;
+  border-color: $revature-orange-light;
+}
+
+.page-link {
+  color: black;
+}
+
+
