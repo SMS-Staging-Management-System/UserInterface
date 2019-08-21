@@ -535,7 +535,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-                                    <div className='col-1'>
+                                    <div className='col-1.5'>
                                         <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
                                             <option value='clientName'>Client</option>
                                             {arrClientName2.map((entry, index) => {
@@ -545,7 +545,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-                                    <div className='col-2'>
+                                    <div className='col-1.5'>
                                         <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
                                             <option value='stagingOff'>Staging Off</option>
                                             <option value='stagingOn'>Staging On</option>
