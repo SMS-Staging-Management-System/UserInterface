@@ -10,6 +10,7 @@ import { Label } from 'reactstrap';
 import { store } from '../../Store';
 // import { Button } from 'react-bootstrap'; 
 import ReviewButton from './ActionButtons/ReviewButton';
+import { CookieStorage } from '@aws-amplify/auth';
 // import { cognitoRoles } from '../../model/cognito-user.model';
 
 
@@ -364,8 +365,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
         const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
-        const place = (name === 'placeName') ? value : this.state.place;
-        const clientName = (name === 'clientName') ? value : this.state.clientName;
+        const place = (name === 'place') ? value : this.state.place;
+        const clientName = (name === 'client') ? value : this.state.clientName;
         const staging = (name === 'staging') ? value : this.state.staging;
         this.setState({
             associateEmail,
@@ -413,33 +414,36 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     };
     // CHECKOUT HERE
     render() {
+        //listOfInterviews: [{associateEmail: 1,...}, {associateEmail: 2,...}]
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.associateEmail;
-        });
-        const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => { //need unique places for select option
-            return arrAssociateEmail1.indexOf(item) === pos;
-        });
-        const arrManagerEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.managerEmail;
-        });
-        const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => { //need unique places for select option
-            return arrManagerEmail1.indexOf(item) === pos;
-        });
-        const arrPlace1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.place;
-        });
-        const arrPlace2 = arrPlace1.filter((item, pos) => { //need unique places for select option
-            return arrPlace1.indexOf(item) === pos;
-        });
-        //END CHECKOUT HERE
-        const arrClientName1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.client.clientName;
-        });
-        const arrClientName2 = arrClientName1.filter((item, pos) => { //need unique places for select option
-            return arrClientName1.indexOf(item) === pos;
-        });
+        // const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        //     return item.associateEmail;
+        // });
+        // const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => { //need unique places for select option
+        //     console.log("Item: " + item + " Pos: " + pos);
+        //     console.log(arrAssociateEmail1);
+        //     return arrAssociateEmail1.indexOf(item) === pos;
+        // });
+        // const arrManagerEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        //     return item.managerEmail;
+        // });
+        // const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => { //need unique places for select option
+        //     return arrManagerEmail1.indexOf(item) === pos;
+        // });
+        // const arrPlace1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        //     return item.place;
+        // });
+        // const arrPlace2 = arrPlace1.filter((item, pos) => { //need unique places for select option
+        //     return arrPlace1.indexOf(item) === pos;
+        // });
+        // //END CHECKOUT HERE
+        // const arrClientName1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        //     return item.client.clientName;
+        // });
+        // const arrClientName2 = arrClientName1.filter((item, pos) => { //need unique places for select option
+        //     return arrClientName1.indexOf(item) === pos;
+        // });
         let thKeys = Object.keys(tableHeaderValues);
         let thValues = Object.values(tableHeaderValues);
         return (
@@ -493,51 +497,57 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             </table>
                             <form>
                                 <div className='form-row'>
-                                    <div className='col-1.5' style={{ width: '12%' }}>
-                                        <select onChange={this.filterChange} name="associateEmail"
-                                            value={this.state.associateEmail} className='form-control'>
-                                            <option value='associateEmail'>Associate Email</option>
-                                            {arrAssociateEmail2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
+                                {thKeys.map((element, keyIndex) => {
+                                    let filterCurrentArrValues : string[] = [];
+                                    return (keyIndex < 4 ? <div className='col-1.5' style={{ width: '12%' }}>
+                                        <select onChange={this.filterChange} name={element}
+                                            value={this.state[element]} className='form-control'>
+                                            <option value={element}>{thValues[keyIndex]}</option>
+                                             {this.props.listOfInterviews.map((entry, index) => {
+                                                 let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                 if(!filterCurrentArrValues.includes(currentNestedEntry)) {
+                                                    filterCurrentArrValues.push(currentNestedEntry);
+                                                    return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
+                                                 }
+                                                 return;
+                                             })}  
                                         </select>
-                                    </div>
-                                    <div className='col-1.5' style={{ width: '12%' }}>
-                                        <select onChange={this.filterChange} name="managerEmail"
-                                            value={this.state.managerEmail} className='form-control'>
-                                            <option value='managerEmail'>Manager Email</option>
-                                            {arrManagerEmail2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-1' style={{ width: '8%' }}>
-                                        <select onChange={this.filterChange} name="placeName"
-                                            value={this.state.place} className='form-control'>
-                                            <option value='placeName'>Location</option>
-                                            {arrPlace2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    {/* END CHECKOUT HERE*/}
-                                    <div className='col-1.5' style={{ width: '9%' }}>
-                                        <select onChange={this.filterChange} name="clientName"
-                                            value={this.state.clientName} className='form-control'>
-                                            <option value='clientName'>Client</option>
-                                            {arrClientName2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
+                                    </div>: null)
+                                    // <div className='col-1.5' style={{ width: '12%' }}>
+                                    //     <select onChange={this.filterChange} name="managerEmail"
+                                    //         value={this.state.managerEmail} className='form-control'>
+                                    //         <option value='managerEmail'>Manager Email</option>
+                                    //         {arrManagerEmail2.map((entry, index) => {
+                                    //             return (
+                                    //                 <option value={entry} key={index}>{entry}</option>
+                                    //             );
+                                    //         })}
+                                    //     </select>
+                                    // </div>
+                                    // <div className='col-1' style={{ width: '8%' }}>
+                                    //     <select onChange={this.filterChange} name="placeName"
+                                    //         value={this.state.place} className='form-control'>
+                                    //         <option value='placeName'>Location</option>
+                                    //         {arrPlace2.map((entry, index) => {
+                                    //             return (
+                                    //                 <option value={entry} key={index}>{entry}</option>
+                                    //             );
+                                    //         })}
+                                    //     </select>
+                                    // </div>
+                                    // {/* END CHECKOUT HERE*/}
+                                    // <div className='col-1.5' style={{ width: '9%' }}>
+                                    //     <select onChange={this.filterChange} name="clientName"
+                                    //         value={this.state.clientName} className='form-control'>
+                                    //         <option value='clientName'>Client</option>
+                                    //         {arrClientName2.map((entry, index) => {
+                                    //             return (
+                                    //                 <option value={entry} key={index}>{entry}</option>
+                                    //             );
+                                    //         })}
+                                    //     </select>
+                                    // </div>
+                                        })}
                                     <div className='col'>
                                         <select onChange={this.filterChange} value={this.state.staging}
                                             name='staging' className='form-control'>
@@ -546,7 +556,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col'>
-                                        <select onChange={this.filterChange} className='form-control'>
+                                        <select name = 'pageSize' onChange={this.filterChange} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
                                             <option value={5} className={'justify-content-center'}>5</option>
                                             <option value={10} className={'justify-content-center'}>10</option>
