@@ -467,7 +467,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         return (<tr key={entry.id}>
                                             {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
                                             {/* {isAdmin? <td><ReviewButton className="text-warning" interviewId = {entry.id}/></td> : <></>} */}
-                                            <td><ReviewButton disabled={isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td>
+                                            {isAdmin ? 
+                                            <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null }
                                             <td>{entry.associateEmail}</td>
                                             <td>{entry.managerEmail}</td>
                                             <td>{entry.place}</td>
