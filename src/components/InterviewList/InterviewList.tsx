@@ -141,26 +141,38 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     }
 
     changeOrderCriteria = async (event: any) => {
+
+
+
         await this.setState({
             tableHeaderId: event.currentTarget.id
         });
+
+        //store page ASC or DESC
+        let orderDirection;
+
         if (this.state.tableHeaderId === this.state.previousTableHeaderId) { //if click same header -> toggle ASC/DESC
             if (this.state.direction === 'ASC') {
-                this.setState({
-                    direction: 'DESC'
-                });
+
+                orderDirection = 'DESC'
+                //this.setState({
+                //    direction: 'DESC'
+                //});
             } else {
-                this.setState({
-                    direction: 'ASC'
-                });
+                orderDirection = 'ASC'
+                //this.setState({
+                //    direction: 'ASC'
+                //});
             }
         } else { //if click diff header -> sort ASC
-            this.setState({
-                direction: 'ASC'
-            })
+            orderDirection = 'ASC'
+            //this.setState({
+            //    direction: 'ASC'
+            //})
         }
         this.setState({
-            previousTableHeaderId: this.state.tableHeaderId
+            previousTableHeaderId: this.state.tableHeaderId,
+            direction: orderDirection
         });
         await this.props.getInterviewPages(
             0,
@@ -497,57 +509,57 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             </table>
                             <form>
                                 <div className='form-row'>
-                                {thKeys.map((element, keyIndex) => {
-                                    let filterCurrentArrValues : string[] = [];
-                                    return (keyIndex < 4 ? <div className='col-1.5' style={{ width: '12%' }}>
-                                        <select onChange={this.filterChange} name={element}
-                                            value={this.state[element]} className='form-control'>
-                                            <option value={element}>{thValues[keyIndex]}</option>
-                                             {this.props.listOfInterviews.map((entry, index) => {
-                                                 let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
-                                                 if(!filterCurrentArrValues.includes(currentNestedEntry)) {
-                                                    filterCurrentArrValues.push(currentNestedEntry);
-                                                    return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
-                                                 }
-                                                 return;
-                                             })}  
-                                        </select>
-                                    </div>: null)
-                                    // <div className='col-1.5' style={{ width: '12%' }}>
-                                    //     <select onChange={this.filterChange} name="managerEmail"
-                                    //         value={this.state.managerEmail} className='form-control'>
-                                    //         <option value='managerEmail'>Manager Email</option>
-                                    //         {arrManagerEmail2.map((entry, index) => {
-                                    //             return (
-                                    //                 <option value={entry} key={index}>{entry}</option>
-                                    //             );
-                                    //         })}
-                                    //     </select>
-                                    // </div>
-                                    // <div className='col-1' style={{ width: '8%' }}>
-                                    //     <select onChange={this.filterChange} name="placeName"
-                                    //         value={this.state.place} className='form-control'>
-                                    //         <option value='placeName'>Location</option>
-                                    //         {arrPlace2.map((entry, index) => {
-                                    //             return (
-                                    //                 <option value={entry} key={index}>{entry}</option>
-                                    //             );
-                                    //         })}
-                                    //     </select>
-                                    // </div>
-                                    // {/* END CHECKOUT HERE*/}
-                                    // <div className='col-1.5' style={{ width: '9%' }}>
-                                    //     <select onChange={this.filterChange} name="clientName"
-                                    //         value={this.state.clientName} className='form-control'>
-                                    //         <option value='clientName'>Client</option>
-                                    //         {arrClientName2.map((entry, index) => {
-                                    //             return (
-                                    //                 <option value={entry} key={index}>{entry}</option>
-                                    //             );
-                                    //         })}
-                                    //     </select>
-                                    // </div>
-                                        })}
+                                    {thKeys.map((element, keyIndex) => {
+                                        let filterCurrentArrValues: string[] = [];
+                                        return (keyIndex < 4 ? <div className='col-1.5' style={{ width: '12%' }}>
+                                            <select onChange={this.filterChange} name={element}
+                                                value={this.state[element]} className='form-control'>
+                                                <option value={element}>{thValues[keyIndex]}</option>
+                                                {this.props.listOfInterviews.map((entry, index) => {
+                                                    let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                    if (!filterCurrentArrValues.includes(currentNestedEntry)) {
+                                                        filterCurrentArrValues.push(currentNestedEntry);
+                                                        return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
+                                                    }
+                                                    return;
+                                                })}
+                                            </select>
+                                        </div> : null)
+                                        // <div className='col-1.5' style={{ width: '12%' }}>
+                                        //     <select onChange={this.filterChange} name="managerEmail"
+                                        //         value={this.state.managerEmail} className='form-control'>
+                                        //         <option value='managerEmail'>Manager Email</option>
+                                        //         {arrManagerEmail2.map((entry, index) => {
+                                        //             return (
+                                        //                 <option value={entry} key={index}>{entry}</option>
+                                        //             );
+                                        //         })}
+                                        //     </select>
+                                        // </div>
+                                        // <div className='col-1' style={{ width: '8%' }}>
+                                        //     <select onChange={this.filterChange} name="placeName"
+                                        //         value={this.state.place} className='form-control'>
+                                        //         <option value='placeName'>Location</option>
+                                        //         {arrPlace2.map((entry, index) => {
+                                        //             return (
+                                        //                 <option value={entry} key={index}>{entry}</option>
+                                        //             );
+                                        //         })}
+                                        //     </select>
+                                        // </div>
+                                        // {/* END CHECKOUT HERE*/}
+                                        // <div className='col-1.5' style={{ width: '9%' }}>
+                                        //     <select onChange={this.filterChange} name="clientName"
+                                        //         value={this.state.clientName} className='form-control'>
+                                        //         <option value='clientName'>Client</option>
+                                        //         {arrClientName2.map((entry, index) => {
+                                        //             return (
+                                        //                 <option value={entry} key={index}>{entry}</option>
+                                        //             );
+                                        //         })}
+                                        //     </select>
+                                        // </div>
+                                    })}
                                     <div className='col'>
                                         <select onChange={this.filterChange} value={this.state.staging}
                                             name='staging' className='form-control'>
@@ -556,7 +568,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col'>
-                                        <select name = 'pageSize' onChange={this.filterChange} className='form-control'>
+                                        <select name='pageSize' onChange={this.filterChange} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
                                             <option value={5} className={'justify-content-center'}>5</option>
                                             <option value={10} className={'justify-content-center'}>10</option>
