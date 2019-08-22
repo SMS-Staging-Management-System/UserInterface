@@ -49,18 +49,18 @@ export interface InterviewListState {
     clientName: string,
     staging: string
 }
-const tableHeaderValues : Object = 
-    {
-     associateEmail: 'Associate Email',
-     managerEmail: 'Manager Email',
-     place: 'Location',
-     client: 'Client',
-     notified: 'Date Notified',
-     scheduled: 'Date Scheduled',
-     reviewed: 'Date Reviewed',
-     associateInput: 'Associate Input',
-     interviewFeedback: 'Interview Feedback'
-    }
+const tableHeaderValues: Object =
+{
+    associateEmail: 'Associate Email',
+    managerEmail: 'Manager Email',
+    place: 'Location',
+    client: 'Client',
+    notified: 'Date Notified',
+    scheduled: 'Date Scheduled',
+    reviewed: 'Date Reviewed',
+    associateInput: 'Associate Input',
+    interviewFeedback: 'Interview Feedback'
+}
 // More comments 
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
@@ -354,7 +354,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 event.currentTarget.value);
         }
     }
-    filterChange = (event : any ) => {
+    filterChange = (event: any) => {
 
         const value = event.currentTarget.value;
         const name = event.currentTarget.name;
@@ -368,7 +368,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
         const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
         const place = (name === 'placeName') ? value : this.state.place;
-        const clientName  = (name === 'clientName') ? value : this.state.clientName;
+        const clientName = (name === 'clientName') ? value : this.state.clientName;
         console.log(associateEmail);
         this.setState({
             associateEmail,
@@ -455,13 +455,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 <thead className='rev-background-color'>
                                     <tr>
                                         {isAdmin ? <th>Reviewed</th> : <></>}
-                                        {thKeys.map((element,index) => {
+                                        {thKeys.map((element, index) => {
                                             return (<th id={element} className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            {/* guard operator to toggle arrow up and down */}
-                                            {thValues[index]}
-					    {this.state.tableHeaderId === element && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                            </th> )
+                                                {/* guard operator to toggle arrow up and down */}
+                                                {thValues[index]}
+                                                {this.state.tableHeaderId === element && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
+                                                {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
+                                            </th>)
                                         })}
                                     </tr>
                                 </thead>
@@ -495,10 +495,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             </table>
                             <form>
                                 <div className='form-row'>
-<<<<<<< HEAD
-                                    <div className='col-1.5' style={{ width: '12%' }}>
-                                        <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
-=======
                                     <div className='col-0.5'>
                                         <select onChange={this.changePageSize} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
@@ -509,9 +505,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col-3'>
-                                        <select onChange={this.filterChange} name = "associateEmail"
-                                        value={this.state.associateEmail} className='form-control'>
->>>>>>> d11f216b26f0e76345dbf06494fba3a327154412
+                                        <select onChange={this.filterChange} name="associateEmail"
+                                            value={this.state.associateEmail} className='form-control'>
                                             <option value='associateEmail'>Associate Email</option>
                                             {arrAssociateEmail2.map((entry, index) => {
                                                 return (
@@ -520,14 +515,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-<<<<<<< HEAD
-                                    <div className='col-1.5' style={{ width: '12%' }}>
-                                        <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
-=======
                                     <div className='col-3'>
-                                        <select onChange={this.filterChange} name = "managerEmail"
-                                        value={this.state.managerEmail} className='form-control'>
->>>>>>> d11f216b26f0e76345dbf06494fba3a327154412
+                                        <select onChange={this.filterChange} name="managerEmail"
+                                            value={this.state.managerEmail} className='form-control'>
                                             <option value='managerEmail'>Manager Email</option>
                                             {arrManagerEmail2.map((entry, index) => {
                                                 return (
@@ -536,14 +526,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-<<<<<<< HEAD
-                                    <div className='col-1' style={{ width: '8%' }}>
-                                        <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
-=======
                                     <div className='col'>
-                                        <select onChange={this.filterChange} name = "placeName"
-                                        value={this.state.place} className='form-control'>
->>>>>>> d11f216b26f0e76345dbf06494fba3a327154412
+                                        <select onChange={this.filterChange} name="placeName"
+                                            value={this.state.place} className='form-control'>
                                             <option value='placeName'>Location</option>
                                             {arrPlace2.map((entry, index) => {
                                                 return (
@@ -552,14 +537,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-<<<<<<< HEAD
-                                    <div className='col-1.5' style={{ width: '9%' }}>
-                                        <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
-=======
                                     <div className='col-1'>
-                                        <select onChange={this.filterChange} name = "clientName"
-                                        value={this.state.clientName} className='form-control'>
->>>>>>> d11f216b26f0e76345dbf06494fba3a327154412
+                                        <select onChange={this.filterChange} name="clientName"
+                                            value={this.state.clientName} className='form-control'>
                                             <option value='clientName'>Client</option>
                                             {arrClientName2.map((entry, index) => {
                                                 return (
@@ -568,13 +548,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-<<<<<<< HEAD
-                                    <div className='col'>
-                                        <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
-=======
                                     <div className='col-2'>
                                         <select onChange={this.filterChange} value={this.state.staging} className='form-control'>
->>>>>>> d11f216b26f0e76345dbf06494fba3a327154412
                                             <option value='stagingOff'>Staging Off</option>
                                             <option value='stagingOn'>Staging On</option>
                                         </select>
