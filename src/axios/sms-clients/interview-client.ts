@@ -45,20 +45,10 @@ export const interviewClient = {
         url += '&clientName=' + clientName;
         url += '&staging=' + staging;
         console.log(url);
-<<<<<<< HEAD
-
-        //test code here
-        return {
-            data: {
-                content: [{ associateEmail: 'a', managerEmail: 'am', place: 'albama', client: { clientName: 'adrian' }, staging: 'STAGING_ON' }
-                    , { associateEmail: 'b', managerEmail: 'bm', place: 'bannana', client: { clientName: 'bobby' }, staging: 'STAGING_OFF' }
-                    , { associateEmail: 'c', managerEmail: 'cm', place: 'cali', client: { clientName: 'cleetus' }, staging: 'STAGING_OFF' }],//resp.data.content,
-=======
         return {
             data: {
                 content: [{ associateEmail: 'test', managerEmail: 'test', place: 'test', client: { clientName: 'test' }, staging: 'STAGING_ON' }
                     , { associateEmail: 'test', managerEmail: 'test2', place: 'test2', client: { clientName: 'test' }, staging: 'STAGING_OFF' }],//resp.data.content,
->>>>>>> b3b2634d1c1fa700b97a5b03d4d681892f8dfdc2
                 numberOfPages: 1,
                 totalPages: 2,
                 currentPage: 1,
@@ -67,10 +57,6 @@ export const interviewClient = {
                 direction: direction
             }
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> b3b2634d1c1fa700b97a5b03d4d681892f8dfdc2
         //return smsClient.get(url);
     },
 

@@ -379,187 +379,11 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             pageSize as number,
             this.props.orderBy,
             this.props.direction,
-<<<<<<< HEAD
-            this.state.associateEmail,
-            this.state.managerEmail,
-            this.state.place,
-            this.state.clientName,
-            this.state.staging);
-    }
-
-    filterByAssociateEmail = (event: any) => { //handle filter click by associate email
-        console.log(event.currentTarget.value);
-
-        if (event.currentTarget.value === 'associateEmail') {
-            this.setState({
-                associateEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                event.currentTarget.value,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-
-        } /*else {
-            this.setState({
-                associateEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                event.currentTarget.value,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        } */
-    }
-
-    filterByManagerEmail = (event: any) => { //handle filter click by manager email
-        if (event.currentTarget.value === 'managerEmail') {
-            this.setState({
-                managerEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                event.currentTarget.value,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        } /*else {
-            this.setState({
-                managerEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                event.currentTarget.value,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        } */
-    }
-
-    filterByPlace = (event: any) => { //handle filter click by place
-        if (event.currentTarget.value === 'placeName') {
-            this.setState({
-                place: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                event.currentTarget.value,
-                this.state.clientName,
-                this.state.staging);
-        } /* else {
-            this.setState({
-                place: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                event.currentTarget.value,
-                this.state.clientName,
-                this.state.staging);
-        } */
-    }
-
-    filterByClient = (event: any) => { //handle filter click by client
-        if (event.currentTarget.value === 'clientName') {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        } /* else {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        } */
-    }
-
-    filterByStaging = (event: any) => { //handle filter click by associate email
-        console.log(event.currentTarget.value);
-
-        if (event.currentTarget.value === 'stagingOff') {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            console.log("staging Off");
-
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-
-        } /* else {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-        } */
-=======
             associateEmail,
             managerEmail,
             place,
             clientName,
             staging);
->>>>>>> b3b2634d1c1fa700b97a5b03d4d681892f8dfdc2
     }
 
     renderDate = (date: number) => {
@@ -626,63 +450,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             <table className='table table-striped mx-auto w-auto'>
                                 <thead className='rev-background-color'>
                                     <tr>
-<<<<<<< HEAD
-                                        <th>Reviewed</th>
-                                        <th id='associateEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            {/* guard operator to toggle arrow up and down */}
-                                            Associate Email
-					    {this.state.tableHeaderId === 'associateEmail' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'associateEmail' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-
-                                        <th id='managerEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Manager Email
-					    {this.state.tableHeaderId === 'managerEmail' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'managerEmail' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-
-                                        <th id='place' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Location
-					    {this.state.tableHeaderId === 'place' && this.state.direction === 'DESC' && <IoIosArrowDown className='dropdownicon' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'place' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-
-                                        <th id='client' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Client
-					    {this.state.tableHeaderId === 'client' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'client' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-
-                                        <th id='notified' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Notified
-					    {this.state.tableHeaderId === 'notified' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'notified' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-
-                                        <th id='scheduled' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Scheduled
-					    {this.state.tableHeaderId === 'scheduled' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'scheduled' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-
-                                        <th id='reviewed' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Reviewed
-					    {this.state.tableHeaderId === 'reviewed' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'reviewed' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-                                        <th id='associateInput' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Associate Input
-					    {this.state.tableHeaderId === 'associateInput' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'associateInput' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                            {/* <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
-						<IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/> */}
-                                        </th>
-                                        <th id='feedback' className='cursor-hover' onClick={this.changeOrderCriteria} style={{ backgroundColor: '#f3a55d' }}>
-                                            Interview Feedback
-					    {this.state.tableHeaderId === 'feedback' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {/*this.state.tableHeaderId === 'feedback' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />*/}
-                                        </th>
-=======
                                         {isAdmin ? <th>Reviewed</th> : <></>}
                                         {/* CHECKOUT THE FOLLOWING */}
                                         {thKeys.map((element, index) => {
@@ -693,7 +460,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                                 {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
                                             </th>)
                                         })}
->>>>>>> b3b2634d1c1fa700b97a5b03d4d681892f8dfdc2
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -702,8 +468,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
                                             {/* {isAdmin? <td><ReviewButton className="text-warning" interviewId = {entry.id}/></td> : <></>} */}
                                             {/* Added isAdmin check before the review button to fix bug. Originally, checkbox was showing even when user wasn't admin.*/}
-                                            {isAdmin ? 
-                                            <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null }
+                                            {isAdmin ?
+                                                <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
                                             <td>{entry.associateEmail}</td>
                                             <td>{entry.managerEmail}</td>
                                             <td>{entry.place}</td>
