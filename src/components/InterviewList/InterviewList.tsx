@@ -174,207 +174,204 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.staging);
     }
 
-    changePageSize = (event: any) => {
-        this.props.getInterviewPages(
-            this.props.currentPage,
-            event.currentTarget.value,
-            this.props.orderBy,
-            this.props.direction,
-            this.state.associateEmail,
-            this.state.managerEmail,
-            this.state.place,
-            this.state.clientName,
-            this.state.staging);
-    }
+    // changePageSize = (event: any) => {
+    //     this.props.getInterviewPages(
+    //         this.props.currentPage,
+    //         event.currentTarget.value,
+    //         this.props.orderBy,
+    //         this.props.direction,
+    //         this.state.associateEmail,
+    //         this.state.managerEmail,
+    //         this.state.place,
+    //         this.state.clientName,
+    //         this.state.staging);
+    // }
 
-    filterByAssociateEmail = (event: any) => { //handle filter click by associate email
-        console.log(event.currentTarget.value);
+    // filterByAssociateEmail = (event: any) => { //handle filter click by associate email
+    //     console.log(event.currentTarget.value);
 
-        if (event.currentTarget.value === 'associateEmail') {
-            this.setState({
-                associateEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                event.currentTarget.value,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
+    //     if (event.currentTarget.value === 'associateEmail') {
+    //         this.setState({
+    //             associateEmail: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             event.currentTarget.value,
+    //             this.state.managerEmail,
+    //             this.state.place,
+    //             this.state.clientName,
+    //             this.state.staging);
 
-        } else {
-            this.setState({
-                associateEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                event.currentTarget.value,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
-    }
+    //     } else {
+    //         this.setState({
+    //             associateEmail: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             event.currentTarget.value,
+    //             this.state.managerEmail,
+    //             this.state.place,
+    //             this.state.clientName,
+    //             this.state.staging);
+    //     }
+    // }
 
-    filterByManagerEmail = (event: any) => { //handle filter click by manager email
-        if (event.currentTarget.value === 'managerEmail') {
-            this.setState({
-                managerEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                event.currentTarget.value,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        } else {
-            this.setState({
-                managerEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                event.currentTarget.value,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
-    }
+    // filterByManagerEmail = (event: any) => { //handle filter click by manager email
+    //     if (event.currentTarget.value === 'managerEmail') {
+    //         this.setState({
+    //             managerEmail: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             event.currentTarget.value,
+    //             this.state.place,
+    //             this.state.clientName,
+    //             this.state.staging);
+    //     } else {
+    //         this.setState({
+    //             managerEmail: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             event.currentTarget.value,
+    //             this.state.place,
+    //             this.state.clientName,
+    //             this.state.staging);
+    //     }
+    // }
 
-    filterByPlace = (event: any) => { //handle filter click by place
-        if (event.currentTarget.value === 'placeName') {
-            this.setState({
-                place: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                event.currentTarget.value,
-                this.state.clientName,
-                this.state.staging);
-        } else {
-            this.setState({
-                place: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                event.currentTarget.value,
-                this.state.clientName,
-                this.state.staging);
-        }
-    }
+    // filterByPlace = (event: any) => { //handle filter click by place
+    //     if (event.currentTarget.value === 'placeName') {
+    //         this.setState({
+    //             place: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             this.state.managerEmail,
+    //             event.currentTarget.value,
+    //             this.state.clientName,
+    //             this.state.staging);
+    //     } else {
+    //         this.setState({
+    //             place: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             this.state.managerEmail,
+    //             event.currentTarget.value,
+    //             this.state.clientName,
+    //             this.state.staging);
+    //     }
+    // }
 
-    filterByClient = (event: any) => { //handle filter click by client
-        if (event.currentTarget.value === 'clientName') {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        } else {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        }
-    }
+    // filterByClient = (event: any) => { //handle filter click by client
+    //     if (event.currentTarget.value === 'clientName') {
+    //         this.setState({
+    //             clientName: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             this.state.managerEmail,
+    //             this.state.place,
+    //             event.currentTarget.value,
+    //             this.state.staging);
+    //     } else {
+    //         this.setState({
+    //             clientName: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             this.state.managerEmail,
+    //             this.state.place,
+    //             event.currentTarget.value,
+    //             this.state.staging);
+    //     }
+    // }
 
-    filterByStaging = (event: any) => { //handle filter click by associate email
-        console.log(event.currentTarget.value);
+    // filterByStaging = (event: any) => { //handle filter click by associate email
+    //     console.log(event.currentTarget.value);
 
-        if (event.currentTarget.value === 'stagingOff') {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            console.log("staging Off");
+    //     if (event.currentTarget.value === 'stagingOff') {
+    //         this.setState({
+    //             staging: event.currentTarget.value
+    //         });
+    //         console.log("staging Off");
 
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             this.state.managerEmail,
+    //             this.state.place,
+    //             this.state.clientName,
+    //             event.currentTarget.value);
 
-        } else {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-        }
-    }
+    //     } else {
+    //         this.setState({
+    //             staging: event.currentTarget.value
+    //         });
+    //         this.props.getInterviewPages(
+    //             0,
+    //             this.props.pageSize,
+    //             this.props.orderBy,
+    //             this.props.direction,
+    //             this.state.associateEmail,
+    //             this.state.managerEmail,
+    //             this.state.place,
+    //             this.state.clientName,
+    //             event.currentTarget.value);
+    //     }
+    // }
     filterChange = (event: any) => {
 
         const value = event.currentTarget.value;
         const name = event.currentTarget.name;
         console.log(`Name: ${name}, Value: ${value}`);
-        // const pageSize = (value instanceof Number) ? value : this.props.pageSize;
-        // const associateEmail = (value === 'associateEmail') ? value : this.state.associateEmail;
-        // const managerEmail = (value === 'managerEmail') ? value : this.state.managerEmail;
-        // const place = (value === 'placeName') ? value : this.state.place;
-        // const clientName  = (value === 'clientName') ? value : this.state.clientName;
-        const pageSize = (value instanceof Number) ? value : this.props.pageSize;
+        const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
         const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
         const place = (name === 'placeName') ? value : this.state.place;
         const clientName = (name === 'clientName') ? value : this.state.clientName;
+        const staging = (name === 'staging') ? value : this.state.staging;
         console.log(associateEmail);
         this.setState({
             associateEmail,
             managerEmail,
             place,
-            clientName
+            clientName,
+            staging,
         });
         this.props.getInterviewPages(
             0,
@@ -385,7 +382,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             managerEmail,
             place,
             clientName,
-            value);
+            staging);
     }
 
     renderDate = (date: number) => {
@@ -399,7 +396,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     getAssocInput = (entry: any) => {
         let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
         let text = (entry.associateInput ? 'View' : 'Add');
-        console.log(entry.associateInput)
         return (
             <td>
                 {
@@ -416,8 +412,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     };
     // CHECKOUT HERE
     render() {
-        console.log(this.state.associateEmail);
-
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
         const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
@@ -469,7 +463,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 </thead>
                                 <tbody>
                                     {this.state.listOfInterviews.map((entry) => {
-                                        console.log(entry.associateInput)
                                         return (<tr key={entry.id}>
                                             {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
                                             {/* {isAdmin? <td><ReviewButton className="text-warning" interviewId = {entry.id}/></td> : <></>} */}
@@ -498,7 +491,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             <form>
                                 <div className='form-row'>
                                     <div className='col-0.5'>
-                                        <select onChange={this.changePageSize} className='form-control'>
+                                        <select onChange={this.filterChange} name='pageSize' className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
                                             <option value={5} className={'justify-content-center'}>5</option>
                                             <option value={10} className={'justify-content-center'}>10</option>
@@ -552,13 +545,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col-2'>
-                                        <select onChange={this.filterChange} value={this.state.staging} className='form-control'>
+                                        <select onChange={this.filterChange} value={this.state.staging}
+                                            name='staging' className='form-control'>
                                             <option value='stagingOff'>Staging Off</option>
                                             <option value='stagingOn'>Staging On</option>
                                         </select>
                                     </div>
                                     <div className='col' style={{}}>
-                                        <select onChange={this.changePageSize} className='form-control'>
+                                        <select onChange={this.filterChange} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
                                             <option value={5} className={'justify-content-center'}>5</option>
                                             <option value={10} className={'justify-content-center'}>10</option>
