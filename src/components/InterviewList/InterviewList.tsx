@@ -413,12 +413,15 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     };
     // CHECKOUT HERE
     render() {
+        //listOfInterviews: [{associateEmail: 1,...}, {associateEmail: 2,...}]
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
         const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
             return item.associateEmail;
         });
         const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => { //need unique places for select option
+            console.log("Item: " + item + " Pos: " + pos);
+            console.log(arrAssociateEmail1);
             return arrAssociateEmail1.indexOf(item) === pos;
         });
         const arrManagerEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
@@ -492,7 +495,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 </tbody>
                             </table>
                             <form>
+                            const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => { //need unique places for select option
+            return arrManagerEmail1.indexOf(item) === pos;
+        });
+        {}
                                 <div className='form-row'>
+                                {thKeys.map((element, index) => {
+
                                     <div className='col-1.5' style={{ width: '12%' }}>
                                         <select onChange={this.filterChange} name="associateEmail"
                                             value={this.state.associateEmail} className='form-control'>
@@ -504,40 +513,41 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-                                    <div className='col-1.5' style={{ width: '12%' }}>
-                                        <select onChange={this.filterChange} name="managerEmail"
-                                            value={this.state.managerEmail} className='form-control'>
-                                            <option value='managerEmail'>Manager Email</option>
-                                            {arrManagerEmail2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-1' style={{ width: '8%' }}>
-                                        <select onChange={this.filterChange} name="placeName"
-                                            value={this.state.place} className='form-control'>
-                                            <option value='placeName'>Location</option>
-                                            {arrPlace2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    {/* END CHECKOUT HERE*/}
-                                    <div className='col-1.5' style={{ width: '9%' }}>
-                                        <select onChange={this.filterChange} name="clientName"
-                                            value={this.state.clientName} className='form-control'>
-                                            <option value='clientName'>Client</option>
-                                            {arrClientName2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
+                                    // <div className='col-1.5' style={{ width: '12%' }}>
+                                    //     <select onChange={this.filterChange} name="managerEmail"
+                                    //         value={this.state.managerEmail} className='form-control'>
+                                    //         <option value='managerEmail'>Manager Email</option>
+                                    //         {arrManagerEmail2.map((entry, index) => {
+                                    //             return (
+                                    //                 <option value={entry} key={index}>{entry}</option>
+                                    //             );
+                                    //         })}
+                                    //     </select>
+                                    // </div>
+                                    // <div className='col-1' style={{ width: '8%' }}>
+                                    //     <select onChange={this.filterChange} name="placeName"
+                                    //         value={this.state.place} className='form-control'>
+                                    //         <option value='placeName'>Location</option>
+                                    //         {arrPlace2.map((entry, index) => {
+                                    //             return (
+                                    //                 <option value={entry} key={index}>{entry}</option>
+                                    //             );
+                                    //         })}
+                                    //     </select>
+                                    // </div>
+                                    // {/* END CHECKOUT HERE*/}
+                                    // <div className='col-1.5' style={{ width: '9%' }}>
+                                    //     <select onChange={this.filterChange} name="clientName"
+                                    //         value={this.state.clientName} className='form-control'>
+                                    //         <option value='clientName'>Client</option>
+                                    //         {arrClientName2.map((entry, index) => {
+                                    //             return (
+                                    //                 <option value={entry} key={index}>{entry}</option>
+                                    //             );
+                                    //         })}
+                                    //     </select>
+                                    // </div>
+                                        })}
                                     <div className='col'>
                                         <select onChange={this.filterChange} value={this.state.staging}
                                             name='staging' className='form-control'>
