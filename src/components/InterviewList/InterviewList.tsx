@@ -496,16 +496,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             </table>
                             <form>
                                 <div className='form-row'>
-                                    <div className='col-0.5'>
-                                        <select onChange={this.changePageSize} className='form-control'>
-                                            <option value="" disabled selected hidden>Page</option>
-                                            <option value={5} className={'justify-content-center'}>5</option>
-                                            <option value={10} className={'justify-content-center'}>10</option>
-                                            <option value={25} className={'justify-content-center'}>25</option>
-                                            <option value={50} className={'justify-content-center'}>50</option>
-                                        </select>
-                                    </div>
-                                    <div className='col-3'>
+                                    <div className='col-1.5' style={{ width: '12%' }}>
                                         <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
                                             <option value='associateEmail'>Associate Email</option>
                                             {arrAssociateEmail2.map((entry, index) => {
@@ -515,7 +506,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-                                    <div className='col-3'>
+                                    <div className='col-1.5' style={{ width: '12%' }}>
                                         <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
                                             <option value='managerEmail'>Manager Email</option>
                                             {arrManagerEmail2.map((entry, index) => {
@@ -525,7 +516,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-                                    <div className='col'>
+                                    <div className='col-1' style={{ width: '8%' }}>
                                         <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
                                             <option value='placeName'>Location</option>
                                             {arrPlace2.map((entry, index) => {
@@ -535,7 +526,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-                                    <div className='col-1'>
+                                    <div className='col-1.5' style={{ width: '9%' }}>
                                         <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
                                             <option value='clientName'>Client</option>
                                             {arrClientName2.map((entry, index) => {
@@ -545,10 +536,19 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
-                                    <div className='col-2'>
+                                    <div className='col'>
                                         <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
                                             <option value='stagingOff'>Staging Off</option>
                                             <option value='stagingOn'>Staging On</option>
+                                        </select>
+                                    </div>
+                                    <div className='col' style={{}}>
+                                        <select onChange={this.changePageSize} className='form-control'>
+                                            <option value="" disabled selected hidden>Page</option>
+                                            <option value={5} className={'justify-content-center'}>5</option>
+                                            <option value={10} className={'justify-content-center'}>10</option>
+                                            <option value={25} className={'justify-content-center'}>25</option>
+                                            <option value={50} className={'justify-content-center'}>50</option>
                                         </select>
                                     </div>
                                 </div>
@@ -576,7 +576,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     nextLinkClassName={'paginate-next page-link no-select justify-content-center'}
                     previousClassName={'page-item cursor-hover'}
                     previousLinkClassName={'paginate-previous page-link no-select justify-content-center'} />
-            </div>
+            </div >
         );
     }
 }
