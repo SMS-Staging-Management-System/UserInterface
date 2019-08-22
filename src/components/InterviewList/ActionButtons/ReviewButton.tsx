@@ -95,6 +95,7 @@ class ReviewButton extends Component<IReviewButtonProps,any> {
         const isReviewed = (this.props.interview.reviewed)
         return (
             <div >
+              {/*Switched undefined and this.toggle on disabled. Changes it so when disabled = true, the checkbox is actually disabled.   */}
             {isReviewed? <i onClick={this.props.disabled? undefined: this.toggle}><FaRegCheckSquare className='btn-success'/></i>: 
             <i onClick={this.props.disabled? undefined : this.toggle}><FaRegSquare className='btn-light'/></i>}
           <Modal isOpen={this.state.modal} fade={false} toggle={this.toggle} >

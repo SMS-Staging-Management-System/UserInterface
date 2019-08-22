@@ -467,6 +467,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         return (<tr key={entry.id}>
                                             {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
                                             {/* {isAdmin? <td><ReviewButton className="text-warning" interviewId = {entry.id}/></td> : <></>} */}
+                                            {/* Added isAdmin check before the review button to fix bug. Originally, checkbox was showing even when user wasn't admin.*/}
                                             {isAdmin ? 
                                             <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null }
                                             <td>{entry.associateEmail}</td>
