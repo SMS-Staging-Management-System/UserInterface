@@ -414,7 +414,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             </td>
         );
     };
-
+    // CHECKOUT HERE
     render() {
         console.log(this.state.associateEmail);
 
@@ -438,6 +438,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const arrPlace2 = arrPlace1.filter((item, pos) => { //need unique places for select option
             return arrPlace1.indexOf(item) === pos;
         });
+        //END CHECKOUT HERE
         const arrClientName1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
             return item.client.clientName;
         });
@@ -455,6 +456,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 <thead className='rev-background-color'>
                                     <tr>
                                         {isAdmin ? <th>Reviewed</th> : <></>}
+                                        {/* CHECKOUT THE FOLLOWING */}
                                         {thKeys.map((element, index) => {
                                             return (<th id={element} className='cursor-hover' onClick={this.changeOrderCriteria}>
                                                 {/* guard operator to toggle arrow up and down */}
@@ -537,6 +539,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             })}
                                         </select>
                                     </div>
+                                    {/* END CHECKOUT HERE*/}
                                     <div className='col-1'>
                                         <select onChange={this.filterChange} name="clientName"
                                             value={this.state.clientName} className='form-control'>
