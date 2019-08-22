@@ -49,7 +49,18 @@ export interface InterviewListState {
     clientName: string,
     staging: string
 }
-
+const tableHeaderValues : Object = 
+    {
+     associateEmail: 'Associate Email',
+     managerEmail: 'Manager Email',
+     place: 'Location',
+     client: 'Client',
+     notified: 'Date Notified',
+     scheduled: 'Date Scheduled',
+     reviewed: 'Date Reviewed',
+     associateInput: 'Associate Input',
+     interviewFeedback: 'Interview Feedback'
+    }
 // More comments 
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
@@ -343,6 +354,39 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 event.currentTarget.value);
         }
     }
+    filterChange = (event : any ) => {
+
+        const value = event.currentTarget.value;
+        const name = event.currentTarget.name;
+        console.log(`Name: ${name}, Value: ${value}`);
+        // const pageSize = (value instanceof Number) ? value : this.props.pageSize;
+        // const associateEmail = (value === 'associateEmail') ? value : this.state.associateEmail;
+        // const managerEmail = (value === 'managerEmail') ? value : this.state.managerEmail;
+        // const place = (value === 'placeName') ? value : this.state.place;
+        // const clientName  = (value === 'clientName') ? value : this.state.clientName;
+        const pageSize = (value instanceof Number) ? value : this.props.pageSize;
+        const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
+        const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
+        const place = (name === 'placeName') ? value : this.state.place;
+        const clientName  = (name === 'clientName') ? value : this.state.clientName;
+        console.log(associateEmail);
+        this.setState({
+            associateEmail,
+            managerEmail,
+            place,
+            clientName
+        });
+        this.props.getInterviewPages(
+            0,
+            pageSize as number,
+            this.props.orderBy,
+            this.props.direction,
+            associateEmail,
+            managerEmail,
+            place,
+            clientName,
+            value);
+    }
 
     renderDate = (date: number) => {
         if (date > 0) {
@@ -400,7 +444,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const arrClientName2 = arrClientName1.filter((item, pos) => { //need unique places for select option
             return arrClientName1.indexOf(item) === pos;
         });
-
+        let thKeys = Object.keys(tableHeaderValues);
+        let thValues = Object.values(tableHeaderValues);
         return (
             <div className='container'>
                 <div className='row'>
@@ -410,60 +455,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 <thead className='rev-background-color'>
                                     <tr>
                                         {isAdmin ? <th>Reviewed</th> : <></>}
-                                        <th id='associateEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
+                                        {thKeys.map((element,index) => {
+                                            return (<th id={element} className='cursor-hover' onClick={this.changeOrderCriteria}>
                                             {/* guard operator to toggle arrow up and down */}
-                                            Associate Email
-					    {this.state.tableHeaderId === 'associateEmail' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'associateEmail' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='managerEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Manager Email
-					    {this.state.tableHeaderId === 'managerEmail' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'managerEmail' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='place' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Location
-					    {this.state.tableHeaderId === 'place' && this.state.direction === 'DESC' && <IoIosArrowDown className='dropdownicon' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'place' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='client' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Client
-					    {this.state.tableHeaderId === 'client' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'client' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='notified' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Notified
-					    {this.state.tableHeaderId === 'notified' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'notified' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='scheduled' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Scheduled
-					    {this.state.tableHeaderId === 'scheduled' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'scheduled' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='reviewed' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Reviewed
-					    {this.state.tableHeaderId === 'reviewed' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'reviewed' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-                                        <th id='associateInput' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Associate Input
-					    {this.state.tableHeaderId === 'associateInput' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'associateInput' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                            {/* <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
-						<IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/> */}
-                                        </th>
-                                        <th id='feedback' className='cursor-hover' onClick={this.changeOrderCriteria} style={{ backgroundColor: '#f3a55d' }}>
-                                            Interview Feedback
-					    {this.state.tableHeaderId === 'feedback' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'feedback' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
+                                            {thValues[index]}
+					    {this.state.tableHeaderId === element && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
+                                            {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
+                                            </th> )
+                                        })}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -506,7 +505,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col-3'>
-                                        <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
+                                        <select onChange={this.filterChange} name = "associateEmail"
+                                        value={this.state.associateEmail} className='form-control'>
                                             <option value='associateEmail'>Associate Email</option>
                                             {arrAssociateEmail2.map((entry, index) => {
                                                 return (
@@ -516,7 +516,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col-3'>
-                                        <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
+                                        <select onChange={this.filterChange} name = "managerEmail"
+                                        value={this.state.managerEmail} className='form-control'>
                                             <option value='managerEmail'>Manager Email</option>
                                             {arrManagerEmail2.map((entry, index) => {
                                                 return (
@@ -526,7 +527,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col'>
-                                        <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
+                                        <select onChange={this.filterChange} name = "placeName"
+                                        value={this.state.place} className='form-control'>
                                             <option value='placeName'>Location</option>
                                             {arrPlace2.map((entry, index) => {
                                                 return (
@@ -536,7 +538,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col-1'>
-                                        <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
+                                        <select onChange={this.filterChange} name = "clientName"
+                                        value={this.state.clientName} className='form-control'>
                                             <option value='clientName'>Client</option>
                                             {arrClientName2.map((entry, index) => {
                                                 return (
@@ -546,7 +549,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </div>
                                     <div className='col-2'>
-                                        <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
+                                        <select onChange={this.filterChange} value={this.state.staging} className='form-control'>
                                             <option value='stagingOff'>Staging Off</option>
                                             <option value='stagingOn'>Staging On</option>
                                         </select>
