@@ -486,13 +486,18 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             {/* Added isAdmin check before the review button to fix bug. Originally, checkbox was showing even when user wasn't admin.*/}
                                             {isAdmin ?
                                                 <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
-                                            <td>{entry.associateEmail}</td>
+                                            {thKeys.map((element, index) => {
+                                                let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
+                                                modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                return((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
+                                            })}
+                                            {/* <td>{entry.associateEmail}</td>
                                             <td>{entry.managerEmail}</td>
                                             <td>{entry.place}</td>
                                             <td>{entry.client.clientName}</td>
                                             <td>{this.renderDate(entry.notified)}</td>
                                             <td>{this.renderDate(entry.scheduled)}</td>
-                                            <td>{this.renderDate(entry.reviewed)}</td>
+                                            <td>{this.renderDate(entry.reviewed)}</td> */}
                                             {this.getAssocInput(entry)}
                                             <td>{
                                                 entry.feedback ?
