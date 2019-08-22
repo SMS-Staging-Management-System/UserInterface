@@ -510,26 +510,25 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             }</td>
                                         </tr>)
                                     })}
-                                </tbody>
-                            </table>
-                            <form>
-                                <div className='form-row'>
-                                    {thKeys.map((element, keyIndex) => {
-                                        let filterCurrentArrValues: string[] = [];
-                                        return (keyIndex < 4 ? <div className='col-1.5' style={{ width: '12%' }}>
-                                            <select onChange={this.filterChange} name={element}
-                                                value={this.state[element]} className='form-control'>
-                                                <option value={element}>{thValues[keyIndex]}</option>
-                                                {this.props.listOfInterviews.map((entry, index) => {
-                                                    let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
-                                                    if (!filterCurrentArrValues.includes(currentNestedEntry)) {
-                                                        filterCurrentArrValues.push(currentNestedEntry);
-                                                        return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
-                                                    }
-                                                    return;
-                                                })}
-                                            </select>
-                                        </div> : null)
+                                {/* </tbody>
+                            </table> */}
+                                        <tr style = {{backgroundColor: '#f3a55d'}}>
+                                                {thKeys.map((element, keyIndex) => {
+                                                    let filterCurrentArrValues: string[] = [];
+                                                    return (keyIndex < 4 ? <td colSpan = {element === 'client' ? 2 : 1}>
+                                                        <select onChange={this.filterChange} name={element}
+                                                        value={this.state[element]} className='form-control'>
+                                                            <option value={element}>{thValues[keyIndex]}</option>
+                                                            {this.props.listOfInterviews.map((entry, index) => {
+                                                                let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                                if (!filterCurrentArrValues.includes(currentNestedEntry)) {
+                                                                    filterCurrentArrValues.push(currentNestedEntry);
+                                                                    return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
+                                                                }
+                                                            return;
+                                                        })}
+                                                    </select>
+                                                </td> : null)
                                         // <div className='col-1.5' style={{ width: '12%' }}>
                                         //     <select onChange={this.filterChange} name="managerEmail"
                                         //         value={this.state.managerEmail} className='form-control'>
@@ -565,14 +564,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         //     </select>
                                         // </div>
                                     })}
-                                    <div className='col'>
+                                    <td colSpan = {2}>
                                         <select onChange={this.filterChange} value={this.state.staging}
                                             name='staging' className='form-control'>
                                             <option value='stagingOff'>Staging Off</option>
                                             <option value='stagingOn'>Staging On</option>
                                         </select>
-                                    </div>
-                                    <div className='col'>
+                                    </td>
+                                    <td colSpan={2}>
                                         <select name='pageSize' onChange={this.filterChange} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
                                             <option value={5} className={'justify-content-center'}>5</option>
@@ -580,9 +579,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             <option value={25} className={'justify-content-center'}>25</option>
                                             <option value={50} className={'justify-content-center'}>50</option>
                                         </select>
-                                    </div>
-                                </div>
-                            </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
