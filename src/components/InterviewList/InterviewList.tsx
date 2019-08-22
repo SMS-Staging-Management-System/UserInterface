@@ -101,22 +101,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.setState({
                 loaded: true
             });
-            this.props.getInterviewPages(
-                this.props.currentPage,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
+            this.handlePageClick({selected: this.props.currentPage});
+        //     this.props.getInterviewPages(
+        //         this.props.currentPage,
+        //         this.props.pageSize,
+        //         this.props.orderBy,
+        //         this.props.direction,
+        //         this.state.associateEmail,
+        //         this.state.managerEmail,
+        //         this.state.place,
+        //         this.state.clientName,
+        //         this.state.staging);
+         }
     }
 
     handlePageClick = (data) => {
         console.log(data);
-
         this.props.getInterviewPages(data.selected,
             this.props.pageSize,
             this.props.orderBy,
