@@ -11,9 +11,28 @@ import { store } from '../../Store';
 // import { Button } from 'react-bootstrap'; 
 import ReviewButton from './ActionButtons/ReviewButton';
 import { CookieStorage } from '@aws-amplify/auth';
+import { number, string } from 'prop-types';
 // import { cognitoRoles } from '../../model/cognito-user.model';
 
+// class for making interviewPage object 
+// meant to replace the getInterviewPages function that passes 
+// pageNumber, pageSize, orderBy, direction, associateEmail, managerEmail, place, clientName, and staging
+const interviewPageClass = {
+    pageNumber: number,
+    pageSize: number,
+    orderBy: string,
+    direction: string,
+    associateEmail: string,
+    managerEmail: string,
+    place: string,
+    clientName: string,
+    staging: string
+}
 
+// creates object from interviewPageClass 
+const interviewPage = Object.create(interviewPageClass);
+
+console.log(interviewPage + 'ejdsjdsds');
 
 export interface InterviewListProps {
     email: string,
@@ -24,16 +43,17 @@ export interface InterviewListProps {
     pageSize: number,
     orderBy: string,
     direction: string,
-    getInterviewPages: (
-        pageNumber?: number,
-        pageSize?: number,
-        ordeyBy?: string,
-        direction?: string,
-        associateEmail?: string,
-        managerEmail?: string,
-        place?: string,
-        clientName?: string,
-        staging?: string) => void,
+    interviewPage: object;
+    // getInterviewPages: (
+    //     pageNumber?: number,
+    //     pageSize?: number,
+    //     ordeyBy?: string,
+    //     direction?: string,
+    //     associateEmail?: string,
+    //     managerEmail?: string,
+    //     place?: string,
+    //     clientName?: string,
+    //     staging?: string) => void,
     markAsReviewed: (interviewId: number) => void,
     setSelected: (current: any) => void;
 }
@@ -117,15 +137,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
     handlePageClick = (data) => {
         console.log(data);
-        this.props.getInterviewPages(data.selected,
-            this.props.pageSize,
-            this.props.orderBy,
-            this.props.direction,
-            this.state.associateEmail,
-            this.state.managerEmail,
-            this.state.place,
-            this.state.clientName,
-            this.state.staging);
+        interviewPage;
+        console.log(interviewPage + "popopo");
     }
 
     changeOrderAsc = () => {
@@ -174,17 +187,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             previousTableHeaderId: this.state.tableHeaderId,
             direction: orderDirection
         });
-        await this.props.getInterviewPages(
-            0,
-            this.props.pageSize,
-            // event.currentTarget.id,
-            this.state.tableHeaderId,
-            this.state.direction,
-            this.state.associateEmail,
-            this.state.managerEmail,
-            this.state.place,
-            this.state.clientName,
-            this.state.staging);
+        interviewPage;
     }
     /*
                 *** REDUNDANT CODE ***
@@ -387,16 +390,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             clientName,
             staging,
         });
-        this.props.getInterviewPages(
-            0,
-            pageSize as number,
-            this.props.orderBy,
-            this.props.direction,
-            associateEmail,
-            managerEmail,
-            place,
-            clientName,
-            staging);
+        interviewPage
     }
 
     renderDate = (date: number) => {
