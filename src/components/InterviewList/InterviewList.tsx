@@ -10,8 +10,9 @@ import { Label } from 'reactstrap';
 import { store } from '../../Store';
 // import { Button } from 'react-bootstrap'; 
 import ReviewButton from './ActionButtons/ReviewButton';
+import { number } from 'prop-types';
+import ByStaging from '../dashboard/modules/byStaging/ByStaging';
 // import { cognitoRoles } from '../../model/cognito-user.model';
-
 
 
 export interface InterviewListProps {
@@ -194,21 +195,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.clientName,
                 this.state.staging);
 
-        } else {
-            this.setState({
-                associateEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                event.currentTarget.value,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
+        } 
+        // else {
+        //     this.setState({
+        //         associateEmail: event.currentTarget.value
+        //     });
+        //     this.props.getInterviewPages(
+        //         0,
+        //         this.props.pageSize,
+        //         this.props.orderBy,
+        //         this.props.direction,
+        //         event.currentTarget.value,
+        //         this.state.managerEmail,
+        //         this.state.place,
+        //         this.state.clientName,
+        //         this.state.staging);
+        // }
     }
 
     filterByManagerEmail = (event: any) => { //handle filter click by manager email
@@ -226,21 +228,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.place,
                 this.state.clientName,
                 this.state.staging);
-        } else {
-            this.setState({
-                managerEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                event.currentTarget.value,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
+        } 
+        // else {
+        //     this.setState({
+        //         managerEmail: event.currentTarget.value
+        //     });
+        //     this.props.getInterviewPages(
+        //         0,
+        //         this.props.pageSize,
+        //         this.props.orderBy,
+        //         this.props.direction,
+        //         this.state.associateEmail,
+        //         event.currentTarget.value,
+        //         this.state.place,
+        //         this.state.clientName,
+        //         this.state.staging);
+        // }
     }
 
     filterByPlace = (event: any) => { //handle filter click by place
@@ -258,21 +261,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 event.currentTarget.value,
                 this.state.clientName,
                 this.state.staging);
-        } else {
-            this.setState({
-                place: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                event.currentTarget.value,
-                this.state.clientName,
-                this.state.staging);
-        }
+        } 
+        // else {
+        //     this.setState({
+        //         place: event.currentTarget.value
+        //     });
+        //     this.props.getInterviewPages(
+        //         0,
+        //         this.props.pageSize,
+        //         this.props.orderBy,
+        //         this.props.direction,
+        //         this.state.associateEmail,
+        //         this.state.managerEmail,
+        //         event.currentTarget.value,
+        //         this.state.clientName,
+        //         this.state.staging);
+        // }
     }
 
     filterByClient = (event: any) => { //handle filter click by client
@@ -290,21 +294,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.place,
                 event.currentTarget.value,
                 this.state.staging);
-        } else {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        }
+        } 
+        // else {
+        //     this.setState({
+        //         clientName: event.currentTarget.value
+        //     });
+        //     this.props.getInterviewPages(
+        //         0,
+        //         this.props.pageSize,
+        //         this.props.orderBy,
+        //         this.props.direction,
+        //         this.state.associateEmail,
+        //         this.state.managerEmail,
+        //         this.state.place,
+        //         event.currentTarget.value,
+        //         this.state.staging);
+        // }
     }
 
     filterByStaging = (event: any) => { //handle filter click by associate email
@@ -327,21 +332,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.clientName,
                 event.currentTarget.value);
 
-        } else {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-        }
+        } 
+        // else {
+        //     this.setState({
+        //         staging: event.currentTarget.value
+        //     });
+        //     this.props.getInterviewPages(
+        //         0,
+        //         this.props.pageSize,
+        //         this.props.orderBy,
+        //         this.props.direction,
+        //         this.state.associateEmail,
+        //         this.state.managerEmail,
+        //         this.state.place,
+        //         this.state.clientName,
+        //         event.currentTarget.value);
+        // }
     }
 
     renderDate = (date: number) => {
@@ -401,6 +407,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             return arrClientName1.indexOf(item) === pos;
         });
 
+        
         return (
             <div className='container'>
                 <div className='row'>
@@ -468,6 +475,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 </thead>
                                 <tbody>
                                     {this.state.listOfInterviews.map((entry) => {
+                                        console.log(this.state.listOfInterviews);
                                         console.log(entry.associateInput)
                                         return (<tr key={entry.id}>
                                             {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
