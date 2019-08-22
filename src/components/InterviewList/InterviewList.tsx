@@ -173,7 +173,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.clientName,
             this.state.staging);
     }
-
+    /*
+                *** REDUNDANT CODE ***
+                      FIX BELOW.
+    */
     // changePageSize = (event: any) => {
     //     this.props.getInterviewPages(
     //         this.props.currentPage,
@@ -358,14 +361,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
         const value = event.currentTarget.value;
         const name = event.currentTarget.name;
-        console.log(`Name: ${name}, Value: ${value}`);
         const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
         const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
         const place = (name === 'placeName') ? value : this.state.place;
         const clientName  = (name === 'clientName') ? value : this.state.clientName;
         const staging = (name === 'staging') ? value : this.state.staging;
-        console.log(associateEmail);
         this.setState({
             associateEmail,
             managerEmail,
