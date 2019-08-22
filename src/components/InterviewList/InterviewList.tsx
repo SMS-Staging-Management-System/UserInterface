@@ -496,15 +496,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             </table>
                             <form>
                                 <div className='form-row'>
-                                    <div className='col-0.5'>
-                                        <select onChange={this.changePageSize} className='form-control'>
-                                            <option value="" disabled selected hidden>Page</option>
-                                            <option value={5} className={'justify-content-center'}>5</option>
-                                            <option value={10} className={'justify-content-center'}>10</option>
-                                            <option value={25} className={'justify-content-center'}>25</option>
-                                            <option value={50} className={'justify-content-center'}>50</option>
-                                        </select>
-                                    </div>
                                     <div className='col-3'>
                                         <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
                                             <option value='associateEmail'>Associate Email</option>
@@ -543,12 +534,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                                     <option value={entry} key={index}>{entry}</option>
                                                 );
                                             })}
-                                        </select>
-                                    </div>
-                                    <div className='col-2'>
-                                        <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
-                                            <option value='stagingOff'>Staging Off</option>
-                                            <option value='stagingOn'>Staging On</option>
                                         </select>
                                     </div>
                                 </div>
