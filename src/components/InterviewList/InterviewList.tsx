@@ -6,14 +6,8 @@ import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
-import { Label } from 'reactstrap';
 import { store } from '../../Store';
-// import { Button } from 'react-bootstrap'; 
 import ReviewButton from './ActionButtons/ReviewButton';
-// import { cognitoRoles } from '../../model/cognito-user.model';
-
-
-
 export interface InterviewListProps {
     email: string,
     listOfInterviews: any[],
@@ -49,8 +43,18 @@ export interface InterviewListState {
     clientName: string,
     staging: string
 }
-
-// More comments 
+const tableHeaderValues: Object =
+{
+    associateEmail: 'Associate Email',
+    managerEmail: 'Manager Email',
+    place: 'Location',
+    client: 'Client',
+    notified: 'Date Notified',
+    scheduled: 'Date Scheduled',
+    reviewed: 'Date Reviewed',
+    associateInput: 'Associate Input',
+    interviewFeedback: 'Interview Feedback'
+}
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
         super(props);
@@ -89,22 +93,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.setState({
                 loaded: true
             });
-            this.props.getInterviewPages(
-                this.props.currentPage,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
+            this.handlePageClick({selected: this.props.currentPage});
+         }
     }
 
     handlePageClick = (data) => {
         console.log(data);
-
         this.props.getInterviewPages(data.selected,
             this.props.pageSize,
             this.props.orderBy,
@@ -132,28 +126,25 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         await this.setState({
             tableHeaderId: event.currentTarget.id
         });
+
+        //store page ASC or DESC
+        let orderDirection;
         if (this.state.tableHeaderId === this.state.previousTableHeaderId) { //if click same header -> toggle ASC/DESC
             if (this.state.direction === 'ASC') {
-                this.setState({
-                    direction: 'DESC'
-                });
+                orderDirection = 'DESC'
             } else {
-                this.setState({
-                    direction: 'ASC'
-                });
+                orderDirection = 'ASC'
             }
         } else { //if click diff header -> sort ASC
-            this.setState({
-                direction: 'ASC'
-            })
+            orderDirection = 'ASC'
         }
         this.setState({
-            previousTableHeaderId: this.state.tableHeaderId
+            previousTableHeaderId: this.state.tableHeaderId,
+            direction: orderDirection
         });
         await this.props.getInterviewPages(
             0,
             this.props.pageSize,
-            // event.currentTarget.id,
             this.state.tableHeaderId,
             this.state.direction,
             this.state.associateEmail,
@@ -162,186 +153,33 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.clientName,
             this.state.staging);
     }
+    filterChange = (event: any) => {
 
-    changePageSize = (event: any) => {
+        const value = event.currentTarget.value;
+        const name = event.currentTarget.name;
+        const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
+        const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
+        const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
+        const place = (name === 'place') ? value : this.state.place;
+        const clientName = (name === 'client') ? value : this.state.clientName;
+        const staging = (name === 'staging') ? value : this.state.staging;
+        this.setState({
+            associateEmail,
+            managerEmail,
+            place,
+            clientName,
+            staging,
+        });
         this.props.getInterviewPages(
-            this.props.currentPage,
-            event.currentTarget.value,
+            0,
+            pageSize as number,
             this.props.orderBy,
             this.props.direction,
-            this.state.associateEmail,
-            this.state.managerEmail,
-            this.state.place,
-            this.state.clientName,
-            this.state.staging);
-    }
-
-    filterByAssociateEmail = (event: any) => { //handle filter click by associate email
-        console.log(event.currentTarget.value);
-
-        if (event.currentTarget.value === 'associateEmail') {
-            this.setState({
-                associateEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                event.currentTarget.value,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-
-        } else {
-            this.setState({
-                associateEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                event.currentTarget.value,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
-    }
-
-    filterByManagerEmail = (event: any) => { //handle filter click by manager email
-        if (event.currentTarget.value === 'managerEmail') {
-            this.setState({
-                managerEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                event.currentTarget.value,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        } else {
-            this.setState({
-                managerEmail: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                event.currentTarget.value,
-                this.state.place,
-                this.state.clientName,
-                this.state.staging);
-        }
-    }
-
-    filterByPlace = (event: any) => { //handle filter click by place
-        if (event.currentTarget.value === 'placeName') {
-            this.setState({
-                place: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                event.currentTarget.value,
-                this.state.clientName,
-                this.state.staging);
-        } else {
-            this.setState({
-                place: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                event.currentTarget.value,
-                this.state.clientName,
-                this.state.staging);
-        }
-    }
-
-    filterByClient = (event: any) => { //handle filter click by client
-        if (event.currentTarget.value === 'clientName') {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        } else {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        }
-    }
-
-    filterByStaging = (event: any) => { //handle filter click by associate email
-        console.log(event.currentTarget.value);
-
-        if (event.currentTarget.value === 'stagingOff') {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            console.log("staging Off");
-
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-
-        } else {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-        }
+            associateEmail,
+            managerEmail,
+            place,
+            clientName,
+            staging);
     }
 
     renderDate = (date: number) => {
@@ -355,7 +193,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     getAssocInput = (entry: any) => {
         let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
         let text = (entry.associateInput ? 'View' : 'Add');
-        console.log(entry.associateInput)
         return (
             <td>
                 {
@@ -370,37 +207,11 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             </td>
         );
     };
-
     render() {
-        console.log(this.state.associateEmail);
-
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.associateEmail;
-        });
-        const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => { //need unique places for select option
-            return arrAssociateEmail1.indexOf(item) === pos;
-        });
-        const arrManagerEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.managerEmail;
-        });
-        const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => { //need unique places for select option
-            return arrManagerEmail1.indexOf(item) === pos;
-        });
-        const arrPlace1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.place;
-        });
-        const arrPlace2 = arrPlace1.filter((item, pos) => { //need unique places for select option
-            return arrPlace1.indexOf(item) === pos;
-        });
-        const arrClientName1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
-            return item.client.clientName;
-        });
-        const arrClientName2 = arrClientName1.filter((item, pos) => { //need unique places for select option
-            return arrClientName1.indexOf(item) === pos;
-        });
-
+        let thKeys = Object.keys(tableHeaderValues);
+        let thValues = Object.values(tableHeaderValues);
         return (
             <div className='container'>
                 <div className='row'>
@@ -410,76 +221,26 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 <thead className='rev-background-color'>
                                     <tr>
                                         {isAdmin ? <th>Reviewed</th> : <></>}
-                                        <th id='associateEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            {/* guard operator to toggle arrow up and down */}
-                                            Associate Email
-					    {this.state.tableHeaderId === 'associateEmail' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'associateEmail' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='managerEmail' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Manager Email
-					    {this.state.tableHeaderId === 'managerEmail' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'managerEmail' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='place' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Location
-					    {this.state.tableHeaderId === 'place' && this.state.direction === 'DESC' && <IoIosArrowDown className='dropdownicon' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'place' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='client' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Client
-					    {this.state.tableHeaderId === 'client' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'client' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='notified' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Notified
-					    {this.state.tableHeaderId === 'notified' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'notified' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='scheduled' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Scheduled
-					    {this.state.tableHeaderId === 'scheduled' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'scheduled' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-
-                                        <th id='reviewed' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Date Reviewed
-					    {this.state.tableHeaderId === 'reviewed' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'reviewed' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
-                                        <th id='associateInput' className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            Associate Input
-					    {this.state.tableHeaderId === 'associateInput' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'associateInput' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                            {/* <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc}/>
-						<IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc}/> */}
-                                        </th>
-                                        <th id='feedback' className='cursor-hover' onClick={this.changeOrderCriteria} style={{ backgroundColor: '#f3a55d' }}>
-                                            Interview Feedback
-					    {this.state.tableHeaderId === 'feedback' && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === 'feedback' && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                        </th>
+                                        {thKeys.map((element, index) => {
+                                            return (<th id={element} className='cursor-hover' onClick={this.changeOrderCriteria}>
+                                                {thValues[index]}
+                                                {this.state.tableHeaderId === element && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
+                                                {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
+                                            </th>)
+                                        })}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {this.state.listOfInterviews.map((entry) => {
-                                        console.log(entry.associateInput)
                                         return (<tr key={entry.id}>
-                                            {/* {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>} */}
-                                            {/* {isAdmin? <td><ReviewButton className="text-warning" interviewId = {entry.id}/></td> : <></>} */}
-                                            <td><ReviewButton disabled={isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td>
-                                            <td>{entry.associateEmail}</td>
-                                            <td>{entry.managerEmail}</td>
-                                            <td>{entry.place}</td>
-                                            <td>{entry.client.clientName}</td>
-                                            <td>{this.renderDate(entry.notified)}</td>
-                                            <td>{this.renderDate(entry.scheduled)}</td>
-                                            <td>{this.renderDate(entry.reviewed)}</td>
+                                            {/* Added isAdmin check before the review button to fix bug. Originally, checkbox was showing even when user wasn't admin.*/}
+                                            {isAdmin ?
+                                                <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
+                                            {thKeys.map((element, index) => {
+                                                let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
+                                                modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                return((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
+                                            })}
                                             {this.getAssocInput(entry)}
                                             <td>{
                                                 entry.feedback ?
@@ -492,18 +253,40 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             }</td>
                                         </tr>)
                                     })}
-                                </tbody>
-                            </table>
-                            <form>
-                                <div className='form-row'>
-                                    <div className='col-0.5'>
-                                        <select onChange={this.changePageSize} className='form-control'>
+                                        <tr style = {{backgroundColor: '#f3a55d'}}>
+                                                {thKeys.map((element, keyIndex) => {
+                                                    let filterCurrentArrValues: string[] = [];
+                                                    return (keyIndex < 4 ? <td colSpan = {element === 'client' ? 2 : 1}>
+                                                        <select onChange={this.filterChange} name={element}
+                                                        value={this.state[element]} className='form-control'>
+                                                            <option value={element}>{thValues[keyIndex]}</option>
+                                                            {this.props.listOfInterviews.map((entry, index) => {
+                                                                let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                                if (!filterCurrentArrValues.includes(currentNestedEntry)) {
+                                                                    filterCurrentArrValues.push(currentNestedEntry);
+                                                                    return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
+                                                                }
+                                                            return;
+                                                        })}
+                                                    </select>
+                                                </td> : null)
+                                    })}
+                                    <td colSpan = {2}>
+                                        <select onChange={this.filterChange} value={this.state.staging}
+                                            name='staging' className='form-control'>
+                                            <option value='stagingOff'>Staging Off</option>
+                                            <option value='stagingOn'>Staging On</option>
+                                        </select>
+                                    </td>
+                                    <td colSpan={2}>
+                                        <select name='pageSize' onChange={this.filterChange} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
                                             <option value={5} className={'justify-content-center'}>5</option>
                                             <option value={10} className={'justify-content-center'}>10</option>
                                             <option value={25} className={'justify-content-center'}>25</option>
                                             <option value={50} className={'justify-content-center'}>50</option>
                                         </select>
+<<<<<<< HEAD
                                     </div>
                                     <div className='col-3'>
                                         <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
@@ -553,6 +336,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     </div>
                                 </div>
                             </form>
+=======
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+>>>>>>> 799698b5057ca56f9538721e16fd91d3c035756f
                         </div>
                     </div>
                 </div>
@@ -576,7 +365,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     nextLinkClassName={'paginate-next page-link no-select justify-content-center'}
                     previousClassName={'page-item cursor-hover'}
                     previousLinkClassName={'paginate-previous page-link no-select justify-content-center'} />
-            </div>
+            </div >
         );
     }
 }
