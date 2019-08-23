@@ -921,6 +921,19 @@ Info Circle
       }
     }
   }
+
+}
+#interview-list-table > thead > tr {
+  text-align:center;
+}
+#interview-list-table > thead > tr > th {
+  padding:0.5rem;
+}
+#interview-list-table > tbody > tr > td {
+  text-align:center;
+}
+.interview-list-table-paginate {
+  margin:auto;
 }
 .pointer-table:hover {
     cursor: pointer;

@@ -213,11 +213,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         let thKeys = Object.keys(tableHeaderValues);
         let thValues = Object.values(tableHeaderValues);
         return (
-            <div className='container'>
                 <div className='row'>
                     <div>
                         <div className='table-responsive-xl'>
-                            <table className='table table-striped mx-auto w-auto'>
+                            <table className='table table-striped mx-auto w-auto' id = 'interview-list-table'>
                                 <thead className='rev-background-color'>
                                     <tr>
                                         {isAdmin ? <th>Reviewed</th> : <></>}
@@ -256,7 +255,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         <tr style = {{backgroundColor: '#f3a55d'}}>
                                                 {thKeys.map((element, keyIndex) => {
                                                     let filterCurrentArrValues: string[] = [];
-                                                    return (keyIndex < 4 ? <td colSpan = {element === 'client' ? 2 : 1}>
+                                                    return (keyIndex < 4 ? <td>
                                                         <select onChange={this.filterChange} name={element}
                                                         value={this.state[element]} className='form-control'>
                                                             <option value={element}>{thValues[keyIndex]}</option>
@@ -271,7 +270,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                                     </select>
                                                 </td> : null)
                                     })}
-                                    <td colSpan = {2}>
+                                    <td colSpan = {3}>
                                         <select onChange={this.filterChange} value={this.state.staging}
                                             name='staging' className='form-control'>
                                             <option value='stagingOff'>Staging Off</option>
@@ -292,7 +291,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                             </table>
                         </div>
                     </div>
-                </div>
                 <br />
                 <ReactPaginate
                     previousLabel={'Prev'}
@@ -305,7 +303,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     pageRangeDisplayed={5}
                     forcePage={this.props.currentPage}
                     onPageChange={this.handlePageClick}
-                    containerClassName={'pagination page-navigator justify-content-center'}
+                    containerClassName={'pagination page-navigator justify-content-center interview-list-table-paginate'}
                     activeClassName={'active'}
                     pageClassName={'page-item cursor-hover'}
                     pageLinkClassName={'paginate-link page-link no-select justify-content-center'}
