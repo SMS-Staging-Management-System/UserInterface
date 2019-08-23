@@ -28,7 +28,9 @@ export interface InterviewListProps {
 
 export interface InterviewListState {
     direction : string,
-    loaded : boolean
+    loaded : boolean,
+    paginateStart : number,
+    paginateEnd : number
 }
 
 // More comments 
@@ -37,7 +39,10 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
         super(props);
         this.state = {
             direction : this.props.direction,
-            loaded : false
+            loaded : false,
+            paginateStart: 0,
+            paginateEnd: 5
+
         }
     }
 
@@ -55,11 +60,16 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
 
     }
 
-    handlePageClick = (data) => {
-        this.props.getInterviewPages(data.selected,
+    handlePageClick = (e: any) => {//data) => {
+        console.log("e is", e.selected);
+        this.props.getInterviewPages(e.selected,//data.selected,
             this.props.pageSize,
             this.props.orderBy,
             this.props.direction);
+        this.setState({
+            paginateStart: e.selected*this.props.pageSize,
+            paginateEnd: e.selected*this.props.pageSize + this.props.pageSize
+        })
     }
 
     changeOrderAsc = () => {
@@ -83,11 +93,31 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
     }
 
     changePageSize = (event: any) => {
+        console.log("page size is",this.props.pageSize);
+        console.log("page Number is",this.props.currentPage);
+        console.log("page Order is",this.props.orderBy);
+        console.log("page Direction is",this.props.direction);
+        console.log("Number of pages is",this.props.numberOfPages);
+        console.log("Page Range Displayed");
+        this.setState({
+            paginateEnd: this.props.pageSize,
+            paginateStart: 0
+        })
         this.props.getInterviewPages(
-            this.props.currentPage,
-            event.currentTarget.value,
+            0,//this.props.currentPage,//Dont wan't user to be on page 15 if they just changed size where there is no page 15 so start at beginning
+            parseInt(event.currentTarget.value),
             this.props.orderBy,
             this.props.direction);
+        /*
+        * pageNumber?: number,
+        * pageSize?: number,
+        * ordeyBy?: string,
+        * direction?: string) => void,
+        */
+        console.log("page size is now",this.props.pageSize);
+        console.log("page Number is now",this.props.currentPage);
+        console.log("page Order is now",this.props.orderBy);
+        console.log("page Direction is now",this.props.direction);
     }
 
     renderDate = (date: number) => {
@@ -168,26 +198,26 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                             </tr>
                         </thead>
                         <tbody>
-                            {this.props.listOfInterviews.map((entry) => {
+                            {this.props.listOfInterviews.slice(this.state.paginateStart,this.state.paginateEnd).map((entry) => {
                                 return (<tr key={entry.id}>
                                     {isAdmin? <td><input id={entry.id} type="checkbox" checked={entry.reviewed} onChange={this.markAsReviewed} /></td> : <></>}
-                                    <td>{entry.associateEmail}</td>
-                                    <td>{entry.managerEmail}</td>
+                                    {/* <td>{entry.associateEmail}</td> */}
+                                    {/* <td>{entry.managerEmail}</td> */}
                                     <td>{entry.place}</td>
-                                    <td>{entry.client.clientName}</td>
-                                    <td>{this.renderDate(entry.notified)}</td>
-                                    <td>{this.renderDate(entry.scheduled)}</td>
-                                    <td>{this.renderDate(entry.reviewed)}</td>
-                                    {this.getAssocInput(entry)}
-                                    <td>{
-                                        entry.feedback ?
+                                    {/* <td>{entry.client.clientName}</td> */}
+                                    {/* <td>{this.renderDate(entry.notified)}</td> */}
+                                    {/* <td>{this.renderDate(entry.scheduled)}</td> */}
+                                    {/* <td>{this.renderDate(entry.reviewed)}</td> */}
+                                    {/* {this.getAssocInput(entry)} */}
+                                    {/* <td>{ */}
+                                        {/* entry.feedback ?
                                         <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id}}}>View Interview Feedback</Link>
                                         :
                                         isAdmin?   
                                         <Link to={{pathname: `/interview/${entry.id}/feedback`}}>Complete Interview Feedback</Link>
                                         :
                                         <></>
-                                    }</td>
+                                    }</td> */}
                                 </tr>)
                             })}
                         </tbody>
@@ -211,7 +241,7 @@ class InterviewList extends React.Component<InterviewListProps, InterviewListSta
                 pageCount={this.props.numberOfPages}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
-                onPageChange={this.handlePageClick}
+                onPageChange={(e) => this.handlePageClick(e)}
                 containerClassName={'pagination page-navigator justify-content-center'}
                 activeClassName={'active'}
                 pageClassName={'page-item cursor-hover'}
