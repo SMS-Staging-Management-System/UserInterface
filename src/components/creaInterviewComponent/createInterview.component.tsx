@@ -225,66 +225,72 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         <hr />
         <Form className="NewInterForm" >
           <div className="row">
-            <div className="col-md-6">
-              {/* Only show this field if user has a defined role*/}
-              {this.props.currentUser.roles.length !== 0 &&
+            {/* Only show this field if user has a defined role*/}
+            {/* We are only going to render this entire column if user has a role*/}
+            {this.props.currentUser.roles.length !== 0 &&
+              <div className="col-md-6">
+                <span className="span-select-interview">Select a Cohort </span>
+                <InputGroup className="new-interview-input-group">
+                  <Input className='input-group-interview' type='select'
+                    value={JSON.stringify(selectedCohort)}
+                    disabled={!allCohorts || allCohorts.length == 0}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setState({
+                        ...state,
+                        selectedCohort: JSON.parse(e.target.value),
+                        selectedAssociate: undefined
+                      });
+                      this.fetchAssociatesInSelectedCohort(JSON.parse(e.target.value));
+                    }} >
+                    <option value={undefined} style={{ display: 'none' }}>.....</option>
+                    {cohortOptions}
+                  </Input>
+                </InputGroup>
+                {/* To choose different input types due to if user is an associate or not. */}
+                <span className="span-select-interview-associate">Select a Associate </span>
+                <InputGroup className="new-interview-input-group">
+                  <Input className='input-group-interview' type='select'
+                    value={selectedAssociate ? JSON.stringify(selectedAssociate) : ''}
+                    disabled={!associatesInSelectedCohort || associatesInSelectedCohort.length === 0}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setState({
+                        ...state,
+                        selectedAssociate: JSON.parse(e.target.value)
+                      });
+                    }} >
+                    <option value={undefined} style={{ display: 'none' }}>.....</option>
+                    {associateOptions}
+                  </Input>
+                </InputGroup>
+                <span className="span-select-interview">Enter  or Select client name</span>
+                <InputGroup className="new-interview-input-group">
+                  <InputGroupAddon addonType="prepend">client</InputGroupAddon>
+                  <Input type="text" placeholder="....." list="clients" value={client} onChange={(e) => { setState({ ...state, client: e.target.value }) }} />
+                  <datalist id="clients">
+                    {this.props.createInterviewComponentState.clientArr.map((ele: any) => (
+                      <option value={ele.clientName} />
+                    ))}
+                  </datalist>
+                </InputGroup>
+              </div>}
+
+
+            <div className="col-md-12">
+              {/* Only render this field is user is an associate, otherwise
+                  it's a copy of the above. */}
+              {this.props.currentUser.roles.length === 0 &&
                 <>
-                  <span className="span-select-interview">Select a Cohort </span>
+                  <span className="span-select-interview">Enter  or Select client name</span>
                   <InputGroup className="new-interview-input-group">
-                    <Input className='input-group-interview' type='select'
-                      value={JSON.stringify(selectedCohort)}
-                      disabled={!allCohorts || allCohorts.length == 0}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setState({
-                          ...state,
-                          selectedCohort: JSON.parse(e.target.value),
-                          selectedAssociate: undefined
-                        });
-                        this.fetchAssociatesInSelectedCohort(JSON.parse(e.target.value));
-                      }} >
-                      <option value={undefined} style={{ display: 'none' }}>.....</option>
-                      {cohortOptions}
-                    </Input>
-                  </InputGroup>
-                </>
-              }
-              {/* To choose different input types due to if user is an associate or not. */}
-              {/* Only show this field if user has a defined role*/}
-              {this.props.currentUser.roles.length !== 0 &&
-                <>
-                  <span className="span-select-interview-associate">Select a Associate </span>
-                  <InputGroup className="new-interview-input-group">
-                    <Input className='input-group-interview' type='select'
-                      value={selectedAssociate ? JSON.stringify(selectedAssociate) : ''}
-                      disabled={!associatesInSelectedCohort
-                        || associatesInSelectedCohort.length === 0
-                        || this.props.currentUser.roles.length === 0}
-                      hidden={this.props.currentUser.roles.length === 0}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setState({
-                          ...state,
-                          selectedAssociate: JSON.parse(e.target.value)
-                        });
-                      }} >
-                      <option value={undefined} style={{ display: 'none' }}>.....</option>
-                      {associateOptions}
-                    </Input>
+                    <InputGroupAddon addonType="prepend">client</InputGroupAddon>
+                    <Input type="text" placeholder="....." list="clients" value={client} onChange={(e) => { setState({ ...state, client: e.target.value }) }} />
+                    <datalist id="clients">
+                      {this.props.createInterviewComponentState.clientArr.map((ele: any) => (
+                        <option value={ele.clientName} />
+                      ))}
+                    </datalist>
                   </InputGroup>
                 </>}
-              <span className="span-select-interview">Enter  or Select client name</span>
-              <InputGroup className="new-interview-input-group">
-                <InputGroupAddon addonType="prepend">client</InputGroupAddon>
-                <Input type="text" placeholder="....." list="clients" value={client} onChange={(e) => { setState({ ...state, client: e.target.value }) }} />
-                <datalist id="clients">
-                  {this.props.createInterviewComponentState.clientArr.map((ele: any) => (
-                    <option value={ele.clientName} />
-                  ))}
-                </datalist>
-              </InputGroup>
-            </div>
-
-
-            <div className="col-md-6">
               <span className="span-select-interview">Select a Date </span>
               <InputGroup size="md" className="new-interview-input-group">
                 <InputGroupAddon addonType="prepend">date </InputGroupAddon>
@@ -308,7 +314,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 
           <Button color="secondary" size="lg" block disabled={buttonDisabledState} onClick={buttonOnClick}>{buttonText}</Button>
         </Form>
-      </div>
+      </div >
     );
   }
 
