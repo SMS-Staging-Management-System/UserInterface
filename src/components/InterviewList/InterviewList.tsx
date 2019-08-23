@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
@@ -8,8 +8,10 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { Label } from 'reactstrap';
 import { store } from '../../Store';
+import { FaSistrix} from 'react-icons/fa';
 // import { Button } from 'react-bootstrap'; 
 import ReviewButton from './ActionButtons/ReviewButton';
+import { Collapse, InputGroup, FormControl } from 'react-bootstrap';
 // import { cognitoRoles } from '../../model/cognito-user.model';
 
 
@@ -47,11 +49,14 @@ export interface InterviewListState {
     managerEmail: string,
     place: string,
     clientName: string,
-    staging: string
+    staging: string,
+
 }
+
 
 // More comments 
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
+    
     constructor(props: InterviewListProps) {
         super(props);
 
@@ -65,7 +70,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             managerEmail: 'managerEmail',
             place: 'placeName',
             clientName: 'clientName',
-            staging: 'stagingOff'
+            staging: 'stagingOff',
+            
+
+            
         }
     }
 
@@ -276,7 +284,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     }
 
     filterByClient = (event: any) => { //handle filter click by client
-        if (event.currentTarget.value === 'clientName') {
+        //if (event.currentTarget.value === 'clientName') {
             this.setState({
                 clientName: event.currentTarget.value
             });
@@ -290,59 +298,37 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.place,
                 event.currentTarget.value,
                 this.state.staging);
-        } else {
-            this.setState({
-                clientName: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                event.currentTarget.value,
-                this.state.staging);
-        }
+        // } //else {
+        //     this.setState({
+        //         clientName: event.currentTarget.value
+        //     });
+        //     this.props.getInterviewPages(
+        //         0,
+        //         this.props.pageSize,
+        //         this.props.orderBy,
+        //         this.props.direction,
+        //         this.state.associateEmail,
+        //         this.state.managerEmail,
+        //         this.state.place,
+        //         event.currentTarget.value,
+        //         this.state.staging);
+        // }
     }
 
-    filterByStaging = (event: any) => { //handle filter click by associate email
-        console.log(event.currentTarget.value);
+    filterByAssociateInput = (event: any) =>{
+        if(event === 'with')
+        this.setState({
+        listOfInterviews: this.props.listOfInterviews.filter(interview => interview.associateInput)
+        });
+        else 
+        this.setState({
+            listOfInterviews: this.props.listOfInterviews.filter(interview => !interview.associateInput)
+        })
 
-        if (event.currentTarget.value === 'stagingOff') {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            console.log("staging Off");
-
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-
-        } else {
-            this.setState({
-                staging: event.currentTarget.value
-            });
-            this.props.getInterviewPages(
-                0,
-                this.props.pageSize,
-                this.props.orderBy,
-                this.props.direction,
-                this.state.associateEmail,
-                this.state.managerEmail,
-                this.state.place,
-                this.state.clientName,
-                event.currentTarget.value);
-        }
     }
+
+
+
 
     renderDate = (date: number) => {
         if (date > 0) {
@@ -466,6 +452,93 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </th>
                                     </tr>
                                 </thead>
+                                <tr>
+                                    {isAdmin ? <td></td> : <></>}
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                        <div>
+                                        <span style={{position: 'absolute', zIndex: 2, display: 'block'}}><FaSistrix/></span>
+                                        <input type="text"placeholder="Associate Email" style={{paddingLeft: '1rem'}} className='form-control' 
+                                        onChange={this.filterByAssociateEmail} value={this.state.associateEmail === 'associateEmail'? '' : this.state.associateEmail}></input>
+                                        </div>
+                                    {/* <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
+                                            <option value='associateEmail'>Associate Email</option>
+                                            {arrAssociateEmail2.map((entry, index) => {
+                                                return (
+                                                    <option value={entry} key={index}>{entry}</option>
+                                                );
+                                            })}
+                                        </select>            */}
+                                    </td>
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+{/*                                     <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
+                                            <option value='managerEmail'>Manager Email</option>
+                                            {arrManagerEmail2.map((entry, index) => {
+                                                return (
+                                                    <option value={entry} key={index}>{entry}</option>
+                                                );
+                                            })}
+                                        </select> */}
+                                        <div>
+                                        <span style={{position: 'absolute', zIndex: 2, display: 'block'}}><FaSistrix/></span>
+                                        <input type="text"placeholder="Managaer Email" style={{paddingLeft: '1rem'}} className='form-control'
+                                        onChange={this.filterByManagerEmail} value={this.state.managerEmail === 'managerEmail'? '' : this.state.managerEmail}></input>
+                                        </div>
+                                    </td>    
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                    <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
+                                            <option value='placeName'>Location</option>
+                                            {arrPlace2.map((entry, index) => {
+                                                return (
+                                                    <option value={entry} key={index}>{entry}</option>
+                                                );
+                                            })}
+                                        </select>
+                                    </td>
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                    <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
+                                            <option value='clientName'>Client</option>
+                                            {arrClientName2.map((entry, index) => {
+                                                return (
+                                                    <option value={entry} key={index}>{entry}</option>
+                                                );
+                                            })}
+                                        </select>
+                                    </td>
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                    <select className='form-control'>
+                                            <option value='dateNotified'>Date Notified</option>
+                                            
+                                        </select>
+                                    </td>    
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                    <select className='form-control'>
+                                            <option value='dateNotified'>Date Scheduled</option>
+                                            
+                                        </select>
+                                    </td>
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                    <select className='form-control'>
+                                            <option value='dateNotified'>Date Reviewed</option>
+                                            
+                                        </select>            
+                                    </td>
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                    <select className='form-control' onChange={this.filterByAssociateInput}>
+                                            <option value='dateNotified'>Associate Input</option>
+                                            <option value='with'>With Associate Input</option>
+                                            <option value='without'>Without Associate Input</option>
+                                            
+                                        </select>
+                                    </td>    
+                                    <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
+                                    <select className='form-control'>
+                                            <option value='dateNotified'>Interview Feedback</option>
+                                            <option value='with'>With Interview Feedback</option>
+                                            <option value='without'>Without Interview Feedback</option> 
+                                            
+                                        </select>
+                                    </td>
+                                    </tr>
                                 <tbody>
                                     {this.state.listOfInterviews.map((entry) => {
                                         console.log(entry.associateInput)
@@ -493,9 +566,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </tr>)
                                     })}
                                 </tbody>
-                            </table>
-                            <form>
-                                <div className='form-row'>
+                                <tfoot >
+
+                                </tfoot>
+                                </table>
                                     <div className='col-0.5'>
                                         <select onChange={this.changePageSize} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
@@ -504,56 +578,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             <option value={25} className={'justify-content-center'}>25</option>
                                             <option value={50} className={'justify-content-center'}>50</option>
                                         </select>
-                                    </div>
-                                    <div className='col-3'>
-                                        <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
-                                            <option value='associateEmail'>Associate Email</option>
-                                            {arrAssociateEmail2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-3'>
-                                        <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
-                                            <option value='managerEmail'>Manager Email</option>
-                                            {arrManagerEmail2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col'>
-                                        <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
-                                            <option value='placeName'>Location</option>
-                                            {arrPlace2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-1'>
-                                        <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
-                                            <option value='clientName'>Client</option>
-                                            {arrClientName2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-2'>
+                                    </div> 
+     {/*                                <div className='col-2'>
                                         <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
                                             <option value='stagingOff'>Staging Off</option>
                                             <option value='stagingOn'>Staging On</option>
                                         </select>
-                                    </div>
+                                    </div> */}
                                 </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
                 <br />

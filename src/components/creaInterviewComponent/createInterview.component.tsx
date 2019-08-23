@@ -117,6 +117,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 
     grabManagerEmail = async (alias) => { 
         const res = await managersClient.findManagersByLocation(alias)
+        console.log('Check')
+            console.log(alias);
             this.setState({...this.state,
                 managerEmail: res.data[0].email
         })
