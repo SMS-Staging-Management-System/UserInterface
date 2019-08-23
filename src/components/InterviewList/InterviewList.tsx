@@ -315,7 +315,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         // }
     }
 
-    filterByAssociateInput = (event: any) =>{
+  /*   filterByAssociateInput = (event: any) =>{
         if(event === 'with')
         this.setState({
         listOfInterviews: this.props.listOfInterviews.filter(interview => interview.associateInput)
@@ -326,7 +326,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         })
 
     }
-
+ */
 
 
 
@@ -523,7 +523,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>            
                                     </td>
                                     <td style={{margin: 0,padding: 0,borderCollapse: 'collapse'}}>
-                                    <select className='form-control' onChange={this.filterByAssociateInput}>
+                                    <select className='form-control' >
                                             <option value='dateNotified'>Associate Input</option>
                                             <option value='with'>With Associate Input</option>
                                             <option value='without'>Without Associate Input</option>
@@ -570,7 +570,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
                                 </tfoot>
                                 </table>
-                                    <div className='col-0.5'>
+                                    <div className='col-0.5' style={{width: '10%'}}>
                                         <select onChange={this.changePageSize} className='form-control'>
                                             <option value="" disabled selected hidden>Page</option>
                                             <option value={5} className={'justify-content-center'}>5</option>
