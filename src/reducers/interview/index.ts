@@ -3,6 +3,7 @@ import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
 import { interviewFeedbackReducer } from './interviewFeedback.reducer';
+// import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { assocInputReducer } from './assoc-input.reducer';

@@ -1,26 +1,28 @@
-import Form from "reactstrap/lib/Form";
+//import Form from "reactstrap/lib/Form";
 import React from "react";
 import { interviewClient } from "../../axios/sms-clients/interview-client";
-import InputGroup from "reactstrap/lib/InputGroup";
-import InputGroupAddon from "reactstrap/lib/InputGroupAddon";
-import Input from "reactstrap/lib/Input";
+//import InputGroup from "reactstrap/lib/InputGroup";
+//import InputGroupAddon from "reactstrap/lib/InputGroupAddon";
+//import Input from "reactstrap/lib/Input";
 import { Redirect } from "react-router";
+// import { connect } from "react-redux";
+// import { IState } from "../../reducers";
+// import { setState } from "../../actions/interviewFeedback/interviewFeedback.actions";
+// import { IInterviewFeedbackComponentState } from "../../reducers/interview";
 import Button from "reactstrap/lib/Button";
+import { store } from '../../Store';
+
 
 export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
-    
+
     constructor(props) {
         super(props);
         this.state = {
-            redirect: null,
-            feedbackRequestedDate: null,
-            feedbackText: null,
-            feedbackReceivedDate: null,
-            feedbackDeliveredDate: null
+            redirect: null
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getInterviewFeedback();
     }
 
