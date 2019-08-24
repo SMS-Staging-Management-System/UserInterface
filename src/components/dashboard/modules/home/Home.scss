@@ -1,0 +1,43 @@
+.wrapper{
+    margin-top: 20px;
+    display:grid;
+    grid-template-columns:1fr;
+    grid-auto-rows: minmax(80px,auto);
+    grid-gap: 1em;
+    justify-items: center;
+    align-items: center;
+    grid-template-areas: 
+        "byStaging" 
+        "fiveOrMore"
+        "numInterviews"
+        "toStaging"
+        "dropped"
+        
+}
+.byStaging{
+    grid-area: byStaging;
+}
+.fiveOrMore{
+    grid-area:fiveOrMore;
+}
+.numInterviews{
+    grid-area: numInterviews;
+}
+.toStaging{
+    grid-area:toStaging;
+}
+.dropped{
+    grid-area:dropped;
+}
+
+@media (min-width:700px){
+    .wrapper{
+        grid-template-columns: repeat(4,1fr );
+        grid-auto-rows: minmax(200px,auto);
+        grid-template-areas: 
+        "numInterviews numInterviews numInterviews numInterviews"
+        " dropped dropped byStaging byStaging"
+        "fiveOrMore fiveOrMore toStaging toStaging"
+        ;
+    }
+}

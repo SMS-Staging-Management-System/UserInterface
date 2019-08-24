@@ -17,26 +17,26 @@ export const joinCohortTypes = {
 } 
 
 
-// export const findByCohortToken = (token:string) => async (dispatch) => {
-//     try {
-//         const res = await cohortClient.findByToken(token);
-//         if(res.data){
-//             dispatch({
-//                 payload: {
-//                     validToken: true
-//                   },
-//                   type: joinCohortTypes.FIND_BY_COHORT_TOKEN
-//             })
+export const findCohortByToken = (token:string) => async (dispatch) => {
+    try {
+        const res = await cohortClient.findByToken(token);
+        if(res.data){
+            dispatch({
+                payload: {
+                    validToken: true
+                  },
+                  type: joinCohortTypes.FIND_BY_COHORT_TOKEN
+            })
 
-//         }
-//     } catch (e) {
-//         dispatch({
-//             payload: {
-//               },
-//               type: joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN
-//         })
-//     }
-// }
+        }
+    } catch (e) {
+        dispatch({
+            payload: {
+              },
+              type: joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN
+        })
+    }
+}
 export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
     try {
         const res = await userClient.findOneByEmail(user.email)
@@ -68,7 +68,7 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
                   type: joinCohortTypes.JOIN_COHORT
                   
             })
-            history.push('/management/login');
+            history.push('/dashboard/home');
             toast.success('Joined Cohort')
         }
     } catch (e) {

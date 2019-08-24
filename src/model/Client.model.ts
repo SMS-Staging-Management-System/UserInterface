@@ -1,4 +1,3 @@
-
 export class Client {
     id: number;
     name: string;
@@ -7,4 +6,9 @@ export class Client {
         this.id = id;
         this.name = name;
     }
+}
+
+export interface IClient {
+    clientId: number;
+    clientName: string;
 }

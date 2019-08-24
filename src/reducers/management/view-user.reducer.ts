@@ -50,11 +50,11 @@ export const viewUserReducer = (state = initialState, action: any) => {
         newUser: action.payload.newUser
       }
 
-    // case viewUserTypes.GET_USER_INFO:
-    //   return {
-    //     ...state,
-    //     newUser: action.payload.newUser
-    //   }
+    case viewUserTypes.GET_USER_INFO:
+       return {
+         ...state,
+         newUser: action.payload.newUser
+       }
   }
   return state;
 }

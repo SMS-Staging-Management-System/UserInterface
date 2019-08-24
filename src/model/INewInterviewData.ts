@@ -1,7 +1,7 @@
-
 export interface INewInterviewData {
-  associateEmail: number;
-	date: number;
-	location: string;
-	client: string;
-}
+	associateEmail: number;
+	managerEmail : string;
+	  date: number;
+	  location: string;
+	  client: string;
+  }

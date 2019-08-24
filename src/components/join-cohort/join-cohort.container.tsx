@@ -1,12 +1,12 @@
 import { IState } from "../../reducers";
 import { connect } from "react-redux";
 import { JoinCohortComponent } from "./join-cohort.component";
-import {joinCohort, saveUserAssociate, findLoggedInUser} from '../../actions/join-cohort/join-cohort.actions'
+import { joinCohort, saveUserAssociate, findLoggedInUser } from '../../actions/join-cohort/join-cohort.actions'
 import { IAuthState, ICreateUserState, IAddressState, IJoinCohortState } from "../../reducers/management";
 import { ICognitoUser } from "../../model/cognito-user.model";
 import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
-import {updateNewUser, updateNewUserLocation, toggleLocationDropdown} from '../../actions/create-user/create-user.actions'
+import { updateNewUser, updateNewUserLocation, toggleLocationDropdown } from '../../actions/create-user/create-user.actions'
 import { updateLocations } from '../../actions/address/address.actions';
 import { History } from "history";
 
@@ -49,8 +49,7 @@ const mapDispatchToProps:IJoinCohortDispatchToProps = {
     updateLocations,
     toggleLocationDropdown,
     saveUserAssociate,
-    findLoggedInUser
-
+    findLoggedInUser,
 }
 
 

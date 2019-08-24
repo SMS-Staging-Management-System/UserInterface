@@ -70,7 +70,8 @@ export const loginRequest = (username: string, password: string, history) => asy
         if(credentials.challengeName === 'NEW_PASSWORD_REQUIRED'){
             history.push('/management/reset-password')
         }else{
-            history.push('/surveys');
+            
+            history.push('/dashboard');
         }
     } catch (error) {
         console.log(error);

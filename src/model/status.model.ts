@@ -1,5 +1,3 @@
-
-
 export interface IStatus{
     statusId: number;
     generalStatus: string;

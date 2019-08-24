@@ -1,5 +1,6 @@
 import { IAddress } from "./address.model";
 import { IStatus } from "./status.model";
+import { ICohort } from "./cohort";
 
 export interface IUser {
   email:      string;
@@ -11,4 +12,5 @@ export interface IUser {
   personalAddress:    IAddress;
   userStatus:     IStatus
   roles: string[];
+  cohorts?: ICohort[];
 }

@@ -6,24 +6,25 @@ import { ViewUserModal } from './view-user-modal.component';
 import { IUser } from '../../../model/user.model';
 
 export interface IViewUserModal {
-  toggleViewUserModal: () => void,
-  viewUser: IViewUserState,
-  addresses: IAddressState,
-  user: IUser,
-  profileBeingViewed: IProfileViewState
+    manageGetUsersByGroup: (groupName: string, email: string, page?: number) => void,
+    toggleViewUserModal: () => void,
+    viewUser: IViewUserState,
+    addresses: IAddressState,
+    user: IUser,
+    profileBeingViewed: IProfileViewState
 }
 
-const mapStateToProps = (state:IState) => ({
-  addresses: state.managementState.addresses,
-  viewUser: state.managementState.viewUser,
-  user: state.managementState.currentSMSUser.currentSMSUser,
-  profileBeingViewed: state.managementState.currentProfile
+const mapStateToProps = (state: IState) => ({
+    addresses: state.managementState.addresses,
+    viewUser: state.managementState.viewUser,
+    user: state.managementState.currentSMSUser.currentSMSUser,
+    profileBeingViewed: state.managementState.currentProfile
 });
 
 const mapDispatchToProps = {
-  toggleViewUserModal,
-  updateUserInfo,
-  hoveredUser
+    toggleViewUserModal,
+    updateUserInfo,
+    hoveredUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewUserModal);
