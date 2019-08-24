@@ -3,35 +3,26 @@ import { interviewListReducer } from './interviewList.reducer';
 import { reportFormReducer } from './reportform.reducer';
 import { createInterviewReducer } from './createInterview.reducer';
 import { interviewFeedbackReducer } from './interviewFeedback.reducer';
-import { InterviewFormat } from '../../model/Interview.format.model';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { assocInputReducer } from './assoc-input.reducer';
 import { IAssociateInput } from '../../model/Associateinput.model';
-import { feedbackDeliveredChartReducer } from './feedbackdelivered';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
 import { jobDescriptionChartReducer } from './jobdesc.reducer';
 import { Client } from '../../model/Client.model';
 import { Interview } from '../../model/Interview.model';
+import { interviewsCountReducer } from './interviewscount.reducer';
 
-export interface IReportFormState {
-    
+// the reportform reducer seems to do nothing. remove later
+export interface IReportFormState {   
 }
 
-export interface IManagerChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
+export interface ISimpleChartDataState {
+    chartData: number[]
+}
+
+export interface IAveragedChartDataState extends ISimpleChartDataState {
+    totalNumber: number
 }
 
 export interface IInterviewFeedbackComponentState {
@@ -39,72 +30,10 @@ export interface IInterviewFeedbackComponentState {
     feedbackText: string
     feedbackReceivedDate: string
     feedbackDeliveredDate: string
-    interviewFormat: InterviewFormat
+    feedbackStatus: number
+    interviewFormat: number
     noInterviewFound: boolean
-}
-
-export interface IAssociateChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
-}
-
-export interface IFeedbackRequestedChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
-}
-
-export interface IFeedbackDeliveredChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
-}
-
-export interface IJobDescriptionChartState {
-    data: {
-        datasets: [{
-            data: number[],    
-            backgroundColor: [ string, string ],
-            borderColor: [ string, string ],
-        }],
-        labels: [ string, string ],
-    },
-    options: {
-        legend: {labels:{}},
-        pointLabels: {}
-    },
-	canvas: any
+    interviewStatus: number
 }
 
 export interface ICreateInterviewComponentState {
@@ -133,12 +62,12 @@ export interface IInterviewState {
     reportForm : IReportFormState,
     createInterviewComponentState: ICreateInterviewComponentState,
     interviewFeedbackComponentState: IInterviewFeedbackComponentState,
-    managerChart: IManagerChartState,
-    associateChart: IAssociateChartState,
+    managerChart: ISimpleChartDataState,
+    associateChart: ISimpleChartDataState,
     associateInput: IAssociateInput,
-    feedbackRequestedChart: IFeedbackRequestedChartState,
-    feedbackDeliveredChart: IFeedbackDeliveredChartState,
-	jobDescriptionChart: IJobDescriptionChartState
+    feedbackRequestedChart: ISimpleChartDataState,
+    jobDescriptionChart: ISimpleChartDataState,
+    interviewsCountChart: IAveragedChartDataState,
 }
 
 export const interviewState = combineReducers<IInterviewState>({
@@ -150,6 +79,6 @@ export const interviewState = combineReducers<IInterviewState>({
    associateChart: associateChartReducer,
    associateInput: assocInputReducer,
    feedbackRequestedChart: feedbackRequestedChartReducer,
-   feedbackDeliveredChart: feedbackDeliveredChartReducer,
-   jobDescriptionChart: jobDescriptionChartReducer
+   jobDescriptionChart: jobDescriptionChartReducer,
+   interviewsCountChart: interviewsCountReducer,
 })

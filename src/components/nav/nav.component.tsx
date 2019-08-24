@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
-import { FaUserAlt, FaDatabase, FaClock, FaThumbsUp, FaComment, FaListOl } from 'react-icons/fa';
+import { FaUserAlt, FaDatabase } from 'react-icons/fa';
+import { cognitoRoles } from '../../model/cognito-user.model';
 
 interface IProps extends RouteComponentProps<{}> {
   logout: () => void;
@@ -53,8 +54,11 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                   }
                   {
 
-                    this.props.auth.currentUser.roles.some(role => role === 'staging-manager' || role === 'admin' || role === 'trainer') &&
+                    this.props.auth.currentUser.roles.some(role => role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN || role === cognitoRoles.TRAINER) &&
                     <>
+                      <li className="nav-item active">
+                        <Link to="/dashboard/home" className="unset-anchor nav-link">Dashboard</Link>
+                      </li>
                       <li className="nav-item active">
                         <Link to="/surveys" className="unset-anchor nav-link">Surveys</Link>
                       </li>
@@ -68,29 +72,27 @@ class AppNav extends React.PureComponent<IProps, {}, {}> {
                           <Link to="/interview/list" className=" dropdown-item nav-dropdown"> Interview List </Link>
                         </div>
                       </li>
-                      <li className="nav-item active dropdown">
-                        <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaDatabase /> Reports</a>
-                        <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                          <Link to="/interview/report/feedback" className=" dropdown-item nav-dropdown"><FaThumbsUp /> Feedback Given Report...</Link>
-                          <Link to="/interview/report/24hour" className=" dropdown-item nav-dropdown"><FaClock /> Given 24 Hour Notice Report...</Link>
-                          <Link to="/interview/report/jobDesc" className=" dropdown-item nav-dropdown"><FaComment /> Job Description Given Report...</Link>
-                          <Link to="/interview/report/AssociateInterviews" className=" dropdown-item nav-dropdown"><FaListOl /> Interviews Per Associate Report...</Link>
-                        </div>
+                      <li className="nav-item active">
+                        <Link to="/interview/reports" className="unset-anchor nav-link"><FaDatabase />Reports</Link>
                       </li>
 
                     </>
                   }
                   {
+                    //needs for all users to be able to see and didnt want to make the above code any more complicated looking
                     (this.props.auth.currentUser.roles.length === 0) &&
-                    <li>
-                      <Link to="/interview/list" className=" dropdown-item"> Interview List </Link>
-                    </li>
+                    <li className="nav-item active dropdown">
+                    <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaDatabase /> Interviews </a>
+                    <div className="dropdown-menu" aria-labelledby="examples-dropdown">
+                      <Link to="/interview/new" className=" dropdown-item nav-dropdown"> New Interview</Link>
+                      <Link to="/interview/list" className=" dropdown-item nav-dropdown"> Interview List </Link>
+                    </div>
+                  </li>
                   }
                   <li className="nav-item active dropdown">
                     <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><FaUserAlt />  {props.auth.currentUser.email}</a>
                     <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                      <Link to="/management/profile" className=" dropdown-item nav-dropdown">Profile</Link>
-
+                      <Link to={{ pathname: "/management/profile", state:{currentUser: true}}} className=" dropdown-item nav-dropdown">Profile</Link>
 
                       <div className="dropdown-item nav-dropdown" onClick={this.logout}>Logout</div>
                     </div>

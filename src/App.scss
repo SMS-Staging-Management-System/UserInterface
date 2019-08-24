@@ -1,5 +1,3 @@
-// @import 'components/pokemon/pokemon-card/pokemon-card.scss';
-
 // variables can be declared and later reused
 $revature-orange-light: #f3a55d;
 $revature-orange: #f26925;
@@ -32,37 +30,37 @@ $screen-xl-min: 1200px;
 /* @include transition(all,2s,ease-out); */
 @mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
   -webkit-transition: $what $time $how;
-  -moz-transition:    $what $time $how;
-  -ms-transition:     $what $time $how;
-  -o-transition:      $what $time $how;
-  transition:         $what $time $how;
+  -moz-transition: $what $time $how;
+  -ms-transition: $what $time $how;
+  -o-transition: $what $time $how;
+  transition: $what $time $how;
 }
 
 // Small devices
 @mixin sm {
   @media (min-width: #{$screen-sm-min}) {
-      @content;
+    @content;
   }
 }
 
 // Medium devices
 @mixin md {
   @media (min-width: #{$screen-md-min}) {
-      @content;
+    @content;
   }
 }
 
 // Large devices
 @mixin lg {
   @media (min-width: #{$screen-lg-min}) {
-      @content;
+    @content;
   }
 }
 
 // Extra large devices
 @mixin xl {
   @media (min-width: #{$screen-xl-min}) {
-      @content;
+    @content;
   }
 }
 
@@ -70,7 +68,16 @@ $screen-xl-min: 1200px;
   Positioning
 *******************************************/
 .align-start {
-  align-self: flex-start
+  align-self: flex-start;
+}
+.horizontal-centering{
+    justify-content: center;
+}
+.vertical-centering{
+    align-items: center;
+}
+.text-vertical-centering{
+    text-align: center;
 }
 /********************************************
   Shared
@@ -88,27 +95,27 @@ input:invalid:not(:valid) {
 }
 
 .flex-package {
-  display:    flex;
+  display: flex;
   flex-shrink: 0;
 }
 
-.rev-btn:not(.dropdown), .rev-btn > button.dropdown-toggle {
-  background-color: $revature-orange-light ;
-  border-color: $revature-orange-light;
+.rev-btn:not(.dropdown),
+.rev-btn > button.dropdown-toggle {
+  background-color: $revature-orange-light;
+  border-color: $revature-orange;
   color: black !important;
   &:hover {
-    border-bottom-color: #565D61;
-    color: $revature-orange-light;
+    background-color: $revature-orange;
   }
   &:active {
     background-color: $revature-orange-light;
-    color: #565D61;
+    color: #565d61;
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
   }
-  &:active, &:focus {
+  &:active,
+  &:focus {
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
-  } 
-
+  }
 }
 
 li > a.rev-btn-tab {
@@ -123,9 +130,10 @@ li > a.rev-btn-tab {
   &:active {
     color: black;
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
-    border-color: $revature-orange-light
+    border-color: $revature-orange-light;
   }
-  &:active, &:focus {
+  &:active,
+  &:focus {
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
@@ -136,12 +144,11 @@ li > a.rev-btn-tab {
   cursor: pointer;
 }
 
-
 .rev-background-color {
   background-color: $revature-orange-light;
 }
 
-.rev-color { 
+.rev-color {
   color: $revature-orange;
 }
 
@@ -156,15 +163,14 @@ li > a.rev-btn-tab {
   .responsive-modal-row-item {
     margin-right: 0.3em;
     margin-bottom: 0.7em;
-  } 
+  }
 
   textarea {
     width: 100%;
   }
-  
 }
 
-.dropdown-item { 
+.dropdown-item {
   &:active {
     background-color: $revature-orange-light;
   }
@@ -199,11 +205,10 @@ li > a.rev-btn-tab {
     margin: 2em auto;
   }
 
-  @include lg { 
+  @include lg {
     max-width: 900px;
   }
 }
-
 
 /****************************************
   App
@@ -240,18 +245,21 @@ body {
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
 
 #main-content-container {
   @include flex-col;
   width: 100%;
   align-items: center;
-  margin:auto;
+  margin: auto;
   @include md {
-    max-width: 80%
+    max-width: 80%;
   }
 }
 
@@ -271,7 +279,8 @@ body {
   border: unset;
   color: black;
   text-decoration: none;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: black;
     text-decoration: none;
   }
@@ -286,7 +295,8 @@ body {
     border: unset !important;
     color: black !important;
   }
-  &:active, &:focus {
+  &:active,
+  &:focus {
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
@@ -298,17 +308,17 @@ body {
 }
 
 .margin-nav {
-  margin-right: 2em
+  margin-right: 2em;
 }
 
-
-.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-  color: rgba(0,0,0,.7);
+.navbar-light .navbar-nav .nav-link:focus,
+.navbar-light .navbar-nav .nav-link:hover {
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .navbar-expand-md .navbar-nav .nav-link {
-  padding-right: .75rem !important;
-  padding-left: .75rem !important;
+  padding-right: 0.75rem !important;
+  padding-left: 0.75rem !important;
 }
 
 .bg-light {
@@ -332,9 +342,6 @@ body {
   cursor: pointer;
 }
 
-/*****************************
-  Clicker
-*****************************/
 .blue {
   color: blue;
 }
@@ -347,7 +354,7 @@ body {
           login.component.tsx
 ************************************/
 #login-pass {
-  margin: 0.3em
+  margin: 0.3em;
 }
 
 #login-form {
@@ -356,21 +363,20 @@ body {
   align-items: center;
 }
 
-@media (min-width: 1200px) { 
-  .top-lev-div{
-    margin-top:50px;
+@media (min-width: 1200px) {
+  .top-lev-div {
+    margin-top: 50px;
     zoom: 1.5;
     -moz-transform: scale(1.5);
-  } 
+  }
 }
 
-@media (max-width: 1199.99px) { 
-  .top-lev-div{
-    margin-top:50px;
-    zoom: 1.0;
-    -moz-transform: scale(1.0);
-  } 
-
+@media (max-width: 1199.99px) {
+  .top-lev-div {
+    margin-top: 50px;
+    zoom: 1;
+    -moz-transform: scale(1);
+  }
 }
 
 .frontDiv {
@@ -380,16 +386,15 @@ body {
 
 .behindDiv {
   z-index: 2;
-
 }
 
 .box input {
-  margin-left:0;
+  margin-left: 0;
   -webkit-transition: 1s;
-          transition: 1s;
+  transition: 1s;
 }
 
-.txt-bx{
+.txt-bx {
   width: 250px;
 }
 
@@ -397,15 +402,14 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 0.5em;
-  border-bottom:solid rgb(245, 139, 0) 4px;
+  border-bottom: solid rgb(245, 139, 0) 4px;
 }
 
 .resetDiv {
-  margin:auto;
+  margin: auto;
   display: flex;
   justify-content: center;
 }
-
 
 .rememberSpan {
   display: inline;
@@ -416,21 +420,21 @@ body {
   display: inline;
 }
 
-#titleHead{
-  margin:auto;
+#titleHead {
+  margin: auto;
   display: flex;
   justify-content: center;
   padding-bottom: 10px;
 }
 
-#forgot-pass-btn{
+#forgot-pass-btn {
   color: blue;
   margin-top: 0.5em;
   border: none;
   text-align: center;
   background-color: transparent;
   -webkit-transition: 1s;
-          transition: 1s;
+  transition: 1s;
   &:hover {
     text-decoration: underline;
   }
@@ -442,12 +446,9 @@ body {
   padding-top: 10px;
 }
 
-
-
 /***********************************
   Manage
 ***********************************/
-
 
 #manage-users-container {
   width: 100%;
@@ -470,8 +471,8 @@ body {
 .nav-tabs .manage-user-nav-item-active {
   border: 2px solid;
   border-color: #d6dce2;
-  border-top-left-radius: .25rem;
-  border-top-right-radius: .25rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
   border-bottom: none;
   color: $revature-orange-light;
   &:hover {
@@ -486,8 +487,6 @@ body {
   display: flex;
   justify-content: space-between;
 }
-
-
 
 #manage-cohorts-nav {
   display: flex;
@@ -525,26 +524,59 @@ body {
   }
 }
 
+.create-user-buttons {
+  justify-content: space-between;
+}
 
+.create-user-margin {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#create-user-modal {
+  @include md() {
+    max-width: 580px;
+  }
+}
+
+.manage-user-nav {
+    display: flex;
+    padding: 0.25em 0.75rem;
+    align-items: center;
+    justify-content: initial;
+    @include rounded-top();
+  }
+  
+.no-backround-image {
+    background-image:''
+}
+  
+  
 /*****************
 Survey Component
-*****************/ 
+*****************/
 
+.inputWrapper {
+  display:flex;
+  justify-content: flex-start;
+
+}
 .tableUsers{
   text-align: center;
   margin-top: 4em;
 }
 
-.buttonDiv{
+.buttonDiv {
   float: right;
-  
 }
 
-.assignButtonDiv{
-    width: 100%;  
+.assignButtonDiv {
+  width: 100%;
 }
 
-.assignSurveyBtn{
+.assignSurveyBtn {
   color: black;
   border-radius: 10px;
   background-color: $revature-orange-light;
@@ -555,21 +587,21 @@ Survey Component
 }
 
 .assignSurveyBtn:hover,
-.assignSurveyBtn:active{
-background-color: $revature-orange-light;
-color:#565D61;
+.assignSurveyBtn:active {
+  background-color: $revature-orange-light;
+  color: #565d61;
 }
 
-.assignSurveyModalHeader{
-    text-align: center;
-    background-color: $revature-orange-light;
-    font-weight: bold;
-    height: 100%;
-    width: 100%;
+.assignSurveyModalHeader {
+  text-align: center;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 100%;
+  width: 100%;
 }
 
 .modal-content {
-    min-height: 300px;
+  min-height: 300px;
 }
 
 /*****************
@@ -577,57 +609,52 @@ User Dropdown
 *****************/
 
 .userDropdown {
-    // background-color: $revature-orange-light;
-    float: right;
+  // background-color: $revature-orange-light;
+  float: right;
 }
 
 .userDropdownBtn {
-    color: black;
-    border-radius: 10px;
-    background-color: $revature-orange-light;
-    height: 40px;
-    width: 100%;
-    border: none;
+  color: black;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  height: 40px;
+  width: 100%;
+  border: none;
 }
 
 .userDropdownBtn:hover,
 .userDropdownBtn:active {
-    background-color: $revature-orange-light;
-    color:#565D61;
+  background-color: $revature-orange-light;
+  color: #565d61;
 }
 
 .userDropInput {
-    margin-left: 10px;
-    margin-right: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 #userDropdownWidth {
-    width: 335px;
+  width: 335px;
 }
-
 
 /*****************
 Drag and Drop
-*****************/ 
+*****************/
 .todos {
   float: top;
   background: #f3a55d;
   height: auto;
   width: 300px;
-   margin-top: 3em; 
- 
-
+  margin-top: 3em;
 }
 .test {
   //margin-right: 100%;
-float: left;
-
+  float: left;
 }
-.questionbutton{
+.questionbutton {
   display: inline-block;
 }
 .done {
- 
   background: #e9ecef;
   height: auto;
   padding-top: 50px;
@@ -637,68 +664,82 @@ float: left;
   width: auto;
   margin: 10px;
 }
-#jumbotronSurveyBuild{
+#jumbotronSurveyBuild {
   height: auto;
   margin-top: 3em;
-  border: 3px solid black;
-  box-shadow: 0 16px 16px black;
+  border: 3px solid grey;
   letter-spacing: 0.2pc;
   font-weight: bold;
   background-color: #eee;
 }
-.survey-build-jumbotron{
-    margin-left: 20em;
+.survey-build-jumbotron {
+  margin: 1em;
 }
-#multi{
-  background-color: black;
-  color: white;
+#multi {
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   display: inline-block;
   font-size: 14.9px;
- 
 }
-#yn{
-  background-color: black;
-  color: white;
+#yn {
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
-#agree{
-  background-color: black;
-  color: white;
+#agree {
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
-#rating{
-  background-color: black;
-  color: white;
+#rating {
+  background-color: $revature-orange;
+  color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
-#feedback{
-  background-color: black;
-  color: white;
+#feedback {
+    background-color: $revature-orange;
+    color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
-#checkbox{
-  background-color: black;
-  color: white;
+#checkbox {
+    background-color: $revature-orange;
+    color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
-#tf{
-  background-color: black;
-  color: white;
+#tf {
+    background-color: $revature-orange;
+    color: black;
   letter-spacing: 0.1pc;
   font-size: 14.9px;
 }
+.typeSelect{
+    margin: 0.5em;
+}
+.questionTableRow{
+    width: 100%;
+}	
+.myTr{	
+    width: 100%;	
+  }	
+  .trashCan{	
+    align-content: right;	
+    width: 50px;	
+    border-color: $revature-orange;	
+    border-style: solid;	
+    border-width: thick;	
+  }
 // .labelTitle{
 //   font-family: Helvetica;
 //   font-weight: bold;
 //   text-shadow: 0 16px 16px black;
 // }
-.surveyCreateBtn{
+.surveyCreateBtn {
   border-radius: 10px;
   float: right;
   background: rgb(44, 90, 117);
@@ -708,15 +749,21 @@ float: left;
   font-weight: bold;
 }
 .surveyCreateBtn:hover,
-.surveyCreateBtn:active{
+.surveyCreateBtn:active {
   background: black;
   color: white;
 }
 
+.form-control2 {	
+    &:focus {	
+      border-color: $revature-orange-light;	
+      box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;	
+    }	
+  }
 /***************
 TEMPLATE MODAL
-***************/ 
-.buttonCreate{
+***************/
+.buttonCreate {
   border-radius: 10px;
   background-color: $revature-orange-light;
   font-weight: bold;
@@ -725,7 +772,7 @@ TEMPLATE MODAL
   color: black;
   width: 50%;
 }
-.buttonBack{
+.buttonBack {
   border-radius: 10px;
   background-color: $revature-orange-light;
   font-weight: bold;
@@ -735,20 +782,20 @@ TEMPLATE MODAL
   width: 50%;
 }
 .buttonBack:hover,
-.buttonBack:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
+.buttonBack:active {
+  background-color: $revature-orange-light;
+  color: #565d61;
   border: 1px solid black;
 }
 .buttonCreate:hover,
-.buttonCreate:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
+.buttonCreate:active {
+  background-color: $revature-orange-light;
+  color: #565d61;
   border: 1px solid black;
 }
-.createSurveyButton{
-  background-color: $revature-orange-light; 
-  color:black;
+.createSurveyButton {
+  background-color: $revature-orange-light;
+  color: black;
   border: 1px solid black;
   width: 100%;
   border-radius: 10px;
@@ -756,14 +803,14 @@ TEMPLATE MODAL
   height: 40px;
 }
 .createSurveyButton:hover,
-.createSurveyButton:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
+.createSurveyButton:active {
+  background-color: $revature-orange-light;
+  color: #565d61;
   border: 1px solid black;
 }
-.submitSurveyButton{
-  background-color: $revature-orange-light; 
-  color:black;
+.submitSurveyButton {
+  background-color: $revature-orange-light;
+  color: black;
   border: 1px solid black;
   width: 100%;
   border-radius: 10px;
@@ -771,12 +818,12 @@ TEMPLATE MODAL
   height: 40px;
 }
 .submitSurveyButton:hover,
-.submitSurveyButton:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
+.submitSurveyButton:active {
+  background-color: $revature-orange-light;
+  color: #565d61;
   border: 1px solid black;
 }
-.buttonEdit{
+.buttonEdit {
   border-radius: 10px;
   background-color: white;
   font-weight: bold;
@@ -784,7 +831,7 @@ TEMPLATE MODAL
   border: 1px solid $revature-orange-light;
   color: $revature-orange;
 }
-.horizontal-scroll{
+.horizontal-scroll {
   overflow: scroll;
   direction: ltr;
   width: 200px;
@@ -792,54 +839,51 @@ TEMPLATE MODAL
   white-space: nowarp;
 }
 .buttonEdit:hover,
-.buttonEdit:active{
-  background-color: $revature-orange-light; 
-  color:black;
+.buttonEdit:active {
+  background-color: $revature-orange-light;
+  color: black;
   border: none;
 }
 
-.modalHeading{
+.modalHeading {
   width: 100%;
   text-align: left;
   height: 60px;
   background-color: $revature-orange-light;
   color: black;
   padding: 10px;
-  
-  
+
   text-align: center;
   font-size: 22px;
   font-family: Helvetica;
   border-radius: 10px 10px 0px 0px;
 }
-#jumbotronTemplate{
+#jumbotronTemplate {
   margin: auto;
 }
-.surveyName{
+.surveyName {
   width: 20%;
   border: 1px solid black;
   padding: 5px;
- 
-  
 }
-.surveyDescription{
+.surveyDescription {
   width: 45%;
   border: 1px solid black;
   padding: 5px;
 }
-.noteDiv{
+.noteDiv {
   color: green;
   font-weight: bold;
 }
 /*******************
 Info Circle
-*******************/ 
-.surveyInfoCircle{
+*******************/
+.surveyInfoCircle {
   font-size: 17px;
   text-align: center;
   width: 100%;
 }
-.modalSuccessHeading{
+.modalSuccessHeading {
   height: 40px;
   width: 100%;
   background-color: $revature-orange-light;
@@ -852,32 +896,36 @@ Info Circle
   tabular data
 ***********************************/
 
-.tableholder{
+.tableholder {
   background-color: #ffc289;
   padding: 1rem;
-  
-  form{
+
+  form {
     width: max-content;
   }
 
-  table{
-    background:       #ffffff;
-    margin-left:      auto;
-    margin-right:     auto;
-    max-width:        100%;
+  table {
+    background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
 
-    tr{
+    tr {
       border-bottom: #333333 solid 1px;
 
-      td, th{
-        padding:          5px;
-        text-align:       center;
-        word-wrap:        break-word;
+      td,
+      th {
+        padding: 5px;
+        text-align: center;
+        word-wrap: break-word;
       }
     }
   }
 }
-
+.pointer-table:hover {
+    cursor: pointer;
+}
+  
 /***********************************
   Chart
 ***********************************/
@@ -885,42 +933,42 @@ Info Circle
 #AssociateChart,
 #FeedbackRequestedChart,
 #FeedbackReceivedChart,
-#JDChartComponent{
-  width:40vw;
-  height:60vh;
-  display:inline-block;
-  top:180px;
-  position:fixed;
-  text-align:center;
-  z-index:10;
+#JDChartComponent {
+  width: 40vw;
+  height: 60vh;
+  display: inline-block;
+  top: 180px;
+  position: fixed;
+  text-align: center;
+  z-index: 10;
 }
 
 #ManagerChart,
-#FeedbackRequestedChart{
-  left:10vw;
+#FeedbackRequestedChart {
+  left: 10vw;
 }
 
 #AssociateChart,
-#FeedbackReceivedChart{
-  left:50vw;
+#FeedbackReceivedChart {
+  left: 50vw;
 }
 
- #JDChartComponent{
-  left:30vw;
- }
- 
+#JDChartComponent {
+  left: 30vw;
+}
+
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
-.editButton{
-  background-color: #f26925; 
-  color: white; 
+.editButton {
+  background-color: #f26925;
+  color: white;
   border: 2px solid #f26925;
 }
 
@@ -931,89 +979,292 @@ Info Circle
 
 /***********
 Container
-***********/ 
-#containerTemplate{
+***********/
+#containerTemplate {
   background: #f8f9fa;
   border-radius: 0 0 10px 10px;
   padding: 15px;
-  
 }
 /**************
 Alert
-**************/ 
-#alertSubmission{
+**************/
+#alertSubmission {
   width: auto;
   text-align: center;
   display: none;
-  border:  1px solid black;
+  border: 1px solid black;
   color: black;
 }
 /****************
 Fa Circle
-****************/ 
+****************/
 .faCircle {
-    color: $revature-orange-light;
-  }
+  color: $revature-orange-light;
+}
 
-  #FeedbackRequestedChart{
-    width:50vw;
-    height:100vh;
-    display:inline-block;
-    top:180px;
-    left:0%;
-    position:fixed;
-   z-index:12;
-   text-align:center;
-   }
-  
-    #FeedbackReceivedChart{
-     width:50vw;
-     height:100vh;
-     display:inline-block;
-     top:180px;
-     left:50vw;
-     position:fixed;
-     z-index:10;
-     text-align:center;
-   }
-  
-    #JDChartComponent{
-     width:50vw;
-     height:100vh;
-     display:inline-block;
-     top:180px;
-     left:25vw;
-     position:fixed;
-     z-index:10;
-     text-align:center;
-   }
+#FeedbackRequestedChart {
+  width: 50vw;
+  height: 100vh;
+  display: inline-block;
+  top: 180px;
+  left: 0%;
+  position: fixed;
+  z-index: 12;
+  text-align: center;
+}
 
-   /////////////////////////////////////////////////
+#FeedbackReceivedChart {
+  width: 50vw;
+  height: 100vh;
+  display: inline-block;
+  top: 180px;
+  left: 50vw;
+  position: fixed;
+  z-index: 10;
+  text-align: center;
+}
+
+#JDChartComponent {
+  width: 50vw;
+  height: 100vh;
+  display: inline-block;
+  top: 180px;
+  left: 25vw;
+  position: fixed;
+  z-index: 10;
+  text-align: center;
+}
+
+/////////////////////////////////////////////////
 // CHARTS
 /////////////////////////////////////////////////
+//
+// Survey's Team PAGINATEDDATA
+//
+// .paginateddata,
+// .visualdata {
+//   background-color: #f26925;
+//   color: white;
+//   border: 2px solid #f26925;
+//   position: absolute;
+//   width: 40%;
+//   bottom: 5%;
+//   display: block;
+//   text-align: center;
+//   #FeedbackRequestedChart{
+//     width:50vw;
+//     height:100vh;
+//     display:inline-block;
+//     top:180px;
+//     left:0%;
+//     position:fixed;
+//    z-index:12;
+//    text-align:center;
+//    }
+  
+//     #FeedbackReceivedChart{
+//      width:50vw;
+//      height:100vh;
+//      display:inline-block;
+//      top:180px;
+//      left:50vw;
+//      position:fixed;
+//      z-index:10;
+//      text-align:center;
+//    }
+  
+//     #JDChartComponent{
+//      width:50vw;
+//      height:100vh;
+//      display:inline-block;
+//      top:180px;
+//      left:25vw;
+//      position:fixed;
+//      z-index:10;
+//      text-align:center;
+//    }
+//   }
 
+/****************
+Charts ~ Interview Team V  V V
+****************/
+.AssociateChart, .ManagerChart, .JDChartComponent, .FeedbackReceivedChart, .FeedbackRequestedChart{
+  position: relative;
+  margin: 5px;
+  border-radius: 7px;
+  box-shadow: 3px 3px 8px grey;
+}
+.chart-title{
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #f3a55d;
+  text-align: center;
+}
  .paginateddata, .visualdata{
-  background-color: #f26925; 
+  //background-color: #f26925; 
+  background-color: #f26925;
   color: white; 
   border: 2px solid #f26925;
   position:absolute;
-  width:40%;
+  width:20%;
   bottom:5%;
   display:block;
   text-align:center;
   z-index: 100;
+  box-shadow: 3px 3px 8px grey;
+  border-radius: 25px;
 
-  a{
-    color:#000000;
+  a {
+    color: #000000;
     text-decoration: underline;
     font-size: 2em;
+    font-family: Futura-Std-Book;
   }
 }
-
+/*****************
+ Chart ~ Interview's Team ^ ^ ^
+*****************/
 .paginateddata{
-  left:5%;
+  position:relative;
+ // top: 80%;
+ bottom: -102.7px;
+  width: 50%;
+  left: -30px;
 }
 
  .visualdata{
-  left:55%;
+  position:relative;
+  //left:55%;
+  width: 50%;
+  left: 300px;
+  bottom: -50px;
+ // top: 80%;
+  //bottom: 50%;
+}
+
+.option-box:hover {
+  background-color: $revature-orange-light;
+  cursor: pointer;
+}
+
+.pagination-button{
+  position: absolute;
+  right: 0;
+  width: 120px;
+  transform: translateY(-50%);
+}
+
+.div-fixed{
+  height:500px;
+  width:300px;
+  top: 55vh;
+  right: 40vw; 
+  margin-left: 40%;
+  margin-top : 120px;
+}
+
+.div-child {
+  border-radius: 10%;
+  display: inline-block;
+  border:orange
+}
+
+.text-style{
+  background-color:white;
+  color:  gray; 
+  padding: 1rem;
+  border: white 1px solid;
+}   
+
+.div-center {
+  display: flex;
+  justify-content: center;
+  color: #f26925;
+  font-size: 1.5rem
+}
+
+@keyframes lightSpeedIn {
+  from {
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+  }
+
+  60% {
+    transform: skewX(20deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: skewX(-5deg);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.lightSpeedIn {
+  animation: lightSpeedIn 3s normal;
+  animation-timing-function: ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 2s normal;
+}
+
+//////////////////////////////
+//////////   FONT   //////////
+//////////////////////////////
+
+@font-face {
+  font-family: "FuturaSTDBook";
+  src: url("assets/FuturaStdBook.otf");
+}
+
+body {
+  font-family: "FuturaSTDBook";
+}
+
+.futurafont {
+  font-family: "FuturaSTDBook";
+}
+
+.close-sign {
+  margin-left: 740px;
+  border: 2px solid black;
+}
+
+.close-sign:hover {
+  background-color:grey;
+  color: white;
+}
+.update-model {
+  float: right
+}
+
+.list-group-item.active {
+  background-color: $revature-orange-light;
+  border-color: grey;
+  border: 1px solid grey
+}
+
+.page-item.active .page-link {
+  background-color: $revature-orange-light;
+  border-color: $revature-orange-light;
+}
+
+.page-link {
+  color: black;
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-//import { AssociatesFeedbackRequest } from "../components/associatesFeedbackRequestComponent/associatesFeedbackRequestComponent.component"
 import { Switch, Route } from 'react-router';
 import InterviewList from '../components/InterviewList/InterviewList';
 import createInterviewComponent from '../components/creaInterviewComponent/createInterview.component';
@@ -7,6 +6,8 @@ import interviewFeedbackComponent from '../components/interviewFeedbackComponent
 import AssociateInput from '../components/associate-input/associate-inputs.component';
 import ViewAssociateInput from '../components/view-assoc-input/view-assoc-input.component';
 import { ViewInterviewFeedbackComponent } from '../components/interviewFeedbackComponent/ViewInterviewFeedbackComponent';
+import { ReportsPage } from '../components/interviewreportspage/interviewreportspage';
+
 
 export class InterviewRoutes extends React.Component<any, any> {
     constructor(props: any) {
@@ -27,6 +28,7 @@ export class InterviewRoutes extends React.Component<any, any> {
                 <Route path={`${path}/:interviewId/feedback`} component={interviewFeedbackComponent} />
                 <Route path={`${path}/list`} component={InterviewList} />
                 <Route path={`${path}/viewAssocInput`} component={ViewAssociateInput} />
+                <Route path={`${path}/reports`} component={ReportsPage} />
             </Switch>
         )
     }
