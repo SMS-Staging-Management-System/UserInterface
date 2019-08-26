@@ -34,9 +34,9 @@ export interface IAuthState {
 export interface ICreateUserState {
     enabled: boolean,
     newUser: ICreateUser,
-    locationDropdownActive: false,
-    roleDropdownActive: false,
-    cohortDropdownActive: false,
+    locationDropdownActive: boolean,
+    roleDropdownActive: boolean,
+    cohortDropdownActive: boolean,
 }
 
 export interface IViewUserState {
@@ -48,8 +48,8 @@ export interface ICreateCohortState {
     enabled: boolean,
     isSaved: boolean,
     newCohort: ICohort,
-    locationDropdownActive: false,
-    trainerDropdownActive: false
+    locationDropdownActive: boolean,
+    trainerDropdownActive: boolean
 }
 
 export interface IAddressState {
@@ -102,6 +102,7 @@ export interface ICohortModalState {
 }
 
 export interface IJoinCohortState {
+    foundCohort: ICohort,
     validToken: boolean,
     userToJoin: IUser
 }
@@ -137,8 +138,7 @@ export interface IManagementState {
     joinCohort: IJoinCohortState,
     resetPassword: IResetPasswordState,
     resetPasswordUsername: IResetPasswordUsernameState,
-    login: ILoginState,
-    statusDropdownActive: boolean;
+    login: ILoginState
 }
 
 export const managementState = combineReducers<IManagementState>({

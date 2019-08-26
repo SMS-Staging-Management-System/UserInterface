@@ -22,8 +22,8 @@ export interface IJoinCohortStateToProps {
     history:History
 }
 export interface IJoinCohortDispatchToProps{
-    joinCohort:(user:IUser, token:string, history:History) => void
-    findCohortByToken: (token:string) => void
+    findCohortByToken:(token:string) => void,
+    joinCohort:(user:IUser, token:string, history:History) => void,
     updateNewUserLocation: (location: IAddress) => void,
     updateNewUser: (user: IUser) => void,
     updateLocations: () => void,
@@ -44,14 +44,14 @@ const mapStateToProps = (state:IState, ownProps):IJoinCohortStateToProps => ({
 
 
 const mapDispatchToProps:IJoinCohortDispatchToProps = {
+    findCohortByToken,
     joinCohort,
     updateNewUser,
     updateNewUserLocation,
     updateLocations,
     toggleLocationDropdown,
     saveUserAssociate,
-    findLoggedInUser,
-    findCohortByToken
+    findLoggedInUser
 }
 
 

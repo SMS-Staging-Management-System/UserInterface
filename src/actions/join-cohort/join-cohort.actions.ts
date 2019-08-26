@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { History } from "history";
 
 export const joinCohortTypes = {
-    FIND_BY_COHORT_TOKEN: 'JOIN_FIND_BY_COHORT_TOKEN',
+    FIND_COHORT_BY_TOKEN: 'FIND_COHORT_BY_TOKEN',
     FAILED_TO_FIND_COHORT_BY_TOKEN: 'FAILED_TO_FIND_COHORT_BY_TOKEN',
     JOIN_COHORT: 'JOIN_COHORT',
     FAILED_TO_JOIN_COHORT: 'FAILED_TO_JOIN_COHORT',
@@ -18,25 +18,28 @@ export const joinCohortTypes = {
 
 
 export const findCohortByToken = (token:string) => async (dispatch) => {
-    try {
-        const res = await cohortClient.findByToken(token);
-        if(res.data){
+    
+    await cohortClient.findByToken(token)
+    .then((response) => {
+        if(response.data){
             dispatch({
                 payload: {
-                    validToken: true
-                  },
-                  type: joinCohortTypes.FIND_BY_COHORT_TOKEN
+                    foundCohort: response.data
+                    },
+                    type: joinCohortTypes.FIND_COHORT_BY_TOKEN
             })
-
         }
-    } catch (e) {
+    })
+     .catch((e)=> {
         dispatch({
             payload: {
+                foundCohort:null
               },
               type: joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN
         })
-    }
+    });
 }
+
 export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
     try {
         const res = await userClient.findOneByEmail(user.email)
@@ -58,27 +61,27 @@ export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
 }
 
 export const joinCohort = (user:IUser, token:string, history:History) => async (dispatch) => {
-    try {
-        
-        const res = await cohortClient.joinCohort(user, token);
-        if(res.status === 200){
+    await cohortClient.joinCohort(user, token)
+    .then((response) => {
+        if(response.status === 200){
             dispatch({
                 payload: {
-                  },
-                  type: joinCohortTypes.JOIN_COHORT
-                  
+                    },
+                    type: joinCohortTypes.JOIN_COHORT
+                    
             })
-            history.push('/dashboard/home');
-            toast.success('Joined Cohort')
+            history.push('/dashboard');
+            toast.success('Joined Cohort'); 
         }
-    } catch (e) {
-        dispatch({
-            payload: {
-              },
-              type: joinCohortTypes.FAILED_TO_JOIN_COHORT
-        })
-        toast.error('Failed to Join Cohort')
-    }
+    })
+    .catch((e)=> {
+    dispatch({
+        payload: {
+            },
+            type: joinCohortTypes.FAILED_TO_JOIN_COHORT
+    })
+    toast.error('Failed to Join Cohort')
+    });
 }
 
 export const saveUserAssociate = (newUser: IUser) => async (dispatch) => {
