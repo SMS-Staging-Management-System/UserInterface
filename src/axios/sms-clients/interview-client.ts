@@ -29,6 +29,7 @@ export const interviewClient = {
 
         let url = interviewContext;
         url += '/page'
+        //Comment out line below to make backend calls work (AS OF 8/26/2019)
         if (!isAdmin) url += 's'
         url += '?orderBy=' + orderBy + '&direction=' + direction;
         if (pageNumber) {

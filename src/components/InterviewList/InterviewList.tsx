@@ -40,7 +40,7 @@ export interface InterviewListState {
     associateEmail: string,
     managerEmail: string,
     place: string,
-    clientName: string,
+    client: string,
     staging: string
 }
 const tableHeaderValues: Object =
@@ -68,7 +68,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             associateEmail: 'associateEmail',
             managerEmail: 'managerEmail',
             place: 'placeName',
-            clientName: 'clientName',
+            client: 'clientName',
             staging: 'stagingOff'
         }
     }
@@ -106,7 +106,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
-            this.state.clientName,
+            this.state.client,
             this.state.staging);
     }
 
@@ -150,7 +150,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
-            this.state.clientName,
+            this.state.client,
             this.state.staging);
     }
     filterChange = (event: any) => {
@@ -160,16 +160,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
         const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
-        const place = (name === 'place') ? value : this.state.place;
-        const clientName = (name === 'client') ? value : this.state.clientName;
+        let place = (name === 'place') ? value : this.state.place;
+        let client = (name === 'client') ? value : this.state.client;
         const staging = (name === 'staging') ? value : this.state.staging;
         this.setState({
             associateEmail,
             managerEmail,
             place,
-            clientName,
+            client,
             staging,
         });
+        // console.log(client);
+        // setTimeout(() => {
+        // console.log(this.state.client);
+        // },100);
+        //Add check if place has a value of place, change it to placeName (default filter for list all places)
+        //Add check if client has a value of client, change it to clientName (default filter for list all places)
         this.props.getInterviewPages(
             0,
             pageSize as number,
@@ -177,8 +183,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.props.direction,
             associateEmail,
             managerEmail,
-            place,
-            clientName,
+            place === 'place' ? 'placeName' : place,
+            client === 'client' ? 'clientName' : client,
             staging);
     }
 
