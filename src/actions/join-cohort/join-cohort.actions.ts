@@ -70,7 +70,7 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
                     type: joinCohortTypes.JOIN_COHORT
                     
             })
-            history.push('/dashboard');
+            history.push('/dashboard/home');
             toast.success('Joined Cohort'); 
         }
     })

@@ -172,7 +172,7 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
       {
         return (
           <div>
-            <p>Click to join, {this.props.login.currentUser.firstName}</p> <br/>
+            <p>Click to join, {this.props.joinCohortState.userToJoin.firstName}</p> <br/>
             <Button color='primary' onClick={()=>this.joinCohort()}>Join Cohort</Button>
           </div>
         )
