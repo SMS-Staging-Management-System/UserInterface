@@ -18,7 +18,7 @@ export interface ICreateCohortModal {
   updateNewCohort: (cohort: ICohort) => void,
   updateLocations: () => void,
   updateNewCohortTrainer: (trainer: ICognitoUser) => void,
-  manageGetUsersByGroup: (group: string) => void,
+  manageGetUsersByGroup: (groupName: string, email: string, page?: number) => void,
   manageUsers: IManageUsersState,
   createCohort: ICreateCohortState,
   addresses: IAddressState,

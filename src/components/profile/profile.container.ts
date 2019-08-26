@@ -3,7 +3,7 @@ import { IState } from '../../reducers/index';
 import Profile from './profile.component';
 import { updateUserTrainingLocation, updateUserInfo, setToCurrentSMSUser,
      toggleTrainingLocationsDropdown, updateUser, updateUserStatus,
-      toggleStatusDropdown, handleCheckboxChange, toggleCohortDropdown } from '../../actions/profile/profile.actions';
+      toggleStatusDropdown, handleCheckboxChange, toggleCohortDropdown } from '../../actions/profile/profile.actions';  
 import { IUser } from '../../model/user.model';
 import { IAddressState, IStatusState, IManageUsersState } from '../../reducers/management';
 import { IAddress } from '../../model/address.model';
@@ -58,7 +58,7 @@ const mapDispatchToProps = {
     updateUserStatus: updateUserStatus,
     toggleStatusDropdown: toggleStatusDropdown,
     toggleCohortDropdown: toggleCohortDropdown,
-    handleCheckboxChange: handleCheckboxChange,
+    handleCheckboxChange: handleCheckboxChange
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

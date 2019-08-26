@@ -129,12 +129,12 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
         this.props.saveCohort(this.props.createCohort.newCohort);
     }
 
-    // goToCohortPage = (window, createCohort) => {
-    //     const cohortLocation = `${window.location.origin.toString()}` +
-    //         `/management/joincohort/${createCohort.newCohort.cohortToken}`;
+    goToCohortPage = (window, createCohort) => {
+         const cohortLocation = `${window.location.origin.toString()}` +
+            `/management/joincohort/${createCohort.newCohort.cohortToken}`;
 
 
-    // }
+    }
 
     getNewCohortJoinPath = (window, createCohort) => {
         return `${window.location.origin.toString()}` +
@@ -143,7 +143,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
 
     render() {
 
-        const { createCohort, addresses, /*manageUsers*/ } = this.props;
+        const { createCohort, addresses, manageUsers } = this.props;
 
         console.log(this.state.trainers);
 
