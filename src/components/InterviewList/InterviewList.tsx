@@ -93,8 +93,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.setState({
                 loaded: true
             });
-            this.handlePageClick({selected: this.props.currentPage});
-         }
+            this.handlePageClick({ selected: this.props.currentPage });
+        }
     }
 
     handlePageClick = (data) => {
@@ -239,7 +239,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             {thKeys.map((element, index) => {
                                                 let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
                                                 modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
-                                                return((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
+                                                return ((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
                                             })}
                                             {this.getAssocInput(entry)}
                                             <td>{
@@ -253,95 +253,43 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             }</td>
                                         </tr>)
                                     })}
-                                        <tr style = {{backgroundColor: '#f3a55d'}}>
-                                                {thKeys.map((element, keyIndex) => {
-                                                    let filterCurrentArrValues: string[] = [];
-                                                    return (keyIndex < 4 ? <td colSpan = {element === 'client' ? 2 : 1}>
-                                                        <select onChange={this.filterChange} name={element}
-                                                        value={this.state[element]} className='form-control'>
-                                                            <option value={element}>{thValues[keyIndex]}</option>
-                                                            {this.props.listOfInterviews.map((entry, index) => {
-                                                                let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
-                                                                if (!filterCurrentArrValues.includes(currentNestedEntry)) {
-                                                                    filterCurrentArrValues.push(currentNestedEntry);
-                                                                    return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
-                                                                }
-                                                            return;
-                                                        })}
-                                                    </select>
-                                                </td> : null)
-                                    })}
-                                    <td colSpan = {2}>
-                                        <select onChange={this.filterChange} value={this.state.staging}
-                                            name='staging' className='form-control'>
-                                            <option value='stagingOff'>Staging Off</option>
-                                            <option value='stagingOn'>Staging On</option>
-                                        </select>
-                                    </td>
-                                    <td colSpan={2}>
-                                        <select name='pageSize' onChange={this.filterChange} className='form-control'>
-                                            <option value="" disabled selected hidden>Page</option>
-                                            <option value={5} className={'justify-content-center'}>5</option>
-                                            <option value={10} className={'justify-content-center'}>10</option>
-                                            <option value={25} className={'justify-content-center'}>25</option>
-                                            <option value={50} className={'justify-content-center'}>50</option>
-                                        </select>
-<<<<<<< HEAD
-                                    </div>
-                                    <div className='col-3'>
-                                        <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
-                                            <option value='associateEmail'>Associate Email</option>
-                                            {arrAssociateEmail2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-3'>
-                                        <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
-                                            <option value='managerEmail'>Manager Email</option>
-                                            {arrManagerEmail2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col'>
-                                        <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
-                                            <option value='placeName'>Location</option>
-                                            {arrPlace2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-1.5'>
-                                        <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
-                                            <option value='clientName'>Client</option>
-                                            {arrClientName2.map((entry, index) => {
-                                                return (
-                                                    <option value={entry} key={index}>{entry}</option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className='col-1.5'>
-                                        <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
-                                            <option value='stagingOff'>Staging Off</option>
-                                            <option value='stagingOn'>Staging On</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
-=======
-                                    </td>
-                                </tr>
-                            </tbody>
+                                    <tr style={{ backgroundColor: '#f3a55d' }}>
+                                        {thKeys.map((element, keyIndex) => {
+                                            let filterCurrentArrValues: string[] = [];
+                                            return (keyIndex < 4 ? <td colSpan={element === 'client' ? 2 : 1}>
+                                                <select onChange={this.filterChange} name={element}
+                                                    value={this.state[element]} className='form-control'>
+                                                    <option value={element}>{thValues[keyIndex]}</option>
+                                                    {this.props.listOfInterviews.map((entry, index) => {
+                                                        let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                        if (!filterCurrentArrValues.includes(currentNestedEntry)) {
+                                                            filterCurrentArrValues.push(currentNestedEntry);
+                                                            return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
+                                                        }
+                                                        return;
+                                                    })}
+                                                </select>
+                                            </td> : null)
+                                        })}
+                                        <td colSpan={2}>
+                                            <select onChange={this.filterChange} value={this.state.staging}
+                                                name='staging' className='form-control'>
+                                                <option value='stagingOff'>Staging Off</option>
+                                                <option value='stagingOn'>Staging On</option>
+                                            </select>
+                                        </td>
+                                        <td colSpan={2}>
+                                            <select name='pageSize' onChange={this.filterChange} className='form-control'>
+                                                <option value="" disabled selected hidden>Page</option>
+                                                <option value={5} className={'justify-content-center'}>5</option>
+                                                <option value={10} className={'justify-content-center'}>10</option>
+                                                <option value={25} className={'justify-content-center'}>25</option>
+                                                <option value={50} className={'justify-content-center'}>50</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
->>>>>>> 799698b5057ca56f9538721e16fd91d3c035756f
                         </div>
                     </div>
                 </div>

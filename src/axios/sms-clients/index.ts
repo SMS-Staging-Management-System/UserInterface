@@ -11,6 +11,7 @@ export const smsClient = axios.create({
 });
 
 // Create interceptor to add the token into the header for every request
+//may need to comment the bottom for checking to work
 smsClient.interceptors.request.use((config) => {
   config.headers.Authorization = jwt
   return config;

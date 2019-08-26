@@ -44,7 +44,7 @@ export const interviewClient = {
         url += '&place=' + place;
         url += '&clientName=' + clientName;
         url += '&staging=' + staging;
-        console.log(url);
+        /* console.log(url);
         return {
             data: {
                 content: [{ associateEmail: 'test', managerEmail: 'test', place: 'test', client: { clientName: 'test' }, staging: 'STAGING_ON' }
@@ -56,8 +56,13 @@ export const interviewClient = {
                 orderBy: orderBy,
                 direction: direction
             }
-        }
-        //return smsClient.get(url);
+        } */
+        let x = smsClient.get(url).catch(error => { // debugging aid
+            console.log(error.message);
+            console.log('You sent the following: ');
+            console.log(error.config);
+        });
+        return smsClient.get(url);
     },
 
     assocNeedFeedback: async (pageNumber: number, PageSize: number) => {
