@@ -40,7 +40,7 @@ export interface InterviewListState {
     associateEmail: string,
     managerEmail: string,
     place: string,
-    clientName: string,
+    client: string,
     staging: string
 }
 const tableHeaderValues: Object =
@@ -68,7 +68,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             associateEmail: 'associateEmail',
             managerEmail: 'managerEmail',
             place: 'placeName',
-            clientName: 'clientName',
+            client: 'clientName',
             staging: 'stagingOff'
         }
     }
@@ -106,7 +106,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
-            this.state.clientName,
+            this.state.client,
             this.state.staging);
     }
 
@@ -150,7 +150,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
-            this.state.clientName,
+            this.state.client,
             this.state.staging);
     }
     filterChange = (event: any) => {
@@ -160,16 +160,22 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
         const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
-        const place = (name === 'place') ? value : this.state.place;
-        const clientName = (name === 'client') ? value : this.state.clientName;
+        let place = (name === 'place') ? value : this.state.place;
+        let client = (name === 'client') ? value : this.state.client;
         const staging = (name === 'staging') ? value : this.state.staging;
         this.setState({
             associateEmail,
             managerEmail,
             place,
-            clientName,
+            client,
             staging,
         });
+        // console.log(client);
+        // setTimeout(() => {
+        // console.log(this.state.client);
+        // },100);
+        //Add check if place has a value of place, change it to placeName (default filter for list all places)
+        //Add check if client has a value of client, change it to clientName (default filter for list all places)
         this.props.getInterviewPages(
             0,
             pageSize as number,
@@ -177,8 +183,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.props.direction,
             associateEmail,
             managerEmail,
-            place,
-            clientName,
+            place === 'place' ? 'placeName' : place,
+            client === 'client' ? 'clientName' : client,
             staging);
     }
 
@@ -213,84 +219,82 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         let thKeys = Object.keys(tableHeaderValues);
         let thValues = Object.values(tableHeaderValues);
         return (
-            <div className='container'>
-                <div className='row'>
-                    <div>
-                        <div className='table-responsive-xl'>
-                            <table className='table table-striped mx-auto w-auto'>
-                                <thead className='rev-background-color'>
-                                    <tr>
-                                        {isAdmin ? <th>Reviewed</th> : <></>}
-                                        {thKeys.map((element, index) => {
-                                            return (<th id={element} className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                                {thValues[index]}
-                                                {this.state.tableHeaderId === element && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                                {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
-                                            </th>)
-                                        })}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.state.listOfInterviews.map((entry) => {
-                                        return (<tr key={entry.id}>
-                                            {/* Added isAdmin check before the review button to fix bug. Originally, checkbox was showing even when user wasn't admin.*/}
-                                            {isAdmin ?
-                                                <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
-                                            {thKeys.map((element, index) => {
-                                                let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
-                                                modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
-                                                return ((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
-                                            })}
-                                            {this.getAssocInput(entry)}
-                                            <td>{
-                                                entry.feedback ?
-                                                    <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id } }}>Edit Interview Feedback</Link>
-                                                    :
-                                                    isAdmin ?
-                                                        <Link to={{ pathname: `/interview/${entry.id}/feedback` }}>Complete Interview Feedback</Link>
-                                                        :
-                                                        <></>
-                                            }</td>
-                                        </tr>)
+            <div className='row'>
+                <div>
+                    <div className='table-responsive-xl'>
+                        <table className='table table-striped mx-auto w-auto' id='interview-list-table'>
+                            <thead className='rev-background-color'>
+                                <tr>
+                                    {isAdmin ? <th>Reviewed</th> : <></>}
+                                    {thKeys.map((element, index) => {
+                                        return (<th id={element} className='cursor-hover' onClick={this.changeOrderCriteria}>
+                                            {thValues[index]}
+                                            {this.state.tableHeaderId === element && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
+                                            {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
+                                        </th>)
                                     })}
-                                    <tr style={{ backgroundColor: '#f3a55d' }}>
-                                        {thKeys.map((element, keyIndex) => {
-                                            let filterCurrentArrValues: string[] = [];
-                                            return (keyIndex < 4 ? <td colSpan={element === 'client' ? 2 : 1}>
-                                                <select onChange={this.filterChange} name={element}
-                                                    value={this.state[element]} className='form-control'>
-                                                    <option value={element}>{thValues[keyIndex]}</option>
-                                                    {this.props.listOfInterviews.map((entry, index) => {
-                                                        let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
-                                                        if (!filterCurrentArrValues.includes(currentNestedEntry)) {
-                                                            filterCurrentArrValues.push(currentNestedEntry);
-                                                            return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
-                                                        }
-                                                        return;
-                                                    })}
-                                                </select>
-                                            </td> : null)
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.listOfInterviews.map((entry) => {
+                                    return (<tr key={entry.id}>
+                                        {/* Added isAdmin check before the review button to fix bug. Originally, checkbox was showing even when user wasn't admin.*/}
+                                        {isAdmin ?
+                                            <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
+                                        {thKeys.map((element, index) => {
+                                            let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
+                                            modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                            return ((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
                                         })}
-                                        <td colSpan={2}>
-                                            <select onChange={this.filterChange} value={this.state.staging}
-                                                name='staging' className='form-control'>
-                                                <option value='stagingOff'>Staging Off</option>
-                                                <option value='stagingOn'>Staging On</option>
+                                        {this.getAssocInput(entry)}
+                                        <td>{
+                                            entry.feedback ?
+                                                <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id } }}>Edit Interview Feedback</Link>
+                                                :
+                                                isAdmin ?
+                                                    <Link to={{ pathname: `/interview/${entry.id}/feedback` }}>Complete Interview Feedback</Link>
+                                                    :
+                                                    <></>
+                                        }</td>
+                                    </tr>)
+                                })}
+                                <tr style={{ backgroundColor: '#f3a55d' }}>
+                                    {thKeys.map((element, keyIndex) => {
+                                        let filterCurrentArrValues: string[] = [];
+                                        return (keyIndex < 4 ? <td>
+                                            <select onChange={this.filterChange} name={element}
+                                                value={this.state[element]} className='form-control'>
+                                                <option value={element}>{thValues[keyIndex]}</option>
+                                                {this.props.listOfInterviews.map((entry, index) => {
+                                                    let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                    if (!filterCurrentArrValues.includes(currentNestedEntry)) {
+                                                        filterCurrentArrValues.push(currentNestedEntry);
+                                                        return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
+                                                    }
+                                                    return;
+                                                })}
                                             </select>
-                                        </td>
-                                        <td colSpan={2}>
-                                            <select name='pageSize' onChange={this.filterChange} className='form-control'>
-                                                <option value="" disabled selected hidden>Page</option>
-                                                <option value={5} className={'justify-content-center'}>5</option>
-                                                <option value={10} className={'justify-content-center'}>10</option>
-                                                <option value={25} className={'justify-content-center'}>25</option>
-                                                <option value={50} className={'justify-content-center'}>50</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                        </td> : null)
+                                    })}
+                                    <td colSpan={3}>
+                                        <select onChange={this.filterChange} value={this.state.staging}
+                                            name='staging' className='form-control'>
+                                            <option value='stagingOff'>Staging Off</option>
+                                            <option value='stagingOn'>Staging On</option>
+                                        </select>
+                                    </td>
+                                    <td colSpan={2}>
+                                        <select name='pageSize' onChange={this.filterChange} className='form-control'>
+                                            <option value="" disabled selected hidden>Page</option>
+                                            <option value={5} className={'justify-content-center'}>5</option>
+                                            <option value={10} className={'justify-content-center'}>10</option>
+                                            <option value={25} className={'justify-content-center'}>25</option>
+                                            <option value={50} className={'justify-content-center'}>50</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <br />
@@ -305,7 +309,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     pageRangeDisplayed={5}
                     forcePage={this.props.currentPage}
                     onPageChange={this.handlePageClick}
-                    containerClassName={'pagination page-navigator justify-content-center'}
+                    containerClassName={'pagination page-navigator justify-content-center interview-list-table-paginate'}
                     activeClassName={'active'}
                     pageClassName={'page-item cursor-hover'}
                     pageLinkClassName={'paginate-link page-link no-select justify-content-center'}
