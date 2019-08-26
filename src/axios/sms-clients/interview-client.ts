@@ -45,26 +45,6 @@ export const interviewClient = {
         url += '&place=' + place;
         url += '&clientName=' + clientName;
         url += '&staging=' + staging;
-<<<<<<< HEAD
-        /* console.log(url);
-        return {
-            data: {
-                content: [{ associateEmail: 'test', managerEmail: 'test', place: 'test', client: { clientName: 'test' }, staging: 'STAGING_ON' }
-                    , { associateEmail: 'test', managerEmail: 'test2', place: 'test2', client: { clientName: 'test' }, staging: 'STAGING_OFF' }],//resp.data.content,
-                numberOfPages: 1,
-                totalPages: 2,
-                currentPage: 1,
-                pageSize: 2,
-                orderBy: orderBy,
-                direction: direction
-            }
-        } */
-        let x = smsClient.get(url).catch(error => { // debugging aid
-            console.log(error.message);
-            console.log('You sent the following: ');
-            console.log(error.config);
-        });
-=======
         console.log(url);
         // DUMMY DATA
         // return {
@@ -79,7 +59,6 @@ export const interviewClient = {
         //        direction: direction
         //    }
         // }
->>>>>>> 225d2c0ae3f9b2afef523a430bf929b68bf9548c
         return smsClient.get(url);
     },
 
