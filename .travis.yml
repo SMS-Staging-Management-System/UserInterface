@@ -1,0 +1,14 @@
+language: node_js
+
+node_js: "10.16.3"
+
+git:
+  depth: false
+
+jobs:
+  include:
+
+  - stage: test
+  script:
+    npm test --watch=false
+  
