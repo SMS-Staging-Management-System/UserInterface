@@ -13,6 +13,7 @@
     "build:uat": "cross-env REACT_APP_ENV=uat npm run build",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm test -- --coverage --watchAll",
+    "test:ci": "react-scripts test --watchAll=false",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build"
   },
