@@ -1,14 +1,29 @@
 language: node_js
 
+dist: trusty
+
 node_js: "10.16.3"
 
 git:
   depth: false
 
+addons:
+  sonarcloud:
+    organization: "sms-staging-management-system"
+    token:
+      secure: "IYUIS3w6Tsyd5kQfXqZlorY23tRK5fCKBChKOG6KP1Q/ktWqFC/TYKj168XRolAQ55/SvFN9wVdMer0L84ufyP7147touXxDZa7l86pTcp9ARjL1PzURmIhAo+ch2C/IWhs1lJ32/YSr3lUXoI2O98d6YNXcoVEdQe0Ql+v7uGXuXUs6im1qBTK2fhF3txuRxEpyoVgQoCfK87chBtTnQJcZBSlGzt2HRb7Cj4dNIcH07u7x7lUH5Ct/m1uyy7Yhmz68oMXkjsCOPYuKRuCCF6lYubkQmjv2CN6ii19UPT3ruMR6y/idrCF3j5OKLBYhd3aTIJyXdlyymsRLRYbsZRvAOBkYaaIQTNoU4mYsr95w2J46y0tvTGkSvSIRfIi6kTDdID6mvAl/sQIV7ZxrD3KJwKPQ+Ktk3InXU6ArYdS+TmQ35yzVQXlryMZ/0DYa9dOhlFioGBe+FBOkEzXXIpYT/AqoOakNmho1EYzU5L/5HR3BfN9bPOrXRH8/rGjcVz1rAb7qphKXy9HIBmD/ONrMJfX0dcZR+uS9GFNX0zCGch8TWydBtjJTjhu2LxWOr0sOUISRpkMJo9OJTtMKjgLLa4x7LGG7y0iSHjK0zBxjNL9H7eJXxpcnIezFTuVE4/fy11JJbdnwJZ8li9jYXm9DMy7TC4knSqNhguSAsew="
+
 jobs:
   include:
 
   - stage: test
-  script:
-    npm test --watch=false
-  
+  script: npm run test:ci
+
+  - stage: build
+  script: npm run build:uat
+
+  -stage: quality
+  script: 
+    - npm run test:ci:coverage || true
+    - tslint --force -t json -o tslint-report.json --project .
+    - sonar-scanner
