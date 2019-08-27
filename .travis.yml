@@ -1,9 +1,5 @@
 language: node_js
 
-dist: trusty
-
-node_js: "10.16.3"
-
 git:
   depth: false
 
@@ -17,13 +13,13 @@ jobs:
   include:
 
   - stage: test
-  script: npm run test:ci
+    script: npm run test:ci
 
   - stage: build
-  script: npm run build:uat
+    script: npm run build:uat
 
   -stage: quality
-  script: 
+    script: 
     - npm run test:ci:coverage || true
     - tslint --force -t json -o tslint-report.json --project .
     - sonar-scanner
