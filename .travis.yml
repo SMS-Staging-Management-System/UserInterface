@@ -18,7 +18,7 @@ jobs:
   - stage: build
     script: npm run build:uat
 
-  -stage: quality
+  - stage: quality
     script: 
     - npm run test:ci:coverage || true
     - tslint --force -t json -o tslint-report.json --project .
