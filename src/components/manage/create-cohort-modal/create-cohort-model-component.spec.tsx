@@ -28,7 +28,15 @@ describe('CreateCohortModal', () => {
             updateLocations: jest.fn(),
             updateNewCohortTrainer: jest.fn(),
             manageGetUsersByGroup: jest.fn(),
-
+            manageUsers:{
+                manageUsers:[],
+                manageUsersCurrentPage:0,
+                manageUsersPageTotal:100,
+                emailSearch:'2',
+                option:'option',
+                componentLoaded:false,
+                userTableSort:'sorting'
+            },
             createCohort: {
                 enabled: true,
                 isSaved: false,
@@ -91,7 +99,15 @@ describe('CreateCohortModal', () => {
             updateLocations: jest.fn(),
             updateNewCohortTrainer: jest.fn(),
             manageGetUsersByGroup: jest.fn(),
-
+            manageUsers:{
+                manageUsers:[],
+                manageUsersCurrentPage:0,
+                manageUsersPageTotal:100,
+                emailSearch:'2',
+                option:'option',
+                componentLoaded:false,
+                userTableSort:'sorting'
+            },
             createCohort: {
                 enabled: true,
                 isSaved: false,
@@ -154,7 +170,15 @@ describe('CreateCohortModal', () => {
             updateLocations: jest.fn(),
             updateNewCohortTrainer: jest.fn(),
             manageGetUsersByGroup: jest.fn(),
-
+            manageUsers:{
+                manageUsers:[],
+                manageUsersCurrentPage:0,
+                manageUsersPageTotal:100,
+                emailSearch:'2',
+                option:'option',
+                componentLoaded:false,
+                userTableSort:'sorting'
+            },
             createCohort: {
                 enabled: true,
                 isSaved: false,
@@ -217,7 +241,15 @@ describe('CreateCohortModal', () => {
             updateLocations: jest.fn(),
             updateNewCohortTrainer: jest.fn(),
             manageGetUsersByGroup: jest.fn(),
-
+            manageUsers:{
+                manageUsers:[],
+                manageUsersCurrentPage:0,
+                manageUsersPageTotal:100,
+                emailSearch:'2',
+                option:'option',
+                componentLoaded:false,
+                userTableSort:'sorting'
+            },
             createCohort: {
                 enabled: true,
                 isSaved: false,
@@ -280,7 +312,15 @@ describe('CreateCohortModal', () => {
             updateLocations: () => {},
             updateNewCohortTrainer: () => {},
             manageGetUsersByGroup: () => {},
-
+            manageUsers:{
+                manageUsers:[],
+                manageUsersCurrentPage:0,
+                manageUsersPageTotal:100,
+                emailSearch:'2',
+                option:'option',
+                componentLoaded:false,
+                userTableSort:'sorting'
+            },
             createCohort: {
                 enabled: true,
                 isSaved: false,

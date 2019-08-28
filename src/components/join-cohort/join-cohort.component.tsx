@@ -12,7 +12,7 @@ const inputNames = {
   PHONE: 'NEW_USER_PHONE'
 }
 
-interface IJoinCohortProps extends IJoinCohortStateToProps, IJoinCohortDispatchToProps {
+export interface IJoinCohortProps extends IJoinCohortStateToProps, IJoinCohortDispatchToProps {
   // token: string,
   // validToken: boolean,
   // login: IAuthState,
@@ -137,8 +137,9 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
   }
 
   joinCohort() {
-    this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history)
+    this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history);
   }
+  // This function is called when an user already logged in and
   goToHomePage = () => {
     this.props.history.push('/home');
   }
@@ -149,40 +150,42 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, any> 
   render() {
 
     if (this.props.joinCohortState.validToken) {
+      console.log("Users in cohort:",this.props.joinCohortState.foundCohort.users);
       // If new user just filled the sign up form, will be redirected automatically to the
       // cohort login page
       if (this.props.joinCohortState.userToJoin.userId && !this.props.login.currentUser.email) 
       {
         return (
           <div>
-            <p>Going to cohort dashboard...</p>
+            <p>Going to cohort login...</p>
             {this.joinCohort()}
             <BarLoader/>
           </div>
         )
       }
-      // If user is logged in and is not part of the cohort can join by clicking the button
+      // If user is logged in and is already part of another cohort no need to rejoin. 
+      // User is not supposed to be part of multiple cohorts (?)
       else if (this.props.joinCohortState.userToJoin.userId &&
           (
             this.props.login.currentUser.email &&
-            !(this.props.joinCohortState.foundCohort.address.addressId == 
-              this.props.joinCohortState.userToJoin.trainingAddress.addressId)
+            this.props.joinCohortState.userToJoin.trainingAddress.addressId
           )
         ) 
       {
         return (
           <div>
-            <p>Click to join, {this.props.joinCohortState.userToJoin.firstName}</p> <br/>
-            <Button color='primary' onClick={()=>this.joinCohort()}>Join Cohort</Button>
+            <p>You're already part of a cohort.</p>
           </div>
         )
       } 
-      // If user is logged in and is already part of the cohort no need to re-join. 
+      // If user is logged in and is already part of the present cohort no need to re-join. 
       // Instead, user is redirected to the home page if clicks the button
       else if (this.props.joinCohortState.userToJoin.userId &&
+        (
+          this.props.login.currentUser.email &&
           (this.props.joinCohortState.foundCohort.address.addressId == 
             this.props.joinCohortState.userToJoin.trainingAddress.addressId)
-        ) 
+        ))  
       {
         return (
           <div>
