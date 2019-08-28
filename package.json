@@ -45,7 +45,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "^2.1.5",
     "react-spinner": "^0.2.7",
-    "react-spinners": "^0.5.3",
+    "react-spinners": "0.5.3",
     "react-toastify": "^4.5.1",
     "reactstrap": "^6.5.0",
     "redux": "^3.7.0",
