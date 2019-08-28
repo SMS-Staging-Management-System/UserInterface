@@ -192,7 +192,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             staging);
     }
 
-    //!!!!!!!!!!!!
     renderDate = (date: number) => { // renders a data if one is returned, otherwise just a dash
         if (date > 0) {
             return new Date(date).toDateString();
@@ -249,12 +248,15 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         {isAdmin ?
                                             <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
                                         {thKeys.map((element, index) => {
+                                            // check if element is a number, if it is then it's a date and should be rendered as such
                                             let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
+                                            // if element is an object, it's probably the client and we need their name, otherwise it can exist as is
                                             modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : modifiedElement;
+                                            // return the table cell with the value coming back from the database. DO NOT return last 2 columns, as there is no data for them.
                                             return ((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
                                         })}
                                         {this.getAssocInput(entry)}
-                                        <td>{
+                                        <td>{ // Link to feedback component
                                             entry.feedback ?
                                                 <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id } }}>Edit Interview Feedback</Link>
                                                 :
