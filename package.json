@@ -55,7 +55,8 @@
     "tether": "^1.4.4",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^4.0.0"
+    "tslint-react": "^4.0.0",
+    "tslint-sonarts": "^1.9.0"
   },
   "devDependencies": {
     "@types/aws-sdk": "^2.7.0",
