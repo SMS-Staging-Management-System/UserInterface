@@ -9,6 +9,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { store } from '../../Store';
 import ReviewButton from './ActionButtons/ReviewButton';
+import moment from 'moment';
 // #endregion 
 
 // The following is imported from the reducer to accept filtering conditions and display interviews
@@ -195,7 +196,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     //!!!!!!!!!!!!
     renderDate = (date: number) => { // renders a data if one is returned, otherwise just a dash
         if (date > 0) {
-            return new Date(date).toDateString();
+            return moment(date).format('lll');
         } else {
             return '-';
         }
