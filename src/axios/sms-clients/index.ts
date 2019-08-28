@@ -11,6 +11,7 @@ export const smsClient = axios.create({
 });
 //COMMENT OUT BLOCK BELOW TO MAKE BACKEND CALLS WORK (AS OF 8/26/2019)
 // Create interceptor to add the token into the header for every request
+//may need to comment the bottom for checking to work
 smsClient.interceptors.request.use((config) => {
  config.headers.Authorization = jwt
  return config;
