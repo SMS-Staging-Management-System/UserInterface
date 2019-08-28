@@ -3,11 +3,8 @@ import { ICohort } from "../../model/cohort";
 import { IUser } from "../../model/user.model";
 
 const cohortContext = '/user-service/cohorts'
-<<<<<<< HEAD
 const cohortNameSort = '/user-service/page';
 const aliasNameSort = '/user-service/page';
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 export const cohortClient = {
   save(cohort: ICohort) {
@@ -19,7 +16,6 @@ export const cohortClient = {
   joinCohort(user:IUser, token:string){
     return smsClient.post(cohortContext + `/token/${token.toString()}`, user)
   },
-<<<<<<< HEAD
   
   findAllByPage(page: number) {
     return smsClient.get(cohortContext+`/page/${page}`)
@@ -80,13 +76,3 @@ export const cohortClient = {
 
 
 
-=======
-  getAll: () => {
-    return smsClient.get(cohortContext + "/cohorts");
-  },
-
-  findAll() {
-    return smsClient.get(cohortContext)
-  }
-}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71

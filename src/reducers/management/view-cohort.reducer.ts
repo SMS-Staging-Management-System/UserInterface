@@ -17,7 +17,6 @@ const initialState: ICohortModalState = {
         users: [],
         cohortToken: '',
         address: {
-<<<<<<< HEAD
             addressId: 0,
             street: '',
             alias: '',
@@ -25,22 +24,12 @@ const initialState: ICohortModalState = {
             country: '',
             state: '',
             zip: ''
-=======
-          addressId: 0,
-          street: '',
-          alias: '',
-          city: '',
-          country: '',
-          state: '',
-          zip: ''
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         },
         cohortDescription: '',
         cohortName: '',
         endDate: '2019-03-21',
         startDate: '2019-01-10',
         cohortId: 0,
-<<<<<<< HEAD
         trainer: {
             trainingAddress: {
                 addressId: 0,
@@ -72,49 +61,13 @@ const initialState: ICohortModalState = {
                 specificStatus: '',
                 virtual: false
             }
-=======
-     trainer: {
-          trainingAddress: {
-            addressId: 0,
-            street: '',
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            zip: '',
-          },
-          personalAddress: {
-            addressId: 0,
-            street: '',
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            zip: '',
-          },
-          email: '',
-          firstName: '',
-          lastName: '',
-          phoneNumber: '',
-          userId: 0,
-          roles: [],
-          userStatus: {
-            statusId: 0,
-            generalStatus: '',
-            specificStatus: '',
-            virtual: false
-          }
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         }
     }
 }
 
 const {
     TOGGLE,
-<<<<<<< HEAD
     TOGGLE_CLOSE,
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     TOGGLE_STATUS_DROPDOWN,
     SELECT_ONE,
     SELECT_ALL,
@@ -127,16 +80,11 @@ const {
     HOVERED_COHORT,
 } = viewCohortTypes;
 
-<<<<<<< HEAD
 export const viewCohortReducer = (state = { ...initialState, isSaved: false }, action: any): ICohortModalState => {
-=======
-export const viewCohortReducer = (state = {...initialState, isSaved:false}, action: any): ICohortModalState => {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     switch (action.type) {
         case TOGGLE:
             return {
                 ...state,
-<<<<<<< HEAD
                 cohort: action.payload.cohort,
                 modalVisible: !state.modalVisible
             };
@@ -146,11 +94,6 @@ export const viewCohortReducer = (state = {...initialState, isSaved:false}, acti
                 modalVisible: false
             };
         case TOGGLE_STATUS_DROPDOWN:
-=======
-                modalVisible: !state.modalVisible
-            };
-         case TOGGLE_STATUS_DROPDOWN:
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             return {
                 ...state,
                 statusDropdownActive: !state.statusDropdownActive
@@ -187,11 +130,7 @@ export const viewCohortReducer = (state = {...initialState, isSaved:false}, acti
                 cohort: {
                     ...state.cohort,
                     users: state.cohort.users.filter(user => {
-<<<<<<< HEAD
                         return state.selectedUsers.some(userWithSameEmail => {
-=======
-                        return state.selectedUsers.some(userWithSameEmail => { 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                             return userWithSameEmail.email === user.email
                         });
                     })
@@ -203,11 +142,7 @@ export const viewCohortReducer = (state = {...initialState, isSaved:false}, acti
                 ...state,
                 isSaved: true
             };
-<<<<<<< HEAD
         case HOVERED_COHORT:
-=======
-        case HOVERED_COHORT: 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             //toast.success("cohort action hit reducer");
             return {
                 ...state,

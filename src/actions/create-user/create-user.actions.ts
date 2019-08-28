@@ -2,7 +2,6 @@ import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
 import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
@@ -26,28 +25,10 @@ export const toggleModal = () => {
         },
         type: createUserTypes.TOGGLE
     }
-=======
-
-export const createUserTypes = {  
-  TOGGLE: 'TOGGLE_CREATE_USER_MODAL',
-  TOGGLE_LOCATION_DROPDOWN: 'TOGGLE_CREATE_USER_MODAL_LOCATION_DROPDOWN',
-  UPDATE_NEW_USER: 'UPDATE_NEW_USER',
-  UPDATE_NEW_USER_LOCATION: 'UPDATE_NEW_USER_LOCATION',
-  USER_SAVED: 'CREATE_NEW_USER_USER_SAVED'
-}
-
-export const toggleModal = () => {
-  return {
-    payload: {
-    },
-    type: createUserTypes.TOGGLE
-  }
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 
 export const toggleLocationDropdown = () => {
-<<<<<<< HEAD
     return {
         payload: {},
         type: createUserTypes.TOGGLE_LOCATION_DROPDOWN
@@ -136,46 +117,4 @@ export const saveUser = (newUser: IUser, cohort?: ICohort) => async (dispatch: (
         .catch(e => {
             toast.error('Failed To Save User')
         })
-=======
-  return {
-    payload: {},
-    type: createUserTypes.TOGGLE_LOCATION_DROPDOWN
-  }
-}
-
-export const updateNewUserLocation = (location: IAddress) => {
-  return {
-    payload: {
-      location
-    },
-    type: createUserTypes.UPDATE_NEW_USER_LOCATION
-  }
-}
-
-export const updateNewUser = (newUser: IUser) => {
-  return {
-    payload: {
-      newUser
-    },
-    type: createUserTypes.UPDATE_NEW_USER
-  }
-}
-
-
-//Use async await tho?
-export const saveUser = (newUser: IUser) => (dispatch: (action: any) => void) => {
-  userClient.saveUser(newUser)
-    .then(resp => {
-      toast.success('User Created')
-      dispatch({
-        payload: {},
-        type: createUserTypes.USER_SAVED
-      })
-    })
-    .catch(e => {
-      toast.error('Failed To Save User')
-    })
-
- 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }

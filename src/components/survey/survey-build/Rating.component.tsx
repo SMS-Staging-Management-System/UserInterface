@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import { DeleteButton } from './delete.component';
 import AddOther from './add.other.component';
 
@@ -11,10 +10,6 @@ interface PropsPlease{
   }
 
 export class Rating extends React.Component<PropsPlease, any> {
-=======
-
-export class Rating extends React.Component<any, any> {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     constructor(props) {
         super(props);
 
@@ -25,7 +20,6 @@ export class Rating extends React.Component<any, any> {
         return (
 
             <div>
-<<<<<<< HEAD
                 <table className="questionTableRow">
                     <tbody>
                         <tr>
@@ -38,14 +32,6 @@ export class Rating extends React.Component<any, any> {
                 <div className="new" id="t4">
 
                     <input name="questionText" type="text" placeholder="Question Title (i.e. How likely are you to recommend our product to a friend? )" style={{ width: '100%' }} defaultValue={this.props.defaultQuestion}  ></input>
-=======
-
-                <label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="rating" className="form-control" > Rating </label>
-
-                <div className="new" id="t4">
-
-                    <input name="questionText" type="text" placeholder="Question Title (i.e. How likely are you to recommend our product to a friend? )" style={{ width: '100%' }}   ></input>
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                     <input name="answerText" value="1,2,3,4,5" readOnly hidden />
 
                 </div>

@@ -1,5 +1,4 @@
 import { ICreateInterviewComponentState } from "../../reducers/interview";
-<<<<<<< HEAD
 import { interviewClient } from "../../axios/sms-clients/interview-client";
 import { Client } from "../../model/Client.model";
 
@@ -25,16 +24,4 @@ export const  getAllClients = async () => {
         },
         type: createInterviewTypes.GET_ALL_CLIENTS
       }
-=======
-
-export const createInterviewTypes = {
-  SET_CREATE_INTERVIEW_COMPONENT_STATE: 'SET_CREATE_INTERVIEW_COMPONENT_STATE'
-}
-
-export const setState = (newCreateInterviewComponentState: ICreateInterviewComponentState) => (dispatch) => {    
-    dispatch({
-        type: createInterviewTypes.SET_CREATE_INTERVIEW_COMPONENT_STATE,
-        payload:  newCreateInterviewComponentState
-    });
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }

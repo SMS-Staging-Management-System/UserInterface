@@ -18,7 +18,6 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
   componentDidMount() {
     const manage = this.props.match.params.manage;
     if (manage === 'users') {
-<<<<<<< HEAD
       console.log('ANYTHING')
       this.props.manageGetUsersByGroup('all', '', 0);
     }
@@ -26,14 +25,6 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
 
   updateManageUsersTable = (groupName: string, email:string, page?: number) => {
     this.props.manageGetUsersByGroup(groupName, email, page);
-=======
-      this.props.manageGetUsersByGroup(manage);
-    }
-  }
-
-  updateManageUsersTable = (groupName: string) => {
-    this.props.manageGetUsersByGroup(groupName);
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   }
 
   render() {
@@ -41,11 +32,7 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
       <div id="manage-users-container">
         <ManageNavComponent
           toggleCreateUserModal={this.props.toggleCreateUserModal}
-<<<<<<< HEAD
           
-=======
-          updateManageUsersTable={this.updateManageUsersTable}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
           manage={this.props.match.params.manage}
           history={this.props.history} 
           location={this.props.location}
@@ -53,13 +40,9 @@ export class ManageComponenet extends React.Component<IManageComponentProps, any
 
         {/cohorts/.test(this.props.location.pathname)?
         <ManageCohortsComponent />:
-<<<<<<< HEAD
         <ManageInternalComponenet
         updateManageUsersTable={this.updateManageUsersTable}
         />
-=======
-        <ManageInternalComponenet/>
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         }
         <CreateCohortModal />
         <CreateUserModal />

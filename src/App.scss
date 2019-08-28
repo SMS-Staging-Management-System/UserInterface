@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-// @import 'components/pokemon/pokemon-card/pokemon-card.scss';
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 // variables can be declared and later reused
 $revature-orange-light: #f3a55d;
 $revature-orange: #f26925;
@@ -44,7 +39,6 @@ $screen-xl-min: 1200px;
 // Small devices
 @mixin sm {
   @media (min-width: #{$screen-sm-min}) {
-<<<<<<< HEAD
     @content;
   }
 }
@@ -149,113 +143,12 @@ li > a.rev-btn-tab {
   box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   cursor: pointer;
 }
-=======
-      @content;
-  }
-}
-
-// Medium devices
-@mixin md {
-  @media (min-width: #{$screen-md-min}) {
-      @content;
-  }
-}
-
-// Large devices
-@mixin lg {
-  @media (min-width: #{$screen-lg-min}) {
-      @content;
-  }
-}
-
-// Extra large devices
-@mixin xl {
-  @media (min-width: #{$screen-xl-min}) {
-      @content;
-  }
-}
-
-/*******************************************
-  Positioning
-*******************************************/
-.align-start {
-  align-self: flex-start
-}
-/********************************************
-  Shared
-********************************************/
-input:invalid:not(:valid) {
-  border-color: salmon;
-  box-shadow: 0 0 0.2rem 0.1rem salmon;
-}
-.cursor-hover:hover {
-  cursor: pointer;
-}
-
-.no-link:hover {
-  text-decoration: none;
-}
-
-.flex-package {
-  display:    flex;
-  flex-shrink: 0;
-}
-
-.rev-btn:not(.dropdown), .rev-btn > button.dropdown-toggle {
-  background-color: $revature-orange-light ;
-  border-color: $revature-orange-light;
-  color: black !important;
-  &:hover {
-    border-bottom-color: #565D61;
-    color: $revature-orange-light;
-  }
-  &:active {
-    background-color: $revature-orange-light;
-    color: #565D61;
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
-  }
-  &:active, &:focus {
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
-  } 
-
-}
-
-li > a.rev-btn-tab {
-  background-color: white;
-  border-color: $revature-orange-light;
-  color: black;
-  &:hover {
-    background-color: white;
-    border-color: $revature-orange-light;
-    color: $revature-orange-light;
-  }
-  &:active {
-    color: black;
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
-    border-color: $revature-orange-light
-  }
-  &:active, &:focus {
-    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
-  }
-}
-.rev-table-row:hover {
-  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-  box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-  cursor: pointer;
-}
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 .rev-background-color {
   background-color: $revature-orange-light;
 }
 
-<<<<<<< HEAD
 .rev-color {
-=======
-.rev-color { 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   color: $revature-orange;
 }
 
@@ -270,25 +163,14 @@ li > a.rev-btn-tab {
   .responsive-modal-row-item {
     margin-right: 0.3em;
     margin-bottom: 0.7em;
-<<<<<<< HEAD
   }
-=======
-  } 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
   textarea {
     width: 100%;
   }
-<<<<<<< HEAD
 }
 
 .dropdown-item {
-=======
-  
-}
-
-.dropdown-item { 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   &:active {
     background-color: $revature-orange-light;
   }
@@ -323,19 +205,11 @@ li > a.rev-btn-tab {
     margin: 2em auto;
   }
 
-<<<<<<< HEAD
   @include lg {
-=======
-  @include lg { 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     max-width: 900px;
   }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 /****************************************
   App
 ****************************************/
@@ -383,15 +257,9 @@ body {
   @include flex-col;
   width: 100%;
   align-items: center;
-<<<<<<< HEAD
   margin: auto;
   @include md {
     max-width: 80%;
-=======
-  margin:auto;
-  @include md {
-    max-width: 80%
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   }
 }
 
@@ -411,12 +279,8 @@ body {
   border: unset;
   color: black;
   text-decoration: none;
-<<<<<<< HEAD
   &:hover,
   &:focus {
-=======
-  &:hover, &:focus {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     color: black;
     text-decoration: none;
   }
@@ -431,12 +295,8 @@ body {
     border: unset !important;
     color: black !important;
   }
-<<<<<<< HEAD
   &:active,
   &:focus {
-=======
-  &:active, &:focus {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
   }
 }
@@ -444,6 +304,7 @@ body {
 .rev-logo {
   width: auto;
   height: 2em;
+  margin-right: 2em;
 }
 
 .margin-nav {
@@ -453,13 +314,6 @@ body {
 .navbar-light .navbar-nav .nav-link:focus,
 .navbar-light .navbar-nav .nav-link:hover {
   color: rgba(0, 0, 0, 0.7);
-}
-.navbar-light {
-  .navbar-header {
-    .unset-anchor {
-      margin-right: 2em;
-    }
-  }
 }
 
 .navbar-expand-md .navbar-nav .nav-link {
@@ -488,12 +342,6 @@ body {
   cursor: pointer;
 }
 
-<<<<<<< HEAD
-=======
-/*****************************
-  Clicker
-*****************************/
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 .blue {
   color: blue;
 }
@@ -506,18 +354,13 @@ body {
           login.component.tsx
 ************************************/
 #login-pass {
-<<<<<<< HEAD
   margin: 0.3em;
-=======
-  margin: 0.3em
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 #login-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-<<<<<<< HEAD
 }
 
 @media (min-width: 1200px) {
@@ -777,177 +620,6 @@ User Dropdown
   height: 40px;
   width: 100%;
   border: none;
-=======
-}
-
-@media (min-width: 1200px) { 
-  .top-lev-div{
-    margin-top:50px;
-    zoom: 1.5;
-    -moz-transform: scale(1.5);
-  } 
-}
-
-@media (max-width: 1199.99px) { 
-  .top-lev-div{
-    margin-top:50px;
-    zoom: 1.0;
-    -moz-transform: scale(1.0);
-  } 
-
-}
-
-.frontDiv {
-  z-index: 3;
-  position: absolute;
-}
-
-.behindDiv {
-  z-index: 2;
-
-}
-
-.box input {
-  margin-left:0;
-  -webkit-transition: 1s;
-          transition: 1s;
-}
-
-.txt-bx{
-  width: 250px;
-}
-
-.rememberDiv {
-  display: flex;
-  justify-content: center;
-  margin-top: 0.5em;
-  border-bottom:solid rgb(245, 139, 0) 4px;
-}
-
-.resetDiv {
-  margin:auto;
-  display: flex;
-  justify-content: center;
-}
-
-
-.rememberSpan {
-  display: inline;
-  float: none;
-}
-
-#rememberCheck {
-  display: inline;
-}
-
-#titleHead{
-  margin:auto;
-  display: flex;
-  justify-content: center;
-  padding-bottom: 10px;
-}
-
-#forgot-pass-btn{
-  color: blue;
-  margin-top: 0.5em;
-  border: none;
-  text-align: center;
-  background-color: transparent;
-  -webkit-transition: 1s;
-          transition: 1s;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-#invalidCredHead {
-  color: red;
-  text-align: center;
-  padding-top: 10px;
-}
-
-
-
-/***********************************
-  Manage
-***********************************/
-
-
-#manage-users-container {
-  width: 100%;
-}
-.manage-users-nav {
-  padding-left: 0;
-  padding-bottom: 0;
-  .nav-tabs {
-    border: none;
-  }
-}
-
-.manage-user-nav-item {
-  color: gray;
-  &:hover {
-    color: $revature-orange;
-  }
-}
-
-.nav-tabs .manage-user-nav-item-active {
-  border: 2px solid;
-  border-color: #d6dce2;
-  border-top-left-radius: .25rem;
-  border-top-right-radius: .25rem;
-  border-bottom: none;
-  color: $revature-orange-light;
-  &:hover {
-    color: $revature-orange-light;
-  }
-  &:focus {
-    border-color: #d6dce2;
-  }
-}
-
-#create-user-modal-footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-
-
-#manage-cohorts-nav {
-  display: flex;
-  padding: 0.25em 0.75rem;
-  align-items: center;
-  justify-content: space-between;
-  @include rounded-top();
-}
-
-#manage-cohorts-view-selection-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#manage-users-table {
-  margin-top: 1px;
-  @include rounded-top();
-  thead {
-    @include rounded-top();
-    tr {
-      @include rounded-top();
-      th {
-        border: none;
-      }
-      :first-child {
-        border-top-left-radius: $rounded-amount;
-        border: none;
-      }
-      :last-child {
-        border-top-right-radius: $rounded-amount;
-        border: none;
-      }
-    }
-  }
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 .userDropdownBtn:hover,
@@ -956,7 +628,6 @@ User Dropdown
   color: #565d61;
 }
 
-<<<<<<< HEAD
 .userDropInput {
   margin-left: 10px;
   margin-right: 10px;
@@ -1075,36 +746,8 @@ Drag and Drop
   color: white;
   width: 150px;
   height: 40px;
-=======
-/*****************
-Survey Component
-*****************/ 
-
-.tableUsers{
-  text-align: center;
-  margin-top: 4em;
-}
-
-.buttonDiv{
-  float: right;
-  
-}
-
-.assignButtonDiv{
-    width: 100%;  
-}
-
-.assignSurveyBtn{
-  color: black;
-  border-radius: 10px;
-  background-color: $revature-orange-light;
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   font-weight: bold;
-  height: 40px;
-  width: 100%;
-  border: none;
 }
-<<<<<<< HEAD
 .surveyCreateBtn:hover,
 .surveyCreateBtn:active {
   background: black;
@@ -1278,19 +921,6 @@ Info Circle
       }
     }
   }
-
-}
-#interview-list-table > thead > tr {
-  text-align:center;
-}
-#interview-list-table > thead > tr > th {
-  padding:0.5rem;
-}
-#interview-list-table > tbody > tr > td {
-  text-align:center;
-}
-.interview-list-table-paginate {
-  margin:auto;
 }
 .pointer-table:hover {
     cursor: pointer;
@@ -1311,78 +941,8 @@ Info Circle
   position: fixed;
   text-align: center;
   z-index: 10;
-=======
-
-.assignSurveyBtn:hover,
-.assignSurveyBtn:active{
-background-color: $revature-orange-light;
-color:#565D61;
 }
 
-.assignSurveyModalHeader{
-    text-align: center;
-    background-color: $revature-orange-light;
-    font-weight: bold;
-    height: 100%;
-    width: 100%;
-}
-
-.modal-content {
-    min-height: 300px;
-}
-
-/*****************
-User Dropdown
-*****************/
-
-.userDropdown {
-    // background-color: $revature-orange-light;
-    float: right;
-}
-
-.userDropdownBtn {
-    color: black;
-    border-radius: 10px;
-    background-color: $revature-orange-light;
-    height: 40px;
-    width: 100%;
-    border: none;
-}
-
-.userDropdownBtn:hover,
-.userDropdownBtn:active {
-    background-color: $revature-orange-light;
-    color:#565D61;
-}
-
-.userDropInput {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-#userDropdownWidth {
-    width: 335px;
-}
-
-
-/*****************
-Drag and Drop
-*****************/ 
-.todos {
-  float: top;
-  background: #f3a55d;
-  height: auto;
-  width: 300px;
-   margin-top: 3em; 
- 
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
-}
-.test {
-  //margin-right: 100%;
-float: left;
-
-<<<<<<< HEAD
 #ManagerChart,
 #FeedbackRequestedChart {
   left: 10vw;
@@ -1671,247 +1231,8 @@ Charts ~ Interview Team V  V V
 @font-face {
   font-family: "FuturaSTDBook";
   src: url("assets/FuturaStdBook.otf");
-=======
-}
-.questionbutton{
-  display: inline-block;
-}
-.done {
- 
-  background: #e9ecef;
-  height: auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  border-style: dashed;
-  border-color: grey;
-  width: auto;
-  margin: 10px;
-}
-#jumbotronSurveyBuild{
-  height: auto;
-  margin-top: 3em;
-  border: 3px solid black;
-  box-shadow: 0 16px 16px black;
-  letter-spacing: 0.2pc;
-  font-weight: bold;
-  background-color: #eee;
-}
-.survey-build-jumbotron{
-    margin-left: 20em;
-}
-#multi{
-  background-color: black;
-  color: white;
-  letter-spacing: 0.1pc;
-  display: inline-block;
-  font-size: 14.9px;
- 
-}
-#yn{
-  background-color: black;
-  color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
-}
-#agree{
-  background-color: black;
-  color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
-}
-#rating{
-  background-color: black;
-  color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
-}
-#feedback{
-  background-color: black;
-  color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
-}
-#checkbox{
-  background-color: black;
-  color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
-}
-#tf{
-  background-color: black;
-  color: white;
-  letter-spacing: 0.1pc;
-  font-size: 14.9px;
-}
-// .labelTitle{
-//   font-family: Helvetica;
-//   font-weight: bold;
-//   text-shadow: 0 16px 16px black;
-// }
-.surveyCreateBtn{
-  border-radius: 10px;
-  float: right;
-  background: rgb(44, 90, 117);
-  color: white;
-  width: 150px;
-  height: 40px;
-  font-weight: bold;
-}
-.surveyCreateBtn:hover,
-.surveyCreateBtn:active{
-  background: black;
-  color: white;
 }
 
-/***************
-TEMPLATE MODAL
-***************/ 
-.buttonCreate{
-  border-radius: 10px;
-  background-color: $revature-orange-light;
-  font-weight: bold;
-  height: 40px;
-  border: none;
-  color: black;
-  width: 50%;
-}
-.buttonBack{
-  border-radius: 10px;
-  background-color: $revature-orange-light;
-  font-weight: bold;
-  height: 40px;
-  border: none;
-  color: black;
-  width: 50%;
-}
-.buttonBack:hover,
-.buttonBack:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
-  border: 1px solid black;
-}
-.buttonCreate:hover,
-.buttonCreate:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
-  border: 1px solid black;
-}
-.createSurveyButton{
-  background-color: $revature-orange-light; 
-  color:black;
-  border: 1px solid black;
-  width: 100%;
-  border-radius: 10px;
-  font-weight: bold;
-  height: 40px;
-}
-.createSurveyButton:hover,
-.createSurveyButton:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
-  border: 1px solid black;
-}
-.submitSurveyButton{
-  background-color: $revature-orange-light; 
-  color:black;
-  border: 1px solid black;
-  width: 100%;
-  border-radius: 10px;
-  font-weight: bold;
-  height: 40px;
-}
-.submitSurveyButton:hover,
-.submitSurveyButton:active{
-  background-color: $revature-orange-light; 
-  color:#565D61;
-  border: 1px solid black;
-}
-.buttonEdit{
-  border-radius: 10px;
-  background-color: white;
-  font-weight: bold;
-  height: 40px;
-  border: 1px solid $revature-orange-light;
-  color: $revature-orange;
-}
-.horizontal-scroll{
-  overflow: scroll;
-  direction: ltr;
-  width: 200px;
-  flex-wrap: nowarp;
-  white-space: nowarp;
-}
-.buttonEdit:hover,
-.buttonEdit:active{
-  background-color: $revature-orange-light; 
-  color:black;
-  border: none;
-}
-
-.modalHeading{
-  width: 100%;
-  text-align: left;
-  height: 60px;
-  background-color: $revature-orange-light;
-  color: black;
-  padding: 10px;
-  
-  
-  text-align: center;
-  font-size: 22px;
-  font-family: Helvetica;
-  border-radius: 10px 10px 0px 0px;
-}
-#jumbotronTemplate{
-  margin: auto;
-}
-.surveyName{
-  width: 20%;
-  border: 1px solid black;
-  padding: 5px;
- 
-  
-}
-.surveyDescription{
-  width: 45%;
-  border: 1px solid black;
-  padding: 5px;
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
-}
-.noteDiv{
-  color: green;
-  font-weight: bold;
-}
-/*******************
-Info Circle
-*******************/ 
-.surveyInfoCircle{
-  font-size: 17px;
-  text-align: center;
-  width: 100%;
-}
-.modalSuccessHeading{
-  height: 40px;
-  width: 100%;
-  background-color: $revature-orange-light;
-  color: white;
-  border-radius: 10px 10px 0 0;
-  text-align: center;
-}
-
-/***********************************
-  tabular data
-***********************************/
-
-.tableholder{
-  background-color: #ffc289;
-  padding: 1rem;
-  
-  form{
-    width: max-content;
-  }
-
-<<<<<<< HEAD
 body {
   font-family: "FuturaSTDBook";
 }
@@ -1942,170 +1263,10 @@ body {
 .page-item.active .page-link {
   background-color: $revature-orange-light;
   border-color: $revature-orange-light;
-=======
-  table{
-    background:       #ffffff;
-    margin-left:      auto;
-    margin-right:     auto;
-    max-width:        100%;
-
-    tr{
-      border-bottom: #333333 solid 1px;
-
-      td, th{
-        padding:          5px;
-        text-align:       center;
-        word-wrap:        break-word;
-      }
-    }
-  }
 }
 
-/***********************************
-  Chart
-***********************************/
-#ManagerChart,
-#AssociateChart,
-#FeedbackRequestedChart,
-#FeedbackReceivedChart,
-#JDChartComponent{
-  width:40vw;
-  height:60vh;
-  display:inline-block;
-  top:180px;
-  position:fixed;
-  text-align:center;
-  z-index:10;
-}
-
-#ManagerChart,
-#FeedbackRequestedChart{
-  left:10vw;
-}
-
-#AssociateChart,
-#FeedbackReceivedChart{
-  left:50vw;
-}
-
- #JDChartComponent{
-  left:30vw;
- }
- 
-.no-select {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
-}
-.editButton{
-  background-color: #f26925; 
-  color: white; 
-  border: 2px solid #f26925;
-}
-
-.editButton:hover {
-  background-color: white;
-  color: #f26925;
-}
-
-/***********
-Container
-***********/ 
-#containerTemplate{
-  background: #f8f9fa;
-  border-radius: 0 0 10px 10px;
-  padding: 15px;
-  
-}
-/**************
-Alert
-**************/ 
-#alertSubmission{
-  width: auto;
-  text-align: center;
-  display: none;
-  border:  1px solid black;
-  color: black;
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
-}
-/****************
-Fa Circle
-****************/ 
-.faCircle {
-    color: $revature-orange-light;
-  }
-
-<<<<<<< HEAD
 .page-link {
   color: black;
 }
 
 
-=======
-  #FeedbackRequestedChart{
-    width:50vw;
-    height:100vh;
-    display:inline-block;
-    top:180px;
-    left:0%;
-    position:fixed;
-   z-index:12;
-   text-align:center;
-   }
-  
-    #FeedbackReceivedChart{
-     width:50vw;
-     height:100vh;
-     display:inline-block;
-     top:180px;
-     left:50vw;
-     position:fixed;
-     z-index:10;
-     text-align:center;
-   }
-  
-    #JDChartComponent{
-     width:50vw;
-     height:100vh;
-     display:inline-block;
-     top:180px;
-     left:25vw;
-     position:fixed;
-     z-index:10;
-     text-align:center;
-   }
-
-   /////////////////////////////////////////////////
-// CHARTS
-/////////////////////////////////////////////////
-
- .paginateddata, .visualdata{
-  background-color: #f26925; 
-  color: white; 
-  border: 2px solid #f26925;
-  position:absolute;
-  width:40%;
-  bottom:5%;
-  display:block;
-  text-align:center;
-  z-index: 100;
-
-  a{
-    color:#000000;
-    text-decoration: underline;
-    font-size: 2em;
-  }
-}
-
-.paginateddata{
-  left:5%;
-}
-
- .visualdata{
-  left:55%;
-}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71

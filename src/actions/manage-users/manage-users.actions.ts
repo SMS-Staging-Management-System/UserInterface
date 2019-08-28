@@ -1,6 +1,5 @@
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
 import { ICognitoUser, cognitoRoles } from "../../model/cognito-user.model";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { sortTypes } from "../../components/manage/manage-internal/manage-internal.component";
@@ -223,32 +222,3 @@ function sortBy(user1, user2, sortKey) {
     }
     return 0;
 }
-=======
-
-export const manageUsersTypes = {
-  GET_USERS: 'MANAGE_GET_USERS',
-}
-
-export const manageGetUsersByGroup = (groupName: string) => async (dispatch: any) => {
-  try {
-    const response = await cognitoClient.findUsersByGroup(groupName)
-    dispatch({
-      payload: {
-        manageUsers: response.data.Users.map((user: any) => ({
-          email: user.Attributes.find((attr: any) => attr.Name === 'email').Value,
-
-        }))
-      },
-      type: manageUsersTypes.GET_USERS
-    })
-  } catch (e) {
-    toast.warn('Unable to retreive users')
-    dispatch({
-      payload: {
-      },
-      type: ''
-    })
-  }
-}
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71

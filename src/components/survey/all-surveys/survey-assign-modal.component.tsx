@@ -13,30 +13,21 @@ interface IComponentProps {
 }
 
 interface IComponentState {
-<<<<<<< HEAD
-=======
-    cohorts: ICohort[],
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     cohortIdsToAssign: number[],
     cohortsLoaded: boolean,
     userArray: IUserCohortIdAndEmail[],
     usersLoaded: boolean,
     emailsToAssign: string[],
-<<<<<<< HEAD
     modal: boolean,
     nameTextBox: string,
     addressId: number,
     sortCohorts: ICohort[],
     sortAlias: ICohort[],
     alias: string
-=======
-    modal: boolean
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 interface IUserCohortIdAndEmail {
     id: number,
-<<<<<<< HEAD
     email: string,
 
 }
@@ -58,31 +49,12 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             alias: ''
         };
     }
-=======
-    email: string
-}
-
-class SurveyModal extends React.Component<IComponentProps, IComponentState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false,
-      cohorts: [],
-      cohortsLoaded: false,
-      userArray: [],
-      usersLoaded: false,
-      cohortIdsToAssign: [],
-      emailsToAssign: []
-    };
-  }
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
     componentDidMount() {
         // grabs all cohorts from database and loads them into
         //   the userArray, each having their cohort id and email address
         this.loadAllCohorts();
     }
-<<<<<<< HEAD
     // componentWillUpdate(nextProps, nextState){
     //     console.log("Hi")
     //     if(nextState !== this.state){
@@ -140,9 +112,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
 
     }
-=======
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 
     loadAllCohorts = async () => {
@@ -150,39 +119,23 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         const cohorts = await cohortClient.findAll();
         if (cohorts) {
             this.setState({
-<<<<<<< HEAD
                 sortCohorts: cohorts.data,
                 cohortsLoaded: true
             },
                 // then, only AFTER state is changed, load user emails according from cohort data
                 () => {
-=======
-                cohorts: cohorts.data,
-                cohortsLoaded: true
-            }, 
-            // then, only AFTER state is changed, load user emails according from cohort data
-                ()=>{
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                     this.loadAllUserEmails();
                 });
         }
     }
 
     loadAllUserEmails = async () => {
-<<<<<<< HEAD
         const { sortCohorts } = this.state;
-=======
-        const { cohorts } = this.state;
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         // set up array to dump into state 
         const idAndEmailArray: IUserCohortIdAndEmail[] = [];
 
         // for each cohort, get users
-<<<<<<< HEAD
         for (const cohort of sortCohorts) {
-=======
-        for (const cohort of cohorts) {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             const users = await userClient.findAllByCohortId(cohort.cohortId);
             // for each array of users, load into array
             for (const user of users.data) {
@@ -206,11 +159,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         const { checked } = e.target;
         const { emailsToAssign: emAssign } = this.state;
         const id = +e.target.id;
-<<<<<<< HEAD
         let emailArray: string[] = [];
-=======
-        let emailArray:string[] = [];
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
         if (checked) {
             // filter out users for only ones in THIS cohort
@@ -225,24 +174,14 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 // then check all individual user checkboxes in this cohort 
                 let el = document.getElementById(user.email) as HTMLInputElement;
                 if (el) { el.checked = true; }
-<<<<<<< HEAD
             });
-=======
-            }); 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             this.setState({
                 emailsToAssign: this.state.emailsToAssign.concat(emailArray)
             });
 
-<<<<<<< HEAD
         } else {
             // if checking OFF the Select ALL, do this
             // filter through all users for     those in this checkboxes cohort
-=======
-        }  else {
-            // if checking OFF the Select ALL, do this
-            // filter through all users for those in this checkboxes cohort
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             this.state.userArray.filter(user => {
                 return user.id === id
             }).map(user => {
@@ -256,11 +195,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             this.setState({
                 // filter emailsToAssign:emAssign array to get rid of all emails from local emailArray
                 emailsToAssign: emAssign.filter(em => {
-<<<<<<< HEAD
                     let inArr: boolean = true;
-=======
-                    let inArr:boolean = true;
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                     for (const email of emailArray) {
                         if (em === email) {
                             inArr = false;
@@ -305,10 +240,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     }
                 }
                 let el = document.getElementById(cohortId) as HTMLInputElement;
-<<<<<<< HEAD
                 console.log()
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                 if (el) { el.checked = false; }
             }
         }
@@ -317,21 +249,14 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     postSurveyToCohort = () => {
         // loop through each chosen survey from parent component and for each email,
         //   assign the survey to the history table
-<<<<<<< HEAD
         for (const surveyId of this.props.surveysToAssign) {
             for (const email of this.state.emailsToAssign) {
                 surveyClient.assignSurveyByIdAndEmail(surveyId, email);
-=======
-        for ( const surveyId of this.props.surveysToAssign) {
-            for ( const email of this.state.emailsToAssign) {
-            surveyClient.assignSurveyByIdAndEmail(surveyId, email);
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             }
         }
     }
 
     // toggles the modal and clears the emailsToAssign
-<<<<<<< HEAD
     toggle = () => {
         this.setState(prevState => ({
             modal: !prevState.modal,
@@ -411,78 +336,3 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 }
 
 export default SurveyModal;
-=======
-  toggle = () => {
-    this.setState(prevState => ({
-      modal: !prevState.modal,
-      emailsToAssign: []
-    }));
-  }
-
-  render() {
-    return (
-        <> 
-            <div>
-                <Button className='assignSurveyBtn mb-3' color="black" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-                <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader className='assignSurveyModalHeader' toggle={this.toggle}>Cohorts</ModalHeader>
-                {/* ensure users in cohorts do not show until they are loaded to avoid assign survey bug */}
-                {this.state.usersLoaded ? (
-                    <ModalBody >
-                        <Table striped id="manage-users-table" className="tableUsers">
-                            <thead>
-                                <tr>
-                                    <th>Select</th>
-                                    <th colSpan={5}>Cohort</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.cohorts.map(cohort => (
-                                    <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                                        <td>All: <input type="checkbox" id={cohort.cohortId.toString()}  onChange={e=>this.checkFunc(e)} />
-                                            <div className="dropdown userDropdown">
-                                                <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    By Member
-                                                </Button>
-                                                <div className="dropdown-menu" id="userDropdownWidth" aria-labelledby="dropdownMenu2">
-                                                    {this.state.userArray.filter(user => {
-                                                        return user.id === cohort.cohortId;
-                                                    }).map(user => (
-                                                        <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" onChange={e=>this.checkUserFunc(e)}/>{user.email}</p>
-                                                        )
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td colSpan={5}>{cohort.cohortName}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>  
-                                ))}
-                            </tbody>
-                            </Table>
-                            <div className="buttonDiv">
-                                <Button 
-                                    className='assignSurveyBtn' 
-                                    onClick={()=>{this.postSurveyToCohort(); this.toggle(); }
-                                    }>Submit</Button>
-                            </div>
-                    </ModalBody>) : (
-                        <Loader />
-                    )}
-                </Modal>
-            </div>
-        
-    </>
-    );
-  }
-}
-
-export default SurveyModal;
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71

@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import { DeleteButton } from './delete.component';
 import AddOther from './add.other.component';
 
@@ -11,11 +10,6 @@ interface PropsPlease{
 }
 
 export class FeedBack extends React.Component<PropsPlease, any> {
-=======
-
-
-export class FeedBack extends React.Component<any, any> {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   constructor(props) {
     super(props);
 
@@ -26,7 +20,6 @@ export class FeedBack extends React.Component<any, any> {
     return (
 
       <div>
-<<<<<<< HEAD
         <table className="questionTableRow">
           <tbody>
             <tr>
@@ -39,14 +32,6 @@ export class FeedBack extends React.Component<any, any> {
           <div className="new" id="t5">
 
             <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }}  defaultValue={this.props.defaultQuestion}  >
-=======
-
-        <label htmlFor="" style={{ marginBottom: 0, textAlign:'center' }} id="feedback" className="form-control" > Feedback </label>
-
-          <div className="new" id="t5">
-
-            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }}    >
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             </input>
 
           </div>
