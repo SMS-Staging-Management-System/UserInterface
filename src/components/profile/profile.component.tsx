@@ -262,6 +262,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             type="text"
                             name={inputNames.STREET}
                             value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.street}
+                            // value={userToViewDetails.trainingAddress && userToViewDetails.trainingAddress.street}
                             onChange={(event) => this.onUserInfoChangeHandler(event)} />
                     </FormGroup>
                     <Row>
@@ -272,6 +273,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                     type="text"
                                     name={inputNames.CITY}
                                     value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.city}
+                                    // value={userToViewDetails.trainingAddress && userToViewDetails.trainingAddress.city}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -282,6 +284,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                     type="text"
                                     name={inputNames.STATE}
                                     value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.state}
+                                    // value={userToViewDetails.trainingAddress && userToViewDetails.trainingAddress.state}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -292,6 +295,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                     type="text"
                                     name={inputNames.ZIP}
                                     value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.zip}
+                                    // value={userToViewDetails.trainingAddress && userToViewDetails.trainingAddress.zip}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>
@@ -302,6 +306,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                     type="text"
                                     name={inputNames.COUNTRY}
                                     value={userToViewDetails.personalAddress && userToViewDetails.personalAddress.country}
+                                    // value={userToViewDetails.trainingAddress && userToViewDetails.trainingAddress.country}
                                     onChange={(event) => this.onUserInfoChangeHandler(event)} />
                             </FormGroup>
                         </Col>

@@ -16,7 +16,7 @@ export interface IProfileProps {
     currentSMSUser: IUser,
     userToView: IUser,
     trainingAddresses: IAddressState,
-    allStatus: IStatusState,
+    // allStatus: IStatusState,
     locationDropdownActive: boolean,
     statusDropdownActive: boolean,
     cohortDropdownActive: boolean,
@@ -36,7 +36,7 @@ export interface IProfileProps {
 }
 
 const mapStateToProps = (state: IState) => ({
-    allState: state,
+    // allState: state,
     manageUsers: state.managementState.manageUsers,
     currentSMSUser: state.managementState.currentSMSUser.currentSMSUser,
     userToView: state.managementState.currentProfile.user,

@@ -106,8 +106,6 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 ...state,
                 virtual: !state.virtual
             }
-
-
     }
     return state;
 }

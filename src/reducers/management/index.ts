@@ -24,9 +24,9 @@ import { ICreateUser } from "../../model/create-user.model";
 
 
 
-export interface IAddressState {
-    trainingAddresses: IAddress[],
-}
+// export interface IAddressState {
+//     trainingAddresses: IAddress[],
+// }
 export interface IAuthState {
     currentUser: ICognitoUser
 }
