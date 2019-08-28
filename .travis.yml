@@ -26,4 +26,4 @@ jobs:
     script: 
     - npm run test:ci:coverage || true
     - tslint --force -t json -o tslint-report.json --project .
-    - sonar-scanner --projectKey=sms-staging-management-system_user-interface
+    - sonar-scanner
