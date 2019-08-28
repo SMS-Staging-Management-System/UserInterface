@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //import Form from "reactstrap/lib/Form";
 import React from "react";
 import { interviewClient } from "../../axios/sms-clients/interview-client";
@@ -24,31 +23,6 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
     }
 
     componentDidMount() {
-=======
-import Form from "reactstrap/lib/Form";
-import React from "react";
-import { interviewClient } from "../../axios/sms-clients/interview-client";
-import InputGroup from "reactstrap/lib/InputGroup";
-import InputGroupAddon from "reactstrap/lib/InputGroupAddon";
-import Input from "reactstrap/lib/Input";
-import { Redirect } from "react-router";
-import Button from "reactstrap/lib/Button";
-
-export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-            redirect: null,
-            feedbackRequestedDate: null,
-            feedbackText: null,
-            feedbackReceivedDate: null,
-            feedbackDeliveredDate: null
-        };
-    }
-
-    componentWillMount() {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         this.getInterviewFeedback();
     }
 
@@ -58,7 +32,6 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
         });
     }
 
-<<<<<<< HEAD
     sendFeedbackToDB = async (event) => {
         event.preventDefault()
         let { interviewId } = this.props.location.state;
@@ -95,14 +68,11 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
         return `${year}-${month}-${day}`
     }
 
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     getInterviewFeedback = async () => {
         let { interviewId } = this.props.location.state;
         console.log(interviewId);
         let interviewFeedback = await interviewClient.fetchInterviewFeedback(interviewId);
         console.log(interviewFeedback);
-<<<<<<< HEAD
         let req = new Date(interviewFeedback.data.feedbackRequested)
         let rec = new Date(interviewFeedback.data.feedbackReceived)
         let del = new Date(interviewFeedback.data.feedbackDelivered)
@@ -129,21 +99,10 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
         }
     }
 
-=======
-        this.setState({
-            feedbackRequestedDate: new Date(interviewFeedback.data.feedbackRequested),
-            feedbackText: interviewFeedback.data.feedback,
-            feedbackReceivedDate: new Date(interviewFeedback.data.feedbackReceived),
-            feedbackDeliveredDate: new Date(interviewFeedback.data.feedbackDelivered)
-        });
-    }
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     render() {
         if (this.state.redirect) {
             return (<Redirect push to={this.state.redirect} />);
         } else {
-<<<<<<< HEAD
             const roles = (store.getState().managementState.auth.currentUser.roles);
             const isAdmin = (roles.includes('admin') || roles.includes('staging-manager'));
             return (
@@ -214,38 +173,3 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
 
     }
 }
-=======
-            return (
-            <div id="new-interview-full">
-                <span>Interview Feedback</span>
-                <hr />
-                <Form>
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback Requested</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackRequestedDate} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackText} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback Received Date</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackReceivedDate} />
-                    </InputGroup>
-                    <br />
-                    <InputGroup>
-                        <InputGroupAddon addonType="prepend">Feedback Delievered Date</InputGroupAddon>
-                        <Input type="textarea" value={this.state.feedbackDeliveredDate} />
-                    </InputGroup>
-                    <br />
-                    <Button color="secondary" size="lg" block onClick={() => this.redirectTo()}>Back</Button>
-                </Form>
-            </div>
-            );
-        }
-       
-    }
-}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71

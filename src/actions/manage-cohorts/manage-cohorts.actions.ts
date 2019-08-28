@@ -9,7 +9,6 @@ export const updateCohorts = (cohorts: ICohort[]) => {
     console.log('cohorts = ', cohorts)
     return {
         payload: {
-<<<<<<< HEAD
             cohorts: cohorts,
             currentPage: 0,
             totalPages: 0
@@ -31,11 +30,4 @@ export const updateCohortsByPage = (cohortsPage, currentPage: number) => {
         },
         type: manageCohortsTypes.UPDATE_COHORTS
     }
-=======
-            cohorts
-        },
-        type: manageCohortsTypes.UPDATE_COHORTS
-    }
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }

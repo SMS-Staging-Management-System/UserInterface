@@ -14,14 +14,11 @@ export const cognitoClient = {
   addUserToGroup(body: ICognitoUserAddGroup) {
     return smsClient.put(cognitoContext + '/users/groups', body);
   },
-<<<<<<< HEAD
   removeUserFromGroup(body: ICognitoUserAddGroup) {
     return smsClient.delete(cognitoContext + `/users/groups`, {
       data: body
     });
   },
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   auth() {
     return smsClient.get(cognitoContext + '/auth');
   },

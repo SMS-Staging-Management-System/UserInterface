@@ -16,30 +16,6 @@ export const joinCohortTypes = {
     FAILED_TO_FIND_LOGGED_IN_USER: 'FAILED_TO_FIND_LOGGED_IN_USER'
 } 
 
-<<<<<<< HEAD
-=======
-
-// export const findByCohortToken = (token:string) => async (dispatch) => {
-//     try {
-//         const res = await cohortClient.findByToken(token);
-//         if(res.data){
-//             dispatch({
-//                 payload: {
-//                     validToken: true
-//                   },
-//                   type: joinCohortTypes.FIND_BY_COHORT_TOKEN
-//             })
-
-//         }
-//     } catch (e) {
-//         dispatch({
-//             payload: {
-//               },
-//               type: joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN
-//         })
-//     }
-// }
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
     try {
         const res = await userClient.findOneByEmail(user.email)
@@ -63,13 +39,8 @@ export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
 export const joinCohort = (user:IUser, token:string, history:History) => async (dispatch) => {
     try {
         
-<<<<<<< HEAD
         const join = await cohortClient.joinCohort(user, token);
         if(join.status === 200){
-=======
-        const res = await cohortClient.joinCohort(user, token);
-        if(res.status === 200){
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             dispatch({
                 payload: {
                   },
@@ -90,7 +61,6 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
 }
 
 export const saveUserAssociate = (newUser: IUser) => async (dispatch) => {
-<<<<<<< HEAD
       await userClient.saveUser(newUser)
       .then(async resp => {
         toast.success('User Created')
@@ -102,32 +72,12 @@ export const saveUserAssociate = (newUser: IUser) => async (dispatch) => {
           })
       })
       .catch(e => {
-=======
-        
-    try{
-        let res = await userClient.saveUser(newUser)
-      
-        toast.success('User Created')
-        dispatch({
-          payload: {
-              newUser: res.data
-          },
-          type: joinCohortTypes.CREATE_NEW_USER_FOR_COHORT
-        })
-    }catch (e) {
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         toast.error('Failed To Save User')
         dispatch({
             payload: {
             },
             type: joinCohortTypes.FAILED_TO_CREATE_NEW_USER_FOR_COHORT
           })
-<<<<<<< HEAD
       })
-=======
-      }
-  
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
    
   }

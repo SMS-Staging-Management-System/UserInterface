@@ -31,21 +31,14 @@ const initialState: IProfileViewState = {
             statusId: 0,
             generalStatus: '',
             specificStatus: '',
-<<<<<<< HEAD
             virtual: false
-=======
-            virtual: false     
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         },
         roles: []
     },
     bUserInfoChanged: false,
     locationDropdownActive: false,
     statusDropdownActive: false,
-<<<<<<< HEAD
     cohortDropdownActive: false,
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     virtual: false
 }
 
@@ -94,39 +87,27 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 statusDropdownActive: !state.statusDropdownActive,
                 bUserInfoChanged: true
             }
-<<<<<<< HEAD
         case profileTypes.TOGGLE_COHORT_DROPDOWN:
             return {
                 ...state,
                 cohortDropdownActive: !state.cohortDropdownActive,
                 bUserInfoChanged: true
             }
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         case profileTypes.UPDATE_USER_STATUS:
             return {
                 ...state,
                 user: {
                     ...state.user,
-<<<<<<< HEAD
                     userStatus: action.payload.status
                 }
-=======
-                    userStatus: action.payload.status}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             }
         case profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX:
             return {
                 ...state,
                 virtual: !state.virtual
             }
-<<<<<<< HEAD
 
 
-=======
-    
-    
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     }
     return state;
 }

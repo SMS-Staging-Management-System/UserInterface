@@ -18,22 +18,14 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-<<<<<<< HEAD
-=======
-    "noUnusedLocals": true,
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-<<<<<<< HEAD
     "noEmit": true,
     "noUnusedLocals": false
-=======
-    "noEmit": true
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   },
   "exclude": [
     "node_modules",

@@ -18,22 +18,16 @@ import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { ISurveyState } from '../../../reducers/survey';
 import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
-<<<<<<< HEAD
 import { FaPlusSquare } from 'react-icons/fa';
 import AddOther from './add.other.component';
 
 interface IComponentProps extends RouteComponentProps<{}> {
   displaySurvey?: any,
-=======
-
-interface IComponentProps extends RouteComponentProps<{}> {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   auth: IAuthState,
   match: any,
   surveyState: ISurveyState
   CreatSurvey: (frmData: any, completedTasks: any[]) => void
 };
-<<<<<<< HEAD
 interface IComponentState{
   displaySurvey?: any,
   displayChoice: boolean,
@@ -53,23 +47,12 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
     super(props);
     this.state = {
       displayChoice: false,
-=======
-
-class surveyBuild extends React.Component<IComponentProps, any>{
-  constructor(props) {
-    super(props);
-    this.state = {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
       isSuccessfullySubmitted: false,
       showModal: false,
       todos: [
         {
           questionID: 1, // make sure this questioID matches the id in the datatype for questiontype
-<<<<<<< HEAD
           task: <TrueFalse/>
-=======
-          task: <TrueFalse /> //multiple choice
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         },
         {
           questionID: 2,
@@ -98,7 +81,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
 
       ],
-<<<<<<< HEAD
       submitQuestions: [],
       completedTasks: [],
       draggedTask: {},
@@ -108,13 +90,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     this.deleterow = this.deleterow.bind(this);
   }
   
-=======
-      completedTasks: [],
-      draggedTask: {}
-    }
-  }
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   onDrag = (event, todo) => {
     event.preventDefault();
     this.setState({
@@ -136,11 +111,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     })
   }
 
-<<<<<<< HEAD
   deleterow = (index) => {
-=======
-  deleterow = (event, index) => {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     let temp: any[];
     temp = this.state.completedTasks;
     temp.splice(index, 1);
@@ -150,43 +121,22 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     })
   }
 
-<<<<<<< HEAD
-=======
-
-
-
-
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   handleSubmit = async (event) => {
     event.preventDefault();
 
     if (this.state.completedTasks.length > 0) {
       let frmData = $(":input").serializeArray();
-<<<<<<< HEAD
-=======
-      //frm data takes in too much data so splice until only title is received
-      frmData.splice(0, 13);
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
       this.props.CreatSurvey(frmData, this.state.completedTasks);
     }
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
     }
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     this.handleShow();//user styleing for creating a survey
   }
 
   testaxois = async (event) => {
     surveyClient.findSurveyById(2);
   }
-<<<<<<< HEAD
   componentWillMount(){
     this.addSpecificSurvey();
   }
@@ -214,13 +164,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       });
     }
   }
-=======
-
-  componentDidMount() {
-    this.testaxois(event);
-  }
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   handleShow = () => {
     $('#alertSubmission').show();
     setTimeout(function () {
@@ -230,16 +173,12 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       showModal: true
     })
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   handleClose = () => {
     this.setState({
       showModal: false
     })
   }
-<<<<<<< HEAD
 
   addClick = () =>{
     this.setState({displayChoice : true});
@@ -403,14 +342,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     return (
       <>
         {/* Used for dragging 
-=======
-  render() {
-    const { todos, completedTasks } = this.state;
-
-    return (
-      <>
-        {/* Used for dragging */}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         <div className="test">
           <div className="todos" >
             {
@@ -421,17 +352,9 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
               )
             }</div></div>
-<<<<<<< HEAD
         */ 
        //OUTDATED FUNCTIONALITY FOR DRAG AND DROP. LEFT REMAINING FOR REFERENCE AND ROLL BACK ABILITY WITH EASE.
       }
-=======
-
-
-
-
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         <div className="container" >
 
           <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
@@ -439,7 +362,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
                 <label htmlFor="title">Survey Title</label>
-<<<<<<< HEAD
                 {/*conditional rendering*/}
                 {this.props.history.location.state && <input type="text" className="form-control" name="title" required defaultValue={this.props.history.location.state.displaySurvey.title}/>}
                 {!this.props.history.location.state && <input type="text" className="form-control" name="title" required/>}
@@ -452,14 +374,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                 {this.props.history.location.state && <textarea className="form-control" name="description" placeholder="Survey Description" required defaultValue={this.props.history.location.state.displaySurvey.description}></textarea>}
                 {!this.props.history.location.state && <textarea className="form-control" name="description" placeholder="Survey Description" required ></textarea>}
                 <br />
-=======
-                <input type="text" className="form-control" name="title" required /><br />
-                <input type="checkbox" name="template?" /> Is this a template?
-
-     <br></br><br></br>
-                <label htmlFor="description">Survey Description</label>
-                <textarea className="form-control" name="description" placeholder="Survey Description" required></textarea><br />
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 
 
@@ -469,7 +383,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                 {/* Used for dropping from a drag */}
                 <div className="App">
 
-<<<<<<< HEAD
                    <div data-required onDrop={event => this.onDrop(event)} onDragOver={(event => this.onDragOver(event))} className="done" >
                     {completedTasks.map((task, index, arr) =>
                       <div key={index}>
@@ -493,25 +406,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                 </div>
 
                 <br/><br/><button type="submit" className="createSurveyButton" >Create Survey</button>
-=======
-                  <div data-required onDrop={event => this.onDrop(event)} onDragOver={(event => this.onDragOver(event))} className="done" >
-                    {completedTasks.map((task, index) =>
-                      <div key={index}>
-                        <br />
-
-                        <button className="btn btn-primary" onClick={() => this.deleterow(event, index)}>Remove &#8628;</button>
-                        {task.task}
-
-
-                      </div>
-
-                    )
-                    }
-                  </div>
-                </div>
-
-                <br /><br /><button type="submit" className="createSurveyButton" >Create Survey</button>
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 
               </div>
@@ -524,10 +418,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       </>
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     );
   }
 }

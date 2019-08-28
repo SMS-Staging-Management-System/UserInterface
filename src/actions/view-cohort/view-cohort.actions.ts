@@ -6,34 +6,21 @@ import { toast } from "react-toastify";
 
 export const viewCohortTypes = {
     TOGGLE: 'VIEW_COHORT_TOGGLE_MODAL_VISIBLE',
-<<<<<<< HEAD
     TOGGLE_CLOSE: 'VIEW_COHORT_TOGGLE_CLOSE_MODAL_VISIBLE',
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     TOGGLE_STATUS_DROPDOWN: 'VIEW_COHORT_TOGGLE_STATUS_DROPDOWN',
     SELECT_ONE: 'VIEW_COHORT_SELECT_ONE_USER',
     SELECT_ALL: 'VIEW_COHORT_SELECT_ALL_USERS',
     DESELECT_ONE: 'VIEW_COHORT_DESELECT_ONE_USER',
-<<<<<<< HEAD
     DESELECT_ALL: 'VIEW_COHORT_DESLECT_ALL_USERS',
     GET_USERS: 'VIEW_COHORT_LOAD_USERS',
     REMOVE_SELECTED: 'VIEW_COHORT_REMOVE_SELECTED_USERS',
     COHORT_SAVED: 'VIEW_COHORT_COHORT_SAVED',
     UPDATE_COHORT: 'VIEW_COHORT_UPDATE',
     HOVERED_COHORT: 'VIEW_COHORT_CHANGE_SELECTED_COHORT',
-=======
-    DESELECT_ALL: 'VIEW_COHORT_DESLECT_ALL_USERS', 
-    GET_USERS: 'VIEW_COHORT_LOAD_USERS', 
-    REMOVE_SELECTED: 'VIEW_COHORT_REMOVE_SELECTED_USERS',
-    COHORT_SAVED: 'VIEW_COHORT_COHORT_SAVED',
-    UPDATE_COHORT: 'VIEW_COHORT_UPDATE',
-    HOVERED_COHORT: 'VIEW_COHORT_CHANGE_SELECTED_COHORT', 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 // Excplicitly deconstruct to ensure that all types have a
 // corresponding action
-<<<<<<< HEAD
 const { TOGGLE,
     TOGGLE_CLOSE,
     TOGGLE_STATUS_DROPDOWN,
@@ -69,30 +56,6 @@ export const closeViewCohortModal = ()  => async (dispatch: any) => {
 
 export const getCohortUsers = () => {
     return {
-=======
-const {TOGGLE, 
-       TOGGLE_STATUS_DROPDOWN,
-       SELECT_ONE,
-       SELECT_ALL,
-       DESELECT_ONE,
-       DESELECT_ALL,
-       GET_USERS,
-       REMOVE_SELECTED,
-       COHORT_SAVED,
-       UPDATE_COHORT,
-       HOVERED_COHORT 
-    } = viewCohortTypes;
-
-export const toggleViewCohortModal = () => {
-    return { 
-        payload: {},
-        type: TOGGLE
-    }
-}
-
-export const getCohortUsers = () => {
-    return { 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         payload: {},
         type: GET_USERS
     }
@@ -129,11 +92,7 @@ export const selectAllUsers = () => {
     return {
         payload: {},
         type: SELECT_ALL
-<<<<<<< HEAD
     }
-=======
-    }   
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 export const deselectAllUsers = () => {
@@ -154,19 +113,13 @@ export const removeSelectedUsers = () => {
 export const toggleStatusDropdown = () => {
     return {
         payload: {},
-<<<<<<< HEAD
         type: TOGGLE_STATUS_DROPDOWN
     }
-=======
-        type: TOGGLE_STATUS_DROPDOWN 
-    } 
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 // should let you save cohorts.
 export const saveCohort = (cohort: ICohort) => (dispatch: (action: any) => void) => {
     cohortClient.save(cohort)
-<<<<<<< HEAD
         .then(async resp => {
             toast.success('Cohort info updated');
             const result = await resp.data;
@@ -185,26 +138,6 @@ export const saveCohort = (cohort: ICohort) => (dispatch: (action: any) => void)
         .catch(e => {
             toast.error('Failed to Save Cohort');
         })
-=======
-    .then( async resp => {
-        toast.success('Cohort info updated');
-        const result = await resp.data;
-        dispatch({
-            payload: {
-                cohort: result
-            },
-            type: UPDATE_COHORT
-        });
-
-        dispatch({
-            payload: {},
-            type: COHORT_SAVED 
-        });
-    })
-    .catch(e => {
-        toast.error('Failed to Save Cohort');
-    })
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 export const updateCohort = (cohort: ICohort) => {

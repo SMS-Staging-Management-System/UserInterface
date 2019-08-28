@@ -1,7 +1,6 @@
 import { smsClient } from ".";
 import { IUser } from "../../model/user.model";
 
-<<<<<<< HEAD
 
 const usersContext = '/user-service/users'
 
@@ -50,21 +49,4 @@ export const userClient = {
     findAllDroppedAssociate: async(pageNumber:number, PageSize:number) =>{
         return smsClient.get(usersContext + `/dropped/page?pageNumber=${pageNumber}&pageSize=${PageSize}`)
     }
-=======
-const usersContext = '/user-service/users'
-
-export const userClient = {
-  saveUser(newUser: IUser) {
-    return smsClient.post(usersContext, newUser);
-  },
-  findAllByCohortId: (cohortId: number) => {
-    return smsClient.get(`${usersContext}/cohorts/${cohortId}`)
-  },
-  findOneByEmail(email: string) {
-    return smsClient.get(usersContext + `/email/${email}`);
-  },
-  updateSMSUserInfo(updatedUser: IUser) {
-    return smsClient.patch(usersContext, updatedUser);
-  }
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }

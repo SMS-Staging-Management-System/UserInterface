@@ -76,7 +76,6 @@ export const updateNewCohort = (newCohort: ICohort) => {
   }
 }
 
-<<<<<<< HEAD
 export const saveCohort = (newCohort: ICohort) => async (dispatch: (action: any)=> void) => {
     //saving the cohort on the database
     await cohortClient.save(newCohort)
@@ -86,12 +85,6 @@ export const saveCohort = (newCohort: ICohort) => async (dispatch: (action: any)
       newCohort.trainer.trainingAddress = newCohort.address;
       //updating the trainer on the database
       await userClient.updateSMSUserInfo(newCohort.trainer);
-=======
-export const saveCohort = (newCohort: ICohort) => (dispatch: (action: any)=> void) => {
-  cohortClient.save(newCohort)
-    .then(async resp => {
-      toast.success('Cohort Created')
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
       const createdCohort = await resp.data
       dispatch({
         payload: {

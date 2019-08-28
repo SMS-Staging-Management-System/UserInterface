@@ -10,12 +10,8 @@ import { ManageComponenet } from './manage.component';
 
 export interface IManageComponentProps extends RouteComponentProps<{manage: string}>{
   manageUsers: IManageUsersState,
-<<<<<<< HEAD
   manageGetUsersByGroup: (groupName: string, email:string, page?: number) => void,
   manageGetAllUsers: () => void,
-=======
-  manageGetUsersByGroup: (groupName: string) => void,
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   toggleCreateUserModal: () => void,
   toggleCreateCohortModal: () => void,
   toggleViewUserModal: () => void,

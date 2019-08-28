@@ -5,10 +5,7 @@ import Loader from '../Loader/Loader';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { IState } from '../../../reducers';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
 import Button from 'reactstrap/lib/Button';
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 interface IComponentProps extends RouteComponentProps<{}> {
     match: any
@@ -17,7 +14,6 @@ interface IComponentProps extends RouteComponentProps<{}> {
 interface IComponentState {
     historyData: any,
     historyDataLoaded: boolean,
-<<<<<<< HEAD
     redirectTo: any,
     pageNumber: number,
     totalPage: number
@@ -25,29 +21,17 @@ interface IComponentState {
 
 class SurveyRespondentsComponent extends React.Component<IComponentProps, IComponentState> {
     constructor(props: IComponentProps) {
-=======
-    redirectTo: any
-};
-
-class SurveyRespondentsComponent extends React.Component<IComponentProps, IComponentState> {
-    constructor(props) {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         super(props);
         this.state = {
             historyData: [],
             historyDataLoaded: false,
-<<<<<<< HEAD
             redirectTo: null,
             pageNumber: 0,
             totalPage: 0
-=======
-            redirectTo: null
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         }
     }
 
     componentWillMount() {
-<<<<<<< HEAD
         this.loadSurveyRespondents(this.state.pageNumber);
     }
 
@@ -91,18 +75,6 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
             historyData: historyData,
             historyDataLoaded: true,
             totalPage: history.totalPages
-=======
-        this.loadSurveyRespondents();
-    }
-
-    loadSurveyRespondents = async () => {
-        console.log("The surveyId is ", this.props);
-        const historyData = await surveyClient.findHistoriesBySurveyId(this.props.match.params.surveyId);
-        console.log("The history data brought in is: ", historyData);
-        this.setState({
-            historyData: historyData,
-            historyDataLoaded: true
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         });
     }
 
@@ -116,10 +88,7 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
                     <Fragment>
                         {this.state.historyData ? (
                             <>
-<<<<<<< HEAD
 
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">
                                         <tr>
@@ -138,7 +107,6 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
                                         ))}
                                     </tbody>
                                 </Table>
-<<<<<<< HEAD
                                 <ul>
                                     <div className="div-fixed">
                                         <tr className= "row-border">
@@ -148,8 +116,6 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
                                         </tr>
                                     </div>
                                 </ul>
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                             </>
                         ) : (
                                 <div>No Respondents to Display</div>

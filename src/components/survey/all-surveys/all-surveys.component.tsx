@@ -17,7 +17,6 @@ interface IComponentState {
     surveys: ISurvey[],
     surveysLoaded: boolean,
     surveysToAssign: number[],
-<<<<<<< HEAD
     redirectTo: string | null,
     closingFilter: boolean,
     listFiltered: ISurvey[],
@@ -27,28 +26,18 @@ interface IComponentState {
 }
 
 export class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
-=======
-    redirectTo: string | null
-}
-
-class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     constructor(props) {
         super(props);
         this.state = {
             surveys: [],
             surveysLoaded: false,
             surveysToAssign: [],
-<<<<<<< HEAD
             redirectTo: null,
             closingFilter: false,
             listFiltered: [],
             title: "",
             description: "",
             filterOption: "Filter By"
-=======
-            redirectTo: null
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         }
     }
 
@@ -70,7 +59,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
         })
     }
 
-<<<<<<< HEAD
      // Added this code because I was having issues accessing this property in a later function
      // Used to return closing date by the index provided in the array that is passed
     getClosingDate = (array, index) => {
@@ -139,8 +127,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
         });
     }
 
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     checkFunc = (e) => {
         const { checked } = e.target;
         const id = +e.target.id;
@@ -161,7 +147,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
             }
         }
     }
-<<<<<<< HEAD
 // this function set the state after the input box has been unselected after this, 
 
     setTitleChange = async (event) => {
@@ -203,8 +188,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
             this.loadAllSurveys();
         }
     }
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
     // Load the surveys into the state
     loadAllSurveys = async () => {
@@ -215,7 +198,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
         })
     }
 
-<<<<<<< HEAD
     // Used to route user filter selection to appropriate function
     filterCheck = (e) => {
         const {id:option} = e.target;
@@ -233,22 +215,16 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
         }
     }
 
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     render() {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
         }
-<<<<<<< HEAD
         console.log(this.state.surveys);
         const sortOptions = ["Active", "Closed", "None"];
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         return (
             <>
                 {this.state.surveysLoaded ? (
                     <Fragment>
-<<<<<<< HEAD
                         
                             <div className="filterSelect">
                                 <div className="dropdown userDropdown">
@@ -266,10 +242,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                     </div>
                                 </div>
                             </div>
-=======
-                        {this.state.surveys.length ? (
-                            <>
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead className="rev-background-color">
                                         <tr>
@@ -282,7 +254,6 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                             <th>Analytics</th>
                                             <th>Respondents</th>
                                         </tr>
-<<<<<<< HEAD
                                         {(this.state.surveys.length > 0) &&
                                         <tr style={secondHeadFilter}>
                                             <td></td>
@@ -367,40 +338,13 @@ class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
                                     </tbody>
                                 </Table>
                                 {(this.state.surveys.length > 0) &&
-=======
-                                    </thead>
-                                    <tbody>
-                                        {this.state.surveys.map(survey => (
-                                            <tr key={survey.surveyId} className="rev-table-row">
-                                                <td><input type="checkbox" onChange={e => this.checkFunc(e)} id={survey.surveyId.toString()} /></td>
-                                                <td>{survey.title}</td>
-                                                <td>{survey.description}</td>
-                                                <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
-                                                <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
-                                                <td>{survey.published ? 'Yes' : 'No'}</td>
-                                                <td><Button className='assignSurveyBtn' onClick={() =>
-                                                    this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
-                                                <td><Button className='assignSurveyBtn' onClick={() =>
-                                                    this.loadSurveyRespondents(survey.surveyId)}>Status</Button></td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </Table>
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                                 <div className="assignButtonDiv">
                                     <SurveyModal
                                         buttonLabel='Assign To Cohorts'
                                         surveysToAssign={this.state.surveysToAssign} />
                                 </div>
-<<<<<<< HEAD
                                 }
                             
-=======
-                            </>
-                        ) : (
-                                <div>No Surveys to Display</div>
-                            )}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                     </Fragment>
                 ) : (
                         <Loader/>
@@ -414,13 +358,9 @@ const mapStateToProps = (state: IState) => ({
     auth: state.managementState.auth
 });
 
-<<<<<<< HEAD
 export default connect(mapStateToProps)(AllSurveysComponent);
 
 const secondHeadFilter = {
     width: '100%',
     background: 'white'
 }
-=======
-export default connect(mapStateToProps)(AllSurveysComponent);
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71

@@ -4,10 +4,6 @@ import { IUser } from "../../model/user.model";
 import { addressReducer } from "./address.reducer";
 import { statusReducer } from "./status.reducer";
 import { authReducer } from "./auth.reducer";
-<<<<<<< HEAD
-=======
-import { clickerReducer } from "./clicker.reducer";
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 import { createUserReducer } from "./create-user.reducer";
 import { createCohortReducer } from "./create-cohort.reducer";
 import { manageUsersReducer } from "./manage-users.reducer";
@@ -23,16 +19,12 @@ import { resetPasswordUsernameReducer } from "./reset-password-username.reducer"
 import { joinCohortReducer } from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
-<<<<<<< HEAD
 import { ICreateUser } from "../../model/create-user.model";
-=======
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 
 
 
 export interface IAddressState {
-<<<<<<< HEAD
     trainingAddresses: IAddress[],
 }
 export interface IAuthState {
@@ -53,36 +45,11 @@ export interface IViewUserState {
 }
 
 export interface ICreateCohortState {
-=======
-  trainingAddresses: IAddress[],
-}
-export interface IAuthState {
-    currentUser: ICognitoUser
-  }
-  
-  export interface IClickerState {
-    clicks: number
-  }
-  
-  export interface ICreateUserState {
-    enabled: boolean,
-    newUser: IUser,
-    locationDropdownActive: false
-  }
-  
-  export interface IViewUserState {
-    enabled: boolean,
-    newUser: IUser
-  }
-
-  export interface ICreateCohortState {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     enabled: boolean,
     isSaved: boolean,
     newCohort: ICohort,
     locationDropdownActive: false,
     trainerDropdownActive: false
-<<<<<<< HEAD
 }
 
 export interface IAddressState {
@@ -107,26 +74,6 @@ export interface IManageUsersState {
 export interface ICurrentSMSUserState {
     currentSMSUser: IUser
 }
-=======
-  }
-  
-  export interface IAddressState {
-    trainingAddresses: IAddress[]
-  }
-
-  export interface IStatusState {
-    userStatus: IStatus[],
-    
-  }
-  
-  export interface IManageUsersState {
-    manageUsers: ICognitoUser[];
-  }
-
-  export interface ICurrentSMSUserState {
-    currentSMSUser: IUser
-  }
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 export interface ICohortModalState {
     /**
      * The currently selected cohort
@@ -152,7 +99,6 @@ export interface ICohortModalState {
      */
     isSaved: boolean,
     statusDropdownActive: boolean
-<<<<<<< HEAD
 }
 
 export interface IJoinCohortState {
@@ -168,39 +114,16 @@ export interface IManageCohortsState {
 }
 
 export interface IProfileViewState {
-=======
- }
-
-  export interface IJoinCohortState {
-    validToken:boolean,
-    userToJoin:IUser
-  }
-
-
-  export interface IManageCohortsState {
-    cohorts: ICohort[]
-  }
-  export interface IProfileViewState {
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     user: IUser,
     bUserInfoChanged: boolean,
     locationDropdownActive: boolean,
     statusDropdownActive: boolean,
-<<<<<<< HEAD
     cohortDropdownActive: boolean,
     virtual: boolean,
 }
 
 export interface IManagementState {
     viewUser: IViewUserState;
-=======
-    virtual:boolean,
-  }
-
-  export interface IManagementState {
-    viewUser: IViewUserState;
-    clicker: IClickerState,
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     createUser: ICreateUserState,
     createCohort: ICreateCohortState,
     auth: IAuthState,
@@ -215,7 +138,6 @@ export interface IManagementState {
     resetPassword: IResetPasswordState,
     resetPasswordUsername: IResetPasswordUsernameState,
     login: ILoginState,
-<<<<<<< HEAD
     statusDropdownActive: boolean;
 }
 
@@ -223,15 +145,6 @@ export const managementState = combineReducers<IManagementState>({
     addresses: addressReducer,
     statuses: statusReducer,
     auth: authReducer,
-=======
-  }
-
-  export const managementState = combineReducers<IManagementState>({
-    addresses: addressReducer,
-    statuses: statusReducer,
-    auth: authReducer,
-    clicker: clickerReducer,
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     viewUser: viewUserReducer,
     createUser: createUserReducer,
     createCohort: createCohortReducer,
@@ -244,7 +157,6 @@ export const managementState = combineReducers<IManagementState>({
     resetPassword: resetPasswordReducer,
     resetPasswordUsername: resetPasswordUsernameReducer,
     login: loginReducer,
-<<<<<<< HEAD
 })
 
 
@@ -266,26 +178,3 @@ export interface ILoginState {
     incorrectUserPass: boolean,
     passwordNeedsReset: boolean,
 }
-=======
-  })
-
-
-export interface IResetPasswordState {
-  showPasswordTip: boolean,
-  confirmationPassword: string,
-  newPassword: string,
-  verificationCode: string,
-}
-export interface IResetPasswordUsernameState {
-  username: string,
-  needsVerificationCode: boolean,
-}
-
-export interface ILoginState {
-  username: string,
-  password: string,
-  cogUser: ICognitoUser,
-  incorrectUserPass: boolean,
-  passwordNeedsReset: boolean,
-}
->>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
