@@ -6,6 +6,7 @@ import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-que
 import { smsClient } from ".";
 
 const surveyBaseRoute = '/survey-service/surveys';
+const surveyAllBaseRoute = '/survey-service/surveys/all';
 const questionBaseRoute = '/survey-service/questions';
 const answerBaseRoute = '/survey-service/answers';
 const responseBaseRoute = '/survey-service/responses';
@@ -26,42 +27,16 @@ export const surveyClient = {
   // this is our fetch call on which if dont have a body back we will return
   // the empty array declare on the first line.
   findSurveyByTitle: async (title: string) => {
-    //  let surveyFound;
-    let surveys: any = [];
-    console.log(`${surveyBaseRoute}/title/${title}`);
-    await smsClient.get(`${surveyBaseRoute}/title/${title}`)
-      // await smsClient.get(`localhost:8092/surveys/title/${title}`)
-      .then(response => {
-        if (response.data) {
-          surveys = response.data;
-        }
-        else {
-          console.log("Record not found.");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    return surveys;
+     return await smsClient.get(`${surveyBaseRoute}/title/${title}`)
   },
 
     // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyDescription
   // this is our fetch call on which if dont have a body back we will return
   // the empty array declare on the first line.
   findSurveyByDescription: async (description: string) => {
-    let surveys: any = [];
-
-    await smsClient.get(`${surveyBaseRoute}/description/${description}`)
-      .then(response => {
-        surveys = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-   
-    return surveys;
+    return await smsClient.get(`${surveyBaseRoute}/description/${description}`)
   },
+
   findAllSurveys: async () => {
     let surveysAndTemplates;
     let surveys: any = [];
@@ -217,8 +192,14 @@ export const surveyClient = {
 
   async saveSurvey(survey: ISurvey) {
     let resp = await smsClient.post(surveyBaseRoute, survey);
-    let sID = resp.data.surveyId;      // return ID; 
-    return sID;
+    // let sID = resp.data.surveyId;      // return ID; 
+    // return sID;
+  },
+
+  async saveSurveyAll(survey: any) {
+    let resp = await smsClient.post(surveyAllBaseRoute, survey);
+    // let sID = resp.data.surveyId;      // return ID; 
+    // return sID;
   },
 
   //----------------------//

@@ -17,7 +17,7 @@ import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { ISurveyState } from '../../../reducers/survey';
-import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
+import { CreateSurvey } from '../../../actions/survey/SurveyBuild.action';
 import { FaPlusSquare } from 'react-icons/fa';
 import AddOther from './add.other.component';
 
@@ -26,7 +26,7 @@ interface IComponentProps extends RouteComponentProps<{}> {
   auth: IAuthState,
   match: any,
   surveyState: ISurveyState
-  CreatSurvey: (frmData: any, completedTasks: any[]) => void
+  CreateSurvey: (frmData: any, completedTasks: any[]) => void
 };
 interface IComponentState{
   displaySurvey?: any,
@@ -126,7 +126,10 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
 
     if (this.state.completedTasks.length > 0) {
       let frmData = $(":input").serializeArray();
-      this.props.CreatSurvey(frmData, this.state.completedTasks);
+      // console.log('form data: ', frmData);
+      // console.log ('complete task: ', this.state.completedTasks);
+      this.props.CreateSurvey(frmData, this.state.completedTasks);
+
     }
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
@@ -398,7 +401,7 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
                     
                     }
                     
-                    {this.state.displayChoice == true && <AddOther parentFunction={this.toAddFunction}></AddOther>}
+                    {this.state.displayChoice == true && <AddOther name="Select Question Type" parentFunction={this.toAddFunction}></AddOther>}
                     
                     {this.state.displayChoice == false && <button type="button" className="btn rev-btn" onClick={this.addClick}>Add Question <FaPlusSquare /> </button>}
                   </div> 
@@ -427,6 +430,6 @@ const mapStateToProps = (state: IState) => ({
   surveyBuildState: state.surveyState
 });
 const mapDispatchToProps = {
-  CreatSurvey
+  CreateSurvey
 }
 export default connect(mapStateToProps, mapDispatchToProps)(surveyBuild);

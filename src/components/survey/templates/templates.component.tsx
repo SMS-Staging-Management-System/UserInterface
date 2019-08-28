@@ -11,6 +11,7 @@ import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import Loader from '../Loader/Loader';
 import { IState } from '../../../reducers';
+import { toast } from 'react-toastify';
 
 interface TemplatesProps extends RouteComponentProps<{}> {
     match: any
@@ -79,7 +80,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     
     changeSurveyDescription = (event) => {
         this.setState({
-            newDescription: event.target.value,
+            description: event.target.value,
         })
     }
 
@@ -93,8 +94,6 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             newTitle: openedTemplate.title,	            //surveyId: id,
             surveyLoaded: true,
             description: description
-
-
         })
     }
 
@@ -120,14 +119,15 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
         if (this.state.survey.description !== this.state.newDescription) {
             this.setState({
-                newDescription: this.state.newDescription
+                description: this.state.description
             })
         } else {
             this.setState({
-                newDescription: this.state.survey.description
+                description: this.state.survey.description
             })
 
         }
+        
         this.setState({
             showModal: false,
             surveyId: 0,
@@ -139,7 +139,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         let dummySurvey: ISurvey = {
             surveyId: 1,
             title: this.state.newTitle,
-            description: this.state.newDescription,
+            description: this.state.description,
             dateCreated: this.state.dateCreated,
             closingDate: this.state.survey.closingDate,
             template: false,
@@ -210,6 +210,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             junctionTable.surveyId = dummySurvey;
             junctionTable.surveyId.surveyId = dummySurvey.surveyId;
             surveyClient.saveToQuestionJunction(junctionTable);
+            toast.success('Survey created');
         }
     }
     handleDuplicateClose = async () => {
