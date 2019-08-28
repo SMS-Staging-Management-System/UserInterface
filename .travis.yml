@@ -1,5 +1,5 @@
-dist: trusty
-language: node_js
+dist: "trusty"
+language: "node_js"
 node_js: "12.9.1",
 git:
   depth: false
