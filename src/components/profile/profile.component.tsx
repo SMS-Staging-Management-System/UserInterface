@@ -68,7 +68,6 @@ class Profile extends Component<IProfileProps, IProfileState> {
 
     onUserInfoChangeHandler = (event: React.FormEvent) => {
         let updatedUser = this.props.userToView;
-
         const target = event.target as HTMLSelectElement;
         switch (target.name) {
             case inputNames.EMAIL:
@@ -374,6 +373,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled = {!this.state.isAdmin}
                                         type="checkbox"
                                         value="admin"
                                         checked={this.state.isAdmin}
@@ -384,6 +384,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled = {!this.state.isTrainer}
                                         type="checkbox"
                                         value="trainer"
                                         checked={this.state.isTrainer}
@@ -394,6 +395,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled = {!this.state.isStagingManager}
                                         type="checkbox"
                                         value="staging-manager"
                                         checked={this.state.isStagingManager}
@@ -404,6 +406,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled = {!this.state.isAssociate}
                                         type="checkbox"
                                         value="associtate"
                                         checked={this.state.isAssociate}
