@@ -6,7 +6,11 @@ import LoginComponent from "../login/login.container";
 import { IState } from "../../reducers";
 
 
+<<<<<<< HEAD
 
+=======
+const mapStateToProps = (state: IState) => ({ auth: state.managementState.auth });
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 export interface IProtectedRouteProps {
   component: Component<any, any> | ConnectedComponentClass<any, any>,
@@ -14,10 +18,19 @@ export interface IProtectedRouteProps {
   auth: any,
   path: any
 }
+<<<<<<< HEAD
 /*
  *The protected route component
  */
 export const ProtectedRoute = (props: IProtectedRouteProps,any) => {
+=======
+
+
+/*
+ *The protected route component
+ */
+export const ProtectedRoute = (props: IProtectedRouteProps) => {
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   const { component, auth, allowedRoles } = props;
   const Component = component as any;
   return (
@@ -35,9 +48,12 @@ export const ProtectedRoute = (props: IProtectedRouteProps,any) => {
     />
   );
 }
+<<<<<<< HEAD
 const mapStateToProps = (state: IState) => ({ 
   auth: state.managementState.auth 
 });
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 export default connect(mapStateToProps)(ProtectedRoute);
 // Type '{ history: History<any>; location: Location<any>; match: match<any>; staticContext?: StaticContext | undefined; }'
 // is missing the following properties from type 'Readonly<Pick<ILoginProps, "confirmationPassword" | "newPassword" | "passwordNeedsReset" | "incorrectUserPass" | 

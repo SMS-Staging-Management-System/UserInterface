@@ -39,7 +39,11 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
     }
 
     loadMyAssignedSurveys = async () => {
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         if (this.props.auth.currentUser.email) {
             const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
             this.setState({
@@ -62,6 +66,7 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
         return (
             <>
                 {this.state.surveysLoaded ? (
+<<<<<<< HEAD
                     <Table striped id="manage-users-table" className="tableUsers">
                         <thead className="rev-background-color">
                             <tr>
@@ -74,12 +79,27 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
                         <tbody>
                             {this.state.surveys.length ?
                                 (this.state.surveys.map((survey, index) => (
+=======
+                    this.state.surveys.length ? (
+                        <Table striped id="manage-users-table" className="tableUsers">
+                            <thead className="rev-background-color">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Date Created</th>
+                                    <th>Closing Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.surveys.map((survey, index) => (
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                                     <tr key={index} className="rev-table-row" onClick={() => this.handleTakeSurvey(survey.surveyId)}>
                                         <td>{survey.title}</td>
                                         <td>{survey.description}</td>
                                         <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
                                         <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
                                     </tr>
+<<<<<<< HEAD
                                 ))
                                 ) :
                                 (
@@ -91,6 +111,16 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
                     </Table>
                 ) : (
                         <Loader />
+=======
+                                ))}
+                            </tbody>
+                        </Table>
+                    ) : (
+                            <div>No Surveys to Display</div>
+                        )
+                ) : (
+                        <Loader/>
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                     )}
             </>
         );

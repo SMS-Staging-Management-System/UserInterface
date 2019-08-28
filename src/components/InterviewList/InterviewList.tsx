@@ -9,6 +9,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { store } from '../../Store';
 import ReviewButton from './ActionButtons/ReviewButton';
+import { Label } from 'reactstrap';
 // #endregion 
 
 // The following is imported from the reducer to accept filtering conditions and display interviews
@@ -102,6 +103,19 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.handlePageClick({ selected: this.props.currentPage });
         }
     }
+    // async componentDidUpdate() { //from master, unsure if it works yet
+    //     if(!this.state.loaded){
+    //         this.setState ({
+    //             loaded:true
+    //         });
+    //         this.props.getInterviewPages(
+    //             this.props.currentPage, 
+    //             this.props.pageSize, 
+    //             this.props.orderBy, 
+    //             this.props.direction);
+    //     }
+
+    // }
 
     handlePageClick = (data) => { // runs when the page is clicked, change values displayed to what's in the state
         console.log(data);
@@ -132,7 +146,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         await this.setState({ // when a sorting value changes, wait for needed calls on a state change
             tableHeaderId: event.currentTarget.id
         });
-
         //store page ASC or DESC
         let orderDirection;
         if (this.state.tableHeaderId === this.state.previousTableHeaderId) { //if click same header -> toggle ASC/DESC
@@ -161,7 +174,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     }
     // generic filter that is called whenever user wants to filter results by a field
     filterChange = (event: any) => {
-
         const value = event.currentTarget.value;
         const name = event.currentTarget.name;
         //list of ternaries that check if the filter select box has changed, otherwise assume original state value
@@ -192,6 +204,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             staging);
     }
 
+    // changePageSize = (event: any) => { //from master, unsure if it works
+    //     this.props.getInterviewPages(
+    //         this.props.currentPage,
+    //         event.currentTarget.value,
+    //         this.props.orderBy,
+    //         this.props.direction);
+    // }
+
     renderDate = (date: number) => { // renders a data if one is returned, otherwise just a dash
         if (date > 0) {
             return new Date(date).toDateString();
@@ -200,7 +220,11 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    getAssocInput = (entry: any) => { // open component to associate input component
+    markAsReviewed = (event: any) => {
+        this.props.markAsReviewed(event.currentTarget.id);
+    }
+
+    getAssocInput = (entry: any) => {
         let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
         let text = (entry.associateInput ? 'View' : 'Add');
         return (

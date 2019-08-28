@@ -59,8 +59,14 @@ class ViewAssociateInput extends Component<IProps, IViewState> {
         }
         return (
             <div style={{
+<<<<<<< HEAD
                 padding: '1rem'
             }}className = 'rev-background-color'>
+=======
+                padding: '1rem',
+                backgroundColor: 'rgb(255,194,137)'
+            }}>
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                 <h3 style={{textAlign: 'center'}}>Associate Input</h3>
                 <hr/>
 

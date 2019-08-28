@@ -15,13 +15,17 @@ const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
 const junctionSurveyQuestionsBaseRoute = '/survey-service/junction_survey_questions';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 export const surveyClient = {
 
   //--------------------//
   //-- Survey Methods --//
   //--------------------//
 
+<<<<<<< HEAD
   // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyTitle
   // this is our fetch call on which if dont have a body back we will return
   // the empty array declare on the first line.
@@ -62,6 +66,8 @@ export const surveyClient = {
    
     return surveys;
   },
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   findAllSurveys: async () => {
     let surveysAndTemplates;
     let surveys: any = [];
@@ -295,6 +301,7 @@ export const surveyClient = {
     smsClient.post(historyBaseRoute, postObject);
   },
 
+<<<<<<< HEAD
   findHistoriesBySurveyId: async (id: number, pageId : number) => {
     let histories;
 
@@ -303,6 +310,13 @@ export const surveyClient = {
         console.log('Total pages : ' + response.data.totalPages);
         histories = response.data;
         
+=======
+  findHistoriesBySurveyId: async (id: number) => {
+    let histories;
+    await smsClient.get(`${historyBaseRoute}/survey/${id}`)
+      .then(response => {
+        histories = response.data;
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
       })
       .catch(err => {
         console.log(err);
@@ -319,6 +333,10 @@ export const surveyClient = {
       "dateCompleted": new Date()
     }
     smsClient.patch(`${historyBaseRoute}/taken`, historyUpdate);
+<<<<<<< HEAD
   },
 
+=======
+  }
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
