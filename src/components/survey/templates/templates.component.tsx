@@ -76,7 +76,10 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             newTitle: event.target.value,
         })
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     changeSurveyDescription = (event) => {
         this.setState({
             newDescription: event.target.value,
@@ -97,7 +100,10 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
         })
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     handleClose = () => {
         this.setState({
             survey: {},
@@ -212,6 +218,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             surveyClient.saveToQuestionJunction(junctionTable);
         }
     }
+<<<<<<< HEAD
     handleDuplicateClose = async () => {
         if (this.state.survey.title !== this.state.newTitle) {
             this.setState({
@@ -245,6 +252,9 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
         
     }
+=======
+
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     render() {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
@@ -333,7 +343,10 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button className="buttonBack" onClick={() => this.handleClose()}>Back</Button>
+<<<<<<< HEAD
                         <Button className="buttonCreate" onClick={() => this.handleDuplicateClose()}>Duplicate</Button>
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                         <Button className="buttonCreate" onClick={() => this.handleCreateClose()}>Create</Button>
                     </Modal.Footer>
                 </Modal>

@@ -1,6 +1,7 @@
 import { interviewClient } from "../../axios/sms-clients/interview-client";
 
 export const feedbackRequestedChartTypes = {
+<<<<<<< HEAD
   SET_ASSOC_FEEDBACK_CHART_INFO: 'SET_ASSOC_FEETBACK_CHART_INFO'
 }
 
@@ -23,3 +24,29 @@ export const setInfoAssoc = () => async dispatch => {
     console.log(error)
   }
 }
+=======
+  GET_INFO: 'GET_INFO',
+  SET_CANVAS: 'SET_CANVAS',
+}
+
+export const setCanvasAssociate = (canvasRef) => async (dispatch) => {
+  dispatch({
+    payload: {
+      canvas: canvasRef
+    },
+    type: feedbackRequestedChartTypes.SET_CANVAS
+  })
+}
+
+export const getInfoAssociate = (chartRef) => async (dispatch) => {
+  const resp = await interviewClient.assocNeedFeedbackChart();
+
+  dispatch({
+    payload: {
+      chartInfo: resp.data,
+      canvas: chartRef
+    },
+    type: feedbackRequestedChartTypes.GET_INFO
+  })
+} 
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71

@@ -1,5 +1,6 @@
 import { InterviewFeedback } from "./Interview.feedback";
 import { IAssociateInput } from "./Associateinput.model";
+<<<<<<< HEAD
 import { IClient } from "./Client.model";
 
 export interface Interview {
@@ -13,6 +14,19 @@ export interface Interview {
   feedback : InterviewFeedback;
   associateInput : IAssociateInput;
   client: IClient;
+=======
+
+export interface Interview {
+  interviewId:      number,
+  managerId: number,
+  associateId: number,
+  scheduled: Date,
+  notified: Date,
+  reviewed: Date,
+  place: string,
+  feedback : InterviewFeedback,
+  associateInput : IAssociateInput
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 }
 
 /*

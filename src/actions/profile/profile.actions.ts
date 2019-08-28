@@ -6,9 +6,12 @@ import { toast } from "react-toastify";
 import { IStatus } from "../../model/status.model";
 
 import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
+<<<<<<< HEAD
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
 import { cognitoRoles } from "../../model/cognito-user.model";
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 
 export const profileTypes = {
@@ -19,7 +22,10 @@ export const profileTypes = {
     USER_UPDATE_SUCCESSFUL: 'PROFILE_USER_UPDATE_SUCCESSFUL',
     UPDATE_USER_STATUS: 'UPDATE_USER_STATUS',
     TOGGLE_STATUS_DROPDOWN: 'TOGGLE_STATUS_DROPDOWN',
+<<<<<<< HEAD
     TOGGLE_COHORT_DROPDOWN: 'TOGGLE_COHORT_DROPDOWN',
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     UPDATE_VIRTUAL_STATUS_CHECKBOX: 'UPDATE_VIRTUAL_STATUS_CHECKBOX',
 }
 
@@ -74,6 +80,7 @@ export const toggleStatusDropdown = () => {
     }
 }
 
+<<<<<<< HEAD
 export const toggleCohortDropdown = () => {
     return {
         payload: {},
@@ -117,6 +124,15 @@ export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean, roles: 
         const updatedUser = resp.data;
         updatedUser.roles = userToUpdate.roles;
         dispatch({
+=======
+
+export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean) => async (dispatch: (action: any) => void) => {
+
+    try {
+        const resp = await userClient.updateSMSUserInfo(userToUpdate);
+        toast.success('Info updated successfully');
+        dispatch ({
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             payload: {
                 updatedUser: resp.data as IUser
             },
@@ -125,6 +141,7 @@ export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean, roles: 
         if (bIsCurrentUser) {
             dispatch(updateCurrentSMSUser(resp.data));
         }
+<<<<<<< HEAD
         toast.success('Info updated successfully');
     } catch (error) {
         toast.error('Failed to update user info');
@@ -132,6 +149,14 @@ export const updateUser = (userToUpdate: IUser, bIsCurrentUser: boolean, roles: 
 }
 
 export const handleCheckboxChange = (status: IStatus) => (dispatch) => {
+=======
+    } catch (error) {
+        toast.error('Failed to update');
+    }
+}
+
+export const handleCheckboxChange = (status:IStatus) => (dispatch)=>{
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
     dispatch({
         payload: {},
         type: profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX

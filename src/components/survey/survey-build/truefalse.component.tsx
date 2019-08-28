@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { DeleteButton } from './delete.component';
 import AddOther from './add.other.component';
 
@@ -13,6 +14,13 @@ export class TrueFalse extends React.Component<PropsPlease, any> {
   constructor(props) {
     super(props);
     
+=======
+
+export class TrueFalse extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
+
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
   }
 
@@ -21,6 +29,7 @@ export class TrueFalse extends React.Component<PropsPlease, any> {
     return (
 
       <div>
+<<<<<<< HEAD
         <table className="questionTableRow">
           <tbody>
             <tr>
@@ -35,6 +44,17 @@ export class TrueFalse extends React.Component<PropsPlease, any> {
               <input name="answerText" value="True,False" readOnly hidden />
             </div>
             <hr />
+=======
+        <label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="tf" className="form-control" > True/False </label>
+
+        <div className="new" id="t7">
+
+          <input name="questionText" type="text" placeholder="Question Title (i.e. The sky is blue) " style={{ width: '100%' }}   ></input>
+          <input name="answerText" value="True,False" readOnly hidden />
+        </div>
+
+        <hr />
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
       </div>
 
     );

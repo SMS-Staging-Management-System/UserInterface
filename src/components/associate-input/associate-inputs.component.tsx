@@ -92,8 +92,14 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
         return (
             <form style={{
+<<<<<<< HEAD
                 padding: '1rem'
             }}className = 'rev-background-color'>
+=======
+                padding: '1rem',
+                backgroundColor: 'rgb(255,194,137)'
+            }}>
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                 <Question value='When did you recieve a notification?' >
                     <input className='tab-once' type="date" onChange={updateDayNotified} />
                 </Question>

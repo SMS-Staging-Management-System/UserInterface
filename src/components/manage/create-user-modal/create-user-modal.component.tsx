@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+<<<<<<< HEAD
   Button, Modal, ModalHeader, ModalBody, ModalFooter, Input,
   Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
@@ -7,6 +8,13 @@ import { ICreateUserModal } from './create-user-modal.container';
 import { IUser } from '../../../model/user.model';
 import Label from 'reactstrap/lib/Label';
 import { cognitoRoles } from '../../../model/cognito-user.model';
+=======
+  Button, Modal, ModalHeader, ModalBody, ModalFooter,
+  InputGroup, InputGroupText, InputGroupAddon, Input,
+  Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+} from 'reactstrap';
+import { ICreateUserModal } from './create-user-modal.container';
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
 
 
 const inputNames = {
@@ -26,7 +34,10 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
     this.props.updateLocations();
   }
 
+<<<<<<< HEAD
   //This updates the user when the input data
+=======
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   updateNewUserInfo = (e: React.FormEvent) => {
     let updatedNewUser = this.props.createUser.newUser;
 
@@ -59,6 +70,7 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
       default:
         break;
     }
+<<<<<<< HEAD
     const tempUser: IUser = {
       email: updatedNewUser.email,
       userId: 0,
@@ -120,18 +132,35 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
 
     //This function saves the user on redux store.
     this.props.saveUser(tempUser, this.props.createUser.newUser.cohort);
+=======
+    this.props.updateNewUser(updatedNewUser)
+  }
+
+  saveNewUser = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('saving')
+    this.props.saveUser(this.props.createUser.newUser);
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
   }
 
 
 
   render() {
+<<<<<<< HEAD
     const { createUser, addresses, cohorts } = this.props;
     return (
       <Modal isOpen={this.props.createUser.enabled} id="create-user-modal" className="futurafont">
+=======
+
+    const { createUser, addresses } = this.props;
+    return (
+      <Modal isOpen={this.props.createUser.enabled}>
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
         <form onSubmit={this.saveNewUser}>
           <ModalHeader className="rev-background-color">Create User</ModalHeader>
           <ModalBody>
             <div className="responsive-modal-row">
+<<<<<<< HEAD
               <div className="responsive-modal-column create-user-margin">
                 <Label for="create-user-firstname-input">First Name</Label>
                 <Input name={inputNames.FIRST_NAME}
@@ -172,10 +201,66 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
                 <Label for="create-user-phoneNumber-input">Phone Number</Label>
                 <Input className="responsive-modal-row-item"
                   id="create-user-phoneNumber-input"
+=======
+              <InputGroup className="responsive-modal-row-item">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>Email</InputGroupText>
+                </InputGroupAddon>
+                <Input name={inputNames.EMAIL}
+                  onChange={this.updateNewUserInfo}
+                  value={createUser.newUser.email}
+                  valid={!!createUser.newUser.email}
+                  invalid={!createUser.newUser.email} />
+              </InputGroup>
+              <Dropdown color="success" className="responsive-modal-row-item rev-btn"
+                isOpen={this.props.createUser.locationDropdownActive}
+                toggle={this.props.toggleLocationDropdown}>
+                <DropdownToggle caret>
+                  {createUser.newUser.trainingAddress.alias || 'Location'}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {
+                    addresses.trainingAddresses.length === 0
+                      ? <>
+                        <DropdownItem>Unable To Find Any Locations</DropdownItem>
+                        <DropdownItem divider />
+                      </>
+                      : addresses.trainingAddresses.map(location =>
+                        <DropdownItem key={location.addressId} onClick={() => this.props.updateNewUserLocation(location)}>{location.alias}</DropdownItem>
+                      )
+                  }
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+            <div className="responsive-modal-row">
+              <Input name={inputNames.FIRST_NAME}
+                className="responsive-modal-row-item"
+                placeholder="First Name"
+                onChange={this.updateNewUserInfo}
+                value={createUser.newUser.firstName}
+                valid={!!createUser.newUser.firstName}
+                invalid={!createUser.newUser.firstName} />
+
+              <Input name={inputNames.LAST_NAME}
+                className="responsive-modal-row-item"
+                placeholder="Last Name"
+                onChange={this.updateNewUserInfo}
+                value={createUser.newUser.lastName}
+                valid={!!createUser.newUser.lastName}
+                invalid={!createUser.newUser.lastName} />
+            </div>
+            <div className="responsive-modal-row">
+              <InputGroup className="responsive-modal-row-item">
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText>Phone Number</InputGroupText>
+                </InputGroupAddon>
+                <Input type="number"
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
                   name={inputNames.PHONE}
                   onChange={this.updateNewUserInfo}
                   value={createUser.newUser.phoneNumber}
                   valid={!!createUser.newUser.phoneNumber}
+<<<<<<< HEAD
                   invalid={!createUser.newUser.phoneNumber}
                   placeholder="Phone Number" />
               </div>
@@ -245,6 +330,11 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
                   </DropdownMenu>
                 </Dropdown>
               </div>}
+=======
+                  invalid={!createUser.newUser.phoneNumber} />
+
+              </InputGroup>
+>>>>>>> a79a8b5ccb0eb6399b03c54354142fe83ede5f71
             </div>
           </ModalBody>
           <ModalFooter id="create-user-modal-footer">
