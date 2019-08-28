@@ -44,6 +44,7 @@ export const updateCurrentUser = (currentUser: ICognitoUser) => {
   return {
     payload: {
       currentUser
+      // currentUser: {email: 'kylejkirsten@gmail.com', roles: ['admin']}
     },
     type: authTypes.UPDATE_CURRENT_USER
   }

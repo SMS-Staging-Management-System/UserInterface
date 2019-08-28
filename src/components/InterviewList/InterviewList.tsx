@@ -269,6 +269,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     </tr>)
                                 })}
                                 <tr style={{ backgroundColor: '#f3a55d' }}>
+                                    {isAdmin ? <td></td> : null/* will display only if user is an admin*/}
                                     {thKeys.map((element, keyIndex) => { // mapping out for every header value, it has a respective filter box
                                         let filterCurrentArrValues: string[] = []; // array for each header if there are duplicates in results so they aren't shown
                                         /* first 4 headers are the only ones we want users to filter by 
