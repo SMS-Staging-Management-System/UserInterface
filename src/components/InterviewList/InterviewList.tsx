@@ -195,7 +195,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     //!!!!!!!!!!!!
     renderDate = (date: number) => { // renders a data if one is returned, otherwise just a dash
         if (date > 0) {
-            return new Date(date).toDateString()
+            return new Date(date).toDateString();
         } else {
             return '-';
         }
@@ -249,10 +249,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         {isAdmin ?
                                             <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
                                         {thKeys.map((element, index) => {
-                                            /* LOOK AT THIS */
                                             let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
-                                            /* LOOK AT ABOVE */
-                                            modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                            modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : modifiedElement;
                                             return ((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
                                         })}
                                         {this.getAssocInput(entry)}
