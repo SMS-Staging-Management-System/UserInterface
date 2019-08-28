@@ -9,7 +9,8 @@ import Loader from '../Loader/Loader';
 
 interface IComponentProps {
     surveysToAssign: number[],
-    buttonLabel: string
+    buttonLabel: string,
+    
 }
 
 interface IComponentState {
@@ -23,13 +24,15 @@ interface IComponentState {
     addressId: number,
     sortCohorts: ICohort[],
     sortAlias: ICohort[],
-    alias: string
+    alias: string,
+    totalPages: number,
+    currentPage: number
 }
 
 interface IUserCohortIdAndEmail {
     id: number,
     email: string,
-
+    status: string
 }
 
 class SurveyModal extends React.Component<IComponentProps, IComponentState> {
@@ -46,15 +49,20 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             addressId: 0,
             sortCohorts: [],
             sortAlias: [],
-            alias: ''
+            alias: '',
+            totalPages: 0,
+            currentPage: 0
         };
     }
-
-    componentDidMount() {
-        // grabs all cohorts from database and loads them into
-        //   the userArray, each having their cohort id and email address
-        this.loadAllCohorts();
+    // pagination
+    async componentDidMount() {
+        const data = await this.getAllCohorts(this.state.currentPage);
     }
+    // componentDidMount() {
+    //     // grabs all cohorts from database and loads them into
+    //     //   the userArray, each having their cohort id and email address
+    //     this.loadAllCohorts();
+    // }
     // componentWillUpdate(nextProps, nextState){
     //     console.log("Hi")
     //     if(nextState !== this.state){
@@ -113,7 +121,18 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
     }
 
-
+    getAllCohorts = async (newPage: number) => {
+        let resp = await cohortClient.findAllByPage(newPage);
+        console.log("response data");
+        console.log(resp.data);
+        console.log("after response");
+        this.setState({
+            sortCohorts: resp.data.content,
+            currentPage: newPage,
+            totalPages: resp.data.totalPages
+        });
+        this.loadAllUserEmails();
+    }
     loadAllCohorts = async () => {
         // get all cohorts
         const cohorts = await cohortClient.findAll();
@@ -128,7 +147,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 });
         }
     }
-
     loadAllUserEmails = async () => {
         const { sortCohorts } = this.state;
         // set up array to dump into state 
@@ -142,7 +160,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 // make object for each user to push to array
                 const idAndEmailObj: IUserCohortIdAndEmail = {
                     id: cohort.cohortId,
-                    email: user.email
+                    email: user.email,
+                    status: ""
                 }
                 idAndEmailArray.push(idAndEmailObj);
             }
@@ -154,7 +173,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         });
     }
 
-    checkFunc = (e) => {
+    checkFunc = (e, cohortId: number) => {
         // this function is for the the Select ALL checkbox
         const { checked } = e.target;
         const { emailsToAssign: emAssign } = this.state;
@@ -164,7 +183,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         if (checked) {
             // filter out users for only ones in THIS cohort
             this.state.userArray.filter(user => {
-                return user.id === id
+                return user.id === cohortId;
             }).map(user => {
                 // for each user in this cohort, dump them into array to assign to
                 // but first, check they are not already in the array
@@ -263,10 +282,28 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             emailsToAssign: []
         }));
     }
+    // increment decrement pages
+    incrementPage = async () => {
+        if (this.state.currentPage < this.state.totalPages - 1) {
+            const newPage = this.state.currentPage + 1;
+            const data = await this.getAllCohorts(newPage);
+            this.setState({
+                currentPage: newPage
+            });
+        }
+    }
 
+    decrementPage = async () => {
+        if (this.state.currentPage > 0) {
+            const newPage = this.state.currentPage - 1;
+            const data = await this.getAllCohorts(newPage);
+            this.setState({
+                currentPage: newPage
+            });
+        }
+    }
     render() {
         console.log(this.state.sortCohorts);
-
         return (
             <>
                 <div>
@@ -291,11 +328,10 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         {this.state.sortCohorts && this.state.sortCohorts.map(cohort => (
                                             <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                                                <td>All: <input type="checkbox" onChange={e => this.checkFunc(e)} />
-                                                    <div className="dropdown userDropdown">
+                                                <td>All: <input type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
+                                                    {/* <div className="dropdown userDropdown">
                                                         <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             By Member
                                                 </Button>
@@ -306,8 +342,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                                                 <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" onChange={e => this.checkUserFunc(e)} />{user.email}</p>
                                                             )
                                                             )}
-                                                        </div>
-                                                    </div>
+                                                        </div> 
+                                                    </div> */}
                                                 </td>
                                                 <td colSpan={5}>{cohort.cohortName}</td>
                                                 <td></td>
@@ -318,6 +354,15 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                         ))}
                                     </tbody>
                                 </Table>
+                                {(this.state.totalPages > 0) &&
+                                    (<div className='row horizontal-centering vertical-centering'>
+                                        <Button variant="button-color" className="rev-background-color div-child" onClick={() => this.decrementPage()}>Prev</Button>
+                                        <h6 className="div-child text-style" >
+                                            Page {this.state.currentPage + 1} of {this.state.totalPages}
+                                        </h6>
+                                        <Button variant="button-color" className="rev-background-color div-child" onClick={() => this.incrementPage()}>Next</Button>
+                                    </div>)
+                                }
                                 <div className="buttonDiv">
                                     <Button
                                         className='assignSurveyBtn'
