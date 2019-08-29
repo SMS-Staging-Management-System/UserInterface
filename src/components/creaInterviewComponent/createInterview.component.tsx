@@ -275,7 +275,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
               </div>}
 
 
-            <div className="col-md-12">
+            {/* Render single column if associate, two columns otherwise */}
+            <div className={this.props.currentUser.roles.length === 0 ? "col-md-12" : "col-md-6"}>
               {/* Only render this field is user is an associate, otherwise
                   it's a copy of the above. */}
               {this.props.currentUser.roles.length === 0 &&

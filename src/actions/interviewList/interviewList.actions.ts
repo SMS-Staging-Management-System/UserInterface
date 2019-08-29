@@ -16,8 +16,7 @@ export const getInterviewPages = (
     clientName?: string,
     staging?: string) => async (dispatch) => {
         const resp = await interviewClient.fetchPage(pageNumber, pageSize, orderBy, direction,
-                                            associateEmail, managerEmail, place, clientName, staging)
-
+            associateEmail, managerEmail, place, clientName, staging)
         dispatch({
             payload: {
                 listOfInterviews: resp.data.content,
