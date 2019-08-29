@@ -121,7 +121,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         // store page ASC or DESC
         let previousTableHeaderId = this.state.previousTableHeaderId;
         let orderDirection;
-        if (event.currentTarget.id === previousTableHeaderId) { //if click same header -> toggle ASC/DESC
+        if (event.currentTarget.id === previousTableHeaderId) { // if click same header -> toggle ASC/DESC
             if (this.state.direction === 'ASC') {
                 orderDirection = 'DESC'
             } else {
