@@ -16,7 +16,6 @@ import moment from 'moment';
 export interface InterviewListProps {
     email: string,
     listOfInterviews: any[],
-
     numberOfPages: number,
     currentPage: number,
     pageSize: number,
@@ -36,7 +35,6 @@ export interface InterviewListProps {
     setSelected: (current: any) => void;
 }
 
-
 export interface InterviewListState { // state of table, its headings, and sorting options
     direction: string,
     loaded: boolean,
@@ -49,7 +47,8 @@ export interface InterviewListState { // state of table, its headings, and sorti
     client: string,
     staging: string
 }
-const tableHeaderValues: Object = // list of headers for table
+// list of headers for table
+const tableHeaderValues: object = 
 {
     associateEmail: 'Associate Email',
     managerEmail: 'Manager Email',
@@ -65,18 +64,18 @@ const tableHeaderValues: Object = // list of headers for table
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
         super(props);
-
-        this.state = { // initial state of the table and sorting values
+        // initial state of the table and sorting values
+        this.state = { 
+            associateEmail: 'associateEmail',
+            client: 'clientName',
             direction: this.props.direction,
             loaded: false,
-            tableHeaderId: '0',
-            previousTableHeaderId: '1', //init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
             listOfInterviews: [],
-            associateEmail: 'associateEmail',
             managerEmail: 'managerEmail',
             place: 'placeName',
-            client: 'clientName',
-            staging: 'stagingOff'
+            previousTableHeaderId: '1', // init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
+            staging: 'stagingOff',
+            tableHeaderId: '0'
         }
     }
 
@@ -86,11 +85,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         });
     }
 
-    async componentWillReceiveProps(nextProps) { //Move props into state here
+    async componentWillReceiveProps(nextProps) { // Move props into state here
         this.setState({
             listOfInterviews: nextProps.listOfInterviews,
             //listOfInterviewsInitial: nextProps.listOfInterviews
         });
+        
     }
 
     async componentDidUpdate() { // when the user messes with values, change the state
@@ -116,67 +116,55 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.client,
             this.state.staging);
     }
-
-    changeOrderAsc = () => { // when the "down" arrow button is displayed, change the sorting to ascending
-        this.setState({
-            direction: 'ASC'
-        })
-    }
-
-    changeOrderDesc = () => { //as per changeOrderAsc, but for descending
-        this.setState({
-            direction: 'DESC'
-        })
-    }
-
-    changeOrderCriteria = async (event: any) => { // when triggered, run calls to back-end to alter how you sort
-        await this.setState({ // when a sorting value changes, wait for needed calls on a state change
-            tableHeaderId: event.currentTarget.id
-        });
-
-        //store page ASC or DESC
+    changeOrderCriteria = (event: any) => { // when triggered, run calls to back-end to alter how you sort
+        // when a sorting value changes, wait for needed calls on a state change
+        // store page ASC or DESC
+        let previousTableHeaderId = this.state.previousTableHeaderId;
         let orderDirection;
-        if (this.state.tableHeaderId === this.state.previousTableHeaderId) { //if click same header -> toggle ASC/DESC
+        if (event.currentTarget.id === previousTableHeaderId) { //if click same header -> toggle ASC/DESC
             if (this.state.direction === 'ASC') {
                 orderDirection = 'DESC'
             } else {
                 orderDirection = 'ASC'
             }
-        } else { //if click diff header -> sort ASC
+        } else { // if click diff header -> sort ASC
             orderDirection = 'ASC'
         }
-        this.setState({
-            previousTableHeaderId: this.state.tableHeaderId,
-            direction: orderDirection
-        });
-        await this.props.getInterviewPages( // after state has changed, pull it down and display it
+        previousTableHeaderId = event.currentTarget.id;
+        this.props.getInterviewPages(
             0,
             this.props.pageSize,
-            this.state.tableHeaderId,
-            this.state.direction,
+            previousTableHeaderId,
+            orderDirection,
             this.state.associateEmail,
             this.state.managerEmail,
             this.state.place,
             this.state.client,
-            this.state.staging);
+            this.state.staging
+        );
+        this.setState({
+            direction: orderDirection,
+            previousTableHeaderId,
+            tableHeaderId: event.currentTarget.id,
+        });        
     }
     // generic filter that is called whenever user wants to filter results by a field
     filterChange = (event: any) => {
 
         const value = event.currentTarget.value;
         const name = event.currentTarget.name;
-        //list of ternaries that check if the filter select box has changed, otherwise assume original state value
+        // list of ternaries that check if the filter select box has changed, otherwise assume original state value
         const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
         const managerEmail = (name === 'managerEmail') ? value : this.state.managerEmail;
-        let place = (name === 'place') ? value : this.state.place;
-        let client = (name === 'client') ? value : this.state.client;
+        const place = (name === 'place') ? value : this.state.place;
+        const client = (name === 'client') ? value : this.state.client;
         const staging = (name === 'staging') ? value : this.state.staging;
         this.setState({ // updates state accordingly
             associateEmail,
+            client,
             managerEmail,
             place,
-            client,
             staging,
         });
         this.props.getInterviewPages( // now that state has changed, update
@@ -186,7 +174,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.props.direction,
             associateEmail,
             managerEmail,
-            //following 2 are ensuring that default values placeName and clientName are passed to the server,
+            // following 2 are ensuring that default values placeName and clientName are passed to the server,
             // it is named differently there
             place === 'place' ? 'placeName' : place,
             client === 'client' ? 'clientName' : client,
@@ -223,8 +211,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
         // map out the tableHeader values onto the actual object
-        let thKeys = Object.keys(tableHeaderValues);
-        let thValues = Object.values(tableHeaderValues);
+        const thKeys = Object.keys(tableHeaderValues);
+        const thValues = Object.values(tableHeaderValues);
         return (
             <div className='row'>
                 <div>
@@ -234,10 +222,12 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 <tr>
                                     {isAdmin ? <th>Reviewed</th> : <></>/* will display only if user is an admin*/}
                                     {thKeys.map((element, index) => {
-                                        return (<th id={element} className='cursor-hover' onClick={this.changeOrderCriteria}>
+                                        return (<th id={element} key = {index} className='cursor-hover' onClick={this.changeOrderCriteria}>
                                             {thValues[index]}
-                                            {this.state.tableHeaderId === element && this.state.direction === 'DESC' && <IoIosArrowDown className='cursor-hover' onClick={this.changeOrderDesc} />}
-                                            {this.state.tableHeaderId === element && this.state.direction === 'ASC' && <IoIosArrowUp className='cursor-hover' onClick={this.changeOrderAsc} />}
+                                            {this.state.tableHeaderId === element && this.state.direction === 'DESC' && 
+                                            <IoIosArrowDown id = {element} className='cursor-hover' onClick={this.changeOrderCriteria} />}
+                                            {this.state.tableHeaderId === element && this.state.direction === 'ASC' && 
+                                            <IoIosArrowUp id = {element} className='cursor-hover' onClick={this.changeOrderCriteria} />}
                                         </th>)
                                     })}
                                 </tr>
@@ -271,7 +261,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 <tr style={{ backgroundColor: '#f3a55d' }}>
                                     {isAdmin ? <td></td> : null/* will display only if user is an admin*/}
                                     {thKeys.map((element, keyIndex) => { // mapping out for every header value, it has a respective filter box
-                                        let filterCurrentArrValues: string[] = []; // array for each header if there are duplicates in results so they aren't shown
+                                        const filterCurrentArrValues: string[] = []; // array for each header if there are duplicates in results so they aren't shown
                                         /* first 4 headers are the only ones we want users to filter by 
                                             Then it will create filter boxes for each of those headers.
                                             Option value display the table header as a default.
@@ -284,7 +274,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                                 value={this.state[element]} className='form-control'>
                                                 <option value={element}>{thValues[keyIndex]}</option>
                                                 {this.props.listOfInterviews.map((entry, index) => {
-                                                    let currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
+                                                    const currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
                                                     if (!filterCurrentArrValues.includes(currentNestedEntry)) {
                                                         filterCurrentArrValues.push(currentNestedEntry);
                                                         return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
