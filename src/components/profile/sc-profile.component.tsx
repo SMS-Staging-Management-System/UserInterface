@@ -222,8 +222,16 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         }));
     }
 
-    render() {
+    async onUpdateClick() {
+        // await this.props.updateUser(this.props.userToView, this.props.bUserInfoChanged,
+        //     [this.state.isAdmin, this.state.isTrainer, this.state.isStagingManager]);
+        // const resetRolesPromise = this.resetRoleState();
+        // await this.props.manageGetUsersByGroup(this.props.manageUsers.option, this.props.manageUsers.emailSearch, 
+        //     this.props.manageUsers.manageUsersCurrentPage);
+        // await resetRolesPromise;
+    }
 
+    render() {
         return (
             <div>
                 <Container>
@@ -356,7 +364,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                 <Row>
                                     <Col>
                                         <Label>Status</Label>
-                                        {this.state.updateUser.roles.length === 0 ?
+                                        {this.props.currentSMSUser.roles.length === 0 ?
                                             <Button className="user-btn" disabled>{this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
                                                 && this.state.updateUser.userStatus.specificStatus || 'No Status'}</Button>
                                             :
@@ -449,7 +457,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                     </Col>
                                 </Row>
                                 <br />
-                                <Button className="update-model">Update</Button>
+                                <Button className="update-model"
+                                    onClick={this.onUpdateClick}>Update</Button>
                             </Col>
                         </Row>
                     </Form>
