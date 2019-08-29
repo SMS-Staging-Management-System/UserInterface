@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { IViewUserModal } from './view-user-modal.container';
 import Profile from '../../profile/profile.container';
 import { cognitoRoles } from '../../../model/cognito-user.model';
+import SCProfile from '../../profile/sc-profile.component';
 
 
 
@@ -42,7 +43,7 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
                 <ModalBody>
 
                     {this.props.user.roles.some(role => (role === cognitoRoles.ADMIN))
-                        ? <Profile manageGetUsersByGroup={this.props.manageGetUsersByGroup}/> : currentModalDisplay}
+                        ? <SCProfile userToUpdate={this.props.profileBeingViewed.user} /> : currentModalDisplay}
 
                 </ModalBody>
             </Modal>
