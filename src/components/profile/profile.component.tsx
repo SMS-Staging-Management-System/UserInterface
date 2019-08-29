@@ -174,10 +174,10 @@ class Profile extends Component<IProfileProps, IProfileState> {
         }
     }
 
-    render() {        
+    render() {
         const { userToView, trainingAddresses, allStatus, currentSMSUser } = this.props;
         let userToViewDetails
-        if (this.props.location && this.props.location.state && this.props.location.state.currentUser) 
+        if (this.props.location && this.props.location.state && this.props.location.state.currentUser)
             userToViewDetails = currentSMSUser
         else userToViewDetails = userToView
         return (
@@ -374,6 +374,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled={!this.state.isAdmin}
                                         type="checkbox"
                                         value="admin"
                                         checked={this.state.isAdmin}
@@ -384,6 +385,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled={!this.state.isTrainer}
                                         type="checkbox"
                                         value="trainer"
                                         checked={this.state.isTrainer}
@@ -394,6 +396,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled={!this.state.isStagingManager}
                                         type="checkbox"
                                         value="staging-manager"
                                         checked={this.state.isStagingManager}
@@ -404,6 +407,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                             <FormGroup checkedRoles>
                                 <Label Roles>
                                     <Input
+                                        disabled={!this.state.isAssociate}
                                         type="checkbox"
                                         value="associtate"
                                         checked={this.state.isAssociate}
