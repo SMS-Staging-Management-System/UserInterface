@@ -86,6 +86,13 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 updateUser: this.props.userToUpdate
             })
         }
+        
+        if (this.props.userStatus) {
+            this.setState({
+                userStatus: this.props.userStatus.userStatus
+            })
+        }
+
         if (this.props.trainingAddresses) {
             this.setState({
                 trainingAddresses: this.props.trainingAddresses.trainingAddresses
