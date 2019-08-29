@@ -77,12 +77,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             
         };
     }
-    // show status dropdown 
-    toggleStatusDropdown() {
-        this.setState({
-            statusDropdownActive: !this.state.statusDropdownActive
-        });
-    }
     // pagination
     async componentDidMount() {
         const data = await this.getAllCohorts(this.state.currentPage);
