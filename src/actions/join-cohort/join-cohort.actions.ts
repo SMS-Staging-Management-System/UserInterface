@@ -38,7 +38,6 @@ export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
 
 export const joinCohort = (user:IUser, token:string, history:History) => async (dispatch) => {
     try {
-        
         const join = await cohortClient.joinCohort(user, token);
         if(join.status === 200){
             dispatch({
@@ -47,8 +46,28 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
                   type: joinCohortTypes.JOIN_COHORT
                   
             })
-            history.push('/management/login');
+            history.push('/dashboard/home');
             toast.success('Joined Cohort')
+        }
+        if(join.status === 404){
+            dispatch({
+                payload: {
+                  },
+                  type: joinCohortTypes.FAILED_TO_JOIN_COHORT
+                  
+            })
+            history.push('/management/login');
+            toast.success('Cohort not found')
+        }
+        if(join.status === 400){
+            dispatch({
+                payload: {
+                  },
+                  type: joinCohortTypes.FAILED_TO_JOIN_COHORT
+                  
+            })
+            history.push('/management/login');
+            toast.success('Failed to Join Cohort')
         }
     } catch (e) {
         dispatch({
