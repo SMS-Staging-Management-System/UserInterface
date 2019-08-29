@@ -1,10 +1,15 @@
 import React from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Table, Button, Modal, ModalHeader, ModalBody, Label, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { ICohort } from '../../../model/cohort';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { userClient } from '../../../axios/sms-clients/user-client';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import Loader from '../Loader/Loader';
+import { inputNames } from '../../profile/profile.component';
+import { IUser } from '../../../model/user.model';
+import { statusClient } from '../../../axios/sms-clients/status-client';
+import { IStatus } from '../../../model/status.model';
+import Input from 'reactstrap/lib/Input';
 
 
 interface IComponentProps {
@@ -26,13 +31,22 @@ interface IComponentState {
     sortAlias: ICohort[],
     alias: string,
     totalPages: number,
-    currentPage: number
+    currentPage: number,
+    allGeneralStatusUsers: IUserCohortIdAndEmail[],
+    allSpecificStatusUsers: IUserCohortIdAndEmail[],
+    statusDropdownActive: boolean,
+    virtual: boolean,
+    allUsers: IUser[],
+    allStatus: IStatus[],
+    allGeneralStatus: Set<string>,
+    allSpecificStatus: Set<string>
 }
 
 interface IUserCohortIdAndEmail {
     id: number,
     email: string,
-    status: string
+    generalStatus: string,
+    specificStatus: string
 }
 
 class SurveyModal extends React.Component<IComponentProps, IComponentState> {
@@ -51,8 +65,23 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             sortAlias: [],
             alias: '',
             totalPages: 0,
-            currentPage: 0
+            currentPage: 0,
+            allGeneralStatusUsers: [],
+            allSpecificStatusUsers: [],
+            statusDropdownActive: false,
+            virtual: false,
+            allUsers: [],
+            allStatus: [],
+            allGeneralStatus: new Set,
+            allSpecificStatus: new Set
+            
         };
+    }
+    // show status dropdown 
+    toggleStatusDropdown() {
+        this.setState({
+            statusDropdownActive: !this.state.statusDropdownActive
+        });
     }
     // pagination
     async componentDidMount() {
@@ -129,10 +158,54 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         this.setState({
             sortCohorts: resp.data.content,
             currentPage: newPage,
-            totalPages: resp.data.totalPages
+            totalPages: resp.data.totalPages,
         });
         this.loadAllUserEmails();
+        this.getAllGeneralStatus();
+        this.loadAllUsersSinglePage();
     }
+    // save all general status to allGeneralStatus state
+    getAllGeneralStatus = async () => {
+        let resp = await statusClient.findAllStatuses();
+        this.setState({
+            allStatus: resp.data
+        });
+        this.state.allStatus.forEach(status => {
+            this.setState({
+                allGeneralStatus: this.state.allGeneralStatus.add(status.generalStatus)
+            });
+        });
+        console.log("all general status");
+        console.log(this.state.allGeneralStatus);
+        this.getAllSpecificStatus();
+    }
+    getAllSpecificStatus = () => {
+        this.state.allStatus.forEach(status => {
+            this.setState({
+                allSpecificStatus: this.state.allSpecificStatus.add(status.specificStatus)
+            });
+        });
+        console.log("all Specific status");
+        console.log(this.state.allSpecificStatus);
+    }
+    // get all users
+    loadAllUsersSinglePage = async () => {
+        let resp = await userClient.findAllUsers(0);
+        console.log('all users single page');
+        console.log(resp.data);
+        this.setState({
+            allUsers: resp.data.content
+        });
+        this.loadAllUsersAllPages(resp.data.totalPages);
+    }
+    loadAllUsersAllPages = async (totalPages: number) => {
+        for(let i = 1; i < totalPages; i++) {
+            let resp = await userClient.findAllUsers(i);
+            this.setState({
+                allUsers: this.state.allUsers.concat(resp.data.content)
+            })
+        }
+    } 
     loadAllCohorts = async () => {
         // get all cohorts
         const cohorts = await cohortClient.findAll();
@@ -147,6 +220,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 });
         }
     }
+    
     loadAllUserEmails = async () => {
         const { sortCohorts } = this.state;
         // set up array to dump into state 
@@ -156,12 +230,15 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         for (const cohort of sortCohorts) {
             const users = await userClient.findAllByCohortId(cohort.cohortId);
             // for each array of users, load into array
+            console.log("emails");
+            console.log(users.data);
             for (const user of users.data) {
                 // make object for each user to push to array
                 const idAndEmailObj: IUserCohortIdAndEmail = {
                     id: cohort.cohortId,
                     email: user.email,
-                    status: ""
+                    generalStatus: "",
+                    specificStatus: ""
                 }
                 idAndEmailArray.push(idAndEmailObj);
             }
@@ -225,6 +302,80 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             })
 
         }
+    }
+     // load general status users of selected status
+    loadGeneralUser = (e, gStatus: string) => {
+        const generalUsers: IUserCohortIdAndEmail[] = [];
+        for(const user of this.state.allUsers) {
+            if(user.userStatus.generalStatus.toLowerCase() === gStatus.toLowerCase()) {
+                const generalStatusUser: IUserCohortIdAndEmail = {
+                    id: user.userId,
+                    email: user.email,
+                    generalStatus: user.userStatus.generalStatus,
+                    specificStatus: user.userStatus.specificStatus 
+                }
+                generalUsers.push(generalStatusUser);
+            }
+        }
+        if(e.target.checked) {
+            this.setState({
+                allGeneralStatusUsers: this.state.allGeneralStatusUsers.concat(generalUsers)
+            });
+        } else {
+            this.setState({
+                allGeneralStatusUsers: this.state.allGeneralStatusUsers.filter((user) => {
+                    return user.generalStatus.toLowerCase() !== gStatus.toLowerCase();
+                })
+            });
+        }
+    }
+    // load specific status users of selected status
+    loadSpecificUser = (e, sStatus: string) => {
+        const specificUsers: IUserCohortIdAndEmail[] = [];
+        for(const user of this.state.allUsers) {
+            if(user.userStatus.specificStatus.toLowerCase() === sStatus.toLowerCase()) {
+                const specificStatusUser: IUserCohortIdAndEmail = {
+                        id: user.userId,
+                        email: user.email,
+                        generalStatus: user.userStatus.generalStatus,
+                        specificStatus: user.userStatus.specificStatus 
+                    }
+                    specificUsers.push(specificStatusUser);
+            }
+        }
+        if(e.target.checked) {
+            this.setState({
+                allSpecificStatusUsers: this.state.allSpecificStatusUsers.concat(specificUsers)
+            });
+        } else {
+            this.setState({
+                allSpecificStatusUsers: this.state.allSpecificStatusUsers.filter((user) => {
+                    return user.specificStatus.toLowerCase() !== sStatus.toLowerCase();
+                })
+            });
+        }
+    }
+    // add general status users avoid duplicates
+    checkGeneralFunc = (e, status: string) => {
+        this.loadGeneralUser(e, status);
+        this.state.allGeneralStatusUsers.map(user => {
+            this.setState({
+                emailsToAssign: this.state.emailsToAssign.filter(email => {
+                    return user.email !== email;
+                })
+            });
+        });
+    }
+    // add specific status users avoid duplicates
+    checkSpecificFunc = (e, status: string) => {
+        this.loadSpecificUser(e, status);
+        this.state.allSpecificStatusUsers.map(user => {
+            this.setState({
+                emailsToAssign: this.state.emailsToAssign.filter(email => {
+                    return user.email !== email;
+                })
+            });
+        });
     }
 
     checkUserFunc = (e) => {
@@ -304,6 +455,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     render() {
         console.log(this.state.sortCohorts);
+        const { allGeneralStatus, allSpecificStatus } = this.state;
+
         return (
             <>
                 <div>
@@ -313,6 +466,36 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                         {/* ensure users in cohorts do not show until they are loaded to avoid assign survey bug */}
                         {this.state.usersLoaded ? (
                             <ModalBody>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <Label className="input-group-text">General Status: </Label>
+                                    </div>
+                                    <div className="input-group-text">
+                                    { allGeneralStatus && Array.from(allGeneralStatus).map(status => (
+                                            // <Label className="form-check-label">{status}</Label>
+                                            <div key={'general' + status} className="form-check form-check-inline input-group-text">
+                                                <Input className="form-check-input" type="checkbox" id={status} value={status} onChange={(e)=> this.checkGeneralFunc(e, status)}></Input>
+                                                <Label className="form-check-label" for={status}>{status}</Label>
+                                            </div>
+
+                                        ))
+                                    }
+                                    </div>
+                                </div>
+                                <div className="input-group mb-3 input-group-text">
+                                    <div className="input-group-prepend">
+                                        <Label className="input-group-text">Specific Status:  </Label>
+                                    </div>
+                                    {/* <div className="input-group-text"> */}
+                                    { allSpecificStatus && Array.from(allSpecificStatus).map(status => (
+                                                <div key={'specific' + status} className="form-check form-check-inline input-group-text">
+                                                <Input className="form-check-input" type="checkbox" id={'specific'+status} value={status} onChange={(e) => this.checkSpecificFunc(e, status)}></Input>
+                                                <Label className="form-check-label" for={'specific'+status}>{status}</Label>
+                                                </div>
+                                        ))
+                                    }
+                                    {/* </div> */}
+                                    </div>
                                 <Table striped id="manage-users-table" className="tableUsers">
                                     <thead>
                                         <tr>
@@ -331,19 +514,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                         {this.state.sortCohorts && this.state.sortCohorts.map(cohort => (
                                             <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
                                                 <td>All: <input type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
-                                                    {/* <div className="dropdown userDropdown">
-                                                        <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            By Member
-                                                </Button>
-                                                        <div className="dropdown-menu" id="userDropdownWidth" aria-labelledby="dropdownMenu2">
-                                                            {this.state.userArray.filter(user => {
-                                                                return user.id === cohort.cohortId;
-                                                            }).map(user => (
-                                                                <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" onChange={e => this.checkUserFunc(e)} />{user.email}</p>
-                                                            )
-                                                            )}
-                                                        </div> 
-                                                    </div> */}
                                                 </td>
                                                 <td colSpan={5}>{cohort.cohortName}</td>
                                                 <td></td>
