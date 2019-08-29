@@ -68,7 +68,6 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
                 payload: {
                     },
                     type: joinCohortTypes.JOIN_COHORT
-                    
             })
             history.push('/dashboard/home');
             toast.success('Joined Cohort')
