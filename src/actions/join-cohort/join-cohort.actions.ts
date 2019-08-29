@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { History } from "history";
 
 export const joinCohortTypes = {
-    FIND_BY_COHORT_TOKEN: 'JOIN_FIND_BY_COHORT_TOKEN',
+    FIND_COHORT_BY_TOKEN: 'FIND_COHORT_BY_TOKEN',
     FAILED_TO_FIND_COHORT_BY_TOKEN: 'FAILED_TO_FIND_COHORT_BY_TOKEN',
     JOIN_COHORT: 'JOIN_COHORT',
     FAILED_TO_JOIN_COHORT: 'FAILED_TO_JOIN_COHORT',
@@ -15,6 +15,30 @@ export const joinCohortTypes = {
     FIND_LOGGED_IN_USER: 'FIND_LOGGED_IN_USER',
     FAILED_TO_FIND_LOGGED_IN_USER: 'FAILED_TO_FIND_LOGGED_IN_USER'
 } 
+
+
+export const findCohortByToken = (token:string) => async (dispatch) => {
+    
+    await cohortClient.findByToken(token)
+    .then((response) => {
+        if(response.data){
+            dispatch({
+                payload: {
+                    foundCohort: response.data
+                    },
+                    type: joinCohortTypes.FIND_COHORT_BY_TOKEN
+            })
+        }
+    })
+     .catch((e)=> {
+        dispatch({
+            payload: {
+                foundCohort:null
+              },
+              type: joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN
+        })
+    });
+}
 
 export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
     try {
@@ -42,9 +66,9 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
         if(join.status === 200){
             dispatch({
                 payload: {
-                  },
-                  type: joinCohortTypes.JOIN_COHORT
-                  
+                    },
+                    type: joinCohortTypes.JOIN_COHORT
+                    
             })
             history.push('/dashboard/home');
             toast.success('Joined Cohort')

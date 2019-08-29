@@ -48,7 +48,7 @@
     "react-spinners": "0.5.3",
     "react-toastify": "^4.5.1",
     "reactstrap": "^6.5.0",
-    "redux": "^3.7.0",
+    "redux": "^4.0.3",
     "redux-logger": "^3.0.6",
     "redux-thunk": "2.2.0",
     "rxjs": "^6.3.2",

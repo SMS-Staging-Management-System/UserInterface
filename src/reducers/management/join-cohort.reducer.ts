@@ -5,6 +5,56 @@ import { IJoinCohortState } from ".";
 
 const initialState: IJoinCohortState = {
     validToken: true,
+    foundCohort:{
+        cohortId:0,
+        cohortName:'',
+        cohortDescription:'',
+        cohortToken:'',
+        address:{
+            addressId:0,
+            street:'',
+            alias:'',
+            city:'',
+            country:'',
+            state:'',
+            zip:''
+        },
+        startDate:'',
+        endDate:'',
+        users:[],
+        trainer:{
+            userId:0,
+            email:'',
+            firstName:'',
+            lastName:'',
+            phoneNumber:'',
+            trainingAddress:{
+                addressId:0,
+                street:'',
+                alias:'',
+                city:'',
+                country:'',
+                state:'',
+                zip:''
+            },
+            personalAddress:{
+                addressId:0,
+                street:'',
+                alias:'',
+                city:'',
+                country:'',
+                state:'',
+                zip:''
+            },
+            userStatus:{
+                statusId:0,
+                generalStatus:'',
+                specificStatus:'',
+                virtual:false
+            },
+            roles:[]
+        }
+    },
     userToJoin:{
         userId: 0,
         userStatus: {
@@ -42,6 +92,16 @@ const initialState: IJoinCohortState = {
 
 export const joinCohortReducer = (state = initialState, action: any) => {
     switch (action.type) {
+        case joinCohortTypes.FIND_COHORT_BY_TOKEN:
+            return {
+                ...state,
+                foundCohort:action.payload.foundCohort
+            }
+        case joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN:
+            return {
+                ...state,
+                foundCohort:action.payload.foundCohort
+            }
         case joinCohortTypes.FAILED_TO_JOIN_COHORT:
             return {
                 ...state,
