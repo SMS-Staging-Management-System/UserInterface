@@ -1,13 +1,10 @@
 import React from 'react';
-import {
-    Container, Form, Row, FormGroup, Label, Input,
-    Col, Button, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown
-} from 'reactstrap';
-import { IUser } from '../../model/user.model';
-import { IAddressState, IStatusState } from '../../reducers/management';
 import { connect } from 'react-redux';
-import { IState } from '../../reducers';
+import { Button, Col, Container, DropdownItem, DropdownMenu, DropdownToggle, Form, FormGroup, Input, Label, Row, UncontrolledDropdown } from 'reactstrap';
 import { IAddress } from '../../model/address.model';
+import { IUser } from '../../model/user.model';
+import { IState } from '../../reducers';
+import { IAddressState } from '../../reducers/management';
 
 
 export const inputNames = {
@@ -26,19 +23,14 @@ export const inputNames = {
 
 interface ISCProfileProps {
     currentSMSUser: IUser,
-    userToView: IUser,
     trainingAddresses: IAddressState,
-    allStatus: IStatusState,
-    locationDropdownActive: boolean,
-    statusDropdownActive: boolean,
-    bUserInfoChanged: boolean,
-    virtual: boolean,
-    location: any
+    userToUpdate?: IUser // This prop tells the component to look at a user other than the current user
 }
 
 interface ISCProfileState {
     updateUser: IUser
     trainingAddresses: IAddress[]
+    modal: boolean
 }
 
 export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState> {
@@ -46,8 +38,40 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
     constructor(props) {
         super(props);
         this.state = {
-            updateUser: this.props.currentSMSUser,
-            trainingAddresses: []
+            updateUser: {
+                email: '',
+                userId: 0,
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                trainingAddress: {
+                    addressId: 0,
+                    street: '',
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    zip: ''
+                },
+                personalAddress: {
+                    addressId: 0,
+                    street: '',
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    zip: ''
+                },
+                userStatus: {
+                    statusId: 0,
+                    generalStatus: '',
+                    specificStatus: '',
+                    virtual: false
+                },
+                roles: [],
+            },
+            trainingAddresses: [],
+            modal: false
             // isAdmin: this.props.userToView.roles.some(roles => roles.includes('admin')),
             // isTrainer: this.props.userToView.roles.some(roles => roles.includes('trainer')),
             // isStagingManager: this.props.userToView.roles.some(roles => roles.includes('staging-manager')),
@@ -57,11 +81,26 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         // this.onUpdateClick = this.onUpdateClick.bind(this);
     }
 
-    componentDidUpdate(prevProps: ISCProfileProps, prevState: ISCProfileState) {
-        if (prevProps.currentSMSUser !== this.props.currentSMSUser) {
+    componentDidMount() {
+        if (this.props.userToUpdate) {
             this.setState({
-                updateUser: this.props.currentSMSUser
+                updateUser: this.props.userToUpdate
             })
+        }
+        if (this.props.trainingAddresses) {
+            this.setState({
+                trainingAddresses: this.props.trainingAddresses.trainingAddresses
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps: ISCProfileProps, prevState: ISCProfileState) {
+        if (!this.props.userToUpdate) {
+            if (prevProps.currentSMSUser !== this.props.currentSMSUser) {
+                this.setState({
+                    updateUser: this.props.currentSMSUser
+                })
+            }
         }
         if (prevProps.trainingAddresses !== this.props.trainingAddresses) {
             this.setState({
@@ -173,7 +212,14 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         }
     }
 
+    toggle = () => {
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
+    }
+
     render() {
+
         return (
             <div>
                 <Container>
