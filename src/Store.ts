@@ -1,4 +1,4 @@
-import { Store, createStore, compose, applyMiddleware } from 'redux';
+import { Store, createStore, compose, applyMiddleware, AnyAction } from 'redux';
 import reduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { state } from './reducers';
