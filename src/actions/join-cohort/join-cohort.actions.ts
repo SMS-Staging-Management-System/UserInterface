@@ -63,15 +63,30 @@ export const findLoggedInUser = (user:ICognitoUser) => async (dispatch) => {
 export const joinCohort = (user:IUser, token:string, history:History) => async (dispatch) => {
     await cohortClient.joinCohort(user, token)
     .then((response) => {
-        if(response.status === 200){
+        if(response.status === 200) {
             dispatch({
                 payload: {
                     },
                     type: joinCohortTypes.JOIN_COHORT
-                    
             })
             history.push('/dashboard/home');
             toast.success('Joined Cohort'); 
+        }
+        if(response.status === 400) {
+            dispatch({
+                payload: {
+                    },
+                    type: joinCohortTypes.JOIN_COHORT
+            })
+            toast.error('Please enter valid information'); 
+        }
+        if(response.status === 404) {
+            dispatch({
+                payload: {
+                    },
+                    type: joinCohortTypes.JOIN_COHORT
+            })
+            toast.error('Cohort not found'); 
         }
     })
     .catch((e)=> {
