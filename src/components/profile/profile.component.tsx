@@ -68,6 +68,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
 
     onUserInfoChangeHandler = (event: React.FormEvent) => {
         let updatedUser = this.props.userToView;
+
         const target = event.target as HTMLSelectElement;
         switch (target.name) {
             case inputNames.EMAIL:
