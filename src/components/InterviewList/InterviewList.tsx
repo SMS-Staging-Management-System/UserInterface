@@ -47,19 +47,11 @@ export interface InterviewListState { // state of table, its headings, and sorti
     client: string,
     staging: string
 }
-// list of headers for table
-const tableHeaderValues: object = 
-{
-    associateEmail: 'Associate Email',
-    managerEmail: 'Manager Email',
-    place: 'Location',
-    client: 'Client',
-    notified: 'Date Notified',
-    scheduled: 'Date Scheduled',
-    reviewed: 'Date Reviewed',
-    associateInput: 'Associate Input',
-    interviewFeedback: 'Interview Feedback'
-}
+// Two arrays to arrange table headers. Originally the two were defined as a key-value pair object.
+const thKeys = ['associateEmail', 'managerEmail', 'place', 'client', 'notified',
+                 'scheduled', 'reviewed', 'associateInput', 'interviewFeedback'];  
+const thValues = ['Associate Email', 'Manager Email', 'Location', 'Client', 'Date Notified',
+                 'Date Scheduled', 'Date Reviewed', 'Associate Input', 'Interview Feedback'];
 
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
     constructor(props: InterviewListProps) {
@@ -210,9 +202,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     render() {
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        // map out the tableHeader values onto the actual object
-        const thKeys = Object.keys(tableHeaderValues);
-        const thValues = Object.values(tableHeaderValues);
         return (
             <div className='row'>
                 <div>
