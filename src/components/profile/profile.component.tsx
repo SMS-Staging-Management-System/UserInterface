@@ -359,7 +359,7 @@ class Profile extends Component<IProfileProps, IProfileState> {
                                 </Col>
                             </Row>
                             <Row style={{ margin: '2em', }}>
-                                <Label>Virtual:</Label>
+                                <Label>Virtual</Label>
                                 <br />
                                 <Input
                                     type="checkbox"

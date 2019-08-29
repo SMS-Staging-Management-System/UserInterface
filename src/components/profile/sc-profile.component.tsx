@@ -8,6 +8,7 @@ import { IAddressState, IStatusState } from '../../reducers/management';
 import { connect } from 'react-redux';
 import { IState } from '../../reducers';
 import { IAddress } from '../../model/address.model';
+import { IStatus } from '../../model/status.model';
 
 
 export const inputNames = {
@@ -28,7 +29,7 @@ interface ISCProfileProps {
     currentSMSUser: IUser,
     userToView: IUser,
     trainingAddresses: IAddressState,
-    allStatus: IStatusState,
+    userStatus: IStatusState,
     locationDropdownActive: boolean,
     statusDropdownActive: boolean,
     bUserInfoChanged: boolean,
@@ -39,6 +40,7 @@ interface ISCProfileProps {
 interface ISCProfileState {
     updateUser: IUser
     trainingAddresses: IAddress[]
+    userStatus: IStatus[]
 }
 
 export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState> {
@@ -47,13 +49,9 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         super(props);
         this.state = {
             updateUser: this.props.currentSMSUser,
-            trainingAddresses: []
-            // isAdmin: this.props.userToView.roles.some(roles => roles.includes('admin')),
-            // isTrainer: this.props.userToView.roles.some(roles => roles.includes('trainer')),
-            // isStagingManager: this.props.userToView.roles.some(roles => roles.includes('staging-manager')),
-            // isAssociate: this.props.userToView.roles.some(roles => roles.includes(''))
+            trainingAddresses: [],
+            userStatus: []
         }
-
         // this.onUpdateClick = this.onUpdateClick.bind(this);
     }
 
@@ -66,6 +64,11 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         if (prevProps.trainingAddresses !== this.props.trainingAddresses) {
             this.setState({
                 trainingAddresses: this.props.trainingAddresses.trainingAddresses
+            })
+        }
+        if (prevProps.userStatus !== this.props.userStatus) {
+            this.setState({
+                userStatus: this.props.userStatus.userStatus
             })
         }
     }
@@ -190,7 +193,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             </Col>
                             <Col md={4}>
                                 <Label>Training Location</Label>
-                                {this.state.updateUser.roles.length === 0 ?
+                                {this.props.currentSMSUser.roles.length === 0 ?
                                     <p><strong>{this.state.updateUser.trainingAddress && this.state.updateUser.trainingAddress.alias}</strong></p>
                                     :
                                     <UncontrolledDropdown caret>
@@ -305,12 +308,43 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             <Col md={4}>
                                 <Row>
                                     <Col>
-                                        <Label>Status:</Label>
+                                        <Label>Status</Label>
+                                        {this.state.updateUser.roles.length === 0 ?
+                                            <Button className="user-btn" disabled>{this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
+                                                && this.state.updateUser.userStatus.specificStatus || 'No Status'}</Button>
+                                            :
+                                            <UncontrolledDropdown caret>
+                                                <DropdownToggle>
+                                                    {this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
+                                                        && this.state.updateUser.userStatus.specificStatus || 'No Status'}
+                                                </DropdownToggle>
+                                                <DropdownMenu name={inputNames.STATUS_ALIASES}>
+                                                    {
+                                                        this.state.userStatus.length === 0
+                                                            ? <>
+                                                                <DropdownItem>Unable To Find Any Statuses</DropdownItem>
+                                                            </>
+                                                            : this.state.userStatus.map(location =>
+                                                                <DropdownItem
+                                                                    key={location.statusId}
+                                                                // onClick={() => this.props.updateUserTrainingLocation(location)}
+                                                                >
+                                                                    {location.specificStatus}
+                                                                </DropdownItem>
 
+                                                            )
+                                                    }
+                                                </DropdownMenu>
+                                            </UncontrolledDropdown>
+                                        }
                                     </Col>
                                 </Row>
+                                {this.state.updateUser.userStatus.specificStatus !== 'Staging'
+                                ? <>
+                                </>
+                                :
                                 <Row style={{ margin: '2em' }}>
-                                    <Label>Virtual:</Label>
+                                    <Label>Virtual</Label>
                                     <br />
                                     <Input
                                         type="checkbox"
@@ -318,6 +352,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                     // onChange={}
                                     />
                                 </Row>
+                                }
                             </Col>
                             <Col md={8}>
                                 <Label>Roles</Label>
@@ -328,7 +363,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                             <Label roles>
                                                 <Input
                                                     type="checkbox"
-                                                    value="admin" /> Admin
+                                                    value="admin" 
+                                                    checked={this.state.updateUser.roles.includes('admin')} /> Admin
                                             </Label>
                                         </FormGroup>
                                     </Col>
@@ -337,7 +373,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                             <Label roles>
                                                 <Input
                                                     type="checkbox"
-                                                    value="tranier" /> Trainer
+                                                    value="tranier" 
+                                                    checked={this.state.updateUser.roles.includes('trainer')}/> Trainer
                                         </Label>
                                         </FormGroup>
                                     </Col>
@@ -346,7 +383,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                             <Label roles>
                                                 <Input
                                                     type="checkbox"
-                                                    value="staging-manager" /> Staging Manager
+                                                    value="staging-manager" 
+                                                    checked={this.state.updateUser.roles.includes('staging-manager')}/> Staging Manager
                                         </Label>
                                         </FormGroup>
                                     </Col>
@@ -355,7 +393,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                             <Label roles>
                                                 <Input
                                                     type="checkbox"
-                                                    value="associate" /> Associate
+                                                    value="associate" 
+                                                    checked={!(this.state.updateUser.roles.includes('admin')
+                                                        || this.state.updateUser.roles.includes('trainer')
+                                                        || this.state.updateUser.roles.includes('staging-manager'))}/> Associate
                                         </Label>
                                         </FormGroup>
                                     </Col>
@@ -373,7 +414,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
 
 const mapStateToProps = (state: IState) => ({
     currentSMSUser: state.managementState.currentSMSUser.currentSMSUser,
-    trainingAddresses: state.managementState.addresses
+    trainingAddresses: state.managementState.addresses,
+    userStatus: state.managementState.statuses
 })
 
 const mapDispatchToProps = {
