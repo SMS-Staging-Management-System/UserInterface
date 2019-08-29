@@ -16,7 +16,7 @@ export interface IProfileProps {
     currentSMSUser: IUser,
     userToView: IUser,
     trainingAddresses: IAddressState,
-    // allStatus: IStatusState,
+    allStatus: IStatusState,
     locationDropdownActive: boolean,
     statusDropdownActive: boolean,
     cohortDropdownActive: boolean,

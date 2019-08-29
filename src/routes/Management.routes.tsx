@@ -9,6 +9,7 @@ import profileContainer from '../components/profile/profile.container';
 import resetPasswordContainer from '../components/resetPassword/reset-password.container';
 import resetPasswordUsernameContainer from '../components/resetPasswordUsername/reset-password-username.container'
 import { cognitoRoles } from '../model/cognito-user.model';
+import SCProfile from '../components/profile/sc-profile.component';
 
 export class ManagementRoutes extends React.Component<any, any> {
     constructor(props: any) {
@@ -20,6 +21,7 @@ export class ManagementRoutes extends React.Component<any, any> {
         return (
             <Switch>
                 <Route path={`${path}/profile`} component={profileContainer} />
+                <Route path={`${path}/scprofile`} component={SCProfile} />
                 <Route path={`${path}/login`} component={LoginComponent} />
                 <Route path={`${path}/home`} component={HomeComponent} />
                 <Route path={`${path}/reset-password`} component={resetPasswordContainer} />
