@@ -61,8 +61,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             associateEmail: 'associateEmail',
             client: 'clientName',
             direction: this.props.direction,
-            loaded: false,
             listOfInterviews: [],
+            loaded: false,
             managerEmail: 'managerEmail',
             place: 'placeName',
             previousTableHeaderId: '1', // init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
@@ -142,9 +142,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     }
     // generic filter that is called whenever user wants to filter results by a field
     filterChange = (event: any) => {
-
         const value = event.currentTarget.value;
         const name = event.currentTarget.name;
+        
         // list of ternaries that check if the filter select box has changed, otherwise assume original state value
         const pageSize = (name === 'pageSize') ? value : this.props.pageSize;
         const associateEmail = (name === 'associateEmail') ? value : this.state.associateEmail;
