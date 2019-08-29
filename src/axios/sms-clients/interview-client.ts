@@ -44,8 +44,6 @@ export const interviewClient = {
         url += '&clientName=' + clientName;
         url += '&staging=' + staging;
 
-        console.log(url);
-
         return smsClient.get(url);
     },
 

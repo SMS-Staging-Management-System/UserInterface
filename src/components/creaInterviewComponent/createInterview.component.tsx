@@ -37,6 +37,8 @@ interface ICreateNewInterviewComponentState {
 }
 
 class CreateInterviewComponent extends React.Component<ICreateInterviewComponentProps, ICreateNewInterviewComponentState> {
+  // This should be DB call but we are hardcoding for now 
+  locations = ['USF', 'Reston', 'WVU', 'UTA', 'CUNY'];
 
   state = {
     date: '',
@@ -225,8 +227,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         <hr />
         <Form className="NewInterForm" >
           <div className="row">
-            {/* Only show this field if user has a defined role*/}
-            {/* We are only going to render this entire column if user has a role*/}
+            {/* Only show this column of fields if user has a defined role.
+                Otherwise we will only render one column of fields defined after this block. */}
             {this.props.currentUser.roles.length !== 0 &&
               <div className="col-md-6">
                 <span className="span-select-interview">Select a Cohort </span>
@@ -262,22 +264,20 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                     {associateOptions}
                   </Input>
                 </InputGroup>
-                <span className="span-select-interview">Enter  or Select client name</span>
+                <span className="span-select-interview">Enter or Select client name</span>
                 <InputGroup className="new-interview-input-group">
                   <InputGroupAddon addonType="prepend">client</InputGroupAddon>
                   <Input type="text" placeholder="....." list="clients" value={client} onChange={(e) => { setState({ ...state, client: e.target.value }) }} />
                   <datalist id="clients">
-                    {this.props.createInterviewComponentState.clientArr.map((ele: any) => (
-                      <option value={ele.clientName} />
+                    {this.props.createInterviewComponentState.clientArr.map((ele: any, i: number) => (
+                      <option value={ele.clientName} key={i} />
                     ))}
                   </datalist>
                 </InputGroup>
               </div>}
-
-
             {/* Render single column if associate, two columns otherwise */}
             <div className={this.props.currentUser.roles.length === 0 ? "col-md-12" : "col-md-6"}>
-              {/* Only render this field is user is an associate, otherwise
+              {/* Only render this field if user is an associate, otherwise
                   it's a copy of the above. */}
               {this.props.currentUser.roles.length === 0 &&
                 <>
@@ -306,13 +306,16 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
               <span className="span-select-interview">Enter a location</span>
               <InputGroup size="md" className="new-interview-input-group">
                 <InputGroupAddon addonType="prepend">location</InputGroupAddon>
-                <Input placeholder="....." value={location} onChange={(e) => { setState({ ...state, location: e.target.value }) }} />
+                <Input type='select' value={location} onChange={(e) => { setState({ ...state, location: e.target.value }) }}>
+                  <option value={undefined} style={{ display: 'none' }}>.....</option>
+                  {this.locations.map((loc: string, i: number) => (
+                    <option value={loc} key={i}>{loc}</option>
+                  ))}
+                </Input>
               </InputGroup>
             </div>
           </div>
           <br />
-
-
           <Button color="secondary" size="lg" block disabled={buttonDisabledState} onClick={buttonOnClick}>{buttonText}</Button>
         </Form>
       </div >
