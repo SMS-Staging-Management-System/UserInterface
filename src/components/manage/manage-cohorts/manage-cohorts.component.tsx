@@ -18,7 +18,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
             filterDropdownList: false,
             locationDropdownList: false,
             trainerDropdownList: false,
-            showTrainerDropdownList: false
+            showFilertSelection: ''
         };
     }
 
@@ -74,29 +74,49 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
         });
     }
 
-    showTrainerDropdown = () => {
-
+    setFilterSelection = (filter: String) => {
         this.setState({
-            showTrainerDropdownList: !this.state.showTrainerDropdownList
+            showFilertSelection: filter
         });
 
+    }
 
-        if (this.state.showTrainerDropdownList == true) {
+
+    showFilterTypeDropdown = () => {
+
+        if (this.state.showFilertSelection === 'trainer') {
             return (<Dropdown color="success" className="responsive-modal-row-item rev-btn"
                 isOpen={this.state.locationDropdownList} toggle={this.toggleLocationDropdown} display={false}>
                 <DropdownToggle className="ml-1" caret>
-                    Location
+                    Trainer
         </DropdownToggle>
                 <DropdownMenu>
                     <DropdownItem>Trainer</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>Location</DropdownItem>
+                    <DropdownItem>trainer</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
 
             )
         }
-        return null; 
+        else if (this.state.showFilertSelection === 'location') {
+
+            return (
+                <Dropdown color="success" className="responsive-modal-row-item rev-btn"
+                    isOpen={this.state.trainerDropdownList} toggle={this.toggleTrainerDropdown}>
+                    <DropdownToggle className="ml-1" caret>
+                        Location
+                </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem>location</DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>Location</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+
+            )
+        }
+        return null;
 
     }
 
@@ -113,27 +133,30 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                                 Selection
                 </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem >Trainer</DropdownItem>
+                            <DropdownItem>
+                                    <li onClick={() => this.setFilterSelection('')}>
+                                        All
+                                </li>
+                                </DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem>Location</DropdownItem>
+                                <DropdownItem>
+                                    <li onClick={() => this.setFilterSelection('trainer')}>
+                                        Trainer
+                                </li>
+                                </DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem>
+                                    <li onClick={() => this.setFilterSelection('location')}>
+                                        Location
+                                </li>
+                                </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
 
-                        {this.showTrainerDropdown()}
+                        {this.showFilterTypeDropdown()}
 
-                        <Dropdown color="success" className="responsive-modal-row-item rev-btn"
-                            isOpen={this.state.trainerDropdownList} toggle={this.toggleTrainerDropdown}>
-                            <DropdownToggle className="ml-1" caret>
-                                Trainer
-                </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem>Trainer</DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem>Location</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </div>
 
+                    </div >
                     <div>
                         <Button className="responsive-modal-row-item rev-btn" onClick={this.props.toggleCreateCohortModal}>New Cohort</Button>
                     </div>
