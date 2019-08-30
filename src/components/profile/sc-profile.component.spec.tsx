@@ -216,7 +216,7 @@ describe('<SCProfile />', () => {
         }
     })
 
-    // Ensure component is rentered
+    // Ensure component is rendered
     it('Should render the component', () => {
         const component = shallow(<SCProfile {...mockProps} />);
         expect(component).toBeDefined();
