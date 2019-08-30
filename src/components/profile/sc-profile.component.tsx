@@ -6,6 +6,7 @@ import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { IAddressState, IStatusState } from '../../reducers/management';
+import { updateUserSC } from '../../actions/profile/sc.profile.actions';
 
 
 export const inputNames = {
@@ -26,7 +27,8 @@ interface ISCProfileProps {
     currentSMSUser: IUser,
     trainingAddresses: IAddressState,
     userStatus: IStatusState,
-    userToUpdate?: IUser // This prop tells the component to look at a user other than the current user
+    userToUpdate?: IUser, // This prop tells the component to look at a user other than the current user
+    updateUserSC: (userToUpdate: IUser, prevUser: IUser) => any
 }
 
 interface ISCProfileState {
@@ -81,6 +83,12 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
     }
 
     componentDidMount() {
+        if (this.props.currentSMSUser) {
+            this.setState({
+                updateUser: this.props.currentSMSUser
+            })
+        }
+
         if (this.props.userToUpdate) {
             this.setState({
                 updateUser: this.props.userToUpdate
@@ -223,26 +231,20 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         }
     }
 
-    toggle = () => {
-        this.setState(prevState => ({
-            modal: !prevState.modal
-        }));
-    }
-
-    async onUpdateClick() {
-        // await this.props.updateUser(this.props.userToView, this.props.bUserInfoChanged,
-        //     [this.state.isAdmin, this.state.isTrainer, this.state.isStagingManager]);
-        // const resetRolesPromise = this.resetRoleState();
-        // await this.props.manageGetUsersByGroup(this.props.manageUsers.option, this.props.manageUsers.emailSearch, 
-        //     this.props.manageUsers.manageUsersCurrentPage);
-        // await resetRolesPromise;
+    onSubmit = (event: any) => {
+        event.preventDefault();
+        if(this.props.userToUpdate){
+            this.props.updateUserSC(this.state.updateUser, this.props.userToUpdate);
+        } else {
+            this.props.updateUserSC(this.state.updateUser, this.props.currentSMSUser);
+        }
     }
 
     render() {
         return (
             <div>
                 <Container>
-                    <Form onSubmit={this.onUpdateClick}>
+                    <Form onSubmit={this.onSubmit}>
                         <Row>
                             <Col md={4}>
                                 <FormGroup>
@@ -464,7 +466,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                     </Col>
                                 </Row>
                                 <br />
-                                <Button className="update-model">Update</Button>
+                                <Button className="update-model" type='submit'>Update</Button>
                             </Col>
                         </Row>
                     </Form>
@@ -481,6 +483,7 @@ const mapStateToProps = (state: IState) => ({
 })
 
 const mapDispatchToProps = {
+    updateUserSC
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SCProfile);

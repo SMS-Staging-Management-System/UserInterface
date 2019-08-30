@@ -20,6 +20,7 @@ import { joinCohortReducer } from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
 import { ICreateUser } from "../../model/create-user.model";
+import { scProfileViewReducer } from "./sc.profile.reducer";
 
 
 
@@ -113,6 +114,10 @@ export interface IManageCohortsState {
     totalPages: number
 }
 
+export interface ISCProfileUpdateState {
+    user: IUser
+}
+
 export interface IProfileViewState {
     user: IUser,
     bUserInfoChanged: boolean,
@@ -133,6 +138,7 @@ export interface IManagementState {
     statuses: IStatusState,
     currentSMSUser: ICurrentSMSUserState,
     currentProfile: IProfileViewState,
+    scUpdateProfile: ISCProfileUpdateState,
     viewCohort: ICohortModalState,
     joinCohort: IJoinCohortState,
     resetPassword: IResetPasswordState,
@@ -152,6 +158,7 @@ export const managementState = combineReducers<IManagementState>({
     currentSMSUser: currentSMSUserReducer,
     joinCohort: joinCohortReducer,
     currentProfile: profileViewReducer,
+    scUpdateProfile: scProfileViewReducer,
     viewCohort: viewCohortReducer,
     manageCohorts: manageCohortsReducer,
     resetPassword: resetPasswordReducer,
