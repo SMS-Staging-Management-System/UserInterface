@@ -10,19 +10,19 @@ import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { inputNames } from './profile.component';
 
-export interface ISCProfileTrainingLocationDropdownState {
+export interface ISCProfileTLDState {
     buttonText: string
 }
 
-export interface ISCProfileTrainingLocationDropdownProps {
+export interface ISCProfileTLDProps {
     currentSMSUser: IUser
     updateUser: IUser
     trainingAddresses: IAddress[]
     changeHandler: (event: any) => any
 }
 
-export class SCProfileTrainingLocationDropdown extends Component<ISCProfileTrainingLocationDropdownProps, ISCProfileTrainingLocationDropdownState> {
-    constructor(props: ISCProfileTrainingLocationDropdownProps) {
+export class SCProfileTLD extends Component<ISCProfileTLDProps, ISCProfileTLDState> {
+    constructor(props: ISCProfileTLDProps) {
         super(props);
 
         this.state = {
@@ -37,7 +37,7 @@ export class SCProfileTrainingLocationDropdown extends Component<ISCProfileTrain
         this.props.changeHandler({ target: { name: inputNames.TRAINING_ALIASES, value: event.currentTarget.innerText } });
     }
 
-    componentDidUpdate(prevProps: ISCProfileTrainingLocationDropdownProps) {
+    componentDidUpdate(prevProps: ISCProfileTLDProps) {
         if (prevProps !== this.props) {
             this.setState({
                 buttonText: this.props.updateUser.trainingAddress && this.props.updateUser.trainingAddress.alias || 'No Location'
@@ -85,4 +85,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SCProfileTrainingLocationDropdown)
+export default connect(mapStateToProps, mapDispatchToProps)(SCProfileTLD)

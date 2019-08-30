@@ -3,8 +3,7 @@ import React from "react";
 import { IUser } from "../../model/user.model";
 import { UncontrolledDropdown } from "reactstrap";
 import DropdownToggle from "reactstrap/lib/DropdownToggle";
-import { SCProfileTrainingLocationDropdown } from "./sc-profile.training.location.dropdown";
-import { ISCProfileTrainingLocationDropdownProps } from "./sc-profile.training.location.dropdown";
+import { ISCProfileTLD, ISCProfileTLDProps } from "./sc-profile.tld";
 import { Button } from "react-bootstrap";
 
 const inputNames = {
@@ -36,7 +35,7 @@ const passedInputNames = {
 }
 
 describe('<SCProfileTrainingLocationDropdown />', () => {
-    let mockProps: ISCProfileTrainingLocationDropdownProps;
+    let mockProps: ISCProfileTLDProps;
     const mockUser: IUser = {
         email: passedInputNames.EMAIL,
         userId: 0,
@@ -103,7 +102,7 @@ describe('<SCProfileTrainingLocationDropdown />', () => {
 
     // Ensure component is rendered
     it('Should render the component', () => {
-        const component = shallow(<SCProfileTrainingLocationDropdown {...mockProps} />);
+        const component = shallow(<ISCProfileTLD {...mockProps} />);
         expect(component).toBeDefined();
     })
 
@@ -113,14 +112,14 @@ describe('<SCProfileTrainingLocationDropdown />', () => {
             if (input === 'TRAINING_ALIASES') {
                 // Ensure button is disabled for users who don't have credentials
                 it(`Should contain one ${input} button which is disabled`, () => {
-                    const component = shallow(<SCProfileTrainingLocationDropdown {...mockProps} />);
+                    const component = shallow(<ISCProfileTLD {...mockProps} />);
                     const button = component.find(Button).find(`[disabled=${true}]`);
                     expect(button).toHaveLength(1);
                 }) 
 
                 // Ensure dropdown is rendered
                 it(`Should contain one ${input} uncontrolled dropdown that shows ${mockUser.trainingAddress.alias} initally`, () => {
-                    const component = shallow(<SCProfileTrainingLocationDropdown {...mockProps} />);
+                    const component = shallow(<ISCProfileTLD {...mockProps} />);
                     const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
                     expect (uncontrolledDropdown).toHaveLength(1);
                     const dropdownToggle = uncontrolledDropdown.find(DropdownToggle).render().text();

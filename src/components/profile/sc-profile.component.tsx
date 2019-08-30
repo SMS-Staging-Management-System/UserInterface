@@ -9,7 +9,7 @@ import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { IAddressState, IStatusState } from '../../reducers/management';
 import SCProfileStatusDropdown from './sc-profile.status.dropdown';
-import SCProfileTrainingLocationButton from './sc-profile.training.location.dropdown';
+import SCProfileTLD from './sc-profile.tld';
 
 
 export const inputNames = {
@@ -282,7 +282,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                     </Col>
                     <Col md={4}>
                         <Label>Training Location</Label>
-                        <SCProfileTrainingLocationButton
+                        <SCProfileTLD
                             updateUser={this.state.updateUser}
                             changeHandler={this.onUserInfoChangeHandler} />
                     </Col>
