@@ -8,6 +8,7 @@ import { IState } from '../../reducers';
 import { IAddressState, IStatusState } from '../../reducers/management';
 import { updateUserSC } from '../../actions/profile/sc.profile.actions';
 import { cognitoRoles } from '../../model/cognito-user.model';
+import SCProfileTrainingLocationButton from './sc-profile.training.location.dropdown';
 
 
 export const inputNames = {
@@ -81,52 +82,6 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
             }
         }
         // this.onUpdateClick = this.onUpdateClick.bind(this);
-    }
-
-    componentDidMount() {
-        if (this.props.currentSMSUser) {
-            this.setState({
-                updateUser: this.props.currentSMSUser
-            })
-        }
-
-        if (this.props.userToUpdate) {
-            this.setState({
-                updateUser: this.props.userToUpdate
-            })
-        }
-        
-        if (this.props.userStatus) {
-            this.setState({
-                userStatus: this.props.userStatus.userStatus
-            })
-        }
-
-        if (this.props.trainingAddresses) {
-            this.setState({
-                trainingAddresses: this.props.trainingAddresses.trainingAddresses
-            });
-        }
-    }
-
-    componentDidUpdate(prevProps: ISCProfileProps, prevState: ISCProfileState) {
-        if (!this.props.userToUpdate) {
-            if (prevProps.currentSMSUser !== this.props.currentSMSUser) {
-                this.setState({
-                    updateUser: this.props.currentSMSUser
-                })
-            }
-        }
-        if (prevProps.trainingAddresses !== this.props.trainingAddresses) {
-            this.setState({
-                trainingAddresses: this.props.trainingAddresses.trainingAddresses
-            })
-        }
-        if (prevProps.userStatus !== this.props.userStatus) {
-            this.setState({
-                userStatus: this.props.userStatus.userStatus
-            })
-        }
     }
 
     onUserInfoChangeHandler = (event: any) => {
@@ -227,6 +182,19 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                     }
                 })
                 break;
+            case inputNames.TRAINING_ALIASES:
+                const newAddress = this.props.trainingAddresses.trainingAddresses.find((address: IAddress) => {
+                    return address.alias === event.target.value;
+                })
+                
+                this.setState({
+                    ...this.state,
+                    updateUser: {
+                        ...this.state.updateUser,
+                        trainingAddress: newAddress || this.state.updateUser.trainingAddress
+                    }
+                })
+                break;
             default:
                 break;
         }
@@ -234,49 +202,188 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
 
     onSubmit = (event: any) => {
         event.preventDefault();
-        if(this.props.userToUpdate){
+        if (this.props.userToUpdate) {
             this.props.updateUserSC(this.state.updateUser, this.props.userToUpdate);
         } else {
             this.props.updateUserSC(this.state.updateUser, this.props.currentSMSUser);
         }
     }
 
+    componentDidMount() {
+        if (this.props.currentSMSUser) {
+            this.setState({
+                updateUser: this.props.currentSMSUser
+            })
+        }
+
+        if (this.props.userToUpdate) {
+            this.setState({
+                updateUser: this.props.userToUpdate
+            })
+        }
+
+        if (this.props.userStatus) {
+            this.setState({
+                userStatus: this.props.userStatus.userStatus
+            })
+        }
+
+        if (this.props.trainingAddresses) {
+            this.setState({
+                trainingAddresses: this.props.trainingAddresses.trainingAddresses
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps: ISCProfileProps, prevState: ISCProfileState) {
+        if (!this.props.userToUpdate) {
+            if (prevProps.currentSMSUser !== this.props.currentSMSUser) {
+                this.setState({
+                    updateUser: this.props.currentSMSUser
+                })
+            }
+        }
+        if (prevProps.trainingAddresses !== this.props.trainingAddresses) {
+            this.setState({
+                trainingAddresses: this.props.trainingAddresses.trainingAddresses
+            })
+        }
+        if (prevProps.userStatus !== this.props.userStatus) {
+            this.setState({
+                userStatus: this.props.userStatus.userStatus
+            })
+        }
+    }
+
     render() {
         return (
-            <div>
-                <Container>
-                    <Form onSubmit={this.onSubmit}>
+            <Form onSubmit={this.onSubmit}>
+                <Row>
+                    <Col md={4}>
+                        <FormGroup>
+                            <Label>Email</Label>
+                            <Input
+                                type="email"
+                                name={inputNames.EMAIL}
+                                value={this.state.updateUser && this.state.updateUser.email} readOnly />
+                        </FormGroup>
+                    </Col>
+                    <Col md={4}>
+                        <Label>Training Location</Label>
+                        <SCProfileTrainingLocationButton 
+                        updateUser={this.state.updateUser} 
+                        changeHandler={this.onUserInfoChangeHandler}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={4}>
+                        <FormGroup>
+                            <Label>First Name</Label>
+                            <Input
+                                type="text"
+                                name={inputNames.FIRST_NAME}
+                                value={this.state.updateUser.firstName}
+                                onChange={(event) => this.onUserInfoChangeHandler(event)} required />
+                        </FormGroup>
+                    </Col>
+                    <Col md={4}>
+                        <FormGroup>
+                            <Label>Last Name</Label>
+                            <Input
+                                type="text"
+                                name={inputNames.LAST_NAME}
+                                value={this.state.updateUser.lastName}
+                                onChange={(event) => this.onUserInfoChangeHandler(event)} required />
+                        </FormGroup>
+                    </Col>
+                    <Col md={4}>
+                        <FormGroup>
+                            <Label>Phone Number</Label>
+                            <Input
+                                type="tel"
+                                pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
+                                name={inputNames.PHONE}
+                                value={this.state.updateUser.phoneNumber}
+                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <FormGroup>
+                    <Label>Street</Label>
+                    <Input
+                        type="text"
+                        name={inputNames.STREET}
+                        value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.street}
+                        onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                </FormGroup>
+                <Row>
+                    <Col md={4}>
+                        <FormGroup>
+                            <Label>City</Label>
+                            <Input
+                                type="text"
+                                name={inputNames.CITY}
+                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.city}
+                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                        </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                        <FormGroup>
+                            <Label>State</Label>
+                            <Input
+                                type="text"
+                                name={inputNames.STATE}
+                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.state}
+                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                        </FormGroup>
+                    </Col>
+                    <Col md={2}>
+                        <FormGroup>
+                            <Label>Zip</Label>
+                            <Input
+                                type="text"
+                                name={inputNames.ZIP}
+                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.zip}
+                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                        </FormGroup>
+                    </Col>
+                    <Col md={3}>
+                        <FormGroup>
+                            <Label>Country</Label>
+                            <Input
+                                type="text"
+                                name={inputNames.COUNTRY}
+                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.country}
+                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={4}>
                         <Row>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label>Email</Label>
-                                    <Input
-                                        type="email"
-                                        name={inputNames.EMAIL}
-                                        value={this.state.updateUser && this.state.updateUser.email} readOnly />
-                                </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                                <Label>Training Location</Label>
+                            <Col>
+                                <Label>Status</Label>
                                 {this.props.currentSMSUser.roles.length === 0 ?
-                                    <p><strong>{this.state.updateUser.trainingAddress && this.state.updateUser.trainingAddress.alias}</strong></p>
+                                    <Button name={inputNames.STATUS_ALIASES} className="user-btn" disabled>{this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
+                                        && this.state.updateUser.userStatus.specificStatus || 'No Status'}</Button>
                                     :
-                                    <UncontrolledDropdown name={inputNames.TRAINING_ALIASES} caret>
+                                    <UncontrolledDropdown name={inputNames.STATUS_ALIASES} caret>
                                         <DropdownToggle>
-                                            {this.state.updateUser.trainingAddress && this.state.updateUser.trainingAddress.alias || 'No Location'}
+                                            {this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
+                                                && this.state.updateUser.userStatus.specificStatus || 'No Status'}
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             {
-                                                this.state.trainingAddresses.length === 0
+                                                this.state.userStatus.length === 0
                                                     ? <>
-                                                        <DropdownItem>Unable To Find Any Locations</DropdownItem>
+                                                        <DropdownItem>Unable To Find Any Statuses</DropdownItem>
                                                     </>
-                                                    : this.state.trainingAddresses.map(location =>
+                                                    : this.state.userStatus.map(location =>
                                                         <DropdownItem
-                                                            key={location.addressId}
+                                                            key={location.statusId}
                                                         // onClick={() => this.props.updateUserTrainingLocation(location)}
                                                         >
-                                                            {location.alias}
+                                                            {location.specificStatus}
                                                         </DropdownItem>
 
                                                     )
@@ -286,193 +393,73 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                 }
                             </Col>
                         </Row>
-                        <Row>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label>First Name</Label>
-                                    <Input
-                                        type="text"
-                                        name={inputNames.FIRST_NAME}
-                                        value={this.state.updateUser.firstName}
-                                        onChange={(event) => this.onUserInfoChangeHandler(event)} required />
-                                </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label>Last Name</Label>
-                                    <Input
-                                        type="text"
-                                        name={inputNames.LAST_NAME}
-                                        value={this.state.updateUser.lastName}
-                                        onChange={(event) => this.onUserInfoChangeHandler(event)} required />
-                                </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label>Phone Number</Label>
-                                    <Input
-                                        type="tel"
-                                        pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
-                                        name={inputNames.PHONE}
-                                        value={this.state.updateUser.phoneNumber}
-                                        onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <FormGroup>
-                            <Label>Street</Label>
-                            <Input
-                                type="text"
-                                name={inputNames.STREET}
-                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.street}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                        </FormGroup>
-                        <Row>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label>City</Label>
-                                    <Input
-                                        type="text"
-                                        name={inputNames.CITY}
-                                        value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.city}
-                                        onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                                </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                                <FormGroup>
-                                    <Label>State</Label>
-                                    <Input
-                                        type="text"
-                                        name={inputNames.STATE}
-                                        value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.state}
-                                        onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                                </FormGroup>
-                            </Col>
-                            <Col md={2}>
-                                <FormGroup>
-                                    <Label>Zip</Label>
-                                    <Input
-                                        type="text"
-                                        name={inputNames.ZIP}
-                                        value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.zip}
-                                        onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                                </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                                <FormGroup>
-                                    <Label>Country</Label>
-                                    <Input
-                                        type="text"
-                                        name={inputNames.COUNTRY}
-                                        value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.country}
-                                        onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={4}>
-                                <Row>
-                                    <Col>
-                                        <Label>Status</Label>
-                                        {this.props.currentSMSUser.roles.length === 0 ?
-                                            <Button name={inputNames.STATUS_ALIASES} className="user-btn" disabled>{this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
-                                                && this.state.updateUser.userStatus.specificStatus || 'No Status'}</Button>
-                                            :
-                                            <UncontrolledDropdown name={inputNames.STATUS_ALIASES} caret>
-                                                <DropdownToggle>
-                                                    {this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
-                                                        && this.state.updateUser.userStatus.specificStatus || 'No Status'}
-                                                </DropdownToggle>
-                                                <DropdownMenu>
-                                                    {
-                                                        this.state.userStatus.length === 0
-                                                            ? <>
-                                                                <DropdownItem>Unable To Find Any Statuses</DropdownItem>
-                                                            </>
-                                                            : this.state.userStatus.map(location =>
-                                                                <DropdownItem
-                                                                    key={location.statusId}
-                                                                // onClick={() => this.props.updateUserTrainingLocation(location)}
-                                                                >
-                                                                    {location.specificStatus}
-                                                                </DropdownItem>
-
-                                                            )
-                                                    }
-                                                </DropdownMenu>
-                                            </UncontrolledDropdown>
-                                        }
-                                    </Col>
-                                </Row>
-                                {this.state.updateUser.userStatus.specificStatus !== 'Staging'
-                                ? <>
-                                </>
-                                :
-                                <Row style={{ margin: '2em' }}>
-                                    <Label>Virtual</Label>
-                                    <br />
-                                    <Input
-                                        type="checkbox"
-                                        checked={this.state.updateUser.userStatus.virtual}
-                                    // onChange={}
-                                    />
-                                </Row>
-                                }
-                            </Col>
-                            <Col md={8}>
-                                <Label>Roles</Label>
+                        {this.state.updateUser.userStatus.specificStatus !== 'Staging'
+                            ? <>
+                            </>
+                            :
+                            <Row style={{ margin: '2em' }}>
+                                <Label>Virtual</Label>
                                 <br />
-                                <Row style={{ margin: '1em' }}>
-                                    <Col md={3}>
-                                        <FormGroup checkedRoles>
-                                            <Label roles>
-                                                <Input
-                                                    type="checkbox"
-                                                    value="admin" 
-                                                    checked={this.state.updateUser.roles.includes(cognitoRoles.ADMIN)} /> Admin
+                                <Input
+                                    type="checkbox"
+                                    checked={this.state.updateUser.userStatus.virtual}
+                                // onChange={}
+                                />
+                            </Row>
+                        }
+                    </Col>
+                    <Col md={8}>
+                        <Label>Roles</Label>
+                        <br />
+                        <Row style={{ margin: '1em' }}>
+                            <Col md={3}>
+                                <FormGroup checkedRoles>
+                                    <Label roles>
+                                        <Input
+                                            type="checkbox"
+                                            value="admin"
+                                            checked={this.state.updateUser.roles.includes(cognitoRoles.ADMIN)} /> Admin
                                             </Label>
-                                        </FormGroup>
-                                    </Col>
-                                    <Col md={3}>
-                                        <FormGroup checkedRoles>
-                                            <Label roles>
-                                                <Input
-                                                    type="checkbox"
-                                                    value="tranier" 
-                                                    checked={this.state.updateUser.roles.includes(cognitoRoles.TRAINER)}/> Trainer
+                                </FormGroup>
+                            </Col>
+                            <Col md={3}>
+                                <FormGroup checkedRoles>
+                                    <Label roles>
+                                        <Input
+                                            type="checkbox"
+                                            value="tranier"
+                                            checked={this.state.updateUser.roles.includes(cognitoRoles.TRAINER)} /> Trainer
                                         </Label>
-                                        </FormGroup>
-                                    </Col>
-                                    <Col md={3}>
-                                        <FormGroup checkedRoles>
-                                            <Label roles>
-                                                <Input
-                                                    type="checkbox"
-                                                    value="staging-manager" 
-                                                    checked={this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER)}/> Staging Manager
+                                </FormGroup>
+                            </Col>
+                            <Col md={3}>
+                                <FormGroup checkedRoles>
+                                    <Label roles>
+                                        <Input
+                                            type="checkbox"
+                                            value="staging-manager"
+                                            checked={this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER)} /> Staging Manager
                                         </Label>
-                                        </FormGroup>
-                                    </Col>
-                                    <Col md={3}>
-                                        <FormGroup checkedRoles>
-                                            <Label roles>
-                                                <Input
-                                                    type="checkbox"
-                                                    value="associate" 
-                                                    checked={!(this.state.updateUser.roles.includes(cognitoRoles.ADMIN)
-                                                        || this.state.updateUser.roles.includes(cognitoRoles.TRAINER)
-                                                        || this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER))}/> Associate
+                                </FormGroup>
+                            </Col>
+                            <Col md={3}>
+                                <FormGroup checkedRoles>
+                                    <Label roles>
+                                        <Input
+                                            type="checkbox"
+                                            value="associate"
+                                            checked={!(this.state.updateUser.roles.includes(cognitoRoles.ADMIN)
+                                                || this.state.updateUser.roles.includes(cognitoRoles.TRAINER)
+                                                || this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER))} /> Associate
                                         </Label>
-                                        </FormGroup>
-                                    </Col>
-                                </Row>
-                                <br />
-                                <Button className="update-model" type='submit'>Update</Button>
+                                </FormGroup>
                             </Col>
                         </Row>
-                    </Form>
-                </Container>
-            </div>
+                        <br />
+                        <Button className="update-model" type='submit'>Update</Button>
+                    </Col>
+                </Row>
+            </Form>
         )
     }
 }
