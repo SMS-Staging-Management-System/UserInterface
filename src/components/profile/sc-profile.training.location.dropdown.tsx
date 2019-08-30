@@ -10,11 +10,11 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import { IAddressState } from '../../reducers/management';
 import { Button } from 'react-bootstrap';
 
-interface ISCProfileTrainingLocationDropdownState {
+export interface ISCProfileTrainingLocationDropdownState {
     buttonText: string
 }
 
-interface ISCProfileTrainingLocationDropdownProps {
+export interface ISCProfileTrainingLocationDropdownProps {
     currentSMSUser: IUser
     updateUser: IUser
     trainingAddresses: IAddressState
