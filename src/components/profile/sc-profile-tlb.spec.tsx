@@ -2,6 +2,8 @@ import { shallow } from "enzyme";
 import React from "react";
 import { ISCProfileProps } from "./sc-profile.component";
 import { IUser } from "../../model/user.model";
+import { UncontrolledDropdown } from "reactstrap";
+import DropdownToggle from "reactstrap/lib/DropdownToggle";
 
 const inputNames = {
     EMAIL: 'NEW_USER_EMAIL',
@@ -32,7 +34,7 @@ const passedInputNames = {
 }
 
 describe('<SCProfileTrainingLocationButton />', () => {
-    let mockProps: ISCProfileProps;
+    let mockProps: ISCProfileTrainingLocationButtonProps;
     const mockUser: IUser = {
         email: passedInputNames.EMAIL,
         userId: 0,
@@ -103,4 +105,26 @@ describe('<SCProfileTrainingLocationButton />', () => {
         expect(component).toBeDefined();
     })
 
+    for (const input in inputNames) {
+        if (inputNames.hasOwnProperty(input)) {
+            const inputNamesEle = inputNames[input];
+            if (input === 'TRAINING_ALIASES') {
+                // Ensure button is disabled for users who don't have credentials
+                it(`Should contain one ${input} button which is disabled`, () => {
+                    const component = shallow(<SCProfileTrainingLocationButton {...mockProps} />);
+                    const button = component.find(Button).find(`[disabled=${true}]`);
+                    expect(button).toHaveLength(1);
+                }) 
+
+                // Ensure dropdown is rendered
+                it(`Should contain one ${input} uncontrolled dropdown that shows ${mockUser.trainingAddress.alias} initally`, () => {
+                    const component = shallow(<SCProfileTrainingLocationButton {...mockProps} />);
+                    const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
+                    expect (uncontrolledDropdown).toHaveLength(1);
+                    const dropdownToggle = uncontrolledDropdown.find(DropdownToggle).render().text();
+                    expect(dropdownToggle).toBe(mockUser.trainingAddress.alias);
+                })
+            }
+        }
+    }
 })

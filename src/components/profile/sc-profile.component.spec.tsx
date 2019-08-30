@@ -230,14 +230,14 @@ describe('<SCProfile />', () => {
 
             } else if (input === 'STATUS_ALIASES') {
                 // Ensure button is disabled for users who don't have credentials
-                it(`Should contain one ${input} button that is disabled`, () => {
+                it(`Should contain one ${input} button which is disabled`, () => {
                     const component = shallow(<SCProfile {...mockProps} />);
                     const button = component.find(Button).find(`[name="${inputNamesEle}"]`).find(`[disabled=${true}]`);
                     expect(button).toHaveLength(1);
                 })
 
                 // Ensure dropdown is rendered
-                it(`Should contain one ${input} uncontrolled dropdown that shows ${mockAdminUser.userStatus.specificStatus} initially`, () => {
+                it(`Should contain one ${input} uncontrolled dropdown which shows ${mockAdminUser.userStatus.specificStatus} initially`, () => {
                     const component = shallow(<SCProfile {...{...mockProps, currentSMSUser: mockAdminUser}} />);
                     const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
                     expect(uncontrolledDropdown).toHaveLength(1);
