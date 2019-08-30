@@ -242,7 +242,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         return (
             <div>
                 <Container>
-                    <Form>
+                    <Form onSubmit={this.onUpdateClick}>
                         <Row>
                             <Col md={4}>
                                 <FormGroup>
@@ -464,8 +464,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                     </Col>
                                 </Row>
                                 <br />
-                                <Button className="update-model"
-                                    onClick={this.onUpdateClick}>Update</Button>
+                                <Button className="update-model">Update</Button>
                             </Col>
                         </Row>
                     </Form>
