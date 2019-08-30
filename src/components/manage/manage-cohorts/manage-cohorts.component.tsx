@@ -134,21 +134,21 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                 </DropdownToggle>
                             <DropdownMenu>
                             <DropdownItem>
-                                    <li onClick={() => this.setFilterSelection('')}>
+                                    <div onClick={() => this.setFilterSelection('')}>
                                         All
-                                </li>
+                                </div>
                                 </DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
-                                    <li onClick={() => this.setFilterSelection('trainer')}>
+                                    <div onClick={() => this.setFilterSelection('trainer')}>
                                         Trainer
-                                </li>
+                                </div>
                                 </DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
-                                    <li onClick={() => this.setFilterSelection('location')}>
+                                    <div onClick={() => this.setFilterSelection('location')}>
                                         Location
-                                </li>
+                                </div>
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
