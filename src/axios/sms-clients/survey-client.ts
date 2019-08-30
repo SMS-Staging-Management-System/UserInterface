@@ -77,46 +77,8 @@ export const surveyClient = {
 
   },
   findSurveyById: async (id: number) => {
-    // Get the Survey
-    let survey;
-    await smsClient.get(`${surveyBaseRoute}/${id}`)
-      .then(response => {
-        survey = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    // Get the Junctions of Survey Questions
-    let junctions;
-    await smsClient.get(`${junctionSurveyQuestionsBaseRoute}/surveyId/${id}`)
-      .then(response => {
-        junctions = response.data;
-        // Sort the junction by question order
-        junctions.sort((a, b) => (a.questionOrder > b.questionOrder) ? 1 : -1)
-        survey.questionJunctions = junctions;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    // Append Answers to the Questions
-    // If statement prevents crashing if the API server is down
-    if (survey) {
-      for (const questionJunction of survey.questionJunctions) {
-        await smsClient.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
-          .then(response => {
-            let answerChoices = response.data;
-            // If it is a rating question, sort the ratings
-            // if (questionJunction.typeId === 4) {
-            //   answerChoices.sort((a, b) => (a.answer > b.answer) ? 1 : -1);
-            // }
-            questionJunction.questionId.answerChoices = answerChoices;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
-    }
-    return survey;
+    let response = await smsClient.get(`${surveyBaseRoute}/${id}`);
+    return response.data;
   },
   countResponses: async (id: number) => {
     const allResponses = await smsClient.get(`${responseBaseRoute}/surveyId/${id}`);
@@ -192,15 +154,9 @@ export const surveyClient = {
 
   async saveSurvey(survey: ISurvey) {
     let resp = await smsClient.post(surveyBaseRoute, survey);
-    // let sID = resp.data.surveyId;      // return ID; 
-    // return sID;
+    return resp.data
   },
 
-  async saveSurveyAll(survey: any) {
-    let resp = await smsClient.post(surveyAllBaseRoute, survey);
-    // let sID = resp.data.surveyId;      // return ID; 
-    // return sID;
-  },
 
   //----------------------//
   //-- Question Methods --//
@@ -232,7 +188,6 @@ export const surveyClient = {
   //--------------------//
 
   async saveAnswer(answer: IAnswer) {
-    answer.id = 0;
     return await smsClient.post(answerBaseRoute, answer)
   },
 
@@ -255,16 +210,10 @@ export const surveyClient = {
   //---------------------//  
 
   findHistoriesByEmail: async (email: String) => {
-    let histories;
-    await smsClient.post(`${historyBaseRoute}/email`, email)
-      .then(response => {
-        histories = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    return histories;
+    let response = await smsClient.post(historyBaseRoute +'/email', email)
+    return response.data
   },
+
   assignSurveyByIdAndEmail(id: number, email: string) {
     const postObject = {
       "dateAssigned": new Date(),

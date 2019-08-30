@@ -8,6 +8,7 @@ import { IAnswer } from '../../../model/surveys/answer.model';
 import { IResponse } from '../../../model/surveys/response.model';
 import Loader from '../Loader/Loader';
 import { IHistory } from '../../../model/surveys/history.model';
+import { Question } from '../../associate-input/choices.component';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState,
@@ -121,31 +122,38 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
             // Submit the Responses
             for (let key in this.state.responses) {
                 const responseToSubmit: IResponse = {
-                    "answerId": {
-                        "id": this.state.responses[key],
-                        "answer": '',
-                        "questionId": 0
+                    answerId: {
+                        id: this.state.responses[key],
+                        answer: '',
+                        question: {questionId: 0, question: '', typeId: 0, answers: []}
                     },
-                    "id": 0,
-                    "surveyId": {
-                        "surveyId": this.state.survey.surveyId,
-                        "closingDate": new Date(),
-                        "dateCreated": new Date(),
-                        "description": '',
-                        "published": true,
-                        "template": true,
-                        "title": ''
+                    id: 0,
+                    surveyId: {
+                        surveyId: this.state.survey.surveyId,
+                        closingDate: new Date(),
+                        dateCreated: new Date(),
+                        description: '',
+                        creator: '',
+                        published: true,
+                        template: true,
+                        title: '',
+                        questionJunctions: []
                     },
-                    "userEmailString": email
+                    userEmailString: email
                 }
                 surveyClient.saveResponse(responseToSubmit);
             }
             // Submit the feedback
             for (let key in this.state.newFeedback) {
                 const newAnswer: IAnswer = {
-                    "id": 0,
-                    "answer": this.state.newFeedback[key],
-                    "questionId": parseInt(key)
+                    id: 0,
+                    answer: this.state.newFeedback[key],
+                    question: {
+                        questionId: parseInt(key),
+                        question: '',
+                        typeId: 0,
+                        answers: []
+                    }
                 }
                 surveyClient.saveAnswer(newAnswer);
             }

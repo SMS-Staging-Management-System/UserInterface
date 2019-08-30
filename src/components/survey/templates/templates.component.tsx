@@ -12,8 +12,10 @@ import { ISurvey } from '../../../model/surveys/survey.model';
 import Loader from '../Loader/Loader';
 import { IState } from '../../../reducers';
 import { toast } from 'react-toastify';
+import { IAuthState } from '../../../reducers/management';
 
 interface TemplatesProps extends RouteComponentProps<{}> {
+    auth: IAuthState;
     match: any
 }
 interface IComponentState {
@@ -49,10 +51,12 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 surveyId: 0,
                 title: '',
                 description: '',
+                creator: '',
                 dateCreated: new Date(),
                 closingDate: null,
                 template: false,
-                published: true
+                published: true,
+                questionJunctions: []
             },
             redirectTo: null
         }
@@ -134,84 +138,54 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             dateCreated: this.state.dateCreated
         })
 
-        let questions: IQuestion[] = [];
-        let answers: IAnswer[] = [];
         let dummySurvey: ISurvey = {
-            surveyId: 1,
+            surveyId: 0,
             title: this.state.newTitle,
             description: this.state.description,
+            creator: this.props.auth.currentUser.email,
             dateCreated: this.state.dateCreated,
             closingDate: this.state.survey.closingDate,
             template: false,
-            published: true
+            published: true,
+            questionJunctions: []
         };
-        for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
-            let dummyquestion: IQuestion | any = {
-                questionId: {
+        let questionJunctions: IJunctionSurveyQuestion[] = [];
+        
+        for (let i = 0; i < (this.state.survey.questionJunctions).length; i++) {
+
+            let dummyQuestionJunction: any = {
+                id: 0,
+                survey: null,
+                question: {
                     questionId: 0,
-                    question: 'string',
-                    typeId: 0,
-                }
+                    typeId: this.state.survey.questionJunctions[i].question.typeId,
+                    question: this.state.survey.questionJunctions[i].question.question,
+                    answers: []
+                },
+                questionOrder: this.state.survey.questionJunctions[i].questionOrder
             }
-            dummyquestion.questionId.questionId = this.state.survey.questionJunctions[i].questionId.questionId;
-            dummyquestion.questionId.typeId = this.state.survey.questionJunctions[i].questionId.typeId;
-            dummyquestion.questionId.question = this.state.survey.questionJunctions[i].questionId.question;
-            for (let j = 0; j < this.state.survey.questionJunctions[i].questionId.answerChoices.length; j++) {
+    
+            for (let j = 0; j < (this.state.survey.questionJunctions[i].question.answers).length; j++) {
 
                 let dummyAnswers: IAnswer | any = {
-                    id: 0,
-                    answer: "string",
-                    questionId: 0
+                    answerId: 0,
+                    answer: '',
+                    question: null
                 }
-                dummyAnswers.id = this.state.survey.questionJunctions[i].questionId.answerChoices[j].id;
-                dummyAnswers.answer = this.state.survey.questionJunctions[i].questionId.answerChoices[j].answer;
-                dummyAnswers.questionId = this.state.survey.questionJunctions[i].questionId.answerChoices[j].questionId;
-                answers.push(dummyAnswers);
+                dummyAnswers.answer = this.state.survey.questionJunctions[i].question.answers[j].answer;
+                dummyQuestionJunction.question.answers.push(dummyAnswers);
             }
-            questions.push(dummyquestion);
+            questionJunctions.push(dummyQuestionJunction);
         }
 
-        dummySurvey.surveyId = await surveyClient.saveSurvey(dummySurvey);
-        let questionid = new Array;
+        dummySurvey.questionJunctions = questionJunctions;
 
-        for (let index = 0; index < questions.length; index++) {
-            let num = await surveyClient.saveQuestion(questions[index]);
-            questionid.push(num);
+        surveyClient.saveSurvey(dummySurvey);
 
-            for (let j = 0; j < answers.length; j++) {
-                if (answers[j].questionId === questions[index].questionId.questionId) {
-                    answers[j].questionId = questionid[index];
-                    await surveyClient.saveAnswer(answers[j]);
-                }
-            }
+        console.log(dummySurvey);
 
-        }
-
-        for (let index = 0; index < questions.length; index++) {
-            let junctionTable: IJunctionSurveyQuestion = {
-
-                id: 0,
-
-                questionId: {
-                    questionId: 0,
-                    question: 'string',
-                    typeId: 0,
-                },
-                questionOrder: 0,
-
-                surveyId: dummySurvey,
-
-            }
-
-            junctionTable.questionId.question = questions[index].questionId.question;
-            junctionTable.questionId.questionId = questionid[index];
-            junctionTable.questionId.typeId = questions[index].questionId.typeId;
-            junctionTable.questionOrder = index + 1;
-            junctionTable.surveyId = dummySurvey;
-            junctionTable.surveyId.surveyId = dummySurvey.surveyId;
-            surveyClient.saveToQuestionJunction(junctionTable);
-            toast.success('Survey created');
-        }
+        toast.success('Survey created');
+        
     }
     handleDuplicateClose = async () => {
         if (this.state.survey.title !== this.state.newTitle) {
@@ -310,15 +284,15 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             {this.state.surveyLoaded ?
                                 this.state.surveyLoaded &&
                                 this.state.survey.questionJunctions.map(questionJunction => (
-                                    <div key={questionJunction.questionId.questionId}>
+                                    <div key={questionJunction.question.questionId}>
 
-                                        <strong>{questionJunction.questionId.question}:</strong>
+                                        <strong>{questionJunction.question.question}:</strong>
 
                                         {
-                                            questionJunction.questionId.typeId === 5 ?
+                                            questionJunction.question.typeId === 5 ?
                                                 <div>Question Type: Feedback</div>
-                                                : questionJunction.questionId.answerChoices.map(choice => (
-                                                    <div key={choice.id} >
+                                                : questionJunction.question.answers.map(choice => (
+                                                    <div key={choice.answerId} >
                                                         <label>
                                                             <i>{choice.answer}</i> </label>
                                                     </div>
