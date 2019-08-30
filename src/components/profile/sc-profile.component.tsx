@@ -373,7 +373,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                 <Row>
                                     <Col>
                                         <Label>Status</Label>
-                                        {this.state.updateUser.roles.length === 0 ?
+                                        {this.props.currentSMSUser.roles.length === 0 ?
                                             <Button className="user-btn" disabled>{this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
                                                 && this.state.updateUser.userStatus.specificStatus || 'No Status'}</Button>
                                             :
