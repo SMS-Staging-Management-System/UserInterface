@@ -10,19 +10,19 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import { IAddressState } from '../../reducers/management';
 import { Button } from 'react-bootstrap';
 
-interface ISCProfileTrainingLocationButtonState {
+interface ISCProfileTrainingLocationDropdownState {
     buttonText: string
 }
 
-interface ISCProfileTrainingLocationButtonProps {
+interface ISCProfileTrainingLocationDropdownProps {
     currentSMSUser: IUser
     updateUser: IUser
     trainingAddresses: IAddressState
     changeHandler: (event: any) => any
 }
 
-export class SCProfileTrainingLocationButton extends Component<ISCProfileTrainingLocationButtonProps, ISCProfileTrainingLocationButtonState> {
-    constructor(props: ISCProfileTrainingLocationButtonProps) {
+export class SCProfileTrainingLocationDropdown extends Component<ISCProfileTrainingLocationDropdownProps, ISCProfileTrainingLocationDropdownState> {
+    constructor(props: ISCProfileTrainingLocationDropdownProps) {
         super(props);
 
         this.state = {
@@ -37,7 +37,7 @@ export class SCProfileTrainingLocationButton extends Component<ISCProfileTrainin
         this.props.changeHandler({target: {name: inputNames.TRAINING_ALIASES, value: event.currentTarget.innerText}});
     }
 
-    componentDidUpdate(prevProps: ISCProfileTrainingLocationButtonProps) {
+    componentDidUpdate(prevProps: ISCProfileTrainingLocationDropdownProps) {
         if (prevProps !== this.props) {
             this.setState({
                 buttonText: this.props.updateUser.trainingAddress && this.props.updateUser.trainingAddress.alias || 'No Location'
@@ -85,4 +85,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SCProfileTrainingLocationButton)
+export default connect(mapStateToProps, mapDispatchToProps)(SCProfileTrainingLocationDropdown)
