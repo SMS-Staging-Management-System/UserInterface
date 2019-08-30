@@ -14,6 +14,11 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
     constructor(props: IManageCohortsComponentProps) {
         super(props);
+        this.state = {
+            filterDropdownList: false,
+            locationDropdownList: false,
+            trainerDropdownList: false
+        };
     }
 
     getAllCohorts = async (newPage): Promise<ICohort[]> => {
@@ -50,25 +55,63 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
         this.props.toggleViewCohortModal(cohort);
     }
 
-    render() {
+    toggleFilterDropdown = () => {
+        this.setState({
+            filterDropdownList: !this.state.filterDropdownList
+        });
+    }
+
+    toggleLocationDropdown = () => {
+        this.setState({
+            locationDropdownList: !this.state.locationDropdownList
+        });
+    }
+
+    toggleTrainerDropdown = () => {
+        this.setState({
+            trainerDropdownList: !this.state.trainerDropdownList
+        });
+    }
+
+    render() { 
         return (
             <>
                 <div id="manage-cohorts-nav" className="rev-background-color">
                     <div id="manage-cohorts-view-selection-container">
                         <div>View By:</div>
                         <Dropdown color="success" className="responsive-modal-row-item rev-btn"
-                            isOpen={false}>
-                            {/* toggle={this.props.toggleLocationDropdown}> */}
+                             isOpen={this.state.filterDropdownList} toggle={this.toggleFilterDropdown}>
                             <DropdownToggle className ="ml-1"caret>
                                 Selection
                 </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem>Year</DropdownItem>
-                                <DropdownItem divider />
                                 <DropdownItem>Trainer</DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>Location</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+
+                        <Dropdown color="success" className="responsive-modal-row-item rev-btn"
+                             isOpen={this.state.locationDropdownList} toggle={this.toggleLocationDropdown} display={false}>
+                            <DropdownToggle className ="ml-1"caret>
+                            Location
+                </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem>Trainer</DropdownItem>
                                 <DropdownItem divider />
+                                <DropdownItem>Location</DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+
+                        <Dropdown color="success" className="responsive-modal-row-item rev-btn"
+                             isOpen={this.state.trainerDropdownList} toggle={this.toggleTrainerDropdown}>
+                            <DropdownToggle className ="ml-1"caret>
+                            Trainer
+                </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem>Trainer</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem>Location</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </div>
