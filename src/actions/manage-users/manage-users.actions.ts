@@ -82,7 +82,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             addUserRolesToMap(cognitoRoles.TRAINER, trainerResponse.data.Users, userMap);
         }
 
-        // parse the response from the user service
+         // parse the response from the user service
         let userInfoResp = await userInfoRespPromise;
         const userServiceUserList = userInfoResp.data.content;
         const pageTotal = userInfoResp.data.totalPages;
