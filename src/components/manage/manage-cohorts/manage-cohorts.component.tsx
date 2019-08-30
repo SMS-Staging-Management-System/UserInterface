@@ -96,7 +96,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
             )
         }
-        return null;
+        return null; 
 
     }
 
