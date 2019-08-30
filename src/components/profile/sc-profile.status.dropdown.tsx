@@ -46,8 +46,25 @@ export class SCProfileStatusDropdown extends Component<ISCProfileStatusDropdownP
     }
 
     render() {
+        let dropDownHeaders: string[] = [];
         let dropDownArr: any[] = [];
-        
+
+        for (let i = 0; i < this.props.userStatuses.length; i++) {
+            const status = this.props.userStatuses[i];
+            if (!dropDownHeaders.includes(status.generalStatus)) {
+                dropDownArr.push(<DropdownItem className="dropdown-header" disabled>{status.generalStatus}</DropdownItem>);
+                dropDownHeaders.push(status.generalStatus);
+            }
+            if (!status.virtual) {
+                dropDownArr.push(<DropdownItem
+                    key={status.statusId} 
+                    onClick={this.selectHandler}
+                    active={status.specificStatus === this.state.buttonText}>
+                    {status.specificStatus}
+                </DropdownItem>)
+            }
+        }
+
         return (
             <>
                 {this.props.currentSMSUser.roles.length === 0 ?
@@ -59,20 +76,10 @@ export class SCProfileStatusDropdown extends Component<ISCProfileStatusDropdownP
                         </DropdownToggle>
                         <DropdownMenu>
                             {!this.props.userStatuses
-                                    ? <>
-                                        <DropdownItem>Unable To Find Any Statuses</DropdownItem>
-                                    </>
-                                    : this.props.userStatuses.map(status =>
-                                        (!status.virtual) 
-                                        ? <DropdownItem
-                                            key={status.statusId} 
-                                            onClick={this.selectHandler}
-                                            active={status.specificStatus === this.state.buttonText}>
-                                            {status.specificStatus}
-                                        </DropdownItem>
-                                        : <></>
-
-                                    )
+                                ? <>
+                                    <DropdownItem>Unable To Find Any Statuses</DropdownItem>
+                                </>
+                                : dropDownArr
                             }
                         </DropdownMenu>
                     </UncontrolledDropdown>
