@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
@@ -6,13 +6,13 @@ import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
-import { Label } from 'reactstrap';
 import { store } from '../../Store';
 import { FaSistrix } from 'react-icons/fa';
-// import { Button } from 'react-bootstrap'; 
 import ReviewButton from './ActionButtons/ReviewButton';
-import { Collapse, InputGroup, FormControl } from 'react-bootstrap';
-// import { cognitoRoles } from '../../model/cognito-user.model';
+import { InputGroup } from 'react-bootstrap';
+import InputGroupAddon from 'reactstrap/lib/InputGroupAddon';
+import Input from 'reactstrap/lib/Input';
+import { UncontrolledPopover, PopoverBody } from 'reactstrap';
 
 
 
@@ -50,9 +50,13 @@ export interface InterviewListState {
     place: string,
     clientName: string,
     staging: string,
-
+    fromNotified: string,
+    toNotified: string,
+    fromScheduled: string,
+    toScheduled: string,
+    fromReviewed: string,
+    toReviewed: string,
 }
-
 
 // More comments 
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
@@ -64,16 +68,19 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             direction: this.props.direction,
             loaded: false,
             tableHeaderId: '0',
-            previousTableHeaderId: '1', //init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
+            previousTableHeaderId: '1', // init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
             listOfInterviews: [],
             associateEmail: 'associateEmail',
             managerEmail: 'managerEmail',
             place: 'placeName',
             clientName: 'clientName',
             staging: 'stagingOff',
-
-
-
+            fromNotified: '',
+            toNotified: '',
+            fromScheduled: '',
+            toScheduled: '',
+            fromReviewed: '',
+            toReviewed: '',
         }
     }
 
@@ -83,10 +90,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         });
     }
 
-    async componentWillReceiveProps(nextProps) { //Move props into state here
+    async componentWillReceiveProps(nextProps) { // Move props into state here
         this.setState({
             listOfInterviews: nextProps.listOfInterviews,
-            //listOfInterviewsInitial: nextProps.listOfInterviews
+            // listOfInterviewsInitial: nextProps.listOfInterviews
         });
     }
 
@@ -137,7 +144,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         await this.setState({
             tableHeaderId: event.currentTarget.id
         });
-        if (this.state.tableHeaderId === this.state.previousTableHeaderId) { //if click same header -> toggle ASC/DESC
+        if (this.state.tableHeaderId === this.state.previousTableHeaderId) { // if click same header -> toggle ASC/DESC
             if (this.state.direction === 'ASC') {
                 this.setState({
                     direction: 'DESC'
@@ -147,7 +154,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     direction: 'ASC'
                 });
             }
-        } else { //if click diff header -> sort ASC
+        } else { // if click diff header -> sort ASC
             this.setState({
                 direction: 'ASC'
             })
@@ -181,7 +188,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.staging);
     }
 
-    filterByAssociateEmail = (event: any) => { //handle filter click by associate email
+    filterByAssociateEmail = (event: any) => { // handle filter click by associate email
         console.log(event.currentTarget.value);
 
         if (event.currentTarget.value === 'associateEmail') {
@@ -216,7 +223,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    filterByManagerEmail = (event: any) => { //handle filter click by manager email
+    filterByManagerEmail = (event: any) => { // handle filter click by manager email
         if (event.currentTarget.value === 'managerEmail') {
             this.setState({
                 managerEmail: event.currentTarget.value
@@ -248,7 +255,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    filterByPlace = (event: any) => { //handle filter click by place
+    filterByPlace = (event: any) => { // handle filter click by place
         if (event.currentTarget.value === 'placeName') {
             this.setState({
                 place: event.currentTarget.value
@@ -280,8 +287,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         }
     }
 
-    filterByClient = (event: any) => { //handle filter click by client
-        //if (event.currentTarget.value === 'clientName') {
+    filterByClient = (event: any) => { // handle filter click by client
+        // if (event.currentTarget.value === 'clientName') {
         this.setState({
             clientName: event.currentTarget.value
         });
@@ -324,8 +331,18 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
   
       }
    */
+      
 
+    updateDate = (event: any) => {
+        event.preventDefault()
 
+        console.log(event.target.value)
+
+        this.setState({
+        ...this.state,
+        [event.target.name]: event.target.value
+        })
+    }
 
     renderDate = (date: number) => {
         if (date > 0) {
@@ -336,8 +353,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     }
 
     getAssocInput = (entry: any) => {
-        let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
-        let text = (entry.associateInput ? 'View' : 'Add');
+        const url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
+        const text = (entry.associateInput ? 'View' : 'Add');
         return (
             <td>
                 {
@@ -356,28 +373,28 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     render() {
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { // convert interview array to place array
             return item.associateEmail;
         });
-        const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => { //need unique places for select option
+        const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => { // need unique places for select option
             return arrAssociateEmail1.indexOf(item) === pos;
         });
-        const arrManagerEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrManagerEmail1 = this.props.listOfInterviews.map((item) => { // convert interview array to place array
             return item.managerEmail;
         });
-        const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => { //need unique places for select option
+        const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => { // need unique places for select option
             return arrManagerEmail1.indexOf(item) === pos;
         });
-        const arrPlace1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrPlace1 = this.props.listOfInterviews.map((item) => { // convert interview array to place array
             return item.place;
         });
-        const arrPlace2 = arrPlace1.filter((item, pos) => { //need unique places for select option
+        const arrPlace2 = arrPlace1.filter((item, pos) => { // need unique places for select option
             return arrPlace1.indexOf(item) === pos;
         });
-        const arrClientName1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrClientName1 = this.props.listOfInterviews.map((item) => { // convert interview array to place array
             return item.client.clientName;
         });
-        const arrClientName2 = arrClientName1.filter((item, pos) => { //need unique places for select option
+        const arrClientName2 = arrClientName1.filter((item, pos) => { // need unique places for select option
             return arrClientName1.indexOf(item) === pos;
         });
 
@@ -499,22 +516,55 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                         </select>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
-                                        <select className='form-control'>
-                                            <option value='dateNotified'>Date Notified</option>
-
-                                        </select>
+                                            <button className="btn rev-btn-2" type="button" id="dateNotified">
+                                                Notified
+                                            </button> 
+                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateNotified">
+                                                <PopoverBody>
+                                                    <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">From</InputGroupAddon>
+                                                        <Input type="date" name="fromNotified" onChange={this.updateDate}></Input>
+                                                        </InputGroup>
+                                                        <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">To</InputGroupAddon>
+                                                        <Input type="date" name="toNotified" onChange={this.updateDate}></Input>
+                                                    </InputGroup>
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
-                                        <select className='form-control'>
-                                            <option value='dateNotified'>Date Scheduled</option>
-
-                                        </select>
+                                            <button className="btn rev-btn-2" type="button" id="dateScheduled">
+                                                Scheduled
+                                            </button> 
+                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateScheduled">
+                                                <PopoverBody>
+                                                    <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">From</InputGroupAddon>
+                                                        <Input type="date" name="fromScheduled" onChange={this.updateDate}></Input>
+                                                        </InputGroup>
+                                                        <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">To</InputGroupAddon>
+                                                        <Input type="date" name="toScheduled" onChange={this.updateDate}></Input>
+                                                    </InputGroup>
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
                                     </td>
-                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
-                                        <select className='form-control'>
-                                            <option value='dateNotified'>Date Reviewed</option>
-
-                                        </select>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse'}}>
+                                            <button className="btn rev-btn-2" type="button" id="dateReviewed">
+                                                Reviewed
+                                            </button> 
+                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateReviewed">
+                                                <PopoverBody>
+                                                    <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">From</InputGroupAddon>
+                                                        <Input type="date" name="fromReviewed" onChange={this.updateDate}></Input>
+                                                        </InputGroup>
+                                                        <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">To</InputGroupAddon>
+                                                        <Input type="date" name="toReviewed" onChange={this.updateDate}></Input>
+                                                    </InputGroup>
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <select className='form-control' >
@@ -532,7 +582,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
                                         </select>
                                     </td>
-                                </tr>
+                                </tr> 
                                 <tbody>
                                     {this.state.listOfInterviews.map((entry) => {
                                         return (<tr key={entry.id}>
@@ -543,6 +593,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             <td>{entry.managerEmail}</td>
                                             <td>{entry.place}</td>
                                             <td>{entry.client.clientName}</td>
+                                            {/* <td><button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#dateNotified">Notified</button></td> */}
                                             <td>{this.renderDate(entry.notified)}</td>
                                             <td>{this.renderDate(entry.scheduled)}</td>
                                             <td>{this.renderDate(entry.reviewed)}</td>
@@ -601,6 +652,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     nextLinkClassName={'paginate-next page-link no-select justify-content-center'}
                     previousClassName={'page-item cursor-hover'}
                     previousLinkClassName={'paginate-previous page-link no-select justify-content-center'} />
+                
             </div>
         );
     }
