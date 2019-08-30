@@ -82,36 +82,7 @@ describe('<SCProfile />', () => {
     beforeEach(() => {
         mockProps = {
             currentSMSUser: {
-                email: inputNames.EMAIL,
-                userId: 1,
-                firstName: inputNames.FIRST_NAME,
-                lastName: inputNames.LAST_NAME,
-                phoneNumber: inputNames.PHONE,
-                trainingAddress: {
-                    addressId: 1,
-                    alias: 'Reston',
-                    street: '11730 Plaza America Dr #205',
-                    zip: '20190',
-                    city: 'Reston',
-                    state: 'VA',
-                    country: 'United States'
-                },
-                personalAddress: {
-                    addressId: 0,
-                    street: inputNames.STREET,
-                    alias: 'tstr',
-                    city: inputNames.CITY,
-                    country: inputNames.COUNTRY,
-                    state: inputNames.STATE,
-                    zip: inputNames.ZIP
-                },
-                userStatus: {
-                    statusId: 1,
-                    generalStatus: 'Training',
-                    specificStatus: 'Dropped',
-                    virtual: false
-                },
-                roles: [],
+                ...mockUser
             },
             trainingAddresses: {
                 trainingAddresses: [
@@ -266,7 +237,7 @@ describe('<SCProfile />', () => {
                 })
 
                 // Ensure dropdown is rendered
-                it(`Should contain one ${input} uncontrolled dropdown that shows ${inputNamesEle} initially`, () => {
+                it(`Should contain one ${input} uncontrolled dropdown that shows ${mockAdminUser.userStatus.specificStatus} initially`, () => {
                     const component = shallow(<SCProfile {...{...mockProps, currentSMSUser: mockAdminUser}} />);
                     const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
                     expect(uncontrolledDropdown).toHaveLength(1);
