@@ -6,7 +6,7 @@ import NavLink from 'reactstrap/lib/NavLink';
 import Navbar from 'reactstrap/lib/Navbar';
 
 
-interface IManageNavComponentProps extends RouteComponentProps{
+interface IManageNavComponentProps extends RouteComponentProps {
 
   toggleCreateUserModal: () => void,
   // toggleViewUserModal: () => void,
@@ -43,11 +43,11 @@ export class ManageNavComponent extends React.Component<IManageNavComponentProps
               onClick={() => this.props.updateManageUsersTable('trainer')}>Trainers</Link>
           </NavItem> */}
           <NavItem>
-              <Link to={path +"/manage/users"}
-                className={`nav-link ${this.isActive('users')}`}>Users</Link>
+            <Link to={path + "/manage/users"}
+              className={`nav-link ${this.isActive('users')}`}>Users</Link>
           </NavItem>
           <NavItem>
-            <Link to={path +"/manage/cohorts"}
+            <Link to={path + "/manage/cohorts"}
               className={`nav-link ${this.isActive('associates')}`}>Cohorts</Link>
           </NavItem>
         </Nav>
