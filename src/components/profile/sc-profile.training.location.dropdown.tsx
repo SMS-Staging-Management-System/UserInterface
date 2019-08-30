@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { IState } from '../../reducers';
-import { IUser } from '../../model/user.model';
-import { UncontrolledDropdown } from 'reactstrap/lib/Uncontrolled';
-import { inputNames } from './profile.component';
-import DropdownToggle from 'reactstrap/lib/DropdownToggle';
-import DropdownMenu from 'reactstrap/lib/DropdownMenu';
-import DropdownItem from 'react-bootstrap/DropdownItem';
-import { IAddressState } from '../../reducers/management';
+import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import DropdownItem from 'react-bootstrap/DropdownItem';
+import { connect } from 'react-redux';
+import DropdownMenu from 'reactstrap/lib/DropdownMenu';
+import DropdownToggle from 'reactstrap/lib/DropdownToggle';
+import { UncontrolledDropdown } from 'reactstrap/lib/Uncontrolled';
+import { IAddress } from '../../model/address.model';
+import { IUser } from '../../model/user.model';
+import { IState } from '../../reducers';
+import { inputNames } from './profile.component';
 
 export interface ISCProfileTrainingLocationDropdownState {
     buttonText: string
@@ -17,7 +17,7 @@ export interface ISCProfileTrainingLocationDropdownState {
 export interface ISCProfileTrainingLocationDropdownProps {
     currentSMSUser: IUser
     updateUser: IUser
-    trainingAddresses: IAddressState
+    trainingAddresses: IAddress[]
     changeHandler: (event: any) => any
 }
 
@@ -34,7 +34,7 @@ export class SCProfileTrainingLocationDropdown extends Component<ISCProfileTrain
         this.setState({
             buttonText: event.currentTarget.innerText
         })
-        this.props.changeHandler({target: {name: inputNames.TRAINING_ALIASES, value: event.currentTarget.innerText}});
+        this.props.changeHandler({ target: { name: inputNames.TRAINING_ALIASES, value: event.currentTarget.innerText } });
     }
 
     componentDidUpdate(prevProps: ISCProfileTrainingLocationDropdownProps) {
@@ -60,13 +60,13 @@ export class SCProfileTrainingLocationDropdown extends Component<ISCProfileTrain
                                 ? <>
                                     <DropdownItem>Unable To Find Any Locations</DropdownItem>
                                 </>
-                                : this.props.trainingAddresses.trainingAddresses.map(location =>
+                                : this.props.trainingAddresses.map(location =>
                                     <DropdownItem
                                         key={location.addressId}
-                                        onClick={this.selectHandler} >
+                                        onClick={this.selectHandler}
+                                        active={location.alias === this.state.buttonText}>
                                         {location.alias}
                                     </DropdownItem>
-
                                 )}
                         </DropdownMenu>
                     </UncontrolledDropdown>
@@ -78,7 +78,7 @@ export class SCProfileTrainingLocationDropdown extends Component<ISCProfileTrain
 
 const mapStateToProps = (state: IState) => ({
     currentSMSUser: state.managementState.currentSMSUser.currentSMSUser,
-    trainingAddresses: state.managementState.addresses
+    trainingAddresses: state.managementState.addresses.trainingAddresses
 })
 
 const mapDispatchToProps = {
