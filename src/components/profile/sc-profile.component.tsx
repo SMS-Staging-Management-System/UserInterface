@@ -7,6 +7,7 @@ import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { IAddressState, IStatusState } from '../../reducers/management';
 import { updateUserSC } from '../../actions/profile/sc.profile.actions';
+import { cognitoRoles } from '../../model/cognito-user.model';
 
 
 export const inputNames = {
@@ -23,7 +24,7 @@ export const inputNames = {
     STATUS_ALIASES: 'STATUS_ALIASES'
 }
 
-interface ISCProfileProps {
+export interface ISCProfileProps {
     currentSMSUser: IUser,
     trainingAddresses: IAddressState,
     userStatus: IStatusState,
@@ -251,7 +252,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                     <Label>Email</Label>
                                     <Input
                                         type="email"
-                                        name=""
+                                        name={inputNames.EMAIL}
                                         value={this.state.updateUser && this.state.updateUser.email} readOnly />
                                 </FormGroup>
                             </Col>
@@ -260,11 +261,11 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                 {this.props.currentSMSUser.roles.length === 0 ?
                                     <p><strong>{this.state.updateUser.trainingAddress && this.state.updateUser.trainingAddress.alias}</strong></p>
                                     :
-                                    <UncontrolledDropdown caret>
+                                    <UncontrolledDropdown name={inputNames.TRAINING_ALIASES} caret>
                                         <DropdownToggle>
                                             {this.state.updateUser.trainingAddress && this.state.updateUser.trainingAddress.alias || 'No Location'}
                                         </DropdownToggle>
-                                        <DropdownMenu name={inputNames.TRAINING_ALIASES}>
+                                        <DropdownMenu>
                                             {
                                                 this.state.trainingAddresses.length === 0
                                                     ? <>
@@ -374,15 +375,15 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                     <Col>
                                         <Label>Status</Label>
                                         {this.props.currentSMSUser.roles.length === 0 ?
-                                            <Button className="user-btn" disabled>{this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
+                                            <Button name={inputNames.STATUS_ALIASES} className="user-btn" disabled>{this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
                                                 && this.state.updateUser.userStatus.specificStatus || 'No Status'}</Button>
                                             :
-                                            <UncontrolledDropdown caret>
+                                            <UncontrolledDropdown name={inputNames.STATUS_ALIASES} caret>
                                                 <DropdownToggle>
                                                     {this.state.updateUser.userStatus && this.state.updateUser.userStatus.generalStatus
                                                         && this.state.updateUser.userStatus.specificStatus || 'No Status'}
                                                 </DropdownToggle>
-                                                <DropdownMenu name={inputNames.STATUS_ALIASES}>
+                                                <DropdownMenu>
                                                     {
                                                         this.state.userStatus.length === 0
                                                             ? <>
@@ -428,7 +429,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                                 <Input
                                                     type="checkbox"
                                                     value="admin" 
-                                                    checked={this.state.updateUser.roles.includes('admin')} /> Admin
+                                                    checked={this.state.updateUser.roles.includes(cognitoRoles.ADMIN)} /> Admin
                                             </Label>
                                         </FormGroup>
                                     </Col>
@@ -438,7 +439,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                                 <Input
                                                     type="checkbox"
                                                     value="tranier" 
-                                                    checked={this.state.updateUser.roles.includes('trainer')}/> Trainer
+                                                    checked={this.state.updateUser.roles.includes(cognitoRoles.TRAINER)}/> Trainer
                                         </Label>
                                         </FormGroup>
                                     </Col>
@@ -448,7 +449,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                                 <Input
                                                     type="checkbox"
                                                     value="staging-manager" 
-                                                    checked={this.state.updateUser.roles.includes('staging-manager')}/> Staging Manager
+                                                    checked={this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER)}/> Staging Manager
                                         </Label>
                                         </FormGroup>
                                     </Col>
@@ -458,9 +459,9 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                                 <Input
                                                     type="checkbox"
                                                     value="associate" 
-                                                    checked={!(this.state.updateUser.roles.includes('admin')
-                                                        || this.state.updateUser.roles.includes('trainer')
-                                                        || this.state.updateUser.roles.includes('staging-manager'))}/> Associate
+                                                    checked={!(this.state.updateUser.roles.includes(cognitoRoles.ADMIN)
+                                                        || this.state.updateUser.roles.includes(cognitoRoles.TRAINER)
+                                                        || this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER))}/> Associate
                                         </Label>
                                         </FormGroup>
                                     </Col>
