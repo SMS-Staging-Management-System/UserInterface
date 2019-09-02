@@ -1,0 +1,154 @@
+import { shallow } from "enzyme";
+import React from 'react';
+import { cognitoRoles } from "../../model/cognito-user.model";
+import { IUser } from "../../model/user.model";
+import { ISCRoleSelectorProps, SCRoleSelector } from "./sc-profile.role.selector";
+import { Input } from "reactstrap";
+
+const inputNames = {
+    EMAIL: 'NEW_USER_EMAIL',
+    FIRST_NAME: 'NEW_USER_FIRST_NAME',
+    LAST_NAME: 'NEW_USER_LAST_NAME',
+    PHONE: 'NEW_USER_PHONE',
+    STREET: 'STREET',
+    CITY: 'CITY',
+    STATE: 'STATE',
+    COUNTRY: 'COUNTRY',
+    ZIP: 'ZIP',
+    TRAINING_ALIASES: 'TRAINING_ALIASES',
+    STATUS_ALIASES: 'STATUS_ALIASES',
+    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
+    ROLES: 'ROLES'
+}
+
+const passedInputNames = {
+    EMAIL: 'PASSED_IN_EMAIL',
+    FIRST_NAME: 'PASSED_IN_FIRST_NAME',
+    LAST_NAME: 'PASSED_IN_LAST_NAME',
+    PHONE: 'PASSED_IN_PHONE',
+    STREET: 'PASSED_IN_STREET',
+    CITY: 'PASSED_IN_CITY',
+    STATE: 'PASSED_IN_STATE',
+    COUNTRY: 'PASSED_IN_COUNTRY',
+    ZIP: 'PASSED_IN_ZIP',
+    TRAINING_ALIASES: 'TRAINING_ALIASES',
+    STATUS_ALIASES: 'STATUS_ALIASES',
+    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
+    ROLES: 'ROLES'
+}
+
+describe('<SCRoleSelector />', () => {
+    let mockProps: ISCRoleSelectorProps;
+    const mockUser: IUser = {
+        email: passedInputNames.EMAIL,
+        userId: 0,
+        firstName: passedInputNames.FIRST_NAME,
+        lastName: passedInputNames.LAST_NAME,
+        phoneNumber: passedInputNames.PHONE,
+        trainingAddress: {
+            addressId: 1,
+            alias: 'Reston',
+            street: '11730 Plaza America Dr #205',
+            zip: '20190',
+            city: 'Reston',
+            state: 'VA',
+            country: 'United States'
+        },
+        personalAddress: {
+            addressId: 0,
+            street: passedInputNames.STREET,
+            alias: 'tstr',
+            city: passedInputNames.CITY,
+            country: passedInputNames.COUNTRY,
+            state: passedInputNames.STATE,
+            zip: passedInputNames.ZIP
+        },
+        userStatus: {
+            statusId: 2,
+            generalStatus: 'Training',
+            specificStatus: 'Training',
+            virtual: false
+        },
+        roles: []
+    }
+    const mockAdminUser: IUser = {
+        ...mockUser,
+        userStatus: {
+            statusId: 8,
+            generalStatus: 'Staging',
+            specificStatus: 'Project Started',
+            virtual: false
+        },
+        roles: [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]
+    }
+    const mockRoleConfigurations: string[][] = [
+        [],
+        [cognitoRoles.TRAINER],
+        [cognitoRoles.STAGING_MANAGER],
+        [cognitoRoles.ADMIN],
+        [cognitoRoles.TRAINER, cognitoRoles.STAGING_MANAGER],
+        [cognitoRoles.TRAINER, cognitoRoles.ADMIN],
+        [cognitoRoles.STAGING_MANAGER, cognitoRoles.ADMIN],
+        [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]
+    ]
+    const checkboxValues = [
+        'associate',
+        cognitoRoles.TRAINER,
+        cognitoRoles.STAGING_MANAGER,
+        cognitoRoles.ADMIN
+    ]
+
+    beforeEach(() => {
+        mockProps = {
+            currentSMSUser: {
+                ...mockUser
+            },
+            updateUser: {
+                ...mockUser
+            },
+            onChangeHandler: jest.fn()
+        }
+    })
+
+    it('Should render the component as a disabled input if the current user is an associate.', () => {
+        const component = shallow(<SCRoleSelector {...mockProps} />);
+        expect(component).toBeDefined();
+        const input = component.find(Input).find(`[name="${inputNames.ROLES}"]`).find(`[value="Associate"]`);
+        expect(input).toHaveLength(1);
+    })
+
+    mockRoleConfigurations.forEach(configuration => {
+        const mockUpdateUser: IUser = {
+            ...mockUser,
+            roles: configuration
+        }
+
+        if (configuration.length === 0) {
+            configuration = ['associate']
+        }
+
+        it(`Should render the component with ${configuration} option(s) checked`, () => {
+            const component = shallow(<SCRoleSelector {...{ ...mockProps, currentSMSUser: mockAdminUser, updateUser: mockUpdateUser }} />);
+            expect(component).toBeDefined();
+            const inputs = component.find(Input).find(`[name="${inputNames.ROLES}"]`);
+            expect(inputs).toHaveLength(4);
+            checkboxValues.forEach(checkbox => {
+                const checked = configuration.includes(checkbox);
+                const box = inputs.find(`[value="${checkbox}"]`).find(`[checked=${checked}]`);
+                expect(box).toHaveLength(1);
+            })
+        })
+    })
+
+    it('Should call the prop function when changed.', () => {
+        const component = shallow(<SCRoleSelector {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        expect(component).toBeDefined();
+        const inputs = component.find(Input).find(`[name="${inputNames.ROLES}"]`);
+        expect(inputs).toHaveLength(4);
+        checkboxValues.forEach(checkbox => {
+            const box = inputs.find(`[value="${checkbox}"]`);
+            box.simulate('change');
+            expect(mockProps.onChangeHandler).toHaveBeenCalled();
+        })
+    })
+})

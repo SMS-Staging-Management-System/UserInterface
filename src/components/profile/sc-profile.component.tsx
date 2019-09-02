@@ -10,6 +10,7 @@ import { IState } from '../../reducers';
 import { IAddressState, IStatusState } from '../../reducers/management';
 import SCProfileStatusDropdown from './sc-profile.status.dropdown';
 import SCProfileTrainingLocationButton from './sc-profile.training.location.dropdown';
+import SCRoleSelector from './sc-profile.role.selector';
 
 
 export const inputNames = {
@@ -23,7 +24,9 @@ export const inputNames = {
     COUNTRY: 'COUNTRY',
     ZIP: 'ZIP',
     TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES'
+    STATUS_ALIASES: 'STATUS_ALIASES',
+    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
+    ROLES: 'ROLES'
 }
 
 export interface ISCProfileProps {
@@ -86,13 +89,15 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
     }
 
     onUserInfoChangeHandler = (event: any) => {
+        const target = event.target.value
+        const user = this.state.updateUser;
         switch (event.target.name) {
             case inputNames.EMAIL:
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
-                        email: event.target.value
+                        ...user,
+                        email: target
                     }
                 })
                 break;
@@ -100,8 +105,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
-                        firstName: event.target.value
+                        ...user,
+                        firstName: target
                     }
                 })
                 break;
@@ -109,8 +114,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
-                        lastName: event.target.value
+                        ...user,
+                        lastName: target
                     }
                 })
                 break;
@@ -118,8 +123,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
-                        phoneNumber: event.target.value
+                        ...user,
+                        phoneNumber: target
                     }
                 })
                 break;
@@ -127,10 +132,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
+                        ...user,
                         personalAddress: {
-                            ...this.state.updateUser.personalAddress,
-                            street: event.target.value
+                            ...user.personalAddress,
+                            street: target
                         }
                     }
                 })
@@ -139,10 +144,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
+                        ...user,
                         personalAddress: {
-                            ...this.state.updateUser.personalAddress,
-                            city: event.target.value
+                            ...user.personalAddress,
+                            city: target
                         }
                     }
                 })
@@ -151,10 +156,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
+                        ...user,
                         personalAddress: {
-                            ...this.state.updateUser.personalAddress,
-                            state: event.target.value
+                            ...user.personalAddress,
+                            state: target
                         }
                     }
                 })
@@ -163,10 +168,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
+                        ...user,
                         personalAddress: {
-                            ...this.state.updateUser.personalAddress,
-                            zip: event.target.value
+                            ...user.personalAddress,
+                            zip: target
                         }
                     }
                 })
@@ -175,35 +180,70 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
+                        ...user,
                         personalAddress: {
-                            ...this.state.updateUser.personalAddress,
-                            country: event.target.value
+                            ...user.personalAddress,
+                            country: target
                         }
                     }
                 })
                 break;
             case inputNames.TRAINING_ALIASES:
                 const newAddress = this.props.trainingAddresses.trainingAddresses.find((address: IAddress) => {
-                    return address.alias === event.target.value;
+                    return address.alias === target;
                 })
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
-                        trainingAddress: newAddress || this.state.updateUser.trainingAddress
+                        ...user,
+                        trainingAddress: newAddress || user.trainingAddress
                     }
                 })
                 break;
             case inputNames.STATUS_ALIASES:
-                const newStatus = this.props.userStatus.userStatus.find((status: IStatus) => {
-                    return status.specificStatus === event.target.value;
-                })
+                const newStatus = (this.props.userStatus.userStatus.find((status: IStatus) => {
+                    return status.specificStatus === target;
+                })) || user.userStatus
                 this.setState({
                     ...this.state,
                     updateUser: {
-                        ...this.state.updateUser,
-                        userStatus: newStatus || this.state.updateUser.userStatus
+                        ...user,
+                        userStatus: {
+                            ...newStatus,
+                            virtual: (newStatus.generalStatus === 'Training') ? false : user.userStatus.virtual
+                        }
+                    }
+                })
+                break;
+            case inputNames.VIRTUAL_CHECKBOX:
+                const newVirtual = (this.props.userStatus.userStatus.find((status: IStatus) => {
+                    return (status.specificStatus === user.userStatus.specificStatus && status.virtual === !user.userStatus.virtual)
+                }))
+                this.setState({
+                    ...this.state,
+                    updateUser: {
+                        ...user,
+                        userStatus: {
+                            ...newVirtual!
+                        }
+                    }
+                })
+                break;
+            case inputNames.ROLES:
+                let roles: string[] = [];
+                if (target !== 'associate') {
+                    roles = user.roles
+                    if (roles.includes(target)) {
+                        roles = roles.filter(role => { return role !== target });
+                    } else {
+                        roles.push(target);
+                    }
+                }
+                this.setState({
+                    ...this.state,
+                    updateUser: {
+                        ...user,
+                        roles
                     }
                 })
                 break;
@@ -270,15 +310,13 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
     render() {
         return (
             <Form onSubmit={this.onSubmit}>
-                <Row>
+                <Row className="mb-3">
                     <Col md={4}>
-                        <FormGroup>
-                            <Label>Email</Label>
-                            <Input
-                                type="email"
-                                name={inputNames.EMAIL}
-                                value={this.state.updateUser && this.state.updateUser.email} readOnly />
-                        </FormGroup>
+                        <Label>Email</Label>
+                        <Input
+                            type="email"
+                            name={inputNames.EMAIL}
+                            value={this.state.updateUser && this.state.updateUser.email} readOnly />
                     </Col>
                     <Col md={4}>
                         <Label>Training Location</Label>
@@ -287,162 +325,110 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             changeHandler={this.onUserInfoChangeHandler} />
                     </Col>
                 </Row>
-                <Row>
+                <Row className="mb-3">
                     <Col md={4}>
-                        <FormGroup>
-                            <Label>First Name</Label>
-                            <Input
-                                type="text"
-                                name={inputNames.FIRST_NAME}
-                                value={this.state.updateUser.firstName}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} required />
-                        </FormGroup>
+                        <Label>First Name</Label>
+                        <Input
+                            type="text"
+                            name={inputNames.FIRST_NAME}
+                            value={this.state.updateUser.firstName}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} required />
                     </Col>
                     <Col md={4}>
-                        <FormGroup>
-                            <Label>Last Name</Label>
-                            <Input
-                                type="text"
-                                name={inputNames.LAST_NAME}
-                                value={this.state.updateUser.lastName}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} required />
-                        </FormGroup>
+                        <Label>Last Name</Label>
+                        <Input
+                            type="text"
+                            name={inputNames.LAST_NAME}
+                            value={this.state.updateUser.lastName}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} required />
                     </Col>
                     <Col md={4}>
-                        <FormGroup>
-                            <Label>Phone Number</Label>
-                            <Input
-                                type="tel"
-                                pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
-                                name={inputNames.PHONE}
-                                value={this.state.updateUser.phoneNumber}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                        </FormGroup>
+                        <Label>Phone Number</Label>
+                        <Input
+                            type="tel"
+                            pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
+                            name={inputNames.PHONE}
+                            value={this.state.updateUser.phoneNumber}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
                     </Col>
                 </Row>
-                <FormGroup>
-                    <Label>Street</Label>
-                    <Input
-                        type="text"
-                        name={inputNames.STREET}
-                        value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.street}
-                        onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                </FormGroup>
-                <Row>
+                <Row className="mb-3">
+                    <Col>
+                        <Label>Street</Label>
+                        <Input
+                            type="text"
+                            name={inputNames.STREET}
+                            value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.street}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                    </Col>
+                </Row>
+                <Row className="mb-3">
                     <Col md={4}>
-                        <FormGroup>
-                            <Label>City</Label>
-                            <Input
-                                type="text"
-                                name={inputNames.CITY}
-                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.city}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                        </FormGroup>
+                        <Label>City</Label>
+                        <Input
+                            type="text"
+                            name={inputNames.CITY}
+                            value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.city}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
                     </Col>
                     <Col md={3}>
-                        <FormGroup>
-                            <Label>State</Label>
-                            <Input
-                                type="text"
-                                name={inputNames.STATE}
-                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.state}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                        </FormGroup>
+                        <Label>State</Label>
+                        <Input
+                            type="text"
+                            name={inputNames.STATE}
+                            value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.state}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
                     </Col>
                     <Col md={2}>
-                        <FormGroup>
-                            <Label>Zip</Label>
-                            <Input
-                                type="text"
-                                name={inputNames.ZIP}
-                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.zip}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                        </FormGroup>
+                        <Label>Zip</Label>
+                        <Input
+                            type="text"
+                            name={inputNames.ZIP}
+                            value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.zip}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
                     </Col>
                     <Col md={3}>
-                        <FormGroup>
-                            <Label>Country</Label>
-                            <Input
-                                type="text"
-                                name={inputNames.COUNTRY}
-                                value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.country}
-                                onChange={(event) => this.onUserInfoChangeHandler(event)} />
-                        </FormGroup>
+                        <Label>Country</Label>
+                        <Input
+                            type="text"
+                            name={inputNames.COUNTRY}
+                            value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.country}
+                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
                     </Col>
                 </Row>
-                <Row>
+                <Row className="mb-3">
                     <Col md={4}>
                         <Label>Status</Label>
                         <SCProfileStatusDropdown
                             updateUser={this.state.updateUser}
                             changeHandler={this.onUserInfoChangeHandler} />
+                        {this.state.updateUser.userStatus.generalStatus === 'Training'
+                            ? <></>
+                            :
+                            <>
+                                <FormGroup className="m-0" check inline>
+                                    <Input
+                                        className="m-0"
+                                        type="checkbox"
+                                        name={inputNames.VIRTUAL_CHECKBOX}
+                                        onChange={this.onUserInfoChangeHandler}
+                                        checked={this.state.updateUser.userStatus.virtual} />
+                                </FormGroup>
+                                {' Virtual'}
+                            </>}
                     </Col>
                     <Col md={8}>
                         <Label>Roles</Label>
                         <br />
-                        <Row style={{ margin: '1em' }}>
-                            <Col md={3}>
-                                <FormGroup checkedRoles>
-                                    <Label roles>
-                                        <Input
-                                            type="checkbox"
-                                            value="admin"
-                                            checked={this.state.updateUser.roles.includes(cognitoRoles.ADMIN)} /> Admin
-                                            </Label>
-                                </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                                <FormGroup checkedRoles>
-                                    <Label roles>
-                                        <Input
-                                            type="checkbox"
-                                            value="tranier"
-                                            checked={this.state.updateUser.roles.includes(cognitoRoles.TRAINER)} /> Trainer
-                                        </Label>
-                                </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                                <FormGroup checkedRoles>
-                                    <Label roles>
-                                        <Input
-                                            type="checkbox"
-                                            value="staging-manager"
-                                            checked={this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER)} /> Staging Manager
-                                        </Label>
-                                </FormGroup>
-                            </Col>
-                            <Col md={3}>
-                                <FormGroup checkedRoles>
-                                    <Label roles>
-                                        <Input
-                                            type="checkbox"
-                                            value="associate"
-                                            checked={!(this.state.updateUser.roles.includes(cognitoRoles.ADMIN)
-                                                || this.state.updateUser.roles.includes(cognitoRoles.TRAINER)
-                                                || this.state.updateUser.roles.includes(cognitoRoles.STAGING_MANAGER))} /> Associate
-                                        </Label>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <br />
-                        <Button className="update-model" type='submit'>Update</Button>
+                        <SCRoleSelector
+                            updateUser={this.state.updateUser}
+                            onChangeHandler={this.onUserInfoChangeHandler} />
                     </Col>
                 </Row>
                 <Row>
-                    {this.state.updateUser.userStatus.specificStatus !== 'Staging'
-                        ? <>
-                        </>
-                        :
-                        <Row style={{ margin: '2em' }}>
-                            <Label>Virtual</Label>
-                            <br />
-                            <Input
-                                type="checkbox"
-                                checked={this.state.updateUser.userStatus.virtual}
-                            // onChange={}
-                            />
-                        </Row>
-                    }
+                    <Col>
+                        <Button className="update-model" type='submit'>Update</Button>
+                    </Col>
                 </Row>
             </Form>
         )
