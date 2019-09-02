@@ -1,10 +1,8 @@
 import { shallow } from "enzyme";
 import React from "react";
 import { IUser } from "../../model/user.model";
-import { UncontrolledDropdown } from "reactstrap";
-import DropdownToggle from "reactstrap/lib/DropdownToggle";
-import { SCProfileTLD, ISCProfileTLDProps } from "./sc-profile.tld";
-import { Button } from "react-bootstrap";
+import { SCLocationDropdown, ISCLocationDropdownProps } from "./sc-location.dropdown";
+import { Button, UncontrolledDropdown, DropdownToggle } from "reactstrap";
 
 const inputNames = {
     EMAIL: 'NEW_USER_EMAIL',
@@ -34,8 +32,8 @@ const passedInputNames = {
     STATUS_ALIASES: 'STATUS_ALIASES'
 }
 
-describe('<SCProfileTrainingLocationDropdown />', () => {
-    let mockProps: ISCProfileTLDProps;
+describe('<SCLocationDropdown />', () => {
+    let mockProps: ISCLocationDropdownProps;
     const mockUser: IUser = {
         email: passedInputNames.EMAIL,
         userId: 0,
@@ -74,35 +72,36 @@ describe('<SCProfileTrainingLocationDropdown />', () => {
             currentSMSUser: {
                 ...mockUser
             },
-            trainingAddresses: {
-                trainingAddresses: [
-                    {
-                        addressId: 1,
-                        alias: 'Reston',
-                        street: '11730 Plaza America Dr #205',
-                        zip: '20190',
-                        city: 'Reston',
-                        state: 'VA',
-                        country: 'United States'
-                    },
-                    {
-                        addressId: 2,
-                        alias: 'USF',
-                        street: 'Northwest Educational Complex',
-                        zip: '33613',
-                        city: 'Tampa',
-                        state: 'FL',
-                        country: 'United States'
-                    }
-                ]
+            updateUser: {
+                ...mockUser
             },
-            updateUserSC: jest.fn()
+            trainingAddresses: [
+                {
+                    addressId: 1,
+                    alias: 'Reston',
+                    street: '11730 Plaza America Dr #205',
+                    zip: '20190',
+                    city: 'Reston',
+                    state: 'VA',
+                    country: 'United States'
+                },
+                {
+                    addressId: 2,
+                    alias: 'USF',
+                    street: 'Northwest Educational Complex',
+                    zip: '33613',
+                    city: 'Tampa',
+                    state: 'FL',
+                    country: 'United States'
+                }
+            ],
+            changeHandler: jest.fn()
         }
     })
 
     // Ensure component is rendered
     it('Should render the component', () => {
-        const component = shallow(<SCProfileTLD {...mockProps} />);
+        const component = shallow(<SCLocationDropdown {...mockProps} />);
         expect(component).toBeDefined();
     })
 
@@ -112,16 +111,16 @@ describe('<SCProfileTrainingLocationDropdown />', () => {
             if (input === 'TRAINING_ALIASES') {
                 // Ensure button is disabled for users who don't have credentials
                 it(`Should contain one ${input} button which is disabled`, () => {
-                    const component = shallow(<SCProfileTLD {...mockProps} />);
+                    const component = shallow(<SCLocationDropdown {...mockProps} />);
                     const button = component.find(Button).find(`[disabled=${true}]`);
                     expect(button).toHaveLength(1);
-                }) 
+                })
 
                 // Ensure dropdown is rendered
                 it(`Should contain one ${input} uncontrolled dropdown that shows ${mockUser.trainingAddress.alias} initally`, () => {
-                    const component = shallow(<SCProfileTLD {...mockProps} />);
+                    const component = shallow(<SCLocationDropdown {...mockProps} />);
                     const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
-                    expect (uncontrolledDropdown).toHaveLength(1);
+                    expect(uncontrolledDropdown).toHaveLength(1);
                     const dropdownToggle = uncontrolledDropdown.find(DropdownToggle).render().text();
                     expect(dropdownToggle).toBe(mockUser.trainingAddress.alias);
                 })

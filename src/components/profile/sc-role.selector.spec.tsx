@@ -1,9 +1,9 @@
 import { shallow } from "enzyme";
 import React from 'react';
+import { Input } from "reactstrap";
 import { cognitoRoles } from "../../model/cognito-user.model";
 import { IUser } from "../../model/user.model";
-import { ISCRoleSelectorProps, SCRoleSelector } from "./sc-profile.role.selector";
-import { Input } from "reactstrap";
+import { ISCRoleSelectorProps, SCRoleSelector } from "./sc-role.selector";
 
 const inputNames = {
     EMAIL: 'NEW_USER_EMAIL',

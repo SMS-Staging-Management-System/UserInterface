@@ -1,28 +1,28 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { IState } from '../../reducers';
-import { IUser } from '../../model/user.model';
-import { IStatus } from '../../model/status.model';
-import Button from 'reactstrap/lib/Button';
-import { inputNames } from './profile.component';
-import { UncontrolledDropdown } from 'reactstrap/lib/Uncontrolled';
-import DropdownToggle from 'reactstrap/lib/DropdownToggle';
-import DropdownMenu from 'reactstrap/lib/DropdownMenu';
+import React, { Component } from 'react';
 import DropdownItem from 'react-bootstrap/DropdownItem';
+import { connect } from 'react-redux';
+import Button from 'reactstrap/lib/Button';
+import DropdownMenu from 'reactstrap/lib/DropdownMenu';
+import DropdownToggle from 'reactstrap/lib/DropdownToggle';
+import { UncontrolledDropdown } from 'reactstrap/lib/Uncontrolled';
+import { IStatus } from '../../model/status.model';
+import { IUser } from '../../model/user.model';
+import { IState } from '../../reducers';
+import { inputNames } from './profile.component';
 
-interface ISCProfileStatusDropdownProps {
+interface ISCStatusDropdownProps {
     currentSMSUser: IUser
     userStatuses: IStatus[]
     updateUser: IUser
     changeHandler: (event: any) => any
 }
 
-interface ISCProfileStatusDropdownState {
+interface ISCStatusDropdownState {
     buttonText: string
 }
 
-export class SCProfileStatusDropdown extends Component<ISCProfileStatusDropdownProps, ISCProfileStatusDropdownState> {
-    constructor(props: ISCProfileStatusDropdownProps) {
+export class SCStatusDropdown extends Component<ISCStatusDropdownProps, ISCStatusDropdownState> {
+    constructor(props: ISCStatusDropdownProps) {
         super(props);
 
         this.state = {
@@ -37,7 +37,7 @@ export class SCProfileStatusDropdown extends Component<ISCProfileStatusDropdownP
         this.props.changeHandler({ target: { name: inputNames.STATUS_ALIASES, value: event.currentTarget.innerText } });
     }
 
-    componentDidUpdate(prevProps: ISCProfileStatusDropdownProps) {
+    componentDidUpdate(prevProps: ISCStatusDropdownProps) {
         if (prevProps != this.props) {
             this.setState({
                 buttonText: this.props.updateUser.userStatus && this.props.updateUser.userStatus.generalStatus && this.props.updateUser.userStatus.specificStatus || 'No Status'
@@ -98,4 +98,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SCProfileStatusDropdown)
+export default connect(mapStateToProps, mapDispatchToProps)(SCStatusDropdown)

@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { updateUserSC } from '../../actions/profile/sc.profile.actions';
 import { IAddress } from '../../model/address.model';
-import { cognitoRoles } from '../../model/cognito-user.model';
 import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { IAddressState, IStatusState } from '../../reducers/management';
-import SCProfileStatusDropdown from './sc-profile.status.dropdown';
-import SCRoleSelector from './sc-profile.role.selector';
-import SCProfileTLD from './sc-profile.tld';
+import SCLocationDropdown from './sc-location.dropdown';
+import SCRoleSelector from './sc-role.selector';
+import SCProfileStatusDropdown from './sc-status.dropdown';
 
 
 export const inputNames = {
@@ -320,7 +319,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                     </Col>
                     <Col md={4}>
                         <Label>Training Location</Label>
-                        <SCProfileTLD
+                        <SCLocationDropdown
                             updateUser={this.state.updateUser}
                             changeHandler={this.onUserInfoChangeHandler} />
                     </Col>

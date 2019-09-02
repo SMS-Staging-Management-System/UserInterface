@@ -19,16 +19,6 @@ interface ISCRoleSelectorState {
 export class SCRoleSelector extends Component<ISCRoleSelectorProps, ISCRoleSelectorState> {
     constructor(props: ISCRoleSelectorProps) {
         super(props);
-
-        this.state = {
-            //
-        }
-    }
-
-    componentDidUpdate(prevProps: ISCRoleSelectorProps) {
-        if(prevProps.updateUser.roles !== this.props.updateUser.roles) {
-            //
-        }
     }
 
     render() {

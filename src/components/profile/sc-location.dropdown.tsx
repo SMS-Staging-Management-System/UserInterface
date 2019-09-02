@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import DropdownItem from 'react-bootstrap/DropdownItem';
 import { connect } from 'react-redux';
-import DropdownMenu from 'reactstrap/lib/DropdownMenu';
-import DropdownToggle from 'reactstrap/lib/DropdownToggle';
-import { UncontrolledDropdown } from 'reactstrap/lib/Uncontrolled';
+import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
 import { IAddress } from '../../model/address.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { inputNames } from './profile.component';
 
-export interface ISCProfileTLDState {
+export interface ISCLocationDropdownState {
     buttonText: string
 }
 
-export interface ISCProfileTLDProps {
+export interface ISCLocationDropdownProps {
     currentSMSUser: IUser
     updateUser: IUser
     trainingAddresses: IAddress[]
     changeHandler: (event: any) => any
 }
 
-export class SCProfileTLD extends Component<ISCProfileTLDProps, ISCProfileTLDState> {
-    constructor(props: ISCProfileTLDProps) {
+export class SCLocationDropdown extends Component<ISCLocationDropdownProps, ISCLocationDropdownState> {
+    constructor(props: ISCLocationDropdownProps) {
         super(props);
 
         this.state = {
@@ -37,7 +34,7 @@ export class SCProfileTLD extends Component<ISCProfileTLDProps, ISCProfileTLDSta
         this.props.changeHandler({ target: { name: inputNames.TRAINING_ALIASES, value: event.currentTarget.innerText } });
     }
 
-    componentDidUpdate(prevProps: ISCProfileTLDProps) {
+    componentDidUpdate(prevProps: ISCLocationDropdownProps) {
         if (prevProps !== this.props) {
             this.setState({
                 buttonText: this.props.updateUser.trainingAddress && this.props.updateUser.trainingAddress.alias || 'No Location'
@@ -85,4 +82,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SCProfileTLD)
+export default connect(mapStateToProps, mapDispatchToProps)(SCLocationDropdown)
