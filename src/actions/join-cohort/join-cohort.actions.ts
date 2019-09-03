@@ -58,7 +58,6 @@ export const findCohortByToken = (token:string, history:History) => async (dispa
 export const findLoggedInUser = (user:ICognitoUser, history:History) => async (dispatch) => {
     try {
         const res = await userClient.findOneByEmail(user.email);
-        console.log('findOneByEmail', res);
         if (res.status === 200) {
             dispatch({
                 payload: {
@@ -120,7 +119,7 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
                     },
                     type: joinCohortTypes.JOIN_COHORT
             });
-            history.push('/dashboard/home');
+            history.push('/');
             toast.success('Joined Cohort');
         }
         if(join.status === 404){
@@ -175,7 +174,6 @@ export const saveUserAssociate = (newUser: IUser, history:History) => async (dis
             },
             type: joinCohortTypes.CREATE_NEW_USER_FOR_COHORT
           })
-          history.push('/management/login');
           toast.success('User Created');
       } else {
           history.push('/management/login');

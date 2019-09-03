@@ -44,7 +44,7 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, IJoin
 
   joinCohort = () => {
     if (this.props.joinCohortState.foundCohort.users.find((currentUser:IUser) => ( currentUser.userId === this.props.joinCohortState.userToJoin.userId))) {
-        this.props.history.push('/dashboard/home');
+        this.props.history.push('/');
         toast.info(`You are already in the ${this.props.joinCohortState.foundCohort.cohortName} cohort`);
     } else {
     this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history);
