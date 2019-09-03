@@ -8,7 +8,12 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import { store } from '../../Store';
+import { FaSistrix } from 'react-icons/fa';
 import ReviewButton from './ActionButtons/ReviewButton';
+import { InputGroup } from 'react-bootstrap';
+import InputGroupAddon from 'reactstrap/lib/InputGroupAddon';
+import Input from 'reactstrap/lib/Input';
+import { UncontrolledPopover, PopoverBody } from 'reactstrap';
 import moment from 'moment';
 // #endregion 
 
@@ -44,6 +49,13 @@ export interface InterviewListState { // state of table, its headings, and sorti
     associateEmail: string,
     managerEmail: string,
     place: string,
+    clientName: string,
+    fromNotified: string,
+    toNotified: string,
+    fromScheduled: string,
+    toScheduled: string,
+    fromReviewed: string,
+    toReviewed: string,
     client: string,
     staging: string
 }
@@ -52,22 +64,32 @@ const thKeys = ['associateEmail', 'managerEmail', 'place', 'client', 'notified',
                  'scheduled', 'reviewed', 'associateInput', 'interviewFeedback'];  
 const thValues = ['Associate Email', 'Manager Email', 'Location', 'Client', 'Date Notified',
                  'Date Scheduled', 'Date Reviewed', 'Associate Input', 'Interview Feedback'];
+const justifyCenter = 'justify-content-center';
+const pageItemCursorHover = 'page-item cursor-hover'
 
 export class InterviewList extends React.Component<InterviewListProps, InterviewListState> {
+
     constructor(props: InterviewListProps) {
         super(props);
         // initial state of the table and sorting values
         this.state = { 
             associateEmail: 'associateEmail',
             client: 'clientName',
+            clientName: 'clientName',
             direction: this.props.direction,
+            fromNotified: '',
+            fromReviewed: '',
+            fromScheduled: '',
             listOfInterviews: [],
             loaded: false,
             managerEmail: 'managerEmail',
             place: 'placeName',
             previousTableHeaderId: '1', // init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
             staging: 'stagingOff',
-            tableHeaderId: '0'
+            tableHeaderId: '0',
+            toNotified: '',
+            toReviewed: '',
+            toScheduled: '',
         }
     }
 
@@ -80,14 +102,11 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     async componentWillReceiveProps(nextProps) { // Move props into state here
         this.setState({
             listOfInterviews: nextProps.listOfInterviews,
-            //listOfInterviewsInitial: nextProps.listOfInterviews
         });
         
     }
 
     async componentDidUpdate() { // when the user messes with values, change the state
-        console.log(this.state);
-
         if (!this.state.loaded) {
             this.setState({
                 loaded: true
@@ -97,7 +116,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     }
 
     handlePageClick = (data) => { // runs when the page is clicked, change values displayed to what's in the state
-        console.log(data);
         this.props.getInterviewPages(data.selected,
             this.props.pageSize,
             this.props.orderBy,
@@ -171,9 +189,18 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             place === 'place' ? 'placeName' : place,
             client === 'client' ? 'clientName' : client,
             staging);
+    }     
+
+    updateDate = (event: any) => {
+        event.preventDefault()
+        this.setState({
+        ...this.state,
+        [event.target.name]: event.target.value
+        })
     }
 
     renderDate = (date: number) => { // renders a data if one is returned, otherwise just a dash
+        // end jons group
         if (date > 0) {
             return moment(date).format('lll');
         } else {
@@ -182,8 +209,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     }
 
     getAssocInput = (entry: any) => { // open component to associate input component
-        let url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
-        let text = (entry.associateInput ? 'View' : 'Add');
+        const url = (entry.associateInput ? 'viewAssocInput' : 'associateInput');
+        const text = (entry.associateInput ? 'View' : 'Add');
         return (
             <td>
                 {
@@ -202,96 +229,170 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     render() {
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
+        // convert interview array to place array
+        const arrPlace = this.props.listOfInterviews
+            .map((item) => item.place)
+            .filter((item, pos) => arrPlace.indexOf(item) === pos);
+        // convert interview array to client array
+        const arrClientName = this.props.listOfInterviews
+            .map((item) => item.client.clientName)
+            .filter((item, pos) => arrClientName.indexOf(item) === pos);
+
         return (
-            <div className='row'>
-                <div>
-                    <div className='table-responsive-xl'>
-                        <table className='table table-striped mx-auto w-auto' id='interview-list-table'>
-                            <thead className='rev-background-color'>
-                                <tr>
-                                    {isAdmin ? <th>Reviewed</th> : <></>/* will display only if user is an admin*/}
-                                    {thKeys.map((element, index) => {
-                                        return (<th id={element} key = {index} className='cursor-hover' onClick={this.changeOrderCriteria}>
-                                            {thValues[index]}
-                                            {this.state.tableHeaderId === element && this.state.direction === 'DESC' && 
-                                            <IoIosArrowDown id = {element} className='cursor-hover' onClick={this.changeOrderCriteria} />}
-                                            {this.state.tableHeaderId === element && this.state.direction === 'ASC' && 
-                                            <IoIosArrowUp id = {element} className='cursor-hover' onClick={this.changeOrderCriteria} />}
-                                        </th>)
-                                    })}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.listOfInterviews.map((entry) => {
-                                    return (<tr key={entry.id}>
-                                        {/* Added isAdmin check before the review button to fix bug. Originally, checkbox was showing even when user wasn't admin.*/}
-                                        {isAdmin ?
-                                            <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td> : null}
+            <div className='container'>
+                <div className='row'>
+                    <div>
+                        <div className='table-responsive-xl'>
+                            <table className='table table-striped mx-auto w-auto'>
+                                <thead className='rev-background-color'>
+                                    <tr>
+                                        {isAdmin ? <th>Reviewed</th> : <></>}
                                         {thKeys.map((element, index) => {
-                                            // check if element is a number, if it is then it's a date and should be rendered as such
-                                            let modifiedElement = (isNaN(entry[element])) ? entry[element] : this.renderDate(entry[element]);
-                                            // if element is an object, it's probably the client and we need their name, otherwise it can exist as is
-                                            modifiedElement = (entry[element] instanceof Object) ? entry[element].clientName : modifiedElement;
-                                            // return the table cell with the value coming back from the database. DO NOT return last 2 columns, as there is no data for them.
-                                            return ((index < thKeys.length - 2) ? <td>{modifiedElement}</td> : null)
+                                            return (<th id={element} key = {index} className='cursor-hover' onClick={this.changeOrderCriteria}>
+                                                {thValues[index]}
+                                                {this.state.tableHeaderId === element && this.state.direction === 'DESC' && 
+                                                <IoIosArrowDown id = {element} className='cursor-hover' onClick={this.changeOrderCriteria} />}
+                                                {this.state.tableHeaderId === element && this.state.direction === 'ASC' && 
+                                                <IoIosArrowUp id = {element} className='cursor-hover' onClick={this.changeOrderCriteria} />}
+                                            </th>)
                                         })}
-                                        {this.getAssocInput(entry)}
-                                        <td>{ // Link to feedback component
-                                            entry.feedback ?
-                                                <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id } }}>Edit Interview Feedback</Link>
-                                                :
-                                                isAdmin ?
-                                                    <Link to={{ pathname: `/interview/${entry.id}/feedback` }}>Complete Interview Feedback</Link>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    {isAdmin ? <td></td> : <></>}
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                        <div>
+                                            <span style={{ position: 'absolute', zIndex: 2, display: 'block' }}><FaSistrix /></span>
+                                            <input name='associateEmail' type="text" placeholder="Associate Email" style={{ paddingLeft: '1rem' }} className='form-control'
+                                                onChange={this.filterChange} value={this.state.associateEmail === 'associateEmail' ? '' : this.state.associateEmail}></input>
+                                        </div>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                        <div>
+                                            <span style={{ position: 'absolute', zIndex: 2, display: 'block' }}><FaSistrix /></span>
+                                            <input name='managerEmail' type="text" placeholder="Managaer Email" style={{ paddingLeft: '1rem' }} className='form-control'
+                                                onChange={this.filterChange} value={this.state.managerEmail === 'managerEmail' ? '' : this.state.managerEmail}></input>
+                                        </div>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                        <select name='place' onChange={this.filterChange} value={this.state.place} className='form-control'>
+                                            <option value='placeName'>Location</option>
+                                            {arrPlace.map((entry, index) => {
+                                                return (<option value={entry} key={index}>{entry}</option>);
+                                            })}
+                                        </select>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                        <select name='client' onChange={this.filterChange} value={this.state.clientName} className='form-control'>
+                                            <option value='clientName'>Client</option>
+                                            {arrClientName.map((entry, index) => {
+                                                return (<option value={entry} key={index}>{entry}</option>);
+                                            })}
+                                        </select>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                            <button className="btn rev-btn-2" type="button" id="dateNotified">
+                                                Notified
+                                            </button> 
+                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateNotified">
+                                                <PopoverBody>
+                                                    <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">From</InputGroupAddon>
+                                                        <Input type="date" name="fromNotified" onChange={this.updateDate}></Input>
+                                                        </InputGroup>
+                                                        <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">To</InputGroupAddon>
+                                                        <Input type="date" name="toNotified" onChange={this.updateDate}></Input>
+                                                    </InputGroup>
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                            <button className="btn rev-btn-2" type="button" id="dateScheduled">
+                                                Scheduled
+                                            </button> 
+                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateScheduled">
+                                                <PopoverBody>
+                                                    <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">From</InputGroupAddon>
+                                                        <Input type="date" name="fromScheduled" onChange={this.updateDate}></Input>
+                                                        </InputGroup>
+                                                        <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">To</InputGroupAddon>
+                                                        <Input type="date" name="toScheduled" onChange={this.updateDate}></Input>
+                                                    </InputGroup>
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse'}}>
+                                            <button className="btn rev-btn-2" type="button" id="dateReviewed">
+                                                Reviewed
+                                            </button> 
+                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateReviewed">
+                                                <PopoverBody>
+                                                    <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">From</InputGroupAddon>
+                                                        <Input type="date" name="fromReviewed" onChange={this.updateDate}></Input>
+                                                        </InputGroup>
+                                                        <InputGroup>
+                                                        <InputGroupAddon addonType="prepend">To</InputGroupAddon>
+                                                        <Input type="date" name="toReviewed" onChange={this.updateDate}></Input>
+                                                    </InputGroup>
+                                                </PopoverBody>
+                                            </UncontrolledPopover>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                        <select name='{element}' onChange={this.filterChange} className='form-control' >
+                                            <option value='dateNotified'>Associate Input</option>
+                                            <option value='with'>With Associate Input</option>
+                                            <option value='without'>Without Associate Input</option>
+                                        </select>
+                                    </td>
+                                    <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
+                                        <select name='{element}' onChange={this.filterChange} className='form-control'>
+                                            <option value='dateNotified'>Interview Feedback</option>
+                                            <option value='with'>With Interview Feedback</option>
+                                            <option value='without'>Without Interview Feedback</option>
+                                        </select>
+                                    </td>
+                                </tr> 
+                                <tbody>
+                                    {this.state.listOfInterviews.map((entry) => {
+                                        return (<tr key={entry.id}>
+                                            <td><ReviewButton disabled={isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td>
+                                            <td>{entry.associateEmail}</td>
+                                            <td>{entry.managerEmail}</td>
+                                            <td>{entry.place}</td>
+                                            <td>{entry.client.clientName}</td>
+                                            <td>{this.renderDate(entry.notified)}</td>
+                                            <td>{this.renderDate(entry.scheduled)}</td>
+                                            <td>{this.renderDate(entry.reviewed)}</td>
+                                            {this.getAssocInput(entry)}
+                                            <td>{
+                                                entry.feedback ?
+                                                    <Link to={{ pathname: "/interview/viewFeedback", state: { interviewId: entry.id } }}>Edit Interview Feedback</Link>
                                                     :
-                                                    <></>
-                                        }</td>
-                                    </tr>)
-                                })}
-                                <tr style={{ backgroundColor: '#f3a55d' }}>
-                                    {isAdmin ? <td></td> : null/* will display only if user is an admin*/}
-                                    {thKeys.map((element, keyIndex) => { // mapping out for every header value, it has a respective filter box
-                                        const filterCurrentArrValues: string[] = []; // array for each header if there are duplicates in results so they aren't shown
-                                        /* first 4 headers are the only ones we want users to filter by 
-                                            Then it will create filter boxes for each of those headers.
-                                            Option value display the table header as a default.
-                                            Then we map through each interview, matching header keys to the associated values, and then displaying them on the table
-                                            Below it we have a check of currentNestedEntry to ensure the entry is not an object, otherwise it must be on the client object
-                                            Then another check if the current entry is already in the filterCurrentArrValues, it is ignored. Otherwise add to array, and print option value
-                                        */
-                                        return (keyIndex < 4 ? <td>
-                                            <select onChange={this.filterChange} name={element}
-                                                value={this.state[element]} className='form-control'>
-                                                <option value={element}>{thValues[keyIndex]}</option>
-                                                {this.props.listOfInterviews.map((entry, index) => {
-                                                    const currentNestedEntry = (entry[element] instanceof Object) ? entry[element].clientName : entry[element];
-                                                    if (!filterCurrentArrValues.includes(currentNestedEntry)) {
-                                                        filterCurrentArrValues.push(currentNestedEntry);
-                                                        return (<option value={currentNestedEntry} key={index}>{currentNestedEntry}</option>)
-                                                    }
-                                                    return;
-                                                })}
-                                            </select>
-                                        </td> : null)
+                                                    isAdmin ?
+                                                        <Link to={{ pathname: `/interview/${entry.id}/feedback` }}>Complete Interview Feedback</Link>
+                                                        :
+                                                        <></>
+                                            }</td>
+                                        </tr>)
                                     })}
-                                    <td colSpan={3}>
-                                        <select onChange={this.filterChange} value={this.state.staging}
-                                            name='staging' className='form-control'>
-                                            <option value='stagingOff'>Staging Off</option>
-                                            <option value='stagingOn'>Staging On</option>
-                                        </select>
-                                    </td>
-                                    <td colSpan={2}>
-                                        <select name='pageSize' onChange={this.filterChange} className='form-control'>
-                                            <option value="" disabled selected hidden>Page</option>
-                                            <option value={5} className={'justify-content-center'}>5</option>
-                                            <option value={10} className={'justify-content-center'}>10</option>
-                                            <option value={25} className={'justify-content-center'}>25</option>
-                                            <option value={50} className={'justify-content-center'}>50</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                                <tfoot >
+                                </tfoot>
+                            </table>
+                            <div className='col-0.5' style={{ width: '10%' }}>
+                                <select name='pageSize' onChange={this.filterChange} className='form-control'>
+                                    <option value="" disabled selected hidden>Page</option>
+                                    <option value={5} className={justifyCenter}>5</option>
+                                    <option value={10} className={justifyCenter}>10</option>
+                                    <option value={25} className={justifyCenter}>25</option>
+                                    <option value={50} className={justifyCenter}>50</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br />
@@ -308,11 +409,11 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     onPageChange={this.handlePageClick}
                     containerClassName={'pagination page-navigator justify-content-center interview-list-table-paginate'}
                     activeClassName={'active'}
-                    pageClassName={'page-item cursor-hover'}
+                    pageClassName={pageItemCursorHover}
                     pageLinkClassName={'paginate-link page-link no-select justify-content-center'}
-                    nextClassName={'page-item cursor-hover'}
+                    nextClassName={pageItemCursorHover}
                     nextLinkClassName={'paginate-next page-link no-select justify-content-center'}
-                    previousClassName={'page-item cursor-hover'}
+                    previousClassName={pageItemCursorHover}
                     previousLinkClassName={'paginate-previous page-link no-select justify-content-center'} />
             </div >
         );
@@ -321,13 +422,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
 const mapStateToProps = (state: IState) => {
     return {
+        currentPage: state.interviewState.interviewList.currentPage,
+        direction: state.interviewState.interviewList.direction,
         email: state.managementState.auth.currentUser.email,
         listOfInterviews: state.interviewState.interviewList.listOfInterviews,
         numberOfPages: state.interviewState.interviewList.numberOfPages,
-        currentPage: state.interviewState.interviewList.currentPage,
-        pageSize: state.interviewState.interviewList.pageSize,
         orderBy: state.interviewState.interviewList.orderBy,
-        direction: state.interviewState.interviewList.direction
+        pageSize: state.interviewState.interviewList.pageSize,
     }
 }
 
