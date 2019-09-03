@@ -123,7 +123,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
             for (let key in this.state.responses) {
                 const responseToSubmit: IResponse = {
                     answerId: {
-                        id: this.state.responses[key],
+                        answerId: this.state.responses[key],
                         answer: '',
                         question: {questionId: 0, question: '', typeId: 0, answers: []}
                     },
@@ -146,7 +146,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
             // Submit the feedback
             for (let key in this.state.newFeedback) {
                 const newAnswer: IAnswer = {
-                    id: 0,
+                    answerId: 0,
                     answer: this.state.newFeedback[key],
                     question: {
                         questionId: parseInt(key),
@@ -178,31 +178,31 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                                 <form>
                                     {
                                         this.state.survey.questionJunctions.map(questionJunction => (
-                                            <div key={questionJunction.questionId.questionId} className="card form-group mb-3">
-                                                <h5 className="card-header">{questionJunction.questionId.question}</h5>
+                                            <div key={questionJunction.question.questionId} className="card form-group mb-3">
+                                                <h5 className="card-header">{questionJunction.question.question}</h5>
                                                 <div className="card-body">
-                                                    {questionJunction.questionId.typeId === 5 ? (
+                                                    {questionJunction.question.typeId === 5 ? (
                                                         <div className="form-group">
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
-                                                                name={questionJunction.questionId.questionId}
-                                                                value={this.state.newFeedback[questionJunction.questionId.questionId] || ''}
+                                                                name={questionJunction.question.questionId}
+                                                                value={this.state.newFeedback[questionJunction.question.questionId] || ''}
                                                                 onChange={this.handleFeedbackInput}
                                                                 placeholder="Enter your response here"
                                                             />
                                                         </div>
                                                     ) : (
                                                             <>
-                                                                {questionJunction.questionId.answerChoices &&
+                                                                {questionJunction.question.answers &&
 
-                                                                    questionJunction.questionId.answerChoices.map(choice => (
-                                                                        <div key={choice.id} className="form-check">
+                                                                    questionJunction.question.answers.map(choice => (
+                                                                        <div key={choice.answerId} className="form-check">
                                                                             <input
                                                                                 className="form-check-input"
                                                                                 type="radio"
-                                                                                name={`question-${questionJunction.questionId.questionId}-choice`}
-                                                                                value={choice.id}
+                                                                                name={`question-${questionJunction.question.questionId}-choice`}
+                                                                                value={choice.answerId}
                                                                                 onChange={this.handleResponseInput}
                                                                             />
                                                                             <label className="form-check-label">

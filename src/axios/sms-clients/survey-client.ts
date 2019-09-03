@@ -38,42 +38,13 @@ export const surveyClient = {
   },
 
   findAllSurveys: async () => {
-    let surveysAndTemplates;
-    let surveys: any = [];
-    await smsClient.get(surveyBaseRoute)
-      .then(response => {
-        surveysAndTemplates = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    if (surveysAndTemplates) {
-      surveysAndTemplates.forEach(element => {
-        if (!element.template) {
-          surveys.push(element);
-        }
-      });
-    }
-    return surveys;
+    const resp = await smsClient.get(surveyBaseRoute + '/published');
+    return resp.data;   
   },
+
   findAllTemplates: async () => {
-    let surveysAndTemplates;
-    let templates: any = [];
-    await smsClient.get(surveyBaseRoute)
-      .then(response => {
-        surveysAndTemplates = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    if (surveysAndTemplates) {
-      surveysAndTemplates.forEach(element => {
-        if (element.template) {
-          templates.push(element);
-        }
-      });
-    }
-    return templates;
+    const resp = await smsClient.get(surveyBaseRoute + '/template')
+    return resp.data;
 
   },
   findSurveyById: async (id: number) => {
@@ -116,26 +87,15 @@ export const surveyClient = {
   },
 
 
-  findSurveysAssignedToUser: async (email: String) => {
-    let allSurveys: any[] = [];
+  findSurveysAssignedToUser: async (email: string) => {
     let myAssignedSurveys: any[] = [];
-    let myHistories;
     // Get all surveys
-    await surveyClient.findAllSurveys()
-      .then(response => {
-        allSurveys = response;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let allSurveys = await surveyClient.findAllSurveys();
+
     // Get histories by email
-    await surveyClient.findHistoriesByEmail(email)
-      .then(response => {
-        myHistories = response;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let myHistories = await surveyClient.findHistoriesByEmail(email);
+
+    console.log(myHistories)
     // If loading failed, don't loop through surveys, preventing crashing the page if the api server is down
     if (myHistories !== undefined) {
       //Loop through the histories, and save the corresponding survey
@@ -209,8 +169,8 @@ export const surveyClient = {
   //-- History Methods --//
   //---------------------//  
 
-  findHistoriesByEmail: async (email: String) => {
-    let response = await smsClient.post(historyBaseRoute +'/email', email)
+  findHistoriesByEmail: async (email: string) => {
+    let response = await smsClient.post(historyBaseRoute +'/email', JSON.stringify(email))
     return response.data
   },
 
