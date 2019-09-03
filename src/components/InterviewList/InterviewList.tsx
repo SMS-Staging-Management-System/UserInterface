@@ -229,14 +229,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     render() {
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        // convert interview array to place array
         const arrPlace = this.props.listOfInterviews
-            .map((item) => item.place)
-            .filter((item, pos) => arrPlace.indexOf(item) === pos);
+            .filter((item, pos) => this.props.listOfInterviews.indexOf(item) === pos)
+            .map((item) => item.place);
         // convert interview array to client array
         const arrClientName = this.props.listOfInterviews
+            .filter((item, pos) => this.props.listOfInterviews.indexOf(item) === pos)
             .map((item) => item.client.clientName)
-            .filter((item, pos) => arrClientName.indexOf(item) === pos);
 
         return (
             <div className='container'>
