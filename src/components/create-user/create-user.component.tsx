@@ -121,7 +121,6 @@ export interface ICreateUserProps {
         lastName: this.props.createUser.newUser.lastName,
         phoneNumber: this.props.createUser.newUser.phoneNumber
       }
-      console.log("1231231", tempUser);
       await this.props.saveUserAssociate(tempUser, this.props.history);
       this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history);
     }
