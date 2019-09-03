@@ -1,6 +1,7 @@
 import { INewInterviewData } from "../../model/INewInterviewData";
 import { store } from "../../Store";
 import { smsClient } from ".";
+import { cognitoRoles } from "../../model/cognito-user.model";
 
 const interviewContext = '/interview-service/interview';
 
@@ -17,12 +18,14 @@ export const interviewClient = {
         return await smsClient.get(`${interviewContext}/${interviewId}`);
     },
     
-    fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC') => {
+    fetchPage: (pageNumber? : number, pageSize? : number, orderBy = 'id', direction='ASC',
+                associateEmail='associateEmail', managerEmail='managerEmail',
+                place="placeName", clientName="clientName", staging='stagingOff') => {
         const currentUser = store.getState().managementState.auth.currentUser;
         console.log(currentUser);
         const roles = currentUser.roles
         const email = currentUser.email
-        const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
+        const isAdmin = (roles.includes(cognitoRoles.ADMIN) || roles.includes(cognitoRoles.STAGING_MANAGER) || roles.includes(cognitoRoles.TRAINER));
 
         let url = interviewContext;
         url += '/page'
@@ -36,6 +39,12 @@ export const interviewClient = {
         }
         if(!isAdmin)
             url += '&email=' + email;
+        url += '&associateEmail=' + associateEmail;
+        url += '&managerEmail=' + managerEmail;
+        url += '&place=' + place;
+        url += '&clientName=' + clientName;
+        url += '&staging=' + staging;
+        console.log(url);
         
         return smsClient.get(url);
     },
@@ -52,8 +61,20 @@ export const interviewClient = {
         return await smsClient.get(interviewContext + `/reports/InterviewsPerAssociate/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
     },
 
+    interviewPerAssocStats: async () => await smsClient.get(
+        interviewContext + '/reports/InterviewsPerAssociate/chart'
+    ),
+
+    getAssocMoreThanFiveInterviews: async (pageNumber: number, PageSize: number) => {
+        return await smsClient.get(interviewContext + `/dashboard/interviews/associate/fiveormore/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);
+    },
+
     sendFeedback: async (feedback: any) => {
         return await smsClient.post(interviewContext + `/feedback`, feedback);
+    },
+
+    updateFeedback: async (interviewId:any, feedback:any) => {
+        return await smsClient.patch(interviewContext + `/Feedback/InterviewId/${interviewId}`, feedback)
     },
 
     fetchManager24: async () => {
@@ -85,10 +106,24 @@ export const interviewClient = {
     },
 
     fetchInterviewFeedback: async (interviewId: number) => {
-        return await smsClient.get(interviewContext + `/Feedback/InterviewId/${interviewId}`);;
+        return await smsClient.get(interviewContext + `/Feedback/InterviewId/${interviewId}`);
+    },
+
+    fetchFeedbackStats: async (pageNumber:number, pageSize:number) => {
+        return await smsClient.get(interviewContext + '/reports/FeedbackStats/page', {
+            params: { pageNumber, pageSize } })
     },
 
     markInterviewAsReviewed: (id: number) => {
         return smsClient.get(interviewContext + '/markReviewed/' + id);
+    },
+    
+    getCalendarWeek: async (date: number | Date) => {
+
+        // Pass an epoch date number instead of a Date object, but accept
+        // either one for convenience or to account for user error
+        let epochDate = typeof date === 'number' ? date : date.getTime();
+
+        return await smsClient.get(`${interviewContext}/CalendarWeek/${epochDate}`);
     }
 }

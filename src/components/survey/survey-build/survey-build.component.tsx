@@ -18,24 +18,41 @@ import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { ISurveyState } from '../../../reducers/survey';
 import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
+import { FaPlusSquare } from 'react-icons/fa';
+import AddOther from './add.other.component';
 
 interface IComponentProps extends RouteComponentProps<{}> {
+  displaySurvey?: any,
   auth: IAuthState,
   match: any,
   surveyState: ISurveyState
   CreatSurvey: (frmData: any, completedTasks: any[]) => void
 };
+interface IComponentState{
+  displaySurvey?: any,
+  displayChoice: boolean,
+  isSuccessfullySubmitted: boolean,
+  showModal: boolean,
+  todos: any,
+  completedTasks: any,
+  draggedTask: any ,
+  submitQuestions: any,
+  notRenderedFirstTime: boolean
+}
 
-class surveyBuild extends React.Component<IComponentProps, any>{
+
+
+class surveyBuild extends React.Component<IComponentProps, IComponentState>{
   constructor(props) {
     super(props);
     this.state = {
+      displayChoice: false,
       isSuccessfullySubmitted: false,
       showModal: false,
       todos: [
         {
           questionID: 1, // make sure this questioID matches the id in the datatype for questiontype
-          task: <TrueFalse /> //multiple choice
+          task: <TrueFalse/>
         },
         {
           questionID: 2,
@@ -64,11 +81,15 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
 
       ],
+      submitQuestions: [],
       completedTasks: [],
-      draggedTask: {}
+      draggedTask: {},
+      notRenderedFirstTime: true
     }
+    this.toAddFunction = this.toAddFunction.bind(this);
+    this.deleterow = this.deleterow.bind(this);
   }
-
+  
   onDrag = (event, todo) => {
     event.preventDefault();
     this.setState({
@@ -90,7 +111,7 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     })
   }
 
-  deleterow = (event, index) => {
+  deleterow = (index) => {
     let temp: any[];
     temp = this.state.completedTasks;
     temp.splice(index, 1);
@@ -100,38 +121,49 @@ class surveyBuild extends React.Component<IComponentProps, any>{
     })
   }
 
-
-
-
-
-
   handleSubmit = async (event) => {
     event.preventDefault();
 
     if (this.state.completedTasks.length > 0) {
       let frmData = $(":input").serializeArray();
-      //frm data takes in too much data so splice until only title is received
-      frmData.splice(0, 13);
-
       this.props.CreatSurvey(frmData, this.state.completedTasks);
     }
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
     }
-
-
-
     this.handleShow();//user styleing for creating a survey
   }
 
   testaxois = async (event) => {
     surveyClient.findSurveyById(2);
   }
-
-  componentDidMount() {
-    this.testaxois(event);
+  componentWillMount(){
+    this.addSpecificSurvey();
   }
-
+  componentDidMount (){
+    this.testaxois(event);
+      this.setState({
+        notRenderedFirstTime: false
+      })
+    
+  }
+  // test if there is a survey passed into the builder to start with, and if so add it to the proper array for rendering. 
+  addSpecificSurvey = async() => {
+    if(this.props.history.location.state != undefined){
+      console.log("Received Template From /templates");
+      let survey = this.props.history.location.state.displaySurvey;
+      let a = survey.questionJunctions.length;
+      let toSetQuestions = new Array();
+      for(let i = 0; i < a; i++){
+        let type = survey.questionJunctions[i].questionId.typeId;
+        if(type > 0)type--;
+        toSetQuestions.push(this.state.todos[type]);
+      }
+      await this.setState({
+        completedTasks: toSetQuestions
+      });
+    }
+  }
   handleShow = () => {
     $('#alertSubmission').show();
     setTimeout(function () {
@@ -141,17 +173,175 @@ class surveyBuild extends React.Component<IComponentProps, any>{
       showModal: true
     })
   }
+
   handleClose = () => {
     this.setState({
       showModal: false
     })
   }
+
+  addClick = () =>{
+    this.setState({displayChoice : true});
+  }
+  // adds specific question of a specific type to the the render array
+  toAddFunction = (type:string) => {
+    this.setState({displayChoice : false});
+    const { completedTasks, todos } = this.state;
+    switch(type){
+      case "True/False":
+        this.setState({
+          completedTasks: [...completedTasks, todos[0]]
+        });
+      break;
+      case "Multiple Choice":
+        this.setState({
+          completedTasks: [...completedTasks, todos[1]]
+        });
+      break;
+      case "Checkbox Multiple Answer":
+        this.setState({
+          completedTasks: [...completedTasks, todos[2]]
+        });
+      break;
+      case "Rating":
+        this.setState({
+          completedTasks: [...completedTasks, todos[3]]
+        });
+      break;
+      case "Feedback":
+        this.setState({
+          completedTasks: [...completedTasks, todos[4]]
+        });
+      break;
+      case "Yes/No":
+        this.setState({
+          completedTasks: [...completedTasks, todos[5]]
+        });
+      break;
+      case "Strongly Agree/Disagree":
+        this.setState({
+          completedTasks: [...completedTasks, todos[6]]
+        });
+      break;
+      default: 
+        console.log("No matching option for type: " + type);
+    }
+    //console.log(this.state.completedTasks)
+  }
+  // renders components within the render array with given initial properties for props to be controled per question via multiple switch statements
+  renderComponent = (type: number, index:number) =>{
+    let showme ;
+    if(this.props.history.location.state != undefined){
+      let survey = this.props.history.location.state.displaySurvey;
+      console.log(survey);
+      if(survey.questionJunctions.length > index && this.state.notRenderedFirstTime){
+        let question = survey.questionJunctions[index].questionId.question;
+        switch(type){
+          case 1://"True/False":
+              showme = <TrueFalse selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question}/>;
+          break;
+          case 2://"Multiple Choice":
+              let answers1 = "";
+              for(let i = 0; i< survey.questionJunctions[index].questionId.answerChoices.length; i++){
+                answers1 += survey.questionJunctions[index].questionId.answerChoices[i].answer;
+                if(i != (survey.questionJunctions[index].questionId.answerChoices.length - 1)){
+                  answers1 += ", ";
+                }
+              }
+            showme = <MultipleChoice selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer ={answers1}/>;
+          break;
+          case 3://"Checkbox Multiple Answer":
+            //console.log(survey.questionJunctions[index]);
+            let answers = "";
+            for(let i = 0; i< survey.questionJunctions[index].questionId.answerChoices.length; i++){
+              answers += survey.questionJunctions[index].questionId.answerChoices[i].answer;
+              if(i != (survey.questionJunctions[index].questionId.answerChoices.length - 1)){
+                answers += ", ";
+              }
+            }
+            //console.log(answers);
+            showme = <CheckBox selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer ={answers}/>;
+          break;
+          case 4://"Rating":
+            showme = <Rating selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question}/>;
+          break;
+          case 5://"Feedback":
+            showme = <FeedBack selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question}/>;
+          break;
+          case 6://"Yes/No":
+            showme = <YesNoMaybe selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question}/>;
+          break;
+          case 7://"Strongly Agree/Disagree":
+            showme = <StronglyAgree selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question}/>;
+          break;
+          default: 
+            console.log("No matching option to render");
+        }
+      }
+      else{
+        switch(type){
+          case 1://"True/False":
+              showme = <TrueFalse selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} />;
+          break;
+          case 2://"Multiple Choice":
+            showme = <MultipleChoice selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+          break;
+          case 3://"Checkbox Multiple Answer":
+            showme = <CheckBox selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+          break;
+          case 4://"Rating":
+            showme = <Rating selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+          break;
+          case 5://"Feedback":
+            showme = <FeedBack selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+          break;
+          case 6://"Yes/No":
+            showme = <YesNoMaybe selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+          break;
+          case 7://"Strongly Agree/Disagree":
+            showme = <StronglyAgree selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+          break;
+          default: 
+            console.log("No matching option to render");
+        }
+      }
+    }
+    else{
+      switch(type){
+        case 1://"True/False":
+            showme = <TrueFalse selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} />;
+        break;
+        case 2://"Multiple Choice":
+          showme = <MultipleChoice selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+        break;
+        case 3://"Checkbox Multiple Answer":
+          showme = <CheckBox selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+        break;
+        case 4://"Rating":
+          showme = <Rating selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+        break;
+        case 5://"Feedback":
+          showme = <FeedBack selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+        break;
+        case 6://"Yes/No":
+          showme = <YesNoMaybe selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+        break;
+        case 7://"Strongly Agree/Disagree":
+          showme = <StronglyAgree selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction}/>;
+        break;
+        default: 
+          console.log("No matching option to render");
+      }
+    }
+    
+    return showme;
+  }
   render() {
-    const { todos, completedTasks } = this.state;
+    const { completedTasks } = this.state;
 
     return (
       <>
-        {/* Used for dragging */}
+        {/* Used for dragging 
         <div className="test">
           <div className="todos" >
             {
@@ -162,11 +352,9 @@ class surveyBuild extends React.Component<IComponentProps, any>{
 
               )
             }</div></div>
-
-
-
-
-
+        */ 
+       //OUTDATED FUNCTIONALITY FOR DRAG AND DROP. LEFT REMAINING FOR REFERENCE AND ROLL BACK ABILITY WITH EASE.
+      }
         <div className="container" >
 
           <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
@@ -174,12 +362,18 @@ class surveyBuild extends React.Component<IComponentProps, any>{
             <form onSubmit={this.handleSubmit} >
               <div id="123d" className={'form-group'}>
                 <label htmlFor="title">Survey Title</label>
-                <input type="text" className="form-control" name="title" required /><br />
-                <input type="checkbox" name="template?" /> Is this a template?
-
-     <br></br><br></br>
+                {/*conditional rendering*/}
+                {this.props.history.location.state && <input type="text" className="form-control" name="title" required defaultValue={this.props.history.location.state.displaySurvey.title}/>}
+                {!this.props.history.location.state && <input type="text" className="form-control" name="title" required/>}
+                <br />
+                {this.props.history.location.state && <input type="checkbox" name="template?" defaultChecked={this.props.history.location.state.displaySurvey.template}/> }
+                {!this.props.history.location.state && <input type="checkbox" name="template?"/> }
+                Is this a template?
+                <br></br><br></br>
                 <label htmlFor="description">Survey Description</label>
-                <textarea className="form-control" name="description" placeholder="Survey Description" required></textarea><br />
+                {this.props.history.location.state && <textarea className="form-control" name="description" placeholder="Survey Description" required defaultValue={this.props.history.location.state.displaySurvey.description}></textarea>}
+                {!this.props.history.location.state && <textarea className="form-control" name="description" placeholder="Survey Description" required ></textarea>}
+                <br />
 
 
 
@@ -189,23 +383,29 @@ class surveyBuild extends React.Component<IComponentProps, any>{
                 {/* Used for dropping from a drag */}
                 <div className="App">
 
-                  <div data-required onDrop={event => this.onDrop(event)} onDragOver={(event => this.onDragOver(event))} className="done" >
-                    {completedTasks.map((task, index) =>
+                   <div data-required onDrop={event => this.onDrop(event)} onDragOver={(event => this.onDragOver(event))} className="done" >
+                    {completedTasks.map((task, index, arr) =>
                       <div key={index}>
                         <br />
 
-                        <button className="btn btn-primary" onClick={() => this.deleterow(event, index)}>Remove &#8628;</button>
-                        {task.task}
+                        { //<button className="btn btn-primary" onClick={() => this.deleterow(event, index)}>Remove &#8628;</button>
+                        //OUTDATED FUNCTIONALITY FOR DRAG AND DROP. LEFT REMAINING FOR REFERENCE AND ROLL BACK ABILITY WITH EASE.
+                        }
 
-
+                        {task.task = this.renderComponent(task.questionID, index)}
                       </div>
-
                     )
+                    
                     }
-                  </div>
+                    
+                    {this.state.displayChoice == true && <AddOther parentFunction={this.toAddFunction}></AddOther>}
+                    
+                    {this.state.displayChoice == false && <button type="button" className="btn rev-btn" onClick={this.addClick}>Add Question <FaPlusSquare /> </button>}
+                  </div> 
+                  
                 </div>
 
-                <br /><br /><button type="submit" className="createSurveyButton" >Create Survey</button>
+                <br/><br/><button type="submit" className="createSurveyButton" >Create Survey</button>
 
 
               </div>
@@ -216,7 +416,6 @@ class surveyBuild extends React.Component<IComponentProps, any>{
           </div>
         </div>
       </>
-
 
 
     );

@@ -19,7 +19,7 @@ const prod = {
   smsContext:         'https://7i6rudc3m2.execute-api.us-east-1.amazonaws.com/prod',
 };
 
-// console.log(process.env.NODE_ENV);
+console.log(process.env.NODE_ENV);
 
 export let environment = dev;
 
