@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from "react-redux";
 import { IState } from '../../reducers';
 import { Button, Input, Label, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Card } from 'reactstrap';
-import { saveUserAssociate } from '../../actions/join-cohort/join-cohort.actions'
-import { ICreateUserState, IAddressState } from "../../reducers/management";
+import { joinCohort, saveUserAssociate } from '../../actions/join-cohort/join-cohort.actions'
+import { ICreateUserState, IAddressState, IJoinCohortState } from "../../reducers/management";
 import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
 import { updateNewUser, updateNewUserLocation, toggleLocationDropdown } from '../../actions/create-user/create-user.actions'
@@ -19,16 +19,19 @@ const inputNames = {
   }
 
 export interface ICreateUserProps {
+    token: string,
     createUser: ICreateUserState,
     addresses: IAddressState,
+    joinCohortState: IJoinCohortState,
     history: History,
+    joinCohort: (user:IUser, token:string, history:History) => void,
     updateNewUserLocation: (location: IAddress) => void,
     updateNewUser: (user: IUser) => void,
     toggleLocationDropdown: () => void,
     saveUserAssociate: (user:IUser, history:History) => void
   }
   
-  export class CreateUserComponent extends React.Component<ICreateUserProps, ICreateUserState> {
+  export class CreateUserComponent extends React.Component<ICreateUserProps, IJoinCohortState> {
     constructor(props) {
       super(props)
     }
@@ -95,11 +98,14 @@ export interface ICreateUserProps {
     saveNewUser = async (e: React.FormEvent) => {
       e.preventDefault();
       const tempUser: IUser = {
-        email: this.props.createUser.newUser.email,
         userId: 0,
-        firstName: this.props.createUser.newUser.firstName,
-        lastName: this.props.createUser.newUser.lastName,
-        phoneNumber: this.props.createUser.newUser.phoneNumber,
+        userStatus: {
+          statusId: 2,
+          generalStatus: 'Training',
+          specificStatus: 'Training',
+          virtual: false
+        },
+        roles: ['associate'],
         trainingAddress: this.props.createUser.newUser.trainingAddress,
         personalAddress: {
           addressId: 0,
@@ -110,15 +116,14 @@ export interface ICreateUserProps {
           state: '',
           zip: ''
         },
-        userStatus: {
-          statusId: 2,
-          generalStatus: 'Training',
-          specificStatus: 'Training',
-          virtual: false
-        },
-        roles: ['associate'],
+        email: this.props.createUser.newUser.email,
+        firstName: this.props.createUser.newUser.firstName,
+        lastName: this.props.createUser.newUser.lastName,
+        phoneNumber: this.props.createUser.newUser.phoneNumber
       }
-      this.props.saveUserAssociate(tempUser, this.props.history);
+      console.log("1231231", tempUser);
+      await this.props.saveUserAssociate(tempUser, this.props.history);
+      this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history);
     }
 
     signIn = () => {
@@ -220,11 +225,14 @@ export interface ICreateUserProps {
   const mapStateToProps = (state:IState, ownProps) => ({
     addresses: state.managementState.addresses,
     createUser: state.managementState.createUser, 
-    history: ownProps.history
+    history: ownProps.history,
+    joinCohortState: state.managementState.joinCohort,
+    token: ownProps.match.params.token
   })
   
   
   const mapDispatchToProps = {
+    joinCohort,
     updateNewUser,
     updateNewUserLocation,
     // tslint:disable-next-line: object-literal-sort-keys

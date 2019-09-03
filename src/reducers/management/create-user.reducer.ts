@@ -1,4 +1,4 @@
-import { ICreateUserState } from '.';
+import { ICreateUserState } from './index';
 import { authTypes } from '../../actions/auth/auth.actions';
 import { createUserTypes } from '../../actions/create-user/create-user.actions';
 
@@ -130,6 +130,7 @@ export const createUserReducer = (state = initialState, action: any) => {
       }
     case createUserTypes.USER_SAVED:
       return initialState;
+
     case authTypes.LOGOUT:
       return initialState;
   }
