@@ -1,10 +1,10 @@
 import { joinCohortTypes } from "../../actions/join-cohort/join-cohort.actions";
 import { authTypes } from "../../actions/auth/auth.actions";
-import { IJoinCohortState } from ".";
+import { IJoinCohortState } from "./index";
 
 
 const initialState: IJoinCohortState = {
-    validToken: true,
+    validToken: false,
     foundCohort:{
         cohortId:0,
         cohortName:'',
@@ -90,30 +90,35 @@ const initialState: IJoinCohortState = {
 }
 
 
-export const joinCohortReducer = (state = initialState, action: any) => {
+const joinCohortReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case joinCohortTypes.FIND_COHORT_BY_TOKEN:
             return {
                 ...state,
-                foundCohort:action.payload.foundCohort
+                foundCohort:action.payload.foundCohort,
+                validToken: true
             }
         case joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN:
             return {
                 ...state,
-                foundCohort:action.payload.foundCohort
+                foundCohort:action.payload.foundCohort,
+                validToken: false
             }
         case joinCohortTypes.FAILED_TO_JOIN_COHORT:
             return {
                 ...state,
             }
+        // tslint:disable-next-line: no-duplicated-branches
         case joinCohortTypes.FAILED_TO_CREATE_NEW_USER_FOR_COHORT:
             return {
                 ...state,
             }
+        // tslint:disable-next-line: no-duplicated-branches
         case joinCohortTypes.FAILED_TO_FIND_LOGGED_IN_USER:
             return {
                 ...state,
             }
+        // tslint:disable-next-line: no-duplicated-branches
         case joinCohortTypes.JOIN_COHORT:
             return {
                 ...state,
@@ -123,6 +128,7 @@ export const joinCohortReducer = (state = initialState, action: any) => {
                 ...state,
                 userToJoin: action.payload.newUser
             }
+        // tslint:disable-next-line: no-duplicated-branches
         case joinCohortTypes.FIND_LOGGED_IN_USER:
             return {
                 ...state,
@@ -134,3 +140,5 @@ export const joinCohortReducer = (state = initialState, action: any) => {
     }
     return state;
   }
+
+  export default joinCohortReducer;
