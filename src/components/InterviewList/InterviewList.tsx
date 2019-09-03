@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages, markAsReviewed, setSelected, getDropdown } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,7 @@ import ReviewButton from './ActionButtons/ReviewButton';
 export interface InterviewListProps {
     email: string,
     listOfInterviews: any[],
+    dropdowns: any[],
 
     numberOfPages: number,
     currentPage: number,
@@ -35,6 +36,16 @@ export interface InterviewListProps {
         staging?: string) => void,
     markAsReviewed: (interviewId: number) => void,
     setSelected: (current: any) => void;
+    getDropdown: (
+        pageNumber?: number,
+        pageSize?: number,
+        ordeyBy?: string,
+        direction?: string,
+        associateEmail?: string,
+        managerEmail?: string,
+        place?: string,
+        clientName?: string,
+        staging?: string) => void,
 }
 
 export interface InterviewListState {
@@ -47,7 +58,8 @@ export interface InterviewListState {
     managerEmail: string,
     place: string,
     clientName: string,
-    staging: string
+    staging: string,
+    dropdowns: any[]
 }
 
 // More comments 
@@ -61,23 +73,26 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             tableHeaderId: '0',
             previousTableHeaderId: '1', //init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
             listOfInterviews: [],
-            associateEmail: 'associateEmail',
-            managerEmail: 'managerEmail',
-            place: 'placeName',
-            clientName: 'clientName',
-            staging: 'stagingOff'
+            associateEmail: '*',
+            managerEmail: '*',
+            place: '*',
+            clientName: '*',
+            staging: '*',
+            dropdowns: []
         }
     }
 
     async componentDidMount() {
         this.setState({
+            dropdowns: this.props.dropdowns,
             listOfInterviews: this.props.listOfInterviews
         });
     }
 
     async componentWillReceiveProps(nextProps) { //Move props into state here
         this.setState({
-            listOfInterviews: nextProps.listOfInterviews,
+            dropdowns: nextProps.dropdowns,
+            listOfInterviews: nextProps.listOfInterviews
             //listOfInterviewsInitial: nextProps.listOfInterviews
         });
     }
@@ -99,6 +114,17 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                 this.state.place,
                 this.state.clientName,
                 this.state.staging);
+
+            this.props.getDropdown(
+                    this.props.currentPage,
+                    this.props.pageSize,
+                    this.props.orderBy,
+                    this.props.direction,
+                    this.state.associateEmail,
+                    this.state.managerEmail,
+                    this.state.place,
+                    this.state.clientName,
+                    this.state.staging);
         }
     }
 
@@ -373,28 +399,30 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
     render() {
         console.log(this.state.associateEmail);
+        console.log(this.props.dropdowns);
+        console.log(this.props.listOfInterviews);
 
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrAssociateEmail1 = this.props.dropdowns.map((item) => { //convert interview array to place array
             return item.associateEmail;
         });
         const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => { //need unique places for select option
             return arrAssociateEmail1.indexOf(item) === pos;
         });
-        const arrManagerEmail1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrManagerEmail1 = this.props.dropdowns.map((item) => { //convert interview array to place array
             return item.managerEmail;
         });
         const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => { //need unique places for select option
             return arrManagerEmail1.indexOf(item) === pos;
         });
-        const arrPlace1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrPlace1 = this.props.dropdowns.map((item) => { //convert interview array to place array
             return item.place;
         });
         const arrPlace2 = arrPlace1.filter((item, pos) => { //need unique places for select option
             return arrPlace1.indexOf(item) === pos;
         });
-        const arrClientName1 = this.props.listOfInterviews.map((item) => { //convert interview array to place array
+        const arrClientName1 = this.props.dropdowns.map((item) => { //convert interview array to place array
             return item.client.clientName;
         });
         const arrClientName2 = arrClientName1.filter((item, pos) => { //need unique places for select option
@@ -507,7 +535,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     </div>
                                     <div className='col-3'>
                                         <select onChange={this.filterByAssociateEmail} value={this.state.associateEmail} className='form-control'>
-                                            <option value='associateEmail'>Associate Email</option>
+                                            <option value='*'>Associate Email</option>
                                             {arrAssociateEmail2.map((entry, index) => {
                                                 return (
                                                     <option value={entry} key={index}>{entry}</option>
@@ -517,7 +545,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     </div>
                                     <div className='col-3'>
                                         <select onChange={this.filterByManagerEmail} value={this.state.managerEmail} className='form-control'>
-                                            <option value='managerEmail'>Manager Email</option>
+                                            <option value='*'>Manager Email</option>
                                             {arrManagerEmail2.map((entry, index) => {
                                                 return (
                                                     <option value={entry} key={index}>{entry}</option>
@@ -527,7 +555,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     </div>
                                     <div className='col'>
                                         <select onChange={this.filterByPlace} value={this.state.place} className='form-control'>
-                                            <option value='placeName'>Location</option>
+                                            <option value='*'>Location</option>
                                             {arrPlace2.map((entry, index) => {
                                                 return (
                                                     <option value={entry} key={index}>{entry}</option>
@@ -537,7 +565,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     </div>
                                     <div className='col-1.5'>
                                         <select onChange={this.filterByClient} value={this.state.clientName} className='form-control'>
-                                            <option value='clientName'>Client</option>
+                                            <option value='*'>Client</option>
                                             {arrClientName2.map((entry, index) => {
                                                 return (
                                                     <option value={entry} key={index}>{entry}</option>
@@ -547,8 +575,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     </div>
                                     <div className='col-1.5'>
                                         <select onChange={this.filterByStaging} value={this.state.staging} className='form-control'>
-                                            <option value='stagingOff'>Staging Off</option>
-                                            <option value='stagingOn'>Staging On</option>
+                                            <option value='*'>Staging Off</option>
+                                            <option value='*'>Staging On</option>
                                         </select>
                                     </div>
                                 </div>
@@ -589,11 +617,13 @@ const mapStateToProps = (state: IState) => {
         currentPage: state.interviewState.interviewList.currentPage,
         pageSize: state.interviewState.interviewList.pageSize,
         orderBy: state.interviewState.interviewList.orderBy,
-        direction: state.interviewState.interviewList.direction
+        direction: state.interviewState.interviewList.direction,
+        dropdowns: state.interviewState.interviewList.dropdowns
     }
 }
 
 const mapDispatchToProps = {
+    getDropdown,
     getInterviewPages,
     markAsReviewed,
     setSelected
