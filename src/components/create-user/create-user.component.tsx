@@ -71,6 +71,7 @@ export interface ICreateUserProps {
       const tempUser: IUser = {
         email: updatedNewUser.email,
         userId: 0,
+        // tslint:disable-next-line: object-literal-sort-keys
         firstName: updatedNewUser.firstName,
         lastName: updatedNewUser.lastName,
         phoneNumber: updatedNewUser.phoneNumber,
@@ -78,6 +79,7 @@ export interface ICreateUserProps {
         personalAddress: {
           addressId: 0,
           street: '',
+          // tslint:disable-next-line: object-literal-sort-keys
           alias: '',
           city: '',
           country: '',
@@ -86,6 +88,7 @@ export interface ICreateUserProps {
         },
         userStatus: {
           statusId: 0,
+          // tslint:disable-next-line: object-literal-sort-keys
           generalStatus: '',
           specificStatus: '',
           virtual: false,
@@ -101,15 +104,18 @@ export interface ICreateUserProps {
         userId: 0,
         userStatus: {
           statusId: 2,
+          // tslint:disable-next-line: object-literal-sort-keys
           generalStatus: 'Training',
           specificStatus: 'Training',
           virtual: false
         },
+        // tslint:disable-next-line: object-literal-sort-keys
         roles: ['associate'],
         trainingAddress: this.props.createUser.newUser.trainingAddress,
         personalAddress: {
           addressId: 0,
           street: '',
+          // tslint:disable-next-line: object-literal-sort-keys
           alias: '',
           city: '',
           country: '',
@@ -121,6 +127,7 @@ export interface ICreateUserProps {
         lastName: this.props.createUser.newUser.lastName,
         phoneNumber: this.props.createUser.newUser.phoneNumber
       }
+      // tslint:disable-next-line: no-invalid-await
       await this.props.saveUserAssociate(tempUser, this.props.history);
       this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history);
     }

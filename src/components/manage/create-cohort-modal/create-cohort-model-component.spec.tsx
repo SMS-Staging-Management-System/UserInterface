@@ -6,11 +6,12 @@ import { IAddress } from '../../../model/address.model';
 import { Button, InputGroup, Dropdown, Modal } from 'reactstrap';
 
 describe('CreateCohortModal', () => {
-
-    test('There are only 2 Buttons', () => {
+    let createCohort;
+    beforeEach(() => {
         const propAddress: IAddress = {
             addressId: 1,
             street: 'string',
+            // tslint:disable-next-line: object-literal-sort-keys
             alias: 'string',
             city: 'string',
             country: 'string',
@@ -20,6 +21,7 @@ describe('CreateCohortModal', () => {
 
         const props: ICreateCohortModal = {
             toggleModal: jest.fn(),
+            // tslint:disable-next-line: object-literal-sort-keys
             toggleLocationDropdown: jest.fn(),
             toggleTrainerDropdown: jest.fn(),
             saveCohort: jest.fn(),
@@ -32,6 +34,7 @@ describe('CreateCohortModal', () => {
                 manageUsers:[],
                 manageUsersCurrentPage:0,
                 manageUsersPageTotal:100,
+                // tslint:disable-next-line: object-literal-sort-keys
                 emailSearch:'2',
                 option:'option',
                 componentLoaded:false,
@@ -43,6 +46,7 @@ describe('CreateCohortModal', () => {
                 newCohort: {
                     cohortId: 1,
                     cohortName: 'string',
+                    // tslint:disable-next-line: object-literal-sort-keys
                     cohortDescription: 'string',
                     cohortToken: 'ring',
                     address: propAddress,
@@ -52,6 +56,7 @@ describe('CreateCohortModal', () => {
                     trainer: {
                         email: 'string',
                         userId: 1,
+                        // tslint:disable-next-line: object-literal-sort-keys
                         firstName: 'string',
                         lastName: 'string',
                         phoneNumber: 'string',
@@ -59,6 +64,7 @@ describe('CreateCohortModal', () => {
                         personalAddress: propAddress,
                         userStatus: {
                             statusId: 1,
+                            // tslint:disable-next-line: object-literal-sort-keys
                             generalStatus: 'string',
                             specificStatus: 'string',
                             virtual: false,
@@ -66,6 +72,7 @@ describe('CreateCohortModal', () => {
                         roles: [],
                     },
                 },
+                // tslint:disable-next-line: object-literal-sort-keys
                 locationDropdownActive: false,
                 trainerDropdownActive: false
             },
@@ -73,544 +80,27 @@ describe('CreateCohortModal', () => {
                 trainingAddresses: [propAddress]
             }
         }
-
-        const createCohort = shallow(<CreateCohortModal {...props} />);
+        createCohort = shallow(<CreateCohortModal {...props} />);
+    });
+    
+    test('There are only 2 Buttons', () => {
         expect(createCohort.find(Button)).toHaveLength(2);
     })
 
     test('There are only 3 Input Groups', () => {
-        const propAddress: IAddress = {
-            addressId: 1,
-            street: 'string',
-            alias: 'string',
-            city: 'string',
-            country: 'string',
-            state: 'string',
-            zip: 'stri'
-        }
-
-        const props: ICreateCohortModal = {
-            toggleModal: jest.fn(),
-            toggleLocationDropdown: jest.fn(),
-            toggleTrainerDropdown: jest.fn(),
-            saveCohort: jest.fn(),
-            updateNewCohortLocation: jest.fn(),
-            updateNewCohort: jest.fn(),
-            updateLocations: jest.fn(),
-            updateNewCohortTrainer: jest.fn(),
-            manageGetUsersByGroup: jest.fn(),
-            manageUsers:{
-                manageUsers:[],
-                manageUsersCurrentPage:0,
-                manageUsersPageTotal:100,
-                emailSearch:'2',
-                option:'option',
-                componentLoaded:false,
-                userTableSort:'sorting'
-            },
-            createCohort: {
-                enabled: true,
-                isSaved: false,
-                newCohort: {
-                    cohortId: 1,
-                    cohortName: 'string',
-                    cohortDescription: 'string',
-                    cohortToken: 'ring',
-                    address: propAddress,
-                    startDate: 'string', // 2019-01-15
-                    endDate: 'string', // yyyy-MM-dd
-                    users: [],
-                    trainer: {
-                        email: 'string',
-                        userId: 1,
-                        firstName: 'string',
-                        lastName: 'string',
-                        phoneNumber: 'string',
-                        trainingAddress: propAddress,
-                        personalAddress: propAddress,
-                        userStatus: {
-                            statusId: 1,
-                            generalStatus: 'string',
-                            specificStatus: 'string',
-                            virtual: false,
-                        },
-                        roles: [],
-                    },
-                },
-                locationDropdownActive: false,
-                trainerDropdownActive: false
-            },
-            addresses: {
-                trainingAddresses: [propAddress]
-            }
-        }
-
-        const createCohort = shallow(<CreateCohortModal {...props} />);
         expect(createCohort.find(InputGroup)).toHaveLength(3);
     })
 
     test('There are only 2 Dropdowns', () => {
-        const propAddress: IAddress = {
-            addressId: 1,
-            street: 'string',
-            alias: 'string',
-            city: 'string',
-            country: 'string',
-            state: 'string',
-            zip: 'stri'
-        }
-
-        const props: ICreateCohortModal = {
-            toggleModal: jest.fn(),
-            toggleLocationDropdown: jest.fn(),
-            toggleTrainerDropdown: jest.fn(),
-            saveCohort: jest.fn(),
-            updateNewCohortLocation: jest.fn(),
-            updateNewCohort: jest.fn(),
-            updateLocations: jest.fn(),
-            updateNewCohortTrainer: jest.fn(),
-            manageGetUsersByGroup: jest.fn(),
-            manageUsers:{
-                manageUsers:[],
-                manageUsersCurrentPage:0,
-                manageUsersPageTotal:100,
-                emailSearch:'2',
-                option:'option',
-                componentLoaded:false,
-                userTableSort:'sorting'
-            },
-            createCohort: {
-                enabled: true,
-                isSaved: false,
-                newCohort: {
-                    cohortId: 1,
-                    cohortName: 'string',
-                    cohortDescription: 'string',
-                    cohortToken: 'ring',
-                    address: propAddress,
-                    startDate: 'string', // 2019-01-15
-                    endDate: 'string', // yyyy-MM-dd
-                    users: [],
-                    trainer: {
-                        email: 'string',
-                        userId: 1,
-                        firstName: 'string',
-                        lastName: 'string',
-                        phoneNumber: 'string',
-                        trainingAddress: propAddress,
-                        personalAddress: propAddress,
-                        userStatus: {
-                            statusId: 1,
-                            generalStatus: 'string',
-                            specificStatus: 'string',
-                            virtual: false,
-                        },
-                        roles: [],
-                    },
-                },
-                locationDropdownActive: false,
-                trainerDropdownActive: false
-            },
-            addresses: {
-                trainingAddresses: [propAddress]
-            }
-        }
-
-        const createCohort = shallow(<CreateCohortModal {...props} />);
         expect(createCohort.find(Dropdown)).toHaveLength(2);
     })
 
     test('There is only 1 modal', () => {
-        const propAddress: IAddress = {
-            addressId: 1,
-            street: 'string',
-            alias: 'string',
-            city: 'string',
-            country: 'string',
-            state: 'string',
-            zip: 'stri'
-        }
-
-        const props: ICreateCohortModal = {
-            toggleModal: jest.fn(),
-            toggleLocationDropdown: jest.fn(),
-            toggleTrainerDropdown: jest.fn(),
-            saveCohort: jest.fn(),
-            updateNewCohortLocation: jest.fn(),
-            updateNewCohort: jest.fn(),
-            updateLocations: jest.fn(),
-            updateNewCohortTrainer: jest.fn(),
-            manageGetUsersByGroup: jest.fn(),
-            manageUsers:{
-                manageUsers:[],
-                manageUsersCurrentPage:0,
-                manageUsersPageTotal:100,
-                emailSearch:'2',
-                option:'option',
-                componentLoaded:false,
-                userTableSort:'sorting'
-            },
-            createCohort: {
-                enabled: true,
-                isSaved: false,
-                newCohort: {
-                    cohortId: 1,
-                    cohortName: 'string',
-                    cohortDescription: 'string',
-                    cohortToken: 'ring',
-                    address: propAddress,
-                    startDate: 'string', // 2019-01-15
-                    endDate: 'string', // yyyy-MM-dd
-                    users: [],
-                    trainer: {
-                        email: 'string',
-                        userId: 1,
-                        firstName: 'string',
-                        lastName: 'string',
-                        phoneNumber: 'string',
-                        trainingAddress: propAddress,
-                        personalAddress: propAddress,
-                        userStatus: {
-                            statusId: 1,
-                            generalStatus: 'string',
-                            specificStatus: 'string',
-                            virtual: false,
-                        },
-                        roles: [],
-                    },
-                },
-                locationDropdownActive: false,
-                trainerDropdownActive: false
-            },
-            addresses: {
-                trainingAddresses: [propAddress]
-            }
-        }
-
-        const createCohort = shallow(<CreateCohortModal {...props} />);
         expect(createCohort.find(Modal)).toHaveLength(1);
     })
 
     test('This is the resolves', () => {
-        const propAddress: IAddress = {
-            addressId: 1,
-            street: 'string',
-            alias: 'string',
-            city: 'string',
-            country: 'string',
-            state: 'string',
-            zip: 'stri'
-        }
-
-        const props: ICreateCohortModal = {
-            toggleModal: () => {},
-            toggleLocationDropdown: () => {},
-            toggleTrainerDropdown: () => {},
-            saveCohort: () => {},
-            updateNewCohortLocation: () => {},
-            updateNewCohort: () => {},
-            updateLocations: () => {},
-            updateNewCohortTrainer: () => {},
-            manageGetUsersByGroup: () => {},
-            manageUsers:{
-                manageUsers:[],
-                manageUsersCurrentPage:0,
-                manageUsersPageTotal:100,
-                emailSearch:'2',
-                option:'option',
-                componentLoaded:false,
-                userTableSort:'sorting'
-            },
-            createCohort: {
-                enabled: true,
-                isSaved: false,
-                newCohort: {
-                    cohortId: 1,
-                    cohortName: 'string',
-                    cohortDescription: 'string',
-                    cohortToken: 'ring',
-                    address: propAddress,
-                    startDate: 'string', // 2019-01-15
-                    endDate: 'string', // yyyy-MM-dd
-                    users: [],
-                    trainer: {
-                        email: 'string',
-                        userId: 1,
-                        firstName: 'string',
-                        lastName: 'string',
-                        phoneNumber: 'string',
-                        trainingAddress: propAddress,
-                        personalAddress: propAddress,
-                        userStatus: {
-                            statusId: 1,
-                            generalStatus: 'string',
-                            specificStatus: 'string',
-                            virtual: false,
-                        },
-                        roles: ['trainer'],
-                    },
-                },
-                locationDropdownActive: false,
-                trainerDropdownActive: false
-            },
-            addresses: {
-                trainingAddresses: [propAddress]
-            }
-        }
-
-        const createCohort = shallow(<CreateCohortModal {...props} />);
+        // tslint:disable-next-line: no-unused-expression
         expect(createCohort).resolves;
     })
-
-    // test('There are only 2 buttons', () => {
-    //     const propAddress: IAddress = {
-    //         addressId: 1,
-    //         street: 'string',
-    //         alias: 'string',
-    //         city: 'string',
-    //         country: 'string',
-    //         state: 'string',
-    //         zip: 'stri'
-    //     }
-
-    //     const props: ICreateCohortModal = {
-    //         toggleModal: jest.fn(),
-    //         toggleLocationDropdown: jest.fn(),
-    //         toggleTrainerDropdown: jest.fn(),
-    //         saveCohort: jest.fn(),
-    //         updateNewCohortLocation: jest.fn(),
-    //         updateNewCohort: jest.fn(),
-    //         updateLocations: jest.fn(),
-    //         updateNewCohortTrainer: jest.fn(),
-    //         manageGetUsersByGroup: jest.fn(),
-
-    //         createCohort: {
-    //             enabled: true,
-    //             isSaved: false,
-    //             newCohort: {
-    //                 cohortId: 1,
-    //                 cohortName: 'string',
-    //                 cohortDescription: 'string',
-    //                 cohortToken: 'ring',
-    //                 address: propAddress,
-    //                 startDate: 'string', // 2019-01-15
-    //                 endDate: 'string', // yyyy-MM-dd
-    //                 users: [],
-    //                 trainer: {
-    //                     email: 'string',
-    //                     userId: 1,
-    //                     firstName: 'string',
-    //                     lastName: 'string',
-    //                     phoneNumber: 'string',
-    //                     trainingAddress: propAddress,
-    //                     personalAddress: propAddress,
-    //                     userStatus: {
-    //                         statusId: 1,
-    //                         generalStatus: 'string',
-    //                         specificStatus: 'string',
-    //                         virtual: false,
-    //                     },
-    //                     roles: [],
-    //                 },
-    //             },
-    //             locationDropdownActive: false,
-    //             trainerDropdownActive: false
-    //         },
-    //         addresses: {
-    //             trainingAddresses: [propAddress]
-    //         }
-    //     }
-
-    //     const createCohort = shallow(<CreateCohortModal {...props} />);
-    //     expect(createCohort.find(Button)).toHaveLength(2);
-    // })
-
-    // test('There are only 2 buttons', () => {
-    //     const propAddress: IAddress = {
-    //         addressId: 1,
-    //         street: 'string',
-    //         alias: 'string',
-    //         city: 'string',
-    //         country: 'string',
-    //         state: 'string',
-    //         zip: 'stri'
-    //     }
-
-    //     const props: ICreateCohortModal = {
-    //         toggleModal: jest.fn(),
-    //         toggleLocationDropdown: jest.fn(),
-    //         toggleTrainerDropdown: jest.fn(),
-    //         saveCohort: jest.fn(),
-    //         updateNewCohortLocation: jest.fn(),
-    //         updateNewCohort: jest.fn(),
-    //         updateLocations: jest.fn(),
-    //         updateNewCohortTrainer: jest.fn(),
-    //         manageGetUsersByGroup: jest.fn(),
-
-    //         createCohort: {
-    //             enabled: true,
-    //             isSaved: false,
-    //             newCohort: {
-    //                 cohortId: 1,
-    //                 cohortName: 'string',
-    //                 cohortDescription: 'string',
-    //                 cohortToken: 'ring',
-    //                 address: propAddress,
-    //                 startDate: 'string', // 2019-01-15
-    //                 endDate: 'string', // yyyy-MM-dd
-    //                 users: [],
-    //                 trainer: {
-    //                     email: 'string',
-    //                     userId: 1,
-    //                     firstName: 'string',
-    //                     lastName: 'string',
-    //                     phoneNumber: 'string',
-    //                     trainingAddress: propAddress,
-    //                     personalAddress: propAddress,
-    //                     userStatus: {
-    //                         statusId: 1,
-    //                         generalStatus: 'string',
-    //                         specificStatus: 'string',
-    //                         virtual: false,
-    //                     },
-    //                     roles: [],
-    //                 },
-    //             },
-    //             locationDropdownActive: false,
-    //             trainerDropdownActive: false
-    //         },
-    //         addresses: {
-    //             trainingAddresses: [propAddress]
-    //         }
-    //     }
-
-    //     const createCohort = shallow(<CreateCohortModal {...props} />);
-    //     expect(createCohort.find(Button)).toHaveLength(2);
-    // })
-
-    // test('There are only 2 buttons', () => {
-    //     const propAddress: IAddress = {
-    //         addressId: 1,
-    //         street: 'string',
-    //         alias: 'string',
-    //         city: 'string',
-    //         country: 'string',
-    //         state: 'string',
-    //         zip: 'stri'
-    //     }
-
-    //     const props: ICreateCohortModal = {
-    //         toggleModal: jest.fn(),
-    //         toggleLocationDropdown: jest.fn(),
-    //         toggleTrainerDropdown: jest.fn(),
-    //         saveCohort: jest.fn(),
-    //         updateNewCohortLocation: jest.fn(),
-    //         updateNewCohort: jest.fn(),
-    //         updateLocations: jest.fn(),
-    //         updateNewCohortTrainer: jest.fn(),
-    //         manageGetUsersByGroup: jest.fn(),
-
-    //         createCohort: {
-    //             enabled: true,
-    //             isSaved: false,
-    //             newCohort: {
-    //                 cohortId: 1,
-    //                 cohortName: 'string',
-    //                 cohortDescription: 'string',
-    //                 cohortToken: 'ring',
-    //                 address: propAddress,
-    //                 startDate: 'string', // 2019-01-15
-    //                 endDate: 'string', // yyyy-MM-dd
-    //                 users: [],
-    //                 trainer: {
-    //                     email: 'string',
-    //                     userId: 1,
-    //                     firstName: 'string',
-    //                     lastName: 'string',
-    //                     phoneNumber: 'string',
-    //                     trainingAddress: propAddress,
-    //                     personalAddress: propAddress,
-    //                     userStatus: {
-    //                         statusId: 1,
-    //                         generalStatus: 'string',
-    //                         specificStatus: 'string',
-    //                         virtual: false,
-    //                     },
-    //                     roles: [],
-    //                 },
-    //             },
-    //             locationDropdownActive: false,
-    //             trainerDropdownActive: false
-    //         },
-    //         addresses: {
-    //             trainingAddresses: [propAddress]
-    //         }
-    //     }
-
-    //     const createCohort = shallow(<CreateCohortModal {...props} />);
-    //     expect(createCohort.find(Button)).toHaveLength(2);
-    // })
-
-    // test('There are only 2 buttons', () => {
-    //     const propAddress: IAddress = {
-    //         addressId: 1,
-    //         street: 'string',
-    //         alias: 'string',
-    //         city: 'string',
-    //         country: 'string',
-    //         state: 'string',
-    //         zip: 'stri'
-    //     }
-
-    //     const props: ICreateCohortModal = {
-    //         toggleModal: jest.fn(),
-    //         toggleLocationDropdown: jest.fn(),
-    //         toggleTrainerDropdown: jest.fn(),
-    //         saveCohort: jest.fn(),
-    //         updateNewCohortLocation: jest.fn(),
-    //         updateNewCohort: jest.fn(),
-    //         updateLocations: jest.fn(),
-    //         updateNewCohortTrainer: jest.fn(),
-    //         manageGetUsersByGroup: jest.fn(),
-
-    //         createCohort: {
-    //             enabled: true,
-    //             isSaved: false,
-    //             newCohort: {
-    //                 cohortId: 1,
-    //                 cohortName: 'string',
-    //                 cohortDescription: 'string',
-    //                 cohortToken: 'ring',
-    //                 address: propAddress,
-    //                 startDate: 'string', // 2019-01-15
-    //                 endDate: 'string', // yyyy-MM-dd
-    //                 users: [],
-    //                 trainer: {
-    //                     email: 'string',
-    //                     userId: 1,
-    //                     firstName: 'string',
-    //                     lastName: 'string',
-    //                     phoneNumber: 'string',
-    //                     trainingAddress: propAddress,
-    //                     personalAddress: propAddress,
-    //                     userStatus: {
-    //                         statusId: 1,
-    //                         generalStatus: 'string',
-    //                         specificStatus: 'string',
-    //                         virtual: false,
-    //                     },
-    //                     roles: [],
-    //                 },
-    //             },
-    //             locationDropdownActive: false,
-    //             trainerDropdownActive: false
-    //         },
-    //         addresses: {
-    //             trainingAddresses: [propAddress]
-    //         }
-    //     }
-
-    //     const createCohort = shallow(<CreateCohortModal {...props} />);
-    //     expect(createCohort.find(Button)).toHaveLength(2);
-    // })
 })
