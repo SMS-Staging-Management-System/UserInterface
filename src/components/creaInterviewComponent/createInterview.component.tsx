@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
-//import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
 import { InputGroupAddon, Form } from 'reactstrap';
 import Input from 'reactstrap/lib/Input';
@@ -29,8 +28,8 @@ interface ICreateInterviewComponentProps extends RouteComponentProps {
 }
 
 interface ICreateNewInterviewComponentState {
-  //Because I cant get date and time individually alone and cant use props setState
-  //to allow date and time to be pu tinto the props date
+  // Because I cant get date and time individually alone and cant use props setState
+  // to allow date and time to be pu tinto the props date
   date: string
   time: string
   managerEmail: string
@@ -42,29 +41,27 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 
   state = {
     date: '',
+    managerEmail: '',
     time: '',
-    managerEmail: ''
   }
 
   componentDidMount() {
-    //This will find all cohorts to check if any exist
+    // This will find all cohorts to check if any exist
     cohortClient.findAll().then((res) => {
       if (res.data) {
         this.props.setState({ ...this.props.createInterviewComponentState, allCohorts: res.data })
       }
-      console.log("all cohorts");
-      console.log(res);
     }).catch((e) => {
       console.trace();
       console.log(e);
     });
-    //This will grab all the clients
+    // This will grab all the clients
     this.getAllClients();
 
     //
     smsClient.get(`/user-service/users/email/${this.props.currentUser.email}`).then((res) => {
-      //function returns a page instead of just user, but due to being
-      //just a big javascript object, can just grab username and password from it
+      // function returns a page instead of just user, but due to being
+      // just a big javascript object, can just grab username and password from it
       if (res.data) {
         this.props.setState({
           ...this.props.createInterviewComponentState,
@@ -81,24 +78,17 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
     if (this.props.createInterviewComponentState.date !== (this.state.date + ' ' + this.state.time)) {
       this.createDate()
     }
-    let testDate: Date = new Date(this.props.createInterviewComponentState.date)
-    console.log(testDate)
   }
 
   getAllClients = async () => {
-    let tempArr = await interviewClient.fetchClient();
-    let clientArr: Client[] = await tempArr.data;
+    const tempArr = await interviewClient.fetchClient();
+    const clientArr: Client[] = await tempArr.data;
 
-    this.props.setState({ ...this.props.createInterviewComponentState, clientArr: clientArr });
-
-    console.log(this.props.createInterviewComponentState.clientArr);
+    this.props.setState({ ...this.props.createInterviewComponentState, clientArr });
   }
 
 
   fetchAssociatesInSelectedCohort = async (selectedCohort) => {
-    //const selectedCohort = this.props.createInterviewComponentState.selectedCohort;
-    console.log("selected cohort");
-    console.log(selectedCohort);
     const res = selectedCohort && await userClient.findAllByCohortId(selectedCohort.cohortId);
     if (res && res.data && this.props.currentUser.roles.length !== 0) {
       this.props.setState({
@@ -107,8 +97,6 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
         selectedAssociate: undefined,
       })
     }
-    console.log("all associates in cohort");
-    console.log(res.data);
   }
 
   fetchCurrentUserName = async (currentEmail) => {
@@ -128,43 +116,36 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 
   sendInputToDB = async (): Promise<boolean> => {
     // { firstName:'', lastName:'', date:'', location:'', format:''}
-    let { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState;
+    const { selectedAssociate, date: dateString, location, client } = this.props.createInterviewComponentState;
     if (selectedAssociate && dateString && location && client) {
       let newInterviewData: INewInterviewData
       await this.grabManagerEmail(location)
-      //to tell if a user is an associate or not. if not, then managerEmail is blank and the endpoint will take care of that
+      // to tell if a user is an associate or not. if not, then managerEmail is blank and the endpoint will take care of that
       if (this.props.currentUser.roles.length === 0) {
         newInterviewData = {
           associateEmail: selectedAssociate.email,
-          managerEmail: this.state.managerEmail,
+          client,
           date: (new Date(dateString)).valueOf(),
-          location: location,
-          client: client
+          location,
+          managerEmail: this.state.managerEmail,
         };
       } else {
         newInterviewData = {
           associateEmail: selectedAssociate.email,
-          managerEmail: '',
+          client,
           date: (new Date(dateString)).valueOf(),
-          location: location,
-          client: client
+          location,
+          managerEmail: '',
         };
       }
-
-
-      console.log(newInterviewData);
       const res = await interviewClient.addNewInterview(newInterviewData)
-      console.log('submitted')
-      console.log(res);
       return (res.status >= 200 && res.status < 300);
-    } else return false;
+    } else { return false; }
   }
 
 
   createDate = () => {
-    let newDate = this.state.date + ' ' + this.state.time
-
-    console.log(newDate)
+    const newDate = this.state.date + ' ' + this.state.time
     this.props.setState({
       ...this.props.createInterviewComponentState,
       date: newDate
@@ -173,9 +154,6 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 
   updateDate = (event) => {
     event.preventDefault()
-
-    console.log(event.target.value)
-
     this.setState({
       ...this.state,
       date: event.target.value
@@ -184,9 +162,6 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
 
   updateTime = (event) => {
     event.preventDefault()
-
-    console.log(event.target.value)
-
     this.setState({
       ...this.state,
       time: event.target.value
@@ -194,11 +169,6 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
   }
 
   render() {
-    // private int associateId;	
-    // private Date scheduled; 
-    // private String Place;
-    // private int interview_format;
-    // private int managerId;
 
     const state = this.props.createInterviewComponentState;
     const setState = this.props.setState;
@@ -215,8 +185,7 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
     const buttonText = (buttonDisabledState) ? "Please fill out all fields" : "SUBMIT";
     const buttonOnClick = async () => {
       const success = await this.sendInputToDB();
-      console.log("successfully sent?:" + success);
-      if (success) this.props.history.push("/interview/list");
+      if (success) { this.props.history.push("/interview/list"); }
     };
 
     return (
@@ -235,12 +204,12 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                 <InputGroup className="new-interview-input-group">
                   <Input className='input-group-interview' type='select'
                     value={JSON.stringify(selectedCohort)}
-                    disabled={!allCohorts || allCohorts.length == 0}
+                    disabled={!allCohorts || allCohorts.length === 0}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setState({
                         ...state,
+                        selectedAssociate: undefined,
                         selectedCohort: JSON.parse(e.target.value),
-                        selectedAssociate: undefined
                       });
                       this.fetchAssociatesInSelectedCohort(JSON.parse(e.target.value));
                     }} >
@@ -286,8 +255,8 @@ class CreateInterviewComponent extends React.Component<ICreateInterviewComponent
                     <InputGroupAddon addonType="prepend">client</InputGroupAddon>
                     <Input type="text" placeholder="....." list="clients" value={client} onChange={(e) => { setState({ ...state, client: e.target.value }) }} />
                     <datalist id="clients">
-                      {this.props.createInterviewComponentState.clientArr.map((ele: any) => (
-                        <option value={ele.clientName} />
+                      {this.props.createInterviewComponentState.clientArr.map((ele: any, index) => (
+                        <option key={index} value={ele.clientName} />
                       ))}
                     </datalist>
                   </InputGroup>

@@ -230,21 +230,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
         // convert interview array to place array
-        const arrAssociateEmail1 = this.props.listOfInterviews.map((item) => item.associateEmail);
-        // need unique places for select option
-        const arrAssociateEmail2 = arrAssociateEmail1.filter((item, pos) => arrAssociateEmail1.indexOf(item) === pos);
-        // convert interview array to place array
-        const arrManagerEmail1 = this.props.listOfInterviews.map((item) => item.managerEmail);
-        // need unique places for select option
-        const arrManagerEmail2 = arrManagerEmail1.filter((item, pos) => arrManagerEmail1.indexOf(item) === pos);
-        // convert interview array to place array
-        const arrPlace1 = this.props.listOfInterviews.map((item) => item.place);
-        // need unique places for select option
-        const arrPlace2 = arrPlace1.filter((item, pos) => arrPlace1.indexOf(item) === pos);
-        // convert interview array to place array
-        const arrClientName1 = this.props.listOfInterviews.map((item) => item.client.clientName);
-        // need unique places for select option
-        const arrClientName2 = arrClientName1.filter((item, pos) => arrClientName1.indexOf(item) === pos);
+        const arrPlace = this.props.listOfInterviews
+            .map((item) => item.place)
+            .filter((item, pos) => arrPlace.indexOf(item) === pos);
+        // convert interview array to client array
+        const arrClientName = this.props.listOfInterviews
+            .map((item) => item.client.clientName)
+            .filter((item, pos) => arrClientName.indexOf(item) === pos);
 
         return (
             <div className='container'>
@@ -285,7 +277,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <select name='place' onChange={this.filterChange} value={this.state.place} className='form-control'>
                                             <option value='placeName'>Location</option>
-                                            {arrPlace2.map((entry, index) => {
+                                            {arrPlace.map((entry, index) => {
                                                 return (<option value={entry} key={index}>{entry}</option>);
                                             })}
                                         </select>
@@ -293,7 +285,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <select name='client' onChange={this.filterChange} value={this.state.clientName} className='form-control'>
                                             <option value='clientName'>Client</option>
-                                            {arrClientName2.map((entry, index) => {
+                                            {arrClientName.map((entry, index) => {
                                                 return (<option value={entry} key={index}>{entry}</option>);
                                             })}
                                         </select>
