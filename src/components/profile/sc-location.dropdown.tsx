@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
+import { Button, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
 import { IAddress } from '../../model/address.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
@@ -46,7 +45,10 @@ export class SCLocationDropdown extends Component<ISCLocationDropdownProps, ISCL
         return (
             <>
                 {this.props.currentSMSUser.roles.length === 0 ?
-                    <Button name={inputNames.TRAINING_ALIASES} disabled>{this.state.buttonText}</Button>
+                    <Button
+                        name={inputNames.TRAINING_ALIASES}
+                        className='ml-2'
+                        disabled >{this.state.buttonText}</Button>
                     :
                     <UncontrolledDropdown name={inputNames.TRAINING_ALIASES} caret>
                         <DropdownToggle>

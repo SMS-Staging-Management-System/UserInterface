@@ -68,7 +68,7 @@ export class SCStatusDropdown extends Component<ISCStatusDropdownProps, ISCStatu
         return (
             <>
                 {this.props.currentSMSUser.roles.length === 0 ?
-                    <Button name={inputNames.STATUS_ALIASES} className="user-btn" disabled>{this.state.buttonText}</Button>
+                    <Button name={inputNames.STATUS_ALIASES} className="ml-2" disabled>{this.state.buttonText}</Button>
                     :
                     <UncontrolledDropdown name={inputNames.STATUS_ALIASES} caret>
                         <DropdownToggle>

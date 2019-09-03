@@ -263,7 +263,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
     componentDidMount() {
         if (this.props.currentSMSUser) {
             this.setState({
-                updateUser: this.props.currentSMSUser
+                updateUser: {
+                    ...this.props.currentSMSUser,
+                    roles: this.props.currentSMSUser.roles.slice(0)
+                }
             })
         }
 
@@ -293,7 +296,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         if (!this.props.userToUpdate) {
             if (prevProps.currentSMSUser !== this.props.currentSMSUser) {
                 this.setState({
-                    updateUser: this.props.currentSMSUser
+                    updateUser: {
+                        ...this.props.currentSMSUser,
+                        roles: this.props.currentSMSUser.roles.slice(0)
+                    }
                 })
             }
         }

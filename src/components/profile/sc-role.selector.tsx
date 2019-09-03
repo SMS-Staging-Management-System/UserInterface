@@ -28,7 +28,8 @@ export class SCRoleSelector extends Component<ISCRoleSelectorProps, ISCRoleSelec
                     ? <Input
                         type="text"
                         name={inputNames.ROLES}
-                        value="Associate" />
+                        value="Associate" 
+                        disabled />
                     : <FormGroup className="m-0" check inline>
                         <Row>
                             <Col>

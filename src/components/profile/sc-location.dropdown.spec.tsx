@@ -117,7 +117,8 @@ describe('<SCLocationDropdown />', () => {
                 })
 
                 // Ensure dropdown is rendered
-                it(`Should contain one ${input} uncontrolled dropdown that shows ${mockUser.trainingAddress.alias} initally`, () => {
+                it(`Should contain one ${input} uncontrolled dropdown that shows 
+                        ${mockUser.trainingAddress.alias} initally`, () => {
                     const component = shallow(<SCLocationDropdown {...mockProps} />);
                     const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
                     expect(uncontrolledDropdown).toHaveLength(1);
