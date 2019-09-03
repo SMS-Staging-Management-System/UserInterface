@@ -5,14 +5,17 @@ import { IJoinCohortState } from "./index";
 
 const initialState: IJoinCohortState = {
     validToken: false,
+    // tslint:disable-next-line: object-literal-sort-keys
     foundCohort:{
         cohortId:0,
         cohortName:'',
+        // tslint:disable-next-line: object-literal-sort-keys
         cohortDescription:'',
         cohortToken:'',
         address:{
             addressId:0,
             street:'',
+            // tslint:disable-next-line: object-literal-sort-keys
             alias:'',
             city:'',
             country:'',
@@ -24,6 +27,7 @@ const initialState: IJoinCohortState = {
         users:[],
         trainer:{
             userId:0,
+            // tslint:disable-next-line: object-literal-sort-keys
             email:'',
             firstName:'',
             lastName:'',
@@ -31,6 +35,7 @@ const initialState: IJoinCohortState = {
             trainingAddress:{
                 addressId:0,
                 street:'',
+                // tslint:disable-next-line: object-literal-sort-keys
                 alias:'',
                 city:'',
                 country:'',
@@ -40,6 +45,7 @@ const initialState: IJoinCohortState = {
             personalAddress:{
                 addressId:0,
                 street:'',
+                // tslint:disable-next-line: object-literal-sort-keys
                 alias:'',
                 city:'',
                 country:'',
@@ -48,6 +54,7 @@ const initialState: IJoinCohortState = {
             },
             userStatus:{
                 statusId:0,
+                // tslint:disable-next-line: object-literal-sort-keys
                 generalStatus:'',
                 specificStatus:'',
                 virtual:false
@@ -59,14 +66,17 @@ const initialState: IJoinCohortState = {
         userId: 0,
         userStatus: {
           statusId: 2,
+          // tslint:disable-next-line: object-literal-sort-keys
           generalStatus: 'Training',
           specificStatus: 'Training',
           virtual: false
         },
+        // tslint:disable-next-line: object-literal-sort-keys
         roles: [],
         trainingAddress: {
           addressId: 0,
           street: '',
+          // tslint:disable-next-line: object-literal-sort-keys
           alias: '',
           city: '',
           country: '',
@@ -76,6 +86,7 @@ const initialState: IJoinCohortState = {
         personalAddress: {
             addressId: 0,
             street: '',
+            // tslint:disable-next-line: object-literal-sort-keys
             alias: '',
             city: '',
             country: '',
