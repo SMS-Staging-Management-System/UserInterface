@@ -269,7 +269,10 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
 
         if (this.props.userToUpdate) {
             this.setState({
-                updateUser: this.props.userToUpdate
+                updateUser: {
+                    ...this.props.userToUpdate,
+                    roles: this.props.userToUpdate.roles.slice(0)
+                },
             })
         }
 
