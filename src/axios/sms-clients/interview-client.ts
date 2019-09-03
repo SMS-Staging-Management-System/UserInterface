@@ -2,6 +2,7 @@ import { INewInterviewData } from "../../model/INewInterviewData";
 import { store } from "../../Store";
 import { smsClient } from ".";
 import { cognitoRoles } from "../../model/cognito-user.model";
+import { state } from "../../reducers";
 
 const interviewContext = '/interview-service/interview';
 
@@ -23,29 +24,42 @@ export const interviewClient = {
         place = "placeName", clientName = "clientName", staging = 'stagingOff') => {
         const currentUser = store.getState().managementState.auth.currentUser;
         const roles = currentUser.roles
+        console.log(roles);
         const email = currentUser.email
+        console.log(email);
         const isAdmin = (roles.includes(cognitoRoles.ADMIN) || roles.includes(cognitoRoles.STAGING_MANAGER) || roles.includes(cognitoRoles.TRAINER));
 
         let url = interviewContext;
-        url += '/page'
-        if (!isAdmin) url += 's'
-        url += '?orderBy=' + orderBy + '&direction=' + direction;
-        if (pageNumber) {
-            url += '&pageNumber=' + pageNumber;
-        }
-        if (pageSize) {
-            url += '&pageSize=' + pageSize;
-        }
-        if (!isAdmin)
-            url += '&email=' + email;
-        url += '&associateEmail=' + associateEmail;
-        url += '&managerEmail=' + managerEmail;
-        url += '&place=' + place;
-        url += '&clientName=' + clientName;
-        url += '&staging=' + staging;
 
-        return smsClient.get(url);
-    },
+    url += '/page'
+
+    // an associate user, uses pages endpoint instead of page
+    if(!isAdmin) { url += 's' }
+    url += '?search=';
+    url += 'associateEmail:' + (isAdmin ? associateEmail: email );
+    url += ',managerEmail:' + managerEmail;
+    url += ',place:' + place;
+    url += ',client:' + clientName;
+    url += ',staging:' + staging;
+    // url += ',associateInput:' + input;
+    // url += ',feedback:' + feedback;
+
+    if(!isAdmin) {
+        url += '&orderBy=' + orderBy + '&direction=' + direction;
+    }
+    if (pageNumber) {
+        url += '&pageNumber=' + pageNumber;
+    }
+    if (pageSize) {
+        url += '&pageSize=' + pageSize;
+    }
+
+    console.log(url);
+    
+    return smsClient.get(url);
+},
+
+
 
     assocNeedFeedback: async (pageNumber: number, PageSize: number) => {
         return await smsClient.get(interviewContext + `/reports/AssociateNeedFeedback/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);

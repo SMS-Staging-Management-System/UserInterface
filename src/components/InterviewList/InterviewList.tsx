@@ -1,7 +1,7 @@
 // #region Imports
 import React from 'react';
 import { connect } from 'react-redux';
-import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages, markAsReviewed, setSelected, getDropdown } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
@@ -21,6 +21,8 @@ import moment from 'moment';
 export interface InterviewListProps {
     email: string,
     listOfInterviews: any[],
+    dropdowns: any[],
+
     numberOfPages: number,
     currentPage: number,
     pageSize: number,
@@ -38,6 +40,16 @@ export interface InterviewListProps {
         staging?: string) => void,
     markAsReviewed: (interviewId: number) => void,
     setSelected: (current: any) => void;
+    getDropdown: (
+        pageNumber?: number,
+        pageSize?: number,
+        ordeyBy?: string,
+        direction?: string,
+        associateEmail?: string,
+        managerEmail?: string,
+        place?: string,
+        clientName?: string,
+        staging?: string) => void,
 }
 
 export interface InterviewListState { // state of table, its headings, and sorting options
@@ -57,7 +69,8 @@ export interface InterviewListState { // state of table, its headings, and sorti
     fromReviewed: string,
     toReviewed: string,
     client: string,
-    staging: string
+    staging: string,
+    dropdowns: any[]
 }
 // Two arrays to arrange table headers. Originally the two were defined as a key-value pair object.
 const thKeys = ['associateEmail', 'managerEmail', 'place', 'client', 'notified',
@@ -73,19 +86,20 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         super(props);
         // initial state of the table and sorting values
         this.state = { 
-            associateEmail: 'associateEmail',
+            associateEmail: '*',
             client: 'clientName',
-            clientName: 'clientName',
+            clientName: '*',
             direction: this.props.direction,
+            dropdowns: [],
             fromNotified: '',
             fromReviewed: '',
             fromScheduled: '',
             listOfInterviews: [],
             loaded: false,
-            managerEmail: 'managerEmail',
-            place: 'placeName',
+            managerEmail: '*',
+            place: '*',
             previousTableHeaderId: '1', // init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
-            staging: 'stagingOff',
+            staging: '*',
             tableHeaderId: '0',
             toNotified: '',
             toReviewed: '',
@@ -95,13 +109,15 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
 
     async componentDidMount() { // on render, load the interviews
         this.setState({
+            dropdowns: this.props.dropdowns,
             listOfInterviews: this.props.listOfInterviews
         });
     }
 
     async componentWillReceiveProps(nextProps) { // Move props into state here
         this.setState({
-            listOfInterviews: nextProps.listOfInterviews,
+            dropdowns: nextProps.dropdowns,
+            listOfInterviews: nextProps.listOfInterviews
         });
         
     }
@@ -111,7 +127,27 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.setState({
                 loaded: true
             });
-            this.handlePageClick({ selected: this.props.currentPage });
+            this.props.getInterviewPages(
+                this.props.currentPage,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                this.state.staging);
+
+            this.props.getDropdown(
+                    this.props.currentPage,
+                    this.props.pageSize,
+                    this.props.orderBy,
+                    this.props.direction,
+                    this.state.associateEmail,
+                    this.state.managerEmail,
+                    this.state.place,
+                    this.state.clientName,
+                    this.state.staging);
         }
     }
 
@@ -229,13 +265,14 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     render() {
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        const arrPlace = this.props.listOfInterviews
-            .filter((item, pos) => this.props.listOfInterviews.indexOf(item) === pos)
+        // convert interview array to location array
+        const arrPlace = this.props.dropdowns
+            .filter((item, pos) => this.props.dropdowns.indexOf(item) === pos)
             .map((item) => item.place);
         // convert interview array to client array
-        const arrClientName = this.props.listOfInterviews
-            .filter((item, pos) => this.props.listOfInterviews.indexOf(item) === pos)
-            .map((item) => item.client.clientName)
+        const arrClientName = this.props.dropdowns
+            .filter((item, pos) => this.props.dropdowns.indexOf(item) === pos)
+            .map((item) => item.client.clientName);
 
         return (
             <div className='container'>
@@ -343,15 +380,15 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <select name='{element}' onChange={this.filterChange} className='form-control' >
                                             <option value='dateNotified'>Associate Input</option>
-                                            <option value='with'>With Associate Input</option>
-                                            <option value='without'>Without Associate Input</option>
+                                            <option value='notnull'>With Associate Input</option>
+                                            <option value='null'>Without Associate Input</option>
                                         </select>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <select name='{element}' onChange={this.filterChange} className='form-control'>
                                             <option value='dateNotified'>Interview Feedback</option>
-                                            <option value='with'>With Interview Feedback</option>
-                                            <option value='without'>Without Interview Feedback</option>
+                                            <option value='notnull'>With Interview Feedback</option>
+                                            <option value='null'>Without Interview Feedback</option>
                                         </select>
                                     </td>
                                 </tr> 
@@ -423,15 +460,16 @@ const mapStateToProps = (state: IState) => {
     return {
         currentPage: state.interviewState.interviewList.currentPage,
         direction: state.interviewState.interviewList.direction,
+        dropdowns: state.interviewState.interviewList.dropdowns,
         email: state.managementState.auth.currentUser.email,
         listOfInterviews: state.interviewState.interviewList.listOfInterviews,
         numberOfPages: state.interviewState.interviewList.numberOfPages,
         orderBy: state.interviewState.interviewList.orderBy,
-        pageSize: state.interviewState.interviewList.pageSize,
     }
 }
 
 const mapDispatchToProps = {
+    getDropdown,
     getInterviewPages,
     markAsReviewed,
     setSelected
