@@ -15,9 +15,11 @@ export const getInterviewPages = (
     managerEmail?: string,
     place?: string,
     clientName?: string,
-    staging?: string) => async (dispatch) => {
+    // staging?: string,
+    input?: string,
+    feedback?: string) => async (dispatch) => {
         const resp = await interviewClient.fetchPage(pageNumber, pageSize, orderBy, direction,
-            associateEmail, managerEmail, place, clientName, staging)
+            associateEmail, managerEmail, place, clientName, /*staging,*/ input, feedback)
         dispatch({
             payload: {
                 listOfInterviews: resp.data.content,
@@ -53,9 +55,11 @@ export const getDropdown = (
     managerEmail?: string,
     place?: string,
     clientName?: string,
-    staging?: string) => async (dispatch) => {
+    // staging?: string,
+    input?: string,
+    feedback?: string) => async (dispatch) => {
         const resp = await interviewClient.fetchPage(pageNumber, pageSize=100, orderBy, direction,
-                                            associateEmail, managerEmail, place, clientName, staging)
+                                            associateEmail, managerEmail, place, clientName, /*staging,*/ input, feedback)
 
         dispatch({
             payload: {

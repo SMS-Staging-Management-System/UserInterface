@@ -21,7 +21,7 @@ export const interviewClient = {
 
     fetchPage: (pageNumber?: number, pageSize?: number, orderBy = 'id', direction = 'ASC',
         associateEmail = 'associateEmail', managerEmail = 'managerEmail',
-        place = "placeName", clientName = "clientName", staging = 'stagingOff') => {
+        place = "placeName", clientName = "clientName", /*staging = 'stagingOff',*/ input = 'associateInput', feedback = 'feedback') => {
         const currentUser = store.getState().managementState.auth.currentUser;
         const roles = currentUser.roles
         console.log(roles);
@@ -36,13 +36,15 @@ export const interviewClient = {
     // an associate user, uses pages endpoint instead of page
     if(!isAdmin) { url += 's' }
     url += '?search=';
-    url += 'associateEmail:' + (isAdmin ? associateEmail: email );
-    url += ',managerEmail:' + managerEmail;
+    if(associateEmail === ''){ url += 'associateEmail:*'; } 
+    else {url += 'associateEmail:' + (isAdmin ? associateEmail: email );}
+   if(managerEmail === ''){ url += ',managerEmail:*';}
+   else{ url += ',managerEmail:' + managerEmail;}
     url += ',place:' + place;
     url += ',client:' + clientName;
-    url += ',staging:' + staging;
-    // url += ',associateInput:' + input;
-    // url += ',feedback:' + feedback;
+    // url += ',staging:' + staging;
+    url += ',associateInput:' + input;
+    url += ',feedback:' + feedback;
 
     if(!isAdmin) {
         url += '&orderBy=' + orderBy + '&direction=' + direction;
