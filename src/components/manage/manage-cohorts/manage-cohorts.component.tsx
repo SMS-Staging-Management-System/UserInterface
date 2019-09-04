@@ -6,29 +6,46 @@ import {
 import Button from 'reactstrap/lib/Button';
 import { IManageCohortsComponentProps } from './manage-cohorts.container';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
+import { cognitoClient } from "../../../axios/sms-clients/cognito-client";
 import { addressesClient } from '../../../axios/sms-clients/address-client';
 import { ICohort } from '../../../model/cohort';
 import { IAddress } from '../../../model/address.model';
 
+interface IManageCohortsState {
+    locations: any[]
+    trainers: any[]
+    filterDropdownList: boolean
+    showFilterSelection: String
+    trainerDropdown: {
+        isOpen: boolean
+        selection: String
+    }
+    sortTrainer: String
+    locationDropdown: {
+        isOpen: boolean
+        selection: String
+    }
+}
 
-
-export class ManageCohortsComponenent extends React.Component<IManageCohortsComponentProps, any> {
+export class ManageCohortsComponenent extends React.Component<IManageCohortsComponentProps, IManageCohortsState> {
 
     constructor(props: IManageCohortsComponentProps) {
         super(props);
         this.state = {
             filterDropdownList: false,
-            showFilertSelection: '',
+            showFilterSelection: '',
             locations: [],
             trainers: [],
             trainerDropdown: {
                 isOpen: false,
                 selection: 'Trainers'
             },
+            sortTrainer: 'All',
             locationDropdown: {
                 isOpen: false,
                 selection: 'Locations'
             }
+
         };
     }
 
@@ -45,26 +62,20 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
     }
 
     getLocations = async () => {
+        console.log('getting locations?')
         const resp = await addressesClient.findAll();
-        const locations = await resp.data
+        const locations = await resp.data;
+        console.log(`locations ${locations}`);
         this.setState({
+            ...this.state,
             locations
         });
     }
 
     getTrainers = async () => {
-        const resp = await cohortClient.findAll();
-        const cohorts = await resp.data
-        let tempSet = new Set();
-
-        cohorts.map(cohort => (
-            tempSet.add(cohort.trainer.email)
-        ))
-
-        console.log(tempSet);
-        const trainers = Array.from(tempSet);
-        console.log('trainers');
-        console.log(trainers);
+        const resp = await cognitoClient.findUsersByGroup('trainer');
+        const trainers = await resp.data.Users;
+       
         this.setState({
             ...this.state,
             trainers
@@ -72,7 +83,6 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
     }
 
     async componentDidMount() {
-
         const data = await this.getAllCohorts(this.props.currentPage);
         console.log('calling getAllCohorts in componentDidMount')
         console.log(data);
@@ -131,15 +141,31 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
     setFilterSelection = (filter: String) => {
         this.setState({
-            showFilertSelection: filter
+            ...this.state,
+            showFilterSelection: filter
         });
 
     }
 
+    sortTrainers = (trainer: String) => {
+        this.setState({
+            ...this.state,
+            sortTrainer: trainer
+        })
+    }
 
     showFilterTypeDropdown = () => {
         const instructer = this.state.trainers;
-        if (this.state.showFilertSelection === 'trainer') {
+        console.log(instructer);
+        let trainers: string[] = [];
+
+        for (let i = 0; i < instructer.length; i++) {
+            const currentUser = instructer[i];
+            const currentUserEmail = currentUser.Attributes.find((attr: any) => attr.Name === 'email').Value;
+            trainers[i] = currentUserEmail;
+        }
+
+        if (this.state.showFilterSelection === 'trainer') {
             return (
                 <ButtonDropdown color="success" className="responsive-modal-row-item rev-btn"
                     isOpen={this.state.trainerDropdown.isOpen}
@@ -152,22 +178,25 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         <DropdownItem onClick={this.getTrainers}>All </DropdownItem>
                         <DropdownItem divider />
                         {
-                            instructer.map(trainer => (
+                            trainers.map(trainer => (
+                                // {if(this.state.sortTrainer !== 'All') {
                                 <DropdownItem
-                                    key={'Status-dropdown-' + trainer}
-                                // onClick={() => this.getCohortByLocation(user)}
+                                    // key={'Status-dropdown-' + trainer}
+                                 onClick={() => this.sortTrainers(trainer)}
                                 >
                                     {trainer}
                                 </DropdownItem>
+                                // }
                             ))
                         }
                     </DropdownMenu>
                 </ButtonDropdown>
 
+
             )
         }
-        else if (this.state.showFilertSelection === 'location') {
-
+        else if (this.state.showFilterSelection === 'location') {
+            console.log(this.state.locations);
             return (
                 <Dropdown color="success" className="responsive-modal-row-item rev-btn"
                     isOpen={this.state.locationDropdown.isOpen} toggle={this.toggleLocationDropdown} >
@@ -255,10 +284,10 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                                     onMouseEnter={() => this.props.hoveredCohort(cohort)}
                                 >
                                     <td>{cohort.cohortName}</td>
-                                    <td>{cohort.address ? cohort.address.alias : ''}</td>
+                                    <td>{cohort.address ? cohort.address.alias : <td></td>}</td>
                                     <td>{cohort.cohortToken}</td>
                                     <td>{cohort.startDate}</td>
-                                    <td>{cohort.trainer ? cohort.trainer.email : ''}</td>
+                                    <td>{cohort.trainer ? cohort.trainer.email : <td></td>}</td>
                                 </tr>
                             )
                         }
