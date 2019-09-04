@@ -113,7 +113,7 @@ describe('<SCRoleSelector />', () => {
     it('Should render the component as a disabled input if the current user is an associate.', () => {
         const component = shallow(<SCRoleSelector {...mockProps} />);
         expect(component).toBeDefined();
-        const input = component.find(Input).find(`[name="${inputNames.ROLES}"]`).find(`[value="Associate"]`);
+        const input = component.find(Input).find(`[name="${inputNames.ROLES}"]`).find(`[value="Associate"]`).find('[disabled=true]');
         expect(input).toHaveLength(1);
     })
 
@@ -140,15 +140,21 @@ describe('<SCRoleSelector />', () => {
         })
     })
 
-    it('Should call the prop function when changed.', () => {
+    it('Should call the prop function with the proper event when changed.', () => {
         const component = shallow(<SCRoleSelector {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const inputs = component.find(Input).find(`[name="${inputNames.ROLES}"]`);
         expect(inputs).toHaveLength(4);
         checkboxValues.forEach(checkbox => {
             const box = inputs.find(`[value="${checkbox}"]`);
-            box.simulate('change');
-            expect(mockProps.onChangeHandler).toHaveBeenCalled();
+            const simulatedEvent = {
+                target: {
+                    name: inputNames.ROLES,
+                    value: checkbox
+                }
+            }
+            box.simulate('change', simulatedEvent);
+            expect(mockProps.onChangeHandler).toHaveBeenCalledWith(simulatedEvent);
         })
     })
 })

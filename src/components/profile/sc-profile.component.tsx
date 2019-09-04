@@ -409,7 +409,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                         <Label>Status</Label>
                         <SCProfileStatusDropdown
                             updateUser={this.state.updateUser}
-                            changeHandler={this.onUserInfoChangeHandler} />
+                            onChangeHandler={this.onUserInfoChangeHandler} />
                         {this.state.updateUser.userStatus.generalStatus === 'Training'
                             ? <></>
                             :
