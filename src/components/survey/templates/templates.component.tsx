@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { Table } from 'reactstrap';
+import { Table, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
@@ -11,7 +11,11 @@ import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import Loader from '../Loader/Loader';
 import { IState } from '../../../reducers';
+import { toast } from 'react-toastify';
+import { IAuthState } from '../../../reducers/management';
+
 interface TemplatesProps extends RouteComponentProps<{}> {
+    auth: IAuthState;
     match: any
 }
 interface IComponentState {
@@ -29,7 +33,9 @@ interface IComponentState {
     redirectTo: any,
     page: number,
     prev: boolean,
-    next: boolean
+    next: boolean,
+    search: string,
+    searching: boolean
 };
 class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     constructor(props) {
@@ -49,15 +55,19 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 surveyId: 0,
                 title: '',
                 description: '',
+                creator: '',
                 dateCreated: new Date(),
                 closingDate: null,
                 template: false,
-                published: true
+                published: true,
+                questionJunctions: []
             },
             redirectTo: null,
             page: 0,
             prev: false,
-            next: true
+            next: true,
+            search: '',
+            searching: false
         }
     }
     componentDidMount() {
@@ -68,32 +78,32 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         const templates = await surveyClient.findAllTemplates(page);
         this.setState({
             templates: templates,
-            templatesLoaded: true
+            templatesLoaded: true,
+            searching: true
         });
         if(surveyClient.currentPage() <= 1) {
-            this.setState({
+            if(surveyClient.currentPage() !== surveyClient.totalPages()){
+                this.setState({
                 prev: true,
                 next: false
-            });
+            });} else {
+                this.setState({
+                    prev: true,
+                    next: true
+                });
+            }
+
             
-        console.log(this.state.prev)
-        console.log(this.state.next)
         } else if(surveyClient.currentPage() >= surveyClient.totalPages()){
             this.setState({
                 prev: false,
                 next: true
             });
-            
-        console.log(this.state.prev)
-        console.log(this.state.next)
         } else {
             this.setState({
                 prev: false,
                 next: false
             });
-            
-        console.log(this.state.prev)
-        console.log(this.state.next)
         }
     };
     changeSurveyTitle = (event) => {
@@ -103,7 +113,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     }
     changeSurveyDescription = (event) => {
         this.setState({
-            newDescription: event.target.value,
+            description: event.target.value,
         })
     }
     handleShow = async (id: number, description: string) => {
@@ -138,84 +148,67 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         }
         if (this.state.survey.description !== this.state.newDescription) {
             this.setState({
-                newDescription: this.state.newDescription
+                description: this.state.description
             })
         } else {
             this.setState({
-                newDescription: this.state.survey.description
+                description: this.state.survey.description
             })
         }
+        
         this.setState({
             showModal: false,
             surveyId: 0,
             dateCreated: this.state.dateCreated
         })
-        let questions: IQuestion[] = [];
-        let answers: IAnswer[] = [];
         let dummySurvey: ISurvey = {
-            surveyId: 1,
+            surveyId: 0,
             title: this.state.newTitle,
-            description: this.state.newDescription,
+            description: this.state.description,
+            creator: this.props.auth.currentUser.email,
             dateCreated: this.state.dateCreated,
             closingDate: this.state.survey.closingDate,
             template: false,
-            published: true
+            published: true,
+            questionJunctions: []
         };
-        for (let i = 0; i < this.state.survey.questionJunctions.length; i++) {
-            let dummyquestion: IQuestion | any = {
-                questionId: {
-                    questionId: 0,
-                    question: 'string',
-                    typeId: 0,
-                }
-            }
-            dummyquestion.questionId.questionId = this.state.survey.questionJunctions[i].questionId.questionId;
-            dummyquestion.questionId.typeId = this.state.survey.questionJunctions[i].questionId.typeId;
-            dummyquestion.questionId.question = this.state.survey.questionJunctions[i].questionId.question;
-            for (let j = 0; j < this.state.survey.questionJunctions[i].questionId.answerChoices.length; j++) {
-                let dummyAnswers: IAnswer | any = {
-                    id: 0,
-                    answer: "string",
-                    questionId: 0
-                }
-                dummyAnswers.id = this.state.survey.questionJunctions[i].questionId.answerChoices[j].id;
-                dummyAnswers.answer = this.state.survey.questionJunctions[i].questionId.answerChoices[j].answer;
-                dummyAnswers.questionId = this.state.survey.questionJunctions[i].questionId.answerChoices[j].questionId;
-                answers.push(dummyAnswers);
-            }
-            questions.push(dummyquestion);
-        }
-        dummySurvey.surveyId = await surveyClient.saveSurvey(dummySurvey);
-        let questionid = new Array;
-        for (let index = 0; index < questions.length; index++) {
-            let num = await surveyClient.saveQuestion(questions[index]);
-            questionid.push(num);
-            for (let j = 0; j < answers.length; j++) {
-                if (answers[j].questionId === questions[index].questionId.questionId) {
-                    answers[j].questionId = questionid[index];
-                    await surveyClient.saveAnswer(answers[j]);
-                }
-            }
-        }
-        for (let index = 0; index < questions.length; index++) {
-            let junctionTable: IJunctionSurveyQuestion = {
+        let questionJunctions: IJunctionSurveyQuestion[] = [];
+        
+        for (let i = 0; i < (this.state.survey.questionJunctions).length; i++) {
+
+            let dummyQuestionJunction: any = {
                 id: 0,
-                questionId: {
+                survey: null,
+                question: {
                     questionId: 0,
-                    question: 'string',
-                    typeId: 0,
+                    typeId: this.state.survey.questionJunctions[i].question.typeId,
+                    question: this.state.survey.questionJunctions[i].question.question,
+                    answers: []
                 },
-                questionOrder: 0,
-                surveyId: dummySurvey,
+                questionOrder: this.state.survey.questionJunctions[i].questionOrder
             }
-            junctionTable.questionId.question = questions[index].questionId.question;
-            junctionTable.questionId.questionId = questionid[index];
-            junctionTable.questionId.typeId = questions[index].questionId.typeId;
-            junctionTable.questionOrder = index + 1;
-            junctionTable.surveyId = dummySurvey;
-            junctionTable.surveyId.surveyId = dummySurvey.surveyId;
-            surveyClient.saveToQuestionJunction(junctionTable);
+    
+            for (let j = 0; j < (this.state.survey.questionJunctions[i].question.answers).length; j++) {
+
+                let dummyAnswers: IAnswer | any = {
+                    answerId: 0,
+                    answer: '',
+                    question: null
+                }
+                dummyAnswers.answer = this.state.survey.questionJunctions[i].question.answers[j].answer;
+                dummyQuestionJunction.question.answers.push(dummyAnswers);
+            }
+            questionJunctions.push(dummyQuestionJunction);
         }
+
+        dummySurvey.questionJunctions = questionJunctions;
+
+        surveyClient.saveSurvey(dummySurvey);
+
+        console.log(dummySurvey);
+
+        toast.success('Survey created');
+        
     }
     handleDuplicateClose = async () => {
         if (this.state.survey.title !== this.state.newTitle) {
@@ -247,6 +240,44 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             state: { displaySurvey: this.state.survey }
         });
     }
+
+    handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            search: event.target.value
+        });
+    }
+
+    findByTitle = async (title: String, page: number) => {
+        const templates = await surveyClient.findByTitle(title, page);
+        this.setState({
+            templates: templates,
+            templatesLoaded: true,
+            searching: false
+        });
+        if(surveyClient.currentPage() <= 1) {
+            if(surveyClient.currentPage() !== surveyClient.totalPages()){
+                this.setState({
+                prev: true,
+                next: false
+            });} else {
+                this.setState({
+                    prev: true,
+                    next: true
+                });
+            }    
+        } else if(surveyClient.currentPage() >= surveyClient.totalPages()){
+            this.setState({
+                prev: false,
+                next: true
+            });
+        } else {
+            this.setState({
+                prev: false,
+                next: false
+            });
+        }
+    }
+
     render() {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
@@ -256,6 +287,18 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 {this.state.templatesLoaded ? (
                     this.state.templates.length ? (
                         <div>
+                            <div>
+                           <InputGroup>
+                           <InputGroupAddon addonType="prepend">
+                           <InputGroupText>
+                           {/* <Input addon type="checkbox" aria-label="Checkbox for following text input" /> */}
+                           <Button type="button" aria-label="Checkbox for following text input" onClick={() =>this.findByTitle(this.state.search, 0)}>Search</Button>
+                           </InputGroupText>
+                           </InputGroupAddon>
+                           <Input id="template-search-bar" placeholder="Enter Template Name" onChange={this.handleChange}/>
+                           </InputGroup>
+                           </div>
+                           <br />
                             <Table striped id="manage-users-table" className="tableUsers">
                                 <thead className="rev-background-color">
                                     <tr>
@@ -277,6 +320,10 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             </Table>
                             {/* button goes here pick up here */}
                             <div className='row horizontal-centering vertical-centering'>
+                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(0)} disabled={this.state.searching}>All Templates</Button>
+                            <h6 className="div-child text-style" >
+                                          
+                                </h6>
                                 <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(-1)} disabled={this.state.prev}>Prev</Button>
                                 <h6 className="div-child text-style" >
                                     Page {surveyClient.currentPage()} of {surveyClient.totalPages()}
@@ -317,13 +364,15 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             {this.state.surveyLoaded ?
                                 this.state.surveyLoaded &&
                                 this.state.survey.questionJunctions.map(questionJunction => (
-                                    <div key={questionJunction.questionId.questionId}>
-                                        <strong>{questionJunction.questionId.question}</strong>
+                                    <div key={questionJunction.question.questionId}>
+
+                                        <strong>{questionJunction.question.question}:</strong>
+
                                         {
-                                            questionJunction.questionId.typeId === 5 ?
+                                            questionJunction.question.typeId === 5 ?
                                                 <div>Question Type: Feedback</div>
-                                                : questionJunction.questionId.answerChoices.map(choice => (
-                                                    <div key={choice.id} >
+                                                : questionJunction.question.answers.map(choice => (
+                                                    <div key={choice.answerId} >
                                                         <label>
                                                             <i>{choice.answer}</i> </label>
                                                     </div>

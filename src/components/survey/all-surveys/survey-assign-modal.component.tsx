@@ -154,58 +154,85 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         });
     }
 
-    checkFunc = (e) => {
+    // checkFunc = (e) => {
+    //     // this function is for the the Select ALL checkbox
+    //     const { checked } = e.target;
+    //     const { emailsToAssign: emAssign } = this.state;
+    //     const id = +e.target.id;
+    //     let emailArray: string[] = [];
+
+    //     if (checked) {
+    //         // filter out users for only ones in THIS cohort
+    //         this.state.userArray.filter(user => {
+    //             return user.id === id
+    //         }).map(user => {
+    //             // for each user in this cohort, dump them into array to assign to
+    //             // but first, check they are not already in the array
+    //             if (!this.state.emailsToAssign.includes(user.email)) {
+    //                 emailArray.push(user.email);
+    //             }
+    //             // then check all individual user checkboxes in this cohort 
+    //             let el = document.getElementById(user.email) as HTMLInputElement;
+    //             if (el) { el.checked = true; }
+    //         });
+    //         this.setState({
+    //             emailsToAssign: this.state.emailsToAssign.concat(emailArray)
+    //         });
+
+    //     } else {
+    //         // if checking OFF the Select ALL, do this
+    //         // filter through all users for     those in this checkboxes cohort
+    //         this.state.userArray.filter(user => {
+    //             return user.id === id
+    //         }).map(user => {
+    //             // push into local array to know which users to remove from state below
+    //             emailArray.push(user.email);
+    //             // uncheck each individual user checkbox if all is unchecked
+    //             let el = document.getElementById(user.email) as HTMLInputElement;
+    //             if (el) { el.checked = false; }
+    //         });
+
+    //         this.setState({
+    //             // filter emailsToAssign:emAssign array to get rid of all emails from local emailArray
+    //             emailsToAssign: emAssign.filter(em => {
+    //                 let inArr: boolean = true;
+    //                 for (const email of emailArray) {
+    //                     if (em === email) {
+    //                         inArr = false;
+    //                     }
+    //                 }
+    //                 return inArr;
+    //             })
+    //         })
+
+    //     }
+    // }
+
+    checkFunc = (e , cohortId) => {
         // this function is for the the Select ALL checkbox
         const { checked } = e.target;
-        const { emailsToAssign: emAssign } = this.state;
-        const id = +e.target.id;
+        const { emailsToAssign } = this.state;
+        const id = +e;
         let emailArray: string[] = [];
 
-        if (checked) {
-            // filter out users for only ones in THIS cohort
-            this.state.userArray.filter(user => {
-                return user.id === id
-            }).map(user => {
-                // for each user in this cohort, dump them into array to assign to
-                // but first, check they are not already in the array
-                if (!this.state.emailsToAssign.includes(user.email)) {
-                    emailArray.push(user.email);
-                }
-                // then check all individual user checkboxes in this cohort 
-                let el = document.getElementById(user.email) as HTMLInputElement;
-                if (el) { el.checked = true; }
-            });
-            this.setState({
-                emailsToAssign: this.state.emailsToAssign.concat(emailArray)
-            });
+        
+        this.state.userArray.filter(user => {
+            return user.id === cohortId
+        }).map(user => {
+            emailArray.push(user.email);
+        })
 
-        } else {
-            // if checking OFF the Select ALL, do this
-            // filter through all users for     those in this checkboxes cohort
-            this.state.userArray.filter(user => {
-                return user.id === id
-            }).map(user => {
-                // push into local array to know which users to remove from state below
-                emailArray.push(user.email);
-                // uncheck each individual user checkbox if all is unchecked
-                let el = document.getElementById(user.email) as HTMLInputElement;
-                if (el) { el.checked = false; }
-            });
-
+        if(checked){
             this.setState({
-                // filter emailsToAssign:emAssign array to get rid of all emails from local emailArray
-                emailsToAssign: emAssign.filter(em => {
-                    let inArr: boolean = true;
-                    for (const email of emailArray) {
-                        if (em === email) {
-                            inArr = false;
-                        }
-                    }
-                    return inArr;
-                })
+                emailsToAssign: emailArray
             })
-
+        } else {
+            this.setState({
+                emailsToAssign: []
+            })
         }
+
+        
     }
 
     checkUserFunc = (e) => {
@@ -294,16 +321,16 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
                                         {this.state.sortCohorts && this.state.sortCohorts.map(cohort => (
                                             <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                                                <td>All: <input type="checkbox" onChange={e => this.checkFunc(e)} />
+                                                <td>All: <input className="userDropInput" type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
                                                     <div className="dropdown userDropdown">
                                                         <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             By Member
-                                                </Button>
+                                                        </Button>
                                                         <div className="dropdown-menu" id="userDropdownWidth" aria-labelledby="dropdownMenu2">
                                                             {this.state.userArray.filter(user => {
                                                                 return user.id === cohort.cohortId;
                                                             }).map(user => (
-                                                                <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" onChange={e => this.checkUserFunc(e)} />{user.email}</p>
+                                                                <p key={`email${user.email}`}><input className="userDropInput" id={user.email} type="checkbox" checked={this.state.emailsToAssign.includes(user.email)} onChange={e => this.checkUserFunc(e)} />{user.email} </p>
                                                             )
                                                             )}
                                                         </div>

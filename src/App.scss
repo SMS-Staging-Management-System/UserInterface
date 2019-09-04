@@ -154,6 +154,12 @@ li > a.rev-btn-tab {
   cursor: pointer;
 }
 
+.rev-table-row-active {
+  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+}
+
 .rev-background-color {
   background-color: $revature-orange-light;
 }
@@ -641,6 +647,8 @@ User Dropdown
 .userDropInput {
   margin-left: 10px;
   margin-right: 10px;
+  width: 1em;
+  height: 1em;  
 }
 
 #userDropdownWidth {
@@ -737,12 +745,18 @@ Drag and Drop
 .myTr{	
     width: 100%;	
   }	
-  .trashCan{	
+  
+  .trashCan{
     align-content: right;	
     width: 50px;	
+  }
+
+  .trashCan:hover{	
     border-color: $revature-orange;	
     border-style: solid;	
-    border-width: thick;	
+    border-width: thick;
+    cursor: pointer;
+
   }
 // .labelTitle{
 //   font-family: Helvetica;
@@ -1277,6 +1291,11 @@ body {
 
 .page-link {
   color: black;
+}
+
+#template-search-bar{
+  height: 3.5em;
+  
 }
 
 

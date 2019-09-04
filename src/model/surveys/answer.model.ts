@@ -1,5 +1,7 @@
+import { IQuestion } from "./question.model";
+
 export interface IAnswer {
-    id: number;
+    answerId: number;
     answer: string;
-    questionId: number;
+    question: IQuestion;
 }

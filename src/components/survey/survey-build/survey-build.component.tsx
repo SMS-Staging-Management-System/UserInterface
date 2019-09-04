@@ -17,16 +17,17 @@ import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { ISurveyState } from '../../../reducers/survey';
-import { CreatSurvey } from '../../../actions/survey/SurveyBuild.action';
+import { CreateSurvey } from '../../../actions/survey/SurveyBuild.action';
 import { FaPlusSquare } from 'react-icons/fa';
 import AddOther from './add.other.component';
+import { setTimeout } from 'timers';
 
 interface IComponentProps extends RouteComponentProps<{}> {
   displaySurvey?: any,
   auth: IAuthState,
   match: any,
   surveyState: ISurveyState
-  CreatSurvey: (frmData: any, completedTasks: any[]) => void
+  CreateSurvey: (frmData: any, completedTasks: any[]) => void
 };
 interface IComponentState{
   displaySurvey?: any,
@@ -37,7 +38,8 @@ interface IComponentState{
   completedTasks: any,
   draggedTask: any ,
   submitQuestions: any,
-  notRenderedFirstTime: boolean
+  notRenderedFirstTime: boolean,
+  isCreating: boolean
 }
 
 
@@ -84,7 +86,8 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
       submitQuestions: [],
       completedTasks: [],
       draggedTask: {},
-      notRenderedFirstTime: true
+      notRenderedFirstTime: true,
+      isCreating: false
     }
     this.toAddFunction = this.toAddFunction.bind(this);
     this.deleterow = this.deleterow.bind(this);
@@ -126,7 +129,15 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
 
     if (this.state.completedTasks.length > 0) {
       let frmData = $(":input").serializeArray();
-      this.props.CreatSurvey(frmData, this.state.completedTasks);
+      frmData = [...frmData, {name: 'creator', value: this.props.auth.currentUser.email}];
+      // console.log('form data: ', frmData)
+      // console.log('completed Tasks : ', this.state.completedTasks);
+      this.props.CreateSurvey(frmData, this.state.completedTasks);
+      this.setState({
+        ...this.state,
+        isCreating: true
+      })
+      setTimeout(()=>{this.setState({...this.state, isCreating: false})}, 3000);
     }
     else {
       alert('In order to continue, you must choose a question type and fill out the appropriate fields.');
@@ -152,10 +163,10 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
     if(this.props.history.location.state != undefined){
       console.log("Received Template From /templates");
       let survey = this.props.history.location.state.displaySurvey;
-      let a = survey.questionJunctions.length;
+      let a = (survey.questionJunctions).length;
       let toSetQuestions = new Array();
       for(let i = 0; i < a; i++){
-        let type = survey.questionJunctions[i].questionId.typeId;
+        let type = survey.questionJunctions[i].question.typeId;
         if(type > 0)type--;
         toSetQuestions.push(this.state.todos[type]);
       }
@@ -235,16 +246,16 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
       let survey = this.props.history.location.state.displaySurvey;
       console.log(survey);
       if(survey.questionJunctions.length > index && this.state.notRenderedFirstTime){
-        let question = survey.questionJunctions[index].questionId.question;
+        let question = survey.questionJunctions[index].question.question;
         switch(type){
           case 1://"True/False":
               showme = <TrueFalse selfDestruct={this.deleterow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question}/>;
           break;
           case 2://"Multiple Choice":
               let answers1 = "";
-              for(let i = 0; i< survey.questionJunctions[index].questionId.answerChoices.length; i++){
-                answers1 += survey.questionJunctions[index].questionId.answerChoices[i].answer;
-                if(i != (survey.questionJunctions[index].questionId.answerChoices.length - 1)){
+              for(let i = 0; i< (survey.questionJunctions[index].question.answers).length; i++){
+                answers1 += survey.questionJunctions[index].question.answers[i].answer;
+                if(i != ((survey.questionJunctions[index].question.answers).length - 1)){
                   answers1 += ", ";
                 }
               }
@@ -253,9 +264,9 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
           case 3://"Checkbox Multiple Answer":
             //console.log(survey.questionJunctions[index]);
             let answers = "";
-            for(let i = 0; i< survey.questionJunctions[index].questionId.answerChoices.length; i++){
-              answers += survey.questionJunctions[index].questionId.answerChoices[i].answer;
-              if(i != (survey.questionJunctions[index].questionId.answerChoices.length - 1)){
+            for(let i = 0; i< (survey.questionJunctions[index].question.answers).length; i++){
+              answers += survey.questionJunctions[index].question.answers[i].answer;
+              if(i != ((survey.questionJunctions[index].question.answers).length - 1)){
                 answers += ", ";
               }
             }
@@ -398,14 +409,14 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
                     
                     }
                     
-                    {this.state.displayChoice == true && <AddOther parentFunction={this.toAddFunction}></AddOther>}
+                    {this.state.displayChoice == true && <AddOther name="Select Question Type" parentFunction={this.toAddFunction}></AddOther>}
                     
                     {this.state.displayChoice == false && <button type="button" className="btn rev-btn" onClick={this.addClick}>Add Question <FaPlusSquare /> </button>}
                   </div> 
                   
                 </div>
 
-                <br/><br/><button type="submit" className="createSurveyButton" >Create Survey</button>
+                <br/><br/>{<button type="submit" className="createSurveyButton" disabled={this.state.isCreating}>Create Survey</button>}
 
 
               </div>
@@ -427,6 +438,6 @@ const mapStateToProps = (state: IState) => ({
   surveyBuildState: state.surveyState
 });
 const mapDispatchToProps = {
-  CreatSurvey
+  CreateSurvey
 }
 export default connect(mapStateToProps, mapDispatchToProps)(surveyBuild);

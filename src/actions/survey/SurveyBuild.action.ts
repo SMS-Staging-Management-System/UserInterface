@@ -7,162 +7,113 @@ import { surveyClient } from "../../axios/sms-clients/survey-client";
 // import { surveyClient } from "../../axios/sms-clients/survey-client";
 
 export const surveyBuildTypes = {
-  CreatSurvey: 'CreatSurvey'
+  CreateSurvey: 'CreateSurvey'
 
 }
 
-export const CreatSurvey = (frmData: any, completedTasks: any[]) => async (dispatch) => {
-  console.log('CreatSurvey was called');
+export const CreateSurvey = (formData: any, completedTasks: any[]) => async (dispatch) => {
+  console.log('CreateSurvey was called');
 
   // surveyClient.saveSurvey(survey);
-  let dummySurvey: ISurvey = {
-    surveyId: 1,
-    title: frmData,
+  let survey: ISurvey = {
+    surveyId: 0,
+    title: '',
     description: 'Example Survey 1 Description',
+    creator: '',
     dateCreated: new Date(),
     closingDate: new Date(new Date().getTime() + 604800000),
     template: false,
-    published: true
+    published: true,
+    questionJunctions: []
   };
-  let dummyQuestionArray: IQuestion[] = [];
-  let dummyAnswerArray: IAnswer[] = [];
-  //beacuse there was a bug of sending data to the api(answers were out of order) 
-  //we had to create another answer array that carried all of the parsed answers
-  let parsedAnswers: IAnswer[] = [];
-  let questionindex = 0;// used for connecting answers to their temp question index
+  let questionJunctions: IJunctionSurveyQuestion[] = [];
+  let answers: IAnswer[] = [];
 
-  for (let index = 0; index < frmData.length; index++) {
 
-    let dummyquestion: IQuestion = {
-      questionId: {
-        questionId: 0,
-        question: 'string',
-        typeId: 0,
-      }
-    }
-    let dummyAnswers: IAnswer = {
-      id: 0,
-      answer: "string",
-      questionId: 0
-    }
+  let questionOrder = 1
 
-    //switch between the types of data from the survey
-    switch (frmData[index].name) {
+  for (let index = 0; index < formData.length; index++) {
+    switch (formData[index].name) {
       case 'title':
-        dummySurvey.title = frmData[index].value;
-        dummySurvey.description = frmData[index].value;
-        break;
-
-      case 'description':
-        dummySurvey.description = frmData[index].value;
-        break;
-
-      case 'questionText':
-        dummyquestion.questionId.typeId = completedTasks[questionindex].questionID;
-        dummyquestion.questionId.question = frmData[index].value;
-        dummyQuestionArray.push(dummyquestion);
-        questionindex += 1//update the group of answers to this question
-        break;
-      case 'answerText':
-        dummyAnswers.id = questionindex;
-        dummyAnswers.questionId = questionindex;//if not then use questionindex
-        dummyAnswers.answer = frmData[index].value;
-        dummyAnswerArray.push(dummyAnswers);
+        survey.title = formData[index].value;
         break;
       case 'template?':
-        dummySurvey.template = true;
-        dummySurvey.published = false;
+        survey.template = true;
+        survey.published = false;
         break;
-
-      default:
+      case 'description':
+        survey.description = formData[index].value;
         break;
-    }
-  }
-
-
-  let junctionTable: IJunctionSurveyQuestion = {
-    id: 0,
-    questionId: {
-      questionId: 0,
-      question: 'string',
-      typeId: 0,
-    },
-    questionOrder: 0,
-    surveyId: dummySurvey,
-  }
-
-  let surveyId = await surveyClient.saveSurvey(dummySurvey);
-  let questionid = new Array; // used to connect the answers to the database question id
-
-  //loop through the question array that was filled during the frmdata loop
-  for (let index = 0; index < dummyQuestionArray.length; index++) {
-    //grab the questions id from the database
-    //and push the id into the questionid array
-    let num = await surveyClient.saveQuestion(dummyQuestionArray[index]);
-    //beacuase feedback question has no answer we need to skip the question
-    //in order to keep the correct structor 
-    if (dummyQuestionArray[index].questionId.typeId != 5) {
-      questionid.push(num);
-    }
-
-    junctionTable.questionId = dummyQuestionArray[index].questionId;
-    junctionTable.questionId.questionId = num;
-
-    junctionTable.questionOrder = index + 1;
-    junctionTable.surveyId = dummySurvey;
-    junctionTable.surveyId.surveyId = surveyId;
-
-
-    surveyClient.saveToQuestionJunction(junctionTable);
-  }
-
-  let change = dummyAnswerArray[0].id;//keep a temp variable to check if the answer block is connected to its question
-  let questionOrder = 0;
-
-  for (let index = 0; index < dummyAnswerArray.length; index++) {
-
-    let match = dummyAnswerArray[index].answer.split(",")//splits the answer choices by comma
-    for (let a in match) {//gets each individual answer and creates an answer model to be submitted to the database
-
-
-      let dummyAnswers: IAnswer = {
-        id: 0,
-        answer: "string",
-        questionId: 0
-      }
-
-      let choice = match[a]
-      dummyAnswers.answer = choice
-
-      //if the answer block has reached a new question
-      //update to the next answer block
-      if (change != dummyAnswerArray[index].id) {
-
-        change = dummyAnswerArray[index].id;
+      case 'creator':
+        survey.creator = formData[index].value;
+        break;
+      case 'questionText':
+        let questionJunction: IJunctionSurveyQuestion = {
+          id: 0,
+          question: {
+            questionId: 0,
+            question: formData[index].value,
+            typeId: 0,
+            answers: []
+          },
+          survey: {
+            surveyId: 0,
+            title: '',
+            description: '',
+            creator: '',
+            dateCreated: new Date(),
+            closingDate: new Date(new Date().getTime() + 604800000),
+            template: false,
+            published: true,
+            questionJunctions: []
+          },
+          questionOrder: questionOrder
+        };
+        for (let i = 0; i < completedTasks.length; i++) {
+          questionJunction.question.typeId = completedTasks[i].questionID;
+          completedTasks.shift();
+          break;
+        }
         questionOrder++;
-
-      }
-
-      dummyAnswerArray[index].questionId = questionid[questionOrder];
-      dummyAnswers.questionId = questionid[questionOrder];
-
-      parsedAnswers.push(dummyAnswers);
+        questionJunctions.push(questionJunction);
+        break;
+      case 'answerText':
+        let answer:  any = {
+          answerId: 0,
+          answer: formData[index].value,
+          question: null
+        }
+        answers.push(answer);
+        break;
     }
   }
 
-  for (let index = 0; index < parsedAnswers.length; index++) {
-    await surveyClient.saveAnswer(parsedAnswers[index]);
-  }
-  dispatch({
-    payload: {
-      actionSurvey: dummySurvey,
-      actionQuestion: dummyQuestionArray,
-      actionAnswer: dummyAnswerArray,
-      //beacuse there was a bug of sending data to the api(answers were out of order) 
-      //we had to create another answer array that carried all of the parsed answers
-      actionParsedAnswers: parsedAnswers,
-      actionJunctionTable: junctionTable
-    },
-    type: surveyBuildTypes.CreatSurvey
-  });
+
+
+  for (let i = 0; i < questionJunctions.length; i++)
+    if (questionJunctions[i].question.typeId !== 5) {
+      let match: string = '';
+      for (let j = 0; j < answers.length; j++) {
+        match = answers[j].answer;
+        answers.shift();
+        break;
+      }
+
+      let matchArray = match.split(',');
+      for (let l = 0; l < matchArray.length; l++) {
+        let dummyAnswer: any = {
+          answerId: 0,
+          answer: matchArray[l].trim(),
+          question: null
+        }
+        questionJunctions[i].question.answers.push(dummyAnswer);
+      }
+    }
+
+
+  survey.questionJunctions = questionJunctions;
+
+  console.log(survey)
+
+  surveyClient.saveSurvey(survey);
 }
