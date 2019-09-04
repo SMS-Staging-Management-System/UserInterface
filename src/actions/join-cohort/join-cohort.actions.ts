@@ -177,7 +177,7 @@ export const saveUserAssociate = (newUser: IUser, history:History) => async (dis
           toast.success('User Created');
       } else {
           history.push('/management/login');
-          toast.error('Failed To Save User');
+          toast.error('Incorrect email address format');
         }    
     } catch(error){
         dispatch({
