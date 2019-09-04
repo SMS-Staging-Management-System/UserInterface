@@ -4,8 +4,8 @@ import { IAnswer } from "../../model/surveys/answer.model";
 import { IResponse } from "../../model/surveys/response.model";
 import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
 import { smsClient } from ".";
-
 const surveyBaseRoute = '/survey-service/surveys';
+const templateRoute = '/survey-service/surveys/template/'
 const questionBaseRoute = '/survey-service/questions';
 const answerBaseRoute = '/survey-service/answers';
 const responseBaseRoute = '/survey-service/responses';
@@ -14,14 +14,12 @@ const questionJunctionBaseRoute = '/survey-service/junction_survey_questions';
 const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
 const junctionSurveyQuestionsBaseRoute = '/survey-service/junction_survey_questions';
-
-
+let totalPages = 0;
+let pages = 0;
 export const surveyClient = {
-
   //--------------------//
   //-- Survey Methods --//
   //--------------------//
-
   // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyTitle
   // this is our fetch call on which if dont have a body back we will return
   // the empty array declare on the first line.
@@ -42,16 +40,13 @@ export const surveyClient = {
       .catch(err => {
         console.log(err);
       });
-
     return surveys;
   },
-
-    // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyDescription
+  // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyDescription
   // this is our fetch call on which if dont have a body back we will return
   // the empty array declare on the first line.
   findSurveyByDescription: async (description: string) => {
     let surveys: any = [];
-
     await smsClient.get(`${surveyBaseRoute}/description/${description}`)
       .then(response => {
         surveys = response.data;
@@ -59,47 +54,71 @@ export const surveyClient = {
       .catch(err => {
         console.log(err);
       });
-   
     return surveys;
   },
   findAllSurveys: async () => {
     let surveysAndTemplates;
     let surveys: any = [];
-    await smsClient.get(surveyBaseRoute)
-      .then(response => {
-        surveysAndTemplates = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let resp = await smsClient.get(surveyBaseRoute)
+    surveysAndTemplates = resp.data.content;
     if (surveysAndTemplates) {
       surveysAndTemplates.forEach(element => {
-        if (!element.template) {
-          surveys.push(element);
-        }
+        surveys.push(element);
       });
     }
     return surveys;
   },
-  findAllTemplates: async () => {
+  findAllTemplates: async (page: number) => {
     let surveysAndTemplates;
     let templates: any = [];
-    await smsClient.get(surveyBaseRoute)
-      .then(response => {
-        surveysAndTemplates = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    pages += page;
+    if (pages < 0) {
+      pages = 0
+    } else if (pages > 0) {
+      if (pages >  totalPages) {
+        pages = totalPages;
+      }
+    }
+    let resp = await smsClient.get(templateRoute + pages)
+    surveysAndTemplates = resp.data;
     if (surveysAndTemplates) {
-      surveysAndTemplates.forEach(element => {
-        if (element.template) {
-          templates.push(element);
-        }
+      surveysAndTemplates.content.forEach(element => {
+        templates.push(element);
       });
+      totalPages = surveysAndTemplates.totalPages;
+      console.log("total pages: " + totalPages)
     }
     return templates;
-
+  },
+  changePage: async (page: number) => {
+    // let pages = 0;
+    pages += page;
+    if (pages < 0) {
+      pages = 0
+    } else if (pages > 0) {
+      pages--
+      if (pages >= totalPages) {
+        pages = totalPages;
+      }
+    }
+    let resp = await smsClient.get(templateRoute + page)
+    let surveysAndTemplates;
+    let templates: any = [];
+    surveysAndTemplates = resp.data;
+    if (surveysAndTemplates) {
+      surveysAndTemplates.forEach(element => {
+        templates.push(element);
+      });
+      totalPages = surveysAndTemplates.totalPages;
+    }
+    return templates;
+  },
+  totalPages() {
+    return totalPages;
+  },
+  currentPage() {
+    let sentPage = pages + 1;
+    return sentPage;
   },
   findSurveyById: async (id: number) => {
     // Get the Survey
@@ -159,10 +178,8 @@ export const surveyClient = {
   findSurveyByIdWithResponses: async (id: number) => {
     // Get the Survey
     let survey = await surveyClient.findSurveyById(id);
-
     // Get the Responses
     const responseCount = await surveyClient.countResponses(id);
-
     // Add the response count to each question
     survey.questionJunctions.forEach(question => {
       if (question.questionId.typeId !== 5) {
@@ -177,8 +194,6 @@ export const surveyClient = {
     });
     return survey;
   },
-
-
   findSurveysAssignedToUser: async (email: String) => {
     let allSurveys: any[] = [];
     let myAssignedSurveys: any[] = [];
@@ -214,65 +229,51 @@ export const surveyClient = {
     }
     return myAssignedSurveys;
   },
-
   async saveSurvey(survey: ISurvey) {
     let resp = await smsClient.post(surveyBaseRoute, survey);
     let sID = resp.data.surveyId;      // return ID; 
     return sID;
   },
-
   //----------------------//
   //-- Question Methods --//
   //----------------------//
-
   async saveQuestion(question: IQuestion) {
     let resp = await smsClient.post(questionBaseRoute, question.questionId);
     let qID = parseInt(resp.data.questionId);      // return ID; 
     return qID;
   },
-
   saveAllQuestion(question: IQuestion[]) {
-
     smsClient.post(questionAllBaseRoute, question);
   },
   saveToQuestionJunction(junction: IJunctionSurveyQuestion) {
     smsClient.post(questionJunctionBaseRoute, junction);
   },
-
   async getQuestionType(index: number) {
-
     let resp = await smsClient.get(questionTypeBaseRoute);
     const body = resp.data;
     return body[index].questionType;
   },
-
   //--------------------//
   //-- Answer Methods --//
   //--------------------//
-
   async saveAnswer(answer: IAnswer) {
     answer.id = 0;
     return await smsClient.post(answerBaseRoute, answer)
   },
-
   saveAllAnswer(answer: IAnswer[]) {
     for (let index = 0; index < answer.length; index++) {
       smsClient.post(answerBaseRoute, answer[index]);
     }
   },
-
   //----------------------//
   //-- Response Methods --//
   //----------------------//  
-
   saveResponse: (response: IResponse) => {
     return smsClient.post(responseBaseRoute, response)
   },
-
   //---------------------//
   //-- History Methods --//
   //---------------------//  
-
   findHistoriesByEmail: async (email: String) => {
     let histories;
     await smsClient.post(`${historyBaseRoute}/email`, email)
@@ -294,22 +295,18 @@ export const surveyClient = {
     }
     smsClient.post(historyBaseRoute, postObject);
   },
-
-  findHistoriesBySurveyId: async (id: number, pageId : number) => {
+  findHistoriesBySurveyId: async (id: number, pageId: number) => {
     let histories;
-
     await smsClient.get(`${historyBaseRoute}/pageable/${id}/${pageId}`)
       .then(response => {
         console.log('Total pages : ' + response.data.totalPages);
         histories = response.data;
-        
       })
       .catch(err => {
         console.log(err);
       });
     return histories;
   },
-
   updateHistoryAsComplete(id: number) {
     const historyUpdate = {
       "historyId": id,
@@ -320,5 +317,8 @@ export const surveyClient = {
     }
     smsClient.patch(`${historyBaseRoute}/taken`, historyUpdate);
   },
-
+  //working on pg
+  // findAllByPage(page: number) {
+  //   return smsClient.get(historyBaseRoute+`/page/${page}`)
+  // },
 }
