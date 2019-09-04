@@ -10,7 +10,7 @@ import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { inputNames } from './profile.component';
 
-interface ISCStatusDropdownProps {
+export interface ISCStatusDropdownProps {
     currentSMSUser: IUser
     userStatuses: IStatus[]
     updateUser: IUser

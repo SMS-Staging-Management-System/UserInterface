@@ -1,9 +1,11 @@
 import { shallow } from "enzyme";
 import React from 'react';
-import { Input, UncontrolledDropdown, Button, DropdownToggle } from 'reactstrap';
-import { cognitoRoles } from '../../model/cognito-user.model';
+import { Input } from 'reactstrap';
 import { ISCProfileProps, SCProfile } from "./sc-profile.component";
 import { IUser } from "../../model/user.model";
+import { SCLocationDropdown } from "./sc-location.dropdown";
+import { SCStatusDropdown } from "./sc-status.dropdown";
+import { SCRoleSelector } from "./sc-role.selector";
 
 
 const inputNames = {
@@ -17,7 +19,8 @@ const inputNames = {
     COUNTRY: 'COUNTRY',
     ZIP: 'ZIP',
     TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES'
+    STATUS_ALIASES: 'STATUS_ALIASES',
+    ROLES: 'ROLES'
 }
 
 const passedInputNames = {
@@ -31,12 +34,45 @@ const passedInputNames = {
     COUNTRY: 'PASSED_IN_COUNTRY',
     ZIP: 'PASSED_IN_ZIP',
     TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES'
+    STATUS_ALIASES: 'STATUS_ALIASES',
+    ROLES: 'ROLES'
 }
 
 describe('<SCProfile />', () => {
     let mockProps: ISCProfileProps;
     const mockUser: IUser = {
+        email: inputNames.EMAIL,
+        userId: 0,
+        firstName: inputNames.FIRST_NAME,
+        lastName: inputNames.LAST_NAME,
+        phoneNumber: inputNames.PHONE,
+        trainingAddress: {
+            addressId: 1,
+            alias: 'Reston',
+            street: '11730 Plaza America Dr #205',
+            zip: '20190',
+            city: 'Reston',
+            state: 'VA',
+            country: 'United States'
+        },
+        personalAddress: {
+            addressId: 0,
+            street: inputNames.STREET,
+            alias: 'tstr',
+            city: inputNames.CITY,
+            country: inputNames.COUNTRY,
+            state: inputNames.STATE,
+            zip: inputNames.ZIP
+        },
+        userStatus: {
+            statusId: 2,
+            generalStatus: 'Training',
+            specificStatus: 'Training',
+            virtual: false
+        },
+        roles: []
+    }
+    const mockPassedInUser: IUser = {
             email: passedInputNames.EMAIL,
             userId: 0,
             firstName: passedInputNames.FIRST_NAME,
@@ -67,16 +103,6 @@ describe('<SCProfile />', () => {
             virtual: false
         },
         roles: []
-    }
-    const mockAdminUser: IUser = {
-        ...mockUser,
-        userStatus: {
-            statusId: 8,
-            generalStatus: 'Staging',
-            specificStatus: 'Project Started',
-            virtual: false
-        },
-        roles: [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]
     }
 
     beforeEach(() => {
@@ -227,22 +253,25 @@ describe('<SCProfile />', () => {
             const inputNamesEle = inputNames[input];
             const passedInEle = passedInputNames[input];
             if (input === 'TRAINING_ALIASES') {
-
-            } else if (input === 'STATUS_ALIASES') {
-                // Ensure button is disabled for users who don't have credentials
-                it(`Should contain one ${input} button which is disabled`, () => {
+                // Ensure component is rendered
+                it(`Should render the ${input} component`, () => {
                     const component = shallow(<SCProfile {...mockProps} />);
-                    const button = component.find(Button).find(`[name="${inputNamesEle}"]`).find(`[disabled=${true}]`);
-                    expect(button).toHaveLength(1);
+                    const locationDropdown = component.find(SCLocationDropdown);
+                    expect(locationDropdown).toBeDefined();
                 })
-
-                // Ensure dropdown is rendered
-                it(`Should contain one ${input} uncontrolled dropdown which shows ${mockAdminUser.userStatus.specificStatus} initially`, () => {
-                    const component = shallow(<SCProfile {...{...mockProps, currentSMSUser: mockAdminUser}} />);
-                    const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
-                    expect(uncontrolledDropdown).toHaveLength(1);
-                    const dropdownToggle = uncontrolledDropdown.find(DropdownToggle).render().text();
-                    expect(dropdownToggle).toBe(mockAdminUser.userStatus.specificStatus);
+            } else if (input === 'STATUS_ALIASES') {
+                // Ensure component is rendered
+                it(`Should render the ${input} component`, () => {
+                    const component = shallow(<SCProfile {...mockProps} />);
+                    const statusDropdown = component.find(SCStatusDropdown);
+                    expect(statusDropdown).toBeDefined();
+                })
+            } else if (input === 'ROLES') {
+                // Ensure component is rendered
+                it(`Should render the ${input} component`, () => {
+                    const component = shallow(<SCProfile {...mockProps} />);
+                    const roles = component.find(SCRoleSelector);
+                    expect(roles).toBeDefined();
                 })
             } else {
                 // Ensure each text box is rendered
@@ -255,17 +284,22 @@ describe('<SCProfile />', () => {
                 // Ensure correct information is passed into text boxes
                 it(`Should render the current user's ${input} if no user prop is passed in`, () => {
                     const component = shallow(<SCProfile {...mockProps} />);
-                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`).find(`[value="${inputNamesEle}"]`);
+                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`)
+                        .find(`[value="${inputNamesEle}"]`);
                     expect(input).toHaveLength(1);
                 })
 
                 // Ensure passed in user is shown instead of logged in user
                 it(`Should render the passed in user's ${input} if user prop is passed in`, () => {
-                    const component = shallow(<SCProfile {...{...mockProps, userToUpdate: mockUser}} />);
-                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`).find(`[value="${passedInEle}"]`);
+                    const component = shallow(<SCProfile {...{...mockProps, userToUpdate: mockPassedInUser}} />);
+                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`)
+                        .find(`[value="${passedInEle}"]`);
                     expect(input).toHaveLength(1);
                 })
             }
         }
     }
+
+    // Ensure the onChange function is working properly 
+    // it('Should ')
 })

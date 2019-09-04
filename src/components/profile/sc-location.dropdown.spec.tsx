@@ -3,6 +3,7 @@ import React from "react";
 import { IUser } from "../../model/user.model";
 import { SCLocationDropdown, ISCLocationDropdownProps } from "./sc-location.dropdown";
 import { Button, UncontrolledDropdown, DropdownToggle } from "reactstrap";
+import { cognitoRoles } from "../../model/cognito-user.model";
 
 const inputNames = {
     EMAIL: 'NEW_USER_EMAIL',
@@ -66,6 +67,16 @@ describe('<SCLocationDropdown />', () => {
         },
         roles: []
     }
+    const mockAdminUser: IUser = {
+        ...mockUser,
+        userStatus: {
+            statusId: 8,
+            generalStatus: 'Staging',
+            specificStatus: 'Project Started',
+            virtual: false
+        },
+        roles: [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]
+    }
 
     beforeEach(() => {
         mockProps = {
@@ -119,7 +130,7 @@ describe('<SCLocationDropdown />', () => {
                 // Ensure dropdown is rendered
                 it(`Should contain one ${input} uncontrolled dropdown that shows 
                         ${mockUser.trainingAddress.alias} initally`, () => {
-                    const component = shallow(<SCLocationDropdown {...mockProps} />);
+                    const component = shallow(<SCLocationDropdown {...{...mockProps, currentSMSUser: mockAdminUser}} />);
                     const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNamesEle}"]`);
                     expect(uncontrolledDropdown).toHaveLength(1);
                     const dropdownToggle = uncontrolledDropdown.find(DropdownToggle).render().text();
