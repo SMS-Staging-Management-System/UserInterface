@@ -51,6 +51,17 @@ export const cohortClient = {
       });
     return cohortNames;
   },
+  // async geTrainers(id: number) {
+  //   let cohortUsers: IUser[] = [];
+  //   await smsClient.get(`${cohortContext}/users/id/${id}`)
+  //     .then(response => {
+  //       cohortUsers = response.data;
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  //   return cohortUsers;
+  // },
   
   async getAlias(alias: string){
     let aliases;

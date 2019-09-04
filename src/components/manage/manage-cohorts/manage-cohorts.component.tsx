@@ -1,12 +1,14 @@
 import * as React from 'react';
 import {
     Table,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown
 } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
 import { IManageCohortsComponentProps } from './manage-cohorts.container';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
+import { addressesClient } from '../../../axios/sms-clients/address-client';
 import { ICohort } from '../../../model/cohort';
+import { IAddress } from '../../../model/address.model';
 
 
 
@@ -16,9 +18,17 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
         super(props);
         this.state = {
             filterDropdownList: false,
-            locationDropdownList: false,
-            trainerDropdownList: false,
-            showFilertSelection: ''
+            showFilertSelection: '',
+            locations: [],
+            trainers: [],
+            trainerDropdown: {
+                isOpen: false,
+                selection: 'Trainers'
+            },
+            locationDropdown: {
+                isOpen: false,
+                selection: 'Locations'
+            }
         };
     }
 
@@ -28,12 +38,50 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
         return data
     }
 
+    getTrainersCohorts = async (newPage): Promise<ICohort[]> => {
+        const resp = await cohortClient.findAllByPage(newPage);
+        const data = await resp.data
+        return data
+    }
+
+    getLocations = async () => {
+        const resp = await addressesClient.findAll();
+        const locations = await resp.data
+        this.setState({
+            locations
+        });
+    }
+
+    getTrainers = async () => {
+        const resp = await cohortClient.findAll();
+        const cohorts = await resp.data
+        let tempSet = new Set();
+
+        cohorts.map(cohort => (
+            tempSet.add(cohort.trainer.email)
+        ))
+
+        console.log(tempSet);
+        const trainers = Array.from(tempSet);
+        console.log('trainers');
+        console.log(trainers);
+        this.setState({
+            ...this.state,
+            trainers
+        });
+    }
+
     async componentDidMount() {
 
         const data = await this.getAllCohorts(this.props.currentPage);
         console.log('calling getAllCohorts in componentDidMount')
         console.log(data);
         this.props.updateCohortsByPage(data, this.props.currentPage)
+        this.getLocations();
+        this.getTrainers();
+
+
+
     }
 
     incrementPage = async () => {
@@ -64,13 +112,20 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
     toggleLocationDropdown = () => {
         this.setState({
-            locationDropdownList: !this.state.locationDropdownList
+            locationDropdown:
+            {
+                ...this.state.locationDropdown,
+                isOpen: !this.state.locationDropdown.isOpen
+            }
         });
     }
 
     toggleTrainerDropdown = () => {
         this.setState({
-            trainerDropdownList: !this.state.trainerDropdownList
+            trainerDropdown: {
+                ...this.state.trainerDropdown,
+                isOpen: !this.state.trainerDropdown.isOpen
+            }
         });
     }
 
@@ -83,19 +138,31 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
 
     showFilterTypeDropdown = () => {
-
+        const instructer = this.state.trainers;
         if (this.state.showFilertSelection === 'trainer') {
-            return (<Dropdown color="success" className="responsive-modal-row-item rev-btn"
-                isOpen={this.state.locationDropdownList} toggle={this.toggleLocationDropdown} display={false}>
-                <DropdownToggle className="ml-1" caret>
-                    Trainer
-        </DropdownToggle>
-                <DropdownMenu>
-                    <DropdownItem>Trainer</DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem>trainer</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
+            return (
+                <ButtonDropdown color="success" className="responsive-modal-row-item rev-btn"
+                    isOpen={this.state.trainerDropdown.isOpen}
+                    toggle={this.toggleTrainerDropdown} display={false}>
+
+                    <DropdownToggle className="ml-1" caret>
+                        {this.state.trainerDropdown.selection}
+                    </DropdownToggle>
+                    <DropdownMenu >
+                        <DropdownItem onClick={this.getTrainers}>All </DropdownItem>
+                        <DropdownItem divider />
+                        {
+                            instructer.map(trainer => (
+                                <DropdownItem
+                                    key={'Status-dropdown-' + trainer}
+                                // onClick={() => this.getCohortByLocation(user)}
+                                >
+                                    {trainer}
+                                </DropdownItem>
+                            ))
+                        }
+                    </DropdownMenu>
+                </ButtonDropdown>
 
             )
         }
@@ -103,17 +170,26 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
             return (
                 <Dropdown color="success" className="responsive-modal-row-item rev-btn"
-                    isOpen={this.state.trainerDropdownList} toggle={this.toggleTrainerDropdown}>
-                    <DropdownToggle className="ml-1" caret>
-                        Location
-                </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem>location</DropdownItem>
+                    isOpen={this.state.locationDropdown.isOpen} toggle={this.toggleLocationDropdown} >
+
+                    <DropdownToggle caret>
+                        {this.state.locationDropdown.selection}
+                    </DropdownToggle>
+                    <DropdownMenu >
+                        <DropdownItem onClick={this.getLocations}>All </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem>Location</DropdownItem>
+                        {
+                            this.state.locations.map(locations => (
+                                <DropdownItem
+                                    key={'Status-dropdown-' + locations.id}
+                                // onClick={() => this.getCohortByLocation(user)}
+                                >
+                                    {locations.alias}
+                                </DropdownItem>
+                            ))
+                        }
                     </DropdownMenu>
                 </Dropdown>
-
             )
         }
         return null;
@@ -133,7 +209,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                                 Selection
                 </DropdownToggle>
                             <DropdownMenu>
-                            <DropdownItem>
+                                <DropdownItem>
                                     <div onClick={() => this.setFilterSelection('')}>
                                         All
                                 </div>
