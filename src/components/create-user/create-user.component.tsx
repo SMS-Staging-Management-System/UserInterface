@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from "react-redux";
 import { IState } from '../../reducers';
 import { Button, Input, Label, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Card } from 'reactstrap';
-import { joinCohort, saveUserAssociate } from '../../actions/join-cohort/join-cohort.actions'
+import { joinCohort, saveUserAssociate } from '../../actions/join-cohort/join-cohort.actions';
 import { ICreateUserState, IAddressState, IJoinCohortState } from "../../reducers/management";
 import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
-import { updateNewUser, updateNewUserLocation, toggleLocationDropdown } from '../../actions/create-user/create-user.actions'
+import { updateNewUser, updateNewUserLocation, toggleLocationDropdown } from '../../actions/create-user/create-user.actions';
 import { updateLocations } from '../../actions/address/address.actions';
 import { History } from "history";
 import { withRouter } from 'react-router-dom';
