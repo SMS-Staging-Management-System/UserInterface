@@ -11,7 +11,7 @@ export const surveyBuildTypes = {
 
 }
 
-export const CreateSurvey = (formData: any, completedTasks: any[]) => async (dispatch) => {
+export const createSurvey = (formData: any, completedTasks: any[]) => async (dispatch) => {
   console.log('CreateSurvey was called');
 
   // surveyClient.saveSurvey(survey);

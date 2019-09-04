@@ -17,7 +17,7 @@ import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { ISurveyState } from '../../../reducers/survey';
-import { CreateSurvey } from '../../../actions/survey/SurveyBuild.action';
+import { createSurvey } from '../../../actions/survey/SurveyBuild.action';
 import { FaPlusSquare } from 'react-icons/fa';
 import AddOther from './add.other.component';
 import { setTimeout } from 'timers';
@@ -27,7 +27,7 @@ interface IComponentProps extends RouteComponentProps<{}> {
   auth: IAuthState,
   match: any,
   surveyState: ISurveyState
-  CreateSurvey: (frmData: any, completedTasks: any[]) => void
+  createSurvey: (frmData: any, completedTasks: any[]) => void
 };
 interface IComponentState{
   displaySurvey?: any,
@@ -42,9 +42,7 @@ interface IComponentState{
   isCreating: boolean
 }
 
-
-
-class surveyBuild extends React.Component<IComponentProps, IComponentState>{
+export class SurveyBuild extends React.Component<IComponentProps, IComponentState>{
   constructor(props) {
     super(props);
     this.state = {
@@ -132,7 +130,7 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
       frmData = [...frmData, {name: 'creator', value: this.props.auth.currentUser.email}];
       // console.log('form data: ', frmData)
       // console.log('completed Tasks : ', this.state.completedTasks);
-      this.props.CreateSurvey(frmData, this.state.completedTasks);
+      this.props.createSurvey(frmData, this.state.completedTasks);
       this.setState({
         ...this.state,
         isCreating: true
@@ -145,14 +143,14 @@ class surveyBuild extends React.Component<IComponentProps, IComponentState>{
     this.handleShow();//user styleing for creating a survey
   }
 
-  testaxois = async (event) => {
+  testaxois = async () => {
     surveyClient.findSurveyById(2);
   }
   componentWillMount(){
     this.addSpecificSurvey();
   }
   componentDidMount (){
-    this.testaxois(event);
+    this.testaxois();
       this.setState({
         notRenderedFirstTime: false
       })
@@ -438,6 +436,6 @@ const mapStateToProps = (state: IState) => ({
   surveyBuildState: state.surveyState
 });
 const mapDispatchToProps = {
-  CreateSurvey
+  createSurvey
 }
-export default connect(mapStateToProps, mapDispatchToProps)(surveyBuild);
+export default connect(mapStateToProps, mapDispatchToProps)(SurveyBuild);
