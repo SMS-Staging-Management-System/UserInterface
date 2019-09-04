@@ -287,14 +287,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     render() {
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        // convert interview array to location array
-        // const arrPlace = this.props.dropdowns
-        //     .filter((item, pos) => this.props.dropdowns.indexOf(item) === pos)
-        //     .map((item) => item.place);
-        // // convert interview array to client array
-        // const arrClientName = this.props.dropdowns
-        //     .filter((item, pos) => this.props.dropdowns.indexOf(item) === pos)
-        //     .map((item) => item.client.clientName);
 
         const arrPlace1 = this.props.dropdowns.map((item) => { //convert interview array to place array
             return item.place;
@@ -430,7 +422,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                 <tbody>
                                     {this.state.listOfInterviews.map((entry) => {
                                         return (<tr key={entry.id}>
-                                            <td><ReviewButton disabled={isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td>
+                                            {isAdmin ?
+                                            <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td>:null}
                                             <td>{entry.associateEmail}</td>
                                             <td>{entry.managerEmail}</td>
                                             <td>{entry.place}</td>
