@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import DropdownItem from 'react-bootstrap/DropdownItem';
 import { connect } from 'react-redux';
-import Button from 'reactstrap/lib/Button';
-import DropdownMenu from 'reactstrap/lib/DropdownMenu';
-import DropdownToggle from 'reactstrap/lib/DropdownToggle';
-import { UncontrolledDropdown } from 'reactstrap/lib/Uncontrolled';
 import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
 import { inputNames } from './profile.component';
+import { DropdownItem, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 export interface ISCStatusDropdownProps {
     currentSMSUser: IUser
     userStatuses: IStatus[]
     updateUser: IUser
-    changeHandler: (event: any) => any
+    onChangeHandler: (event: any) => any
 }
 
 interface ISCStatusDropdownState {
@@ -34,7 +30,7 @@ export class SCStatusDropdown extends Component<ISCStatusDropdownProps, ISCStatu
         this.setState({
             buttonText: event.currentTarget.innerText
         })
-        this.props.changeHandler({ target: { name: inputNames.STATUS_ALIASES, value: event.currentTarget.innerText } });
+        this.props.onChangeHandler({ target: { name: inputNames.STATUS_ALIASES, value: event.currentTarget.innerText } });
     }
 
     componentDidUpdate(prevProps: ISCStatusDropdownProps) {
@@ -52,7 +48,8 @@ export class SCStatusDropdown extends Component<ISCStatusDropdownProps, ISCStatu
         for (let i = 0; i < this.props.userStatuses.length; i++) {
             const status = this.props.userStatuses[i];
             if (!dropDownHeaders.includes(status.generalStatus)) {
-                dropDownArr.push(<DropdownItem className="dropdown-header" disabled>{status.generalStatus}</DropdownItem>);
+                dropDownArr.push(<DropdownItem header>{status.generalStatus}</DropdownItem>);
+                dropDownArr.push(<DropdownItem divider></DropdownItem>)
                 dropDownHeaders.push(status.generalStatus);
             }
             if (!status.virtual) {

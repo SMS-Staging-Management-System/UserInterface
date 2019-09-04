@@ -33,7 +33,7 @@ export interface ISCProfileProps {
     trainingAddresses: IAddressState,
     userStatus: IStatusState,
     userToUpdate?: IUser, // This prop tells the component to look at a user other than the current user
-    updateUserSC: (userToUpdate: IUser, prevUser: IUser) => any
+    updateUserSC: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
 }
 
 interface ISCProfileState {
@@ -256,7 +256,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         if (this.props.userToUpdate) {
             this.props.updateUserSC(this.state.updateUser, this.props.userToUpdate);
         } else {
-            this.props.updateUserSC(this.state.updateUser, this.props.currentSMSUser);
+            this.props.updateUserSC(this.state.updateUser, this.props.currentSMSUser, true);
         }
     }
 
@@ -409,7 +409,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                         <Label>Status</Label>
                         <SCProfileStatusDropdown
                             updateUser={this.state.updateUser}
-                            changeHandler={this.onUserInfoChangeHandler} />
+                            onChangeHandler={this.onUserInfoChangeHandler} />
                         {this.state.updateUser.userStatus.generalStatus === 'Training'
                             ? <></>
                             :
