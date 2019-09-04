@@ -2,7 +2,7 @@ import { IAuthState } from '.';
 import { authTypes } from '../../actions/auth/auth.actions';
 
 const initialState: IAuthState = {
-  currentUser:  {email: 'blake.kruppa@revature.com', roles: ['staging-manager']}
+  currentUser:  {email: '', roles: []}
 }
 
 export const authReducer = (state = initialState, action: any) => {
@@ -10,7 +10,7 @@ export const authReducer = (state = initialState, action: any) => {
     case authTypes.UPDATE_CURRENT_USER:
       return {
         ...state,
-        currentUser:  {email: 'blake.kruppa@revature.com', roles: ['staging-manager']} //action.payload.currentUser
+        currentUser: action.payload.currentUser
       }
     case authTypes.LOGOUT:
       return initialState;
