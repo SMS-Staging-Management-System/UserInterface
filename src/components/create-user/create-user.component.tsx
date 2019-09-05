@@ -133,7 +133,7 @@ export interface ICreateUserProps {
     // after clicking join, take you to cohort page
   
     render() {
-     const { createUser, addresses } = this. props;
+     const { createUser, addresses } = this.props;
      return (
        <Card
         className="join-cohort-signup-card">
