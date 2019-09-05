@@ -267,12 +267,12 @@ describe('<SCProfile />', () => {
                     })
                     expect(component).toBeDefined();
                     const input = component.find(SCLocationDropdown);
-                        const simulatedEvent = {
-                            target: {
-                                name: inputName,
-                                value: 'USF'
-                            }
+                    const simulatedEvent = {
+                        target: {
+                            name: inputName,
+                            value: 'USF'
                         }
+                    }
                     input.simulate("changeHandler", simulatedEvent);
                     const newInput = component.find(SCLocationDropdown);
                     expect(newInput).toHaveLength(1);
@@ -315,30 +315,27 @@ describe('<SCProfile />', () => {
                     expect(input).toHaveLength(1);
                 })
                 // Ensure the onChange function is working properly 
-                it(`Should update the ${inputName} state based on event given`, () => {
-                    const component = shallow(<SCProfile {...mockProps} />);
-                    component.setState({
-                        updateUser: mockUser
+                if (inputName !== 'EMAIL') {
+                    it(`Should update the ${inputName} state based on event given`, () => {
+                        const component = shallow(<SCProfile {...mockProps} />);
+                        component.setState({
+                            updateUser: mockUser
+                        })
+                        expect(component).toBeDefined();
+                        const input = component.find(Input).find(`[name="${inputNamesEle}"]`)
+                            .find(`[value="${inputNamesEle}"]`);
+                        const simulatedEvent = {
+                            target: {
+                                name: inputNamesEle,
+                                value: 'changed'
+                            }
+                        }
+                        input.simulate("change", simulatedEvent);
+                        const newInput = component.find(Input).find(`[name="${inputNamesEle}"]`)
+                            .find(`[value="changed"]`);
+                        expect(newInput).toHaveLength(1);
                     })
-                    expect(component).toBeDefined();
-                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`)
-                        .find(`[value="${inputNamesEle}"]`);
-                    console.log(input.debug());
-                        // const infoChange = spyOn(component.instance(), 'onUserInfoChangeHandler');
-                    const simulatedEvent = {
-                    target: {
-                        name: inputName,
-                        value: 'changed'
-                    }
                 }
-                    // component.onUserInfoChangeHandler(simulatedEvent);
-                    // expect(infoChange).toBeCalled();
-                    input.simulate("change", simulatedEvent);
-                    const newInput = component.find(Input).find(`[name="${inputNamesEle}"]`)
-                        .find(`[value="changed"]`);
-                    console.log(newInput.debug());
-                    expect(newInput).toHaveLength(1);
-                })
             }
         }
     }
