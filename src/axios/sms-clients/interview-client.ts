@@ -20,32 +20,46 @@ export const interviewClient = {
 
     fetchPage: (pageNumber?: number, pageSize?: number, orderBy = 'id', direction = 'ASC',
         associateEmail = 'associateEmail', managerEmail = 'managerEmail',
-        place = "placeName", clientName = "clientName", staging = 'stagingOff') => {
+        place = "placeName", clientName = "clientName", input = 'associateInput', feedback = 'feedback') => {
         const currentUser = store.getState().managementState.auth.currentUser;
         const roles = currentUser.roles
+        console.log(roles);
         const email = currentUser.email
+        console.log(currentUser);
         const isAdmin = (roles.includes(cognitoRoles.ADMIN) || roles.includes(cognitoRoles.STAGING_MANAGER) || roles.includes(cognitoRoles.TRAINER));
 
+
         let url = interviewContext;
+
+        // an associate user, uses pages endpoint instead of page
         url += '/page'
-        if (!isAdmin) url += 's'
-        url += '?orderBy=' + orderBy + '&direction=' + direction;
+        if (!isAdmin) { url += 's' }
+
+        url += '?search=associateEmail:';
+
+        if (associateEmail === '') { url += isAdmin ? '*' : email; }
+        else { url += (isAdmin ? associateEmail : email); }
+
+        if (managerEmail === '') { url += ',managerEmail:*'; }
+        else { url += ',managerEmail:' + managerEmail; }
+
+        url += `,place:${place},client:${clientName},associateInput:${input},feedback:${feedback}`
+
+        if (!isAdmin) {
+            url += '&orderBy=' + orderBy + '&direction=' + direction;
+        }
         if (pageNumber) {
             url += '&pageNumber=' + pageNumber;
         }
         if (pageSize) {
             url += '&pageSize=' + pageSize;
         }
-        if (!isAdmin)
-            url += '&email=' + email;
-        url += '&associateEmail=' + associateEmail;
-        url += '&managerEmail=' + managerEmail;
-        url += '&place=' + place;
-        url += '&clientName=' + clientName;
-        url += '&staging=' + staging;
+
 
         return smsClient.get(url);
     },
+
+
 
     assocNeedFeedback: async (pageNumber: number, PageSize: number) => {
         return await smsClient.get(interviewContext + `/reports/AssociateNeedFeedback/page?pageNumber=${pageNumber}&pageSize=${PageSize}`);

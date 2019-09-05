@@ -1,7 +1,7 @@
 // #region Imports
 import React from 'react';
 import { connect } from 'react-redux';
-import { getInterviewPages, markAsReviewed, setSelected } from '../../actions/interviewList/interviewList.actions';
+import { getInterviewPages, markAsReviewed, setSelected, getDropdown } from '../../actions/interviewList/interviewList.actions';
 import ReactPaginate from 'react-paginate'
 import { IState } from '../../reducers';
 import { Link } from 'react-router-dom';
@@ -21,6 +21,7 @@ import moment from 'moment';
 export interface InterviewListProps {
     email: string,
     listOfInterviews: any[],
+    dropdowns: any[],
     numberOfPages: number,
     currentPage: number,
     pageSize: number,
@@ -35,9 +36,23 @@ export interface InterviewListProps {
         managerEmail?: string,
         place?: string,
         clientName?: string,
-        staging?: string) => void,
+        staging?: string,
+        input?: string,
+        feedback?: string) => void,
     markAsReviewed: (interviewId: number) => void,
     setSelected: (current: any) => void;
+    getDropdown: (
+        pageNumber?: number,
+        pageSize?: number,
+        ordeyBy?: string,
+        direction?: string,
+        associateEmail?: string,
+        managerEmail?: string,
+        place?: string,
+        clientName?: string,
+        staging?: string,
+        input?: string,
+        feedback?:string) => void,
 }
 
 export interface InterviewListState { // state of table, its headings, and sorting options
@@ -57,7 +72,10 @@ export interface InterviewListState { // state of table, its headings, and sorti
     fromReviewed: string,
     toReviewed: string,
     client: string,
-    staging: string
+    staging: string,
+    dropdowns: any[],
+    input:string,
+    feedback: string
 }
 // Two arrays to arrange table headers. Originally the two were defined as a key-value pair object.
 const thKeys = ['associateEmail', 'managerEmail', 'place', 'client', 'notified',
@@ -73,35 +91,40 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         super(props);
         // initial state of the table and sorting values
         this.state = { 
-            associateEmail: 'associateEmail',
-            client: 'clientName',
-            clientName: 'clientName',
+            associateEmail: '',
+            client: '*',
+            clientName: '*',
             direction: this.props.direction,
+            dropdowns: [],
             fromNotified: '',
             fromReviewed: '',
             fromScheduled: '',
             listOfInterviews: [],
             loaded: false,
-            managerEmail: 'managerEmail',
-            place: 'placeName',
+            managerEmail: '',
+            place: '*',
             previousTableHeaderId: '1', // init diff values of tableHeaderId and previousTableHeaderId to start DESC sorting logic
-            staging: 'stagingOff',
+            staging: '*',
             tableHeaderId: '0',
             toNotified: '',
             toReviewed: '',
             toScheduled: '',
+            input: '*',
+            feedback: '*'
         }
     }
 
     async componentDidMount() { // on render, load the interviews
         this.setState({
+            dropdowns: this.props.dropdowns,
             listOfInterviews: this.props.listOfInterviews
         });
     }
 
     async componentWillReceiveProps(nextProps) { // Move props into state here
         this.setState({
-            listOfInterviews: nextProps.listOfInterviews,
+            dropdowns: nextProps.dropdowns,
+            listOfInterviews: nextProps.listOfInterviews
         });
         
     }
@@ -111,6 +134,32 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.setState({
                 loaded: true
             });
+
+          this.props.getInterviewPages(
+                this.props.currentPage,
+                this.props.pageSize,
+                this.props.orderBy,
+                this.props.direction,
+                this.state.associateEmail,
+                this.state.managerEmail,
+                this.state.place,
+                this.state.clientName,
+                this.state.staging,
+                this.state.input,
+                this.state.feedback);
+
+            this.props.getDropdown(
+                    this.props.currentPage,
+                    this.props.pageSize,
+                    this.props.orderBy,
+                    this.props.direction,
+                    this.state.associateEmail,
+                    this.state.managerEmail,
+                    this.state.place,
+                    this.state.clientName,
+                    this.state.staging,
+                    this.state.input,
+                    this.state.feedback);
             this.handlePageClick({ selected: this.props.currentPage });
         }
     }
@@ -124,7 +173,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.managerEmail,
             this.state.place,
             this.state.client,
-            this.state.staging);
+            this.state.staging,
+            this.state.input,
+            this.state.feedback);
     }
     changeOrderCriteria = (event: any) => { // when triggered, run calls to back-end to alter how you sort
         // when a sorting value changes, wait for needed calls on a state change
@@ -150,7 +201,9 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.state.managerEmail,
             this.state.place,
             this.state.client,
-            this.state.staging
+            this.state.staging,
+            this.state.input,
+            this.state.feedback
         );
         this.setState({
             direction: orderDirection,
@@ -170,12 +223,16 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const place = (name === 'place') ? value : this.state.place;
         const client = (name === 'client') ? value : this.state.client;
         const staging = (name === 'staging') ? value : this.state.staging;
+        const input = (name === 'input') ? value : this.state.input;
+        const feedback = (name === 'feedback') ? value : this.state.feedback;
         this.setState({ // updates state accordingly
             associateEmail,
             client,
             managerEmail,
             place,
             staging,
+            input,
+            feedback
         });
         this.props.getInterviewPages( // now that state has changed, update
             0,
@@ -188,6 +245,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             // it is named differently there
             place === 'place' ? 'placeName' : place,
             client === 'client' ? 'clientName' : client,
+            input === 'input' ? 'associateInput' : input,
+            feedback,
             staging);
     }     
 
@@ -229,13 +288,19 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
     render() {
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
-        const arrPlace = this.props.listOfInterviews
-            .filter((item, pos) => this.props.listOfInterviews.indexOf(item) === pos)
-            .map((item) => item.place);
-        // convert interview array to client array
-        const arrClientName = this.props.listOfInterviews
-            .filter((item, pos) => this.props.listOfInterviews.indexOf(item) === pos)
-            .map((item) => item.client.clientName)
+
+        const arrPlace1 = this.props.dropdowns.map((item) => { //convert interview array to place array
+            return item.place;
+        });
+        const arrPlace = arrPlace1.filter((item, pos) => { //need unique places for select option
+            return arrPlace1.indexOf(item) === pos;
+        });
+        const arrClientName1 = this.props.dropdowns.map((item) => { //convert interview array to place array
+            return item.client.clientName;
+        });
+        const arrClientName = arrClientName1.filter((item, pos) => { //need unique places for select option
+            return arrClientName1.indexOf(item) === pos;
+        });
 
         return (
             <div className='container'>
@@ -269,21 +334,21 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <div>
                                             <span style={{ position: 'absolute', zIndex: 2, display: 'block' }}><FaSistrix /></span>
-                                            <input name='managerEmail' type="text" placeholder="Managaer Email" style={{ paddingLeft: '1rem' }} className='form-control'
+                                            <input name='managerEmail' type="text" placeholder="Manager Email" style={{ paddingLeft: '1rem' }} className='form-control'
                                                 onChange={this.filterChange} value={this.state.managerEmail === 'managerEmail' ? '' : this.state.managerEmail}></input>
                                         </div>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <select name='place' onChange={this.filterChange} value={this.state.place} className='form-control'>
-                                            <option value='placeName'>Location</option>
+                                            <option value='*'>Location</option>
                                             {arrPlace.map((entry, index) => {
                                                 return (<option value={entry} key={index}>{entry}</option>);
                                             })}
                                         </select>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
-                                        <select name='client' onChange={this.filterChange} value={this.state.clientName} className='form-control'>
-                                            <option value='clientName'>Client</option>
+                                        <select name='client' onChange={this.filterChange} value={this.state.client} className='form-control'>
+                                            <option value='*'>Client</option>
                                             {arrClientName.map((entry, index) => {
                                                 return (<option value={entry} key={index}>{entry}</option>);
                                             })}
@@ -341,24 +406,25 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             </UncontrolledPopover>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
-                                        <select name='{element}' onChange={this.filterChange} className='form-control' >
-                                            <option value='dateNotified'>Associate Input</option>
-                                            <option value='with'>With Associate Input</option>
-                                            <option value='without'>Without Associate Input</option>
+                                        <select name='input' onChange={this.filterChange} className='form-control' >
+                                            <option value='*'>Associate Input</option>
+                                            <option value='notnull'>With Associate Input</option>
+                                            <option value='null'>Without Associate Input</option>
                                         </select>
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
-                                        <select name='{element}' onChange={this.filterChange} className='form-control'>
-                                            <option value='dateNotified'>Interview Feedback</option>
-                                            <option value='with'>With Interview Feedback</option>
-                                            <option value='without'>Without Interview Feedback</option>
+                                        <select name='feedback' onChange={this.filterChange} className='form-control'>
+                                            <option value='*'>Interview Feedback</option>
+                                            <option value='notnull'>With Interview Feedback</option>
+                                            <option value='null'>Without Interview Feedback</option>
                                         </select>
                                     </td>
                                 </tr> 
                                 <tbody>
                                     {this.state.listOfInterviews.map((entry) => {
                                         return (<tr key={entry.id}>
-                                            <td><ReviewButton disabled={isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td>
+                                            {isAdmin ?
+                                            <td><ReviewButton disabled={!isAdmin} interview={entry} assocInput={entry.associateInput || 'bleh'} /></td>:null}
                                             <td>{entry.associateEmail}</td>
                                             <td>{entry.managerEmail}</td>
                                             <td>{entry.place}</td>
@@ -423,6 +489,7 @@ const mapStateToProps = (state: IState) => {
     return {
         currentPage: state.interviewState.interviewList.currentPage,
         direction: state.interviewState.interviewList.direction,
+        dropdowns: state.interviewState.interviewList.dropdowns,
         email: state.managementState.auth.currentUser.email,
         listOfInterviews: state.interviewState.interviewList.listOfInterviews,
         numberOfPages: state.interviewState.interviewList.numberOfPages,
@@ -432,6 +499,7 @@ const mapStateToProps = (state: IState) => {
 }
 
 const mapDispatchToProps = {
+    getDropdown,
     getInterviewPages,
     markAsReviewed,
     setSelected
