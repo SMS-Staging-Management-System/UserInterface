@@ -9,7 +9,6 @@ import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { cognitoClient } from "../../../axios/sms-clients/cognito-client";
 import { addressesClient } from '../../../axios/sms-clients/address-client';
 import { ICohort } from '../../../model/cohort';
-import { IAddress } from '../../../model/address.model';
 
 interface IManageCohortsState {
     locations: any[]
@@ -20,7 +19,8 @@ interface IManageCohortsState {
         isOpen: boolean
         selection: String
     }
-    sortTrainer: String
+    option: String
+    optionVar: number
     locationDropdown: {
         isOpen: boolean
         selection: String
@@ -36,11 +36,12 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
             showFilterSelection: '',
             locations: [],
             trainers: [],
+            option: 'All',
+            optionVar: 0,
             trainerDropdown: {
                 isOpen: false,
                 selection: 'Trainers'
             },
-            sortTrainer: 'All',
             locationDropdown: {
                 isOpen: false,
                 selection: 'Locations'
@@ -53,6 +54,38 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
         const resp = await cohortClient.findAllByPage(newPage);
         const data = await resp.data
         return data
+    }
+
+    getCohortsByAddress = async (addressId, newPage): Promise<ICohort[]> => {
+        const resp = await cohortClient.findAllByAddressPage(addressId, newPage);
+        const data = await resp.data
+        return data
+    }
+
+    getCohortsByTrainer = async (userId, newPage): Promise<ICohort[]> => {
+        const resp = await cohortClient.findAllByTrainerPage(userId, newPage);
+        const data = await resp.data
+        return data
+    }
+
+    getCohortsByOption = async (newPage) => {
+
+        if (this.state.option === 'All') {
+            const resp = await cohortClient.findAllByPage(newPage);
+            const data = await resp.data
+            return data
+        }
+        else if (this.state.option === 'Location'){
+            const resp = await cohortClient.findAllByAddressPage(this.state.optionVar, newPage);
+            const data = await resp.data
+            return data
+        }
+        else if(this.state.option === 'Trainer'){
+            const resp = await cohortClient.findAllByTrainerPage(this.state.optionVar, newPage);
+            const data = await resp.data
+            return data
+        }
+
     }
 
     getTrainersCohorts = async (newPage): Promise<ICohort[]> => {
@@ -83,21 +116,19 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
     }
 
     async componentDidMount() {
-        const data = await this.getAllCohorts(this.props.currentPage);
+
+        const data = await this.getCohortsByOption(this.props.currentPage);
         console.log('calling getAllCohorts in componentDidMount')
         console.log(data);
         this.props.updateCohortsByPage(data, this.props.currentPage)
         this.getLocations();
         this.getTrainers();
-
-
-
     }
 
     incrementPage = async () => {
         if (this.props.currentPage < this.props.totalPages - 1) {
             const newPage = this.props.currentPage + 1;
-            const data = await this.getAllCohorts(newPage);
+            const data = await this.getCohortsByOption(newPage);
             this.props.updateCohortsByPage(data, newPage);
         }
     }
@@ -105,7 +136,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
     decrementPage = async () => {
         if (this.props.currentPage > 0) {
             const newPage = this.props.currentPage - 1;
-            const data = await this.getAllCohorts(newPage);
+            const data = await this.getCohortsByOption(newPage);
             this.props.updateCohortsByPage(data, newPage);
         }
     }
@@ -147,11 +178,18 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
     }
 
-    sortTrainers = (trainer: String) => {
+    setOption = (op: String, opv: number) => {
         this.setState({
             ...this.state,
-            sortTrainer: trainer
+            option: op,
+            optionVar: opv
         })
+
+        console.log(op);
+        console.log(opv);
+       
+        this.componentDidMount();
+
     }
 
     showFilterTypeDropdown = () => {
@@ -181,8 +219,8 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                             trainers.map(trainer => (
                                 // {if(this.state.sortTrainer !== 'All') {
                                 <DropdownItem
-                                    // key={'Status-dropdown-' + trainer}
-                                 onClick={() => this.sortTrainers(trainer)}
+                                    key={'Status-dropdown-' + trainer}
+                                 //onClick={() => this.setOption('Location',)}
                                 >
                                     {trainer}
                                 </DropdownItem>
@@ -210,8 +248,8 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         {
                             this.state.locations.map(locations => (
                                 <DropdownItem
-                                    key={'Status-dropdown-' + locations.id}
-                                // onClick={() => this.getCohortByLocation(user)}
+                                    key={'Status-dropdown-' + locations.addressId}
+                                    onClick={() => this.setOption('Location', locations.addressId)}
                                 >
                                     {locations.alias}
                                 </DropdownItem>

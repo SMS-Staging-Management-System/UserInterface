@@ -18,7 +18,15 @@ export const cohortClient = {
   },
 
   findAllByPage(page: number) {
-    return smsClient.get(cohortContext + `?page=${page}`)
+    return smsClient.get(cohortContext+`?page=${page}`)
+  },
+
+  findAllByAddressPage( addressId: number, page: number) {
+    return smsClient.get(cohortContext+`/address/id/${addressId}?page=${page}`)
+  },
+
+  findAllByTrainerPage(userId: number, page: number) {
+    return smsClient.get(cohortContext+`/trainer/id/${userId}?page=${page}`)
   },
 
   findAll() {
