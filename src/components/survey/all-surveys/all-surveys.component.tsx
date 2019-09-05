@@ -24,359 +24,609 @@ interface IComponentState {
     title: string,
     description: string,
     filterOption: string,
-    selectRow: string
+    selectRow: string,
+    pageNumber: number,
+    totalPages: number,
+    value: any,
+    sortedBy: string
 }
 
-export class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            surveys: [],
-            surveysLoaded: false,
-            surveysToAssign: [],
-            redirectTo: null,
-            closingFilter: false,
-            listFiltered: [],
-            title: "",
-            description: "",
-            filterOption: "Filter By",
-            selectRow: 'rev-table-row'
-        }
-    }
+export class AllSurveysComponent extends Component<
+         IComponentProps,
+         IComponentState
+       > {
+         constructor(props) {
+           super(props);
+           this.state = {
+             surveys: [],
+             surveysLoaded: false,
+             surveysToAssign: [],
+             redirectTo: null,
+             closingFilter: false,
+             listFiltered: [],
+             title: '',
+             description: '',
+             filterOption: 'Filter By',
+             selectRow: 'rev-table-row',
+             value: 1,
+             pageNumber: 0,
+             totalPages: 0,
+             sortedBy: 'Sort by',
+           };
+         }
 
-    componentDidMount() {
-        this.loadAllSurveys();
-    }
+         componentDidMount() {
+           this.loadAllSurveys(0);
+         }
 
-    // When the user clicks a data button for a survey, redirect to the data page for that survey
-    handleLoadSurveyData = (surveyId: number) => {
-        this.setState({
-            redirectTo: `/surveys/survey-data/${surveyId}`
-        })
-    }
+         getCreatorSurveys = async creator => {};
 
-    // When the user clicks a users button for a survey, redirect to the respondents page for that survey
-    loadSurveyRespondents = (surveyId: number) => {
-        this.setState({
-            redirectTo: `/surveys/respondents-data/${surveyId}`
-        })
-    }
+         changeHandler = async (event: any) => {
+           this.setState({
+             ...this.state,
+             value: event.target.value,
+           });
 
-     // Added this code because I was having issues accessing this property in a later function
-     // Used to return closing date by the index provided in the array that is passed
-    getClosingDate = (array, index) => {
-        return array[index].closingDate;
-    }
+           let dropUser = event.target.value;
+           if (dropUser === '3') {
+             const req = await surveyClient.findAllSurveysByCreator(
+               this.props.auth.currentUser.email,
+               this.state.pageNumber,
+             );
+             console.log(req);
+             this.setState({
+               ...this.state,
+               surveys: req.content,
+               surveysLoaded: true,
+             });
+           } else if (dropUser === '1') {
+             this.loadAllSurveys(0);
+           }
+         };
 
-    // Purpose of this function is to set a property of the state to only the surveys whose closing dates have passed
-    returnPassedSurveys = (arr) => {
-        let closingSurvey = arr;
-        let filtered:ISurvey[] = [];
-        for(let i = 0; i < closingSurvey.length; i++) {
-            if(closingSurvey[i].closingDate !== null) {
-                if(new Date(closingSurvey[i].closingDate) < new Date()) {
-                    filtered.push(closingSurvey[i]);
-                }
-            }
-        }
-        this.setState({
-            listFiltered: filtered
-        });
-    }
+         submitHandler = async () => {
+           this.setState({
+             closingFilter: true,
+             filterOption: 'My Surveys',
+           });
+           const req = await surveyClient.findAllSurveysByCreator(
+             this.props.auth.currentUser.email,
+             this.state.pageNumber,
+           );
+           console.log(req);
+           this.setState({
+             ...this.state,
+             surveys: req.content,
+             surveysLoaded: true,
+           });
+         };
 
-    // Returns surveys that are still active and sets the listFiltered array to this data.
-    returnActiveSurveys = (arr) => {
-        let activeSurvey = arr;
-        let filtered:ISurvey[] = [];
-        filtered = activeSurvey.filter((survey) => {
-            if(new Date(survey.closingDate) > new Date()){
-                return true;
-            } else if(survey.closingDate === null){
-                return true;
-            }
-            return false;
-        });
-        this.setState({
-            listFiltered: filtered
-        });
-    }
+         incrementPage = async () => {
+           if (this.state.pageNumber < this.state.totalPages - 1) {
+             const newPage = this.state.pageNumber + 1;
+             await this.loadAllSurveys(newPage);
+           }
+         };
 
-    // Function called when user filters surveys by closing date if surveys had passed.
-    // Sets a boolean check to decide whether a filtered or non-filtered list is rendered
-    filterListByClosing = () => {
-        this.setState({
-            closingFilter: true,
-            filterOption: "Closed"
-        });
-        console.log("In filter list by closing");
-        this.returnPassedSurveys(this.state.surveys);
-    }
+         decrementPage = async () => {
+           if (this.state.pageNumber > this.state.surveys.length) {
+             const newPage = this.state.pageNumber - 1;
+             await this.loadAllSurveys(newPage);
+           }
+         };
 
-    // Function called when user filters surveys by closing date if surveys are still active.
-    // Sets a boolean check to decide whether a filtered or non-filtered list is rendered
-    filterListByActive = () => {
-        this.setState({
-            closingFilter: true,
-            filterOption: "Active"
-        });
-        this.returnActiveSurveys(this.state.surveys);
-    }
+         // When the user clicks a data button for a survey, redirect to the data page for that survey
+         handleLoadSurveyData = (surveyId: number) => {
+           this.setState({
+             redirectTo: `/surveys/survey-data/${surveyId}`,
+           });
+         };
 
-    // Method used to remove filter from data list
-    unFilterList = () => {
-        this.setState({
-            closingFilter: false,
-            filterOption: "Filter By"
-        });
-    }
+         // When the user clicks a users button for a survey, redirect to the respondents page for that survey
+         loadSurveyRespondents = (surveyId: number) => {
+           this.setState({
+             redirectTo: `/surveys/respondents-data/${surveyId}`,
+           });
+         };
 
-    checkFunc = (e) => {
-        // const { checked } = e.target;
-        const id = e;
+         // Added this code because I was having issues accessing this property in a later function
+         // Used to return closing date by the index provided in the array that is passed
+         getClosingDate = (array, index) => {
+           return array[index].closingDate;
+         };
 
-        // if (checked) {
-            if (!this.state.surveysToAssign.includes(id)) {
-                this.setState({
-                    surveysToAssign: [...this.state.surveysToAssign, id]
-                });
-            }
-        // } else {
-            if (this.state.surveysToAssign.includes(id)) {
-                this.setState({
-                    surveysToAssign: this.state.surveysToAssign.filter((surveyId) => {
-                        return surveyId !== id
-                    })
-                });
-            }
-        // }
-    }
+         // Purpose of this function is to set a property of the state to only the surveys whose closing dates have passed
+         returnPassedSurveys = arr => {
+           let closingSurvey = arr;
+           let filtered: ISurvey[] = [];
+           for (let i = 0; i < closingSurvey.length; i++) {
+             if (closingSurvey[i].closingDate !== null) {
+               if (new Date(closingSurvey[i].closingDate) < new Date()) {
+                 filtered.push(closingSurvey[i]);
+               }
+             }
+           }
+           this.setState({
+             listFiltered: filtered,
+           });
+         };
 
-    checkBoxFunc = (e) => {
-        const { checked } = e.target;
-        const id = e;
+         // Returns surveys that are still active and sets the listFiltered array to this data.
+         returnActiveSurveys = arr => {
+           let activeSurvey = arr;
+           let filtered: ISurvey[] = [];
+           filtered = activeSurvey.filter(survey => {
+             if (new Date(survey.closingDate) > new Date()) {
+               return true;
+             } else if (survey.closingDate === null) {
+               return true;
+             }
+             return false;
+           });
+           this.setState({
+             listFiltered: filtered,
+           });
+         };
 
-        if (checked) {
-            if (!this.state.surveysToAssign.includes(id)) {
-                this.setState({
-                    surveysToAssign: [...this.state.surveysToAssign, id]
-                });
-            }
-        } else {
-            if (this.state.surveysToAssign.includes(id)) {
-                this.setState({
-                    surveysToAssign: this.state.surveysToAssign.filter((surveyId) => {
-                        return surveyId !== id
-                    })
-                });
-            }
-        }
-    }
-// this function set the state after the input box has been unselected after this, 
+         // Function called when user filters surveys by closing date if surveys had passed.
+         // Sets a boolean check to decide whether a filtered or non-filtered list is rendered
+         filterListByClosing = () => {
+           this.setState({
+             closingFilter: true,
+             filterOption: 'Closed',
+           });
+           console.log('In filter list by closing');
+           this.returnPassedSurveys(this.state.surveys);
+         };
 
-    setTitleChange = async (event) => {
-        this.setState({
-            title: event.target.value
-        });
-    }
-// the getsurvey button would sent the state to the surveyClient as parameter
-    getSurveysByTitle = async (event) => {
-        event.preventDefault();
-        if (this.state.title) {
-            const surveyByTitle = await surveyClient.findSurveyByTitle(this.state.title);
-            this.setState({
-                surveys: surveyByTitle.data,
-                surveysLoaded: true
-            });
-        }
-        else { this.loadAllSurveys(); }
-    }
+         // Function called when user filters surveys by closing date if surveys are still active.
+         // Sets a boolean check to decide whether a filtered or non-filtered list is rendered
+         filterListByActive = () => {
+           this.setState({
+             closingFilter: true,
+             filterOption: 'Active',
+           });
+           this.returnActiveSurveys(this.state.surveys);
+         };
 
-    // this function set the state after the input box has been unselected after this, 
-    setDescriptionChange = (event) => {
-        this.setState({
-            description: event.target.value
-        });
-    }
+         // Method used to remove filter from data list
+         unFilterList = () => {
+           this.setState({
+             closingFilter: false,
+             filterOption: 'Filter By',
+           });
+         };
 
-    // the getdescription button would sent the state to the surveyClient as paramerter
-    getSurveysByDescription = async (event) => {
-        event.preventDefault();
-        if (this.state.description) {
-            const surveyByDescription = await surveyClient.findSurveyByDescription(this.state.description);
-            this.setState({
-                surveys: surveyByDescription.data,
-                surveysLoaded: true
-            });
-        }
-        else {
-            this.loadAllSurveys();
-        }
-    }
+         checkFunc = e => {
+           // const { checked } = e.target;
+           const id = e;
 
-    // Load the surveys into the state
-    loadAllSurveys = async () => {
-        const allSurveys = await surveyClient.findAllSurveys();
-        this.setState({
-            surveys: allSurveys,
-            surveysLoaded: true
-        })
-    }
+           // if (checked) {
+           if (!this.state.surveysToAssign.includes(id)) {
+             this.setState({
+               surveysToAssign: [...this.state.surveysToAssign, id],
+             });
+           }
+           // } else {
+           if (this.state.surveysToAssign.includes(id)) {
+             this.setState({
+               surveysToAssign: this.state.surveysToAssign.filter(surveyId => {
+                 return surveyId !== id;
+               }),
+             });
+           }
+           // }
+         };
 
-    // Used to route user filter selection to appropriate function
-    filterCheck = (e) => {
-        const {id:option} = e.target;
-        switch(option){
-            case "Active":
-                this.filterListByActive();
-                break;
-            case "Closed":
-                this.filterListByClosing();
-                break;
-            case "None":
-                this.unFilterList();
-            default:
-                break;
-        }
-    }
+         checkBoxFunc = e => {
+           const { checked } = e.target;
+           const id = e;
 
-    render() {
-        if (this.state.redirectTo) {
-            return <Redirect push to={this.state.redirectTo} />
-        }
-        console.log(this.state.surveys);
-        const sortOptions = ["Active", "Closed", "None"];
-        return (
-            <>
-                {this.state.surveysLoaded ? (
-                    <Fragment>
-                        
-                            <div className="filterSelect">
-                                <div className="dropdown userDropdown">
-                                    <Button className="btn userDropdownBtn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort By
-                                    </Button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                        <ul className="list-group">
-                                        { 
-                                            sortOptions.map(option => (
-                                                <li id={option} key={option} className="list-group-item option-box" onClick={(e) => this.filterCheck(e)}>{option}</li>
-                                            ))
-                                        }
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                                <Table striped id="manage-users-table" className="tableUsers">
-                                    <thead className="rev-background-color">
-                                        <tr>
-                                            <th>Select</th>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Created</th>
-                                            <th>Closed</th>
-                                            <th></th>
-                                            <th>Analytics</th>
-                                            <th>Respondents</th>
-                                        </tr>
-                                        {(this.state.surveys.length > 0) &&
-                                        <tr style={secondHeadFilter}>
-                                            <td></td>
-                                            <td>
+           if (checked) {
+             if (!this.state.surveysToAssign.includes(id)) {
+               this.setState({
+                 surveysToAssign: [...this.state.surveysToAssign, id],
+               });
+             }
+           } else {
+             if (this.state.surveysToAssign.includes(id)) {
+               this.setState({
+                 surveysToAssign: this.state.surveysToAssign.filter(
+                   surveyId => {
+                     return surveyId !== id;
+                   },
+                 ),
+               });
+             }
+           }
+         };
+         // this function set the state after the input box has been unselected after this,
 
-                                                <div className="inputWrapper">
+         setTitleChange = async event => {
+           this.setState({
+             title: event.target.value,
+           });
+         };
+         // the getsurvey button would sent the state to the surveyClient as parameter
+         getSurveysByTitle = async event => {
+           event.preventDefault();
+           if (this.state.title) {
+             const surveyByTitle = await surveyClient.findSurveyByTitle(
+               this.state.title,
+             );
+             this.setState({
+               surveys: surveyByTitle.data,
+               surveysLoaded: true,
+             });
+           } else {
+             this.loadAllSurveys(0);
+           }
+         };
 
-                                                    <input type="text" id="inputTItle" name="title"
-                                                        className="inputBox form-control" placeholder="Title"
-                                                        value={this.state.title} onChange={this.setTitleChange} />
-                                                    <button type="submit" className="btn btn-success searchbtn" onClick={this.getSurveysByTitle}><FaSearch /></button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="inputWrapper">
+         // this function set the state after the input box has been unselected after this,
+         setDescriptionChange = event => {
+           this.setState({
+             description: event.target.value,
+           });
+         };
 
-                                                    <input type="text" id="inputDescription" name="description"
-                                                        className=" inputBox form-control" placeholder="Description"
-                                                        value={this.state.description} onChange={this.setDescriptionChange} />
-                                                    <button type="submit" className="btn btn-success searchbtn" onClick={this.getSurveysByDescription}><FaSearch /></button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                {/* <DatePicker
+         // the getdescription button would sent the state to the surveyClient as paramerter
+         getSurveysByDescription = async event => {
+           event.preventDefault();
+           if (this.state.description) {
+             const surveyByDescription = await surveyClient.findSurveyByDescription(
+               this.state.description,
+             );
+             this.setState({
+               surveys: surveyByDescription.data,
+               surveysLoaded: true,
+             });
+           } else {
+             this.loadAllSurveys(0);
+           }
+         };
+
+         // Load the surveys into the state
+         loadAllSurveys = async (page: any) => {
+           const allSurveys = await surveyClient.findAllSurveys(page);
+           this.setState({
+             surveys: allSurveys,
+             surveysLoaded: true,
+           });
+         };
+
+         // Used to route user filter selection to appropriate function
+         filterCheck = e => {
+           const { id: option } = e.target;
+           this.setState({
+             ...this.state,
+             sortedBy: option,
+           });
+           switch (option) {
+             case 'Active':
+               this.filterListByActive();
+               break;
+             case 'Closed':
+               this.filterListByClosing();
+               break;
+             case 'None':
+               this.unFilterList();
+               break;
+             case 'My Surveys':
+               this.submitHandler();
+             default:
+               break;
+           }
+         };
+
+         render() {
+           if (this.state.redirectTo) {
+             return <Redirect push to={this.state.redirectTo} />;
+           }
+           console.log(this.state.surveys);
+           const sortOptions = ['Active', 'Closed', 'My Surveys', 'None'];
+           return (
+             <>
+               {this.state.surveysLoaded ? (
+                 <Fragment>
+                   <div className='filterSelect'>
+                     {/* testing a HTML select */}
+
+                     <div className='dropdown userDropdown'>
+                       {this.state.surveys.length > 0 && (
+                         <span className='assignToCohorts'>
+                           <SurveyModal
+                             buttonLabel='Assign To Cohorts'
+                             surveysToAssign={this.state.surveysToAssign}
+                           />
+                         </span>
+                         // </div>
+                       )}
+
+                       <Button
+                         className='btn userDropdownBtn dropdown-toggle'
+                         type='button'
+                         id='dropdownMenu2'
+                         data-toggle='dropdown'
+                         aria-haspopup='true'
+                         aria-expanded='false'>
+                         <span className='sortedByText'>
+                           {this.state.sortedBy}
+                         </span>
+                       </Button>
+                       <div
+                         className='dropdown-menu'
+                         aria-labelledby='dropdownMenu2'>
+                         <ul className='list-group'>
+                           {sortOptions.map(option => (
+                             <li
+                               id={option}
+                               key={option}
+                               className='list-group-item option-box'
+                               onClick={e => this.filterCheck(e)}>
+                               {option}
+                             </li>
+                           ))}
+                         </ul>
+                       </div>
+                     </div>
+                   </div>
+                   <Table
+                     striped
+                     id='manage-users-table'
+                     className='tableUsers'>
+                     <thead className='rev-background-color'>
+                       <tr>
+                         <th>Select</th>
+                         <th>Title</th>
+                         <th>Description</th>
+                         <th>Created</th>
+                         <th>Closed</th>
+                         <th></th>
+                         <th>Analytics</th>
+                         <th>Respondents</th>
+                       </tr>
+                       {this.state.surveys.length > 0 && (
+                         <tr style={secondHeadFilter}>
+                           <td></td>
+                           <td>
+                             <div className='inputWrapper'>
+                               <input
+                                 type='text'
+                                 id='inputTItle'
+                                 name='title'
+                                 className='inputBox form-control'
+                                 placeholder='Title'
+                                 value={this.state.title}
+                                 onChange={this.setTitleChange}
+                               />
+                               <button
+                                 type='submit'
+                                 className='btn btn-success searchbtn'
+                                 onClick={this.getSurveysByTitle}>
+                                 <FaSearch />
+                               </button>
+                             </div>
+                           </td>
+                           <td>
+                             <div className='inputWrapper'>
+                               <input
+                                 type='text'
+                                 id='inputDescription'
+                                 name='description'
+                                 className=' inputBox form-control'
+                                 placeholder='Description'
+                                 value={this.state.description}
+                                 onChange={this.setDescriptionChange}
+                               />
+                               <button
+                                 type='submit'
+                                 className='btn btn-success searchbtn'
+                                 onClick={this.getSurveysByDescription}>
+                                 <FaSearch />
+                               </button>
+                             </div>
+                           </td>
+                           <td>
+                             {/* <DatePicker
                                                     onChange={this.getDateCreated}
                                                     value={this.state.createdDate}
                                                 /> */}
-                                            </td>
+                           </td>
 
-                                            <td>
-                                                {/* <DatePicker
+                           <td>
+                             {/* <DatePicker
                                                     onChange={this.getDateClosed}
                                                     value={this.state.endDate}
                                                 /> */}
-                                            </td>
+                           </td>
 
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        }
-                                    </thead>  
-                                    <tbody>
-                                        {(!this.state.surveys || !(this.state.surveys.length))? 
-                                        
-                                            <tr className="rev-table-row">
-                                            <td colSpan={8} ><div className='div-center fadeInUp'>You don't have any surveys. <>
-                                         {console.log("I HAPPEN")}   
-                                        </></div></td>
-                                            </tr>
-                                            :<>
-                                        {!this.state.closingFilter ? this.state.surveys.map(survey => (             // This.state.surveys is rendered if there is no filter
-                                        <tr key={survey.surveyId} className={this.state.surveysToAssign.includes(survey.surveyId) ? 'rev-table-row-active' :'rev-table-row'} onClick={e => this.checkFunc(survey.surveyId)}>
-                                            <td><input type="checkbox" className="userDropInput" onChange={e=>this.checkBoxFunc(e)} checked={!!this.state.surveysToAssign.includes(survey.surveyId)} id={survey.surveyId.toString()} /></td> 
-                                            <td>{survey.title}</td>
-                                            <td>{survey.description}</td>
-                                            <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
-                                            <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
-                                            <td></td>
-                                            <td><Button className='assignSurveyBtn' onClick={() =>
-                                                this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
-                                            <td><Button className='assignSurveyBtn' onClick={() =>
-                                                this.loadSurveyRespondents(survey.surveyId)}>Status</Button></td>
-                                        </tr>
-                                    ))
-                                    : 
-                                    this.state.listFiltered.map(filtered => (                           // This.state.listFiltered is rendered if there is a filter.
-                                        <tr key={filtered.surveyId} className={this.state.surveysToAssign.includes(filtered.surveyId) ? 'rev-table-row-active' :'rev-table-row'} onClick={e => this.checkFunc(filtered.surveyId)}>
-                                            <td><input type="checkbox" className="userDropInput" onChange={e=>this.checkBoxFunc(e)} checked={!!this.state.surveysToAssign.includes(filtered.surveyId)} id={filtered.surveyId.toString()} /></td>
-                                            <td>{filtered.title}</td>
-                                            <td>{filtered.description}</td>
-                                            <td>{filtered.dateCreated && new Date(filtered.dateCreated).toDateString()}</td>
-                                            <td>{filtered.closingDate && new Date(filtered.closingDate).toDateString()}</td>
-                                            <td></td>
-                                            <td><Button className='assignSurveyBtn' onClick={() =>
-                                                this.handleLoadSurveyData(filtered.surveyId)}>Data</Button></td>
-                                            <td><Button className='assignSurveyBtn' onClick={() =>
-                                                this.loadSurveyRespondents(filtered.surveyId)}>Status</Button></td>
-                                        </tr>
-                                    ))}
-                                    </>}
-                                    </tbody>
-                                </Table>
-                                {(this.state.surveys.length > 0) &&
-                                <div className="assignButtonDiv">
-                                    <SurveyModal
-                                        buttonLabel='Assign To Cohorts'
-                                        surveysToAssign={this.state.surveysToAssign} />
-                                </div>
-                                }
-                            
-                    </Fragment>
-                ) : (
-                        <Loader/>
-                    )}
-            </>
-        );
-    }
-}
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                         </tr>
+                       )}
+                     </thead>
+                     <tbody>
+                       {!this.state.surveys || !this.state.surveys.length ? (
+                         <tr className='rev-table-row'>
+                           <td colSpan={8}>
+                             <div className='div-center fadeInUp'>
+                               You don't have any surveys.{' '}
+                               <>{console.log('I HAPPEN')}</>
+                             </div>
+                           </td>
+                         </tr>
+                       ) : (
+                         <>
+                           {!this.state.closingFilter
+                             ? this.state.surveys.map((
+                                 survey, // This.state.surveys is rendered if there is no filter
+                               ) => (
+                                 <tr
+                                   key={survey.surveyId}
+                                   className={
+                                     this.state.surveysToAssign.includes(
+                                       survey.surveyId,
+                                     )
+                                       ? 'rev-table-row-active'
+                                       : 'rev-table-row'
+                                   }
+                                   onClick={e =>
+                                     this.checkFunc(survey.surveyId)
+                                   }>
+                                   <td>
+                                     <input
+                                       type='checkbox'
+                                       className='userDropInput'
+                                       onChange={e => this.checkBoxFunc(e)}
+                                       checked={
+                                         !!this.state.surveysToAssign.includes(
+                                           survey.surveyId,
+                                         )
+                                       }
+                                       id={survey.surveyId.toString()}
+                                     />
+                                   </td>
+                                   <td>{survey.title}</td>
+                                   <td>{survey.description}</td>
+                                   <td>
+                                     {survey.dateCreated &&
+                                       new Date(
+                                         survey.dateCreated,
+                                       ).toDateString()}
+                                   </td>
+                                   <td>
+                                     {survey.closingDate &&
+                                       new Date(
+                                         survey.closingDate,
+                                       ).toDateString()}
+                                   </td>
+                                   <td></td>
+                                   <td>
+                                     <Button
+                                       className='assignSurveyBtn'
+                                       onClick={() =>
+                                         this.handleLoadSurveyData(
+                                           survey.surveyId,
+                                         )
+                                       }>
+                                       Data
+                                     </Button>
+                                   </td>
+                                   <td>
+                                     <Button
+                                       className='assignSurveyBtn'
+                                       onClick={() =>
+                                         this.loadSurveyRespondents(
+                                           survey.surveyId,
+                                         )
+                                       }>
+                                       Status
+                                     </Button>
+                                   </td>
+                                 </tr>
+                               ))
+                             : this.state.listFiltered.map((
+                                 filtered, // This.state.listFiltered is rendered if there is a filter.
+                               ) => (
+                                 <tr
+                                   key={filtered.surveyId}
+                                   className={
+                                     this.state.surveysToAssign.includes(
+                                       filtered.surveyId,
+                                     )
+                                       ? 'rev-table-row-active'
+                                       : 'rev-table-row'
+                                   }
+                                   onClick={e =>
+                                     this.checkFunc(filtered.surveyId)
+                                   }>
+                                   <td>
+                                     <input
+                                       type='checkbox'
+                                       className='userDropInput'
+                                       onChange={e => this.checkBoxFunc(e)}
+                                       checked={
+                                         !!this.state.surveysToAssign.includes(
+                                           filtered.surveyId,
+                                         )
+                                       }
+                                       id={filtered.surveyId.toString()}
+                                     />
+                                   </td>
+                                   <td>{filtered.title}</td>
+                                   <td>{filtered.description}</td>
+                                   <td>
+                                     {filtered.dateCreated &&
+                                       new Date(
+                                         filtered.dateCreated,
+                                       ).toDateString()}
+                                   </td>
+                                   <td>
+                                     {filtered.closingDate &&
+                                       new Date(
+                                         filtered.closingDate,
+                                       ).toDateString()}
+                                   </td>
+                                   <td></td>
+                                   <td>
+                                     <Button
+                                       className='assignSurveyBtn'
+                                       onClick={() =>
+                                         this.handleLoadSurveyData(
+                                           filtered.surveyId,
+                                         )
+                                       }>
+                                       Data
+                                     </Button>
+                                   </td>
+                                   <td>
+                                     <Button
+                                       className='assignSurveyBtn'
+                                       onClick={() =>
+                                         this.loadSurveyRespondents(
+                                           filtered.surveyId,
+                                         )
+                                       }>
+                                       Status
+                                     </Button>
+                                   </td>
+                                 </tr>
+                               ))}
+                         </>
+                       )}
+                     </tbody>
+                   </Table>
+
+                   <div className='row horizontal-centering vertical-centering'>
+                     <Button
+                       variant='button-color'
+                       className='rev-background-color div-child'
+                       onClick={this.decrementPage}>
+                       Prev
+                     </Button>
+                     <h6 className='div-child text-style'>
+                       {/* Page 1 of 3 */}
+                       Page {this.state.pageNumber + 1} of{' '}
+                       {this.state.totalPages}
+                       {/* {this.props.totalPages} */}
+                     </h6>
+                     <Button
+                       variant='button-color'
+                       className='rev-background-color div-child'
+                       onClick={this.incrementPage}>
+                       Next
+                     </Button>
+                   </div>
+                 </Fragment>
+               ) : (
+                 <Loader />
+               )}
+             </>
+           );
+         }
+       }
 
 const mapStateToProps = (state: IState) => ({
     auth: state.managementState.auth

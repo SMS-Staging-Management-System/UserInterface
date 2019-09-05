@@ -586,10 +586,16 @@ Survey Component
   color: black;
   border-radius: 10px;
   background-color: $revature-orange-light;
-  font-weight: bold;
+  // font-weight: bold;
   height: 40px;
   width: 100%;
   border: none;
+  float: left;
+}
+
+#dropdownMenu2 {
+  float: right;
+  margin-top: 40px;
 }
 
 .assignSurveyBtn:hover,
@@ -606,6 +612,18 @@ Survey Component
   width: 100%;
 }
 
+.assignToCohorts {
+  background-color: none;
+  border-color: none;
+  width: 20%;
+  float: left;
+  margin: 2.5em 0 -.5em 0;
+}
+
+.assignToCohorts:hover {
+  color: white !important;
+}
+
 .modal-content {
   min-height: 300px;
 }
@@ -617,6 +635,7 @@ User Dropdown
 .userDropdown {
   // background-color: $revature-orange-light;
   float: right;
+  width: 100%;
 }
 
 .userDropdownBtn {
@@ -624,7 +643,7 @@ User Dropdown
   border-radius: 10px;
   background-color: $revature-orange-light;
   height: 40px;
-  width: 100%;
+  width: 15%;
   border: none;
 }
 
@@ -637,14 +656,21 @@ User Dropdown
 .userDropInput {
   margin-left: 10px;
   margin-right: 10px;
-  width: 1em;
-  height: 1em;  
+  // width: 1em;
+  // height: 1em;  
+}
+
+.sortedByText {
+  padding-right: 5px;
 }
 
 #userDropdownWidth {
   width: 335px;
 }
 
+#bookdropdown {
+  width: 30%;
+}
 /*****************
 Drag and Drop
 *****************/

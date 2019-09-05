@@ -37,13 +37,17 @@ export const surveyClient = {
     return await smsClient.get(`${surveyBaseRoute}/description/${description}`)
   },
 
-  findAllSurveys: async () => {
+  findAllByPage(page: number) {
+    return smsClient.get(surveyBaseRoute + `/page/${page}`)
+  },
+
+  findAllSurveys: async (page: any) => {
     const resp = await smsClient.get(surveyBaseRoute + '/template/false?page=0');
     return resp.data.content;   
   },
 
-  findAllSurveysByCreators: async (creator, page) => {
-    const resp = await smsClient.post(surveyBaseRoute + `/${creator}?`+page);
+  findAllSurveysByCreator: async (creator, page) => {
+    const resp = await smsClient.get(surveyBaseRoute + `/creator/?creator=${creator}&page=`+page);
     return resp.data;
   },
 
@@ -95,7 +99,7 @@ export const surveyClient = {
   findSurveysAssignedToUser: async (email: string) => {
     let myAssignedSurveys: any[] = [];
     // Get all surveys
-    let allSurveys = await surveyClient.findAllSurveys();
+    let allSurveys = await surveyClient.findAllSurveys(0);
 
     // Get histories by email
     let myHistories = await surveyClient.findHistoriesByEmail(email);
