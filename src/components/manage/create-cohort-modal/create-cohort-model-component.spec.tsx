@@ -11,7 +11,6 @@ describe('CreateCohortModal', () => {
         const propAddress: IAddress = {
             addressId: 1,
             street: 'string',
-            // tslint:disable-next-line: object-literal-sort-keys
             alias: 'string',
             city: 'string',
             country: 'string',
@@ -21,7 +20,6 @@ describe('CreateCohortModal', () => {
 
         const props: ICreateCohortModal = {
             toggleModal: jest.fn(),
-            // tslint:disable-next-line: object-literal-sort-keys
             toggleLocationDropdown: jest.fn(),
             toggleTrainerDropdown: jest.fn(),
             saveCohort: jest.fn(),
@@ -34,7 +32,6 @@ describe('CreateCohortModal', () => {
                 manageUsers:[],
                 manageUsersCurrentPage:0,
                 manageUsersPageTotal:100,
-                // tslint:disable-next-line: object-literal-sort-keys
                 emailSearch:'2',
                 option:'option',
                 componentLoaded:false,
@@ -46,7 +43,6 @@ describe('CreateCohortModal', () => {
                 newCohort: {
                     cohortId: 1,
                     cohortName: 'string',
-                    // tslint:disable-next-line: object-literal-sort-keys
                     cohortDescription: 'string',
                     cohortToken: 'ring',
                     address: propAddress,
@@ -56,7 +52,6 @@ describe('CreateCohortModal', () => {
                     trainer: {
                         email: 'string',
                         userId: 1,
-                        // tslint:disable-next-line: object-literal-sort-keys
                         firstName: 'string',
                         lastName: 'string',
                         phoneNumber: 'string',
@@ -64,7 +59,6 @@ describe('CreateCohortModal', () => {
                         personalAddress: propAddress,
                         userStatus: {
                             statusId: 1,
-                            // tslint:disable-next-line: object-literal-sort-keys
                             generalStatus: 'string',
                             specificStatus: 'string',
                             virtual: false,
@@ -72,7 +66,6 @@ describe('CreateCohortModal', () => {
                         roles: [],
                     },
                 },
-                // tslint:disable-next-line: object-literal-sort-keys
                 locationDropdownActive: false,
                 trainerDropdownActive: false
             },
@@ -100,7 +93,6 @@ describe('CreateCohortModal', () => {
     })
 
     test('This is the resolves', () => {
-        // tslint:disable-next-line: no-unused-expression
         expect(createCohort).resolves;
     })
 })

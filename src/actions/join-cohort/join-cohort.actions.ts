@@ -9,7 +9,6 @@ export const joinCohortTypes = {
     CREATE_NEW_USER_FOR_COHORT: 'CREATE_NEW_USER_FOR_COHORT',
     FAILED_TO_CREATE_NEW_USER_FOR_COHORT: 'FAILED_TO_CREATE_NEW_USER_FOR_COHORT',
     FAILED_TO_JOIN_COHORT: 'FAILED_TO_JOIN_COHORT',
-    // tslint:disable-next-line: object-literal-sort-keys
     FAILED_TO_FIND_LOGGED_IN_USER: 'FAILED_TO_FIND_LOGGED_IN_USER',
     FAILED_TO_FIND_COHORT_BY_TOKEN: 'FAILED_TO_FIND_COHORT_BY_TOKEN',
     FIND_LOGGED_IN_USER: 'FIND_LOGGED_IN_USER',
@@ -35,9 +34,7 @@ export const findCohortByToken = (token:string, history:History) => async (dispa
                   },
                 type: joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN
                 });
-                // tslint:disable-next-line: no-duplicate-string
                 history.push('/management/login');
-                // tslint:disable-next-line: no-duplicate-string
                 toast.error('Cohort not found');
         }
     }
@@ -48,9 +45,7 @@ export const findCohortByToken = (token:string, history:History) => async (dispa
               },
               type: joinCohortTypes.FAILED_TO_FIND_COHORT_BY_TOKEN
             })
-            // tslint:disable-next-line: no-duplicate-string
             history.push('/management/login');
-            // tslint:disable-next-line: no-duplicate-string
             toast.error('Cohort not found');
         }
     }
@@ -84,7 +79,6 @@ export const findLoggedInUser = (user:ICognitoUser, history:History) => async (d
                   
             });
             history.push('/management/login');
-            // tslint:disable-next-line: no-duplicate-string
             toast.error('Failed to find user');
         }
         if(res.status === 405){
@@ -103,9 +97,7 @@ export const findLoggedInUser = (user:ICognitoUser, history:History) => async (d
               },
               type: joinCohortTypes.FAILED_TO_FIND_LOGGED_IN_USER
         })
-        // tslint:disable-next-line: no-duplicate-string
         history.push('/management/login');
-        // tslint:disable-next-line: no-duplicate-string
         toast.error('Failed to find user');
     }
 }
@@ -140,7 +132,6 @@ export const joinCohort = (user:IUser, token:string, history:History) => async (
                   
             });
             history.push('/management/login');
-            // tslint:disable-next-line: no-duplicate-string
             toast.error('Failed to Join Cohort');
         }
         if(join.status === 405){

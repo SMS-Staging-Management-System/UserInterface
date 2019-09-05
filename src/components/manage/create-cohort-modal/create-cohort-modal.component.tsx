@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
     Button, Modal, ModalHeader, ModalBody, ModalFooter,
     InputGroup, InputGroupText, InputGroupAddon, Input,
@@ -15,7 +15,6 @@ const inputNames = {
     DESCRIPTION: 'NEW_COHORT_DESCRIPTION',
     NAME: 'NEW_COHORT_NAME',
     START_DATE: 'NEW_START_DATE',
-    // tslint:disable-next-line: object-literal-sort-keys
     END_DATE: 'NEW_END_DATE'
 }
 
@@ -44,15 +43,12 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
     async getTrainers() {
         try {
             const trainerResponse = await cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
-
             const userMap = new Map<string, ICognitoUser>();
-
-            // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < trainerResponse.data.Users.length; i++) {
                 const currentCognitoUser = trainerResponse.data.Users[i];
                 const currentEmail = currentCognitoUser.Attributes.find((attr: any) => attr.Name === 'email').Value;
                 const mapUser = userMap.get(currentEmail)
-                let newUser: ICognitoUser = mapUser ? mapUser : {
+                const newUser: ICognitoUser = mapUser ? mapUser : {
                     email: currentEmail,
                     roles: []
                 };
@@ -68,10 +64,8 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
             const emailList: string[] = userArray.map(user => user.email)
             const userInfoResp = await userClient.findAllByEmailsNotPageable(emailList);
 
-            // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < userInfoResp.data.length; i++) {
                 const respEmail = userInfoResp.data[i].email;
-                // tslint:disable-next-line: prefer-for-of
                 for (let j = 0; j < userArray.length; j++) {
                     if (userArray[j].email === respEmail) {
                         userArray[j].firstName = userInfoResp.data[i].firstName;
@@ -91,7 +85,6 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
         let updatedNewCohort = this.props.createCohort.newCohort;
         const target = e.target as HTMLSelectElement;
         const changeValue = e as React.ChangeEvent<HTMLInputElement>;
-        console.log(changeValue.target.value);
         switch (target.name) {
             case inputNames.DESCRIPTION:
                 updatedNewCohort = {
@@ -120,23 +113,13 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
             default:
                 break;
         }
-        console.log(updatedNewCohort);
         this.props.updateNewCohort(updatedNewCohort)
-        console.log(updatedNewCohort);
     }
 
     saveNewCohort = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('saving')
         this.props.saveCohort(this.props.createCohort.newCohort);
     }
-
-    // goToCohortPage = (window, createCohort) => {
-    //     const cohortLocation = `${window.location.origin.toString()}` +
-    //         `/management/joincohort/${createCohort.newCohort.cohortToken}`;
-
-
-    // }
 
     getNewCohortJoinPath = (window, createCohort) => {
         return `${window.location.origin.toString()}` +
@@ -145,7 +128,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
 
     render() {
 
-        const { createCohort, addresses, /*manageUsers*/ } = this.props;
+        const { createCohort, addresses } = this.props;
 
         console.log(this.state.trainers);
 
@@ -257,4 +240,3 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
         );
     }
 }
-
