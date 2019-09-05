@@ -4,7 +4,6 @@ import { ICreateUserProps, CreateUserComponent } from './create-user.component';
 import { mount, shallow } from 'enzyme';
 import DropdownMenu from 'reactstrap/lib/DropdownMenu';
 
-// tslint:disable-next-line: no-big-function
 describe('JoinCohortComponent test',() => {
     let wrapper;
     let mnt;
@@ -12,16 +11,13 @@ describe('JoinCohortComponent test',() => {
         const currentUser = {
             firstName: "",
             lastName: "",
-            // tslint:disable-next-line: object-literal-sort-keys
             email: "",
             roles: []
         };
         const joinCohortState = {
             validToken: true,
-            // tslint:disable-next-line: object-literal-sort-keys
             userToJoin:{
                 userId:0,
-                // tslint:disable-next-line: object-literal-sort-keys
                 email:"",
                 firstName:'',
                 lastName:'',
@@ -29,7 +25,6 @@ describe('JoinCohortComponent test',() => {
                 trainingAddress:{
                     addressId:0,
                     street:'',
-                    // tslint:disable-next-line: object-literal-sort-keys
                     alias:"",
                     city:"",
                     country:"", 
@@ -39,7 +34,6 @@ describe('JoinCohortComponent test',() => {
                 personalAddress:{
                     addressId:0,
                     street:'',
-                    // tslint:disable-next-line: object-literal-sort-keys
                     alias:"",
                     city:"",
                     country:"", 
@@ -48,7 +42,6 @@ describe('JoinCohortComponent test',() => {
                 },
                 userStatus:{
                     statusId:0,
-                    // tslint:disable-next-line: object-literal-sort-keys
                     generalStatus:"",
                     specificStatus:"",
                     virtual:false
@@ -59,27 +52,22 @@ describe('JoinCohortComponent test',() => {
             foundCohort:{
                 cohortId:1,
                 cohortName:"Mock team",
-                // tslint:disable-next-line: object-literal-sort-keys
                 cohortDescription:"For unit testing",
                 cohortToken:"ABCDEFG",
                 address:{
                     addressId:0,
                     street:'Mock ave',
-                    // tslint:disable-next-line: object-literal-sort-keys
                     alias:"Mocktown",
                     city:"Mockland",
                     country:"Mocka", 
                     state:"MCK", 
                     zip:'12678'
                 },
-                // tslint:disable-next-line: no-duplicate-string
                 startDate:'2019-01-15',
-                // tslint:disable-next-line: no-duplicate-string
                 endDate:'2019-03-15',
                 users:[],
                 trainer:{
                     userId:1,
-                // tslint:disable-next-line: object-literal-sort-keys
                 email:"mockito@mail.com",
                 firstName:'Mock',
                 lastName:'Man',
@@ -87,7 +75,6 @@ describe('JoinCohortComponent test',() => {
                 trainingAddress:{
                     addressId:0,
                     street:'Mock ave',
-                    // tslint:disable-next-line: object-literal-sort-keys
                     alias:"Mocktown",
                     city:"Mockland",
                     country:"Mocka", 
@@ -97,7 +84,6 @@ describe('JoinCohortComponent test',() => {
                 personalAddress:{
                     addressId:0,
                     street:'Mock ave',
-                    // tslint:disable-next-line: object-literal-sort-keys
                     alias:"Mocktown",
                     city:"Mockland",
                     country:"Mocka", 
@@ -106,9 +92,7 @@ describe('JoinCohortComponent test',() => {
                 },
                 userStatus:{
                     statusId:0,
-                    // tslint:disable-next-line: object-literal-sort-keys
                     generalStatus:"Mocking",
-                    // tslint:disable-next-line: no-duplicate-string
                     specificStatus:"Specifically mocking",
                     virtual:false
                 },
@@ -119,20 +103,16 @@ describe('JoinCohortComponent test',() => {
         };
         const createProps : ICreateUserProps = {
             token,
-            // tslint:disable-next-line: object-literal-sort-keys
             addresses:{
                 trainingAddresses:[]
             },
-            // tslint:disable-next-line: object-literal-sort-keys
             history:{
                 length:1,
-                // tslint:disable-next-line: object-literal-sort-keys
                 action:'PUSH',
                 location:{
                     pathname:"hello",
                     search:"over here",
                     state:{},
-                    // tslint:disable-next-line: object-literal-sort-keys
                     hash:"thisisamockhash"
                 },
                 push:jest.fn().mockImplementation(),
@@ -148,7 +128,6 @@ describe('JoinCohortComponent test',() => {
             createUser:{
                 locationDropdownActive:false,
                 roleDropdownActive:false,
-                // tslint:disable-next-line: object-literal-sort-keys
                 cohortDropdownActive:false,
                 enabled:true,
                 newUser:{
@@ -159,25 +138,21 @@ describe('JoinCohortComponent test',() => {
                     trainingAddress:{
                         addressId:0,
                         street:'Mock ave',
-                        // tslint:disable-next-line: object-literal-sort-keys
                         alias:"Mocktown",
                         city:"Mockland",
                         country:"Mocka", 
                         state:"MCK", 
                         zip:'12678'
                     },
-                    // tslint:disable-next-line: object-literal-sort-keys
                     dropdownRole:"associate",
                     cohort:{
                         cohortId:1,
                         cohortName:"Mock team",
-                        // tslint:disable-next-line: object-literal-sort-keys
                         cohortDescription:"For unit testing",
                         cohortToken:"ABCDEFG",
                         address:{
                             addressId:0,
                             street:'Mock ave',
-                            // tslint:disable-next-line: object-literal-sort-keys
                             alias:"Mocktown",
                             city:"Mockland",
                             country:"Mocka", 
@@ -189,7 +164,6 @@ describe('JoinCohortComponent test',() => {
                         users:[],
                         trainer:{
                             userId:0,
-                        // tslint:disable-next-line: object-literal-sort-keys
                         email:"mockito@mail.com",
                         firstName:'Mock',
                         lastName:'Man',
@@ -197,7 +171,6 @@ describe('JoinCohortComponent test',() => {
                         trainingAddress:{
                             addressId:0,
                             street:'Mock ave',
-                            // tslint:disable-next-line: object-literal-sort-keys
                             alias:"Mocktown",
                             city:"Mockland",
                             country:"Mocka", 
@@ -207,7 +180,6 @@ describe('JoinCohortComponent test',() => {
                         personalAddress:{
                             addressId:0,
                             street:'Mock ave',
-                            // tslint:disable-next-line: object-literal-sort-keys
                             alias:"Mocktown",
                             city:"Mockland",
                             country:"Mocka", 
@@ -216,7 +188,6 @@ describe('JoinCohortComponent test',() => {
                         },
                         userStatus:{
                             statusId:0,
-                            // tslint:disable-next-line: object-literal-sort-keys
                             generalStatus:"Mocking",
                             specificStatus:"Specifically mocking",
                             virtual:false
@@ -237,7 +208,6 @@ describe('JoinCohortComponent test',() => {
     beforeEach(() => {
         const joinProps : IJoinCohortProps = {
             token,
-            // tslint:disable-next-line: object-literal-sort-keys
             login : { // This test is intended to be done for the case no user is logged in
                       // that way, the join cohort sign up is going to be rendered
             currentUser
@@ -245,13 +215,11 @@ describe('JoinCohortComponent test',() => {
         joinCohortState,
         history:{
             length:1,
-            // tslint:disable-next-line: object-literal-sort-keys
             action:'PUSH',
             location:{
                 pathname:"hello",
                 search:"over here",
                 state:{},
-                // tslint:disable-next-line: object-literal-sort-keys
                 hash:"thisisamockhash"
             },
             push:jest.fn().mockImplementation(),

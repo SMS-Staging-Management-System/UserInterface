@@ -161,7 +161,6 @@ export interface ILoginState {
 export const managementState = combineReducers<IManagementState>({
     addresses: addressReducer,
     statuses: statusReducer,
-    // tslint:disable-next-line: object-literal-sort-keys
     auth: authReducer,
     viewUser: viewUserReducer,
     createUser: createUserReducer,

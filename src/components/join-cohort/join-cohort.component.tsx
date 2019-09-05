@@ -76,7 +76,6 @@ export class JoinCohortComponent extends React.Component<IJoinCohortProps, IJoin
 
 const mapStateToProps = (state:IState, ownProps) => ({
   token: ownProps.match.params.token,
-  // tslint:disable-next-line: object-literal-sort-keys
   login: state.managementState.auth,
   joinCohortState: state.managementState.joinCohort,
   history: ownProps.history
