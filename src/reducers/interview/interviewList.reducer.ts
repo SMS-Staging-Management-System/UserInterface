@@ -10,6 +10,7 @@ const initialState: IInterviewListState = {
     pageSize: 5,
     currentPage: 0,
     assocInput: undefined,
+    dropdowns: []
 }
 
 export const interviewListReducer = (state = initialState, action: any): IInterviewListState => {
@@ -26,9 +27,12 @@ export const interviewListReducer = (state = initialState, action: any): IInterv
                 assocInput: { ...action.payload }
             };
 
-        case authTypes.LOGOUT:
-            return initialState
-
+        case interviewListTypes.DROP_DOWN:
+            return {
+                ...state,
+                dropdowns: action.payload.listOfInterviews
+            };
+            
         default:
             return state
     }
