@@ -8,6 +8,7 @@ import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
 import { connect } from 'react-redux';
 import Loader from '../Loader/Loader';
+import { FaSearch } from 'react-icons/fa';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState;
@@ -271,9 +272,9 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <th>Select</th>
                                             <th>Title</th>
                                             <th>Description</th>
-                                            <th>Date Created</th>
-                                            <th>Closing Date</th>
-                                            <th>Published</th>
+                                            <th>Created</th>
+                                            <th>Closed</th>
+                                            <th></th>
                                             <th>Analytics</th>
                                             <th>Respondents</th>
                                         </tr>
@@ -287,7 +288,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                                     <input type="text" id="inputTItle" name="title"
                                                         className="inputBox form-control" placeholder="Title"
                                                         value={this.state.title} onChange={this.setTitleChange} />
-                                                    <button type="submit" className="btn btn-success searchbtn" onClick={this.getSurveysByTitle}>o</button>
+                                                    <button type="submit" className="btn btn-success searchbtn" onClick={this.getSurveysByTitle}><FaSearch /></button>
                                                 </div>
                                             </td>
                                             <td>
@@ -296,7 +297,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                                     <input type="text" id="inputDescription" name="description"
                                                         className=" inputBox form-control" placeholder="Description"
                                                         value={this.state.description} onChange={this.setDescriptionChange} />
-                                                    <button type="submit" className="btn btn-success searchbtn" onClick={this.getSurveysByDescription}>o</button>
+                                                    <button type="submit" className="btn btn-success searchbtn" onClick={this.getSurveysByDescription}><FaSearch /></button>
                                                 </div>
                                             </td>
                                             <td>
@@ -335,7 +336,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <td>{survey.description}</td>
                                             <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
                                             <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
-                                            <td>{survey.published ? 'Yes' : 'No'}</td>
+                                            <td></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
                                                 this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
@@ -350,7 +351,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <td>{filtered.description}</td>
                                             <td>{filtered.dateCreated && new Date(filtered.dateCreated).toDateString()}</td>
                                             <td>{filtered.closingDate && new Date(filtered.closingDate).toDateString()}</td>
-                                            <td>{filtered.published ? 'Yes' : 'No'}</td>
+                                            <td></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
                                                 this.handleLoadSurveyData(filtered.surveyId)}>Data</Button></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>

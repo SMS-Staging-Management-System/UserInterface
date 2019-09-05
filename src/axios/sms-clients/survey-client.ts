@@ -38,13 +38,18 @@ export const surveyClient = {
   },
 
   findAllSurveys: async () => {
-    const resp = await smsClient.get(surveyBaseRoute + '/published');
-    return resp.data;   
+    const resp = await smsClient.get(surveyBaseRoute + '/template/false?page=0');
+    return resp.data.content;   
+  },
+
+  findAllSurveysByCreators: async (creator, page) => {
+    const resp = await smsClient.post(surveyBaseRoute + `/${creator}?`+page);
+    return resp.data;
   },
 
   findAllTemplates: async () => {
-    const resp = await smsClient.get(surveyBaseRoute + '/template')
-    return resp.data;
+    const resp = await smsClient.get(surveyBaseRoute + '/template/true?page=0')
+    return resp.data.content;
 
   },
   findSurveyById: async (id: number) => {
