@@ -13,7 +13,7 @@ export const addressReducer = (state = initialState, action: any): IAddressState
         ...state,
         trainingAddresses: action.payload.addresses
       }
-    case authTypes.LOGOUT: 
+    case authTypes.LOGOUT:
       return initialState
   }
   return state;
