@@ -50,6 +50,7 @@ export const surveyClient = {
         pages = totalPages;
       }
     }
+    console.log(creator)
     let resp = await smsClient.get(templateRoute + 'creator/' + creator + '/' + pages)
     surveysAndTemplates = resp.data;
     if (surveysAndTemplates) {
