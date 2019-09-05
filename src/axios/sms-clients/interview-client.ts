@@ -55,8 +55,13 @@ export const interviewClient = {
         if (pageSize) {
             url += '&pageSize=' + pageSize;
         }
-
-        console.log(url);
+        if (!isAdmin)
+            url += '&email=' + email;
+        url += '&associateEmail=' + associateEmail;
+        url += '&managerEmail=' + managerEmail;
+        url += '&place=' + place;
+        url += '&clientName=' + clientName;
+        url += '&staging=' + staging;
 
         return smsClient.get(url);
     },

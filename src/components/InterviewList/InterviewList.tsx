@@ -22,7 +22,6 @@ export interface InterviewListProps {
     email: string,
     listOfInterviews: any[],
     dropdowns: any[],
-
     numberOfPages: number,
     currentPage: number,
     pageSize: number,
@@ -135,7 +134,8 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.setState({
                 loaded: true
             });
-            this.props.getInterviewPages(
+
+          this.props.getInterviewPages(
                 this.props.currentPage,
                 this.props.pageSize,
                 this.props.orderBy,
@@ -160,6 +160,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     this.state.staging,
                     this.state.input,
                     this.state.feedback);
+            this.handlePageClick({ selected: this.props.currentPage });
         }
     }
 
@@ -493,6 +494,7 @@ const mapStateToProps = (state: IState) => {
         listOfInterviews: state.interviewState.interviewList.listOfInterviews,
         numberOfPages: state.interviewState.interviewList.numberOfPages,
         orderBy: state.interviewState.interviewList.orderBy,
+        pageSize: state.interviewState.interviewList.pageSize,
     }
 }
 
