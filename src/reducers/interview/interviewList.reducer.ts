@@ -33,6 +33,9 @@ export const interviewListReducer = (state = initialState, action: any): IInterv
                 dropdowns: action.payload.listOfInterviews
             };
             
+        case authTypes.LOGOUT:
+            return initialState
+
         default:
             return state
     }
