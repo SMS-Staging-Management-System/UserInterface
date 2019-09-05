@@ -35,7 +35,7 @@ interface IComponentState {
     prev: boolean,
     next: boolean,
     search: string,
-    searching: boolean
+    foundAll: boolean
 };
 class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     constructor(props) {
@@ -67,7 +67,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             prev: false,
             next: true,
             search: '',
-            searching: false
+            foundAll: false
         }
     }
     componentDidMount() {
@@ -79,7 +79,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         this.setState({
             templates: templates,
             templatesLoaded: true,
-            searching: true
+            foundAll: true
         });
         if(surveyClient.currentPage() <= 1) {
             if(surveyClient.currentPage() !== surveyClient.totalPages()){
@@ -252,7 +252,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         this.setState({
             templates: templates,
             templatesLoaded: true,
-            searching: false
+            foundAll: false
         });
         if(surveyClient.currentPage() <= 1) {
             if(surveyClient.currentPage() !== surveyClient.totalPages()){
@@ -320,7 +320,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             </Table>
                             {/* button goes here pick up here */}
                             <div className='row horizontal-centering vertical-centering'>
-                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(0)} disabled={this.state.searching}>All Templates</Button>
+                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(0)} disabled={this.state.foundAll}>All Templates</Button>
                             <h6 className="div-child text-style" >
                                           
                                 </h6>
