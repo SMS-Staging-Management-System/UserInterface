@@ -125,7 +125,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                     answerId: {
                         answerId: this.state.responses[key],
                         answer: '',
-                        question: {questionId: 0, question: '', typeId: 0, answers: []}
+                        question: { questionId: 0, question: '', typeId: 0, answers: [] }
                     },
                     id: 0,
                     surveyId: {
@@ -134,7 +134,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                         dateCreated: new Date(),
                         description: '',
                         creator: '',
-                        published: true,
+                        // published: true,
                         template: true,
                         title: '',
                         questionJunctions: []

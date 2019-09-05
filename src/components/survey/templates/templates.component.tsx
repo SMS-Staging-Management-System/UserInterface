@@ -59,7 +59,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 dateCreated: new Date(),
                 closingDate: null,
                 template: false,
-                published: true,
+                //published: true,
                 questionJunctions: []
             },
             redirectTo: null,
@@ -75,7 +75,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     }
     // Load the templates into the state
     loadTemplates = async (page: number) => {
-        const templates = await surveyClient.findAllTemplates(page);
+        const templates = await surveyClient.findAllTemplates(this.props.auth.currentUser.email,page);
         this.setState({
             templates: templates,
             templatesLoaded: true,
@@ -169,7 +169,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             dateCreated: this.state.dateCreated,
             closingDate: this.state.survey.closingDate,
             template: false,
-            published: true,
+            // published: true,
             questionJunctions: []
         };
         let questionJunctions: IJunctionSurveyQuestion[] = [];

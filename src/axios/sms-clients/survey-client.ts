@@ -38,7 +38,8 @@ export const surveyClient = {
     const resp = await smsClient.get(surveyBaseRoute + '/published');
     return resp.data;   
   },
-  findAllTemplates: async (page: number) => {
+
+  findAllTemplates: async (creator: string ,page: number) => {
     let surveysAndTemplates;
     let templates: any = [];
     pages += page;
@@ -49,7 +50,7 @@ export const surveyClient = {
         pages = totalPages;
       }
     }
-    let resp = await smsClient.get(templateRoute + pages)
+    let resp = await smsClient.get(templateRoute + 'creator/' + creator + '/' + pages)
     surveysAndTemplates = resp.data;
     if (surveysAndTemplates) {
       surveysAndTemplates.content.forEach(element => {
