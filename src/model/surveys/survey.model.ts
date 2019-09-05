@@ -8,6 +8,6 @@ export interface ISurvey {
   dateCreated: Date;
   closingDate: Date | null;
   template: boolean;
-  published: boolean;
+  // published: boolean;
   questionJunctions: IJunctionSurveyQuestion[];
 }
