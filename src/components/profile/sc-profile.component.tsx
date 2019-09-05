@@ -340,7 +340,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.FIRST_NAME}
                             value={this.state.updateUser.firstName}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} required />
+                            onChange={this.onUserInfoChangeHandler} required />
                     </Col>
                     <Col md={4}>
                         <Label>Last Name</Label>
@@ -348,7 +348,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.LAST_NAME}
                             value={this.state.updateUser.lastName}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} required />
+                            onChange={this.onUserInfoChangeHandler} required />
                     </Col>
                     <Col md={4}>
                         <Label>Phone Number</Label>
@@ -357,7 +357,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
                             name={inputNames.PHONE}
                             value={this.state.updateUser.phoneNumber}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                            onChange={this.onUserInfoChangeHandler} />
                     </Col>
                 </Row>
                 <Row className="mb-3">
@@ -367,7 +367,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.STREET}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.street}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                            onChange={this.onUserInfoChangeHandler} />
                     </Col>
                 </Row>
                 <Row className="mb-3">
@@ -377,7 +377,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.CITY}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.city}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                            onChange={this.onUserInfoChangeHandler} />
                     </Col>
                     <Col md={3}>
                         <Label>State</Label>
@@ -385,7 +385,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.STATE}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.state}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                            onChange={this.onUserInfoChangeHandler} />
                     </Col>
                     <Col md={2}>
                         <Label>Zip</Label>
@@ -393,7 +393,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.ZIP}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.zip}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                            onChange={this.onUserInfoChangeHandler} />
                     </Col>
                     <Col md={3}>
                         <Label>Country</Label>
@@ -401,7 +401,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.COUNTRY}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.country}
-                            onChange={(event) => this.onUserInfoChangeHandler(event)} />
+                            onChange={this.onUserInfoChangeHandler} />
                     </Col>
                 </Row>
                 <Row className="mb-3">
