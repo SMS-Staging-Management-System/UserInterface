@@ -87,111 +87,41 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         // this.onUpdateClick = this.onUpdateClick.bind(this);
     }
 
-    onUserInfoChangeHandler = (event: any) => {
-        const target = event.target.value
+    handleInputChange = (event: any) => {
+        const user = this.state.updateUser;
+        const target = event.target.value;
+        const name = event.target.name;
+        const address = !user[name];
+
+        if (address) {
+            this.setState({
+                updateUser: {
+                    ...user,
+                    personalAddress: {
+                        ...user.personalAddress,
+                        [name]: target
+                    }
+                }
+            })
+        } else {
+            this.setState({
+                updateUser: {
+                    ...user,
+                    [name]: target
+                }
+            })
+        }
+    }
+
+    handleClickChange = (event: any) => {
+        const target = event.target.value;
         const user = this.state.updateUser;
         switch (event.target.name) {
-            case inputNames.EMAIL:
-                this.setState({
-                    updateUser: {
-                        ...user,
-                        email: target
-                    }
-                })
-                break;
-            case inputNames.FIRST_NAME:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        firstName: target
-                    }
-                })
-                break;
-            case inputNames.LAST_NAME:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        lastName: target
-                    }
-                })
-                break;
-            case inputNames.PHONE:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        phoneNumber: target
-                    }
-                })
-                break;
-            case inputNames.STREET:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        personalAddress: {
-                            ...user.personalAddress,
-                            street: target
-                        }
-                    }
-                })
-                break;
-            case inputNames.CITY:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        personalAddress: {
-                            ...user.personalAddress,
-                            city: target
-                        }
-                    }
-                })
-                break;
-            case inputNames.STATE:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        personalAddress: {
-                            ...user.personalAddress,
-                            state: target
-                        }
-                    }
-                })
-                break;
-            case inputNames.ZIP:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        personalAddress: {
-                            ...user.personalAddress,
-                            zip: target
-                        }
-                    }
-                })
-                break;
-            case inputNames.COUNTRY:
-                this.setState({
-                    ...this.state,
-                    updateUser: {
-                        ...user,
-                        personalAddress: {
-                            ...user.personalAddress,
-                            country: target
-                        }
-                    }
-                })
-                break;
             case inputNames.TRAINING_ALIASES:
                 const newAddress = this.props.trainingAddresses.trainingAddresses.find((address: IAddress) => {
                     return address.alias === target;
                 })
                 this.setState({
-                    ...this.state,
                     updateUser: {
                         ...user,
                         trainingAddress: newAddress || user.trainingAddress
@@ -203,7 +133,6 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                     return status.specificStatus === target;
                 })) || user.userStatus
                 this.setState({
-                    ...this.state,
                     updateUser: {
                         ...user,
                         userStatus: {
@@ -218,7 +147,6 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                     return (status.specificStatus === user.userStatus.specificStatus && status.virtual === !user.userStatus.virtual)
                 }))
                 this.setState({
-                    ...this.state,
                     updateUser: {
                         ...user,
                         userStatus: {
@@ -238,7 +166,6 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                     }
                 }
                 this.setState({
-                    ...this.state,
                     updateUser: {
                         ...user,
                         roles
@@ -329,7 +256,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                         <Label>Training Location</Label>
                         <SCLocationDropdown
                             updateUser={this.state.updateUser}
-                            changeHandler={this.onUserInfoChangeHandler} />
+                            changeHandler={this.handleClickChange} />
                     </Col>
                 </Row>
                 <Row className="mb-3">
@@ -339,7 +266,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.FIRST_NAME}
                             value={this.state.updateUser.firstName}
-                            onChange={this.onUserInfoChangeHandler} required />
+                            onChange={this.handleInputChange} required />
                     </Col>
                     <Col md={4}>
                         <Label>Last Name</Label>
@@ -347,7 +274,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.LAST_NAME}
                             value={this.state.updateUser.lastName}
-                            onChange={this.onUserInfoChangeHandler} required />
+                            onChange={this.handleInputChange} required />
                     </Col>
                     <Col md={4}>
                         <Label>Phone Number</Label>
@@ -356,7 +283,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             pattern="^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
                             name={inputNames.PHONE}
                             value={this.state.updateUser.phoneNumber}
-                            onChange={this.onUserInfoChangeHandler} />
+                            onChange={this.handleInputChange} />
                     </Col>
                 </Row>
                 <Row className="mb-3">
@@ -366,7 +293,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.STREET}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.street}
-                            onChange={this.onUserInfoChangeHandler} />
+                            onChange={this.handleInputChange} />
                     </Col>
                 </Row>
                 <Row className="mb-3">
@@ -376,7 +303,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.CITY}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.city}
-                            onChange={this.onUserInfoChangeHandler} />
+                            onChange={this.handleInputChange} />
                     </Col>
                     <Col md={3}>
                         <Label>State</Label>
@@ -384,7 +311,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.STATE}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.state}
-                            onChange={this.onUserInfoChangeHandler} />
+                            onChange={this.handleInputChange} />
                     </Col>
                     <Col md={2}>
                         <Label>Zip</Label>
@@ -392,7 +319,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.ZIP}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.zip}
-                            onChange={this.onUserInfoChangeHandler} />
+                            onChange={this.handleInputChange} />
                     </Col>
                     <Col md={3}>
                         <Label>Country</Label>
@@ -400,7 +327,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                             type="text"
                             name={inputNames.COUNTRY}
                             value={this.state.updateUser.personalAddress && this.state.updateUser.personalAddress.country}
-                            onChange={this.onUserInfoChangeHandler} />
+                            onChange={this.handleInputChange} />
                     </Col>
                 </Row>
                 <Row className="mb-3">
@@ -408,7 +335,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                         <Label>Status</Label>
                         <SCProfileStatusDropdown
                             updateUser={this.state.updateUser}
-                            changeHandler={this.onUserInfoChangeHandler} />
+                            changeHandler={this.handleClickChange} />
                         {this.state.updateUser.userStatus.generalStatus === 'Training'
                             ? <></>
                             :
@@ -418,7 +345,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                                         className="m-0"
                                         type="checkbox"
                                         name={inputNames.VIRTUAL_CHECKBOX}
-                                        onChange={this.onUserInfoChangeHandler}
+                                        onChange={this.handleClickChange}
                                         checked={this.state.updateUser.userStatus.virtual} />
                                 </FormGroup>
                                 {' Virtual'}
@@ -429,7 +356,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                         <br />
                         <SCRoleSelector
                             updateUser={this.state.updateUser}
-                            onChangeHandler={this.onUserInfoChangeHandler} />
+                            onChangeHandler={this.handleClickChange} />
                     </Col>
                 </Row>
                 <Row>

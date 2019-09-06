@@ -217,7 +217,7 @@ describe('<SCProfile />', () => {
         const component = shallow(<SCProfile {...mockProps} />);
         expect(component).toBeDefined();
     })
-    
+
     for (const inputName in inputNames) {
         const inputNameEle = inputNames[inputName];
 
@@ -241,7 +241,7 @@ describe('<SCProfile />', () => {
                 const newTrainingAddress = mockProps.trainingAddresses.trainingAddresses[1];
                 const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
                 const instance = component.instance();
-                instance.onUserInfoChangeHandler(simulatedEvent);
+                instance.handleClickChange(simulatedEvent);
                 expect(component.state('updateUser')).toEqual({ ...mockUser, trainingAddress: newTrainingAddress });
             })
         } else
@@ -268,7 +268,7 @@ describe('<SCProfile />', () => {
                     })[0];
                     const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
                     const instance = component.instance();
-                    instance.onUserInfoChangeHandler(simulatedEvent);
+                    instance.handleClickChange(simulatedEvent);
                     expect(component.state('updateUser')).toEqual({ ...mockUser, userStatus: newStatus });
                 })
             } else
@@ -286,7 +286,7 @@ describe('<SCProfile />', () => {
                         })[0];
                         const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
                         const instance = component.instance();
-                        instance.onUserInfoChangeHandler(simulatedEvent);
+                        instance.handleClickChange(simulatedEvent);
                         expect(component.state('updateUser')).toEqual({ ...mockUser, userStatus: newStatus });
                     })
                 } else
@@ -310,7 +310,7 @@ describe('<SCProfile />', () => {
                             }
                             const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
                             const instance = component.instance();
-                            instance.onUserInfoChangeHandler(simulatedEvent);
+                            instance.handleClickChange(simulatedEvent);
                             expect(component.state('updateUser')).toEqual({ ...mockUser, roles: [cognitoRoles.ADMIN] });
                         })
                     }
@@ -358,7 +358,7 @@ describe('<SCProfile />', () => {
                                 }
                                 const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
                                 const instance = component.instance();
-                                instance.onUserInfoChangeHandler(simulatedEvent);
+                                instance.handleInputChange(simulatedEvent);
                                 if (address) {
                                     expect(component.state('updateUser')).toEqual({ ...mockUser, personalAddress: { ...mockUser.personalAddress, [inputNameEle]: 'changed' } });
                                 } else {
