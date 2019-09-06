@@ -134,7 +134,6 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                         dateCreated: new Date(),
                         description: '',
                         creator: '',
-                        published: true,
                         template: true,
                         title: '',
                         questionJunctions: []

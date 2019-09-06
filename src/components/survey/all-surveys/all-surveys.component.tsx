@@ -273,7 +273,6 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <th>Description</th>
                                             <th>Date Created</th>
                                             <th>Closing Date</th>
-                                            <th>Published</th>
                                             <th>Analytics</th>
                                             <th>Respondents</th>
                                         </tr>
@@ -335,7 +334,6 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <td>{survey.description}</td>
                                             <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
                                             <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
-                                            <td>{survey.published ? 'Yes' : 'No'}</td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
                                                 this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
@@ -350,7 +348,6 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <td>{filtered.description}</td>
                                             <td>{filtered.dateCreated && new Date(filtered.dateCreated).toDateString()}</td>
                                             <td>{filtered.closingDate && new Date(filtered.closingDate).toDateString()}</td>
-                                            <td>{filtered.published ? 'Yes' : 'No'}</td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
                                                 this.handleLoadSurveyData(filtered.surveyId)}>Data</Button></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>

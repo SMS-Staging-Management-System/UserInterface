@@ -18,28 +18,31 @@ let exampleArr:ISurvey[] = [
         surveyId: 4,
         title: "RC Survey",
         description: "A survey for training feedback.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('7-2-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 5,
         title: "Testing2",
         description: "A survey for testing",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 6,
         title: "Testingstuff",
         description: "A survey for more testing",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-10-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
@@ -49,28 +52,31 @@ let exArr:ISurvey[] = [
         surveyId: 1,
         title: "Survey 1",
         description: "A survey for some testing with null closing date.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 2,
         title: "Survey 2",
         description: "A survey for testing without null",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 3,
         title: "Survey 3",
         description: "A survey for testing an active date",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('7-10-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
@@ -80,28 +86,31 @@ let exArray:ISurvey[] = [
         surveyId: 7,
         title: "Survey 7",
         description: "A survey for some testing with null closing date.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 8,
         title: "Survey 8",
         description: "A survey for testing with null closing date",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 9,
         title: "Survey 9",
         description: "A survey for testing more null dates",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
@@ -111,28 +120,31 @@ let allPassedSurveys:ISurvey[] = [
         surveyId: 1,
         title: "Survey 1",
         description: "A survey for some testing with null closing date.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 2,
         title: "Survey 2",
         description: "A survey for testing without null",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 3,
         title: "Survey 3",
         description: "A survey for testing an active date",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
@@ -203,10 +215,11 @@ describe('All surveys should return active and closed surveys', () => {
                 surveyId: 4,
                 title: "RC Survey",
                 description: "A survey for training feedback.",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: new Date('7-2-2019'),
                 template: false,
-                published: true
+                questionJunctions: []
             }
         ]);
     })
@@ -218,19 +231,21 @@ describe('All surveys should return active and closed surveys', () => {
                 surveyId: 1,
                 title: "Survey 1",
                 description: "A survey for some testing with null closing date.",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: null,
                 template: false,
-                published: true
+                questionJunctions: []
             },
             {
                 surveyId: 3,
                 title: "Survey 3",
                 description: "A survey for testing an active date",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: new Date('7-10-2019'),
                 template: false,
-                published: true
+                questionJunctions: []
             },
         ]);
     });
@@ -251,19 +266,21 @@ describe('All surveys should return active and closed surveys', () => {
             surveyId: 5,
             title: "Testing2",
             description: "A survey for testing",
+            creator: '',
             dateCreated: new Date('5/31/2019'),
             closingDate: new Date('5-24-2019'),
             template: false,
-            published: true
+            questionJunctions: []
         },
         {
             surveyId: 6,
             title: "Testingstuff",
             description: "A survey for more testing",
+            creator: '',
             dateCreated: new Date('5/31/2019'),
             closingDate: new Date('5-10-2019'),
             template: false,
-            published: true
+            questionJunctions: []
         }]);
     });
 
@@ -274,10 +291,11 @@ describe('All surveys should return active and closed surveys', () => {
                 surveyId: 2,
                 title: "Survey 2",
                 description: "A survey for testing without null",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: new Date('5-24-2019'),
                 template: false,
-                published: true
+                questionJunctions: []
             }
         ]);
     });

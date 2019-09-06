@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import YesNoMaybe from '../yes_no_question.component';
 import TrueFalse from '../truefalse.component';
 import StronglyAgree from '../stronglyAgree.component';
@@ -9,7 +9,10 @@ import FeedBack from '../feedback.component';
 import CheckBox from '../checkbox.component';
 import { DeleteButton } from '../delete.component';
 import AddOther from '../add.other.component';
-import SurveyBuildComponent, { SurveyBuild } from '../survey-build.component';
+import { SurveyBuild } from '../survey-build.component';
+import { pushd } from 'shelljs';
+import { FaRegPlayCircle } from 'react-icons/fa';
+import { handleShow } from '../../../../actions/template/template-actions';
 
 
 describe('Base Test Rendering For Question Types', () => {
@@ -239,9 +242,9 @@ describe('Delete button click', () => {
         }
     });
 
-    let testArr = [1,2,3,4,5,6,7];
+    let testArr = [1, 2, 3, 4, 5, 6, 7];
 
-    testArr.map(index=> {
+    testArr.map(index => {
         it('Testing delete button', () => {
             mockProps.index = index;
             const component = shallow(<DeleteButton {...mockProps} />);
@@ -249,7 +252,7 @@ describe('Delete button click', () => {
             expect(mockProps.selfDestruct).toBeCalledWith(index)
         });
     })
-    
+
 });
 
 describe('AddOther button click', () => {
@@ -268,50 +271,123 @@ describe('AddOther button click', () => {
         }
     })
 
-    let testArr = [[1, 'True/False'], [2, 'Multiple Choice'], [3, 'Checkbox Multiple Answer'] ,
-                [4, 'Rating'], [5, 'Feedback'], [6, 'Yes/No'], [7, 'Strongly Agree/Disagree']]
+    let testArr = [[1, 'True/False'], [2, 'Multiple Choice'], [3, 'Checkbox Multiple Answer'],
+    [4, 'Rating'], [5, 'Feedback'], [6, 'Yes/No'], [7, 'Strongly Agree/Disagree']]
 
-    testArr.map(([index, value])=> {
+    testArr.map(([index, value]) => {
         it('Testing AddOther button', () => {
             mockProps.index = index;
             const component = shallow(<AddOther {...mockProps} />);
             const buttons = component.find('div').find('div').find('Button');
-            buttons.forEach(button=>{
-                mockEvent.target.value= value
+            buttons.forEach(button => {
+                mockEvent.target.value = value
                 button.simulate('click', mockEvent);
                 expect(button).toHaveLength(1);
                 expect(mockProps.selfDestruct).toBeCalledWith(index);
                 expect(mockProps.parentFunction).toBeCalledWith(value);
-            })        
+            })
         })
     })
-    
+
 
 });
 
 describe('Survey Build Component rendering', () => {
     let mockProps: any;
-    
-    beforeEach(()=>{
-        mockProps = {
-            auth: null,
-            match: null,
-            location:null,
-            history: {
-                location: {
-                    state: null
+    let mockEvent: any;
+    let mockPropsComponent: any;
+    let mockTodos: any;
+    beforeEach(() => {
+        mockPropsComponent = {
+            selfDestruct: jest.fn(),
+            index: 0,
+            parentFunction: jest.fn()
+        },
+            mockProps = {
+                auth: {
+                    currentUser: {
+                        email: 'abc@mail.com',
+                        roles: ['ADMIN']
+                    }
                 },
-                match: null
+                match: null,
+                location: null,
+                history: {
+                    location: {
+                        state: {
+                            displaySurvey: {
+                                "questionJunctions": [
+                                    {
+                                        "question": {
+                                            "questionId": 206,
+                                            "question": "Name (Optional)",
+                                            "typeId": 5,
+                                            "answers": []
+                                        }
+                                    },
+                                    {
+                                        "question": {
+                                            "questionId": 207,
+                                            "question": "Email (Optional)",
+                                            "typeId": 5,
+                                            "answers": []
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    match: null
+                },
+                surveyState: null,
+                createSurvey: jest.fn()
             },
-            surveyState: null,
-            createSurvey: jest.fn()
-        }
+            mockEvent = {
+                target: {
+                    value: ''
+                },
+                preventDefault: jest.fn()
+            },
+            mockTodos = [
+                {
+                    questionID: 1, // make sure this questioID matches the id in the datatype for questiontype
+                    task: <TrueFalse />
+                },
+                {
+                    questionID: 2,
+                    task: <MultipleChoice />
+                },
+                {
+                    questionID: 3,
+                    task: <CheckBox />
+                },
+                {
+                    questionID: 4,
+                    task: <Rating />
+                },
+                {
+                    questionID: 5,
+                    task: <FeedBack />
+                },
+                {
+                    questionID: 6,
+                    task: <YesNoMaybe />
+                },
+                {
+                    questionID: 7,
+                    task: <StronglyAgree />
+                }
+            ]
+
     })
 
-    
+    it('Survey Build rendering', () => {
+        const component = shallow(<SurveyBuild {...mockProps} />);
+        expect(component).resolves;
+    })
 
-    it('AddOther Component redering', ()=> {
-        const component = shallow(<SurveyBuild {...mockProps}/>);
+    it('Submit button preventDefault value change', () => {
+        const component = shallow(<SurveyBuild {...mockProps} />);
         let prevented = false
         component.find('form').simulate('submit', {
             preventDefault: () => {
@@ -321,7 +397,128 @@ describe('Survey Build Component rendering', () => {
         expect(prevented).toBe(true);
     })
 
+    it('Input value', () => {
+        const component = shallow(<SurveyBuild {...mockProps} />);
+        const inputs = component.find('input');
+        // expect(inputs).toHaveLength(2);
+        inputs.forEach(input => {
+            mockEvent.target.value = 'test'
+            input.simulate('focus')
+            input.simulate('change', mockEvent)
+            expect(mockEvent.target.value).toBe('test')
+        })
+    })
 
-    
-    
+    it('createSurvey function', () => {
+        const component = shallow(<SurveyBuild {...mockProps} />);
+        const submit = component.find('form').find('button');
+        submit.forEach(button => {
+            if (button.type() === 'submit') {
+                button.simulate('click');
+                expect(mockProps.createSurvey).toBeCalledTimes(1);
+            }
+        })
+    })
+
+    it('textarea value', () => {
+        const component = shallow(<SurveyBuild {...mockProps} />);
+        const inputs = component.find('textarea');
+        // expect(inputs).toHaveLength(2);
+        inputs.forEach(input => {
+            mockEvent.target.value = 'test textarea'
+            input.simulate('focus')
+            input.simulate('change', mockEvent)
+            expect(mockEvent.target.value).toBe('test textarea')
+        })
+    })
+
+    it('createSurvey function', () => {
+        const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
+        const instance = component.instance();
+        const todos = component.state('todos');
+        expect(todos).toHaveLength(7);
+        expect(component.state('completedTasks')).toHaveLength(2);
+        instance.toAddFunction("True/False");
+        expect(component.state('completedTasks')).toHaveLength(3);
+        instance.handleSubmit(mockEvent);
+        expect(mockProps.createSurvey).toBeCalledWith([{ name: 'creator', value: mockProps.auth.currentUser.email }], component.state('completedTasks'))
+
+
+
+    })
+
+    let testArr = [{type:1,isRender: true},{type:1,isRender: false}, {type:2,isRender: true}, {type:2,isRender: false},
+        {type:3,isRender: false},{type:4,isRender: false},
+        {type:5,isRender: true},{type:6,isRender: false},
+        {type:7,isRender: true},{type:8,isRender: false},{type:8,isRender: true}];
+    testArr.map(({type, isRender}, index) => {
+        it('renderComponent function', () => {
+            const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
+            const instance = component.instance();
+            instance.setState({
+                notRenderedFirstTime: isRender
+            })
+            mockPropsComponent.index = index;
+            if (type > 7) {
+                expect(instance.renderComponent(type, index)).toBeUndefined();
+            } else {
+                expect(instance.renderComponent(type, index).props.index).toBe(index);
+            }
+
+            component.setProps({
+                history: {
+                    action: 'PUSH',
+                    block: jest.fn(),
+                    createHref: jest.fn(),
+                    go: jest.fn(),
+                    goBack: jest.fn(),
+                    goForward: jest.fn(),
+                    length: 0,
+                    listen: jest.fn(),
+                    push: jest.fn(),
+                    replace: jest.fn(),
+                    location: {
+                        hash: '',
+                        key: '',
+                        pathname: '',
+                        search: '',
+                        state: undefined
+                    }
+                }
+            })
+            if (type > 7) {
+                expect(instance.renderComponent(type, index)).toBeUndefined();
+            } else {
+                expect(instance.renderComponent(type, index).props.index).toBe(index);
+            }
+
+        })
+    })
+
+    let testToAddArr = ["True/False", "Multiple Choice", "Checkbox Multiple Answer", "Rating", "Feedback", "Yes/No", "Strongly Agree/Disagree"];
+    testToAddArr.map((type, index) => {
+        it('toAddFunction testing', () => {
+            const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
+            const instance = component.instance();
+            instance.toAddFunction(type);
+            expect(component.state('completedTasks')).toHaveLength(3);
+
+            instance.deleteRow(0);
+            instance.deleteRow(0);
+            instance.deleteRow(0);
+            expect(component.state('completedTasks')).toEqual([]);
+        })
+    })
+
+
+    it('addSpecificSurvey function testing', () => {
+        const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
+        const instance = component.instance();
+        expect(component.state('completedTasks')).toHaveLength(2);
+        instance.addSpecificSurvey();
+        expect(component.state('completedTasks')).toHaveLength(2);
+    })
+
+
+
 })

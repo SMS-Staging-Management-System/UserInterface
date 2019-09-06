@@ -10,7 +10,6 @@ const initialState: ISurveyBuildState = {
         dateCreated: new Date(),
         closingDate: null,
         template: false,
-        published: true,
         questionJunctions: []
     },
     dummyQuestionArray: [],
@@ -33,7 +32,6 @@ const initialState: ISurveyBuildState = {
             dateCreated: new Date(),
             closingDate: null,
             template: false,
-            published: false,
             questionJunctions: []
         }
     }
@@ -44,7 +42,7 @@ export const surveyBuildReducer = (state = initialState, action: any): ISurveyBu
         case surveyBuildTypes.CreateSurvey:
             return {
                 ...state,
-                dummySurvey: action.payload.actionSurvey
+                dummySurvey: action.payload
             }
     }
     return state;

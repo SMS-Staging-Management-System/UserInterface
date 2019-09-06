@@ -38,13 +38,13 @@ export const surveyClient = {
   },
 
   findAllSurveys: async () => {
-    const resp = await smsClient.get(surveyBaseRoute + '/published');
-    return resp.data;   
+    const resp = await smsClient.get(surveyBaseRoute + `/template/${false}?page=0`);
+    return resp.data.content;   
   },
 
   findAllTemplates: async () => {
-    const resp = await smsClient.get(surveyBaseRoute + '/template')
-    return resp.data;
+    const resp = await smsClient.get(surveyBaseRoute + `/template/${true}?page=0`)
+    return resp.data.content;
 
   },
   findSurveyById: async (id: number) => {
@@ -55,7 +55,7 @@ export const surveyClient = {
     const allResponses = await smsClient.get(`${responseBaseRoute}/surveyId/${id}`);
     const responseCount = {};
     allResponses.data.forEach(element => {
-      const answerChosen = element.answerId.id;
+      const answerChosen = element.answerId.answerId;
       if (!responseCount[answerChosen]) {
         responseCount[answerChosen] = 1;
       } else {
@@ -67,16 +67,15 @@ export const surveyClient = {
   findSurveyByIdWithResponses: async (id: number) => {
     // Get the Survey
     let survey = await surveyClient.findSurveyById(id);
-
     // Get the Responses
     const responseCount = await surveyClient.countResponses(id);
 
     // Add the response count to each question
     survey.questionJunctions.forEach(question => {
-      if (question.questionId.typeId !== 5) {
-        question.questionId.answerChoices.forEach(choice => {
-          if (responseCount[choice.id]) {
-            choice.responseCount = responseCount[choice.id];
+      if (question.question.typeId !== 5) {
+        question.question.answers.forEach(choice => {
+          if (responseCount[choice.answerId]) {
+            choice.responseCount = responseCount[choice.answerId];
           } else {
             choice.responseCount = 0;
           }
@@ -170,7 +169,7 @@ export const surveyClient = {
   //---------------------//  
 
   findHistoriesByEmail: async (email: string) => {
-    let response = await smsClient.post(historyBaseRoute +'/email', JSON.stringify(email))
+    let response = await smsClient.get(historyBaseRoute +'/email?email='+email)
     return response.data
   },
 

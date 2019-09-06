@@ -55,7 +55,6 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 dateCreated: new Date(),
                 closingDate: null,
                 template: false,
-                published: true,
                 questionJunctions: []
             },
             redirectTo: null
@@ -146,7 +145,6 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             dateCreated: this.state.dateCreated,
             closingDate: this.state.survey.closingDate,
             template: false,
-            published: true,
             questionJunctions: []
         };
         let questionJunctions: IJunctionSurveyQuestion[] = [];
