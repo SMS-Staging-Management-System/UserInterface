@@ -1,4 +1,4 @@
-import { ICreateUserState } from '.';
+import { ICreateUserState } from './index';
 import { authTypes } from '../../actions/auth/auth.actions';
 import { createUserTypes } from '../../actions/create-user/create-user.actions';
 
@@ -6,27 +6,32 @@ const initialState: ICreateUserState = {
   enabled: false,
   locationDropdownActive: false,
   roleDropdownActive: false,
+  // tslint:disable-next-line: object-literal-sort-keys
   cohortDropdownActive: false,
   newUser: {
     trainingAddress: {
       addressId: 0,
       street: '',
+      // tslint:disable-next-line: object-literal-sort-keys
       alias: '',
       city: '',
       country: '',
       state: '',
       zip: ''
     },
+    // tslint:disable-next-line: object-literal-sort-keys
     role: '',
     dropdownRole: '',
     cohort: {
       cohortId: 0,
       cohortName: '',
+      // tslint:disable-next-line: object-literal-sort-keys
       cohortDescription: '',
       cohortToken: '',
       address: {
         addressId: 0,
         street: '',
+        // tslint:disable-next-line: object-literal-sort-keys
         alias: '',
         city: '',
         country: '',
@@ -38,6 +43,7 @@ const initialState: ICreateUserState = {
       users: [],
       trainer: {
         userId: 0,
+        // tslint:disable-next-line: object-literal-sort-keys
         firstName: '',
         lastName: '',
         email: '',
@@ -45,6 +51,7 @@ const initialState: ICreateUserState = {
         personalAddress: {
           addressId: 0,
           street: '',
+          // tslint:disable-next-line: object-literal-sort-keys
           alias: '',
           city: '',
           state: '',
@@ -54,6 +61,7 @@ const initialState: ICreateUserState = {
         trainingAddress: {
           addressId: 0,
           street: '',
+          // tslint:disable-next-line: object-literal-sort-keys
           alias: '',
           city: '',
           state: '',
@@ -62,6 +70,7 @@ const initialState: ICreateUserState = {
         },
         userStatus: {
           statusId: 0,
+          // tslint:disable-next-line: object-literal-sort-keys
           generalStatus: '',
           specificStatus: '',
           virtual: false
@@ -112,6 +121,7 @@ export const createUserReducer = (state = initialState, action: any) => {
         newUser: {
           ...state.newUser,
           role: action.payload.role,
+          // tslint:disable-next-line: object-literal-sort-keys
           dropdownRole: action.payload.dropdownRole
         }
       }
@@ -130,6 +140,7 @@ export const createUserReducer = (state = initialState, action: any) => {
       }
     case createUserTypes.USER_SAVED:
       return initialState;
+
     case authTypes.LOGOUT:
       return initialState;
   }

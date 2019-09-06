@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { ManageNavComponent } from './manage-nav/manage-nav.component';
 import { IManageComponentProps } from './manage.container';
 import CreateCohortModal from './create-cohort-modal/create-cohort-modal.container';
