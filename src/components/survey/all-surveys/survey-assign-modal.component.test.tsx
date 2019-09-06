@@ -457,19 +457,40 @@ const emailUsers: IUserCohortIdAndEmail[] = [
 ];
 // Render surveyModal
 describe('Testing component rendering', () => {
+    beforeAll(() => {
+        mockCohorts.getAllCohorts.mockImplementation((allCohorts: ICohort) => {
+            if(allCohorts) {
+                return {
+                    sortCohorts: allCohorts,
+                    cohortsLoaded: true
+                };
+            } else {
+                return {
+                    sortCohorts: [],
+                    cohortsLoaded: false
+                };
+            }
+        });
+    });
     test('All survey modal will be created', () => {
         const component = shallow(<SurveyModal buttonLabel='Assign To Cohorts' surveysToAssign={[1]}/>);
         expect(component).resolves;
     });
+    test('getAllCohorts gets all cohorts and saves them to state', () => {
+        const wrapper = mount(<SurveyModal buttonLabel='Assign To Cohorts' surveysToAssign={[1]}/>);
+        wrapper.setState({
+            modal: true,
+            usersLoaded: true,
+            allGeneralStatus: generalStatusState,
+            allSpecificStatus: specificStatusState,
+            totalPages: 5,
+            currentPage: 2,
+            ...mockCohorts.getAllCohorts(sortCohortsState)
+        });
+        expect(wrapper.state('sortCohorts')).toEqual(sortCohortsState);
+    });
+    //loadAllUsersSinglePage and loadAllUserAllPages just change state
 });
-// getAllCohorts
-// describe('Get cohorts based off page', () => {
-//     it('returns cohorts on page one', async () => {
-//         const pageOneCohorts = mockCohorts.getAllCohorts(0);
-//         expect(pageOneCohorts).
-//     })
-    
-// })
 
 describe('test next and previous button', () => {
     const wrapper = mount(<SurveyModal buttonLabel='Assign To Cohorts' surveysToAssign={[1]}/>);
@@ -563,16 +584,6 @@ it('if virtual is checked set state to true', () => {
     wrapper.find('#virtual').at(0).at(0).simulate('change', {target: {checked: true}}); // click changes value of virtual
     expect(wrapper.state('virtual')).toEqual(!virtual); // see if virtual changed value
 });
-
-// load all users gets all the users
-
-// loadAllUserEmails groups users by the cohort they belong to
-
-// load all cohorts gets all the cohorts and call loadAllUserEmails
-
-// checkFunc selects all users that belong to the selected cohort
-
-
 describe('add users to list if their status is checked, lastly put the users into the assign list', () => {
     beforeAll(() => {
         mockCohorts.loadCheckedStatus.mockImplementation((genUsersState: IUserCohortIdAndEmail[], specUsersState: IUserCohortIdAndEmail[], bothVirtual, virtual) => {
@@ -680,19 +691,16 @@ describe('testing loadAllUserEmails and checkFunc', () => {
         allUsers: allUsersState
     });
     // assumes userClient.findAllByCohortId(cohort.cohortId) finds users by cohort they belong to
-    test('loadAllUserEmails should save users that belong to a cohort and set state', () => {
+    test('loadAllUserEmails should groups users by the cohort they belong to and set state', () => {
         wrapper.setState({
             userArray: mockAllUsers.loadAllUserEmails(cohortUsers)
         });
         expect(wrapper.state('userArray')).toEqual(emailUsers);
-    });
-    test('testing checkFunc for cohort one', () => {
-        //console.log(wrapper.debug());
+    }); 
+    test('testing checkFunc for cohort one: selects all users that belong to the selected cohort', () => {
         wrapper.find('#checkFunc1').simulate('change', {target: {checked: true}});
         const usersByCohortOne: string[] = [];
         expect(wrapper.state('emailsToAssign')).toEqual(cohortOneUsers.map(user => user.email));
     });
 });
-
 // postSurveyToCohort calls loadCheckedStatus and assigns surveys to selected users
-
