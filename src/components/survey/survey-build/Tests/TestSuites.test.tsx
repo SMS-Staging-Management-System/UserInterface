@@ -239,7 +239,7 @@ describe('Delete button click', () => {
         }
     });
 
-    let testArr = [1, 2, 3, 4, 5, 6, 7];
+    const testArr = [1, 2, 3, 4, 5, 6, 7];
 
     testArr.forEach(index => {
         it('Testing delete button', () => {
@@ -268,19 +268,19 @@ describe('AddOther button click', () => {
         }
     })
 
-    let testArr = [[1, 'True/False'], [2, 'Multiple Choice'], [3, 'Checkbox Multiple Answer'],
-    [4, 'Rating'], [5, 'Feedback'], [6, 'Yes/No'], [7, 'Strongly Agree/Disagree']]
+    const testArr = ['True/False', 'Multiple Choice', 'Checkbox Multiple Answer',
+        'Rating', 'Feedback', 'Yes/No', 'Strongly Agree/Disagree']
 
-    testArr.forEach(([index, value]) => {
+    testArr.forEach((value, index) => {
         it('Testing AddOther button', () => {
-            mockProps.index = index;
+            mockProps.index = index + 1;
             const component = shallow(<AddOther {...mockProps} />);
             const buttons = component.find('div').find('div').find('Button');
             buttons.forEach(button => {
                 mockEvent.target.value = value
                 button.simulate('click', mockEvent);
                 expect(button).toHaveLength(1);
-                expect(mockProps.selfDestruct).toBeCalledWith(index);
+                expect(mockProps.selfDestruct).toBeCalledWith(index + 1);
                 expect(mockProps.parentFunction).toBeCalledWith(value);
             })
         })
@@ -295,55 +295,55 @@ describe('Survey Build Component rendering', () => {
     let mockPropsComponent: any;
     beforeEach(() => {
         mockPropsComponent = {
-            selfDestruct: jest.fn(),
             index: 0,
-            parentFunction: jest.fn()
-        },
-            mockProps = {
-                auth: {
-                    currentUser: {
-                        email: 'abc@mail.com',
-                        roles: ['ADMIN']
+            parentFunction: jest.fn(),
+            selfDestruct: jest.fn()
+        }
+        mockProps = {
+            auth: {
+                currentUser: {
+                    email: 'abc@mail.com',
+                    roles: ['ADMIN']
+                }
+            },
+            createSurvey: jest.fn(),
+            location: null,
+            match: null,
+            history: {
+                location: {
+                    state: {
+                        displaySurvey: {
+                            "questionJunctions": [
+                                {
+                                    "question": {
+                                        "questionId": 206,
+                                        "question": "Name (Optional)",
+                                        "typeId": 5,
+                                        "answers": []
+                                    }
+                                },
+                                {
+                                    "question": {
+                                        "questionId": 207,
+                                        "question": "Email (Optional)",
+                                        "typeId": 5,
+                                        "answers": []
+                                    }
+                                }
+                            ]
+                        }
                     }
                 },
-                match: null,
-                location: null,
-                history: {
-                    location: {
-                        state: {
-                            displaySurvey: {
-                                "questionJunctions": [
-                                    {
-                                        "question": {
-                                            "questionId": 206,
-                                            "question": "Name (Optional)",
-                                            "typeId": 5,
-                                            "answers": []
-                                        }
-                                    },
-                                    {
-                                        "question": {
-                                            "questionId": 207,
-                                            "question": "Email (Optional)",
-                                            "typeId": 5,
-                                            "answers": []
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    match: null
-                },
-                surveyState: null,
-                createSurvey: jest.fn()
+                match: null
             },
-            mockEvent = {
-                target: {
-                    value: ''
-                },
-                preventDefault: jest.fn()
+            surveyState: null
+        }
+        mockEvent = {
+            preventDefault: jest.fn(),
+            target: {
+                value: ''
             }
+        }
     })
 
     it('Submit button preventDefault value change', () => {
@@ -360,7 +360,6 @@ describe('Survey Build Component rendering', () => {
     it('Input value', () => {
         const component = shallow(<SurveyBuild {...mockProps} />);
         const inputs = component.find('input');
-        // expect(inputs).toHaveLength(2);
         inputs.forEach(input => {
             mockEvent.target.value = 'test'
             input.simulate('focus')
@@ -383,7 +382,6 @@ describe('Survey Build Component rendering', () => {
     it('textarea value', () => {
         const component = shallow(<SurveyBuild {...mockProps} />);
         const inputs = component.find('textarea');
-        // expect(inputs).toHaveLength(2);
         inputs.forEach(input => {
             mockEvent.target.value = 'test textarea'
             input.simulate('focus')
@@ -407,11 +405,11 @@ describe('Survey Build Component rendering', () => {
 
     })
 
-    let testArr = [{type:1,isRender: true},{type:1,isRender: false}, {type:2,isRender: true}, {type:2,isRender: false},
-        {type:3,isRender: false},{type:4,isRender: false},
-        {type:5,isRender: true},{type:6,isRender: false},
-        {type:7,isRender: true},{type:8,isRender: false},{type:8,isRender: true}];
-    testArr.forEach(({type, isRender}, index) => {
+    const testArr = [{ type: 1, isRender: true }, { type: 1, isRender: false }, { type: 2, isRender: true }, { type: 2, isRender: false },
+    { type: 3, isRender: false }, { type: 4, isRender: false },
+    { type: 5, isRender: true }, { type: 6, isRender: false },
+    { type: 7, isRender: true }, { type: 8, isRender: false }, { type: 8, isRender: true }];
+    testArr.forEach(({ type, isRender }, index) => {
         it('renderComponent function', () => {
             const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
             const instance = component.instance();
@@ -435,15 +433,16 @@ describe('Survey Build Component rendering', () => {
                     goForward: jest.fn(),
                     length: 0,
                     listen: jest.fn(),
-                    push: jest.fn(),
-                    replace: jest.fn(),
                     location: {
                         hash: '',
                         key: '',
                         pathname: '',
                         search: '',
                         state: undefined
-                    }
+                    },
+                    push: jest.fn(),
+                    replace: jest.fn(),
+                    
                 }
             })
             if (type > 7) {
@@ -455,7 +454,7 @@ describe('Survey Build Component rendering', () => {
         })
     })
 
-    let testToAddArr = ["True/False", "Multiple Choice", "Checkbox Multiple Answer", "Rating", "Feedback", "Yes/No", "Strongly Agree/Disagree"];
+    const testToAddArr = ["True/False", "Multiple Choice", "Checkbox Multiple Answer", "Rating", "Feedback", "Yes/No", "Strongly Agree/Disagree"];
     testToAddArr.forEach((type) => {
         it('toAddFunction testing', () => {
             const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
