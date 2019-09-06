@@ -21,7 +21,7 @@ let exampleArr:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('7-2-2019'),
         template: false,
-        published: true
+        // published: true
     },
     {
         surveyId: 5,
@@ -30,7 +30,7 @@ let exampleArr:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+      //  published: true
     },
     {
         surveyId: 6,
@@ -39,7 +39,7 @@ let exampleArr:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-10-2019'),
         template: false,
-        published: true
+       // published: true
     }
 
 ]
@@ -52,7 +52,7 @@ let exArr:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+       // published: true
     },
     {
         surveyId: 2,
@@ -61,7 +61,7 @@ let exArr:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+       // published: true
     },
     {
         surveyId: 3,
@@ -70,7 +70,7 @@ let exArr:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('7-10-2019'),
         template: false,
-        published: true
+       // published: true
     }
 
 ]
@@ -83,7 +83,7 @@ let exArray:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+       // published: true
     },
     {
         surveyId: 8,
@@ -92,7 +92,7 @@ let exArray:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+       // published: true
     },
     {
         surveyId: 9,
@@ -101,7 +101,7 @@ let exArray:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        //published: true
     }
 
 ]
@@ -114,7 +114,7 @@ let allPassedSurveys:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+       // published: true
     },
     {
         surveyId: 2,
@@ -123,7 +123,7 @@ let allPassedSurveys:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+      //  published: true
     },
     {
         surveyId: 3,
@@ -132,7 +132,7 @@ let allPassedSurveys:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        //published: true
     }
 
 ]

@@ -10,7 +10,6 @@ const initialState: ISurveyBuildState = {
         dateCreated: new Date(),
         closingDate: null,
         template: false,
-        published: true,
         questionJunctions: []
     },
     dummyQuestionArray: [],
@@ -33,7 +32,6 @@ const initialState: ISurveyBuildState = {
             dateCreated: new Date(),
             closingDate: null,
             template: false,
-            published: false,
             questionJunctions: []
         }
     }

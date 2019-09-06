@@ -15,6 +15,7 @@ const questionJunctionBaseRoute = '/survey-service/junction_survey_questions';
 const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
 const junctionSurveyQuestionsBaseRoute = '/survey-service/junction_survey_questions';
+
 let totalPages = 0;
 let pages = 0;
 export const surveyClient = {
@@ -34,8 +35,14 @@ export const surveyClient = {
     return await smsClient.get(`${surveyBaseRoute}/description/${description}`)
   },
 
+  // phong stuff published doesn't work
+  // findAllSurveys: async () => {
+  //   const resp = await smsClient.get(surveyBaseRoute + '/published');
+  //   return resp.data;   
+  // },
+
   findAllSurveys: async () => {
-    const resp = await smsClient.get(surveyBaseRoute + '/published');
+    const resp = await smsClient.get(surveyBaseRoute);
     return resp.data;   
   },
 

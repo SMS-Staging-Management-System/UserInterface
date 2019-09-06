@@ -273,7 +273,6 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <th>Description</th>
                                             <th>Date Created</th>
                                             <th>Closing Date</th>
-                                            <th>Published</th>
                                             <th>Analytics</th>
                                             <th>Respondents</th>
                                         </tr>

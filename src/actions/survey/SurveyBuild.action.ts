@@ -23,7 +23,6 @@ export const CreateSurvey = (formData: any, completedTasks: any[]) => async (dis
     dateCreated: new Date(),
     closingDate: new Date(new Date().getTime() + 604800000),
     template: false,
-    // published: true,
     questionJunctions: []
   };
   let questionJunctions: IJunctionSurveyQuestion[] = [];
@@ -64,7 +63,6 @@ export const CreateSurvey = (formData: any, completedTasks: any[]) => async (dis
             dateCreated: new Date(),
             closingDate: new Date(new Date().getTime() + 604800000),
             template: false,
-           // published: true,
             questionJunctions: []
           },
           questionOrder: questionOrder
