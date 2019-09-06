@@ -549,14 +549,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                     <thead>
                                         <tr>
                                             <th>Select</th>
-                                            <th colSpan={5}>Cohort</th>
-                                            <th><input type="text" id="box" name="Name" placeholder="Name" value={this.state.nameTextBox} onChange={(e) => this.searchByName(e)}></input></th>
-                                            <th><input type="text" id="box" name="AddressName" placeholder="Address" value={this.state.alias} onChange={(e) => this.searchByAddressName(e)}></input></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-
-
+                                            <th colSpan={5}><input type="text" id="box" name="Name" placeholder="Cohorts" value={this.state.nameTextBox} onChange={(e) => this.searchByName(e)}></input></th>
+                                            <th><input type="text" id="box" name="AddressName" placeholder="Alias" value={this.state.alias} onChange={(e) => this.searchByAddressName(e)}></input></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -565,10 +559,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                                 <td>All: <input id={`checkFunc${cohort.cohortId}`} type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
                                                 </td>
                                                 <td colSpan={5}>{cohort.cohortName}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td>{cohort.address.alias}</td>
                                             </tr>
                                         ))}
                                     </tbody>

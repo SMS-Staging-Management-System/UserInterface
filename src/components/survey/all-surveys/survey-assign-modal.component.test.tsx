@@ -457,6 +457,7 @@ const emailUsers: IUserCohortIdAndEmail[] = [
 ];
 // Render surveyModal
 describe('Testing component rendering', () => {
+    const wrapper = mount(<SurveyModal buttonLabel='Assign To Cohorts' surveysToAssign={[1]}/>);
     beforeAll(() => {
         mockCohorts.getAllCohorts.mockImplementation((allCohorts: ICohort) => {
             if(allCohorts) {
@@ -470,6 +471,21 @@ describe('Testing component rendering', () => {
                     cohortsLoaded: false
                 };
             }
+        });
+        // users 1-8
+        mockAllUsers.loadAllUsersAllPages.mockImplementation((total: number) => {
+            for(let i = 1; i < total; i++) {
+                const prevState: IUser[] = wrapper.state('allUsers');
+                wrapper.setState({
+                    allUsers: prevState.concat(allUsersState[i])
+                });
+            }
+        });
+        mockAllUsers.loadAllUsersSinglePage.mockImplementation(() => {
+            wrapper.setState({
+                allUsers: allUsersState[0]
+            });
+            mockAllUsers.loadAllUsersAllPages(8);
         });
     });
     test('All survey modal will be created', () => {
