@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
-import { inputNames } from './profile.component';
+import { inputNames } from './sc-profile.component';
 import { DropdownItem, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 export interface ISCStatusDropdownProps {
     currentSMSUser: IUser
     userStatuses: IStatus[]
     updateUser: IUser
-    onChangeHandler: (event: any) => any
+    changeHandler: (event: any) => any
 }
 
 interface ISCStatusDropdownState {
@@ -30,7 +30,7 @@ export class SCStatusDropdown extends Component<ISCStatusDropdownProps, ISCStatu
         this.setState({
             buttonText: event.currentTarget.innerText
         })
-        this.props.onChangeHandler({ target: { name: inputNames.STATUS_ALIASES, value: event.currentTarget.innerText } });
+        this.props.changeHandler({ target: { name: inputNames.STATUS_ALIASES, value: event.currentTarget.innerText } });
     }
 
     componentDidUpdate(prevProps: ISCStatusDropdownProps) {

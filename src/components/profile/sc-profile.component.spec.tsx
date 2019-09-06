@@ -1,51 +1,21 @@
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import React from 'react';
 import { Input } from 'reactstrap';
-import { ISCProfileProps, SCProfile } from "./sc-profile.component";
+import { ISCProfileProps, SCProfile, inputNames } from "./sc-profile.component";
 import { IUser } from "../../model/user.model";
-import { SCLocationDropdown } from "./sc-location.dropdown";
-import { SCStatusDropdown } from "./sc-status.dropdown";
-import { SCRoleSelector } from "./sc-role.selector";
-
-
-const inputNames = {
-    EMAIL: 'NEW_USER_EMAIL',
-    FIRST_NAME: 'NEW_USER_FIRST_NAME',
-    LAST_NAME: 'NEW_USER_LAST_NAME',
-    PHONE: 'NEW_USER_PHONE',
-    STREET: 'STREET',
-    CITY: 'CITY',
-    STATE: 'STATE',
-    COUNTRY: 'COUNTRY',
-    ZIP: 'ZIP',
-    TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES',
-    ROLES: 'ROLES'
-}
-
-const passedInputNames = {
-    EMAIL: 'PASSED_IN_EMAIL',
-    FIRST_NAME: 'PASSED_IN_FIRST_NAME',
-    LAST_NAME: 'PASSED_IN_LAST_NAME',
-    PHONE: 'PASSED_IN_PHONE',
-    STREET: 'PASSED_IN_STREET',
-    CITY: 'PASSED_IN_CITY',
-    STATE: 'PASSED_IN_STATE',
-    COUNTRY: 'PASSED_IN_COUNTRY',
-    ZIP: 'PASSED_IN_ZIP',
-    TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES',
-    ROLES: 'ROLES'
-}
+import SCLocationDropdown from "./sc-location.dropdown";
+import SCStatusDropdown from "./sc-status.dropdown";
+import SCRoleSelector from "./sc-role.selector";
+import { cognitoRoles } from "../../model/cognito-user.model";
 
 describe('<SCProfile />', () => {
     let mockProps: ISCProfileProps;
     const mockUser: IUser = {
-        email: inputNames.EMAIL,
+        email: 'email@email.com',
         userId: 0,
-        firstName: inputNames.FIRST_NAME,
-        lastName: inputNames.LAST_NAME,
-        phoneNumber: inputNames.PHONE,
+        firstName: 'First',
+        lastName: "Last",
+        phoneNumber: '8675309',
         trainingAddress: {
             addressId: 1,
             alias: 'Reston',
@@ -57,27 +27,27 @@ describe('<SCProfile />', () => {
         },
         personalAddress: {
             addressId: 0,
-            street: inputNames.STREET,
+            street: '123 Street St',
             alias: 'tstr',
-            city: inputNames.CITY,
-            country: inputNames.COUNTRY,
-            state: inputNames.STATE,
-            zip: inputNames.ZIP
+            city: 'Laramie',
+            country: 'USA',
+            state: 'Wyoming',
+            zip: '82070'
         },
         userStatus: {
-            statusId: 2,
-            generalStatus: 'Training',
-            specificStatus: 'Training',
+            statusId: 4,
+            generalStatus: 'Staging',
+            specificStatus: 'Staging',
             virtual: false
         },
         roles: []
     }
     const mockPassedInUser: IUser = {
-        email: passedInputNames.EMAIL,
+        email: 'passedEmail@email.com',
         userId: 0,
-        firstName: passedInputNames.FIRST_NAME,
-        lastName: passedInputNames.LAST_NAME,
-        phoneNumber: passedInputNames.PHONE,
+        firstName: 'Passedfirst',
+        lastName: 'Passedlast',
+        phoneNumber: '1234567',
         trainingAddress: {
             addressId: 1,
             alias: 'Reston',
@@ -89,12 +59,12 @@ describe('<SCProfile />', () => {
         },
         personalAddress: {
             addressId: 0,
-            street: passedInputNames.STREET,
+            street: '987 Test St',
             alias: 'tstr',
-            city: passedInputNames.CITY,
-            country: passedInputNames.COUNTRY,
-            state: passedInputNames.STATE,
-            zip: passedInputNames.ZIP
+            city: 'Seattle',
+            country: 'America',
+            state: 'Washington',
+            zip: '98101'
         },
         userStatus: {
             statusId: 2,
@@ -247,96 +217,178 @@ describe('<SCProfile />', () => {
         const component = shallow(<SCProfile {...mockProps} />);
         expect(component).toBeDefined();
     })
-
+    
     for (const inputName in inputNames) {
-        if (inputNames.hasOwnProperty(inputName)) {
-            const inputNamesEle = inputNames[inputName];
-            const passedInEle = passedInputNames[inputName];
-            if (inputName === 'TRAINING_ALIASES') {
-                // Ensure component is rendered
-                it(`Should render the ${inputName} component`, () => {
-                    const component = shallow(<SCProfile {...mockProps} />);
-                    const locationDropdown = component.find(SCLocationDropdown);
-                    expect(locationDropdown).toBeDefined();
-                })
-                // Ensure the  is working properly 
-                it('Should update the training dropdown based on event given', () => {
-                    const component = shallow(<SCProfile {...mockProps} />);
-                    component.setState({
-                        updateUser: mockUser
-                    })
-                    expect(component).toBeDefined();
-                    const input = component.find(SCLocationDropdown);
-                    const simulatedEvent = {
-                        target: {
-                            name: inputName,
-                            value: 'USF'
-                        }
+        const inputNameEle = inputNames[inputName];
+
+        // Training location dropdown tests
+        if (inputName === 'TRAINING_ALIASES') {
+            // Ensure component is rendered
+            it(`Should render the ${inputNameEle} component`, () => {
+                const component = shallow(<SCProfile {...mockProps} />);
+                const locationDropdown = component.find(SCLocationDropdown);
+                expect(locationDropdown).toBeDefined();
+            })
+
+            // Ensure the function call is working properly 
+            it(`Should update the ${inputNameEle} state based on event given`, () => {
+                const simulatedEvent = {
+                    target: {
+                        name: inputNameEle,
+                        value: 'USF'
                     }
-                    input.simulate("changeHandler", simulatedEvent);
-                    const newInput = component.find(SCLocationDropdown);
-                    expect(newInput).toHaveLength(1);
-                })
-            } else if (inputName === 'STATUS_ALIASES') {
+                }
+                const newTrainingAddress = mockProps.trainingAddresses.trainingAddresses[1];
+                const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
+                const instance = component.instance();
+                instance.onUserInfoChangeHandler(simulatedEvent);
+                expect(component.state('updateUser')).toEqual({ ...mockUser, trainingAddress: newTrainingAddress });
+            })
+        } else
+
+            // Status dropdown tests
+            if (inputName === 'STATUS_ALIASES') {
                 // Ensure component is rendered
-                it(`Should render the ${inputName} component`, () => {
+                it(`Should render the ${inputNameEle} component`, () => {
                     const component = shallow(<SCProfile {...mockProps} />);
                     const statusDropdown = component.find(SCStatusDropdown);
                     expect(statusDropdown).toBeDefined();
                 })
-            } else if (inputName === 'ROLES') {
-                // Ensure component is rendered
-                it(`Should render the ${inputName} component`, () => {
-                    const component = shallow(<SCProfile {...mockProps} />);
-                    const roles = component.find(SCRoleSelector);
-                    expect(roles).toBeDefined();
-                })
-            } else {
-                // Ensure each text box is rendered
-                it(`Should contain one ${inputName} input box`, () => {
-                    const component = shallow(<SCProfile {...mockProps} />);
-                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`);
-                    expect(input).toHaveLength(1);
-                })
 
-                // Ensure correct information is passed into text boxes
-                it(`Should render the current user's ${inputName} if no user prop is passed in`, () => {
-                    const component = shallow(<SCProfile {...mockProps} />);
-                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`)
-                        .find(`[value="${inputNamesEle}"]`);
-                    expect(input).toHaveLength(1);
+                // Ensure the function call is working properly 
+                it(`Should update the ${inputNameEle} state based on event given`, () => {
+                    const simulatedEvent = {
+                        target: {
+                            name: inputNameEle,
+                            value: 'Confirmed'
+                        }
+                    }
+                    const newStatus = mockProps.userStatus.userStatus.filter(status => {
+                        return status.specificStatus === 'Confirmed' && !status.virtual
+                    })[0];
+                    const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
+                    const instance = component.instance();
+                    instance.onUserInfoChangeHandler(simulatedEvent);
+                    expect(component.state('updateUser')).toEqual({ ...mockUser, userStatus: newStatus });
                 })
+            } else
 
-                // Ensure passed in user is shown instead of logged in user
-                it(`Should render the passed in user's ${inputName} if user prop is passed in`, () => {
-                    const component = shallow(<SCProfile {...{ ...mockProps, userToUpdate: mockPassedInUser }} />);
-                    const input = component.find(Input).find(`[name="${inputNamesEle}"]`)
-                        .find(`[value="${passedInEle}"]`);
-                    expect(input).toHaveLength(1);
-                })
-                // Ensure the onChange function is working properly 
-                if (inputName !== 'EMAIL') {
-                    it(`Should update the ${inputName} state based on event given`, () => {
-                        const component = shallow(<SCProfile {...mockProps} />);
-                        component.setState({
-                            updateUser: mockUser
-                        })
-                        expect(component).toBeDefined();
-                        const input = component.find(Input).find(`[name="${inputNamesEle}"]`)
-                            .find(`[value="${inputNamesEle}"]`);
+                if (inputName === 'VIRTUAL_CHECKBOX') {
+                    // Ensure the function call is working properly 
+                    it(`Should update the user status state to virtual`, () => {
                         const simulatedEvent = {
                             target: {
-                                name: inputNamesEle,
-                                value: 'changed'
+                                name: inputNameEle
                             }
                         }
-                        input.simulate("change", simulatedEvent);
-                        const newInput = component.find(Input).find(`[name="${inputNamesEle}"]`)
-                            .find(`[value="changed"]`);
-                        expect(newInput).toHaveLength(1);
+                        const newStatus = mockProps.userStatus.userStatus.filter(status => {
+                            return status.specificStatus === 'Staging' && status.virtual
+                        })[0];
+                        const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
+                        const instance = component.instance();
+                        instance.onUserInfoChangeHandler(simulatedEvent);
+                        expect(component.state('updateUser')).toEqual({ ...mockUser, userStatus: newStatus });
                     })
-                }
-            }
-        }
+                } else
+
+                    // Role select tests
+                    if (inputName === 'ROLES') {
+                        // Ensure component is rendered
+                        it(`Should render the ${inputNameEle} component`, () => {
+                            const component = shallow(<SCProfile {...mockProps} />);
+                            const roles = component.find(SCRoleSelector);
+                            expect(roles).toBeDefined();
+                        })
+
+                        // Ensure the function call is working properly 
+                        it(`Should update the ${inputNameEle} state based on event given`, () => {
+                            const simulatedEvent = {
+                                target: {
+                                    name: inputNameEle,
+                                    value: cognitoRoles.ADMIN
+                                }
+                            }
+                            const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
+                            const instance = component.instance();
+                            instance.onUserInfoChangeHandler(simulatedEvent);
+                            expect(component.state('updateUser')).toEqual({ ...mockUser, roles: [cognitoRoles.ADMIN] });
+                        })
+                    }
+
+                    // All other form tests
+                    else {
+                        // Ensure each text box is rendered
+                        it(`Should contain one ${inputNameEle} input box`, () => {
+                            const component = shallow(<SCProfile {...mockProps} />);
+                            const input = component.find(Input).find(`[name="${inputNameEle}"]`);
+                            expect(input).toHaveLength(1);
+                        })
+
+                        // Ensure correct information is passed into text boxes
+                        it(`Should contain one ${inputNameEle} input box with the current user's information if no user prop is passed in`, () => {
+                            const value = mockUser[inputNameEle]
+                                ? mockUser[inputNameEle]
+                                : (mockUser.personalAddress[inputNameEle]);
+                            const component = shallow(<SCProfile {...mockProps} />);
+                            const input = component.find(Input).find(`[name="${inputNameEle}"]`)
+                                .find(`[value="${value}"]`);
+                            expect(input).toHaveLength(1);
+                        })
+
+                        // Ensure passed in user is shown instead of logged in user
+                        it(`Should contain one ${inputNameEle} input box with the passed user's information if user prop is passed in`, () => {
+                            const value = mockPassedInUser[inputNameEle]
+                                ? mockPassedInUser[inputNameEle]
+                                : (mockPassedInUser.personalAddress[inputNameEle]);
+                            const component = shallow(<SCProfile {...{ ...mockProps, userToUpdate: mockPassedInUser }} />);
+                            const input = component.find(Input).find(`[name="${inputNameEle}"]`)
+                                .find(`[value="${value}"]`);
+                            expect(input).toHaveLength(1);
+                        })
+
+                        // Ensure the onChange function is working properly 
+                        if (inputName !== 'EMAIL') {
+                            it(`Should update the ${inputNameEle} state based on event given`, () => {
+                                const address = !mockPassedInUser[inputNameEle];
+                                const simulatedEvent = {
+                                    target: {
+                                        name: inputNameEle,
+                                        value: 'changed'
+                                    }
+                                }
+                                const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
+                                const instance = component.instance();
+                                instance.onUserInfoChangeHandler(simulatedEvent);
+                                if (address) {
+                                    expect(component.state('updateUser')).toEqual({ ...mockUser, personalAddress: { ...mockUser.personalAddress, [inputNameEle]: 'changed' } });
+                                } else {
+                                    expect(component.state('updateUser')).toEqual({ ...mockUser, [inputNameEle]: 'changed' });
+                                }
+                            })
+                        }
+                    }
     }
+
+    it('Should call the onSubmit function when the form is submitted', () => {
+        const simulatedEvent = {
+            preventDefault: jest.fn()
+        }
+        const testProps = [
+            mockProps,
+            { ...mockProps, userToUpdate: mockPassedInUser }
+        ]
+
+        testProps.forEach(propConfiguration => {
+            const component = shallow<SCProfile>(<SCProfile {...propConfiguration} />);
+            const instance = component.instance();
+            instance.onSubmit(simulatedEvent);
+            expect(simulatedEvent.preventDefault).toHaveBeenCalled();
+            if (propConfiguration.userToUpdate) {
+                expect(mockProps.updateUserSC).toHaveBeenCalledWith(mockPassedInUser, propConfiguration.userToUpdate);
+            } else {
+                expect(mockProps.updateUserSC).toHaveBeenCalledWith(mockUser, propConfiguration.currentSMSUser, true);
+            }
+        })
+
+    })
 })

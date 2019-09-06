@@ -13,19 +13,19 @@ import SCProfileStatusDropdown from './sc-status.dropdown';
 
 
 export const inputNames = {
-    EMAIL: 'NEW_USER_EMAIL',
-    FIRST_NAME: 'NEW_USER_FIRST_NAME',
-    LAST_NAME: 'NEW_USER_LAST_NAME',
-    PHONE: 'NEW_USER_PHONE',
-    STREET: 'STREET',
-    CITY: 'CITY',
-    STATE: 'STATE',
-    COUNTRY: 'COUNTRY',
-    ZIP: 'ZIP',
-    TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES',
-    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
-    ROLES: 'ROLES'
+    EMAIL: 'email',
+    FIRST_NAME: 'firstName',
+    LAST_NAME: 'lastName',
+    PHONE: 'phoneNumber',
+    STREET: 'street',
+    CITY: 'city',
+    STATE: 'state',
+    COUNTRY: 'country',
+    ZIP: 'zip',
+    TRAINING_ALIASES: 'trainingAlias',
+    STATUS_ALIASES: 'statusAlias',
+    VIRTUAL_CHECKBOX: 'virtualCheckbox',
+    ROLES: 'roles'
 }
 
 export interface ISCProfileProps {
@@ -93,7 +93,6 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         switch (event.target.name) {
             case inputNames.EMAIL:
                 this.setState({
-                    ...this.state,
                     updateUser: {
                         ...user,
                         email: target
@@ -265,7 +264,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
             this.setState({
                 updateUser: {
                     ...this.props.currentSMSUser,
-                    roles: this.props.currentSMSUser.roles.slice(0)
+                    roles: this.props.currentSMSUser.roles.slice(0) // This creates a copy of the array, rather than a copy of the references stored in the array
                 }
             })
         }
@@ -409,7 +408,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                         <Label>Status</Label>
                         <SCProfileStatusDropdown
                             updateUser={this.state.updateUser}
-                            onChangeHandler={this.onUserInfoChangeHandler} />
+                            changeHandler={this.onUserInfoChangeHandler} />
                         {this.state.updateUser.userStatus.generalStatus === 'Training'
                             ? <></>
                             :

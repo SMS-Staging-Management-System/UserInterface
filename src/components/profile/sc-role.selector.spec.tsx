@@ -4,47 +4,16 @@ import { Input } from "reactstrap";
 import { cognitoRoles } from "../../model/cognito-user.model";
 import { IUser } from "../../model/user.model";
 import { ISCRoleSelectorProps, SCRoleSelector } from "./sc-role.selector";
-
-const inputNames = {
-    EMAIL: 'NEW_USER_EMAIL',
-    FIRST_NAME: 'NEW_USER_FIRST_NAME',
-    LAST_NAME: 'NEW_USER_LAST_NAME',
-    PHONE: 'NEW_USER_PHONE',
-    STREET: 'STREET',
-    CITY: 'CITY',
-    STATE: 'STATE',
-    COUNTRY: 'COUNTRY',
-    ZIP: 'ZIP',
-    TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES',
-    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
-    ROLES: 'ROLES'
-}
-
-const passedInputNames = {
-    EMAIL: 'PASSED_IN_EMAIL',
-    FIRST_NAME: 'PASSED_IN_FIRST_NAME',
-    LAST_NAME: 'PASSED_IN_LAST_NAME',
-    PHONE: 'PASSED_IN_PHONE',
-    STREET: 'PASSED_IN_STREET',
-    CITY: 'PASSED_IN_CITY',
-    STATE: 'PASSED_IN_STATE',
-    COUNTRY: 'PASSED_IN_COUNTRY',
-    ZIP: 'PASSED_IN_ZIP',
-    TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES',
-    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
-    ROLES: 'ROLES'
-}
+import { inputNames } from "./sc-profile.component";
 
 describe('<SCRoleSelector />', () => {
     let mockProps: ISCRoleSelectorProps;
     const mockUser: IUser = {
-        email: passedInputNames.EMAIL,
+        email: 'email@email.com',
         userId: 0,
-        firstName: passedInputNames.FIRST_NAME,
-        lastName: passedInputNames.LAST_NAME,
-        phoneNumber: passedInputNames.PHONE,
+        firstName: 'First',
+        lastName: "Last",
+        phoneNumber: '8675309',
         trainingAddress: {
             addressId: 1,
             alias: 'Reston',
@@ -56,17 +25,17 @@ describe('<SCRoleSelector />', () => {
         },
         personalAddress: {
             addressId: 0,
-            street: passedInputNames.STREET,
+            street: '123 Street St',
             alias: 'tstr',
-            city: passedInputNames.CITY,
-            country: passedInputNames.COUNTRY,
-            state: passedInputNames.STATE,
-            zip: passedInputNames.ZIP
+            city: 'Laramie',
+            country: 'USA',
+            state: 'Wyoming',
+            zip: '82070'
         },
         userStatus: {
-            statusId: 2,
-            generalStatus: 'Training',
-            specificStatus: 'Training',
+            statusId: 4,
+            generalStatus: 'Staging',
+            specificStatus: 'Staging',
             virtual: false
         },
         roles: []

@@ -5,47 +5,16 @@ import { IUser } from "../../model/user.model";
 import { ISCStatusDropdownProps, SCStatusDropdown } from "./sc-status.dropdown";
 import { Input, Button, UncontrolledDropdown, DropdownItem, DropdownToggle } from "reactstrap";
 import { IStatus } from "../../model/status.model";
-
-const inputNames = {
-    EMAIL: 'NEW_USER_EMAIL',
-    FIRST_NAME: 'NEW_USER_FIRST_NAME',
-    LAST_NAME: 'NEW_USER_LAST_NAME',
-    PHONE: 'NEW_USER_PHONE',
-    STREET: 'STREET',
-    CITY: 'CITY',
-    STATE: 'STATE',
-    COUNTRY: 'COUNTRY',
-    ZIP: 'ZIP',
-    TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES',
-    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
-    ROLES: 'ROLES'
-}
-
-const passedInputNames = {
-    EMAIL: 'PASSED_IN_EMAIL',
-    FIRST_NAME: 'PASSED_IN_FIRST_NAME',
-    LAST_NAME: 'PASSED_IN_LAST_NAME',
-    PHONE: 'PASSED_IN_PHONE',
-    STREET: 'PASSED_IN_STREET',
-    CITY: 'PASSED_IN_CITY',
-    STATE: 'PASSED_IN_STATE',
-    COUNTRY: 'PASSED_IN_COUNTRY',
-    ZIP: 'PASSED_IN_ZIP',
-    TRAINING_ALIASES: 'TRAINING_ALIASES',
-    STATUS_ALIASES: 'STATUS_ALIASES',
-    VIRTUAL_CHECKBOX: 'VIRTUAL_CHECKBOX',
-    ROLES: 'ROLES'
-}
+import { inputNames } from "./sc-profile.component";
 
 describe('<SCStatusDropdown />', () => {
     let mockProps: ISCStatusDropdownProps;
     const mockUser: IUser = {
-        email: passedInputNames.EMAIL,
+        email: 'email@email.com',
         userId: 0,
-        firstName: passedInputNames.FIRST_NAME,
-        lastName: passedInputNames.LAST_NAME,
-        phoneNumber: passedInputNames.PHONE,
+        firstName: 'First',
+        lastName: "Last",
+        phoneNumber: '8675309',
         trainingAddress: {
             addressId: 1,
             alias: 'Reston',
@@ -57,17 +26,17 @@ describe('<SCStatusDropdown />', () => {
         },
         personalAddress: {
             addressId: 0,
-            street: passedInputNames.STREET,
+            street: '123 Street St',
             alias: 'tstr',
-            city: passedInputNames.CITY,
-            country: passedInputNames.COUNTRY,
-            state: passedInputNames.STATE,
-            zip: passedInputNames.ZIP
+            city: 'Laramie',
+            country: 'USA',
+            state: 'Wyoming',
+            zip: '82070'
         },
         userStatus: {
-            statusId: 2,
-            generalStatus: 'Training',
-            specificStatus: 'Training',
+            statusId: 4,
+            generalStatus: 'Staging',
+            specificStatus: 'Staging',
             virtual: false
         },
         roles: []
@@ -138,58 +107,6 @@ describe('<SCStatusDropdown />', () => {
             virtual: false
         },
     ]
-    const mockVirtualStatuses: IStatus[] = [
-        {
-            statusId: 10,
-            generalStatus: 'Staging',
-            specificStatus: 'Panel Pending',
-            virtual: false
-        },
-        {
-            statusId: 11,
-            generalStatus: 'Staging',
-            specificStatus: 'Staging',
-            virtual: true
-        },
-        {
-            statusId: 12,
-            generalStatus: 'Staging',
-            specificStatus: 'Bench',
-            virtual: true
-        },
-        {
-            statusId: 13,
-            generalStatus: 'Staging',
-            specificStatus: 'Waiting for Paperwork',
-            virtual: true
-        },
-        {
-            statusId: 14,
-            generalStatus: 'Staging',
-            specificStatus: 'Confirmed',
-            virtual: true
-        },
-        {
-            statusId: 15,
-            generalStatus: 'Staging',
-            specificStatus: 'Project Started',
-            virtual: true
-        },
-        {
-            statusId: 16,
-            generalStatus: 'Staging',
-            specificStatus: 'Paused',
-            virtual: true
-        },
-        {
-            statusId: 17,
-            generalStatus: 'Staging',
-            specificStatus: 'Panel Pending',
-            virtual: true
-        }
-    ]
-
-    const selectHandler = jest.fn()
 
     beforeEach(() => {
         mockProps = {
@@ -200,7 +117,7 @@ describe('<SCStatusDropdown />', () => {
                 ...mockUser
             },
             userStatuses: mockStatuses,
-            onChangeHandler: jest.fn()
+            changeHandler: jest.fn()
         }
     })
 
@@ -259,9 +176,6 @@ describe('<SCStatusDropdown />', () => {
 
     it(`Should update the button text when a status is clicked`, () => {
         const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
-        component.setState({
-            buttonText: mockProps.updateUser.userStatus.specificStatus
-        })
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem)
             .filterWhere(item => item.find('[header]').length !== 1)
@@ -288,9 +202,6 @@ describe('<SCStatusDropdown />', () => {
 
     it(`Should call the onChange prop function with the correct parameters when a status is clicked`, () => {
         const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
-        component.setState({
-            buttonText: mockProps.updateUser.userStatus.specificStatus
-        })
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem)
             .filterWhere(item => item.find('[header]').length !== 1)
@@ -313,7 +224,7 @@ describe('<SCStatusDropdown />', () => {
                     value: item.children().text()
                 }
             }
-            expect(mockProps.onChangeHandler).toHaveBeenCalledWith(simulatedTarget);
+            expect(mockProps.changeHandler).toHaveBeenCalledWith(simulatedTarget);
         })
     })
 })

@@ -4,7 +4,7 @@ import { Button, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdow
 import { IAddress } from '../../model/address.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
-import { inputNames } from './profile.component';
+import { inputNames } from './sc-profile.component';
 
 export interface ISCLocationDropdownState {
     buttonText: string
