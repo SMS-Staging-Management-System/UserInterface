@@ -25,8 +25,8 @@ export const cohortClient = {
     return smsClient.get(cohortContext+`/address/id/${addressId}?page=${page}`)
   },
 
-  findAllByTrainerPage(userId: number, page: number) {
-    return smsClient.get(cohortContext+`/trainer/id/${userId}?page=${page}`)
+  findAllByTrainerPage(email: String, page: number) {
+    return smsClient.get(cohortContext+`/trainer/email/${email}?page=${page}`)
   },
 
   findAll() {
