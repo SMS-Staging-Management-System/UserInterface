@@ -27,6 +27,7 @@ import React, { Fragment, Component } from 'react';
 import { IStatus } from '../../../model/status.model';
 import { ICohort } from '../../../model/cohort';
 import { IUser } from '../../../model/user.model';
+import { IAddress } from '../../../model/address.model';
 // mock assign survey
 let assignSurveys:ISurvey[] = [
     {
@@ -239,262 +240,112 @@ const sortCohortsState:ICohort[] = [
         users: []
     }
 ];
+const fakeAddress: IAddress = {
+    addressId: 1,
+    alias: '',
+    city: '',
+    country: '',
+    state: '',
+    street: '',
+    zip: ''    
+}
+const fakeInfoForUser = {
+    firstName: '',
+    lastName: '',
+    personalAddress: fakeAddress,
+    phoneNumber: '',
+    roles: [],
+    trainingAddress: fakeAddress
+}
 const allUsersState: IUser[] = [
     {
         userId: 1,
         email: 'userone@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 1,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 1,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
         userStatus: {
             statusId: 1,
             generalStatus: 'Staging',
             specificStatus: 'Confirmed',
             virtual: false
-        }
+        },
+        ...fakeInfoForUser
     },
     {
         userId: 2,
         email: 'usertwo@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 2,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 2,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
         userStatus: {
             statusId: 2,
             generalStatus: 'Staging',
             specificStatus: 'Staging',
             virtual: false
-        }
+        },
+        ...fakeInfoForUser
     },
     {
         userId: 3,
         email: 'userthree@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 3,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 3,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
         userStatus: {
             statusId: 3,
             generalStatus: 'Training',
             specificStatus: 'Training',
             virtual: false
-        }
+        },
+        ...fakeInfoForUser
     },
     {
         userId: 4,
         email: 'userfour@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 4,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 4,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
+        
         userStatus: {
             statusId: 4,
             generalStatus: 'Staging',
             specificStatus: 'Panel Pending',
             virtual: false
-        }
+        },
+        ...fakeInfoForUser
     },
     {
         userId: 5,
         email: 'userfive@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 5,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 5,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
         userStatus: {
             statusId: 5,
             generalStatus: 'Training',
             specificStatus: 'Dropped',
             virtual: false
-        }
+        },
+        ...fakeInfoForUser
     },
     {
         userId: 6,
         email: 'usersix@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 6,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 6,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
         userStatus: {
             statusId: 6,
             generalStatus: 'Training',
             specificStatus: 'Complete',
             virtual: false
-        }
+        },
+        ...fakeInfoForUser
     },
     {
         userId: 7,
         email: 'userseven@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 7,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 7,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
         userStatus: {
             statusId: 7,
             generalStatus: 'Staging',
             specificStatus: 'Staging',
             virtual: true
-        }
+        },
+        ...fakeInfoForUser
     },
     {
         userId: 8,
         email: 'usereight@gmail.com',
-        firstName: '',
-        lastName: '',
-        personalAddress: {
-            addressId: 8,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
-        phoneNumber: '',
-        roles: [],
-        trainingAddress: {
-            addressId: 8,
-            alias: '',
-            city: '',
-            country: '',
-            state: '',
-            street: '',
-            zip: ''
-        },
         userStatus: {
             statusId: 8,
             generalStatus: 'Staging',
             specificStatus: 'Confirmed',
             virtual: true
-        }
+        },
+        ...fakeInfoForUser
     }
 ];
 // general training status expected
