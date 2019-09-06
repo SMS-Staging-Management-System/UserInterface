@@ -49,22 +49,22 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         const questionJunction: IJunctionSurveyQuestion = {
           id: 0,
           question: {
-            questionId: 0,
             question: formData[index].value,
+            questionId: 0,
             typeId: 0,
             answers: []
           },
+          questionOrder,
           survey: {
+            description: '',
             surveyId: 0,
             title: '',
-            description: '',
             creator: '',
             dateCreated: new Date(),
             closingDate: new Date(new Date().getTime() + 604800000),
             template: false,
             questionJunctions: []
-          },
-          questionOrder: questionOrder
+          }          
         };
           questionJunction.question.typeId = completedTasks[0].questionID;
           completedTasks.shift();
@@ -74,8 +74,8 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         break;
       case 'answerText':
         const answer:  any = {
-          answerId: 0,
           answer: formData[index].value,
+          answerId: 0,
           question: null
         }
         answers.push(answer);
@@ -85,20 +85,20 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
 
 
 
-  for (let i = 0; i < questionJunctions.length; i++){
-    if (questionJunctions[i].question.typeId !== 5) {
+  for (let questionJunction of questionJunctions){
+    if (questionJunction.question.typeId !== 5) {
       let match: string = '';
         match = answers[0].answer;
         answers.shift();
 
       const matchArray = match.split(',');
-      for (let l = 0; l < matchArray.length; l++) {
-        let dummyAnswer: any = {
+      for (let str of matchArray) {
+        const dummyAnswer: any = {
+          answer: str.trim(),
           answerId: 0,
-          answer: matchArray[l].trim(),
           question: null
         }
-        questionJunctions[i].question.answers.push(dummyAnswer);
+        questionJunction.question.answers.push(dummyAnswer);
       }
     }
   }
@@ -110,7 +110,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
   const newSurvey = surveyClient.saveSurvey(survey);
 
   dispatch({
-    type: surveyBuildTypes.CreateSurvey,
-    payload: newSurvey
+    payload: newSurvey,
+    type: surveyBuildTypes.CreateSurvey
   })
 }
