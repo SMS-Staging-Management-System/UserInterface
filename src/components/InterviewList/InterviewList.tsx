@@ -22,6 +22,7 @@ export interface InterviewListProps {
     email: string,
     listOfInterviews: any[],
     dropdowns: any[],
+
     numberOfPages: number,
     currentPage: number,
     pageSize: number,
@@ -134,8 +135,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             this.setState({
                 loaded: true
             });
-
-          this.props.getInterviewPages(
+            this.props.getInterviewPages(
                 this.props.currentPage,
                 this.props.pageSize,
                 this.props.orderBy,
@@ -160,7 +160,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     this.state.staging,
                     this.state.input,
                     this.state.feedback);
-            this.handlePageClick({ selected: this.props.currentPage });
         }
     }
 
@@ -468,7 +467,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     breakLinkClassName={'break-me-link page-link'}
                     pageCount={this.props.numberOfPages}
                     marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={this.props.pageSize}
                     forcePage={this.props.currentPage}
                     onPageChange={this.handlePageClick}
                     containerClassName={'pagination page-navigator justify-content-center interview-list-table-paginate'}
@@ -493,7 +492,6 @@ const mapStateToProps = (state: IState) => {
         listOfInterviews: state.interviewState.interviewList.listOfInterviews,
         numberOfPages: state.interviewState.interviewList.numberOfPages,
         orderBy: state.interviewState.interviewList.orderBy,
-        pageSize: state.interviewState.interviewList.pageSize,
     }
 }
 

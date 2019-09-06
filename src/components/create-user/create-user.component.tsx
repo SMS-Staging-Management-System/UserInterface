@@ -24,11 +24,10 @@ export interface ICreateUserProps {
     addresses: IAddressState,
     joinCohortState: IJoinCohortState,
     history: History,
-    joinCohort: (user:IUser, token:string, history:History) => void,
     updateNewUserLocation: (location: IAddress) => void,
     updateNewUser: (user: IUser) => void,
     toggleLocationDropdown: () => void,
-    saveUserAssociate: (user:IUser, history:History) => void
+    saveUserAssociate: (user:IUser, token:string, history:History) => void
   }
   
   export class CreateUserComponent extends React.Component<ICreateUserProps, IJoinCohortState> {
@@ -95,7 +94,7 @@ export interface ICreateUserProps {
       this.props.updateNewUser(tempUser)
     }
   
-    saveNewUser = async (event: React.FormEvent) => {
+    saveNewUser = (event: React.FormEvent) => {
       event.preventDefault();
       const tempUser: IUser = {
         userId: 0,
@@ -121,8 +120,7 @@ export interface ICreateUserProps {
         lastName: this.props.createUser.newUser.lastName,
         phoneNumber: this.props.createUser.newUser.phoneNumber
       }
-      await this.props.saveUserAssociate(tempUser, this.props.history);
-      this.props.joinCohort(this.props.joinCohortState.userToJoin, this.props.token, this.props.history);
+      this.props.saveUserAssociate(tempUser, this.props.token, this.props.history);
     }
 
     signIn = () => {
@@ -133,7 +131,7 @@ export interface ICreateUserProps {
     // after clicking join, take you to cohort page
   
     render() {
-     const { createUser, addresses } = this. props;
+     const { createUser, addresses } = this.props;
      return (
        <Card
         className="join-cohort-signup-card">
@@ -225,13 +223,11 @@ export interface ICreateUserProps {
     addresses: state.managementState.addresses,
     createUser: state.managementState.createUser, 
     history: ownProps.history,
-    joinCohortState: state.managementState.joinCohort,
     token: ownProps.match.params.token
   })
   
   
   const mapDispatchToProps = {
-    joinCohort,
     saveUserAssociate,
     toggleLocationDropdown,
     updateLocations,

@@ -30,13 +30,13 @@ export const interviewClient = {
 
 
         let url = interviewContext;
-
+       
         // an associate user, uses pages endpoint instead of page
         url += '/page'
         if (!isAdmin) { url += 's' }
-
+        
         url += '?search=associateEmail:';
-
+        
         if (associateEmail === '') { url += isAdmin ? '*' : email; }
         else { url += (isAdmin ? associateEmail : email); }
 
@@ -55,6 +55,7 @@ export const interviewClient = {
             url += '&pageSize=' + pageSize;
         }
 
+        console.log(url);
 
         return smsClient.get(url);
     },
