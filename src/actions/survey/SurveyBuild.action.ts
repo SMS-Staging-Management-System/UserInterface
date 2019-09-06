@@ -15,7 +15,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
   console.log('CreateSurvey was called');
 
   // surveyClient.saveSurvey(survey);
-  let survey: ISurvey = {
+  const survey: ISurvey = {
     surveyId: 0,
     title: '',
     description: 'Example Survey 1 Description',
@@ -25,8 +25,8 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
     template: false,
     questionJunctions: []
   };
-  let questionJunctions: IJunctionSurveyQuestion[] = [];
-  let answers: IAnswer[] = [];
+  const questionJunctions: IJunctionSurveyQuestion[] = [];
+  const answers: IAnswer[] = [];
 
 
   let questionOrder = 1
@@ -46,7 +46,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         survey.creator = formData[index].value;
         break;
       case 'questionText':
-        let questionJunction: IJunctionSurveyQuestion = {
+        const questionJunction: IJunctionSurveyQuestion = {
           id: 0,
           question: {
             questionId: 0,
@@ -73,7 +73,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         questionJunctions.push(questionJunction);
         break;
       case 'answerText':
-        let answer:  any = {
+        const answer:  any = {
           answerId: 0,
           answer: formData[index].value,
           question: null
@@ -85,13 +85,13 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
 
 
 
-  for (let i = 0; i < questionJunctions.length; i++)
+  for (let i = 0; i < questionJunctions.length; i++){
     if (questionJunctions[i].question.typeId !== 5) {
       let match: string = '';
         match = answers[0].answer;
         answers.shift();
 
-      let matchArray = match.split(',');
+      const matchArray = match.split(',');
       for (let l = 0; l < matchArray.length; l++) {
         let dummyAnswer: any = {
           answerId: 0,
@@ -101,7 +101,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         questionJunctions[i].question.answers.push(dummyAnswer);
       }
     }
-
+  }
 
   survey.questionJunctions = questionJunctions;
 

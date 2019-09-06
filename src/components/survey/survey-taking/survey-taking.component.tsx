@@ -8,7 +8,6 @@ import { IAnswer } from '../../../model/surveys/answer.model';
 import { IResponse } from '../../../model/surveys/response.model';
 import Loader from '../Loader/Loader';
 import { IHistory } from '../../../model/surveys/history.model';
-import { Question } from '../../associate-input/choices.component';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState,
@@ -148,7 +147,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                     answerId: 0,
                     answer: this.state.newFeedback[key],
                     question: {
-                        questionId: parseInt(key),
+                        questionId: parseInt(key, 10),
                         question: '',
                         typeId: 0,
                         answers: []

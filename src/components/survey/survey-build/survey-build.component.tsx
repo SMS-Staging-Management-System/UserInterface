@@ -9,10 +9,6 @@ import { FeedBack } from './feedback.component';
 import { CheckBox } from './checkbox.component';
 import { TrueFalse } from './truefalse.component';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
-// import { ISurvey } from '../../../model/surveys/survey.model';
-// import { IQuestion } from '../../../model/surveys/question.model';
-// import { IAnswer } from '../../../model/surveys/answer.model';
-// import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
 import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
@@ -109,7 +105,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
         ...this.state,
         isCreating: true
       })
-      setTimeout(() => { this.setState({ ...this.state, isCreating: false }) }, 3000);
+      setTimeout(() => { this.setState({ ...this.state, isCreating: false }) }, 4000);
       this.handleShow();//user styleing for creating a survey
     }
     else {
@@ -130,8 +126,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
   addSpecificSurvey = () => {
     if (this.props.history.location.state != undefined) {
       let survey = this.props.history.location.state.displaySurvey;
-      let a = (survey.questionJunctions).length;
-      let toSetQuestions: any[] = [];
+      const a = (survey.questionJunctions).length;
+      const toSetQuestions: any[] = [];
       for (let i = 0; i < a; i++) {
         let type = survey.questionJunctions[i].question.typeId;
         if (type > 0) type--;
@@ -146,7 +142,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
     $('#alertSubmission').show();
     setTimeout(function () {
       $('#alertSubmission').hide();
-    }, 3000);
+    }, 4000);
     this.setState({
       showModal: true
     })
@@ -204,7 +200,6 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
       default:
         console.log("No matching option for type: " + type);
     }
-    //console.log(this.state.completedTasks)
   }
   // renders components within the render array with given initial properties for props to be controled per question via multiple switch statements
   renderComponent = (type: number, index: number) => {
@@ -212,7 +207,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
     if (this.props.history.location.state != undefined) {
       let survey = this.props.history.location.state.displaySurvey;
       if (survey.questionJunctions.length > index && this.state.notRenderedFirstTime) {
-        let question = survey.questionJunctions[index].question.question;
+        const question = survey.questionJunctions[index].question.question;
         switch (type) {
           case 1://"True/False":
             showme = <TrueFalse selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
@@ -228,7 +223,6 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
             showme = <MultipleChoice selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer={answers1} />;
             break;
           case 3://"Checkbox Multiple Answer":
-            //console.log(survey.questionJunctions[index]);
             let answers = "";
             for (let i = 0; i < (survey.questionJunctions[index].question.answers).length; i++) {
               answers += survey.questionJunctions[index].question.answers[i].answer;
@@ -318,20 +312,6 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
 
     return (
       <>
-        {/* Used for dragging 
-        <div className="test">
-          <div className="todos" >
-            {
-              todos.map(todo =>
-                <div key={todo.questionID} draggable onDrag={(event) => this.onDrag(event, todo)}>
-                  {todo.task}
-                </div>
-
-              )
-            }</div></div>
-        */
-          //OUTDATED FUNCTIONALITY FOR DRAG AND DROP. LEFT REMAINING FOR REFERENCE AND ROLL BACK ABILITY WITH EASE.
-        }
         <div className="container" >
 
           <div className="jumbotron survey-build-jumbotron" id="jumbotronSurveyBuild">
@@ -364,11 +344,6 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
                     {completedTasks.map((task, index) =>
                       <div key={index}>
                         <br />
-
-                        { //<button className="btn btn-primary" onClick={() => this.deleteRow(event, index)}>Remove &#8628;</button>
-                          //OUTDATED FUNCTIONALITY FOR DRAG AND DROP. LEFT REMAINING FOR REFERENCE AND ROLL BACK ABILITY WITH EASE.
-                        }
-
                         {task.task = this.renderComponent(task.questionID, index)}
                       </div>
                     )

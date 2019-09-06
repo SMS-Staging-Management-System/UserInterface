@@ -293,7 +293,6 @@ describe('Survey Build Component rendering', () => {
     let mockProps: any;
     let mockEvent: any;
     let mockPropsComponent: any;
-    let mockTodos: any;
     beforeEach(() => {
         mockPropsComponent = {
             selfDestruct: jest.fn(),
@@ -344,43 +343,7 @@ describe('Survey Build Component rendering', () => {
                     value: ''
                 },
                 preventDefault: jest.fn()
-            },
-            mockTodos = [
-                {
-                    questionID: 1, // make sure this questioID matches the id in the datatype for questiontype
-                    task: <TrueFalse />
-                },
-                {
-                    questionID: 2,
-                    task: <MultipleChoice />
-                },
-                {
-                    questionID: 3,
-                    task: <CheckBox />
-                },
-                {
-                    questionID: 4,
-                    task: <Rating />
-                },
-                {
-                    questionID: 5,
-                    task: <FeedBack />
-                },
-                {
-                    questionID: 6,
-                    task: <YesNoMaybe />
-                },
-                {
-                    questionID: 7,
-                    task: <StronglyAgree />
-                }
-            ]
-
-    })
-
-    it('Survey Build rendering', () => {
-        const component = shallow(<SurveyBuild {...mockProps} />);
-        expect(component).resolves;
+            }
     })
 
     it('Submit button preventDefault value change', () => {
