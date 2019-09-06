@@ -582,18 +582,27 @@ Survey Component
   width: 100%;
 }
 
+.allSurveyBtn {
+
+}
+
 .assignSurveyBtn {
   color: black;
   border-radius: 10px;
   background-color: $revature-orange-light;
-  // font-weight: bold;
+  font-weight: bold;
   height: 40px;
   width: 100%;
   border: none;
-  float: left;
+  // float: left;
 }
 
 #dropdownMenu2 {
+  float: right;
+  // margin-top: 40px;
+}
+
+#allSurveysDropdownMenu {
   float: right;
   margin-top: 40px;
 }
@@ -643,7 +652,16 @@ User Dropdown
   border-radius: 10px;
   background-color: $revature-orange-light;
   height: 40px;
-  width: 15%;
+  width: 100%;
+  border: none;
+}
+
+.userDropdownBtn2 {
+  color: black;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  height: 40px;
+  width: 10%;
   border: none;
 }
 

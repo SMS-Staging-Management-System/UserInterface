@@ -42,8 +42,13 @@ export const surveyClient = {
   },
 
   findAllSurveys: async (page: any) => {
-    const resp = await smsClient.get(surveyBaseRoute + '/template/false?page=0');
-    return resp.data.content;   
+    const resp = await smsClient.get(surveyBaseRoute + '/template/false?page='+page);
+    return resp.data;   
+  },
+
+  findActiveOrClosedSurveys: async (isActive: string, page: any) => {
+    const resp = await smsClient.get(surveyBaseRoute + `/active/${isActive}?page=` + page);
+    return resp.data;
   },
 
   findAllSurveysByCreator: async (creator, page) => {
@@ -64,7 +69,7 @@ export const surveyClient = {
     const allResponses = await smsClient.get(`${responseBaseRoute}/surveyId/${id}`);
     const responseCount = {};
     allResponses.data.forEach(element => {
-      const answerChosen = element.answerId.id;
+      const answerChosen = element.answerId.answerId;
       if (!responseCount[answerChosen]) {
         responseCount[answerChosen] = 1;
       } else {
@@ -82,10 +87,10 @@ export const surveyClient = {
 
     // Add the response count to each question
     survey.questionJunctions.forEach(question => {
-      if (question.questionId.typeId !== 5) {
-        question.questionId.answerChoices.forEach(choice => {
-          if (responseCount[choice.id]) {
-            choice.responseCount = responseCount[choice.id];
+      if (question.question.typeId !== 5) {
+        question.question.answers.forEach(choice => {
+          if (responseCount[choice.answerId]) {
+            choice.responseCount = responseCount[choice.answerId];
           } else {
             choice.responseCount = 0;
           }
@@ -110,7 +115,7 @@ export const surveyClient = {
       //Loop through the histories, and save the corresponding survey
       myHistories.forEach(history => {
         if (history.dateCompleted === null) {
-          allSurveys.forEach(survey => {
+          allSurveys.content.forEach(survey => {
             if (survey.surveyId === history.surveyId) {
               myAssignedSurveys.push(survey);
             }
