@@ -66,11 +66,9 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
           },
           questionOrder: questionOrder
         };
-        for (let i = 0; i < completedTasks.length; i++) {
-          questionJunction.question.typeId = completedTasks[i].questionID;
+          questionJunction.question.typeId = completedTasks[0].questionID;
           completedTasks.shift();
-          break;
-        }
+        
         questionOrder++;
         questionJunctions.push(questionJunction);
         break;
@@ -90,11 +88,8 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
   for (let i = 0; i < questionJunctions.length; i++)
     if (questionJunctions[i].question.typeId !== 5) {
       let match: string = '';
-      for (let j = 0; j < answers.length; j++) {
-        match = answers[j].answer;
+        match = answers[0].answer;
         answers.shift();
-        break;
-      }
 
       let matchArray = match.split(',');
       for (let l = 0; l < matchArray.length; l++) {

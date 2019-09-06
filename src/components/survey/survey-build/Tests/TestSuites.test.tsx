@@ -10,9 +10,6 @@ import CheckBox from '../checkbox.component';
 import { DeleteButton } from '../delete.component';
 import AddOther from '../add.other.component';
 import { SurveyBuild } from '../survey-build.component';
-import { pushd } from 'shelljs';
-import { FaRegPlayCircle } from 'react-icons/fa';
-import { handleShow } from '../../../../actions/template/template-actions';
 
 
 describe('Base Test Rendering For Question Types', () => {
@@ -244,7 +241,7 @@ describe('Delete button click', () => {
 
     let testArr = [1, 2, 3, 4, 5, 6, 7];
 
-    testArr.map(index => {
+    testArr.forEach(index => {
         it('Testing delete button', () => {
             mockProps.index = index;
             const component = shallow(<DeleteButton {...mockProps} />);
@@ -274,7 +271,7 @@ describe('AddOther button click', () => {
     let testArr = [[1, 'True/False'], [2, 'Multiple Choice'], [3, 'Checkbox Multiple Answer'],
     [4, 'Rating'], [5, 'Feedback'], [6, 'Yes/No'], [7, 'Strongly Agree/Disagree']]
 
-    testArr.map(([index, value]) => {
+    testArr.forEach(([index, value]) => {
         it('Testing AddOther button', () => {
             mockProps.index = index;
             const component = shallow(<AddOther {...mockProps} />);
@@ -451,7 +448,7 @@ describe('Survey Build Component rendering', () => {
         {type:3,isRender: false},{type:4,isRender: false},
         {type:5,isRender: true},{type:6,isRender: false},
         {type:7,isRender: true},{type:8,isRender: false},{type:8,isRender: true}];
-    testArr.map(({type, isRender}, index) => {
+    testArr.forEach(({type, isRender}, index) => {
         it('renderComponent function', () => {
             const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
             const instance = component.instance();
@@ -496,7 +493,7 @@ describe('Survey Build Component rendering', () => {
     })
 
     let testToAddArr = ["True/False", "Multiple Choice", "Checkbox Multiple Answer", "Rating", "Feedback", "Yes/No", "Strongly Agree/Disagree"];
-    testToAddArr.map((type, index) => {
+    testToAddArr.forEach((type) => {
         it('toAddFunction testing', () => {
             const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
             const instance = component.instance();

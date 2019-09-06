@@ -221,7 +221,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
             let answers1 = "";
             for (let i = 0; i < (survey.questionJunctions[index].question.answers).length; i++) {
               answers1 += survey.questionJunctions[index].question.answers[i].answer;
-              if (i != ((survey.questionJunctions[index].question.answers).length - 1)) {
+              if (i !== ((survey.questionJunctions[index].question.answers).length - 1)) {
                 answers1 += ", ";
               }
             }
@@ -232,7 +232,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
             let answers = "";
             for (let i = 0; i < (survey.questionJunctions[index].question.answers).length; i++) {
               answers += survey.questionJunctions[index].question.answers[i].answer;
-              if (i != ((survey.questionJunctions[index].question.answers).length - 1)) {
+              if (i !== ((survey.questionJunctions[index].question.answers).length - 1)) {
                 answers += ", ";
               }
             }
@@ -375,9 +375,9 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
 
                     }
 
-                    {this.state.displayChoice == true && <AddOther name="Select Question Type" parentFunction={this.toAddFunction}></AddOther>}
+                    {this.state.displayChoice === true && <AddOther name="Select Question Type" parentFunction={this.toAddFunction}></AddOther>}
 
-                    {this.state.displayChoice == false && <button type="button" className="btn rev-btn" onClick={this.addClick}>Add Question <FaPlusSquare /> </button>}
+                    {this.state.displayChoice === false && <button type="button" className="btn rev-btn" onClick={this.addClick}>Add Question <FaPlusSquare /> </button>}
                   </div>
 
                 </div>
