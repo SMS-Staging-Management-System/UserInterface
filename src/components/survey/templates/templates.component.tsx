@@ -81,7 +81,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 templates: templates,
                 templatesLoaded: true
             });
-        } else {
+        } else if(this.state.foundAll === false) {
             const templates = await surveyClient.findByTitle(this.state.search, page);
             this.setState({
                 templates: templates,
@@ -113,8 +113,8 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         }
     }
 
-    changeSearch = (flip: boolean) => {
-        this.setState({
+    changeSearch = async (flip: boolean) => {
+        await this.setState({
             foundAll: flip
         });
         this.loadTemplates(0);
