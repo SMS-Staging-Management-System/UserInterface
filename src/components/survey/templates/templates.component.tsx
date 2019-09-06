@@ -67,20 +67,28 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             prev: false,
             next: true,
             search: '',
-            foundAll: false
+            foundAll: true
         }
     }
     componentDidMount() {
-        this.loadTemplates(1);
+        this.loadTemplates(0);
     }
     // Load the templates into the state
     loadTemplates = async (page: number) => {
-        const templates = await surveyClient.findAllTemplates(this.props.auth.currentUser.email,page);
-        this.setState({
-            templates: templates,
-            templatesLoaded: true,
-            foundAll: true
-        });
+        if(this.state.foundAll === true){
+            const templates = await surveyClient.findAllTemplates(this.props.auth.currentUser.email, page);
+            this.setState({
+                templates: templates,
+                templatesLoaded: true
+            });
+        } else if(this.state.foundAll === false) {
+            const templates = await surveyClient.findByTitle(this.state.search, page);
+            this.setState({
+                templates: templates,
+                templatesLoaded: true
+            });
+        }
+
         if(surveyClient.currentPage() <= 1) {
             if(surveyClient.currentPage() !== surveyClient.totalPages()){
                 this.setState({
@@ -91,9 +99,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                     prev: true,
                     next: true
                 });
-            }
-
-            
+            }   
         } else if(surveyClient.currentPage() >= surveyClient.totalPages()){
             this.setState({
                 prev: false,
@@ -105,17 +111,27 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 next: false
             });
         }
-    };
+    }
+
+    changeSearch = async (flip: boolean) => {
+        await this.setState({
+            foundAll: flip
+        });
+        this.loadTemplates(0);
+    }
+
     changeSurveyTitle = (event) => {
         this.setState({
             newTitle: event.target.value,
         })
     }
+
     changeSurveyDescription = (event) => {
         this.setState({
             description: event.target.value,
         })
     }
+
     handleShow = async (id: number, description: string) => {
         this.setState({
             showModal: true
@@ -128,6 +144,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             description: description
         })
     }
+
     handleClose = () => {
         this.setState({
             survey: {},
@@ -135,6 +152,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             showModal: false
         })
     }
+
     handleCreateClose = async () => {
         if (this.state.survey.title !== this.state.newTitle) {
             this.setState({
@@ -209,6 +227,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         toast.success('Survey created');
         
     }
+
     handleDuplicateClose = async () => {
         if (this.state.survey.title !== this.state.newTitle) {
             this.setState({
@@ -246,37 +265,6 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         });
     }
 
-    findByTitle = async (title: String, page: number) => {
-        const templates = await surveyClient.findByTitle(title, page);
-        this.setState({
-            templates: templates,
-            templatesLoaded: true,
-            foundAll: false
-        });
-        if(surveyClient.currentPage() <= 1) {
-            if(surveyClient.currentPage() !== surveyClient.totalPages()){
-                this.setState({
-                prev: true,
-                next: false
-            });} else {
-                this.setState({
-                    prev: true,
-                    next: true
-                });
-            }    
-        } else if(surveyClient.currentPage() >= surveyClient.totalPages()){
-            this.setState({
-                prev: false,
-                next: true
-            });
-        } else {
-            this.setState({
-                prev: false,
-                next: false
-            });
-        }
-    }
-
     render() {
         if (this.state.redirectTo) {
             return <Redirect push to={this.state.redirectTo} />
@@ -291,7 +279,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                            <InputGroupAddon addonType="prepend">
                            <InputGroupText>
                            {/* <Input addon type="checkbox" aria-label="Checkbox for following text input" /> */}
-                           <Button type="button" aria-label="Checkbox for following text input" onClick={() =>this.findByTitle(this.state.search, 0)}>Search</Button>
+                           <Button type="button" aria-label="Checkbox for following text input" onClick={() =>this.changeSearch(false)}>Search</Button>
                            </InputGroupText>
                            </InputGroupAddon>
                            <Input id="template-search-bar" placeholder="Enter Template Name" onChange={this.handleChange}/>
@@ -319,7 +307,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             </Table>
                             {/* button goes here pick up here */}
                             <div className='row horizontal-centering vertical-centering'>
-                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(0)} disabled={this.state.foundAll}>All Templates</Button>
+                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>All Templates</Button>
                             <h6 className="div-child text-style" >
                                           
                                 </h6>

@@ -10,6 +10,10 @@ const initialState: ISurveyBuildState = {
         dateCreated: new Date(),
         closingDate: null,
         template: false,
+<<<<<<< HEAD
+=======
+        // published: true,
+>>>>>>> af7983502415a77cdf2a8e993d2991dfc639ef32
         questionJunctions: []
     },
     dummyQuestionArray: [],
@@ -32,6 +36,10 @@ const initialState: ISurveyBuildState = {
             dateCreated: new Date(),
             closingDate: null,
             template: false,
+<<<<<<< HEAD
+=======
+            // published: false,
+>>>>>>> af7983502415a77cdf2a8e993d2991dfc639ef32
             questionJunctions: []
         }
     }

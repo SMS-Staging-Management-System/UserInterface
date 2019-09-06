@@ -57,6 +57,7 @@ export const surveyClient = {
         pages = totalPages;
       }
     }
+    console.log(creator)
     let resp = await smsClient.get(templateRoute + 'creator/' + creator + '/' + pages)
     surveysAndTemplates = resp.data;
     if (surveysAndTemplates) {
@@ -83,29 +84,6 @@ export const surveyClient = {
     surveysAndTemplates = resp.data;
     if (surveysAndTemplates) {
       surveysAndTemplates.content.forEach(element => {
-        templates.push(element);
-      });
-      totalPages = surveysAndTemplates.totalPages;
-    }
-    return templates;
-  },
-  changePage: async (page: number) => {
-    // let pages = 0;
-    pages += page;
-    if (pages < 0) {
-      pages = 0
-    } else if (pages > 0) {
-      pages--
-      if (pages >= totalPages) {
-        pages = totalPages;
-      }
-    }
-    let resp = await smsClient.get(templateRoute + page)
-    let surveysAndTemplates;
-    let templates: any = [];
-    surveysAndTemplates = resp.data;
-    if (surveysAndTemplates) {
-      surveysAndTemplates.forEach(element => {
         templates.push(element);
       });
       totalPages = surveysAndTemplates.totalPages;
