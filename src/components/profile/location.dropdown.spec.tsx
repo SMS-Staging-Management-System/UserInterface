@@ -1,14 +1,14 @@
 import { shallow } from "enzyme";
 import React from "react";
 import { IUser } from "../../model/user.model";
-import { SCLocationDropdown, ISCLocationDropdownProps } from "./sc-location.dropdown";
+import { LocationDropdown, ILocationDropdownProps } from "./location.dropdown";
 import { Button, UncontrolledDropdown, DropdownToggle, DropdownItem } from "reactstrap";
 import { cognitoRoles } from "../../model/cognito-user.model";
-import { inputNames } from "./sc-profile.component";
+import { inputNames } from "./profile.component";
 import { IAddress } from "../../model/address.model";
 
 describe('<SCLocationDropdown />', () => {
-    let mockProps: ISCLocationDropdownProps;
+    let mockProps: ILocationDropdownProps;
     const mockUser: IUser = {
         email: 'email@email.com',
         userId: 0,
@@ -87,26 +87,26 @@ describe('<SCLocationDropdown />', () => {
 
     // Ensure component is rendered
     it('Should render the component', () => {
-        const component = shallow(<SCLocationDropdown {...mockProps} />);
+        const component = shallow(<LocationDropdown {...mockProps} />);
         expect(component).toBeDefined();
     })
 
     it('Should render the component as a disabled button if the user is not an admin', () => {
-        const component = shallow(<SCLocationDropdown {...mockProps} />);
+        const component = shallow(<LocationDropdown {...mockProps} />);
         expect(component).toBeDefined();
         const button = component.find(Button).find(`[name="${inputNames.TRAINING_ALIASES}"]`).find('[disabled=true]')
         expect(button).toHaveLength(1);
     })
 
     it('Should render the component as an uncontrolled dropdown if the current user is not an associate', () => {
-        const component = shallow(<SCLocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNames.TRAINING_ALIASES}"]`)
         expect(uncontrolledDropdown).toHaveLength(1);
     })
 
     it(`Should render ${mockTrainingAddresses.length} dropdown item components.`, () => {
-        const component = shallow(<SCLocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem);
         expect(dropdownItems).toHaveLength(mockTrainingAddresses.length);
@@ -114,7 +114,7 @@ describe('<SCLocationDropdown />', () => {
 
     mockTrainingAddresses.forEach(address => {
         it(`Should render the ${address.alias} option`, () => {
-            const component = shallow(<SCLocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+            const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
             expect(component).toBeDefined();
             const dropdownItem = component.find(DropdownItem)
                 .findWhere(item => item.text() === address.alias);
@@ -123,14 +123,14 @@ describe('<SCLocationDropdown />', () => {
     })
 
     it(`Should have the text of the button as the passed in user's training address`, () => {
-        const component = shallow(<SCLocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownToggle = component.find(DropdownToggle).children().text();
         expect(dropdownToggle).toBe(mockUser.trainingAddress.alias);
     })
 
     it(`Should have the passed in user's training address enabled initially`, () => {
-        const component = shallow(<SCLocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem);
         const enabledDropdownItem = dropdownItems.find('[active=true]').children().text();
@@ -138,7 +138,7 @@ describe('<SCLocationDropdown />', () => {
     })
 
     it(`Should update the button text when a training address is clicked`, () => {
-        const component = shallow(<SCLocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem);
         const enabledDropdownItem = dropdownItems.find('[active=true]').children().text();
@@ -158,7 +158,7 @@ describe('<SCLocationDropdown />', () => {
     })
 
     it(`Should call the onChange prop function with the correct parameters when a status is clicked`, () => {
-        const component = shallow(<SCLocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem);
         const enabledDropdownItem = dropdownItems.find('[active=true]').children().text();

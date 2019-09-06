@@ -2,13 +2,13 @@ import { shallow, mount } from "enzyme";
 import React from 'react';
 import { cognitoRoles } from "../../model/cognito-user.model";
 import { IUser } from "../../model/user.model";
-import { ISCStatusDropdownProps, SCStatusDropdown } from "./sc-status.dropdown";
+import { IStatusDropdownProps, StatusDropdown } from "./status.dropdown";
 import { Input, Button, UncontrolledDropdown, DropdownItem, DropdownToggle } from "reactstrap";
 import { IStatus } from "../../model/status.model";
-import { inputNames } from "./sc-profile.component";
+import { inputNames } from "./profile.component";
 
 describe('<SCStatusDropdown />', () => {
-    let mockProps: ISCStatusDropdownProps;
+    let mockProps: IStatusDropdownProps;
     const mockUser: IUser = {
         email: 'email@email.com',
         userId: 0,
@@ -122,21 +122,21 @@ describe('<SCStatusDropdown />', () => {
     })
 
     it('Should render the component as a disabled button if the current user is an associate.', () => {
-        const component = shallow(<SCStatusDropdown {...mockProps} />);
+        const component = shallow(<StatusDropdown {...mockProps} />);
         expect(component).toBeDefined();
         const input = component.find(Button).find(`[name="${inputNames.STATUS_ALIASES}"]`).find(`[disabled=true]`);
         expect(input).toHaveLength(1);
     })
 
     it('Should render the component as an uncontrolled dropdown if the current user is not an associate', () => {
-        const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const uncontrolledDropdown = component.find(UncontrolledDropdown).find(`[name="${inputNames.STATUS_ALIASES}"]`)
         expect(uncontrolledDropdown).toHaveLength(1);
     })
 
     it(`Should render ${mockStatuses.length} dropdown item components.`, () => {
-        const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem)
             .filterWhere(item => item.find('[header]').length !== 1)
@@ -147,7 +147,7 @@ describe('<SCStatusDropdown />', () => {
     mockStatuses.forEach(status => {
         if (!status.virtual) {
             it(`Should render the ${status.specificStatus} option`, () => {
-                const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+                const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
                 expect(component).toBeDefined();
                 const dropdownItem = component.find(DropdownItem)
                     .filterWhere(item => item.find('[header]').length !== 1)
@@ -158,14 +158,14 @@ describe('<SCStatusDropdown />', () => {
     })
 
     it(`Should have the text of the button as the passed in user's status`, () => {
-        const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownToggle = component.find(DropdownToggle).children().text();
         expect(dropdownToggle).toBe(mockUser.userStatus.specificStatus);
     })
 
     it(`Should have the passed in user's status enabled initially`, () => {
-        const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem)
             .filterWhere(item => item.find('[header]').length !== 1)
@@ -175,7 +175,7 @@ describe('<SCStatusDropdown />', () => {
     })
 
     it(`Should update the button text when a status is clicked`, () => {
-        const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem)
             .filterWhere(item => item.find('[header]').length !== 1)
@@ -201,7 +201,7 @@ describe('<SCStatusDropdown />', () => {
     })
 
     it(`Should call the onChange prop function with the correct parameters when a status is clicked`, () => {
-        const component = shallow(<SCStatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem)
             .filterWhere(item => item.find('[header]').length !== 1)

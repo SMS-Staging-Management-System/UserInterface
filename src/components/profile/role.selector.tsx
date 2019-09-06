@@ -4,20 +4,20 @@ import { Col, FormGroup, Input, Row } from 'reactstrap';
 import { cognitoRoles } from '../../model/cognito-user.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
-import { inputNames } from './sc-profile.component';
+import { inputNames } from './profile.component';
 
-export interface ISCRoleSelectorProps {
+export interface IRoleSelectorProps {
     updateUser: IUser
     currentSMSUser: IUser
     onChangeHandler: (event: any) => any
 }
 
-interface ISCRoleSelectorState {
+interface IRoleSelectorState {
 
 }
 
-export class SCRoleSelector extends Component<ISCRoleSelectorProps, ISCRoleSelectorState> {
-    constructor(props: ISCRoleSelectorProps) {
+export class RoleSelector extends Component<IRoleSelectorProps, IRoleSelectorState> {
+    constructor(props: IRoleSelectorProps) {
         super(props);
     }
 
@@ -93,4 +93,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SCRoleSelector)
+export default connect(mapStateToProps, mapDispatchToProps)(RoleSelector)

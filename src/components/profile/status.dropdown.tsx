@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
-import { inputNames } from './sc-profile.component';
+import { inputNames } from './profile.component';
 import { DropdownItem, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
-export interface ISCStatusDropdownProps {
+export interface IStatusDropdownProps {
     currentSMSUser: IUser
     userStatuses: IStatus[]
     updateUser: IUser
     changeHandler: (event: any) => any
 }
 
-interface ISCStatusDropdownState {
+interface IStatusDropdownState {
     buttonText: string
 }
 
-export class SCStatusDropdown extends Component<ISCStatusDropdownProps, ISCStatusDropdownState> {
-    constructor(props: ISCStatusDropdownProps) {
+export class StatusDropdown extends Component<IStatusDropdownProps, IStatusDropdownState> {
+    constructor(props: IStatusDropdownProps) {
         super(props);
 
         this.state = {
@@ -33,7 +33,7 @@ export class SCStatusDropdown extends Component<ISCStatusDropdownProps, ISCStatu
         this.props.changeHandler({ target: { name: inputNames.STATUS_ALIASES, value: event.currentTarget.innerText } });
     }
 
-    componentDidUpdate(prevProps: ISCStatusDropdownProps) {
+    componentDidUpdate(prevProps: IStatusDropdownProps) {
         if (prevProps != this.props) {
             this.setState({
                 buttonText: this.props.updateUser.userStatus && this.props.updateUser.userStatus.generalStatus && this.props.updateUser.userStatus.specificStatus || 'No Status'
@@ -95,4 +95,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SCStatusDropdown)
+export default connect(mapStateToProps, mapDispatchToProps)(StatusDropdown)

@@ -3,11 +3,11 @@ import React from 'react';
 import { Input } from "reactstrap";
 import { cognitoRoles } from "../../model/cognito-user.model";
 import { IUser } from "../../model/user.model";
-import { ISCRoleSelectorProps, SCRoleSelector } from "./sc-role.selector";
-import { inputNames } from "./sc-profile.component";
+import { IRoleSelectorProps, RoleSelector } from "./role.selector";
+import { inputNames } from "./profile.component";
 
 describe('<SCRoleSelector />', () => {
-    let mockProps: ISCRoleSelectorProps;
+    let mockProps: IRoleSelectorProps;
     const mockUser: IUser = {
         email: 'email@email.com',
         userId: 0,
@@ -80,7 +80,7 @@ describe('<SCRoleSelector />', () => {
     })
 
     it('Should render the component as a disabled input if the current user is an associate.', () => {
-        const component = shallow(<SCRoleSelector {...mockProps} />);
+        const component = shallow(<RoleSelector {...mockProps} />);
         expect(component).toBeDefined();
         const input = component.find(Input).find(`[name="${inputNames.ROLES}"]`).find(`[value="Associate"]`).find('[disabled=true]');
         expect(input).toHaveLength(1);
@@ -97,7 +97,7 @@ describe('<SCRoleSelector />', () => {
         }
 
         it(`Should render the component with ${configuration} option(s) checked`, () => {
-            const component = shallow(<SCRoleSelector {...{ ...mockProps, currentSMSUser: mockAdminUser, updateUser: mockUpdateUser }} />);
+            const component = shallow(<RoleSelector {...{ ...mockProps, currentSMSUser: mockAdminUser, updateUser: mockUpdateUser }} />);
             expect(component).toBeDefined();
             const inputs = component.find(Input).find(`[name="${inputNames.ROLES}"]`);
             expect(inputs).toHaveLength(4);
@@ -110,7 +110,7 @@ describe('<SCRoleSelector />', () => {
     })
 
     it('Should call the prop function with the proper event when changed.', () => {
-        const component = shallow(<SCRoleSelector {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+        const component = shallow(<RoleSelector {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const inputs = component.find(Input).find(`[name="${inputNames.ROLES}"]`);
         expect(inputs).toHaveLength(4);

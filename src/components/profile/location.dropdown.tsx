@@ -4,21 +4,21 @@ import { Button, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdow
 import { IAddress } from '../../model/address.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
-import { inputNames } from './sc-profile.component';
+import { inputNames } from './profile.component';
 
-export interface ISCLocationDropdownState {
+export interface ILocationDropdownState {
     buttonText: string
 }
 
-export interface ISCLocationDropdownProps {
+export interface ILocationDropdownProps {
     currentSMSUser: IUser
     updateUser: IUser
     trainingAddresses: IAddress[]
     changeHandler: (event: any) => any
 }
 
-export class SCLocationDropdown extends Component<ISCLocationDropdownProps, ISCLocationDropdownState> {
-    constructor(props: ISCLocationDropdownProps) {
+export class LocationDropdown extends Component<ILocationDropdownProps, ILocationDropdownState> {
+    constructor(props: ILocationDropdownProps) {
         super(props);
 
         this.state = {
@@ -33,7 +33,7 @@ export class SCLocationDropdown extends Component<ISCLocationDropdownProps, ISCL
         this.props.changeHandler({ target: { name: inputNames.TRAINING_ALIASES, value: event.currentTarget.innerText } });
     }
 
-    componentDidUpdate(prevProps: ISCLocationDropdownProps) {
+    componentDidUpdate(prevProps: ILocationDropdownProps) {
         if (prevProps !== this.props) {
             this.setState({
                 buttonText: this.props.updateUser.trainingAddress && this.props.updateUser.trainingAddress.alias || 'No Location'
@@ -84,4 +84,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SCLocationDropdown)
+export default connect(mapStateToProps, mapDispatchToProps)(LocationDropdown)
