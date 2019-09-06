@@ -1,11 +1,10 @@
 import React from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody, Label, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Table, Button, Modal, ModalHeader, ModalBody, Label } from 'reactstrap';
 import { ICohort } from '../../../model/cohort';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { userClient } from '../../../axios/sms-clients/user-client';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import Loader from '../Loader/Loader';
-import { inputNames } from '../../profile/profile.component';
 import { IUser } from '../../../model/user.model';
 import { statusClient } from '../../../axios/sms-clients/status-client';
 import { IStatus } from '../../../model/status.model';
@@ -39,14 +38,16 @@ interface IComponentState {
     allUsers: IUser[],
     allStatus: IStatus[],
     allGeneralStatus: Set<string>,
-    allSpecificStatus: Set<string>
+    allSpecificStatus: Set<string>,
+    bothVirtual: boolean // if virtual is never clicked you will have both virtual and nonvirtual users
 }
 
-interface IUserCohortIdAndEmail {
+export interface IUserCohortIdAndEmail {
     id: number,
     email: string,
     generalStatus: string,
-    specificStatus: string
+    specificStatus: string,
+    virtual: boolean
 }
 
 class SurveyModal extends React.Component<IComponentProps, IComponentState> {
@@ -73,19 +74,16 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             allUsers: [],
             allStatus: [],
             allGeneralStatus: new Set,
-            allSpecificStatus: new Set
-            
+            allSpecificStatus: new Set,
+            bothVirtual: true
         };
     }
     // pagination
     async componentDidMount() {
         const data = await this.getAllCohorts(this.state.currentPage);
+        this.getAllGeneralStatus();
+        this.loadAllUsersSinglePage();
     }
-    // componentDidMount() {
-    //     // grabs all cohorts from database and loads them into
-    //     //   the userArray, each having their cohort id and email address
-    //     this.loadAllCohorts();
-    // }
     // componentWillUpdate(nextProps, nextState){
     //     console.log("Hi")
     //     if(nextState !== this.state){
@@ -140,8 +138,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         this.setState({
             sortCohorts: newCohorts
         })
-
-
     }
 
     getAllCohorts = async (newPage: number) => {
@@ -155,8 +151,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             totalPages: resp.data.totalPages,
         });
         this.loadAllUserEmails();
-        this.getAllGeneralStatus();
-        this.loadAllUsersSinglePage();
     }
     // save all general status to allGeneralStatus state
     getAllGeneralStatus = async () => {
@@ -232,7 +226,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     id: cohort.cohortId,
                     email: user.email,
                     generalStatus: "",
-                    specificStatus: ""
+                    specificStatus: "",
+                    virtual: false
                 }
                 idAndEmailArray.push(idAndEmailObj);
             }
@@ -248,7 +243,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         // this function is for the the Select ALL checkbox
         const { checked } = e.target;
         const { emailsToAssign: emAssign } = this.state;
-        const id = +e.target.id;
+        //const id = +e.target.id;
         let emailArray: string[] = [];
 
         if (checked) {
@@ -262,8 +257,9 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     emailArray.push(user.email);
                 }
                 // then check all individual user checkboxes in this cohort 
-                let el = document.getElementById(user.email) as HTMLInputElement;
-                if (el) { el.checked = true; }
+                //might bring back this functionality
+                // let el = document.getElementById(user.email) as HTMLInputElement;
+                // if (el) { el.checked = true; }
             });
             this.setState({
                 emailsToAssign: this.state.emailsToAssign.concat(emailArray)
@@ -273,7 +269,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             // if checking OFF the Select ALL, do this
             // filter through all users for     those in this checkboxes cohort
             this.state.userArray.filter(user => {
-                return user.id === id
+                return user.id === cohortId
             }).map(user => {
                 // push into local array to know which users to remove from state below
                 emailArray.push(user.email);
@@ -298,7 +294,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }
     }
      // load general status users of selected status
-    loadGeneralUser = (e, gStatus: string) => {
+    checkGeneralFunc = (e, gStatus: string) => {
         const generalUsers: IUserCohortIdAndEmail[] = [];
         for(const user of this.state.allUsers) {
             if(user.userStatus.generalStatus.toLowerCase() === gStatus.toLowerCase()) {
@@ -306,16 +302,26 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     id: user.userId,
                     email: user.email,
                     generalStatus: user.userStatus.generalStatus,
-                    specificStatus: user.userStatus.specificStatus 
+                    specificStatus: user.userStatus.specificStatus,
+                    virtual: user.userStatus.virtual 
                 }
-                generalUsers.push(generalStatusUser);
+                generalUsers.push(generalStatusUser); // only sperates virtual is clicked now
+                // if(this.state.bothVirtual) { // if virtual never clicked add both
+                //     generalUsers.push(generalStatusUser);
+                // } else if(this.state.virtual) { //if virtual is checked only add virtual people
+                //     if(generalStatusUser.virtual) {
+                //         generalUsers.push(generalStatusUser);
+                //     }
+                // } else {
+                //     generalUsers.push(generalStatusUser);
+                // }
             }
         }
-        if(e.target.checked) {
+        if(e.target.checked) { //checked add them to list
             this.setState({
                 allGeneralStatusUsers: this.state.allGeneralStatusUsers.concat(generalUsers)
             });
-        } else {
+        } else { //uncheck remove them from list
             this.setState({
                 allGeneralStatusUsers: this.state.allGeneralStatusUsers.filter((user) => {
                     return user.generalStatus.toLowerCase() !== gStatus.toLowerCase();
@@ -324,7 +330,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }
     }
     // load specific status users of selected status
-    loadSpecificUser = (e, sStatus: string) => {
+    checkSpecificFunc = (e, sStatus: string) => {
         const specificUsers: IUserCohortIdAndEmail[] = [];
         for(const user of this.state.allUsers) {
             if(user.userStatus.specificStatus.toLowerCase() === sStatus.toLowerCase()) {
@@ -332,9 +338,19 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                         id: user.userId,
                         email: user.email,
                         generalStatus: user.userStatus.generalStatus,
-                        specificStatus: user.userStatus.specificStatus 
+                        specificStatus: user.userStatus.specificStatus,
+                        virtual: user.userStatus.virtual 
                     }
-                    specificUsers.push(specificStatusUser);
+                    specificUsers.push(specificStatusUser); // only sperates virtual is clicked now
+                    // if(this.state.bothVirtual) { // if virtual never clicked add both
+                    //     specificUsers.push(specificStatusUser);
+                    // } else if(this.state.virtual) { //if virtual is checked only add virtual people
+                    //     if(specificStatusUser.virtual) {
+                    //         specificUsers.push(specificStatusUser);
+                    //     }
+                    // } else {
+                    //     specificUsers.push(specificStatusUser);
+                    // }
             }
         }
         if(e.target.checked) {
@@ -349,29 +365,56 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             });
         }
     }
-    // add general status users avoid duplicates
-    checkGeneralFunc = (e, status: string) => {
-        this.loadGeneralUser(e, status);
-        this.state.allGeneralStatusUsers.map(user => {
-            this.setState({
-                emailsToAssign: this.state.emailsToAssign.filter(email => {
-                    return user.email !== email;
-                })
-            });
+    // if virtual is clicked set virtual to true and only set virtual
+    checkVirtualFunc = (e) => {
+        this.setState({
+            bothVirtual: false
         });
-    }
-    // add specific status users avoid duplicates
-    checkSpecificFunc = (e, status: string) => {
-        this.loadSpecificUser(e, status);
-        this.state.allSpecificStatusUsers.map(user => {
+        if(e.target.checked) {
             this.setState({
-                emailsToAssign: this.state.emailsToAssign.filter(email => {
-                    return user.email !== email;
-                })
+                virtual: true
             });
-        });
+        } else {
+            this.setState({
+                virtual: false
+            });
+        }
     }
-
+    // only assign users by statuses that are checked when submit is clicked
+    loadCheckedStatus = () => {
+        if(this.state.bothVirtual) { 
+            this.state.allGeneralStatusUsers.map(user => {
+                this.setState({
+                    emailsToAssign: this.state.emailsToAssign.filter(email => {
+                        return user.email !== email;
+                    })
+                });
+            });
+            this.state.allSpecificStatusUsers.map(user => {
+                this.setState({
+                    emailsToAssign: this.state.emailsToAssign.filter(email => {
+                        return user.email !== email;
+                    })
+                });
+            });
+        } else { // if virtual has been clicked only assign people based off virtual status
+            this.state.allGeneralStatusUsers.map(user => {
+                this.setState({
+                    emailsToAssign: this.state.emailsToAssign.filter(email => {
+                        return (user.email !== email) && (user.virtual == this.state.virtual);
+                    })
+                });
+            });
+            this.state.allSpecificStatusUsers.map(user => {
+                this.setState({
+                    emailsToAssign: this.state.emailsToAssign.filter(email => {
+                        return (user.email !== email) && (user.virtual == this.state.virtual);
+                    })
+                });
+            });
+        }
+    }
+    // not using but might bring back implementation
     checkUserFunc = (e) => {
         // this function is for each individual user email checkbox 
         const { id: email, checked } = e.target;
@@ -411,6 +454,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
 
     postSurveyToCohort = () => {
+        this.loadCheckedStatus(); // load checked status users into list to be assigned survey
         // loop through each chosen survey from parent component and for each email,
         //   assign the survey to the history table
         for (const surveyId of this.props.surveysToAssign) {
@@ -448,8 +492,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }
     }
     render() {
-        console.log(this.state.sortCohorts);
-        const { allGeneralStatus, allSpecificStatus } = this.state;
+        const { allGeneralStatus, allSpecificStatus, sortCohorts } = this.state;
+        //console.log(sortCohorts);
 
         return (
             <>
@@ -460,6 +504,17 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                         {/* ensure users in cohorts do not show until they are loaded to avoid assign survey bug */}
                         {this.state.usersLoaded ? (
                             <ModalBody>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <Label className="input-group-text">Virtual: </Label>
+                                    </div>
+                                    <div className="input-group-text">
+                                        <div className="form-check form-check-inline input-group-text">
+                                            <Input className="form-check-input" type="checkbox" id="virtual" value="virtual" onChange={(e)=> this.checkVirtualFunc(e)}></Input>
+                                            <Label className="form-check-label" for="virtual">Virtual</Label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="input-group mb-3">
                                     <div className="input-group-prepend">
                                         <Label className="input-group-text">General Status: </Label>
@@ -505,9 +560,9 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.sortCohorts && this.state.sortCohorts.map(cohort => (
+                                        {sortCohorts && sortCohorts.map(cohort => (
                                             <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
-                                                <td>All: <input type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
+                                                <td>All: <input id={`checkFunc${cohort.cohortId}`} type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
                                                 </td>
                                                 <td colSpan={5}>{cohort.cohortName}</td>
                                                 <td></td>
@@ -520,16 +575,17 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                 </Table>
                                 {(this.state.totalPages > 0) &&
                                     (<div className='row horizontal-centering vertical-centering'>
-                                        <Button variant="button-color" className="rev-background-color div-child" onClick={() => this.decrementPage()}>Prev</Button>
+                                        <Button id='prev-btn' variant="button-color" className="rev-background-color div-child" onClick={() => this.decrementPage()}>Prev</Button>
                                         <h6 className="div-child text-style" >
                                             Page {this.state.currentPage + 1} of {this.state.totalPages}
                                         </h6>
-                                        <Button variant="button-color" className="rev-background-color div-child" onClick={() => this.incrementPage()}>Next</Button>
+                                        <Button id='next-btn' variant="button-color" className="rev-background-color div-child" onClick={() => this.incrementPage()}>Next</Button>
                                     </div>)
                                 }
                                 <div className="buttonDiv">
                                     <Button
-                                        className='assignSurveyBtn'
+                                        id='submit-survey'
+                                        className='assignSurveyBtn submit-cohort-survey'
                                         onClick={() => { this.postSurveyToCohort(); this.toggle(); }
                                         }>Submit</Button>
                                 </div>
