@@ -16,14 +16,14 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
 
   // surveyClient.saveSurvey(survey);
   const survey: ISurvey = {
-    surveyId: 0,
-    title: '',
-    description: 'Example Survey 1 Description',
+    closingDate: new Date(new Date().getTime() + 604800000),
     creator: '',
     dateCreated: new Date(),
-    closingDate: new Date(new Date().getTime() + 604800000),
+    description: 'Example Survey 1 Description',
+    questionJunctions: [],
+    surveyId: 0,
     template: false,
-    questionJunctions: []
+    title: '',
   };
   const questionJunctions: IJunctionSurveyQuestion[] = [];
   const answers: IAnswer[] = [];
@@ -38,6 +38,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         break;
       case 'template?':
         survey.template = true;
+        survey.closingDate = null;
         break;
       case 'description':
         survey.description = formData[index].value;
@@ -49,21 +50,21 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         const questionJunction: IJunctionSurveyQuestion = {
           id: 0,
           question: {
+            answers: [],
             question: formData[index].value,
             questionId: 0,
             typeId: 0,
-            answers: []
           },
           questionOrder,
           survey: {
-            description: '',
-            surveyId: 0,
-            title: '',
+            closingDate: new Date(new Date().getTime() + 604800000),
             creator: '',
             dateCreated: new Date(),
-            closingDate: new Date(new Date().getTime() + 604800000),
+            description: '',
+            questionJunctions: [],
+            surveyId: 0,
             template: false,
-            questionJunctions: []
+            title: '',
           }          
         };
           questionJunction.question.typeId = completedTasks[0].questionID;

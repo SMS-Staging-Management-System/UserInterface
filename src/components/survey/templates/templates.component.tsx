@@ -137,21 +137,21 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             dateCreated: this.state.dateCreated
         })
 
-        let dummySurvey: ISurvey = {
+        const dummySurvey: ISurvey = {
             surveyId: 0,
             title: this.state.newTitle,
             description: this.state.description,
             creator: this.props.auth.currentUser.email,
             dateCreated: this.state.dateCreated,
-            closingDate: this.state.survey.closingDate,
+            closingDate: new Date(new Date().getTime() + 604800000),
             template: false,
             questionJunctions: []
         };
-        let questionJunctions: IJunctionSurveyQuestion[] = [];
+        const questionJunctions: IJunctionSurveyQuestion[] = [];
         
         for (let i = 0; i < (this.state.survey.questionJunctions).length; i++) {
 
-            let dummyQuestionJunction: any = {
+            const dummyQuestionJunction: any = {
                 id: 0,
                 survey: null,
                 question: {

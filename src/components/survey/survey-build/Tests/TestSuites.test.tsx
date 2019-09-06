@@ -362,7 +362,6 @@ describe('Survey Build Component rendering', () => {
         const inputs = component.find('input');
         inputs.forEach(input => {
             mockEvent.target.value = 'test'
-            input.simulate('focus')
             input.simulate('change', mockEvent)
             expect(mockEvent.target.value).toBe('test')
         })
@@ -384,7 +383,6 @@ describe('Survey Build Component rendering', () => {
         const inputs = component.find('textarea');
         inputs.forEach(input => {
             mockEvent.target.value = 'test textarea'
-            input.simulate('focus')
             input.simulate('change', mockEvent)
             expect(mockEvent.target.value).toBe('test textarea')
         })

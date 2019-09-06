@@ -56,7 +56,7 @@ export const surveyClient = {
   },
 
   findAllTemplates: async () => {
-    const resp = await smsClient.get(surveyBaseRoute + `/template/${true}?page=0`)
+    const resp = await smsClient.get(surveyBaseRoute + `/template/${true}?page=3`)
     return resp.data.content;
 
   },
