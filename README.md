@@ -76,9 +76,9 @@ implemented but are intended to be used to select a date range.
 
 ## Create New Interview
 
-There are now two user stories for creating a new interview.
+There is a new workflow for creating a new interview.
 
-Admin/Staging Manager: 
+### Admin/Staging Manager: 
 1. Select a cohort
 2. Select populated list of associates based on selected cohort
 3. Select a client
@@ -86,7 +86,7 @@ Admin/Staging Manager:
 5. Select a time
 6. Select a location
 
-Associate:
+### Associate:
 1. Select a client
 2. Select a date
 3. Select a time

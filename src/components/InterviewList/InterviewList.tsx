@@ -61,6 +61,7 @@ export interface InterviewListState { // state of table, its headings, and sorti
     tableHeaderId: string,
     previousTableHeaderId: string,
     listOfInterviews: any[],
+    input:string,
     associateEmail: string,
     managerEmail: string,
     place: string,
@@ -74,8 +75,7 @@ export interface InterviewListState { // state of table, its headings, and sorti
     client: string,
     staging: string,
     dropdowns: any[],
-    input:string,
-    feedback: string
+    feedback: string,
 }
 // Two arrays to arrange table headers. Originally the two were defined as a key-value pair object.
 const thKeys = ['associateEmail', 'managerEmail', 'place', 'client', 'notified',
@@ -96,9 +96,11 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             clientName: '*',
             direction: this.props.direction,
             dropdowns: [],
+            feedback: '*',
             fromNotified: '',
             fromReviewed: '',
             fromScheduled: '',
+            input: '*',
             listOfInterviews: [],
             loaded: false,
             managerEmail: '',
@@ -109,8 +111,6 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
             toNotified: '',
             toReviewed: '',
             toScheduled: '',
-            input: '*',
-            feedback: '*'
         }
     }
 
@@ -228,11 +228,10 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         this.setState({ // updates state accordingly
             associateEmail,
             client,
+            input,
             managerEmail,
             place,
             staging,
-            input,
-            feedback
         });
         this.props.getInterviewPages( // now that state has changed, update
             0,
@@ -289,16 +288,16 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
         const roles = (store.getState().managementState.auth.currentUser.roles);
         const isAdmin = (roles.includes('admin') || roles.includes('staging-manager') || roles.includes('trainer'));
 
-        const arrPlace1 = this.props.dropdowns.map((item) => { //convert interview array to place array
+        const arrPlace1 = this.props.dropdowns.map((item) => { // convert interview array to place array
             return item.place;
         });
-        const arrPlace = arrPlace1.filter((item, pos) => { //need unique places for select option
+        const arrPlace = arrPlace1.filter((item, pos) => { // need unique places for select option
             return arrPlace1.indexOf(item) === pos;
         });
-        const arrClientName1 = this.props.dropdowns.map((item) => { //convert interview array to place array
+        const arrClientName1 = this.props.dropdowns.map((item) => { // convert interview array to place array
             return item.client.clientName;
         });
-        const arrClientName = arrClientName1.filter((item, pos) => { //need unique places for select option
+        const arrClientName = arrClientName1.filter((item, pos) => { // need unique places for select option
             return arrClientName1.indexOf(item) === pos;
         });
 
