@@ -83,29 +83,6 @@ export const surveyClient = {
     }
     return templates;
   },
-  changePage: async (page: number) => {
-    // let pages = 0;
-    pages += page;
-    if (pages < 0) {
-      pages = 0
-    } else if (pages > 0) {
-      pages--
-      if (pages >= totalPages) {
-        pages = totalPages;
-      }
-    }
-    let resp = await smsClient.get(templateRoute + page)
-    let surveysAndTemplates;
-    let templates: any = [];
-    surveysAndTemplates = resp.data;
-    if (surveysAndTemplates) {
-      surveysAndTemplates.forEach(element => {
-        templates.push(element);
-      });
-      totalPages = surveysAndTemplates.totalPages;
-    }
-    return templates;
-  },
   totalPages() {
     return totalPages;
   },
