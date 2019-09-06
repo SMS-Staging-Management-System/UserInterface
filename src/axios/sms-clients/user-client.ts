@@ -20,6 +20,9 @@ export const userClient = {
     updateSMSUserInfo(updatedUser: IUser) {
         return smsClient.patch(usersContext, updatedUser);
     },
+    findAllByEmailsGet(emails: string[]) {
+        return smsClient.get(usersContext + `/emails/${emails}`)
+    },
     findAllByEmails(emails: string[], page: number = 0) {
         return smsClient.post(usersContext + `/emails`,
             {
@@ -40,8 +43,11 @@ export const userClient = {
                 page: page
             });
     },
-    findAllUsers(page: number = 0) {
+    findAllUsersPage(page: number = 0) {
         return smsClient.get(`${usersContext}/allUsers/page/${page}`);
+    },
+    findAllUsers() {
+        return smsClient.get(`${usersContext}/allUsers`);
     },
     getAllVirtualListUser(){
         return smsClient.get(`${usersContext}/invirtual`);

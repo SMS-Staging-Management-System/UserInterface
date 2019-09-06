@@ -142,7 +142,7 @@ export interface IManagementState {
 }
 
 export const managementState = combineReducers<IManagementState>({
-    addresses: addressReducer,
+    addresses: addressReducer, 
     statuses: statusReducer,
     auth: authReducer,
     viewUser: viewUserReducer,

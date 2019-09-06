@@ -7,26 +7,25 @@ import { surveyBuildReducer } from "./SurveyBuild.reducer";
 //import { templateModalReducer } from "./template-modal-reducer";
 
 
-export interface IModalTemplateState{
+export interface IModalTemplateState {
   //showModal: boolean,
 }
 
-export interface ISurveyBuildState{
+export interface ISurveyBuildState {
   dummySurvey: ISurvey,
-   dummyQuestionArray: IQuestion[],
-   dummyAnswerArray: IAnswer[],
+  dummyQuestionArray: IQuestion[],
+  dummyAnswerArray: IAnswer[],
   //beacuse there was a bug of sending data to the api(answers were out of order) 
   //we had to create another answer array that carried all of the parsed answers
-   parsedAnswers : IAnswer[],
-   junctionTable: IJunctionSurveyQuestion
+  parsedAnswers: IAnswer[],
+  junctionTable: IJunctionSurveyQuestion
 }
 export interface ISurveyState {
   templateModal: IModalTemplateState,
-  surveyBuildState : ISurveyBuildState
+  surveyBuildState: ISurveyBuildState
 }
-  export const surveyState = combineReducers<ISurveyState>({
-    //templateModal: templateModalReducer,
-    surveyBuildState : surveyBuildReducer
-  })
+export const surveyState = combineReducers<ISurveyState>({
+  //templateModal: templateModalReducer,
+  surveyBuildState: surveyBuildReducer
+})
 
-  
