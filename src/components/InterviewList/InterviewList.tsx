@@ -468,7 +468,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                     breakLinkClassName={'break-me-link page-link'}
                     pageCount={this.props.numberOfPages}
                     marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
+                    pageRangeDisplayed={this.props.pageSize}
                     forcePage={this.props.currentPage}
                     onPageChange={this.handlePageClick}
                     containerClassName={'pagination page-navigator justify-content-center interview-list-table-paginate'}
