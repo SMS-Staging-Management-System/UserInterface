@@ -261,7 +261,7 @@ describe('<SCProfile />', () => {
                 })
                 // Ensure the  is working properly 
                 it('Should update the training dropdown based on event given', () => {
-                    const component = shallow(<SCProfile {...mockProps} />);
+                    const component = shallow <SCProfile>(<SCProfile {...mockProps} />);
                     component.setState({
                         updateUser: mockUser
                     })
