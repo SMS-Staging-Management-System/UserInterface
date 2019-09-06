@@ -15,12 +15,53 @@ const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
 const junctionSurveyQuestionsBaseRoute = '/survey-service/junction_survey_questions';
 
+
 export const surveyClient = {
 
   //--------------------//
   //-- Survey Methods --//
   //--------------------//
 
+  // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyTitle
+  // this is our fetch call on which if dont have a body back we will return
+  // the empty array declare on the first line.
+  findSurveyByTitle: async (title: string) => {
+    //  let surveyFound;
+    let surveys: any = [];
+    console.log(`${surveyBaseRoute}/title/${title}`);
+    await smsClient.get(`${surveyBaseRoute}/title/${title}`)
+      // await smsClient.get(`localhost:8092/surveys/title/${title}`)
+      .then(response => {
+        if (response.data) {
+          surveys = response.data;
+        }
+        else {
+          console.log("Record not found.");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    return surveys;
+  },
+
+    // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyDescription
+  // this is our fetch call on which if dont have a body back we will return
+  // the empty array declare on the first line.
+  findSurveyByDescription: async (description: string) => {
+    let surveys: any = [];
+
+    await smsClient.get(`${surveyBaseRoute}/description/${description}`)
+      .then(response => {
+        surveys = response.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+   
+    return surveys;
+  },
   findAllSurveys: async () => {
     let surveysAndTemplates;
     let surveys: any = [];
@@ -254,11 +295,14 @@ export const surveyClient = {
     smsClient.post(historyBaseRoute, postObject);
   },
 
-  findHistoriesBySurveyId: async (id: number) => {
+  findHistoriesBySurveyId: async (id: number, pageId : number) => {
     let histories;
-    await smsClient.get(`${historyBaseRoute}/survey/${id}`)
+
+    await smsClient.get(`${historyBaseRoute}/pageable/${id}/${pageId}`)
       .then(response => {
+        console.log('Total pages : ' + response.data.totalPages);
         histories = response.data;
+        
       })
       .catch(err => {
         console.log(err);
@@ -275,5 +319,6 @@ export const surveyClient = {
       "dateCompleted": new Date()
     }
     smsClient.patch(`${historyBaseRoute}/taken`, historyUpdate);
-  }
+  },
+
 }

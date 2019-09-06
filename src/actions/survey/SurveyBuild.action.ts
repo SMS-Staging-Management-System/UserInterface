@@ -20,7 +20,7 @@ export const CreatSurvey = (frmData: any, completedTasks: any[]) => async (dispa
     title: frmData,
     description: 'Example Survey 1 Description',
     dateCreated: new Date(),
-    closingDate: null,
+    closingDate: new Date(new Date().getTime() + 604800000),
     template: false,
     published: true
   };
