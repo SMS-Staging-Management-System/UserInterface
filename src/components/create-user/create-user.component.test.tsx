@@ -201,7 +201,6 @@ describe('JoinCohortComponent test',() => {
             },
             updateNewUserLocation: jest.fn().mockImplementation(),
             updateNewUser: jest.fn().mockImplementation(),
-            joinCohort:jest.fn().mockImplementation(),
             toggleLocationDropdown: jest.fn().mockImplementation(),
             saveUserAssociate: jest.fn().mockImplementation()
         };
