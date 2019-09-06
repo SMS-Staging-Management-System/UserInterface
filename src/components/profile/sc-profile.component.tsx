@@ -6,7 +6,6 @@ import { IAddress } from '../../model/address.model';
 import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
 import { IState } from '../../reducers';
-import { IAddressState, IStatusState } from '../../reducers/management';
 import SCLocationDropdown from './sc-location.dropdown';
 import SCRoleSelector from './sc-role.selector';
 import SCProfileStatusDropdown from './sc-status.dropdown';
@@ -30,8 +29,8 @@ export const inputNames = {
 
 export interface ISCProfileProps {
     currentSMSUser: IUser,
-    trainingAddresses: IAddressState,
-    userStatus: IStatusState,
+    trainingAddresses: IAddress[],
+    userStatus: IStatus[],
     userToUpdate?: IUser, // This prop tells the component to look at a user other than the current user
     updateUserSC: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
 }
@@ -118,7 +117,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         const user = this.state.updateUser;
         switch (event.target.name) {
             case inputNames.TRAINING_ALIASES:
-                const newAddress = this.props.trainingAddresses.trainingAddresses.find((address: IAddress) => {
+                const newAddress = this.props.trainingAddresses.find((address: IAddress) => {
                     return address.alias === target;
                 })
                 this.setState({
@@ -129,7 +128,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 })
                 break;
             case inputNames.STATUS_ALIASES:
-                const newStatus = (this.props.userStatus.userStatus.find((status: IStatus) => {
+                const newStatus = (this.props.userStatus.find((status: IStatus) => {
                     return status.specificStatus === target;
                 })) || user.userStatus
                 this.setState({
@@ -143,7 +142,7 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
                 })
                 break;
             case inputNames.VIRTUAL_CHECKBOX:
-                const newVirtual = (this.props.userStatus.userStatus.find((status: IStatus) => {
+                const newVirtual = (this.props.userStatus.find((status: IStatus) => {
                     return (status.specificStatus === user.userStatus.specificStatus && status.virtual === !user.userStatus.virtual)
                 }))
                 this.setState({
@@ -207,13 +206,13 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
 
         if (this.props.userStatus) {
             this.setState({
-                userStatus: this.props.userStatus.userStatus
+                userStatus: this.props.userStatus
             })
         }
 
         if (this.props.trainingAddresses) {
             this.setState({
-                trainingAddresses: this.props.trainingAddresses.trainingAddresses
+                trainingAddresses: this.props.trainingAddresses
             });
         }
     }
@@ -231,12 +230,12 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
         }
         if (prevProps.trainingAddresses !== this.props.trainingAddresses) {
             this.setState({
-                trainingAddresses: this.props.trainingAddresses.trainingAddresses
+                trainingAddresses: this.props.trainingAddresses
             })
         }
         if (prevProps.userStatus !== this.props.userStatus) {
             this.setState({
-                userStatus: this.props.userStatus.userStatus
+                userStatus: this.props.userStatus
             })
         }
     }
@@ -371,8 +370,8 @@ export class SCProfile extends React.Component<ISCProfileProps, ISCProfileState>
 
 const mapStateToProps = (state: IState) => ({
     currentSMSUser: state.managementState.currentSMSUser.currentSMSUser,
-    trainingAddresses: state.managementState.addresses,
-    userStatus: state.managementState.statuses
+    trainingAddresses: state.managementState.addresses.trainingAddresses,
+    userStatus: state.managementState.statuses.userStatus
 })
 
 const mapDispatchToProps = {

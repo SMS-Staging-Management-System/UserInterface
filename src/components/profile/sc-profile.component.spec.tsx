@@ -1,12 +1,12 @@
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import React from 'react';
 import { Input } from 'reactstrap';
-import { ISCProfileProps, SCProfile, inputNames } from "./sc-profile.component";
+import { cognitoRoles } from "../../model/cognito-user.model";
 import { IUser } from "../../model/user.model";
 import SCLocationDropdown from "./sc-location.dropdown";
-import SCStatusDropdown from "./sc-status.dropdown";
+import { inputNames, ISCProfileProps, SCProfile } from "./sc-profile.component";
 import SCRoleSelector from "./sc-role.selector";
-import { cognitoRoles } from "../../model/cognito-user.model";
+import SCStatusDropdown from "./sc-status.dropdown";
 
 describe('<SCProfile />', () => {
     let mockProps: ISCProfileProps;
@@ -80,143 +80,152 @@ describe('<SCProfile />', () => {
             currentSMSUser: {
                 ...mockUser
             },
-            trainingAddresses: {
-                trainingAddresses: [
-                    {
-                        addressId: 1,
-                        alias: 'Reston',
-                        street: '11730 Plaza America Dr #205',
-                        zip: '20190',
-                        city: 'Reston',
-                        state: 'VA',
-                        country: 'United States'
-                    },
-                    {
-                        addressId: 2,
-                        alias: 'USF',
-                        street: 'Northwest Educational Complex',
-                        zip: '33613',
-                        city: 'Tampa',
-                        state: 'FL',
-                        country: 'United States'
-                    }
-                ]
-            },
-            userStatus: {
-                userStatus: [
-                    {
-                        statusId: 1,
-                        generalStatus: 'Training',
-                        specificStatus: 'Dropped',
-                        virtual: false
-                    },
-                    {
-                        statusId: 2,
-                        generalStatus: 'Training',
-                        specificStatus: 'Training',
-                        virtual: false
-                    },
-                    {
-                        statusId: 3,
-                        generalStatus: 'Training',
-                        specificStatus: 'Complete',
-                        virtual: false
-                    },
-                    {
-                        statusId: 4,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Staging',
-                        virtual: false
-                    },
-                    {
-                        statusId: 5,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Bench',
-                        virtual: false
-                    },
-                    {
-                        statusId: 6,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Waiting for Paperwork',
-                        virtual: false
-                    },
-                    {
-                        statusId: 7,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Confirmed',
-                        virtual: false
-                    },
-                    {
-                        statusId: 8,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Project Started',
-                        virtual: false
-                    },
-                    {
-                        statusId: 9,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Paused',
-                        virtual: false
-                    },
-                    {
-                        statusId: 10,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Panel Pending',
-                        virtual: false
-                    },
-                    {
-                        statusId: 11,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Staging',
-                        virtual: true
-                    },
-                    {
-                        statusId: 12,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Bench',
-                        virtual: true
-                    },
-                    {
-                        statusId: 13,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Waiting for Paperwork',
-                        virtual: true
-                    },
-                    {
-                        statusId: 14,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Confirmed',
-                        virtual: true
-                    },
-                    {
-                        statusId: 15,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Project Started',
-                        virtual: true
-                    },
-                    {
-                        statusId: 16,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Paused',
-                        virtual: true
-                    },
-                    {
-                        statusId: 17,
-                        generalStatus: 'Staging',
-                        specificStatus: 'Panel Pending',
-                        virtual: true
-                    }
-                ]
-            },
+            trainingAddresses: [
+                {
+                    addressId: 1,
+                    alias: 'Reston',
+                    street: '11730 Plaza America Dr #205',
+                    zip: '20190',
+                    city: 'Reston',
+                    state: 'VA',
+                    country: 'United States'
+                },
+                {
+                    addressId: 2,
+                    alias: 'USF',
+                    street: 'Northwest Educational Complex',
+                    zip: '33613',
+                    city: 'Tampa',
+                    state: 'FL',
+                    country: 'United States'
+                }
+            ],
+            userStatus: [
+                {
+                    statusId: 1,
+                    generalStatus: 'Training',
+                    specificStatus: 'Dropped',
+                    virtual: false
+                },
+                {
+                    statusId: 2,
+                    generalStatus: 'Training',
+                    specificStatus: 'Training',
+                    virtual: false
+                },
+                {
+                    statusId: 3,
+                    generalStatus: 'Training',
+                    specificStatus: 'Complete',
+                    virtual: false
+                },
+                {
+                    statusId: 4,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Staging',
+                    virtual: false
+                },
+                {
+                    statusId: 5,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Bench',
+                    virtual: false
+                },
+                {
+                    statusId: 6,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Waiting for Paperwork',
+                    virtual: false
+                },
+                {
+                    statusId: 7,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Confirmed',
+                    virtual: false
+                },
+                {
+                    statusId: 8,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Project Started',
+                    virtual: false
+                },
+                {
+                    statusId: 9,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Paused',
+                    virtual: false
+                },
+                {
+                    statusId: 10,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Panel Pending',
+                    virtual: false
+                },
+                {
+                    statusId: 11,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Staging',
+                    virtual: true
+                },
+                {
+                    statusId: 12,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Bench',
+                    virtual: true
+                },
+                {
+                    statusId: 13,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Waiting for Paperwork',
+                    virtual: true
+                },
+                {
+                    statusId: 14,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Confirmed',
+                    virtual: true
+                },
+                {
+                    statusId: 15,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Project Started',
+                    virtual: true
+                },
+                {
+                    statusId: 16,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Paused',
+                    virtual: true
+                },
+                {
+                    statusId: 17,
+                    generalStatus: 'Staging',
+                    specificStatus: 'Panel Pending',
+                    virtual: true
+                }
+            ],
             updateUserSC: jest.fn()
         }
     })
 
     // Ensure component is rendered
     it('Should render the component', () => {
-        const component = shallow(<SCProfile {...mockProps} />);
+        const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
         expect(component).toBeDefined();
     })
+
+    // it('Should call the componentDidMount function', () => {
+    //     const mockState = {
+    //         updateUser: mockUser,
+    //         trainingAddresses: mockProps.trainingAddresses,
+    //         userStatus: mockProps.userStatus
+    //     }
+    //     const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
+    //     const instance = component.instance();
+    //     instance.componentDidMount();
+    //     expect(instance.props).toEqual(mockProps);
+    //     expect(instance.state).toEqual(mockProps);
+    // })
 
     for (const inputName in inputNames) {
         const inputNameEle = inputNames[inputName];
@@ -238,7 +247,7 @@ describe('<SCProfile />', () => {
                         value: 'USF'
                     }
                 }
-                const newTrainingAddress = mockProps.trainingAddresses.trainingAddresses[1];
+                const newTrainingAddress = mockProps.trainingAddresses[1];
                 const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
                 const instance = component.instance();
                 instance.handleClickChange(simulatedEvent);
@@ -263,7 +272,7 @@ describe('<SCProfile />', () => {
                             value: 'Confirmed'
                         }
                     }
-                    const newStatus = mockProps.userStatus.userStatus.filter(status => {
+                    const newStatus = mockProps.userStatus.filter(status => {
                         return status.specificStatus === 'Confirmed' && !status.virtual
                     })[0];
                     const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
@@ -281,7 +290,7 @@ describe('<SCProfile />', () => {
                                 name: inputNameEle
                             }
                         }
-                        const newStatus = mockProps.userStatus.userStatus.filter(status => {
+                        const newStatus = mockProps.userStatus.filter(status => {
                             return status.specificStatus === 'Staging' && status.virtual
                         })[0];
                         const component = shallow<SCProfile>(<SCProfile {...mockProps} />);
