@@ -49,7 +49,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     componentDidMount() {
         //If component is loading for the first time, load all users
         if (this.props.componentLoaded === false) {
-            this.props.updateManageUsersTable("all", '', this.props.manageUsers.manageUsersCurrentPage);
+            this.props.updateManageUsersTable("All", '', this.props.manageUsers.manageUsersCurrentPage);
         }
         //If component was sorted before, make sure to turn to that sorted state.
         if (this.props.userTableSort !== "sorted") {
@@ -170,8 +170,8 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                             <DropdownMenu>
                                 <DropdownItem >
                                     <Link to={path + "/manage/all"}
-                                        className={`nav-link ${this.isActive('all')}`}
-                                        onClick={() => this.updateDropdown('all', searchPage)}>All</Link></DropdownItem>
+                                        className={`nav-link ${this.isActive('All')}`}
+                                        onClick={() => this.updateDropdown('All', searchPage)}>All</Link></DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
                                     <Link to={path + "/manage/admin"}
