@@ -55,7 +55,8 @@ export interface IInterviewListState {
     direction : string,
     pageSize : number,
     currentPage : number,
-    assocInput: any
+    assocInput: any,
+    dropdowns: Interview[]
 }
     
 export interface IInterviewState {

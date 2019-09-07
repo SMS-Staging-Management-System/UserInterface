@@ -10,12 +10,14 @@ export const cohortClient = {
   save(cohort: ICohort) {
     return smsClient.post(cohortContext, cohort);
   },
+
   // findByToken(token: string) {
   //   return smsClient.get(cohortContext + `/token/${token}`)
   // },
   joinCohort(user: IUser, token: string) {
     return smsClient.post(cohortContext + `/token/${token.toString()}`, user)
   },
+
 
   findAllByPage(page: number) {
     return smsClient.get(cohortContext+`?page=${page}`)
@@ -29,10 +31,10 @@ export const cohortClient = {
     return smsClient.get(cohortContext+`/trainer/email/${email}?page=${page}`)
   },
 
+
   findAll() {
     return smsClient.get(cohortContext)
   },
-
   async getUsers(id: number) {
     let cohortUsers: IUser[] = [];
     await smsClient.get(`${cohortContext}/users/id/${id}`)
@@ -47,6 +49,7 @@ export const cohortClient = {
 
   async getName(cohortName: string) {
     if (!cohortName) {
+
       return [];
     }
     let cohortNames;
@@ -72,6 +75,7 @@ export const cohortClient = {
   // },
 
   async getAlias(alias: string) {
+
     let aliases;
     await smsClient.get(`${aliasNameSort}/address/${alias}`)
       .then(response => {
@@ -90,6 +94,7 @@ export const cohortClient = {
     let epochDate = typeof date === 'number' ? date : date.getTime();
 
     return await smsClient.get(`${cohortContext}/prestaging/${epochDate}`);
+
   }
 }
 
