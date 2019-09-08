@@ -1,7 +1,7 @@
-import { ISCProfileUpdateState } from ".";
-import { profileTypes } from "../../actions/profile/sc.profile.actions";
+import { IProfileUpdateState } from ".";
+import { profileTypes } from "../../actions/profile/profile.actions";
 
-const initialState: ISCProfileUpdateState = {
+const initialState: IProfileUpdateState = {
     user: {
         userId: 0,
         firstName: '',

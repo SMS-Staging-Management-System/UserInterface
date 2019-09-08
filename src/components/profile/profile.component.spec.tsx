@@ -204,7 +204,7 @@ describe('<SCProfile />', () => {
                     virtual: true
                 }
             ],
-            updateUserSC: jest.fn()
+            updateUser: jest.fn()
         }
     })
 
@@ -260,7 +260,7 @@ describe('<SCProfile />', () => {
             },
             trainingAddresses: [],
             userStatus: [],
-            updateUserSC: jest.fn()
+            updateUser: jest.fn()
         }
         const mockState = {
             updateUser: mockUser,
@@ -442,9 +442,9 @@ describe('<SCProfile />', () => {
             instance.onSubmit(simulatedEvent);
             expect(simulatedEvent.preventDefault).toHaveBeenCalled();
             if (propConfiguration.userToUpdate) {
-                expect(mockProps.updateUserSC).toHaveBeenCalledWith(mockPassedInUser, propConfiguration.userToUpdate);
+                expect(mockProps.updateUser).toHaveBeenCalledWith(mockPassedInUser, propConfiguration.userToUpdate);
             } else {
-                expect(mockProps.updateUserSC).toHaveBeenCalledWith(mockUser, propConfiguration.currentSMSUser, true);
+                expect(mockProps.updateUser).toHaveBeenCalledWith(mockUser, propConfiguration.currentSMSUser, true);
             }
         })
 

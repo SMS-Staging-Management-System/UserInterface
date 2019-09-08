@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import { updateUserSC } from '../../actions/profile/sc.profile.actions';
+import { updateUser } from '../../actions/profile/profile.actions';
 import { IAddress } from '../../model/address.model';
 import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
@@ -32,7 +32,7 @@ export interface IProfileProps {
     trainingAddresses: IAddress[],
     userStatus: IStatus[],
     userToUpdate?: IUser, // This prop tells the component to look at a user other than the current user
-    updateUserSC: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
+    updateUser: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
 }
 
 interface IProfileState {
@@ -177,9 +177,9 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
     onSubmit = (event: any) => {
         event.preventDefault();
         if (this.props.userToUpdate) {
-            this.props.updateUserSC(this.state.updateUser, this.props.userToUpdate);
+            this.props.updateUser(this.state.updateUser, this.props.userToUpdate);
         } else {
-            this.props.updateUserSC(this.state.updateUser, this.props.currentSMSUser, true);
+            this.props.updateUser(this.state.updateUser, this.props.currentSMSUser, true);
         }
     }
 
@@ -373,7 +373,7 @@ const mapStateToProps = (state: IState) => ({
 })
 
 const mapDispatchToProps = {
-    updateUserSC
+    updateUser: updateUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
