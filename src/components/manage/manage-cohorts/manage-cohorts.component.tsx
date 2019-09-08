@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {
     Table,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button
 } from 'reactstrap';
-import Button from 'reactstrap/lib/Button';
 import { IManageCohortsComponentProps } from './manage-cohorts.container';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { ICohort } from '../../../model/cohort';
@@ -58,8 +57,8 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         <div>View By:</div>
                         <Dropdown color="success" className="responsive-modal-row-item rev-btn"
                             isOpen={false}>
-                            {/* toggle={this.props.toggleLocationDropdown}> */}
-                            <DropdownToggle className ="ml-1"caret>
+                            {/*toggle={this.props.toggleLocationDropdown}>*/}
+                            <DropdownToggle className="ml-1" caret>
                                 Selection
                 </DropdownToggle>
                             <DropdownMenu>

@@ -118,6 +118,16 @@ input:invalid:not(:valid) {
   }
 }
 
+.rev-btn-2 {
+  background-color: white;
+  border: 1px solid #ced4da;
+  color: #495057;
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
+  }
+}
+
 li > a.rev-btn-tab {
   background-color: white;
   border-color: $revature-orange-light;
