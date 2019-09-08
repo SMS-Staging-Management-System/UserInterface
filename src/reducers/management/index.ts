@@ -20,6 +20,7 @@ import  joinCohortReducer  from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
 import { ICreateUser } from "../../model/create-user.model";
+import { profileUpdateReducer } from "./profile.reducer";
 
 
 export interface IAuthState {
@@ -133,7 +134,7 @@ export interface IManagementState {
     statuses: IStatusState,
     currentSMSUser: ICurrentSMSUserState,
     currentProfile: IProfileViewState,
-    scUpdateProfile: IProfileUpdateState,
+    updateProfile: IProfileUpdateState,
     viewCohort: ICohortModalState,
     joinCohort: IJoinCohortState,
     resetPassword: IResetPasswordState,
@@ -174,6 +175,7 @@ export const managementState = combineReducers<IManagementState>({
     currentSMSUser: currentSMSUserReducer,
     joinCohort: joinCohortReducer,
     currentProfile: profileViewReducer,
+    updateProfile: profileUpdateReducer,
     viewCohort: viewCohortReducer,
     manageCohorts: manageCohortsReducer,
     resetPassword: resetPasswordReducer,

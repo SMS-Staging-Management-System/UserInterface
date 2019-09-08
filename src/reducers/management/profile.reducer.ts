@@ -36,7 +36,7 @@ const initialState: IProfileUpdateState = {
     }
 }
 
-export const scProfileViewReducer  = (state = initialState, action: any) => {
+export const profileUpdateReducer  = (state = initialState, action: any) => {
     switch (action.type) {
         case profileTypes.UPDATE_USER_PROFILE:
             return {
