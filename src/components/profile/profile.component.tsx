@@ -81,7 +81,6 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
                 roles: [],
             }
         }
-        // this.onUpdateClick = this.onUpdateClick.bind(this);
     }
 
     handleInputChange = (event: any) => {

@@ -227,4 +227,53 @@ describe('<SCStatusDropdown />', () => {
             expect(mockProps.changeHandler).toHaveBeenCalledWith(simulatedTarget);
         })
     })
+    it('Should update the buttonText state when componentDidUpdate is called', () => {
+        const mockPrevProps = {
+            currentSMSUser: {
+                ...mockAdminUser
+            },
+            updateUser: {
+                email: '',
+                userId: 0,
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                trainingAddress: {
+                    addressId: 0,
+                    street: '',
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    zip: ''
+                },
+                personalAddress: {
+                    addressId: 0,
+                    street: '',
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    zip: ''
+                },
+                userStatus: {
+                    statusId: 0,
+                    generalStatus: '',
+                    specificStatus: '',
+                    virtual: false
+                },
+                roles: [],
+            },
+            userStatuses: mockStatuses,
+            changeHandler: jest.fn()
+        }
+
+        const mockState = {
+            buttonText: mockProps.updateUser.userStatus.specificStatus
+        }
+
+        const component = shallow(<StatusDropdown {...mockPrevProps} />);
+        component.setProps(mockProps);
+        expect(component.state()).toEqual(mockState);
+    })
 })
