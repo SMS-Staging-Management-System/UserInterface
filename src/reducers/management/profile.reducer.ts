@@ -32,7 +32,7 @@ const initialState: IProfileUpdateState = {
             specificStatus: '',
             statusId: 0,
             virtual: false
-        },
+        }
     }
 }
 
