@@ -234,8 +234,8 @@ describe('Delete button click', () => {
 
     beforeEach(() => {
         mockProps = {
-            selfDestruct: jest.fn(),
-            index: 0
+            index: 0,
+            selfDestruct: jest.fn()
         }
     });
 
@@ -257,9 +257,9 @@ describe('AddOther button click', () => {
     let mockEvent: any;
     beforeEach(() => {
         mockProps = {
+            index: 0,
             parentFunction: jest.fn(),
-            selfDestruct: jest.fn(),
-            index: 0
+            selfDestruct: jest.fn()            
         };
         mockEvent = {
             target: {
@@ -307,8 +307,6 @@ describe('Survey Build Component rendering', () => {
                 }
             },
             createSurvey: jest.fn(),
-            location: null,
-            match: null,
             history: {
                 location: {
                     state: {
@@ -316,18 +314,20 @@ describe('Survey Build Component rendering', () => {
                             "questionJunctions": [
                                 {
                                     "question": {
-                                        "questionId": 206,
+                                        "answers": [],
                                         "question": "Name (Optional)",
+                                        "questionId": 206,
                                         "typeId": 5,
-                                        "answers": []
+                                        
                                     }
                                 },
                                 {
                                     "question": {
-                                        "questionId": 207,
+                                        "answers": [],
                                         "question": "Email (Optional)",
+                                        "questionId": 207,
                                         "typeId": 5,
-                                        "answers": []
+                                        
                                     }
                                 }
                             ]
@@ -336,6 +336,8 @@ describe('Survey Build Component rendering', () => {
                 },
                 match: null
             },
+            location: null,
+            match: null,
             surveyState: null
         }
         mockEvent = {
@@ -379,12 +381,12 @@ describe('Survey Build Component rendering', () => {
     })
 
     it('textarea value', () => {
-        const component = shallow(<SurveyBuild {...mockProps} />);
+        const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
         const inputs = component.find('textarea');
         inputs.forEach(input => {
             mockEvent.target.value = 'test textarea'
             input.simulate('change', mockEvent)
-            expect(mockEvent.target.value).toBe('test textarea')
+            expect(mockEvent.target.value).toEqual('test textarea')
         })
     })
 

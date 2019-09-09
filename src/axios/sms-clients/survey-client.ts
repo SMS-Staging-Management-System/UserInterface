@@ -61,7 +61,7 @@ export const surveyClient = {
 
   },
   findSurveyById: async (id: number) => {
-    let response = await smsClient.get(`${surveyBaseRoute}/${id}`);
+    const response = await smsClient.get(`${surveyBaseRoute}/${id}`);
     return response.data;
   },
   
@@ -123,8 +123,7 @@ export const surveyClient = {
 
   async saveQuestion(question: IQuestion) {
     const resp = await smsClient.post(questionBaseRoute, question.questionId);
-    const qID = parseInt(resp.data.questionId);      // return ID; 
-    return qID;
+    return parseInt(resp.data.questionId, 10);      // return ID; 
   },
 
   saveAllQuestion(question: IQuestion[]) {

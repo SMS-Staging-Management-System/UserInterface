@@ -86,14 +86,14 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
 
 
 
-  for (let questionJunction of questionJunctions){
+  for (const questionJunction of questionJunctions){
     if (questionJunction.question.typeId !== 5) {
       let match: string = '';
         match = answers[0].answer;
         answers.shift();
 
       const matchArray = match.split(',');
-      for (let str of matchArray) {
+      for (const str of matchArray) {
         const dummyAnswer: any = {
           answer: str.trim(),
           answerId: 0,
