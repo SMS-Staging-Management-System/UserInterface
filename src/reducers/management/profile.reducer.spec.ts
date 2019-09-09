@@ -1,6 +1,7 @@
 import { profileTypes } from "../../actions/profile/profile.actions";
-import { profileUpdateReducer, blankUser } from "./profile.reducer";
+import { profileUpdateReducer } from "./profile.reducer";
 import { IProfileUpdateState } from ".";
+import { blankUser } from "../../components/profile/profile.component";
 
 describe('Profile Reducer', () => {
     const initialState: IProfileUpdateState = {

@@ -1,38 +1,6 @@
 import { IProfileUpdateState } from ".";
 import { profileTypes } from "../../actions/profile/profile.actions";
-
-export const blankUser = {
-    email: '',
-    firstName: '',
-    lastName: '',
-    personalAddress: {
-        addressId: 0,
-        alias: '',
-        city: '',
-        country: '',
-        state: '',
-        street: '',
-        zip: ''
-    },
-    phoneNumber: '',
-    roles: [],
-    trainingAddress: {
-        addressId: 0,
-        alias: '',
-        city: '',
-        country: '',
-        state: '',
-        street: '',
-        zip: ''
-    },
-    userId: 0,
-    userStatus: {
-        generalStatus: '',
-        specificStatus: '',
-        statusId: 0,
-        virtual: false
-    }
-}
+import { blankUser } from "../../components/profile/profile.component";
 
 const initialState: IProfileUpdateState = {
     user: blankUser

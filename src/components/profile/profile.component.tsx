@@ -42,44 +42,46 @@ interface IProfileState {
     userStatus: IStatus[]
 }
 
+export const blankUser = {
+    email: '',
+    firstName: '',
+    lastName: '',
+    personalAddress: {
+        addressId: 0,
+        alias: '',
+        city: '',
+        country: '',
+        state: '',
+        street: '',
+        zip: ''
+    },
+    phoneNumber: '',
+    roles: [],
+    trainingAddress: {
+        addressId: 0,
+        alias: '',
+        city: '',
+        country: '',
+        state: '',
+        street: '',
+        zip: ''
+    },
+    userId: 0,
+    userStatus: {
+        generalStatus: '',
+        specificStatus: '',
+        statusId: 0,
+        virtual: false
+    }
+}
+
 export class Profile extends React.Component<IProfileProps, IProfileState> {
 
     constructor(props) {
         super(props);
         this.state = {
             trainingAddresses: [],
-            updateUser: {
-                email: '',
-                firstName: '',
-                lastName: '',
-                personalAddress: {
-                    addressId: 0,
-                    alias: '',
-                    city: '',
-                    country: '',
-                    state: '',
-                    street: '',
-                    zip: ''
-                },
-                phoneNumber: '',
-                roles: [],
-                trainingAddress: {
-                    addressId: 0,
-                    alias: '',
-                    city: '',
-                    country: '',
-                    state: '',
-                    street: '',
-                    zip: ''
-                },
-                userId: 0,
-                userStatus: {
-                    generalStatus: '',
-                    specificStatus: '',
-                    statusId: 0,
-                    virtual: false
-                },
-            },
+            updateUser: blankUser,
             userStatus: [],
         }
     }
