@@ -358,11 +358,18 @@ describe('<SCProfile />', () => {
                             value: cognitoRoles.ADMIN
                         }
                     }
+                    const simulatedAssociateEvent = {
+                        ...simulatedEvent,
+                        value: 'associate'
+                    }
                     const component = shallow<Profile>(<Profile {...mockProps} />);
                     const instance = component.instance();
                     instance.handleClickChange(simulatedEvent);
                     expect(component.state('updateUser')).toEqual({ ...mockUser, roles: [cognitoRoles.ADMIN] });
                     instance.handleClickChange(simulatedEvent);
+                    expect(component.state('updateUser')).toEqual(mockUser);
+                    instance.handleClickChange(simulatedEvent);
+                    instance.handleClickChange(simulatedAssociateEvent);
                     expect(component.state('updateUser')).toEqual(mockUser);
                 })
             } else {

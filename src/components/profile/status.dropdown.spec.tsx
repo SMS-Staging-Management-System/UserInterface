@@ -156,6 +156,17 @@ describe('<SCStatusDropdown />', () => {
                 expect(dropdownItem).toHaveLength(1);
             })
         }
+        if (status.virtual) {
+            // tslint:disable-next-line: no-identical-functions
+            it('Should not renter the option', () => {
+                const component = shallow(<StatusDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
+                expect(component).toBeDefined();
+                const dropdownItem = component.find(DropdownItem)
+                    .filterWhere(item => item.find('[header]').length !== 1)
+                    .findWhere(item => item.text() === status.specificStatus);
+                expect(dropdownItem).toHaveLength(0);
+            })
+        }
     })
 
     it(`Should have the text of the button as the passed in user's status`, () => {
