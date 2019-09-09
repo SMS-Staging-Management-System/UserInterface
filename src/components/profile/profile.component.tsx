@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import { updateUserSC } from '../../actions/profile/sc.profile.actions';
+import { updateUser } from '../../actions/profile/profile.actions';
 import { IAddress } from '../../model/address.model';
 import { IStatus } from '../../model/status.model';
 import { IUser } from '../../model/user.model';
@@ -12,19 +12,19 @@ import SCProfileStatusDropdown from './status.dropdown';
 
 
 export const inputNames = {
+    CITY: 'city',
+    COUNTRY: 'country',
     EMAIL: 'email',
     FIRST_NAME: 'firstName',
     LAST_NAME: 'lastName',
     PHONE: 'phoneNumber',
-    STREET: 'street',
-    CITY: 'city',
+    ROLES: 'roles',
     STATE: 'state',
-    COUNTRY: 'country',
-    ZIP: 'zip',
-    TRAINING_ALIASES: 'trainingAlias',
     STATUS_ALIASES: 'statusAlias',
+    STREET: 'street',
+    TRAINING_ALIASES: 'trainingAlias',
     VIRTUAL_CHECKBOX: 'virtualCheckbox',
-    ROLES: 'roles'
+    ZIP: 'zip',
 }
 
 export interface IProfileProps {
@@ -32,7 +32,8 @@ export interface IProfileProps {
     trainingAddresses: IAddress[],
     userStatus: IStatus[],
     userToUpdate?: IUser, // This prop tells the component to look at a user other than the current user
-    updateUserSC: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
+    // tslint:disable-next-line: bool-param-default
+    updateUser: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
 }
 
 interface IProfileState {
@@ -47,39 +48,39 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
         super(props);
         this.state = {
             trainingAddresses: [],
-            userStatus: [],
             updateUser: {
                 email: '',
-                userId: 0,
                 firstName: '',
                 lastName: '',
-                phoneNumber: '',
-                trainingAddress: {
-                    addressId: 0,
-                    street: '',
-                    alias: '',
-                    city: '',
-                    country: '',
-                    state: '',
-                    zip: ''
-                },
                 personalAddress: {
                     addressId: 0,
-                    street: '',
                     alias: '',
                     city: '',
                     country: '',
                     state: '',
+                    street: '',
                     zip: ''
                 },
+                phoneNumber: '',
+                roles: [],
+                trainingAddress: {
+                    addressId: 0,
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    street: '',
+                    zip: ''
+                },
+                userId: 0,
                 userStatus: {
-                    statusId: 0,
                     generalStatus: '',
                     specificStatus: '',
+                    statusId: 0,
                     virtual: false
                 },
-                roles: [],
-            }
+            },
+            userStatus: [],
         }
     }
 
@@ -156,7 +157,7 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
                 if (target !== 'associate') {
                     roles = user.roles
                     if (roles.includes(target)) {
-                        roles = roles.filter(role => { return role !== target });
+                        roles = roles.filter(role => role !== target);
                     } else {
                         roles.push(target);
                     }
@@ -176,9 +177,9 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
     onSubmit = (event: any) => {
         event.preventDefault();
         if (this.props.userToUpdate) {
-            this.props.updateUserSC(this.state.updateUser, this.props.userToUpdate);
+            this.props.updateUser(this.state.updateUser, this.props.userToUpdate);
         } else {
-            this.props.updateUserSC(this.state.updateUser, this.props.currentSMSUser, true);
+            this.props.updateUser(this.state.updateUser, this.props.currentSMSUser, true);
         }
     }
 
@@ -215,15 +216,13 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
     }
 
     componentDidUpdate(prevProps: IProfileProps, prevState: IProfileState) {
-        if (!this.props.userToUpdate) {
-            if (prevProps.currentSMSUser !== this.props.currentSMSUser) {
-                this.setState({
-                    updateUser: {
-                        ...this.props.currentSMSUser,
-                        roles: this.props.currentSMSUser.roles.slice(0)
-                    }
-                })
-            }
+        if (!this.props.userToUpdate && prevProps.currentSMSUser !== this.props.currentSMSUser) {
+            this.setState({
+                updateUser: {
+                    ...this.props.currentSMSUser,
+                    roles: this.props.currentSMSUser.roles.slice(0)
+                }
+            })
         }
         if (prevProps.trainingAddresses !== this.props.trainingAddresses) {
             this.setState({
@@ -372,7 +371,7 @@ const mapStateToProps = (state: IState) => ({
 })
 
 const mapDispatchToProps = {
-    updateUserSC
+    updateUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

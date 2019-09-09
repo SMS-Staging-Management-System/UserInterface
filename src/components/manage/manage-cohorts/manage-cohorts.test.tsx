@@ -25,19 +25,19 @@ let status: IStatus = {
     specificStatus: 'specifically pending',
     virtual: false
 }
-let userOne: IUser = 
-    {
-        email: 'string',
-        userId: 2,
-        firstName: 'Nae ',
-        lastName: 'Chan',
-        phoneNumber: '1234567890',
-        trainingAddress: addressOne,
-        personalAddress: addressOne,
-        userStatus: status,
-        roles: ['trainer', 'admin'],
-        cohorts: []
-    }
+let userOne: IUser =
+{
+    email: 'string',
+    userId: 2,
+    firstName: 'Nae ',
+    lastName: 'Chan',
+    phoneNumber: '1234567890',
+    trainingAddress: addressOne,
+    personalAddress: addressOne,
+    userStatus: status,
+    roles: ['trainer', 'admin'],
+    cohorts: []
+}
 let userArrayOne: IUser[] = [
     {
         email: 'string',
@@ -69,7 +69,7 @@ const fakeProps: IManageCohortsComponentProps = {
     cohorts: cohortOne,
     currentPage: 2,
     totalPages: 2,
-    updateCohorts: jest.fn().mockImplementation(()=> null),
+    updateCohorts: jest.fn().mockImplementation(() => null),
     updateCohortsByPage: jest.fn().mockImplementation(() => null),
     toggleCreateCohortModal: jest.fn().mockImplementation(() => null),
     toggleViewCohortModal: jest.fn().mockImplementation(() => null),
@@ -85,11 +85,11 @@ describe('Cohort Component', () => {
     })
     test('number of buttons', () => {
         const testCohortComponentResults = shallow(<ManageCohortsComponenent {...fakeProps} />)
-        expect (testCohortComponentResults.find(Button)).toHaveLength(3)
+        expect(testCohortComponentResults.find(Button)).toHaveLength(3)
     })
     test('number of dropdowns', () => {
         const testCohortComponentResults = shallow(<ManageCohortsComponenent {...fakeProps} />)
-        expect (testCohortComponentResults.find(Dropdown)).toHaveLength(1)
+        expect(testCohortComponentResults.find(Dropdown)).toHaveLength(1)
     })
 
 })

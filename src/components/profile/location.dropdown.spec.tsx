@@ -7,81 +7,83 @@ import { cognitoRoles } from "../../model/cognito-user.model";
 import { inputNames } from "./profile.component";
 import { IAddress } from "../../model/address.model";
 
+// tslint:disable-next-line: no-big-function
 describe('<SCLocationDropdown />', () => {
     let mockProps: ILocationDropdownProps;
     const mockUser: IUser = {
         email: 'email@email.com',
-        userId: 0,
         firstName: 'First',
         lastName: "Last",
-        phoneNumber: '8675309',
-        trainingAddress: {
-            addressId: 1,
-            alias: 'Reston',
-            street: '11730 Plaza America Dr #205',
-            zip: '20190',
-            city: 'Reston',
-            state: 'VA',
-            country: 'United States'
-        },
         personalAddress: {
             addressId: 0,
-            street: '123 Street St',
             alias: 'tstr',
             city: 'Laramie',
             country: 'USA',
             state: 'Wyoming',
+            street: '123 Street St',
             zip: '82070'
         },
+        phoneNumber: '8675309',
+        roles: [],
+        trainingAddress: {
+            addressId: 1,
+            alias: 'Reston',
+            city: 'Reston',
+            // tslint:disable-next-line: no-duplicate-string
+            country: 'United States',
+            state: 'VA',
+            street: '11730 Plaza America Dr #205',
+            zip: '20190',
+        },
+        userId: 0,
         userStatus: {
-            statusId: 4,
             generalStatus: 'Staging',
             specificStatus: 'Staging',
+            statusId: 4,
             virtual: false
         },
-        roles: []
     }
     const mockAdminUser: IUser = {
         ...mockUser,
+        roles: [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER],
         userStatus: {
-            statusId: 8,
             generalStatus: 'Staging',
             specificStatus: 'Project Started',
+            statusId: 8,
             virtual: false
         },
-        roles: [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]
     }
     const mockTrainingAddresses: IAddress[] = [
         {
             addressId: 1,
             alias: 'Reston',
+            city: 'Reston',
+            country: 'United States',
+            state: 'VA',
             street: '11730 Plaza America Dr #205',
             zip: '20190',
-            city: 'Reston',
-            state: 'VA',
-            country: 'United States'
         },
         {
             addressId: 2,
             alias: 'USF',
+            city: 'Tampa',
+            country: 'United States',
+            state: 'FL',
             street: 'Northwest Educational Complex',
             zip: '33613',
-            city: 'Tampa',
-            state: 'FL',
-            country: 'United States'
         }
     ]
 
     beforeEach(() => {
         mockProps = {
+            changeHandler: jest.fn(),
             currentSMSUser: {
                 ...mockUser
             },
+            trainingAddresses: mockTrainingAddresses,
             updateUser: {
                 ...mockUser
             },
-            trainingAddresses: mockTrainingAddresses,
-            changeHandler: jest.fn()
         }
     })
 
@@ -133,6 +135,7 @@ describe('<SCLocationDropdown />', () => {
         const component = shallow(<LocationDropdown {...{ ...mockProps, currentSMSUser: mockAdminUser }} />);
         expect(component).toBeDefined();
         const dropdownItems = component.find(DropdownItem);
+        // tslint:disable-next-line: no-duplicate-string
         const enabledDropdownItem = dropdownItems.find('[active=true]').children().text();
         expect(enabledDropdownItem).toBe(mockUser.trainingAddress.alias);
     })
@@ -181,6 +184,54 @@ describe('<SCLocationDropdown />', () => {
             expect(mockProps.changeHandler).toHaveBeenCalledWith(simulatedTarget);
         })
     })
+    
+    it('Should update the buttonText state when componentDidUpdate is called', () => {
+        const mockPrevProps = {
+            changeHandler: jest.fn(),
+            currentSMSUser: {
+                ...mockAdminUser
+            },
+            trainingAddresses: mockTrainingAddresses,
+            updateUser: {
+                email: '',
+                firstName: '',
+                lastName: '',
+                personalAddress: {
+                    addressId: 0,
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    street: '',
+                    zip: ''
+                },
+                phoneNumber: '',
+                roles: [],
+                trainingAddress: {
+                    addressId: 0,
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    street: '',
+                    zip: ''
+                },
+                userId: 0,
+                userStatus: {
+                    generalStatus: '',
+                    specificStatus: '',
+                    statusId: 0,
+                    virtual: false
+                },
+            },
+        }
 
+        const mockState = {
+            buttonText: mockProps.updateUser.trainingAddress.alias
+        }
 
+        const component = shallow(<LocationDropdown {...mockPrevProps} />);
+        component.setProps(mockProps);
+        expect(component.state()).toEqual(mockState);
+    })
 })
