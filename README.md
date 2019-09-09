@@ -1,11 +1,15 @@
 # Staging Management System
 ## Table of Contents
+- [Login](#login)
 - [Folder Structure](#folder-structure)
 - [Available Scripts](#available-scripts)
   - [npm start](#npm-start)
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
 
+## Login
+Username: blake.kruppa@revature.com
+Password: Password1!
 
 ## Folder Structure
 
@@ -61,6 +65,32 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](#deployment) for more information.
+
+## Interview List Filters
+
+The filters should be used as such:<br>
+The associate and manager emails filter dynamically while typing in the text box.
+There are dropdowns for location, client, associate input and interview feedback.
+There are also popovers for each date filter that as of (08-06-2019) are not 
+implemented but are intended to be used to select a date range.
+
+## Create New Interview
+
+There is a new workflow for creating a new interview.
+
+### Admin/Staging Manager: 
+1. Select a cohort
+2. Select populated list of associates based on selected cohort
+3. Select a client
+4. Select a date
+5. Select a time
+6. Select a location
+
+### Associate:
+1. Select a client
+2. Select a date
+3. Select a time
+4. Select a location
 
 
 ## Interview List Pagination

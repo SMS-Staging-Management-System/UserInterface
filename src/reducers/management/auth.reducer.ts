@@ -2,7 +2,7 @@ import { IAuthState } from '.';
 import { authTypes } from '../../actions/auth/auth.actions';
 
 const initialState: IAuthState = {
-  currentUser: {email: '', roles: []}
+  currentUser:  {email: '', roles: []}
 }
 
 export const authReducer = (state = initialState, action: any) => {

@@ -1,0 +1,33 @@
+.title {
+  text-align: center;
+  padding: .75rem;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+}
+
+.no-data {
+  margin-top: 1rem;
+}
+.NumInterviews{
+  margin-top: 20px;
+  border-radius: 20px;
+  width: 100%;
+}
+.chart{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.chart >*{
+  height: 300px;
+}
