@@ -259,7 +259,7 @@ describe('AddOther button click', () => {
         mockProps = {
             index: 0,
             parentFunction: jest.fn(),
-            selfDestruct: jest.fn()            
+            selfDestruct: jest.fn()
         };
         mockEvent = {
             target: {
@@ -268,10 +268,10 @@ describe('AddOther button click', () => {
         }
     })
 
-    const testArr = ['True/False', 'Multiple Choice', 'Checkbox Multiple Answer',
+    const testAddOtherArr = ['True/False', 'Multiple Choice', 'Checkbox Multiple Answer',
         'Rating', 'Feedback', 'Yes/No', 'Strongly Agree/Disagree']
 
-    testArr.forEach((value, index) => {
+    testAddOtherArr.forEach((value, index) => {
         it('Testing AddOther button', () => {
             mockProps.index = index + 1;
             const component = shallow(<AddOther {...mockProps} />);
@@ -318,7 +318,7 @@ describe('Survey Build Component rendering', () => {
                                         "question": "Name (Optional)",
                                         "questionId": 206,
                                         "typeId": 5,
-                                        
+
                                     }
                                 },
                                 {
@@ -327,7 +327,7 @@ describe('Survey Build Component rendering', () => {
                                         "question": "Email (Optional)",
                                         "questionId": 207,
                                         "typeId": 5,
-                                        
+
                                     }
                                 }
                             ]
@@ -405,11 +405,11 @@ describe('Survey Build Component rendering', () => {
 
     })
 
-    const testArr = [{ type: 1, isRender: true }, { type: 1, isRender: false }, { type: 2, isRender: true }, { type: 2, isRender: false },
+    const testRenderComponentArr = [{ type: 1, isRender: true }, { type: 1, isRender: false }, { type: 2, isRender: true }, { type: 2, isRender: false },
     { type: 3, isRender: false }, { type: 4, isRender: false },
     { type: 5, isRender: true }, { type: 6, isRender: false },
     { type: 7, isRender: true }, { type: 8, isRender: false }, { type: 8, isRender: true }];
-    testArr.forEach(({ type, isRender }, index) => {
+    testRenderComponentArr.forEach(({ type, isRender }, index) => {
         it('renderComponent function', () => {
             const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
             const instance = component.instance();
@@ -442,7 +442,7 @@ describe('Survey Build Component rendering', () => {
                     },
                     push: jest.fn(),
                     replace: jest.fn(),
-                    
+
                 }
             })
             if (type > 7) {
