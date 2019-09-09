@@ -102,9 +102,9 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
     handleClose = () => {
         this.setState({
+            showModal: false,
             survey: {},
-            surveyLoaded: false,
-            showModal: false
+            surveyLoaded: false
         })
     }
 
@@ -132,20 +132,20 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         }
         
         this.setState({
+            dateCreated: this.state.dateCreated,
             showModal: false,
-            surveyId: 0,
-            dateCreated: this.state.dateCreated
+            surveyId: 0
         })
 
         const dummySurvey: ISurvey = {
-            surveyId: 0,
-            title: this.state.newTitle,
-            description: this.state.description,
+            closingDate: new Date(new Date().getTime() + 604800000),
             creator: this.props.auth.currentUser.email,
             dateCreated: this.state.dateCreated,
-            closingDate: new Date(new Date().getTime() + 604800000),
+            description: this.state.description,
+            questionJunctions: [],
+            surveyId: 0,
             template: false,
-            questionJunctions: []
+            title: this.state.newTitle,
         };
         const questionJunctions: IJunctionSurveyQuestion[] = [];
         
@@ -153,21 +153,21 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
             const dummyQuestionJunction: any = {
                 id: 0,
-                survey: null,
                 question: {
                     questionId: 0,
                     typeId: this.state.survey.questionJunctions[i].question.typeId,
                     question: this.state.survey.questionJunctions[i].question.question,
                     answers: []
                 },
-                questionOrder: this.state.survey.questionJunctions[i].questionOrder
+                questionOrder: this.state.survey.questionJunctions[i].questionOrder,
+                survey: null,
             }
     
             for (let j = 0; j < (this.state.survey.questionJunctions[i].question.answers).length; j++) {
 
                 let dummyAnswers: IAnswer | any = {
-                    answerId: 0,
                     answer: '',
+                    answerId: 0,
                     question: null
                 }
                 dummyAnswers.answer = this.state.survey.questionJunctions[i].question.answers[j].answer;

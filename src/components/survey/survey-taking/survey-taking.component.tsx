@@ -119,127 +119,127 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                 email = this.props.auth.currentUser.email;
             }
             // Submit the Responses
-            for (let key in this.state.responses) {
+            for (const key in this.state.responses) {
                 const responseToSubmit: IResponse = {
                     answerId: {
-                        answerId: this.state.responses[key],
                         answer: '',
-                        question: {questionId: 0, question: '', typeId: 0, answers: []}
+                        answerId: this.state.responses[key],
+                        question: { questionId: 0, question: '', typeId: 0, answers: [] }
                     },
                     id: 0,
                     surveyId: {
-                        surveyId: this.state.survey.surveyId,
                         closingDate: new Date(),
+                        creator: '',
                         dateCreated: new Date(),
                         description: '',
-                        creator: '',
+                        questionJunctions: [],
+                        surveyId: this.state.survey.surveyId,
                         template: true,
                         title: '',
-                        questionJunctions: []
                     },
                     userEmailString: email
                 }
                 surveyClient.saveResponse(responseToSubmit);
             }
             // Submit the feedback
-            for (let key in this.state.newFeedback) {
+            for (const key in this.state.newFeedback) {
                 const newAnswer: IAnswer = {
-                    answerId: 0,
                     answer: this.state.newFeedback[key],
+                    answerId: 0,
                     question: {
-                        questionId: parseInt(key, 10),
+                        answers: [],
                         question: '',
-                        typeId: 0,
-                        answers: []
+                        questionId: parseInt(key, 10),
+                        typeId: 0
                     }
                 }
                 surveyClient.saveAnswer(newAnswer);
+                }
+                // Redirect to the main page
+                this.setState({
+                    redirectTo: '/surveys'
+                })
             }
-            // Redirect to the main page
-            this.setState({
-                redirectTo: '/surveys'
-            })
-        }
-    };
+        };
 
-    render() {
-        if (this.state.redirectTo) {
-            return <Redirect push to={this.state.redirectTo} />
-        }
-        return (
-            <div className="container">
-                <div className="jumbotron">
-                    {this.state.surveyLoaded ? (
-                        <>
-                            <h2 className="mb-3">{this.state.survey.title}</h2>
-                            {this.state.surveyLoaded &&
-                                <form>
-                                    {
-                                        this.state.survey.questionJunctions.map(questionJunction => (
-                                            <div key={questionJunction.question.questionId} className="card form-group mb-3">
-                                                <h5 className="card-header">{questionJunction.question.question}</h5>
-                                                <div className="card-body">
-                                                    {questionJunction.question.typeId === 5 ? (
-                                                        <div className="form-group">
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                name={questionJunction.question.questionId}
-                                                                value={this.state.newFeedback[questionJunction.question.questionId] || ''}
-                                                                onChange={this.handleFeedbackInput}
-                                                                placeholder="Enter your response here"
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                            <>
-                                                                {questionJunction.question.answers &&
+        render() {
+            if (this.state.redirectTo) {
+                return <Redirect push to={this.state.redirectTo} />
+            }
+            return (
+                <div className="container">
+                    <div className="jumbotron">
+                        {this.state.surveyLoaded ? (
+                            <>
+                                <h2 className="mb-3">{this.state.survey.title}</h2>
+                                {this.state.surveyLoaded &&
+                                    <form>
+                                        {
+                                            this.state.survey.questionJunctions.map(questionJunction => (
+                                                <div key={questionJunction.question.questionId} className="card form-group mb-3">
+                                                    <h5 className="card-header">{questionJunction.question.question}</h5>
+                                                    <div className="card-body">
+                                                        {questionJunction.question.typeId === 5 ? (
+                                                            <div className="form-group">
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control"
+                                                                    name={questionJunction.question.questionId}
+                                                                    value={this.state.newFeedback[questionJunction.question.questionId] || ''}
+                                                                    onChange={this.handleFeedbackInput}
+                                                                    placeholder="Enter your response here"
+                                                                />
+                                                            </div>
+                                                        ) : (
+                                                                <>
+                                                                    {questionJunction.question.answers &&
 
-                                                                    questionJunction.question.answers.map(choice => (
-                                                                        <div key={choice.answerId} className="form-check">
-                                                                            <input
-                                                                                className="form-check-input"
-                                                                                type="radio"
-                                                                                name={`question-${questionJunction.question.questionId}-choice`}
-                                                                                value={choice.answerId}
-                                                                                onChange={this.handleResponseInput}
-                                                                            />
-                                                                            <label className="form-check-label">
-                                                                                {choice.answer} </label>
-                                                                        </div>
-                                                                    ))
-                                                                }
-                                                            </>
-                                                        )}
+                                                                        questionJunction.question.answers.map(choice => (
+                                                                            <div key={choice.answerId} className="form-check">
+                                                                                <input
+                                                                                    className="form-check-input"
+                                                                                    type="radio"
+                                                                                    name={`question-${questionJunction.question.questionId}-choice`}
+                                                                                    value={choice.answerId}
+                                                                                    onChange={this.handleResponseInput}
+                                                                                />
+                                                                                <label className="form-check-label">
+                                                                                    {choice.answer} </label>
+                                                                            </div>
+                                                                        ))
+                                                                    }
+                                                                </>
+                                                            )}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))
-                                    }
-                                    <div className="form-check">
-                                        <input
-                                            className="form-check-input position-static"
-                                            type="checkbox"
-                                            checked={this.state.anonymousResponses}
-                                            name="anonymousResponses"
-                                            onChange={this.handleAnonymousCheckbox} />
-                                        <label className="form-check-label" htmlFor="gridCheck">
-                                            Make my responses anonymous
+                                            ))
+                                        }
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input position-static"
+                                                type="checkbox"
+                                                checked={this.state.anonymousResponses}
+                                                name="anonymousResponses"
+                                                onChange={this.handleAnonymousCheckbox} />
+                                            <label className="form-check-label" htmlFor="gridCheck">
+                                                Make my responses anonymous
                                         </label>
-                                    </div>
-                                    <button type="submit" className="submitSurveyButton" onClick={this.handleSubmitResponses}>Submit</button>
-                                </form>
-                            }
-                        </>
-                    ) : (
-                            <Loader />
-                        )}
-                </div>
-            </div >
-        )
+                                        </div>
+                                        <button type="submit" className="submitSurveyButton" onClick={this.handleSubmitResponses}>Submit</button>
+                                    </form>
+                                }
+                            </>
+                        ) : (
+                                <Loader />
+                            )}
+                    </div>
+                </div >
+            )
+        };
     };
-};
 
-const mapStateToProps = (state: IState) => ({
-    auth: state.managementState.auth
-});
+    const mapStateToProps = (state: IState) => ({
+        auth: state.managementState.auth
+    });
 
-export default connect(mapStateToProps)(SurveyTakingComponent);
+    export default connect(mapStateToProps)(SurveyTakingComponent);

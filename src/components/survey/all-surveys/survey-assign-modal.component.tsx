@@ -148,8 +148,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     checkFunc = (e , cohortId) => {
         // this function is for the the Select ALL checkbox
         const { checked } = e.target;
-        const { emailsToAssign } = this.state;
-        const id = +e;
         let emailArray: string[] = [];
 
         

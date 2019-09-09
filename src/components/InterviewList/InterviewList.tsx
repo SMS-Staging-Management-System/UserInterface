@@ -10,9 +10,6 @@ import { IoIosArrowUp } from 'react-icons/io';
 import { store } from '../../Store';
 import { FaSistrix } from 'react-icons/fa';
 import ReviewButton from './ActionButtons/ReviewButton';
-// import { InputGroup } from 'react-bootstrap';
-// import InputGroupAddon from 'reactstrap/lib/InputGroupAddon';
-// import Input from 'reactstrap/lib/Input';
 import { PopoverBody } from 'reactstrap';
 import moment from 'moment';
 // #endregion 

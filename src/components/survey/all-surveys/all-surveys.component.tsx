@@ -22,8 +22,7 @@ interface IComponentState {
     listFiltered: ISurvey[],
     title: string,
     description: string,
-    filterOption: string,
-    selectRow: string
+    filterOption: string
 }
 
 export class AllSurveysComponent extends Component<IComponentProps, IComponentState> {
@@ -38,8 +37,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
             listFiltered: [],
             title: "",
             description: "",
-            filterOption: "Filter By",
-            selectRow: 'rev-table-row'
+            filterOption: "Filter By"
         }
     }
 
@@ -130,16 +128,12 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
     }
 
     checkFunc = (e) => {
-        // const { checked } = e.target;
         const id = e;
-
-        // if (checked) {
             if (!this.state.surveysToAssign.includes(id)) {
                 this.setState({
                     surveysToAssign: [...this.state.surveysToAssign, id]
                 });
             }
-        // } else {
             if (this.state.surveysToAssign.includes(id)) {
                 this.setState({
                     surveysToAssign: this.state.surveysToAssign.filter((surveyId) => {
@@ -147,7 +141,6 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                     })
                 });
             }
-        // }
     }
 
     checkBoxFunc = (e) => {

@@ -252,6 +252,9 @@ describe('Delete button click', () => {
 
 });
 
+const testArray = ['True/False', 'Multiple Choice', 'Checkbox Multiple Answer',
+        'Rating', 'Feedback', 'Yes/No', 'Strongly Agree/Disagree']
+
 describe('AddOther button click', () => {
     let mockProps: any;
     let mockEvent: any;
@@ -268,10 +271,8 @@ describe('AddOther button click', () => {
         }
     })
 
-    const testAddOtherArr = ['True/False', 'Multiple Choice', 'Checkbox Multiple Answer',
-        'Rating', 'Feedback', 'Yes/No', 'Strongly Agree/Disagree']
-
-    testAddOtherArr.forEach((value, index) => {
+    
+    testArray.forEach((value, index) => {
         it('Testing AddOther button', () => {
             mockProps.index = index + 1;
             const component = shallow(<AddOther {...mockProps} />);
@@ -396,7 +397,7 @@ describe('Survey Build Component rendering', () => {
         const todos = component.state('todos');
         expect(todos).toHaveLength(7);
         expect(component.state('completedTasks')).toHaveLength(2);
-        instance.toAddFunction("True/False");
+        instance.toAddFunction(testArray[0]);
         expect(component.state('completedTasks')).toHaveLength(3);
         instance.handleSubmit(mockEvent);
         expect(mockProps.createSurvey).toBeCalledWith([{ name: 'creator', value: mockProps.auth.currentUser.email }], component.state('completedTasks'))
@@ -454,8 +455,7 @@ describe('Survey Build Component rendering', () => {
         })
     })
 
-    const testToAddArr = ["True/False", "Multiple Choice", "Checkbox Multiple Answer", "Rating", "Feedback", "Yes/No", "Strongly Agree/Disagree"];
-    testToAddArr.forEach((type) => {
+     testArray.forEach((type) => {
         it('toAddFunction testing', () => {
             const component = shallow<SurveyBuild>(<SurveyBuild {...mockProps} />);
             const instance = component.instance();
