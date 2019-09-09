@@ -94,7 +94,7 @@ export const surveyClient = {
 
     // Get histories by email
     const myHistories = await surveyClient.findHistoriesByEmail(email);
-
+    console.log(myHistories)
     // If loading failed, don't loop through surveys, preventing crashing the page if the api server is down
     if (myHistories !== undefined) {
       //Loop through the histories, and save the corresponding survey
