@@ -35,7 +35,8 @@ interface IComponentState {
     prev: boolean,
     next: boolean,
     search: string,
-    foundAll: boolean
+    foundAll: boolean,
+    offSearch: boolean
 };
 class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     constructor(props) {
@@ -67,7 +68,8 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             prev: false,
             next: true,
             search: '',
-            foundAll: true
+            foundAll: true,
+            offSearch: true
         }
     }
     componentDidMount() {
@@ -259,10 +261,20 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         });
     }
 
-    handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({
+    handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+       await this.setState({
             search: event.target.value
         });
+
+        if(this.state.search === ''){
+            this.setState({
+                offSearch: true
+            });
+        } else {
+            this.setState({
+                offSearch: false
+            });
+        }
     }
 
     render() {
@@ -278,8 +290,8 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                            <InputGroup>
                            <InputGroupAddon addonType="prepend">
                            <InputGroupText>
-                           {/* <Input addon type="checkbox" aria-label="Checkbox for following text input" /> */}
-                           <Button type="button" aria-label="Checkbox for following text input" onClick={() =>this.changeSearch(false)}>Search</Button>
+                           {/* <Button aria-label="Checkbox for following text input" onClick={() =>this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button> */}
+                           <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button>
                            </InputGroupText>
                            </InputGroupAddon>
                            <Input id="template-search-bar" placeholder="Enter Template Name" onChange={this.handleChange}/>

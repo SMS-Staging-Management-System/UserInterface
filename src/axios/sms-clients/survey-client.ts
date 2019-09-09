@@ -5,8 +5,7 @@ import { IResponse } from "../../model/surveys/response.model";
 import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
 import { smsClient } from ".";
 const surveyBaseRoute = '/survey-service/surveys';
-const templateRoute = '/survey-service/surveys/template/'
-const surveyAllBaseRoute = '/survey-service/surveys/all';
+const templateRoute = '/survey-service/surveys/template/true/'
 const questionBaseRoute = '/survey-service/questions';
 const answerBaseRoute = '/survey-service/answers';
 const responseBaseRoute = '/survey-service/responses';
@@ -14,7 +13,6 @@ const questionTypeBaseRoute = '/survey-service/questiontype';
 const questionJunctionBaseRoute = '/survey-service/junction_survey_questions';
 const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
-const junctionSurveyQuestionsBaseRoute = '/survey-service/junction_survey_questions';
 
 let totalPages = 0;
 let pages = 0;
@@ -35,12 +33,6 @@ export const surveyClient = {
     return await smsClient.get(`${surveyBaseRoute}/description/${description}`)
   },
 
-  // phong stuff published doesn't work
-  // findAllSurveys: async () => {
-  //   const resp = await smsClient.get(surveyBaseRoute + '/published');
-  //   return resp.data;   
-  // },
-
   findAllSurveys: async () => {
     const resp = await smsClient.get(surveyBaseRoute);
     return resp.data;   
@@ -57,8 +49,7 @@ export const surveyClient = {
         pages = totalPages;
       }
     }
-    console.log(creator)
-    let resp = await smsClient.get(templateRoute + 'creator/' + creator + '/' + pages)
+    let resp = await smsClient.get(`${templateRoute}${creator}/creator?page=${pages}`)
     surveysAndTemplates = resp.data;
     if (surveysAndTemplates) {
       surveysAndTemplates.content.forEach(element => {
@@ -80,7 +71,7 @@ export const surveyClient = {
         pages = totalPages;
       }
     }
-    let resp = await smsClient.get(templateRoute + `/${title}/` + pages)
+    let resp = await smsClient.get(`${templateRoute}title/${title}?page=${pages}`)
     surveysAndTemplates = resp.data;
     if (surveysAndTemplates) {
       surveysAndTemplates.content.forEach(element => {
