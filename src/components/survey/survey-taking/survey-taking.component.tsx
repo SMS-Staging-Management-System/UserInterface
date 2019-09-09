@@ -119,7 +119,6 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                 email = this.props.auth.currentUser.email;
             }
             // Submit the Responses
-            console.log(this.state.responses);
             for(let key in this.state.responses) {
                 const responseToSubmit: IResponse = {
                     answerId: {
@@ -143,7 +142,6 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                 surveyClient.saveResponse(responseToSubmit);
             }
             // Submit the feedback
-            console.log(this.state.newFeedback)
             for(let key in this.state.newFeedback) {
                 const newAnswer: IAnswer = {
                     answer: this.state.newFeedback[key],
