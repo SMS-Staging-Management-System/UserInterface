@@ -6,7 +6,6 @@ import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
 import { FaInfoCircle, FaHandPointRight } from 'react-icons/fa'
 import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
-import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import Loader from '../Loader/Loader';
@@ -154,10 +153,10 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             const dummyQuestionJunction: any = {
                 id: 0,
                 question: {
-                    questionId: 0,
-                    typeId: this.state.survey.questionJunctions[i].question.typeId,
+                    answers: [],
                     question: this.state.survey.questionJunctions[i].question.question,
-                    answers: []
+                    questionId: 0,
+                    typeId: this.state.survey.questionJunctions[i].question.typeId
                 },
                 questionOrder: this.state.survey.questionJunctions[i].questionOrder,
                 survey: null,
