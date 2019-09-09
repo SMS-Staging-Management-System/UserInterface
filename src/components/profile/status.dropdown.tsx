@@ -34,7 +34,7 @@ export class StatusDropdown extends Component<IStatusDropdownProps, IStatusDropd
     }
 
     componentDidUpdate(prevProps: IStatusDropdownProps) {
-        if (prevProps != this.props) {
+        if (prevProps !== this.props) {
             this.setState({
                 buttonText: this.props.updateUser.userStatus && this.props.updateUser.userStatus.generalStatus && this.props.updateUser.userStatus.specificStatus || 'No Status'
             })
@@ -42,9 +42,10 @@ export class StatusDropdown extends Component<IStatusDropdownProps, IStatusDropd
     }
 
     render() {
-        let dropDownHeaders: string[] = [];
-        let dropDownArr: any[] = [];
+        const dropDownHeaders: string[] = [];
+        const dropDownArr: any[] = [];
 
+        // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < this.props.userStatuses.length; i++) {
             const status = this.props.userStatuses[i];
             if (!dropDownHeaders.includes(status.generalStatus)) {

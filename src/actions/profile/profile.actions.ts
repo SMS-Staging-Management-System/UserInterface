@@ -11,8 +11,9 @@ export const profileTypes = {
     UPDATE_USER_PROFILE_FAILED: 'UPDATE USER PROFILE FAILED'
 }
 
+// tslint:disable-next-line: bool-param-default
 export const updateUser = (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => async (dispatch: any) => {
-    let roleNames = [
+    const roleNames = [
         cognitoRoles.ADMIN,
         cognitoRoles.TRAINER,
         cognitoRoles.STAGING_MANAGER
@@ -22,6 +23,7 @@ export const updateUser = (userToUpdate: IUser, prevUser: IUser, isCurrentUser?:
 
         let cognitoFailure = false;
         try {
+            // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < roleNames.length; i++) {
                 const newCogUser: ICognitoUserAddGroup = {
                     email: userToUpdate.email,
@@ -39,26 +41,26 @@ export const updateUser = (userToUpdate: IUser, prevUser: IUser, isCurrentUser?:
             cognitoFailure = true;
         }
         let newUser: IUser = resp.data;
-        if(cognitoFailure) {
+        if (cognitoFailure) {
             newUser = {
                 ...newUser,
                 roles: prevUser.roles
             }
         }
-        if(isCurrentUser){
+        if (isCurrentUser) {
             dispatch(updateCurrentSMSUser(newUser));
         }
         dispatch({
-            type: profileTypes.UPDATE_USER_PROFILE,
             payload: {
                 updatedUser: newUser
-            }            
+            },
+            type: profileTypes.UPDATE_USER_PROFILE,
         })
     } catch (error) {
         toast.error('Failed to update User.');
         dispatch({
+            payload: {},
             type: profileTypes.UPDATE_USER_PROFILE_FAILED,
-            payload: {}
         })
     }
     toast.success('User updated successfully.');

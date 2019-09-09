@@ -1,115 +1,117 @@
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import React from 'react';
+import { Button, DropdownItem, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 import { cognitoRoles } from "../../model/cognito-user.model";
-import { IUser } from "../../model/user.model";
-import { IStatusDropdownProps, StatusDropdown } from "./status.dropdown";
-import { Input, Button, UncontrolledDropdown, DropdownItem, DropdownToggle } from "reactstrap";
 import { IStatus } from "../../model/status.model";
+import { IUser } from "../../model/user.model";
 import { inputNames } from "./profile.component";
+import { IStatusDropdownProps, StatusDropdown } from "./status.dropdown";
 
+// tslint:disable-next-line: no-big-function
 describe('<SCStatusDropdown />', () => {
     let mockProps: IStatusDropdownProps;
     const mockUser: IUser = {
         email: 'email@email.com',
-        userId: 0,
         firstName: 'First',
         lastName: "Last",
-        phoneNumber: '8675309',
-        trainingAddress: {
-            addressId: 1,
-            alias: 'Reston',
-            street: '11730 Plaza America Dr #205',
-            zip: '20190',
-            city: 'Reston',
-            state: 'VA',
-            country: 'United States'
-        },
         personalAddress: {
             addressId: 0,
-            street: '123 Street St',
             alias: 'tstr',
             city: 'Laramie',
             country: 'USA',
             state: 'Wyoming',
+            street: '123 Street St',
             zip: '82070'
         },
+        phoneNumber: '8675309',
+        roles: [],
+        trainingAddress: {
+            addressId: 1,
+            alias: 'Reston',
+            city: 'Reston',
+            country: 'United States',
+            state: 'VA',
+            street: '11730 Plaza America Dr #205',
+            zip: '20190'
+        },
+        userId: 0,
         userStatus: {
-            statusId: 4,
             generalStatus: 'Staging',
             specificStatus: 'Staging',
+            statusId: 4,
             virtual: false
         },
-        roles: []
     }
     const mockAdminUser: IUser = {
         ...mockUser,
+        roles: [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER],
         userStatus: {
-            statusId: 8,
             generalStatus: 'Staging',
             specificStatus: 'Project Started',
+            statusId: 8,
             virtual: false
         },
-        roles: [cognitoRoles.ADMIN, cognitoRoles.STAGING_MANAGER, cognitoRoles.TRAINER]
     }
     const mockStatuses: IStatus[] = [
         {
-            statusId: 1,
             generalStatus: 'Training',
             specificStatus: 'Dropped',
+            statusId: 1,
             virtual: false
         },
         {
-            statusId: 2,
             generalStatus: 'Training',
             specificStatus: 'Training',
+            statusId: 2,
             virtual: false
         },
         {
-            statusId: 3,
             generalStatus: 'Training',
             specificStatus: 'Complete',
+            statusId: 3,
             virtual: false
         },
         {
-            statusId: 4,
             generalStatus: 'Staging',
             specificStatus: 'Staging',
+            statusId: 4,
             virtual: false
         },
         {
-            statusId: 5,
             generalStatus: 'Staging',
             specificStatus: 'Bench',
+            statusId: 5,
             virtual: false
         },
         {
-            statusId: 6,
             generalStatus: 'Staging',
             specificStatus: 'Waiting for Paperwork',
+            statusId: 6,
             virtual: false
         },
         {
-            statusId: 7,
             generalStatus: 'Staging',
             specificStatus: 'Confirmed',
+            statusId: 7,
             virtual: false
         },
         {
-            statusId: 8,
             generalStatus: 'Staging',
             specificStatus: 'Project Started',
+            statusId: 8,
             virtual: false
         },
         {
-            statusId: 9,
             generalStatus: 'Staging',
             specificStatus: 'Paused',
+            statusId: 9,
             virtual: false
         },
     ]
 
     beforeEach(() => {
         mockProps = {
+            changeHandler: jest.fn(),
             currentSMSUser: {
                 ...mockUser
             },
@@ -117,7 +119,6 @@ describe('<SCStatusDropdown />', () => {
                 ...mockUser
             },
             userStatuses: mockStatuses,
-            changeHandler: jest.fn()
         }
     })
 
@@ -170,6 +171,7 @@ describe('<SCStatusDropdown />', () => {
         const dropdownItems = component.find(DropdownItem)
             .filterWhere(item => item.find('[header]').length !== 1)
             .filterWhere(item => item.find('[divider]').length !== 1);
+        // tslint:disable-next-line: no-duplicate-string
         const enabledDropdownItem = dropdownItems.find('[active=true]').children().text();
         expect(enabledDropdownItem).toBe(mockUser.userStatus.specificStatus);
     })
@@ -193,8 +195,8 @@ describe('<SCStatusDropdown />', () => {
             item.simulate('click', simulatedEvent);
 
             const newActive = component.find(DropdownItem)
-                .filterWhere(item => item.find('[header]').length !== 1)
-                .filterWhere(item => item.find('[divider]').length !== 1)
+                .filterWhere(filterItem => filterItem.find('[header]').length !== 1)
+                .filterWhere(filterItem => filterItem.find('[divider]').length !== 1)
                 .find('[active=true]');
             expect(newActive.children().text()).toBe(item.children().text());
         })
@@ -229,43 +231,43 @@ describe('<SCStatusDropdown />', () => {
     })
     it('Should update the buttonText state when componentDidUpdate is called', () => {
         const mockPrevProps = {
+            changeHandler: jest.fn(),
             currentSMSUser: {
                 ...mockAdminUser
             },
             updateUser: {
                 email: '',
-                userId: 0,
                 firstName: '',
                 lastName: '',
-                phoneNumber: '',
-                trainingAddress: {
-                    addressId: 0,
-                    street: '',
-                    alias: '',
-                    city: '',
-                    country: '',
-                    state: '',
-                    zip: ''
-                },
                 personalAddress: {
                     addressId: 0,
-                    street: '',
                     alias: '',
                     city: '',
                     country: '',
                     state: '',
+                    street: '',
                     zip: ''
                 },
+                phoneNumber: '',
+                roles: [],
+                trainingAddress: {
+                    addressId: 0,
+                    alias: '',
+                    city: '',
+                    country: '',
+                    state: '',
+                    street: '',
+                    zip: ''
+                },
+                userId: 0,
                 userStatus: {
-                    statusId: 0,
                     generalStatus: '',
                     specificStatus: '',
+                    statusId: 0,
                     virtual: false
                 },
-                roles: [],
             },
             userStatuses: mockStatuses,
-            changeHandler: jest.fn()
         }
 
         const mockState = {

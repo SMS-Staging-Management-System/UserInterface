@@ -12,11 +12,7 @@ export interface IRoleSelectorProps {
     onChangeHandler: (event: any) => any
 }
 
-interface IRoleSelectorState {
-
-}
-
-export class RoleSelector extends Component<IRoleSelectorProps, IRoleSelectorState> {
+export class RoleSelector extends Component<IRoleSelectorProps, {}> {
     constructor(props: IRoleSelectorProps) {
         super(props);
     }

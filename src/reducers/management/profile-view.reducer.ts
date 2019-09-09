@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { IProfileViewState } from ".";
 import { viewUserTypes } from "../../actions/view-user/view-user.actions";
 import { profileTypes } from "../../actions/profile/profile.actions.old";

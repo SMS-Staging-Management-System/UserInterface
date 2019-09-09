@@ -3,36 +3,36 @@ import { profileTypes } from "../../actions/profile/profile.actions";
 
 const initialState: IProfileUpdateState = {
     user: {
-        userId: 0,
+        email: '',
         firstName: '',
         lastName: '',
-        email: '',
-        phoneNumber: '',
         personalAddress: {
             addressId: 0,
-            street: '',
             alias: '',
             city: '',
-            state: '',
             country: '',
+            state: '',
+            street: '',
             zip: ''
         },
+        phoneNumber: '',
+        roles: [],
         trainingAddress: {
             addressId: 0,
-            street: '',
             alias: '',
             city: '',
-            state: '',
             country: '',
+            state: '',
+            street: '',
             zip: ''
         },
+        userId: 0,
         userStatus: {
-            statusId: 0,
             generalStatus: '',
             specificStatus: '',
+            statusId: 0,
             virtual: false
         },
-        roles: []
     }
 }
 

@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { IAddress } from "../../model/address.model";
 import { IUser } from "../../model/user.model";
 import { userClient } from "../../axios/sms-clients/user-client";
