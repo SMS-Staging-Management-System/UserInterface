@@ -119,7 +119,8 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                 email = this.props.auth.currentUser.email;
             }
             // Submit the Responses
-            this.state.responses.forEach(key => {
+            console.log(this.state.responses);
+            for(let key in this.state.responses) {
                 const responseToSubmit: IResponse = {
                     answerId: {
                         answer: '',
@@ -140,9 +141,10 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                     userEmailString: email
                 }
                 surveyClient.saveResponse(responseToSubmit);
-            })
+            }
             // Submit the feedback
-            this.state.newFeedback.forEach(key => {
+            console.log(this.state.newFeedback)
+            for(let key in this.state.newFeedback) {
                 const newAnswer: IAnswer = {
                     answer: this.state.newFeedback[key],
                     answerId: 0,
@@ -154,7 +156,7 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                     }
                 }
                 surveyClient.saveAnswer(newAnswer);
-            })
+            }
             // Redirect to the main page
             this.setState({
                 redirectTo: '/surveys'

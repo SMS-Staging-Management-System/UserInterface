@@ -72,9 +72,9 @@ export const surveyClient = {
     const responseCount = await surveyClient.countResponses(id);
 
     // Add the response count to each question
-    survey.questionJunctions.forEach(question => {
-      if (question.question.typeId !== 5) {
-        question.question.answers.forEach(choice => {
+    survey.questionJunctions.forEach(questionJunction => {
+      if (questionJunction.question.typeId !== 5) {
+        questionJunction.question.answers.forEach(choice => {
           if (responseCount[choice.answerId]) {
             choice.responseCount = responseCount[choice.answerId];
           } else {
