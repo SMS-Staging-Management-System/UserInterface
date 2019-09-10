@@ -11,9 +11,9 @@ export const cohortClient = {
     return smsClient.post(cohortContext, cohort);
   },
 
-  // findByToken(token: string) {
-  //   return smsClient.get(cohortContext + `/token/${token}`)
-  // },
+  findByToken(token: string) {
+    return smsClient.get(cohortContext + `/token/${token}`)
+  },
   joinCohort(user: IUser, token: string) {
     return smsClient.post(cohortContext + `/token/${token.toString()}`, user)
   },
