@@ -86,6 +86,7 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
                                     <tr className="rev-table-row">
                                         <td colSpan={4} ><div className='div-center fadeInUp'>You have no surveys assigned.</div></td>
                                     </tr>
+                                    
                                     )}
                         </tbody>
                     </Table>

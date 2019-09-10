@@ -85,7 +85,7 @@ describe('Cohort Component', () => {
     })
     test('number of buttons', () => {
         const testCohortComponentResults = shallow(<ManageCohortsComponenent {...fakeProps} />)
-        expect(testCohortComponentResults.find(Button)).toHaveLength(3)
+        expect (testCohortComponentResults.find('Button')).toHaveLength(3)
     })
     test('number of dropdowns', () => {
         const testCohortComponentResults = shallow(<ManageCohortsComponenent {...fakeProps} />)

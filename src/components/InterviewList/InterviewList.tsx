@@ -10,10 +10,7 @@ import { IoIosArrowUp } from 'react-icons/io';
 import { store } from '../../Store';
 import { FaSistrix } from 'react-icons/fa';
 import ReviewButton from './ActionButtons/ReviewButton';
-import { InputGroup } from 'react-bootstrap';
-import InputGroupAddon from 'reactstrap/lib/InputGroupAddon';
-import Input from 'reactstrap/lib/Input';
-import { UncontrolledPopover, PopoverBody } from 'reactstrap';
+import { PopoverBody } from 'reactstrap';
 import moment from 'moment';
 // #endregion 
 
@@ -356,7 +353,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                             <button className="btn rev-btn-2" type="button" id="dateNotified">
                                                 Notified
                                             </button> 
-                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateNotified">
+                                            {/* <UncontrolledPopover trigger="legacy" placement="bottom" target="dateNotified">
                                                 <PopoverBody>
                                                     <InputGroup>
                                                         <InputGroupAddon addonType="prepend">From</InputGroupAddon>
@@ -367,13 +364,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                                         <Input type="date" name="toNotified" onChange={this.updateDate}></Input>
                                                     </InputGroup>
                                                 </PopoverBody>
-                                            </UncontrolledPopover>
+                                            </UncontrolledPopover> */}
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                             <button className="btn rev-btn-2" type="button" id="dateScheduled">
                                                 Scheduled
                                             </button> 
-                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateScheduled">
+                                            {/* <UncontrolledPopover trigger="legacy" placement="bottom" target="dateScheduled">
                                                 <PopoverBody>
                                                     <InputGroup>
                                                         <InputGroupAddon addonType="prepend">From</InputGroupAddon>
@@ -384,13 +381,13 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                                         <Input type="date" name="toScheduled" onChange={this.updateDate}></Input>
                                                     </InputGroup>
                                                 </PopoverBody>
-                                            </UncontrolledPopover>
+                                            </UncontrolledPopover> */}
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse'}}>
                                             <button className="btn rev-btn-2" type="button" id="dateReviewed">
                                                 Reviewed
                                             </button> 
-                                            <UncontrolledPopover trigger="legacy" placement="bottom" target="dateReviewed">
+                                            {/* <UncontrolledPopover trigger="legacy" placement="bottom" target="dateReviewed">
                                                 <PopoverBody>
                                                     <InputGroup>
                                                         <InputGroupAddon addonType="prepend">From</InputGroupAddon>
@@ -401,7 +398,7 @@ export class InterviewList extends React.Component<InterviewListProps, Interview
                                                         <Input type="date" name="toReviewed" onChange={this.updateDate}></Input>
                                                     </InputGroup>
                                                 </PopoverBody>
-                                            </UncontrolledPopover>
+                                            </UncontrolledPopover> */}
                                     </td>
                                     <td style={{ margin: 0, padding: 0, borderCollapse: 'collapse' }}>
                                         <select name='input' onChange={this.filterChange} className='form-control' >

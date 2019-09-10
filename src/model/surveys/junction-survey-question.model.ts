@@ -1,5 +1,6 @@
 //import { IQuestion } from "./question.model";
 import { ISurvey } from "./survey.model";
+import { IQuestion } from "./question.model";
 // let temp: IQuestion = {
 //     questionId: {
 //         questionId: 0,
@@ -8,15 +9,8 @@ import { ISurvey } from "./survey.model";
 //     }
 // }
 export interface IJunctionSurveyQuestion {
-
     id: number;
-
-    questionId :{ 
-        questionId: number;
-    question: string;
-    typeId: number;
-    }
+    question: IQuestion;
+    survey: ISurvey;
     questionOrder: number;
-
-    surveyId: ISurvey;
 }

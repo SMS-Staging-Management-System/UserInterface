@@ -1,9 +1,10 @@
+import { IAnswer } from "./answer.model";
+
 export interface IQuestion {
-    questionId :{ 
-        questionId: number;
+    questionId: number;
     question: string;
     typeId: number;
-    }
+    answers: IAnswer[];
 
 }
 
