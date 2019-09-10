@@ -36,8 +36,8 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
 
         return (
             <Modal isOpen={this.props.viewUser.enabled}>
-                <ModalHeader className="rev-background-color">User Info
-                <Button color="$revature-orange-light" className="close-sign" onClick={this.props.toggleViewUserModal}>x</Button>
+                <ModalHeader className="rev-background-color"><p>User Info</p>
+                <Button color="$revature-orange-light" className="close-sign d-flex justify-content-end" onClick={this.props.toggleViewUserModal}>x</Button>
                 </ModalHeader>
                 <ModalBody>
 
