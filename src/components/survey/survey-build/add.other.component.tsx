@@ -4,7 +4,8 @@ import Button from 'reactstrap/lib/Button';
 interface AddProps {
     parentFunction: any,
     index?: number,
-    selfDestruct?: any
+    selfDestruct?: any,
+    name: string
 }
 
 
@@ -22,7 +23,7 @@ export class AddOther extends React.Component<AddProps, any> {
   render() {
     return (
         <div>
-            <button type="button" className="btn rev-btn dropdown-toggle typeSelect" data-toggle="dropdown" >Select Question Type</button>
+            <button type="button" className="btn rev-btn dropdown-toggle typeSelect" data-toggle="dropdown" >{this.props.name}</button>
             <div className="dropdown-menu" aria-labelledby="examples-dropdown">
                 <Button type="button" onClick={this.selectType} value="True/False" className=" dropdown-item nav-dropdown">True/False</Button>
                 <Button type="button" onClick={this.selectType} value="Multiple Choice" className=" dropdown-item nav-dropdown">Multiple Choice</Button>

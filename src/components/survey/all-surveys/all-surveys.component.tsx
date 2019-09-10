@@ -128,8 +128,24 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
     }
 
     checkFunc = (e) => {
+        const id = e;
+            if (!this.state.surveysToAssign.includes(id)) {
+                this.setState({
+                    surveysToAssign: [...this.state.surveysToAssign, id]
+                });
+            }
+            if (this.state.surveysToAssign.includes(id)) {
+                this.setState({
+                    surveysToAssign: this.state.surveysToAssign.filter((surveyId) => {
+                        return surveyId !== id
+                    })
+                });
+            }
+    }
+
+    checkBoxFunc = (e) => {
         const { checked } = e.target;
-        const id = +e.target.id;
+        const id = e;
 
         if (checked) {
             if (!this.state.surveysToAssign.includes(id)) {
@@ -160,7 +176,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         if (this.state.title) {
             const surveyByTitle = await surveyClient.findSurveyByTitle(this.state.title);
             this.setState({
-                surveys: surveyByTitle,
+                surveys: surveyByTitle.data,
                 surveysLoaded: true
             });
         }
@@ -180,7 +196,7 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
         if (this.state.description) {
             const surveyByDescription = await surveyClient.findSurveyByDescription(this.state.description);
             this.setState({
-                surveys: surveyByDescription,
+                surveys: surveyByDescription.data,
                 surveysLoaded: true
             });
         }
@@ -250,7 +266,6 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             <th>Description</th>
                                             <th>Date Created</th>
                                             <th>Closing Date</th>
-                                            <th>Published</th>
                                             <th>Analytics</th>
                                             <th>Respondents</th>
                                         </tr>
@@ -306,13 +321,12 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                             </tr>
                                             :<>
                                         {!this.state.closingFilter ? this.state.surveys.map(survey => (             // This.state.surveys is rendered if there is no filter
-                                        <tr key={survey.surveyId} className="rev-table-row">
-                                            <td><input type="checkbox" onChange={e => this.checkFunc(e)} id={survey.surveyId.toString()} /></td>
+                                        <tr key={survey.surveyId} className={this.state.surveysToAssign.includes(survey.surveyId) ? 'rev-table-row-active' :'rev-table-row'} onClick={e => this.checkFunc(survey.surveyId)}>
+                                            <td><input type="checkbox" className="userDropInput" onChange={e=>this.checkBoxFunc(e)} checked={!!this.state.surveysToAssign.includes(survey.surveyId)} id={survey.surveyId.toString()} /></td> 
                                             <td>{survey.title}</td>
                                             <td>{survey.description}</td>
                                             <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
                                             <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
-                                            <td>{survey.published ? 'Yes' : 'No'}</td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
                                                 this.handleLoadSurveyData(survey.surveyId)}>Data</Button></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
@@ -321,13 +335,12 @@ export class AllSurveysComponent extends Component<IComponentProps, IComponentSt
                                     ))
                                     : 
                                     this.state.listFiltered.map(filtered => (                           // This.state.listFiltered is rendered if there is a filter.
-                                        <tr key={filtered.surveyId} className="rev-table-row">
-                                            <td><input type="checkbox" onChange={e => this.checkFunc(e)} id={filtered.surveyId.toString()} /></td>
+                                        <tr key={filtered.surveyId} className={this.state.surveysToAssign.includes(filtered.surveyId) ? 'rev-table-row-active' :'rev-table-row'} onClick={e => this.checkFunc(filtered.surveyId)}>
+                                            <td><input type="checkbox" className="userDropInput" onChange={e=>this.checkBoxFunc(e)} checked={!!this.state.surveysToAssign.includes(filtered.surveyId)} id={filtered.surveyId.toString()} /></td>
                                             <td>{filtered.title}</td>
                                             <td>{filtered.description}</td>
                                             <td>{filtered.dateCreated && new Date(filtered.dateCreated).toDateString()}</td>
                                             <td>{filtered.closingDate && new Date(filtered.closingDate).toDateString()}</td>
-                                            <td>{filtered.published ? 'Yes' : 'No'}</td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
                                                 this.handleLoadSurveyData(filtered.surveyId)}>Data</Button></td>
                                             <td><Button className='assignSurveyBtn' onClick={() =>
