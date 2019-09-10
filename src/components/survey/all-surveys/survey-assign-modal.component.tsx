@@ -163,8 +163,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 allGeneralStatus: this.state.allGeneralStatus.add(status.generalStatus)
             });
         });
-        console.log("all general status");
-        console.log(this.state.allGeneralStatus);
         this.getAllSpecificStatus();
     }
     getAllSpecificStatus = () => {
@@ -173,14 +171,10 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 allSpecificStatus: this.state.allSpecificStatus.add(status.specificStatus)
             });
         });
-        console.log("all Specific status");
-        console.log(this.state.allSpecificStatus);
     }
     // get all users
     loadAllUsersSinglePage = async () => {
         let resp = await userClient.findAllUsers(0);
-        console.log('all users single page');
-        console.log(resp.data);
         this.setState({
             allUsers: resp.data.content
         });
@@ -218,8 +212,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         for (const cohort of sortCohorts) {
             const users = await userClient.findAllByCohortId(cohort.cohortId);
             // for each array of users, load into array
-            console.log("emails");
-            console.log(users.data);
             for (const user of users.data) {
                 // make object for each user to push to array
                 const idAndEmailObj: IUserCohortIdAndEmail = {
@@ -245,7 +237,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         const { emailsToAssign: emAssign } = this.state;
         //const id = +e.target.id;
         let emailArray: string[] = [];
-
         if (checked) {
             // filter out users for only ones in THIS cohort
             this.state.userArray.filter(user => {
@@ -289,8 +280,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     }
                     return inArr;
                 })
-            })
-
+            });
         }
     }
      // load general status users of selected status
@@ -447,7 +437,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     }
                 }
                 let el = document.getElementById(cohortId) as HTMLInputElement;
-                console.log()
                 if (el) { el.checked = false; }
             }
         }
@@ -493,8 +482,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     render() {
         const { allGeneralStatus, allSpecificStatus, sortCohorts } = this.state;
-        //console.log(sortCohorts);
-
         return (
             <>
                 <div>
@@ -587,7 +574,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                             )}
                     </Modal>
                 </div>
-
             </>
         );
     }
