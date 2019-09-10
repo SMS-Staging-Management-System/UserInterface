@@ -21,8 +21,8 @@ export interface ISurveyBuildState {
   junctionTable: IJunctionSurveyQuestion
 }
 export interface ISurveyState {
-  templateModal: IModalTemplateState,
-  surveyBuildState: ISurveyBuildState
+  // templateModal: IModalTemplateState,
+  surveyBuildState : ISurveyBuildState
 }
 export const surveyState = combineReducers<ISurveyState>({
   //templateModal: templateModalReducer,

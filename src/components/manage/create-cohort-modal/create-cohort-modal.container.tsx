@@ -2,7 +2,7 @@ import { toggleModal, toggleLocationDropdown, updateNewCohortLocation, updateNew
 import { manageGetUsersByGroup } from '../../../actions/manage-users/manage-users.actions'
 import { updateLocations } from '../../../actions/address/address.actions';
 import { IState,} from '../../../reducers';
-import { IAddressState, ICreateCohortState, /*IManageUsersState*/ } from '../../../reducers/management'
+import { IAddressState, ICreateCohortState, IManageUsersState, /*IManageUsersState*/ } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { CreateCohortModal } from './create-cohort-modal.component';
 import { ICohort } from '../../../model/cohort';
@@ -18,9 +18,8 @@ export interface ICreateCohortModal {
   updateNewCohort: (cohort: ICohort) => void,
   updateLocations: () => void,
   updateNewCohortTrainer: (trainer: ICognitoUser) => void,
-  manageGetUsersByGroup: (group: string) => void,
-
-  //manageUsers: IManageUsersState,
+  manageGetUsersByGroup: (group: string,email: string, page?: number) => void,
+  manageUsers: IManageUsersState,
   createCohort: ICreateCohortState,
   addresses: IAddressState,
 }
@@ -28,7 +27,7 @@ export interface ICreateCohortModal {
 const mapStateToProps = (state:IState) => ({
   addresses: state.managementState.addresses,
   createCohort: state.managementState.createCohort,
-  //manageUsers: state.managementState.manageUsers
+  manageUsers: state.managementState.manageUsers
 });
 
 const mapDispatchToProps = {

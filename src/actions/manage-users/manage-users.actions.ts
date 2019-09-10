@@ -174,7 +174,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             updateTrainerResponse(trainerResponse)(dispatch);
         }
 
-        // parse the response from the user service
+         // parse the response from the user service
         let userInfoResp = await userInfoRespPromise;
         userServiceUserList = userInfoResp.data.content || userInfoResp.data;
 
