@@ -28,7 +28,7 @@ export const cohortClient = {
     return smsClient.get(cohortContext+`/trainer/${email}/email?page=${page}`)
   },
 
-  findAll() { 
+  findAll() {
     return smsClient.get(cohortContext)
   },
   async getUsers(id: number) {
