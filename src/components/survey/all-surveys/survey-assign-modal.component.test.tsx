@@ -37,7 +37,8 @@ let assignSurveys:ISurvey[] = [
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('7-2-2019'),
         template: false,
-        published: true
+        creator: '',
+        questionJunctions: []
     }
 ]
 // mock statuses
