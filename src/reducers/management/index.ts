@@ -20,11 +20,9 @@ import  joinCohortReducer  from "./join-cohort.reducer";
 import { IStatus } from "../../model/status.model";
 import { viewCohortReducer } from "./view-cohort.reducer";
 import { ICreateUser } from "../../model/create-user.model";
+import { profileUpdateReducer } from "./profile.reducer";
 
 
-export interface IAddressState {
-    trainingAddresses: IAddress[],
-}
 export interface IAuthState {
     currentUser: ICognitoUser
 }
@@ -112,6 +110,10 @@ export interface IManageCohortsState {
     totalPages: number
 }
 
+export interface IProfileUpdateState {
+    user: IUser
+}
+
 export interface IProfileViewState {
     user: IUser,
     bUserInfoChanged: boolean,
@@ -132,12 +134,16 @@ export interface IManagementState {
     statuses: IStatusState,
     currentSMSUser: ICurrentSMSUserState,
     currentProfile: IProfileViewState,
+    updateProfile: IProfileUpdateState,
     viewCohort: ICohortModalState,
     joinCohort: IJoinCohortState,
     resetPassword: IResetPasswordState,
     resetPasswordUsername: IResetPasswordUsernameState,
     login: ILoginState
 }
+
+
+
 
 export interface IResetPasswordState {
     showPasswordTip: boolean,
@@ -160,18 +166,19 @@ export interface ILoginState {
 
 export const managementState = combineReducers<IManagementState>({
     addresses: addressReducer,
-    statuses: statusReducer,
     auth: authReducer,
-    viewUser: viewUserReducer,
-    createUser: createUserReducer,
     createCohort: createCohortReducer,
-    manageUsers: manageUsersReducer,
+    createUser: createUserReducer,
+    currentProfile: profileViewReducer,
     currentSMSUser: currentSMSUserReducer,
     joinCohort: joinCohortReducer,
-    currentProfile: profileViewReducer,
-    viewCohort: viewCohortReducer,
+    login: loginReducer,
     manageCohorts: manageCohortsReducer,
+    manageUsers: manageUsersReducer,
     resetPassword: resetPasswordReducer,
     resetPasswordUsername: resetPasswordUsernameReducer,
-    login: loginReducer,
+    statuses: statusReducer,
+    updateProfile: profileUpdateReducer,
+    viewCohort: viewCohortReducer,
+    viewUser: viewUserReducer,
 })
