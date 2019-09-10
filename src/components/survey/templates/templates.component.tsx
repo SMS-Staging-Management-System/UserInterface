@@ -322,15 +322,14 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             </Table>
                             {/* button goes here pick up here */}
                             <div className='row horizontal-centering vertical-centering'>
-                                <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>All Templates</Button>
-                                <h6 className="div-child text-style" >
-
-                                </h6>
                                 <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(-1)} disabled={this.state.prev}>Prev</Button>
                                 <h6 className="div-child text-style" >
                                     Page {surveyClient.currentPage()} of {surveyClient.totalPages()}
                                 </h6>
                                 <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(1)} disabled={this.state.next}>Next</Button>
+                            </div>
+                            <div className='row horizontal-centering vertical-centering'>
+                                <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>All Templates</Button>
                             </div>
                         </div>
                     ) : (
@@ -354,7 +353,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
                                 </Table>
 
-                                <Button variant="primary" className="div-center fadeInUp" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>Go Back To The Templates</Button>
+                                <Button variant="primary" id="back-butt" className="div-center fadeInUp" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>Go Back To The Templates</Button>
                             </div>
                         )
                 ) : (
