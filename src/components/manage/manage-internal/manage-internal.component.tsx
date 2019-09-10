@@ -50,7 +50,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     componentDidMount() {
         //If component is loading for the first time, load all users
         if (this.props.componentLoaded === false) {
-            this.props.updateManageUsersTable("All", '', this.props.manageUsers.manageUsersCurrentPage);
+            this.props.updateManageUsersTable("all", '', this.props.manageUsers.manageUsersCurrentPage);
         }
         //If component was sorted before, make sure to turn to that sorted state.
         if (this.props.userTableSort !== "sorted") {
@@ -130,7 +130,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     }
 
     incrementPage = () => {
-        if (this.props.manageUsers.manageUsersCurrentPage < this.props.manageUsers.manageUsersPageTotal - 1) {
+        if ((this.props.manageUsers.manageUsersCurrentPage < this.props.manageUsers.manageUsersPageTotal - 1) || this.props.manageUsers.areMore) {
             const newPage = this.props.manageUsers.manageUsersCurrentPage + 1;
             if (this.props.manageUsers.emailSearch) {
                 this.getUserByEmail(newPage);
@@ -202,18 +202,18 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                                 <DropdownItem divider />
                                 <DropdownItem>
                                     <Link to={path + "/manage/admin"}
-                                        className={`nav-link ${this.isActive(cognitoRoles.ADMIN)}`}
-                                        onClick={() => this.updateDropdown(cognitoRoles.ADMIN, searchPage)}>Admin</Link></DropdownItem>
+                                        className={`nav-link ${this.isActive(cognitoRoles.CAM_ADMIN)}`}
+                                        onClick={() => this.updateDropdown(cognitoRoles.CAM_ADMIN, searchPage)}>Admin</Link></DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
                                     <Link to={path + "/manage/trainer"}
-                                        className={`nav-link ${this.isActive(cognitoRoles.TRAINER)}`}
-                                        onClick={() => this.updateDropdown(cognitoRoles.TRAINER, searchPage)}>Trainer</Link></DropdownItem>
+                                        className={`nav-link ${this.isActive(cognitoRoles.CAM_TRAINER)}`}
+                                        onClick={() => this.updateDropdown(cognitoRoles.CAM_TRAINER, searchPage)}>Trainer</Link></DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
                                     <Link to={path + "/manage/staging-manager"}
-                                        className={`nav-link ${this.isActive(cognitoRoles.STAGING_MANAGER)}`}
-                                        onClick={() => this.updateDropdown(cognitoRoles.STAGING_MANAGER, searchPage)}>Staging Manager</Link></DropdownItem>
+                                        className={`nav-link ${this.isActive(cognitoRoles.CAM_STAGING_MANAGER)}`}
+                                        onClick={() => this.updateDropdown(cognitoRoles.CAM_STAGING_MANAGER, searchPage)}>Staging Manager</Link></DropdownItem>
                                 <DropdownItem divider />
                             </DropdownMenu>
                         </Dropdown>
@@ -279,7 +279,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                 <div className='row horizontal-centering vertical-centering'>
                     <Button variant="button-color" className="rev-background-color div-child" onClick={this.decrementPage}>Prev</Button>
                     <h6 className="div-child text-style" >
-                        Page {this.props.manageUsers.manageUsersCurrentPage + 1} of {this.props.manageUsers.manageUsersPageTotal}
+                        Page {this.props.manageUsers.manageUsersCurrentPage + 1} of {this.props.manageUsers.manageUsersPageTotal} {this.props.manageUsers.areMore ? '+' : ''}
                     </h6>
                     <Button variant="button-color" className="rev-background-color div-child" onClick={this.incrementPage}>Next</Button>
                 </div>
