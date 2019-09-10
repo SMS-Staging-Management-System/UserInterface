@@ -23,11 +23,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
     questionJunctions: [],
     surveyId: 0,
     template: false,
-<<<<<<< HEAD
     title: '',
-=======
-    questionJunctions: []
->>>>>>> carri-thas-edward
   };
   const questionJunctions: IJunctionSurveyQuestion[] = [];
   const answers: IAnswer[] = [];
@@ -42,10 +38,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         break;
       case 'template?':
         survey.template = true;
-<<<<<<< HEAD
         survey.closingDate = null;
-=======
->>>>>>> carri-thas-edward
         break;
       case 'description':
         survey.description = formData[index].value;
@@ -71,14 +64,8 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
             questionJunctions: [],
             surveyId: 0,
             template: false,
-<<<<<<< HEAD
             title: '',
           }          
-=======
-            questionJunctions: []
-          },
-          questionOrder: questionOrder
->>>>>>> carri-thas-edward
         };
           questionJunction.question.typeId = completedTasks[0].questionID;
           completedTasks.shift();
