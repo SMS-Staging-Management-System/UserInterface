@@ -144,7 +144,11 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             questionJunctions: [],
             surveyId: 0,
             template: false,
+<<<<<<< HEAD
             title: this.state.newTitle,
+=======
+            questionJunctions: []
+>>>>>>> carri-thas-edward
         };
         const questionJunctions: IJunctionSurveyQuestion[] = [];
         

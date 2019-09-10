@@ -1,6 +1,7 @@
+/* tslint:disable */
 import { IProfileViewState } from ".";
 import { viewUserTypes } from "../../actions/view-user/view-user.actions";
-import { profileTypes } from "../../actions/profile/profile.actions";
+import { profileTypes } from "../../actions/profile/profile.actions.old";
 
 const initialState: IProfileViewState = {
     user: {
@@ -106,8 +107,6 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 ...state,
                 virtual: !state.virtual
             }
-
-
     }
     return state;
 }
