@@ -6,7 +6,6 @@ import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-que
 import { smsClient } from ".";
 
 const surveyBaseRoute = '/survey-service/surveys';
-const surveyAllBaseRoute = '/survey-service/surveys/all';
 const questionBaseRoute = '/survey-service/questions';
 const answerBaseRoute = '/survey-service/answers';
 const responseBaseRoute = '/survey-service/responses';
@@ -14,8 +13,6 @@ const questionTypeBaseRoute = '/survey-service/questiontype';
 const questionJunctionBaseRoute = '/survey-service/junction_survey_questions';
 const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
-const junctionSurveyQuestionsBaseRoute = '/survey-service/junction_survey_questions';
-
 
 export const surveyClient = {
 
