@@ -8,5 +8,5 @@ export interface ICognitoUser {
 export const cognitoRoles = {
     ADMIN:'admin',
     STAGING_MANAGER:'staging-manager',
-    TRAINER:'trainer'
+    TRAINER:'trainer',
 }

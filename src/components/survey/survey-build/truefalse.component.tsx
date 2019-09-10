@@ -25,7 +25,7 @@ export class TrueFalse extends React.Component<PropsPlease, any> {
           <tbody>
             <tr>
               <td className="myTr"><label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="tf" className="form-control" > True/False </label></td>
-              {this.props.parentFunction && <td><AddOther parentFunction={this.props.parentFunction} index={this.props.index} selfDestruct={this.props.selfDestruct}></AddOther></td>}
+              {this.props.parentFunction && <td><AddOther name="Change Question Type" parentFunction={this.props.parentFunction} index={this.props.index} selfDestruct={this.props.selfDestruct}></AddOther></td>}
               {this.props.selfDestruct && <td><DeleteButton index={this.props.index} selfDestruct={this.props.selfDestruct}></DeleteButton></td>}
             </tr>
           </tbody>
