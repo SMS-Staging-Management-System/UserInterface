@@ -22,7 +22,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
     questionJunctions: [],
     surveyId: 0,
     template: false,
-    title: ''
+    title: '',
   };
   const questionJunctions: IJunctionSurveyQuestion[] = [];
   const answers: IAnswer[] = [];
