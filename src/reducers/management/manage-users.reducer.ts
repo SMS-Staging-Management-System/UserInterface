@@ -17,6 +17,7 @@ const initialState: IManageUsersState = {
 }
 
 export const manageUsersReducer = (state = initialState, action: any) => {
+    console.log(state, action)
     switch (action.type) {
         case manageUsersTypes.GET_USERS:
             return {

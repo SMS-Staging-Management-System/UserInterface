@@ -117,17 +117,17 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         if (adminResponsePromise) {
             const adminResponse = await adminResponsePromise;
             addUserRolesToMap(cognitoRoles.ADMIN, adminResponse.data.Users, userMap);
-            updateAdminResponse(adminResponse);
+            updateAdminResponse(adminResponse)(dispatch);
         }
         if (stagingManagerResponsePromise) {
             const stagingManagerResponse = await stagingManagerResponsePromise;
             addUserRolesToMap(cognitoRoles.STAGING_MANAGER, stagingManagerResponse.data.Users, userMap);
-            updateStagingManagerResponse(stagingManagerResponse);
+            updateStagingManagerResponse(stagingManagerResponse)(dispatch);
         }
         if (trainerResponsePromise) {
             const trainerResponse = await trainerResponsePromise;
             addUserRolesToMap(cognitoRoles.TRAINER, trainerResponse.data.Users, userMap);
-            updateTrainerResponse(trainerResponse);
+            updateTrainerResponse(trainerResponse)(dispatch);
         }
 
         // parse the response from the user service
@@ -182,7 +182,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
 
         console.log(emailList)
 
-        updateEmailList(emailList);
+        updateEmailList(emailList)(dispatch);
 
         console.log(emailList)
 
