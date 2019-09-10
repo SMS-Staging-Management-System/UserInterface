@@ -13,7 +13,8 @@ export const manageUsersTypes = {
     GET_USERS_SORTED: 'GET_USERS_SORTED',
     UPDATE_ADMIN_RESPONSE: 'UPDATE_ADMIN_RESPONSE',
     UPDATE_TRAINER_RESPONSE: 'UPDATE_TRAINER_RESPONSE',
-    UPDATE_STAGING_MANAGER_RESPONSE: 'UPDATE_STAGING_MANAGER_RESPONSE'
+    UPDATE_STAGING_MANAGER_RESPONSE: 'UPDATE_STAGING_MANAGER_RESPONSE',
+    UPDATE_MAX_PAGE: 'UPDATE_MAX_PAGE'
 }
 
 export const manageGetUsersByGroup = (groupName: string, email: string, page?: number) => async (dispatch: any) => {
@@ -31,59 +32,77 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         let stagingManagerResponsePromise;
         let trainerResponsePromise;
         let userServiceUserList;
+        let pageTotal;
+
+        let adminResponse;
+        let stagingManagerResponse;
+        let trainerResponse;
+
+
+        let oldAdminResponse = reduxStore.managementState.manageUsers.adminResponse;
+        let oldTrainerResponse = reduxStore.managementState.manageUsers.trainerResponse;
+        let oldStagingManagerResponse = reduxStore.managementState.manageUsers.stagingManagerResponse;
+
+        let maxPage = reduxStore.managementState.manageUsers.maxPage;
+        let areMore = reduxStore.managementState.manageUsers.areMore;
 
         console.log('')
         console.log('')
         console.log(reduxStore)
         console.log('')
         console.log('')
-        console.log(emailList)
+
+        console.log('maxPage')
+        console.log(maxPage)
 
         emailList = reduxStore.managementState.manageUsers.emailList;
 
-
         // only request the groups required
         // if caching is implemented for the cognito users this can be simplified
-        if((page + 1) === 1){
+        if ((page + 1) === 1 && (page + 1) > maxPage) {
             if (groupName === cognitoRoles.ADMIN) {
                 adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN, '');
-                const adminResponse = await adminResponsePromise;
+                adminResponse = await adminResponsePromise;
+                console.log('adminResponse');
+                console.log(adminResponse);
                 emailList = adminResponse.data.Users.map(user =>
                     user.Attributes.find((attr: any) => attr.Name === 'email').Value);
             }
             else if (groupName === cognitoRoles.STAGING_MANAGER) {
                 stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER, '');
-                const stagingManagerResponse = await stagingManagerResponsePromise;
+                stagingManagerResponse = await stagingManagerResponsePromise;
                 emailList = stagingManagerResponse.data.Users.map(user =>
                     user.Attributes.find((attr: any) => attr.Name === 'email').Value);
             }
             else if (groupName === cognitoRoles.TRAINER) {
                 trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER, '');
-                const trainerResponse = await trainerResponsePromise;
+                trainerResponse = await trainerResponsePromise;
                 emailList = trainerResponse.data.Users.map(user =>
                     user.Attributes.find((attr: any) => attr.Name === 'email').Value);
             }
-            console.log('inside page 1')
-        } else if((page + 1) % 6 === 0){
+        }
+        else if ((page + 1) % 2 === 1 && (page + 1) > maxPage) {
             if (groupName === cognitoRoles.ADMIN) {
-                adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN, '');
+                adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN, oldAdminResponse.data.NextToken);
                 const adminResponse = await adminResponsePromise;
-                emailList += adminResponse.data.Users.map(user =>
-                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+                for(let i = 0; i < adminResponse.data.Users.length; i++){
+                    emailList.push(adminResponse.data.Users[i].Attributes.find((attr: any) => attr.Name === 'email').Value)
+                }
             }
             else if (groupName === cognitoRoles.STAGING_MANAGER) {
-                stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER, '');
+                stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER, oldTrainerResponse.data.NextToken);
                 const stagingManagerResponse = await stagingManagerResponsePromise;
-                emailList += stagingManagerResponse.data.Users.map(user =>
-                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+                for(let i = 0; i < stagingManagerResponse.data.Users.length; i++){
+                    emailList.push(stagingManagerResponse.data.Users[i].Attributes.find((attr: any) => attr.Name === 'email').Value)
+                }
             }
             else if (groupName === cognitoRoles.TRAINER) {
-                trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER, '');
+                trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER, oldStagingManagerResponse.data.NextToken);
                 const trainerResponse = await trainerResponsePromise;
-                emailList += trainerResponse.data.Users.map(user =>
-                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+                for(let i = 0; i < trainerResponse.data.Users.length; i++){
+                    emailList.push(trainerResponse.data.Users[i].Attributes.find((attr: any) => attr.Name === 'email').Value)
+                }
             }
-            console.log('inside page 6/12/18')
         }
 
         const emailListPaginationStart = page * 10;
@@ -95,22 +114,46 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         console.log('emailListPagination')
         console.log(emailListPagination)
 
+
         // if the email list has any elements then whatever the parameters of the action are
         // they specify only requesting information for specific users
-        // if (adminResponsePromise || stagingManagerResponsePromise || trainerResponsePromise) {
-        if (emailList.length) {
+
+        console.log('adminResponse')
+        console.log(adminResponse)
+
+        console.log('groupName')
+        console.log(groupName)
+
+        console.log('emailList')
+        console.log(emailList)
+
+        if (groupName === 'all') {
+            // if email exists then users are supposed to be filted by that email
+            if (email) {
+                userInfoRespPromise = userClient.findUsersByPartialEmail(email, page);
+            }
+            userInfoRespPromise = userClient.findAllUsersPage(page);
+            let userInfoResp = await userInfoRespPromise;
+            const pageTotalByUserResp = Math.ceil(userInfoResp.data.totalElements / 10);
+            pageTotal = pageTotalByUserResp;
+            console.log('pageTotalUR')
+            console.log(pageTotalByUserResp)
+        } else {
             if (email) {
                 emailList = emailList.filter((currentEmail) => currentEmail.toLocaleLowerCase().includes(email));
             }
-            userInfoRespPromise = userClient.findAllByEmails(emailListPagination, 1);
-        }
-        // if email exists then users are supposed to be filted by that email
-        else if (email) {
-            userInfoRespPromise = userClient.findUsersByPartialEmail(email, page);
-        }
-        // default to retrieving all users
-        else {
-            userInfoRespPromise = userClient.findAllUsersPage(page);
+            userInfoRespPromise = userClient.findAllByEmails(emailListPagination);
+            console.log('inside responses')
+            console.log('emailListPagination')
+            console.log(emailListPagination)
+            const pageTotalByEmailList = Math.ceil(emailList.length / 10);
+            pageTotal = pageTotalByEmailList;
+            console.log('pageTotalEL')
+            console.log(pageTotalByEmailList)
+            if ((page + 1) > maxPage) {
+                maxPage += 1;
+                updateMaxPage(maxPage)(dispatch)
+            }
         }
 
         // if the data has been retrieved then parse it from the promises into the map
@@ -118,6 +161,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             const adminResponse = await adminResponsePromise;
             addUserRolesToMap(cognitoRoles.ADMIN, adminResponse.data.Users, userMap);
             updateAdminResponse(adminResponse)(dispatch);
+
         }
         if (stagingManagerResponsePromise) {
             const stagingManagerResponse = await stagingManagerResponsePromise;
@@ -134,26 +178,33 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         let userInfoResp = await userInfoRespPromise;
         userServiceUserList = userInfoResp.data.content || userInfoResp.data;
 
-        const pageTotalByEmailList = Math.ceil(emailList.length / 10);
-        const pageTotalByUserResp = Math.ceil(userInfoResp.data.totalElements / 10);
-        const pageTotal = pageTotalByUserResp || pageTotalByEmailList;
+        console.log('userServiceUserList')
+        console.log(userServiceUserList)
+        // const pageTotalByEmailList = Math.ceil(emailList.length / 10);
+        // const pageTotalByUserResp = Math.ceil(userInfoResp.data.totalElements / 10);
+        // const pageTotal = pageTotalByUserResp && pageTotalByEmailList;
 
-        if(userInfoResp.data.content){
-            for(email of userInfoResp.data.content) {
-                emailList.push(email);
-            }
+        // if(userInfoResp.data.content){
+        //     for(email of userInfoResp.data.content) {
+        //         emailList.push(email);
+        //     }
+        // }
+        
+        const finalAdminResponse = (adminResponse && adminResponse.data.NextToken) || (oldAdminResponse && oldAdminResponse.data.NextToken);
+        const finalTrainerResponse = (trainerResponse && trainerResponse.data.NextToken) || (oldTrainerResponse && oldTrainerResponse.data.NextToken)
+        const finalStagingManagerResponse = (stagingManagerResponse && stagingManagerResponse.data.NextToken) || (oldStagingManagerResponse && oldStagingManagerResponse.data.NextToken)
+
+        if(groupName !== 'all' && (finalAdminResponse || finalTrainerResponse || finalStagingManagerResponse)) {
+            areMore = true;
+        } else {
+            areMore = false;
         }
 
         console.log('')
         console.log('')
         console.log('pageTotal')
         console.log(pageTotal)
-        console.log('pageTotalEL')
-        console.log(pageTotalByEmailList)
-        console.log('pageTotalUR')
-        console.log(pageTotalByUserResp)
-        console.log(userServiceUserList)
-        console.log(userInfoResp.data.content)
+
         console.log('')
         console.log('')
 
@@ -170,27 +221,17 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             if (potentialUser) {
                 altenateUser.roles = potentialUser.roles
             }
-
-            // add user only if group filter allows
-            if (altenateUser.roles.includes(groupName)) {
-                listOfUsers.push(altenateUser);
-            }
-            else if (groupName === 'all') {
-                listOfUsers.push(altenateUser);
-            }
+            listOfUsers.push(altenateUser);
         }
 
-        console.log(emailList)
-
         updateEmailList(emailList)(dispatch);
-
-        console.log(emailList)
 
         dispatch({
             payload: {
                 manageUsers: listOfUsers,
                 manageUsersCurrentPage: page,
-                manageUsersPageTotal: pageTotal
+                manageUsersPageTotal: pageTotal,
+                areMore: areMore
             },
             type: manageUsersTypes.GET_USERS
         });
@@ -256,6 +297,15 @@ export const updateStagingManagerResponse = (newStagingManagerResponse: string) 
             stagingManagerResponse: newStagingManagerResponse,
         },
         type: manageUsersTypes.UPDATE_STAGING_MANAGER_RESPONSE
+    });
+}
+
+export const updateMaxPage = (newMaxPage: number) => async (dispatch: any) => {
+    dispatch({
+        payload: {
+            maxPage: newMaxPage,
+        },
+        type: manageUsersTypes.UPDATE_MAX_PAGE
     });
 }
 
