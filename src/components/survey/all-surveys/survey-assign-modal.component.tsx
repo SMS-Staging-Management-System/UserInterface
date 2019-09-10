@@ -134,9 +134,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
     getAllCohorts = async (newPage: number) => {
         let resp = await cohortClient.findAllByPage(newPage);
-        console.log("response data");
-        console.log(resp.data);
-        console.log("after response");
         this.setState({
             sortCohorts: resp.data.content,
             currentPage: newPage,
@@ -429,10 +426,6 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     }
                 }
                 let el = document.getElementById(cohortId) as HTMLInputElement;
-<<<<<<< HEAD
-=======
-    
->>>>>>> e77200910f1ff2f22a9e58036712965ee8127666
                 if (el) { el.checked = false; }
             }
         }
