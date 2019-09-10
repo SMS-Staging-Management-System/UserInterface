@@ -384,6 +384,6 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                     </div>)
                 }
             </>
-        )
+        ) 
     }
 }
