@@ -164,7 +164,7 @@ export const surveyClient = {
   },
   async saveSurvey(survey: ISurvey) {
     const resp = await smsClient.post(surveyBaseRoute, survey);
-    return resp.data
+    return resp.data;
   },
 
   //----------------------//
