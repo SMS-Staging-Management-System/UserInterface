@@ -118,6 +118,16 @@ input:invalid:not(:valid) {
   }
 }
 
+.rev-btn-2 {
+  background-color: white;
+  border: 1px solid #ced4da;
+  color: #495057;
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
+  }
+}
+
 li > a.rev-btn-tab {
   background-color: white;
   border-color: $revature-orange-light;
@@ -142,6 +152,12 @@ li > a.rev-btn-tab {
   -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   cursor: pointer;
+}
+
+.rev-table-row-active {
+  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
 }
 
 .rev-background-color {
@@ -631,6 +647,8 @@ User Dropdown
 .userDropInput {
   margin-left: 10px;
   margin-right: 10px;
+  width: 1em;
+  height: 1em;  
 }
 
 #userDropdownWidth {
@@ -727,12 +745,18 @@ Drag and Drop
 .myTr{	
     width: 100%;	
   }	
-  .trashCan{	
+  
+  .trashCan{
     align-content: right;	
     width: 50px;	
+  }
+
+  .trashCan:hover{	
     border-color: $revature-orange;	
     border-style: solid;	
-    border-width: thick;	
+    border-width: thick;
+    cursor: pointer;
+
   }
 // .labelTitle{
 //   font-family: Helvetica;
