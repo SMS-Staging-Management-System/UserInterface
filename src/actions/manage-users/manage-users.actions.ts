@@ -3,12 +3,17 @@ import { toast } from "react-toastify";
 import { ICognitoUser, cognitoRoles } from "../../model/cognito-user.model";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { sortTypes } from "../../components/manage/manage-internal/manage-internal.component";
+import { store } from "../../Store"
 
 export const manageUsersTypes = {
     GET_USERS: 'MANAGE_GET_USERS',
     UPDATE_SEARCH_EMAIL: 'UPDATE_SEARCH_EMAIL',
+    UPDATE_EMAIL_LIST: 'UPDATE_EMAIL_LIST',
     UPDATE_SEARCH_OPTION: 'UPDATE_SEARCH_OPTION',
-    GET_USERS_SORTED: 'GET_USERS_SORTED'
+    GET_USERS_SORTED: 'GET_USERS_SORTED',
+    UPDATE_ADMIN_RESPONSE: 'UPDATE_ADMIN_RESPONSE',
+    UPDATE_TRAINER_RESPONSE: 'UPDATE_TRAINER_RESPONSE',
+    UPDATE_STAGING_MANAGER_RESPONSE: 'UPDATE_STAGING_MANAGER_RESPONSE'
 }
 
 export const manageGetUsersByGroup = (groupName: string, email: string, page?: number) => async (dispatch: any) => {
@@ -16,6 +21,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
     groupName || (groupName = 'all');
     groupName && (groupName = groupName.toLocaleLowerCase());
     try {
+        const reduxStore = store.getState();
         let userMap = new Map<string, ICognitoUser>();
         let emailList: string[] = [];
         let userInfoRespPromise;
@@ -24,40 +30,79 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         let adminResponsePromise;
         let stagingManagerResponsePromise;
         let trainerResponsePromise;
+        let userServiceUserList;
+
+        console.log('')
+        console.log('')
+        console.log(reduxStore)
+        console.log('')
+        console.log('')
+        console.log(emailList)
+
+        emailList = reduxStore.managementState.manageUsers.emailList;
+
 
         // only request the groups required
         // if caching is implemented for the cognito users this can be simplified
-        if (groupName === cognitoRoles.ADMIN) {
-            adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN);
-            const adminResponse = await adminResponsePromise;
-            emailList = adminResponse.data.Users.map(user =>
-                user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+        if((page + 1) === 1){
+            if (groupName === cognitoRoles.ADMIN) {
+                adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN, '');
+                const adminResponse = await adminResponsePromise;
+                emailList = adminResponse.data.Users.map(user =>
+                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+            }
+            else if (groupName === cognitoRoles.STAGING_MANAGER) {
+                stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER, '');
+                const stagingManagerResponse = await stagingManagerResponsePromise;
+                emailList = stagingManagerResponse.data.Users.map(user =>
+                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+            }
+            else if (groupName === cognitoRoles.TRAINER) {
+                trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER, '');
+                const trainerResponse = await trainerResponsePromise;
+                emailList = trainerResponse.data.Users.map(user =>
+                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+            }
+            console.log('inside page 1')
+        } else if((page + 1) % 6 === 0){
+            if (groupName === cognitoRoles.ADMIN) {
+                adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN, '');
+                const adminResponse = await adminResponsePromise;
+                emailList += adminResponse.data.Users.map(user =>
+                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+            }
+            else if (groupName === cognitoRoles.STAGING_MANAGER) {
+                stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER, '');
+                const stagingManagerResponse = await stagingManagerResponsePromise;
+                emailList += stagingManagerResponse.data.Users.map(user =>
+                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+            }
+            else if (groupName === cognitoRoles.TRAINER) {
+                trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER, '');
+                const trainerResponse = await trainerResponsePromise;
+                emailList += trainerResponse.data.Users.map(user =>
+                    user.Attributes.find((attr: any) => attr.Name === 'email').Value);
+            }
+            console.log('inside page 6/12/18')
         }
-        else if (groupName === cognitoRoles.STAGING_MANAGER) {
-            stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER);
-            const stagingManagerResponse = await stagingManagerResponsePromise;
-            emailList = stagingManagerResponse.data.Users.map(user =>
-                user.Attributes.find((attr: any) => attr.Name === 'email').Value);
-        }
-        else if (groupName === cognitoRoles.TRAINER) {
-            trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
-            const trainerResponse = await trainerResponsePromise;
-            emailList = trainerResponse.data.Users.map(user =>
-                user.Attributes.find((attr: any) => attr.Name === 'email').Value);
-        }
-        else {
-            adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN);
-            stagingManagerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.STAGING_MANAGER);
-            trainerResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
-        }
-        
+
+        const emailListPaginationStart = page * 10;
+        const emailListPaginationEnd = (page + 1) * 10;
+        const emailListPagination = emailList.slice(emailListPaginationStart, emailListPaginationEnd);
+
+        console.log('emailList')
+        console.log(emailList)
+        console.log('emailListPagination')
+        console.log(emailListPagination)
+
         // if the email list has any elements then whatever the parameters of the action are
         // they specify only requesting information for specific users
+        // if (adminResponsePromise || stagingManagerResponsePromise || trainerResponsePromise) {
         if (emailList.length) {
             if (email) {
                 emailList = emailList.filter((currentEmail) => currentEmail.toLocaleLowerCase().includes(email));
             }
-            userInfoRespPromise = userClient.findAllByEmails(emailList, page);
+            userInfoRespPromise = userClient.findAllByEmails(emailListPagination, 1);
         }
         // if email exists then users are supposed to be filted by that email
         else if (email) {
@@ -65,28 +110,52 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         }
         // default to retrieving all users
         else {
-            userInfoRespPromise = userClient.findAllUsers(page);
+            userInfoRespPromise = userClient.findAllUsersPage(page);
         }
 
         // if the data has been retrieved then parse it from the promises into the map
         if (adminResponsePromise) {
             const adminResponse = await adminResponsePromise;
             addUserRolesToMap(cognitoRoles.ADMIN, adminResponse.data.Users, userMap);
+            updateAdminResponse(adminResponse)(dispatch);
         }
         if (stagingManagerResponsePromise) {
             const stagingManagerResponse = await stagingManagerResponsePromise;
             addUserRolesToMap(cognitoRoles.STAGING_MANAGER, stagingManagerResponse.data.Users, userMap);
+            updateStagingManagerResponse(stagingManagerResponse)(dispatch);
         }
         if (trainerResponsePromise) {
             const trainerResponse = await trainerResponsePromise;
             addUserRolesToMap(cognitoRoles.TRAINER, trainerResponse.data.Users, userMap);
+            updateTrainerResponse(trainerResponse)(dispatch);
         }
 
          // parse the response from the user service
         let userInfoResp = await userInfoRespPromise;
-        const userServiceUserList = userInfoResp.data.content;
-        const pageTotal = userInfoResp.data.totalPages;
+        userServiceUserList = userInfoResp.data.content || userInfoResp.data;
 
+        const pageTotalByEmailList = Math.ceil(emailList.length / 10);
+        const pageTotalByUserResp = Math.ceil(userInfoResp.data.totalElements / 10);
+        const pageTotal = pageTotalByUserResp || pageTotalByEmailList;
+
+        if(userInfoResp.data.content){
+            for(email of userInfoResp.data.content) {
+                emailList.push(email);
+            }
+        }
+
+        console.log('')
+        console.log('')
+        console.log('pageTotal')
+        console.log(pageTotal)
+        console.log('pageTotalEL')
+        console.log(pageTotalByEmailList)
+        console.log('pageTotalUR')
+        console.log(pageTotalByUserResp)
+        console.log(userServiceUserList)
+        console.log(userInfoResp.data.content)
+        console.log('')
+        console.log('')
 
         // merge the user service and cognito information
         let listOfUsers = new Array<ICognitoUser>();
@@ -111,6 +180,12 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             }
         }
 
+        console.log(emailList)
+
+        updateEmailList(emailList)(dispatch);
+
+        console.log(emailList)
+
         dispatch({
             payload: {
                 manageUsers: listOfUsers,
@@ -120,11 +195,12 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             type: manageUsersTypes.GET_USERS
         });
     } catch (e) {
+        console.log(e)
         toast.warn('Unable to retreive users')
         dispatch({
             payload: {
             },
-            type: ''
+            type: 'ERROR'
         })
     }
 }
@@ -138,6 +214,15 @@ export const updateSearchEmail = (newEmailSearch: string) => async (dispatch: an
     });
 }
 
+export const updateEmailList = (newEmailList: string[]) => async (dispatch: any) => {
+    dispatch({
+        payload: {
+            emailList: newEmailList,
+        },
+        type: manageUsersTypes.UPDATE_EMAIL_LIST
+    });
+}
+
 export const updateSearchOption = (newSearchOption: string) => async (dispatch: any) => {
     dispatch({
         payload: {
@@ -147,11 +232,38 @@ export const updateSearchOption = (newSearchOption: string) => async (dispatch: 
     });
 }
 
+export const updateAdminResponse = (newAdminResponse: string) => async (dispatch: any) => {
+    dispatch({
+        payload: {
+            adminResponse: newAdminResponse,
+        },
+        type: manageUsersTypes.UPDATE_ADMIN_RESPONSE
+    });
+}
+
+export const updateTrainerResponse = (newTrainerResponse: string) => async (dispatch: any) => {
+    dispatch({
+        payload: {
+            trainerResponse: newTrainerResponse,
+        },
+        type: manageUsersTypes.UPDATE_TRAINER_RESPONSE
+    });
+}
+
+export const updateStagingManagerResponse = (newStagingManagerResponse: string) => async (dispatch: any) => {
+    dispatch({
+        payload: {
+            stagingManagerResponse: newStagingManagerResponse,
+        },
+        type: manageUsersTypes.UPDATE_STAGING_MANAGER_RESPONSE
+    });
+}
+
 //Action to Sort user table
 export const sortUsers = (userArray: ICognitoUser[], sortKey) => (dispatch: any) => {
     userArray = userArray.sort((a, b) => sortBy(a, b, sortKey));
 
-     dispatch({
+    dispatch({
         payload: {
             manageUsers: userArray,
             userTableSort: sortKey
@@ -202,9 +314,9 @@ function sortBy(user1, user2, sortKey) {
             return 0;
     }
 
- }
+}
 //Function that does comparing for the sorting
- function sortByString(a, b) {
+function sortByString(a, b) {
     if (a === b) {
         return 0;
     }

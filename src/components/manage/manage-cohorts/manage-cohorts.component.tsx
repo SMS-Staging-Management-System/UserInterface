@@ -1,13 +1,11 @@
 import * as React from 'react';
-import {
-    Table,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown, Button
-} from 'reactstrap';
+import { Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown, Button} from 'reactstrap';
 import { IManageCohortsComponentProps } from './manage-cohorts.container';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { cognitoClient } from "../../../axios/sms-clients/cognito-client";
 import { addressesClient } from '../../../axios/sms-clients/address-client';
 import { ICohort } from '../../../model/cohort';
+import { cognitoRoles } from '../../../model/cognito-user.model';
 
 interface IManageCohortsState {
     locations: any[]
@@ -95,7 +93,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
     }
 
     getTrainers = async () => {
-        const resp = await cognitoClient.findUsersByGroup('trainer');
+        const resp = await cognitoClient.findUsersByGroup(cognitoRoles.TRAINER, '');
         const trainers = await resp.data.Users;
 
         this.setState({

@@ -64,7 +64,11 @@ export interface IManageUsersState {
     emailSearch: string,
     option: string,
     componentLoaded: boolean,
-    userTableSort: string
+    userTableSort: string,
+    emailList: string[],
+    adminResponse: any,
+    trainerResponse: any,
+    stagingManagerResponse: any
 }
 // current user logged in
 export interface ICurrentSMSUserState {

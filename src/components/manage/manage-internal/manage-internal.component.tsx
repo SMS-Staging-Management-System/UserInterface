@@ -5,6 +5,7 @@ import { Dropdown, DropdownMenu, DropdownToggle, Table, Input, Button } from 're
 import { ICognitoUser, cognitoRoles } from '../../../model/cognito-user.model';
 import ViewUserModal from '../view-user-modal/view-user-modal.container';
 import { IManageInternalComponentProps } from './manage-internal.container';
+import SortImage from './sort-image/sort-image.component';
 //import Label from 'reactstrap/lib/Label';
 
 
@@ -28,9 +29,9 @@ export const sortTypes = {
 
 //Store the sort images
 const sortImages = {
-    SORT_IMAGE: 'https://img.icons8.com/android/24/000000/sort-down.png',
-    SORT_IMAGE_REVERSE: 'https://img.icons8.com/android/24/000000/sort-up.png',
-    DEFAULT_SORT_IMAGE: 'https://img.icons8.com/android/24/000000/sort.png'
+    SORT_IMAGE: 'sort-up',
+    SORT_IMAGE_REVERSE: 'sort-down',
+    DEFAULT_SORT_IMAGE: 'sort'
 }
 
 export class ManageInternalComponenet extends React.Component<IManageInternalComponentProps, ManageInternalState> {
@@ -150,6 +151,32 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         }
     }
 
+    updateShowColOneImage = (colNumber: number) => {
+        switch (colNumber) {
+            case 1:
+                if(this.state.colOneSortImage === 'show'){
+                    return 'd-none pointer-table'
+                } else {
+                    return 'd-inline pointer-table'
+                }
+            case 2:
+                if(this.state.colTwoSortImage === 'show'){
+                    return 'd-none pointer-table'
+                } else {
+                    return 'd-inline pointer-table'
+                }
+            case 3:
+                if(this.state.colThreeSortImage === 'show'){
+                    return 'd-none pointer-table'
+                } else {
+                    return 'd-inline pointer-table'
+                }
+            default:
+                return '';
+        }
+        
+    }
+
 
     // returns active if the role provided in the route is the routeName provided
     isActive = (routeName: string) => ((this.props.manageUsers.option === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
@@ -217,9 +244,21 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                     <ViewUserModal manageGetUsersByGroup={this.props.updateManageUsersTable} />
                     <thead className="rev-background-color">
                         <tr>
-                            <th className="pointer-table" onClick={() => this.sort(sortTypes.FIRST_NAME)}>First Name<img src={this.state.colOneSortImage} /> </th>
-                            <th className="pointer-table" onClick={() => this.sort(sortTypes.LAST_NAME)}>Last Name <img src={this.state.colTwoSortImage} /></th>
-                            <th className="pointer-table" onClick={() => this.sort(sortTypes.EMAIL)}>Email<img src={this.state.colThreeSortImage} /></th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.FIRST_NAME)}>First Name 
+                                <SortImage 
+                                    colOneSortImage={this.state.colOneSortImage}
+                                />
+                            </th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.LAST_NAME)}>Last Name 
+                                <SortImage 
+                                    colTwoSortImage={this.state.colTwoSortImage}
+                                />
+                            </th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.EMAIL)}>Email
+                                <SortImage 
+                                    colThreeSortImage={this.state.colThreeSortImage}
+                                />
+                            </th>
                             <th className="pointer-table" >Roles</th>
                         </tr>
                     </thead>

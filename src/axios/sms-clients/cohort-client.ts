@@ -13,8 +13,8 @@ export const cohortClient = {
   findByToken(token: string) {
     return smsClient.get(cohortContext + `/token/${token}`)
   },
-  joinCohort(user:IUser, token:string){
-    return smsClient.post(cohortContext + `/token/${token}`, user)
+  joinCohort(user: IUser, token: string) {
+    return smsClient.post(cohortContext + `/token/${token.toString()}`, user)
   },
   findAllByPage(page: number) {
     return smsClient.get(`${cohortContext}?page=${page}`)

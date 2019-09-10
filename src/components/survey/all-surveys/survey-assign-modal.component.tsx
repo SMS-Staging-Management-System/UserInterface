@@ -163,7 +163,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     // get all users
     loadAllUsersSinglePage = async () => {
-        let resp = await userClient.findAllUsers(0);
+        let resp = await userClient.findAllUsersPage(0);
         this.setState({
             allUsers: resp.data.content
         });
@@ -171,7 +171,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     loadAllUsersAllPages = async (totalPages: number) => {
         for(let i = 1; i < totalPages; i++) {
-            let resp = await userClient.findAllUsers(i);
+            let resp = await userClient.findAllUsersPage(i);
             this.setState({
                 allUsers: this.state.allUsers.concat(resp.data.content)
             })

@@ -1,5 +1,4 @@
 import { ISurvey } from "../../model/surveys/survey.model";
-import { IQuestion } from "../../model/surveys/question.model";
 import { IAnswer } from "../../model/surveys/answer.model";
 import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
 import { surveyClient } from "../../axios/sms-clients/survey-client";
@@ -23,7 +22,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
     questionJunctions: [],
     surveyId: 0,
     template: false,
-    questionJunctions: []
+    title: ''
   };
   const questionJunctions: IJunctionSurveyQuestion[] = [];
   const answers: IAnswer[] = [];
@@ -38,6 +37,7 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
         break;
       case 'template?':
         survey.template = true;
+        survey.closingDate = null;
         break;
       case 'description':
         survey.description = formData[index].value;
@@ -63,55 +63,54 @@ export const createSurvey = (formData: any, completedTasks: any[]) => async (dis
             questionJunctions: [],
             surveyId: 0,
             template: false,
-            questionJunctions: []
-          },
-          questionOrder: questionOrder
-        };
-          questionJunction.question.typeId = completedTasks[0].questionID;
-          completedTasks.shift();
-        
-        questionOrder++;
-        questionJunctions.push(questionJunction);
-        break;
+            title: '',
+          }
+        }
+    questionJunction.question.typeId = completedTasks[0].questionID;
+    completedTasks.shift();
+
+    questionOrder++;
+    questionJunctions.push(questionJunction);
+    break;
       case 'answerText':
-        const answer:  any = {
-          answer: formData[index].value,
-          answerId: 0,
-          question: null
-        }
-        answers.push(answer);
-        break;
+const answer: any = {
+  answer: formData[index].value,
+  answerId: 0,
+  question: null
+}
+answers.push(answer);
+break;
     }
   }
 
 
 
-  for (const questionJunction of questionJunctions){
-    if (questionJunction.question.typeId !== 5) {
-      let match: string = '';
-        match = answers[0].answer;
-        answers.shift();
+for (const questionJunction of questionJunctions) {
+  if (questionJunction.question.typeId !== 5) {
+    let match: string = '';
+    match = answers[0].answer;
+    answers.shift();
 
-      const matchArray = match.split(',');
-      for (const str of matchArray) {
-        const dummyAnswer: any = {
-          answer: str.trim(),
-          answerId: 0,
-          question: null
-        }
-        questionJunction.question.answers.push(dummyAnswer);
+    const matchArray = match.split(',');
+    for (const str of matchArray) {
+      const dummyAnswer: any = {
+        answer: str.trim(),
+        answerId: 0,
+        question: null
       }
+      questionJunction.question.answers.push(dummyAnswer);
     }
   }
+}
 
-  survey.questionJunctions = questionJunctions;
+survey.questionJunctions = questionJunctions;
 
-  console.log(survey)
+console.log(survey)
 
-  const newSurvey = surveyClient.saveSurvey(survey);
+const newSurvey = surveyClient.saveSurvey(survey);
 
-  dispatch({
-    payload: newSurvey,
-    type: surveyBuildTypes.CreateSurvey
-  })
+dispatch({
+  payload: newSurvey,
+  type: surveyBuildTypes.CreateSurvey
+})
 }
