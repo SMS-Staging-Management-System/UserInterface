@@ -17,28 +17,33 @@ export const manageUsersTypes = {
     UPDATE_MAX_PAGE: 'UPDATE_MAX_PAGE'
 }
 
+// FUTURE WORK
+// Proper sorting through server, not by current information
+
 export const manageGetUsersByGroup = (groupName: string, email: string, page?: number) => async (dispatch: any) => {
     page || (page = 0);
     groupName || (groupName = 'all');
     groupName && (groupName = groupName.toLocaleLowerCase());
     try {
+        // getting the store to be used at a later time
         const reduxStore = store.getState();
         let userMap = new Map<string, ICognitoUser>();
-        let emailList: string[] = [];
         let userInfoRespPromise;
 
         // declared here because whether they are acutally used or not varies
         let adminResponsePromise;
         let stagingManagerResponsePromise;
         let trainerResponsePromise;
-        let userServiceUserList;
-        let pageTotal;
 
         let adminResponse;
         let stagingManagerResponse;
         let trainerResponse;
 
+        let userServiceUserList;
+        let pageTotal;
+        const elementsPerPage = 10;
 
+        // storing the redux store into variables to be used as referenced
         let oldAdminResponse = reduxStore.managementState.manageUsers.adminResponse;
         let oldTrainerResponse = reduxStore.managementState.manageUsers.trainerResponse;
         let oldStagingManagerResponse = reduxStore.managementState.manageUsers.stagingManagerResponse;
@@ -46,25 +51,15 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         let maxPage = reduxStore.managementState.manageUsers.maxPage;
         let areMore = reduxStore.managementState.manageUsers.areMore;
 
-        console.log('')
-        console.log('')
-        console.log(reduxStore)
-        console.log('')
-        console.log('')
-
-        console.log('maxPage')
-        console.log(maxPage)
-
-        emailList = reduxStore.managementState.manageUsers.emailList;
+        let emailList = reduxStore.managementState.manageUsers.emailList;
 
         // only request the groups required
+        // checks if on the initial page and won't recall if they go back to the inital page
         // if caching is implemented for the cognito users this can be simplified
         if ((page + 1) === 1 && (page + 1) > maxPage) {
             if (groupName === cognitoRoles.ADMIN) {
                 adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN, '');
                 adminResponse = await adminResponsePromise;
-                console.log('adminResponse');
-                console.log(adminResponse);
                 emailList = adminResponse.data.Users.map(user =>
                     user.Attributes.find((attr: any) => attr.Name === 'email').Value);
             }
@@ -81,6 +76,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
                     user.Attributes.find((attr: any) => attr.Name === 'email').Value);
             }
         }
+        // checks if the page we are going to needs data to be sent from cognito server
         else if ((page + 1) % 2 === 1 && (page + 1) > maxPage) {
             if (groupName === cognitoRoles.ADMIN) {
                 adminResponsePromise = cognitoClient.findUsersByGroup(cognitoRoles.ADMIN, oldAdminResponse.data.NextToken);
@@ -105,28 +101,14 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             }
         }
 
-        const emailListPaginationStart = page * 10;
-        const emailListPaginationEnd = (page + 1) * 10;
+        // selecting only the emails needed for the page(each page has a number of emails set by (elements per page) value)
+        const emailListPaginationStart = page * elementsPerPage;
+        const emailListPaginationEnd = (page + 1) * elementsPerPage;
         const emailListPagination = emailList.slice(emailListPaginationStart, emailListPaginationEnd);
 
-        console.log('emailList')
-        console.log(emailList)
-        console.log('emailListPagination')
-        console.log(emailListPagination)
 
-
-        // if the email list has any elements then whatever the parameters of the action are
-        // they specify only requesting information for specific users
-
-        console.log('adminResponse')
-        console.log(adminResponse)
-
-        console.log('groupName')
-        console.log(groupName)
-
-        console.log('emailList')
-        console.log(emailList)
-
+        // if the group is for all users, we will get all users according to the
+        // parameters provided and if no parameters are provided, get all users by page
         if (groupName === 'all') {
             // if email exists then users are supposed to be filted by that email
             if (email) {
@@ -134,25 +116,22 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             }
             userInfoRespPromise = userClient.findAllUsersPage(page);
             let userInfoResp = await userInfoRespPromise;
-            const pageTotalByUserResp = Math.ceil(userInfoResp.data.totalElements / 10);
-            pageTotal = pageTotalByUserResp;
-            console.log('pageTotalUR')
-            console.log(pageTotalByUserResp)
-        } else {
+            // sets the page total to the total number of elements divided by the elements per page
+            pageTotal = Math.ceil(userInfoResp.data.totalElements / elementsPerPage);
+        } 
+        // if the the group is any role, will use email list to find users based
+        // off emails provided by cognito server
+        else {
             if (email) {
                 emailList = emailList.filter((currentEmail) => currentEmail.toLocaleLowerCase().includes(email));
             }
             userInfoRespPromise = userClient.findAllByEmails(emailListPagination);
-            console.log('inside responses')
-            console.log('emailListPagination')
-            console.log(emailListPagination)
-            const pageTotalByEmailList = Math.ceil(emailList.length / 10);
-            pageTotal = pageTotalByEmailList;
-            console.log('pageTotalEL')
-            console.log(pageTotalByEmailList)
+            // sets the page total to the total number of elements divided by the elements per page
+            pageTotal = Math.ceil(emailList.length / elementsPerPage);
+            // increments the max page if we have not been to that page before
             if ((page + 1) > maxPage) {
                 maxPage += 1;
-                updateMaxPage(maxPage)(dispatch)
+                updateMaxPage(maxPage)(dispatch);
             }
         }
 
@@ -175,29 +154,23 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
         }
 
         // parse the response from the user service
+        // if there is content to the user response(i.e. we got info for all users) it passes that data
+        // else sets the list to the data from a specific group
         let userInfoResp = await userInfoRespPromise;
         userServiceUserList = userInfoResp.data.content || userInfoResp.data;
 
-        console.log('userServiceUserList')
-        console.log(userServiceUserList)
-        
+        // makes the next if statement less cluttered
         const finalAdminResponse = (adminResponse && adminResponse.data.NextToken) || (oldAdminResponse && oldAdminResponse.data.NextToken);
         const finalTrainerResponse = (trainerResponse && trainerResponse.data.NextToken) || (oldTrainerResponse && oldTrainerResponse.data.NextToken)
         const finalStagingManagerResponse = (stagingManagerResponse && stagingManagerResponse.data.NextToken) || (oldStagingManagerResponse && oldStagingManagerResponse.data.NextToken)
 
+        // if there is a group resoponse, and that group has a nextToken, set variable to true
+        // we don't want the group all to have a sign that there are more pages
         if(groupName !== 'all' && (finalAdminResponse || finalTrainerResponse || finalStagingManagerResponse)) {
             areMore = true;
         } else {
             areMore = false;
         }
-
-        console.log('')
-        console.log('')
-        console.log('pageTotal')
-        console.log(pageTotal)
-
-        console.log('')
-        console.log('')
 
         // merge the user service and cognito information
         let listOfUsers = new Array<ICognitoUser>();
@@ -215,6 +188,7 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             listOfUsers.push(altenateUser);
         }
 
+        // send email list to the redux store to be called the next time this funciton runs
         updateEmailList(emailList)(dispatch);
 
         dispatch({
