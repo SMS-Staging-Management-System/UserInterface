@@ -37,7 +37,7 @@ export const surveyClient = {
     const resp = await smsClient.get(surveyBaseRoute);
     return resp.data;   
   },
-
+  
   findAllTemplates: async (creator: string ,page: number) => {
     let surveysAndTemplates;
     let templates: any = [];
@@ -125,12 +125,11 @@ export const surveyClient = {
     return survey;
   },
 
-
   findSurveysAssignedToUser: async (email: string) => {
     let myAssignedSurveys: any[] = [];
     // Get all surveys
     let allSurveys = await surveyClient.findAllSurveys();
-
+  
     // Get histories by email
     let myHistories = await surveyClient.findHistoriesByEmail(email);
 
@@ -154,7 +153,6 @@ export const surveyClient = {
     let resp = await smsClient.post(surveyBaseRoute, survey);
     return resp.data
   },
-
 
   //----------------------//
   //-- Question Methods --//
