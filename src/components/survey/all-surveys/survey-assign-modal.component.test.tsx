@@ -472,20 +472,21 @@ describe('Testing component rendering', () => {
                 };
             }
         });
-        // users 1-8
-        mockAllUsers.loadAllUsersAllPages.mockImplementation((total: number) => {
-            for(let i = 1; i < total; i++) {
-                const prevState: IUser[] = wrapper.state('allUsers');
-                wrapper.setState({
-                    allUsers: prevState.concat(allUsersState[i])
-                });
-            }
-        });
         mockAllUsers.loadAllUsersSinglePage.mockImplementation(() => {
             wrapper.setState({
                 allUsers: allUsersState[0]
             });
             mockAllUsers.loadAllUsersAllPages(8);
+        });
+        // users 1-8
+        mockAllUsers.loadAllUsersAllPages.mockImplementation((total: number) => {
+            let prevState: IUser[] = [allUsersState[0]];
+            for(let i = 1; i < total; i++) {
+                wrapper.setState({
+                    allUsers: prevState.concat(allUsersState[i])
+                });
+                prevState = wrapper.state('allUsers');
+            }
         });
     });
     test('All survey modal will be created', () => {
@@ -506,6 +507,19 @@ describe('Testing component rendering', () => {
         expect(wrapper.state('sortCohorts')).toEqual(sortCohortsState);
     });
     //loadAllUsersSinglePage and loadAllUserAllPages just change state
+    test('loadAllUsersSinglePage which calls loadAllUserAllPages', () => {
+        wrapper.setState({
+            modal: true,
+            usersLoaded: true,
+            allGeneralStatus: generalStatusState,
+            allSpecificStatus: specificStatusState,
+            sortCohorts: sortCohortsState,
+            totalPages: 5,
+            currentPage: 2
+        });
+        mockAllUsers.loadAllUsersSinglePage();
+        expect(wrapper.state('allUsers')).toEqual(allUsersState);
+    });
 });
 
 describe('test next and previous button', () => {

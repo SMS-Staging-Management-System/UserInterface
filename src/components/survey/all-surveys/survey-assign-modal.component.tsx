@@ -514,8 +514,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                             <Label className="form-check-label" for="virtual">Virtual</Label>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="input-group mb-3">
+                                    <div></div>
                                     <div className="input-group-prepend">
                                         <Label className="input-group-text">General Status: </Label>
                                     </div>
@@ -531,6 +530,9 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                     }
                                     </div>
                                 </div>
+                                {/* incase want to revert to old way put it in this
+                                <div className="input-group mb-3">
+                                </div> */}
                                 <div className="input-group mb-3 input-group-text">
                                     <div className="input-group-prepend">
                                         <Label className="input-group-text">Specific Status:  </Label>
@@ -558,8 +560,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                             <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
                                                 <td>All: <input id={`checkFunc${cohort.cohortId}`} type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
                                                 </td>
-                                                <td colSpan={5}>{cohort.cohortName}</td>
-                                                <td>{cohort.address.alias}</td>
+                                                <td colSpan={5}><Label for={`checkFunc${cohort.cohortId}`}>{cohort.cohortName}</Label></td>
+                                                <td><Label for={`checkFunc${cohort.cohortId}`}>{cohort.address.alias}</Label></td>
                                             </tr>
                                         ))}
                                     </tbody>
