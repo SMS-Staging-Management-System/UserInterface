@@ -66,7 +66,6 @@ export class AllSurveysComponent extends Component<
       this.props.auth.currentUser.email,
       page - 1,
     );
-    console.log(req);
     this.setState({
       ...this.state,
       surveys: req.content,
@@ -232,14 +231,12 @@ export class AllSurveysComponent extends Component<
     if (this.state.redirectTo) {
       return <Redirect push to={this.state.redirectTo} />;
     }
-    console.log(this.state.surveys);
     const sortOptions = ['Active', 'Closed', 'My Surveys', 'None'];
     return (
       <>
         {this.state.surveysLoaded ? (
           <Fragment>
             <div className='filterSelect'>
-              {/* testing a HTML select */}
 
               <div className='dropdown userDropdown'>
                 {this.state.surveys.length > 0 && (
@@ -249,7 +246,6 @@ export class AllSurveysComponent extends Component<
                       surveysToAssign={this.state.surveysToAssign}
                     />
                   </span>
-                  // </div>
                 )}
 
                 <Button
@@ -328,19 +324,6 @@ export class AllSurveysComponent extends Component<
                           <FaSearch />
                         </button>
                       </div>
-                    </td>
-                    <td>
-                      {/* <DatePicker
-                                                    onChange={this.getDateCreated}
-                                                    value={this.state.createdDate}
-                                                /> */}
-                    </td>
-
-                    <td>
-                      {/* <DatePicker
-                                                    onChange={this.getDateClosed}
-                                                    value={this.state.endDate}
-                                                /> */}
                     </td>
 
                     <td></td>

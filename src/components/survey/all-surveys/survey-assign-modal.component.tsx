@@ -71,17 +71,13 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             nameTextBox: e.target.value
         });
         let newCohorts;
-        console.log(e.target.value)
         if (e.target.value) {
-            console.log("Hi")
             newCohorts = await cohortClient.getName(e.target.value);
         }
         //If no match occurs, and nothing is present in the textbox, list all the cohorts that currently exist.
         else {
-            console.log("hello")
             const newCohortsResponse = await cohortClient.findAll();
             newCohorts = newCohortsResponse.data;
-            console.log(newCohorts)
         }
         this.setState({
             sortCohorts: newCohorts
@@ -94,17 +90,13 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             alias: e.target.value
         });
         let newCohorts;
-        console.log(e.target.value)
         if (e.target.value) {
-            console.log("Hi")
             newCohorts = await cohortClient.getAlias(e.target.value);
         }
         //If no match occurs, and nothing is present in the textbox, list all the cohorts that currently exist.
         else {
-            console.log("hello")
             const newCohortsResponse = await cohortClient.findAll();
             newCohorts = newCohortsResponse.data;
-            console.log(newCohorts)
         }
         this.setState({
             sortCohorts: newCohorts
@@ -267,7 +259,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                     }
                 }
                 let el = document.getElementById(cohortId) as HTMLInputElement;
-                console.log()
+    
                 if (el) { el.checked = false; }
             }
         }

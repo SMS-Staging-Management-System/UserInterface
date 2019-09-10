@@ -109,7 +109,6 @@ export const surveyClient = {
     // Get histories by email
     let myHistories = await surveyClient.findHistoriesByEmail(email);
 
-    console.log(myHistories)
     // If loading failed, don't loop through surveys, preventing crashing the page if the api server is down
     if (myHistories !== undefined) {
       //Loop through the histories, and save the corresponding survey
@@ -204,7 +203,6 @@ export const surveyClient = {
 
     await smsClient.get(`${historyBaseRoute}/pageable/${id}/${pageId}`)
       .then(response => {
-        console.log('Total pages : ' + response.data.totalPages);
         histories = response.data;
         
       })

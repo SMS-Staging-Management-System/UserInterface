@@ -39,6 +39,9 @@ $screen-xl-min: 1200px;
 // Small devices
 @mixin sm {
   @media (min-width: #{$screen-sm-min}) {
+    .assignToCohorts {
+      width: 200px;
+    } 
     @content;
   }
 }
@@ -46,6 +49,9 @@ $screen-xl-min: 1200px;
 // Medium devices
 @mixin md {
   @media (min-width: #{$screen-md-min}) {
+    .assignToCohorts {
+      width: 200px;
+    } 
     @content;
   }
 }
@@ -582,17 +588,13 @@ Survey Component
   width: 100%;
 }
 
-.allSurveyBtn {
-
-}
-
 .assignSurveyBtn {
   color: black;
   border-radius: 10px;
   background-color: $revature-orange-light;
   font-weight: bold;
   height: 40px;
-  width: 100%;
+  width: 85%;
   border: none;
   // float: left;
 }
@@ -661,7 +663,7 @@ User Dropdown
   border-radius: 10px;
   background-color: $revature-orange-light;
   height: 40px;
-  width: 10%;
+  width: 14%;
   border: none;
 }
 
