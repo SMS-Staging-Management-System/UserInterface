@@ -132,12 +132,8 @@ class SurveyTakingComponent extends Component<IComponentProps, IComponentState>{
                         creator: '',
                         dateCreated: new Date(),
                         description: '',
-<<<<<<< HEAD
                         questionJunctions: [],
                         surveyId: this.state.survey.surveyId,
-=======
-                        creator: '',
->>>>>>> carri-thas-edward
                         template: true,
                         title: '',
                     },
