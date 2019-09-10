@@ -251,7 +251,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         <DropdownMenu >
                             <DropdownItem onClick={this.getTrainers}>
                                 <div onClick={() => this.setFilterSelection('All')}>
-                                    All
+                                    All  
                                 </div>
                             </DropdownItem>
                             <DropdownItem divider />
