@@ -23,6 +23,8 @@ interface IManageCohortsState {
     option: String
     optionVar: number
     optionStr: String
+    title: String
+    titleFilter: String
     locationDropdown: {
         isOpen: boolean
         selection: String
@@ -42,35 +44,20 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
             option: 'All',
             optionVar: 0,
             optionStr: '',
+            title: 'All',
+            titleFilter: 'All',
             trainerDropdown: {
                 isOpen: false,
-                selection: 'Trainer'
+                selection: ''
             },
             locationDropdown: {
                 isOpen: false,
-                selection: 'Location'
+                selection: ''
             }
 
         };
     }
 
-    getAllCohorts = async (newPage): Promise<ICohort[]> => {
-        const resp = await cohortClient.findAllByPage(newPage);
-        const data = await resp.data
-        return data
-    }
-
-    getCohortsByAddress = async (addressId, newPage): Promise<ICohort[]> => {
-        const resp = await cohortClient.findAllByAddressPage(addressId, newPage);
-        const data = await resp.data
-        return data
-    }
-
-    getCohortsByTrainer = async (userId, newPage): Promise<ICohort[]> => {
-        const resp = await cohortClient.findAllByTrainerPage(userId, newPage);
-        const data = await resp.data
-        return data
-    }
 
     getCohortsByOption = async (newPage) => {
 
@@ -99,7 +86,6 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
     }
 
     getLocations = async () => {
-        console.log('getting locations?')
         const resp = await addressesClient.findAll();
         const locations = await resp.data;
         console.log(`Locations ${locations}`);
@@ -122,6 +108,14 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
     async updateTable() {
         const data = await this.getCohortsByOption(this.props.currentPage);
         this.props.updateCohortsByPage(data, this.props.currentPage)
+
+        if (this.state.option === 'All') {
+            this.setState({
+                ...this.state,
+                titleFilter: 'All',
+                showFilterSelection: 'All'
+            });
+        }
     }
 
     async componentDidMount() {
@@ -202,11 +196,19 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
         this.setState({
             ...this.state,
             showFilterSelection: filter,
-            filterDidNotChange: false
+            filterDidNotChange: false,
+            titleFilter: filter,
+            title: 'All'
         });
 
-        if (filter === '') {
-            this.setOption('All', 0,'');
+        if (filter === 'All') {
+            this.setState({
+                ...this.state,
+                showFilterSelection: 'All',
+                title: 'All'
+            });
+
+            this.setOption('All', 0, 'All');
         }
 
     }
@@ -220,11 +222,11 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
             option: op,
             optionVar: opv,
             optionStr: ops,
-            filterDidNotChange: false
+            filterDidNotChange: false,
+            title: ops
         })
 
         this.updateTable();
-
     }
 
     showFilterTypeDropdown = () => {
@@ -240,58 +242,64 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
         if (this.state.showFilterSelection === 'Trainer') {
             return (
-                <ButtonDropdown color="success" className="responsive-modal-row-item rev-btn"
-                    isOpen={this.state.trainerDropdown.isOpen}
-                    toggle={this.toggleTrainerDropdown} display={false}> Trainers:
-
-                    <DropdownToggle className="ml-1" caret>
-                        {this.state.trainerDropdown.selection}
-                    </DropdownToggle>
-                    <DropdownMenu >
-                        <DropdownItem onClick={this.getTrainers}>All </DropdownItem>
-                        <DropdownItem divider />
-                        {
-                            trainers.map(trainer => (
-                                // {if(this.state.sortTrainer !== 'All') {
-                                <DropdownItem
-                                    key={'Status-dropdown-' + trainer}
-                                onClick={() => this.setOption('Trainer', 0,trainer)}
-                                >
-                                    {trainer}
-                                </DropdownItem>
-                                // }
-                            ))
-                        }
-                    </DropdownMenu>
-                </ButtonDropdown>
-
-
+                <div>
+                    <ButtonDropdown color="success" className="responsive-modal-row-item rev-btn"
+                        isOpen={this.state.trainerDropdown.isOpen}
+                        toggle={this.toggleTrainerDropdown} display={false}>
+                        <DropdownToggle className="ml-1" caret>
+                            {this.state.title}
+                        </DropdownToggle>
+                        <DropdownMenu >
+                            <DropdownItem onClick={this.getTrainers}>
+                                <div onClick={() => this.setFilterSelection('All')}>
+                                    All
+                                </div>
+                            </DropdownItem>
+                            <DropdownItem divider />
+                            {
+                                trainers.map(trainer => (
+                                    // {if(this.state.sortTrainer !== 'All') {
+                                    <DropdownItem
+                                        key={'Status-dropdown-' + trainer}
+                                        onClick={() => this.setOption('Trainer', 0, trainer)}
+                                    >
+                                        {trainer}
+                                    </DropdownItem>
+                                    // }
+                                ))
+                            }
+                        </DropdownMenu>
+                    </ButtonDropdown>
+                </div>
             )
         }
         else if (this.state.showFilterSelection === 'Location') {
             console.log(this.state.locations);
             return (
-                <Dropdown color="success" className="responsive-modal-row-item rev-btn"
-                    isOpen={this.state.locationDropdown.isOpen} toggle={this.toggleLocationDropdown} > Alias: 
-
+                <ButtonDropdown color="success" className="responsive-modal-row-item rev-btn"
+                    isOpen={this.state.locationDropdown.isOpen} toggle={this.toggleLocationDropdown} >
                     <DropdownToggle caret>
-                    {this.state.locationDropdown.selection}
+                        {this.state.title}
                     </DropdownToggle>
                     <DropdownMenu >
-                        <DropdownItem onClick={this.getLocations}> </DropdownItem>
-                        {/* <DropdownItem divider /> */}
+                        <DropdownItem onClick={this.getLocations}>
+                            <div onClick={() => this.setFilterSelection('All')}>
+                                All
+                                </div>
+                        </DropdownItem>
+                        <DropdownItem divider />
                         {
                             this.state.locations.map(locations => (
                                 <DropdownItem
                                     key={'Status-dropdown-' + locations.addressId}
-                                    onClick={() => this.setOption('Location', locations.addressId, '')}
+                                    onClick={() => this.setOption('Location', locations.addressId, locations.alias)}
                                 >
                                     {locations.alias}
                                 </DropdownItem>
                             ))
                         }
                     </DropdownMenu>
-                </Dropdown>
+                </ButtonDropdown>
             )
         }
         return null;
@@ -308,8 +316,8 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         <Dropdown color="success" className="responsive-modal-row-item rev-btn"
                             isOpen={this.state.filterDropdownList} toggle={this.toggleFilterDropdown}>
                             <DropdownToggle className="ml-1" caret>
-                                {this.state.showFilterSelection}
-                </DropdownToggle>
+                                {this.state.titleFilter}
+                            </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem>
                                     <div onClick={() => this.setFilterSelection('All')}>
@@ -330,6 +338,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
+
 
                         {this.showFilterTypeDropdown()}
 
