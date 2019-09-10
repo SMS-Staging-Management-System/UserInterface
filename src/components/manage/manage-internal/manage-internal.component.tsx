@@ -130,7 +130,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     }
 
     incrementPage = () => {
-        if ((this.props.manageUsers.manageUsersCurrentPage < this.props.manageUsers.manageUsersPageTotal - 1) || this.props.manageUsers.areMore) {
+        if (this.props.manageUsers.manageUsersCurrentPage < this.props.manageUsers.manageUsersPageTotal - 1) {
             const newPage = this.props.manageUsers.manageUsersCurrentPage + 1;
             if (this.props.manageUsers.emailSearch) {
                 this.getUserByEmail(newPage);
@@ -279,7 +279,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                 <div className='row horizontal-centering vertical-centering'>
                     <Button variant="button-color" className="rev-background-color div-child" onClick={this.decrementPage}>Prev</Button>
                     <h6 className="div-child text-style" >
-                        Page {this.props.manageUsers.manageUsersCurrentPage + 1} of {this.props.manageUsers.manageUsersPageTotal} {this.props.manageUsers.areMore ? '+' : ''}
+                        Page {this.props.manageUsers.manageUsersCurrentPage + 1} of {this.props.manageUsers.manageUsersPageTotal}
                     </h6>
                     <Button variant="button-color" className="rev-background-color div-child" onClick={this.incrementPage}>Next</Button>
                 </div>

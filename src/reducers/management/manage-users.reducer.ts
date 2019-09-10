@@ -11,14 +11,13 @@ const initialState: IManageUsersState = {
     componentLoaded: false,
     userTableSort: 'sorted',
     emailList: [],
-    adminResponse: 0,
-    trainerResponse: 0,
-    stagingManagerResponse: 0,
-    maxPage: 0 ,
-    areMore: false
+    adminResponse: {},
+    trainerResponse: {},
+    stagingManagerResponse: {} 
 }
 
 export const manageUsersReducer = (state = initialState, action: any) => {
+    console.log(state, action)
     switch (action.type) {
         case manageUsersTypes.GET_USERS:
             return {
@@ -26,7 +25,6 @@ export const manageUsersReducer = (state = initialState, action: any) => {
                 manageUsers: action.payload.manageUsers,
                 manageUsersCurrentPage: action.payload.manageUsersCurrentPage,
                 manageUsersPageTotal: action.payload.manageUsersPageTotal,
-                areMore: action.payload.areMore,
                 componentLoaded: true
             }
         case manageUsersTypes.UPDATE_SEARCH_EMAIL:
@@ -65,11 +63,6 @@ export const manageUsersReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 stagingManagerResponse: action.payload.stagingManagerResponse
-            }
-        case manageUsersTypes.UPDATE_MAX_PAGE:
-            return {
-                ...state,
-                maxPage: action.payload.maxPage
             }
         case authTypes.LOGOUT:
             return initialState;
