@@ -5,7 +5,7 @@ import { IResponse } from "../../model/surveys/response.model";
 import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
 import { smsClient } from ".";
 const surveyBaseRoute = '/survey-service/surveys';
-const templateRoute = '/survey-service/surveys/template/true/'
+const templateRoute = '/survey-service/surveys/template/true'
 const questionBaseRoute = '/survey-service/questions';
 const answerBaseRoute = '/survey-service/answers';
 const responseBaseRoute = '/survey-service/responses';
@@ -14,8 +14,6 @@ const questionJunctionBaseRoute = '/survey-service/junction_survey_questions';
 const questionAllBaseRoute = '/survey-service/questions/multi-question';
 const historyBaseRoute = '/survey-service/history';
 
-let totalPages = 0;
-let pages = 0;
 export const surveyClient = {
   //--------------------//
   //-- Survey Methods --//
@@ -53,54 +51,13 @@ export const surveyClient = {
   },
   
   findAllTemplates: async (creator: string ,page: number) => {
-    let surveysAndTemplates;
-    let templates: any = [];
-    pages += page;
-    if (pages < 0) {
-      pages = 0
-    } else if (pages > 0) {
-      if (pages >  totalPages) {
-        pages = totalPages;
-      }
-    }
-    let resp = await smsClient.get(`${templateRoute}${creator}/creator?page=${pages}`)
-    surveysAndTemplates = resp.data;
-    if (surveysAndTemplates) {
-      surveysAndTemplates.content.forEach(element => {
-        templates.push(element);
-      });
-      totalPages = surveysAndTemplates.totalPages;
-      console.log("total pages: " + totalPages)
-    }
-    return templates;
+    let resp = await smsClient.get(`${templateRoute}/creator/?email=${creator}&page=${page}`)
+    return resp.data;
   },
+
   findByTitle: async (title: String, page: number) => {
-    let surveysAndTemplates;
-    let templates: any = [];
-    pages += page;
-    if (pages < 0) {
-      pages = 0
-    } else if (pages > 0) {
-      if (pages >  totalPages) {
-        pages = totalPages;
-      }
-    }
-    let resp = await smsClient.get(`${templateRoute}title/${title}?page=${pages}`)
-    surveysAndTemplates = resp.data;
-    if (surveysAndTemplates) {
-      surveysAndTemplates.content.forEach(element => {
-        templates.push(element);
-      });
-      totalPages = surveysAndTemplates.totalPages;
-    }
-    return templates;
-  },
-  totalPages() {
-    return totalPages;
-  },
-  currentPage() {
-    let sentPage = pages + 1;
-    return sentPage;
+    let resp = await smsClient.get(`${templateRoute}/title/${title}?page=${page}`)
+    return resp.data;
   },
   findSurveyById: async (id: number) => {
     const response = await smsClient.get(`${surveyBaseRoute}/${id}`);
@@ -242,8 +199,4 @@ export const surveyClient = {
     }
     smsClient.patch(`${historyBaseRoute}/taken`, historyUpdate);
   },
-  //working on pg
-  // findAllByPage(page: number) {
-  //   return smsClient.get(historyBaseRoute+`/page/${page}`)
-  // },
 }
