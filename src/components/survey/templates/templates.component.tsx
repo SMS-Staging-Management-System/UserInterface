@@ -13,6 +13,8 @@ import Loader from '../Loader/Loader';
 import { IState } from '../../../reducers';
 import { toast } from 'react-toastify';
 import { IAuthState } from '../../../reducers/management';
+import { Link } from 'react-router-dom';
+
 
 interface TemplatesProps extends RouteComponentProps<{}> {
     auth: IAuthState;
@@ -77,13 +79,13 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     }
     // Load the templates into the state
     loadTemplates = async (page: number) => {
-        if(this.state.foundAll === true){
+        if (this.state.foundAll === true) {
             const templates = await surveyClient.findAllTemplates(this.props.auth.currentUser.email, page);
             this.setState({
                 templates: templates,
                 templatesLoaded: true
             });
-        } else if(this.state.foundAll === false) {
+        } else if (this.state.foundAll === false) {
             const templates = await surveyClient.findByTitle(this.state.search, page);
             this.setState({
                 templates: templates,
@@ -91,18 +93,19 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             });
         }
 
-        if(surveyClient.currentPage() <= 1) {
-            if(surveyClient.currentPage() !== surveyClient.totalPages()){
+        if (surveyClient.currentPage() <= 1) {
+            if (surveyClient.currentPage() !== surveyClient.totalPages()) {
                 this.setState({
-                prev: true,
-                next: false
-            });} else {
+                    prev: true,
+                    next: false
+                });
+            } else {
                 this.setState({
                     prev: true,
                     next: true
                 });
-            }   
-        } else if(surveyClient.currentPage() >= surveyClient.totalPages()){
+            }
+        } else if (surveyClient.currentPage() >= surveyClient.totalPages()) {
             this.setState({
                 prev: false,
                 next: true
@@ -175,7 +178,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 description: this.state.survey.description
             })
         }
-        
+
         this.setState({
             showModal: false,
             surveyId: 0,
@@ -192,7 +195,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
             questionJunctions: []
         };
         let questionJunctions: IJunctionSurveyQuestion[] = [];
-        
+
         for (let i = 0; i < (this.state.survey.questionJunctions).length; i++) {
 
             let dummyQuestionJunction: any = {
@@ -206,7 +209,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 },
                 questionOrder: this.state.survey.questionJunctions[i].questionOrder
             }
-    
+
             for (let j = 0; j < (this.state.survey.questionJunctions[i].question.answers).length; j++) {
 
                 let dummyAnswers: IAnswer | any = {
@@ -227,7 +230,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         console.log(dummySurvey);
 
         toast.success('Survey created');
-        
+
     }
 
     handleDuplicateClose = async () => {
@@ -262,11 +265,11 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
     }
 
     handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-       await this.setState({
+        await this.setState({
             search: event.target.value
         });
 
-        if(this.state.search === ''){
+        if (this.state.search === '') {
             this.setState({
                 offSearch: true
             });
@@ -287,17 +290,17 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                     this.state.templates.length ? (
                         <div>
                             <div>
-                           <InputGroup>
-                           <InputGroupAddon addonType="prepend">
-                           <InputGroupText>
-                           {/* <Button aria-label="Checkbox for following text input" onClick={() =>this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button> */}
-                           <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button>
-                           </InputGroupText>
-                           </InputGroupAddon>
-                           <Input id="template-search-bar" placeholder="Enter Template Name" onChange={this.handleChange}/>
-                           </InputGroup>
-                           </div>
-                           <br />
+                                <InputGroup>
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>
+                                            {/* <Button aria-label="Checkbox for following text input" onClick={() =>this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button> */}
+                                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button>
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                    <Input id="template-search-bar" placeholder="Enter Template Name" onChange={this.handleChange} />
+                                </InputGroup>
+                            </div>
+                            <br />
                             <Table striped id="manage-users-table" className="tableUsers">
                                 <thead className="rev-background-color">
                                     <tr>
@@ -319,9 +322,9 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             </Table>
                             {/* button goes here pick up here */}
                             <div className='row horizontal-centering vertical-centering'>
-                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>All Templates</Button>
-                            <h6 className="div-child text-style" >
-                                          
+                                <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>All Templates</Button>
+                                <h6 className="div-child text-style" >
+
                                 </h6>
                                 <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(-1)} disabled={this.state.prev}>Prev</Button>
                                 <h6 className="div-child text-style" >
@@ -331,7 +334,28 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                             </div>
                         </div>
                     ) : (
-                            <div>No Templates to Display</div>
+                            <div>
+                                <Table striped id="manage-users-table" className="tableUsers">
+                                    <thead className="rev-background-color">
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
+                                            <th>Date Created</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr className="rev-table-row">
+                                            <td colSpan={4} ><div className='div-center fadeInUp'>You Have No Such A Template Sorry!
+                                        </div></td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </Table>
+
+                                <Button variant="primary" className="div-center fadeInUp" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>Go Back To The Templates</Button>
+                            </div>
                         )
                 ) : (
                         <Loader />
