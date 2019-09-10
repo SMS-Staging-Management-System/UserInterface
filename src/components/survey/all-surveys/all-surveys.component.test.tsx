@@ -1,8 +1,3 @@
-const mockReturn = {
-    returnPassedSurveys: jest.fn(),
-    returnActiveSurveys: jest.fn()
-}
-
 import { shallow, mount, render } from 'enzyme';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import { AllSurveysComponent } from './all-surveys.component';
@@ -13,33 +8,37 @@ import React, { Fragment, Component } from 'react';
 
 /*  Mock Survey Data */
 const today = new Date('5/30/2019')
+<<<<<<< HEAD
 let exampleArr:ISurvey[] = [
     {
         surveyId: 4,
         title: "RC Survey",
         description: "A survey for training feedback.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('7-2-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 5,
         title: "Testing2",
         description: "A survey for testing",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 6,
         title: "Testingstuff",
         description: "A survey for more testing",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-10-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
@@ -49,28 +48,31 @@ let exArr:ISurvey[] = [
         surveyId: 1,
         title: "Survey 1",
         description: "A survey for some testing with null closing date.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 2,
         title: "Survey 2",
         description: "A survey for testing without null",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 3,
         title: "Survey 3",
         description: "A survey for testing an active date",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('7-10-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
@@ -80,28 +82,31 @@ let exArray:ISurvey[] = [
         surveyId: 7,
         title: "Survey 7",
         description: "A survey for some testing with null closing date.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 8,
         title: "Survey 8",
         description: "A survey for testing with null closing date",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 9,
         title: "Survey 9",
         description: "A survey for testing more null dates",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
@@ -111,31 +116,101 @@ let allPassedSurveys:ISurvey[] = [
         surveyId: 1,
         title: "Survey 1",
         description: "A survey for some testing with null closing date.",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 2,
         title: "Survey 2",
         description: "A survey for testing without null",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     },
     {
         surveyId: 3,
         title: "Survey 3",
         description: "A survey for testing an active date",
+        creator: '',
         dateCreated: new Date('5/31/2019'),
         closingDate: new Date('5-24-2019'),
         template: false,
-        published: true
+        questionJunctions: []
     }
 
 ]
+=======
+let exampleArr: ISurvey[] = [
+  {
+    surveyId: 4,
+    title: 'RC Survey',
+    description: 'A survey for training feedback.',
+    dateCreated: new Date('5/31/2019'),
+    closingDate: new Date('7-2-2019'),
+    template: false,
+    creator: '',
+    questionJunctions: [],
+  },
+  {
+    surveyId: 5,
+    title: 'Testing2',
+    description: 'A survey for testing',
+    dateCreated: new Date('5/31/2019'),
+    closingDate: new Date('5-24-2019'),
+    template: false,
+    creator: '',
+    questionJunctions: [],
+  },
+  {
+    surveyId: 6,
+    title: 'Testingstuff',
+    description: 'A survey for more testing',
+    dateCreated: new Date('5/31/2019'),
+    closingDate: new Date('5-10-2019'),
+    template: false,
+    creator: '',
+    questionJunctions: [],
+  },
+];
+
+let exArr: ISurvey[] = [
+  {
+    surveyId: 1,
+    title: 'Survey 1',
+    description: 'A survey for some testing with null closing date.',
+    dateCreated: new Date('5/31/2019'),
+    closingDate: null,
+    template: false,
+    creator: '',
+    questionJunctions: [],
+  },
+  {
+    surveyId: 2,
+    title: 'Survey 2',
+    description: 'A survey for testing without null',
+    dateCreated: new Date('5/31/2019'),
+    closingDate: new Date('5-24-2019'),
+    template: false,
+    creator: '',
+    questionJunctions: [],
+  },
+  {
+    surveyId: 3,
+    title: 'Survey 3',
+    description: 'A survey for testing an active date',
+    dateCreated: new Date('5/31/2019'),
+    closingDate: new Date('7-10-2019'),
+    template: false,
+    creator: '',
+    questionJunctions: [],
+  },
+];
+>>>>>>> carri-thas-edward
 
 /* Mock Survey Data */
 
@@ -143,24 +218,26 @@ interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState;
 }
 let filler: any = null;
-let d:IComponentProps = {auth: {
-                            currentUser: {
-                                email: "black.kruppa@revature.com",
-                                roles: ['staging-manager', 'trainer', 'admin']
-                            }
-                        },
-                        history: createBrowserHistory(),
-                        location: filler,
-                        match: filler
-                    }
+let currentUser:IComponentProps = {
+    auth: {
+        currentUser: {
+            email: "black.kruppa@revature.com",
+            roles: ['staging-manager', 'trainer', 'admin']
+        }
+    },
+    history: createBrowserHistory(),
+    location: filler,
+    match: filler
+}
 
 // Render test suite
 describe('Testing component rendering', () => {
     test('All surveys will be rendered', () => {
         
-       const component = shallow(<AllSurveysComponent {...d}/>);
+       const component = shallow(<AllSurveysComponent {...currentUser} />);
        expect(component).resolves;
     })
+<<<<<<< HEAD
 })
 
 // Filter functions test suite
@@ -203,10 +280,11 @@ describe('All surveys should return active and closed surveys', () => {
                 surveyId: 4,
                 title: "RC Survey",
                 description: "A survey for training feedback.",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: new Date('7-2-2019'),
                 template: false,
-                published: true
+                questionJunctions: []
             }
         ]);
     })
@@ -218,19 +296,21 @@ describe('All surveys should return active and closed surveys', () => {
                 surveyId: 1,
                 title: "Survey 1",
                 description: "A survey for some testing with null closing date.",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: null,
                 template: false,
-                published: true
+                questionJunctions: []
             },
             {
                 surveyId: 3,
                 title: "Survey 3",
                 description: "A survey for testing an active date",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: new Date('7-10-2019'),
                 template: false,
-                published: true
+                questionJunctions: []
             },
         ]);
     });
@@ -251,19 +331,21 @@ describe('All surveys should return active and closed surveys', () => {
             surveyId: 5,
             title: "Testing2",
             description: "A survey for testing",
+            creator: '',
             dateCreated: new Date('5/31/2019'),
             closingDate: new Date('5-24-2019'),
             template: false,
-            published: true
+            questionJunctions: []
         },
         {
             surveyId: 6,
             title: "Testingstuff",
             description: "A survey for more testing",
+            creator: '',
             dateCreated: new Date('5/31/2019'),
             closingDate: new Date('5-10-2019'),
             template: false,
-            published: true
+            questionJunctions: []
         }]);
     });
 
@@ -274,10 +356,11 @@ describe('All surveys should return active and closed surveys', () => {
                 surveyId: 2,
                 title: "Survey 2",
                 description: "A survey for testing without null",
+                creator: '',
                 dateCreated: new Date('5/31/2019'),
                 closingDate: new Date('5-24-2019'),
                 template: false,
-                published: true
+                questionJunctions: []
             }
         ]);
     });
@@ -293,4 +376,6 @@ describe('All surveys should return active and closed surveys', () => {
         expect(filteredList).toEqual(allPassedSurveys);
     });
 
+=======
+>>>>>>> carri-thas-edward
 })

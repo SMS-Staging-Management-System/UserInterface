@@ -6,6 +6,7 @@ import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-que
 import { smsClient } from ".";
 
 const surveyBaseRoute = '/survey-service/surveys';
+const surveyAllBaseRoute = '/survey-service/surveys/all';
 const questionBaseRoute = '/survey-service/questions';
 const answerBaseRoute = '/survey-service/answers';
 const responseBaseRoute = '/survey-service/responses';
@@ -26,128 +27,49 @@ export const surveyClient = {
   // this is our fetch call on which if dont have a body back we will return
   // the empty array declare on the first line.
   findSurveyByTitle: async (title: string) => {
-    //  let surveyFound;
-    let surveys: any = [];
-    console.log(`${surveyBaseRoute}/title/${title}`);
-    await smsClient.get(`${surveyBaseRoute}/title/${title}`)
-      // await smsClient.get(`localhost:8092/surveys/title/${title}`)
-      .then(response => {
-        if (response.data) {
-          surveys = response.data;
-        }
-        else {
-          console.log("Record not found.");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    return surveys;
+     return await smsClient.get(`${surveyBaseRoute}/title/${title}`)
   },
 
     // we use the surveyroute and add the uri plus the parametor comig from the getsurveybyDescription
   // this is our fetch call on which if dont have a body back we will return
   // the empty array declare on the first line.
   findSurveyByDescription: async (description: string) => {
-    let surveys: any = [];
+    return await smsClient.get(`${surveyBaseRoute}/description/${description}`)
+  },
 
-    await smsClient.get(`${surveyBaseRoute}/description/${description}`)
-      .then(response => {
-        surveys = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-   
-    return surveys;
+  findAllByPage(page: number) {
+    return smsClient.get(surveyBaseRoute + `/page/${page}`)
   },
-  findAllSurveys: async () => {
-    let surveysAndTemplates;
-    let surveys: any = [];
-    await smsClient.get(surveyBaseRoute)
-      .then(response => {
-        surveysAndTemplates = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    if (surveysAndTemplates) {
-      surveysAndTemplates.forEach(element => {
-        if (!element.template) {
-          surveys.push(element);
-        }
-      });
-    }
-    return surveys;
+
+  findAllSurveys: async (page: any) => {
+    const resp = await smsClient.get(surveyBaseRoute + '/template/false?page='+page);
+    return resp.data;   
   },
+
+  findActiveOrClosedSurveys: async (isActive: string, page: any) => {
+    const resp = await smsClient.get(surveyBaseRoute + `/active/${isActive}?page=` + page);
+    return resp.data;
+  },
+
+  findAllSurveysByCreator: async (creator, page) => {
+    const resp = await smsClient.get(surveyBaseRoute + `/creator/?creator=${creator}&page=`+page);
+    return resp.data;
+  },
+
   findAllTemplates: async () => {
-    let surveysAndTemplates;
-    let templates: any = [];
-    await smsClient.get(surveyBaseRoute)
-      .then(response => {
-        surveysAndTemplates = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    if (surveysAndTemplates) {
-      surveysAndTemplates.forEach(element => {
-        if (element.template) {
-          templates.push(element);
-        }
-      });
-    }
-    return templates;
+    const resp = await smsClient.get(surveyBaseRoute + '/template/true?page=0')
+    return resp.data.content;
 
   },
   findSurveyById: async (id: number) => {
-    // Get the Survey
-    let survey;
-    await smsClient.get(`${surveyBaseRoute}/${id}`)
-      .then(response => {
-        survey = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    // Get the Junctions of Survey Questions
-    let junctions;
-    await smsClient.get(`${junctionSurveyQuestionsBaseRoute}/surveyId/${id}`)
-      .then(response => {
-        junctions = response.data;
-        // Sort the junction by question order
-        junctions.sort((a, b) => (a.questionOrder > b.questionOrder) ? 1 : -1)
-        survey.questionJunctions = junctions;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    // Append Answers to the Questions
-    // If statement prevents crashing if the API server is down
-    if (survey) {
-      for (const questionJunction of survey.questionJunctions) {
-        await smsClient.get(`${answerBaseRoute}/question/${questionJunction.questionId.questionId}`)
-          .then(response => {
-            let answerChoices = response.data;
-            // If it is a rating question, sort the ratings
-            // if (questionJunction.typeId === 4) {
-            //   answerChoices.sort((a, b) => (a.answer > b.answer) ? 1 : -1);
-            // }
-            questionJunction.questionId.answerChoices = answerChoices;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      };
-    }
-    return survey;
+    const response = await smsClient.get(`${surveyBaseRoute}/${id}`);
+    return response.data;
   },
   countResponses: async (id: number) => {
     const allResponses = await smsClient.get(`${responseBaseRoute}/surveyId/${id}`);
     const responseCount = {};
     allResponses.data.forEach(element => {
-      const answerChosen = element.answerId.id;
+      const answerChosen = element.answerId.answerId;
       if (!responseCount[answerChosen]) {
         responseCount[answerChosen] = 1;
       } else {
@@ -159,16 +81,15 @@ export const surveyClient = {
   findSurveyByIdWithResponses: async (id: number) => {
     // Get the Survey
     let survey = await surveyClient.findSurveyById(id);
-
     // Get the Responses
     const responseCount = await surveyClient.countResponses(id);
 
     // Add the response count to each question
     survey.questionJunctions.forEach(question => {
-      if (question.questionId.typeId !== 5) {
-        question.questionId.answerChoices.forEach(choice => {
-          if (responseCount[choice.id]) {
-            choice.responseCount = responseCount[choice.id];
+      if (question.question.typeId !== 5) {
+        question.question.answers.forEach(choice => {
+          if (responseCount[choice.answerId]) {
+            choice.responseCount = responseCount[choice.answerId];
           } else {
             choice.responseCount = 0;
           }
@@ -179,32 +100,20 @@ export const surveyClient = {
   },
 
 
-  findSurveysAssignedToUser: async (email: String) => {
-    let allSurveys: any[] = [];
+  findSurveysAssignedToUser: async (email: string) => {
     let myAssignedSurveys: any[] = [];
-    let myHistories;
     // Get all surveys
-    await surveyClient.findAllSurveys()
-      .then(response => {
-        allSurveys = response;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let allSurveys = await surveyClient.findAllSurveys(0);
+
     // Get histories by email
-    await surveyClient.findHistoriesByEmail(email)
-      .then(response => {
-        myHistories = response;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    let myHistories = await surveyClient.findHistoriesByEmail(email);
+
     // If loading failed, don't loop through surveys, preventing crashing the page if the api server is down
     if (myHistories !== undefined) {
       //Loop through the histories, and save the corresponding survey
       myHistories.forEach(history => {
         if (history.dateCompleted === null) {
-          allSurveys.forEach(survey => {
+          allSurveys.content.forEach(survey => {
             if (survey.surveyId === history.surveyId) {
               myAssignedSurveys.push(survey);
             }
@@ -216,19 +125,18 @@ export const surveyClient = {
   },
 
   async saveSurvey(survey: ISurvey) {
-    let resp = await smsClient.post(surveyBaseRoute, survey);
-    let sID = resp.data.surveyId;      // return ID; 
-    return sID;
+    const resp = await smsClient.post(surveyBaseRoute, survey);
+    return resp.data
   },
+
 
   //----------------------//
   //-- Question Methods --//
   //----------------------//
 
   async saveQuestion(question: IQuestion) {
-    let resp = await smsClient.post(questionBaseRoute, question.questionId);
-    let qID = parseInt(resp.data.questionId);      // return ID; 
-    return qID;
+    const resp = await smsClient.post(questionBaseRoute, question.questionId);
+    return parseInt(resp.data.questionId, 10);      // return ID; 
   },
 
   saveAllQuestion(question: IQuestion[]) {
@@ -240,8 +148,7 @@ export const surveyClient = {
   },
 
   async getQuestionType(index: number) {
-
-    let resp = await smsClient.get(questionTypeBaseRoute);
+    const resp = await smsClient.get(questionTypeBaseRoute);
     const body = resp.data;
     return body[index].questionType;
   },
@@ -251,7 +158,6 @@ export const surveyClient = {
   //--------------------//
 
   async saveAnswer(answer: IAnswer) {
-    answer.id = 0;
     return await smsClient.post(answerBaseRoute, answer)
   },
 
@@ -273,17 +179,11 @@ export const surveyClient = {
   //-- History Methods --//
   //---------------------//  
 
-  findHistoriesByEmail: async (email: String) => {
-    let histories;
-    await smsClient.post(`${historyBaseRoute}/email`, email)
-      .then(response => {
-        histories = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    return histories;
+  findHistoriesByEmail: async (email: string) => {
+    const response = await smsClient.get(historyBaseRoute +'/email?email='+email)
+    return response.data
   },
+
   assignSurveyByIdAndEmail(id: number, email: string) {
     const postObject = {
       "dateAssigned": new Date(),
@@ -300,7 +200,6 @@ export const surveyClient = {
 
     await smsClient.get(`${historyBaseRoute}/pageable/${id}/${pageId}`)
       .then(response => {
-        console.log('Total pages : ' + response.data.totalPages);
         histories = response.data;
         
       })

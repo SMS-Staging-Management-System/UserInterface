@@ -136,7 +136,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                             <br />
                             <div className='form-row'>
                                 <div className='col-3'><label>Interview Format</label></div>
-                                <span className='col-9'><select disabled={!isAdmin} value={this.state.interviewFormat} className='form-control' onChange={(e) => { this.setState({ ...this.state, interviewFormat: parseInt(e.target.value) }); }}>
+                                <span className='col-9'><select disabled={!isAdmin} value={this.state.interviewFormat} className='form-control' onChange={(e) => { this.setState({ ...this.state, interviewFormat: parseInt(e.target.value, 10) }); }}>
                                     {/* <option value={''} style={{ display: 'none' }}>select an interview format...</option> */}
                                     <option value={0} style={{ display: 'none' }}>select an interview format...</option>
                                     <option value={1}>On Site</option>
@@ -148,7 +148,7 @@ export class ViewInterviewFeedbackComponent extends React.Component<any, any> {
                             <br />
                             <div className='form-row'>
                                 <div className='col-3'><label>Feedback Status</label></div>
-                                <span className='col-9'><select disabled={!isAdmin} value={this.state.feedbackStatus} className='form-control' onChange={(e) => { this.setState({ ...this.state, feedbackStatus: parseInt(e.target.value) }); }}>
+                                <span className='col-9'><select disabled={!isAdmin} value={this.state.feedbackStatus} className='form-control' onChange={(e) => { this.setState({ ...this.state, feedbackStatus: parseInt(e.target.value, 10) }); }}>
                                     <option value={1}>Pending</option>
                                     <option value={2}>No Feedback</option>
                                     <option value={3}>Selected for Second Round</option>

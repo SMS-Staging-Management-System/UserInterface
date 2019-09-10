@@ -87,7 +87,7 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
                             <br />
                             <div className='form-row'>
                                 <div className='col-3'><label>Interview Format</label></div>
-                                <span className='col-9'><select className='form-control' value={interviewFormat} onChange={(e) => { setState({ ...state, interviewFormat: parseInt(e.target.value) }); }}>
+                                <span className='col-9'><select className='form-control' value={interviewFormat} onChange={(e) => { setState({ ...state, interviewFormat: parseInt(e.target.value, 10) }); }}>
                                     <option value={0} style={{ display: 'none' }}>select an interview format...</option>
                                     <option value={1}>On Site</option>
                                     <option value={2}>In Person</option>
@@ -98,7 +98,7 @@ class InterviewFeedbackComponent extends React.Component<IInterviewFeedbackCompo
                             <br />
                             <div className='form-row'>
                                 <div className='col-3'><label>Feedback Status</label></div>
-                                <span className='col-9'><select className='form-control' value={interviewStatus} onChange={(e) => { setState({ ...state, interviewStatus: parseInt(e.target.value) }); }}>
+                                <span className='col-9'><select className='form-control' value={interviewStatus} onChange={(e) => { setState({ ...state, interviewStatus: parseInt(e.target.value, 10) }); }}>
                                     <option value={1}>Pending</option>
                                     <option value={2}>No Feedback</option>
                                     <option value={3}>Selected for Second Round</option>

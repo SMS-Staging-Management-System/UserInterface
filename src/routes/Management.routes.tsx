@@ -4,11 +4,11 @@ import ManageComponent from '../components/manage/manage.container';
 import ProtectedRoute from '../components/protected-route.component/protected-route.component';
 import LoginComponent from '../components/login/login.container';
 import { HomeComponent } from '../components/home/home.component';
-import JoinCohortComponent from '../components/join-cohort/join-cohort.container';
-import profileContainer from '../components/profile/profile.container';
+import JoinCohortComponent from '../components/join-cohort/join-cohort.component';
 import resetPasswordContainer from '../components/resetPassword/reset-password.container';
 import resetPasswordUsernameContainer from '../components/resetPasswordUsername/reset-password-username.container'
 import { cognitoRoles } from '../model/cognito-user.model';
+import Profile from '../components/profile/profile.component';
 
 export class ManagementRoutes extends React.Component<any, any> {
     constructor(props: any) {
@@ -16,10 +16,10 @@ export class ManagementRoutes extends React.Component<any, any> {
     }
 
     render() {
-        let { path } = this.props.match
+        const { path } = this.props.match
         return (
             <Switch>
-                <Route path={`${path}/profile`} component={profileContainer} />
+                <Route path={`${path}/profile`} component={Profile} />
                 <Route path={`${path}/login`} component={LoginComponent} />
                 <Route path={`${path}/home`} component={HomeComponent} />
                 <Route path={`${path}/reset-password`} component={resetPasswordContainer} />

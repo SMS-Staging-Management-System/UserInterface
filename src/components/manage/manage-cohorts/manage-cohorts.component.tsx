@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {
     Table,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown, Button
 } from 'reactstrap';
-import Button from 'reactstrap/lib/Button';
 import { IManageCohortsComponentProps } from './manage-cohorts.container';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { cognitoClient } from "../../../axios/sms-clients/cognito-client";
