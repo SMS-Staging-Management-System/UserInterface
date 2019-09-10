@@ -68,9 +68,7 @@ export interface IManageUsersState {
     emailList: string[],
     adminResponse: any,
     trainerResponse: any,
-    stagingManagerResponse: any,
-    maxPage: number,
-    areMore: boolean
+    stagingManagerResponse: any
 }
 // current user logged in
 export interface ICurrentSMSUserState {
