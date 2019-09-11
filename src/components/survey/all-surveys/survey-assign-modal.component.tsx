@@ -137,7 +137,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     getAllCohorts = async (newPage: number) => {
         let resp = await cohortClient.findAllByPage(newPage);
         await this.setState({
-            sortCohorts: resp.data,
+            sortCohorts: resp.data.content,
             currentPage: newPage,
             totalPages: resp.data.totalPages,
         });
@@ -167,7 +167,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     // get all users
     loadAllUsersSinglePage = async () => {
-        let resp = await userClient.findAllUsersByPage(0);
+        let resp = await userClient.findAllUsersPage(0);
         this.setState({
             allUsers: resp.data.content
         });
@@ -175,7 +175,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     loadAllUsersAllPages = async (totalPages: number) => {
         for(let i = 1; i < totalPages; i++) {
-            let resp = await userClient.findAllUsersByPage(i);
+            let resp = await userClient.findAllUsersPage(i);
             this.setState({
                 allUsers: this.state.allUsers.concat(resp.data.content)
             })
@@ -188,7 +188,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             console.log('cohorts data');
             console.log(cohorts.data);
             await this.setState({
-                sortCohorts: cohorts.data,
+                sortCohorts: cohorts.data.content,
                 cohortsLoaded: true
             },
                 // then, only AFTER state is changed, load user emails according from cohort data
@@ -200,7 +200,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     
     loadAllUserEmails = async () => {
-        const { sortCohorts } = this.state;
+        const sortCohorts = this.state.sortCohorts;
         console.log('loadAllEmails');
         console.log(sortCohorts);
         // set up array to dump into state 
@@ -208,6 +208,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
         // for each cohort, get users
         for (const cohort of sortCohorts) {
+            console.log('cohort')
+            console.log(cohort)
             const users = await userClient.findAllByCohortId(cohort.cohortId);
             // for each array of users, load into array
             for (const user of users.data) {
