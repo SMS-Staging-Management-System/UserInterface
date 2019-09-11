@@ -80,9 +80,11 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     // pagination
     async componentDidMount() {
-        const data = await this.getAllCohorts(this.state.currentPage);
-        this.getAllGeneralStatus();
+        this.loadAllCohorts();
         this.loadAllUsersSinglePage();
+        this.getAllCohorts(this.state.currentPage);
+        this.getAllGeneralStatus();
+        
     }
     // componentWillUpdate(nextProps, nextState){
     //     console.log("Hi")
@@ -134,11 +136,13 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
     getAllCohorts = async (newPage: number) => {
         let resp = await cohortClient.findAllByPage(newPage);
-        this.setState({
-            sortCohorts: resp.data.content,
+        await this.setState({
+            sortCohorts: resp.data,
             currentPage: newPage,
             totalPages: resp.data.totalPages,
         });
+        console.log('get all cohorts');
+        console.log(resp.data);
         this.loadAllUserEmails();
     }
     // save all general status to allGeneralStatus state
@@ -163,7 +167,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     // get all users
     loadAllUsersSinglePage = async () => {
-        let resp = await userClient.findAllUsersPage(0);
+        let resp = await userClient.findAllUsersByPage(0);
         this.setState({
             allUsers: resp.data.content
         });
@@ -171,7 +175,7 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     loadAllUsersAllPages = async (totalPages: number) => {
         for(let i = 1; i < totalPages; i++) {
-            let resp = await userClient.findAllUsersPage(i);
+            let resp = await userClient.findAllUsersByPage(i);
             this.setState({
                 allUsers: this.state.allUsers.concat(resp.data.content)
             })
@@ -181,12 +185,15 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         // get all cohorts
         const cohorts = await cohortClient.findAll();
         if (cohorts) {
-            this.setState({
+            console.log('cohorts data');
+            console.log(cohorts.data);
+            await this.setState({
                 sortCohorts: cohorts.data,
                 cohortsLoaded: true
             },
                 // then, only AFTER state is changed, load user emails according from cohort data
                 () => {
+                    console.log('loadAllCohorts');
                     this.loadAllUserEmails();
                 });
         }
@@ -194,6 +201,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     
     loadAllUserEmails = async () => {
         const { sortCohorts } = this.state;
+        console.log('loadAllEmails');
+        console.log(sortCohorts);
         // set up array to dump into state 
         const idAndEmailArray: IUserCohortIdAndEmail[] = [];
 

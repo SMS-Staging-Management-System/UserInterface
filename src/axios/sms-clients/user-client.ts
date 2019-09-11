@@ -40,8 +40,11 @@ export const userClient = {
                 page: page
             });
     },
-    findAllUsersPage(page: number = 0) {
-        return smsClient.get(`${usersContext}/allUsers?page=${page+1}`);
+    findAllUsersPage(page: number) {
+        return smsClient.get(`${usersContext}/allUsers?page=${page}`);
+    },
+    findAllUsersByPage(page: number = 0) {
+        return smsClient.get(`${usersContext}/allUsers/page/${page}`);
     },
     findAllUsers() {
         return smsClient.get(`${usersContext}/allUsers`);
