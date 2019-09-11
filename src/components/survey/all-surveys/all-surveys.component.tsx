@@ -520,7 +520,7 @@ export class AllSurveysComponent extends Component<
                   className='rev-background-color div-child'
                   onClick={() => this.findMySurveys(this.state.pageNumber + 1)}
                   disabled={this.state.pageNumber === this.state.totalPages}>
-                  Prev
+                  Next
                 </Button>
               )}
               {(this.state.sortedBy === 'None' ||
@@ -530,7 +530,7 @@ export class AllSurveysComponent extends Component<
                   className='rev-background-color div-child'
                   onClick={() => this.loadAllSurveys(this.state.pageNumber + 1)}
                   disabled={this.state.pageNumber === this.state.totalPages}>
-                  Prev
+                  Next
                 </Button>
               )}
               {this.state.sortedBy === 'Active' && (
