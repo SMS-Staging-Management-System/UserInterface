@@ -29,7 +29,7 @@ export const cohortClient = {
   },
 
   findAll() { 
-    return smsClient.get(cohortContext)
+    return smsClient.get(`${cohortContext}?page=0`)
   },
   async getUsers(id: number) {
      const resp = await smsClient.get(`${cohortContext}/users/id/${id}`);
