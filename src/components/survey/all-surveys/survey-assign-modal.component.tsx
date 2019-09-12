@@ -555,11 +555,19 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                 </Table>
                                 {(this.state.totalPages > 0) &&
                                     (<div className='row horizontal-centering vertical-centering'>
-                                        <Button id='prev-btn' variant="button-color" className="rev-background-color div-child" onClick={() => this.decrementPage()}>Prev</Button>
+                                        <Button id='prev-btn' 
+                                        variant="secondary" 
+                                        className="rev-background-color div-child" 
+                                        onClick={() => this.decrementPage()}
+                                        disabled={this.state.currentPage === 0}>Prev</Button>
                                         <h6 className="div-child text-style" >
                                             Page {this.state.currentPage + 1} of {this.state.totalPages}
                                         </h6>
-                                        <Button id='next-btn' variant="button-color" className="rev-background-color div-child" onClick={() => this.incrementPage()}>Next</Button>
+                                        <Button id='next-btn' 
+                                        variant="secondary" 
+                                        className="rev-background-color div-child" 
+                                        onClick={() => this.incrementPage()}
+                                        disabled={(this.state.currentPage + 1) === this.state.totalPages}>Next</Button>
                                     </div>)
                                 }
                                 <div className="buttonDiv">

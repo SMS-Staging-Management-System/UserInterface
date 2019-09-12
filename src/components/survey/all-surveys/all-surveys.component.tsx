@@ -464,7 +464,7 @@ export class AllSurveysComponent extends Component<
               className='row horizontal-centering vertical-centering'>
               {this.state.sortedBy === 'My Surveys' && (
                 <Button
-                  variant='button-color'
+                  variant='secondary'
                   className='rev-background-color div-child'
                   onClick={() => this.findMySurveys(this.state.pageNumber - 1)}
                   disabled={this.state.pageNumber === 1}>
@@ -474,7 +474,7 @@ export class AllSurveysComponent extends Component<
               {(this.state.sortedBy === 'None' ||
                 this.state.sortedBy === 'Sort by') && (
                 <Button
-                  variant='button-color'
+                  variant='secondary'
                   className='rev-background-color div-child'
                   onClick={() => this.loadAllSurveys(this.state.pageNumber - 1)}
                   disabled={this.state.pageNumber === 1}>
