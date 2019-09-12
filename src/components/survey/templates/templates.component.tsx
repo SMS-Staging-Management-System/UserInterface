@@ -1,19 +1,17 @@
 import React, { Fragment, Component } from 'react';
-import { Table, InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
-import { FaInfoCircle, FaHandPointRight } from 'react-icons/fa'
+import { FaInfoCircle, FaHandPointRight, FaSearch } from 'react-icons/fa'
 import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
-import { IQuestion } from '../../../model/surveys/question.model';
 import { IAnswer } from '../../../model/surveys/answer.model';
 import { ISurvey } from '../../../model/surveys/survey.model';
 import Loader from '../Loader/Loader';
 import { IState } from '../../../reducers';
 import { toast } from 'react-toastify';
 import { IAuthState } from '../../../reducers/management';
-import { Link } from 'react-router-dom';
 
 
 interface TemplatesProps extends RouteComponentProps<{}> {
@@ -34,8 +32,7 @@ interface IComponentState {
     survey: any,
     redirectTo: any,
     page: number,
-    prev: boolean,
-    next: boolean,
+    totalPage: number,
     search: string,
     foundAll: boolean,
     offSearch: boolean
@@ -62,13 +59,11 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 dateCreated: new Date(),
                 closingDate: null,
                 template: false,
-                //published: true,
                 questionJunctions: []
             },
             redirectTo: null,
             page: 0,
-            prev: false,
-            next: true,
+            totalPage: 1,
             search: '',
             foundAll: true,
             offSearch: true
@@ -82,38 +77,18 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         if (this.state.foundAll === true) {
             const templates = await surveyClient.findAllTemplates(this.props.auth.currentUser.email, page);
             this.setState({
-                templates: templates,
+                templates: templates.content,
+                page,
+                totalPage: templates.totalPages,
                 templatesLoaded: true
             });
         } else if (this.state.foundAll === false) {
             const templates = await surveyClient.findByTitle(this.state.search, page);
             this.setState({
-                templates: templates,
+                templates: templates.content,
+                page,
+                totalPage: templates.totalPages,
                 templatesLoaded: true
-            });
-        }
-
-        if (surveyClient.currentPage() <= 1) {
-            if (surveyClient.currentPage() !== surveyClient.totalPages()) {
-                this.setState({
-                    prev: true,
-                    next: false
-                });
-            } else {
-                this.setState({
-                    prev: true,
-                    next: true
-                });
-            }
-        } else if (surveyClient.currentPage() >= surveyClient.totalPages()) {
-            this.setState({
-                prev: false,
-                next: true
-            });
-        } else {
-            this.setState({
-                prev: false,
-                next: false
             });
         }
     }
@@ -152,9 +127,9 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
 
     handleClose = () => {
         this.setState({
+            showModal: false,
             survey: {},
-            surveyLoaded: false,
-            showModal: false
+            surveyLoaded: false
         })
     }
 
@@ -180,41 +155,42 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
         }
 
         this.setState({
+            dateCreated: this.state.dateCreated,
             showModal: false,
-            surveyId: 0,
-            dateCreated: this.state.dateCreated
+            surveyId: 0
         })
-        let dummySurvey: ISurvey = {
-            surveyId: 0,
-            title: this.state.newTitle,
-            description: this.state.description,
+
+        const dummySurvey: ISurvey = {
+            closingDate: new Date(new Date().getTime() + 604800000),
             creator: this.props.auth.currentUser.email,
             dateCreated: this.state.dateCreated,
-            closingDate: this.state.survey.closingDate,
+            description: this.state.description,
+            questionJunctions: [],
+            surveyId: 0,
             template: false,
-            questionJunctions: []
+            title: this.state.newTitle
         };
-        let questionJunctions: IJunctionSurveyQuestion[] = [];
+        const questionJunctions: IJunctionSurveyQuestion[] = [];
 
         for (let i = 0; i < (this.state.survey.questionJunctions).length; i++) {
 
-            let dummyQuestionJunction: any = {
+            const dummyQuestionJunction: any = {
                 id: 0,
-                survey: null,
                 question: {
-                    questionId: 0,
-                    typeId: this.state.survey.questionJunctions[i].question.typeId,
+                    answers: [],
                     question: this.state.survey.questionJunctions[i].question.question,
-                    answers: []
+                    questionId: 0,
+                    typeId: this.state.survey.questionJunctions[i].question.typeId
                 },
-                questionOrder: this.state.survey.questionJunctions[i].questionOrder
+                questionOrder: this.state.survey.questionJunctions[i].questionOrder,
+                survey: null,
             }
 
             for (let j = 0; j < (this.state.survey.questionJunctions[i].question.answers).length; j++) {
 
                 let dummyAnswers: IAnswer | any = {
-                    answerId: 0,
                     answer: '',
+                    answerId: 0,
                     question: null
                 }
                 dummyAnswers.answer = this.state.survey.questionJunctions[i].question.answers[j].answer;
@@ -289,18 +265,6 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                 {this.state.templatesLoaded ? (
                     this.state.templates.length ? (
                         <div>
-                            <div>
-                                <InputGroup>
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText>
-                                            {/* <Button aria-label="Checkbox for following text input" onClick={() =>this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button> */}
-                                            <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(false)} disabled={this.state.offSearch}>Search</Button>
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input id="template-search-bar" placeholder="Enter Template Name" onChange={this.handleChange} />
-                                </InputGroup>
-                            </div>
-                            <br />
                             <Table striped id="manage-users-table" className="tableUsers">
                                 <thead className="rev-background-color">
                                     <tr>
@@ -308,6 +272,31 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                                         <th>Description</th>
                                         <th>Date Created</th>
                                     </tr>
+                                    {this.state.templates.length > 0 && (
+                                        <tr style={secondHeadFilter}>
+                                            <td>
+                                                <div className='inputWrapper'>
+                                                    <input
+                                                        type='text'
+                                                        id='inputTItle'
+                                                        name='title'
+                                                        className='inputBox form-control'
+                                                        placeholder='Title'
+                                                        onChange={this.handleChange}
+                                                    />
+                                                    <button
+                                                        type='submit'
+                                                        className='btn btn-success searchbtn'
+                                                        onClick={() => this.changeSearch(false)}>
+                                                        <FaSearch />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td></td>
+
+                                            <td></td>
+                                        </tr>
+                                    )}
                                 </thead>
                                 <tbody>
                                     {this.state.templates.map(template => (
@@ -321,13 +310,22 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                                 </tbody>
                             </Table>
                             {/* button goes here pick up here */}
-                            <div className='row horizontal-centering vertical-centering'>
-                                <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(-1)} disabled={this.state.prev}>Prev</Button>
-                                <h6 className="div-child text-style" >
-                                    Page {surveyClient.currentPage()} of {surveyClient.totalPages()}
-                                </h6>
-                                <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.loadTemplates(1)} disabled={this.state.next}>Next</Button>
-                            </div>
+                            {(this.state.totalPage !== 1) &&
+                                <div className='row horizontal-centering vertical-centering'>
+                                    <Button
+                                        variant="secondary"
+                                        className="rev-background-color div-child"
+                                        onClick={() => this.loadTemplates(this.state.page - 1)}
+                                        disabled={this.state.page === 0}>Prev</Button>
+                                    <h6 className="div-child text-style" >
+                                        Page {this.state.page + 1} of {this.state.totalPage}
+                                    </h6>
+                                    <Button
+                                        variant="secondary"
+                                        className="rev-background-color div-child"
+                                        onClick={() => this.loadTemplates(this.state.page + 1)}
+                                        disabled={(this.state.page + 1) === this.state.totalPage}>Next</Button>
+                                </div>}
                             <div className='row horizontal-centering vertical-centering'>
                                 <Button variant="secondary" className="rev-background-color div-child" onClick={() => this.changeSearch(true)} disabled={this.state.foundAll}>All Templates</Button>
                             </div>
@@ -388,7 +386,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                                 this.state.survey.questionJunctions.map(questionJunction => (
                                     <div key={questionJunction.question.questionId}>
 
-                                        <strong>{questionJunction.question.question}:</strong>
+                                        <strong>{questionJunction.question.question}</strong>
 
                                         {
                                             questionJunction.question.typeId === 5 ?
@@ -421,3 +419,8 @@ const mapStateToProps = (state: IState) => ({
     auth: state.managementState.auth
 });
 export default connect(mapStateToProps)(TemplatesComponent);
+
+const secondHeadFilter = {
+    width: '100%',
+    background: 'white',
+};
