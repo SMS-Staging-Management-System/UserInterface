@@ -9,10 +9,23 @@ interface PropsPlease{
   defaultQuestion?: string
 }
 
-export class FeedBack extends React.Component<PropsPlease, any> {
+interface ComponentState {
+  question: string
+}
+
+export class FeedBack extends React.Component<PropsPlease, ComponentState> {
   constructor(props) {
     super(props);
+    this.state = {
+      question: this.props.defaultQuestion ? this.props.defaultQuestion : ''
+    }
+  }
 
+  handleChange = (event: any) => {
+    this.setState({
+      ...this.state,
+      question: event.target.value
+    })
   }
 
   render() {
@@ -31,7 +44,7 @@ export class FeedBack extends React.Component<PropsPlease, any> {
         </table>
           <div className="new" id="t5">
 
-            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }}  defaultValue={this.props.defaultQuestion}  >
+            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }} value={this.state.question} onChange={this.handleChange} >
             </input>
 
           </div>

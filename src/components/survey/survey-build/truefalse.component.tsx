@@ -2,18 +2,31 @@ import React from 'react';
 import { DeleteButton } from './delete.component';
 import AddOther from './add.other.component';
 
-interface PropsPlease{
+interface PropsPlease {
   parentFunction?: any,
   selfDestruct?: any,
   index?: number,
   defaultQuestion?: string
 }
 
-export class TrueFalse extends React.Component<PropsPlease, any> {
+interface ComponentState {
+  question: string
+}
+
+export class TrueFalse extends React.Component<PropsPlease, ComponentState> {
   constructor(props) {
     super(props);
-    
+    this.state = {
+      question: this.props.defaultQuestion ? this.props.defaultQuestion : ''
+    }
 
+  }
+
+  handleChange = (event: any) => {
+    this.setState({
+      ...this.state,
+      question: event.target.value
+    })
   }
 
   render() {
@@ -30,11 +43,11 @@ export class TrueFalse extends React.Component<PropsPlease, any> {
             </tr>
           </tbody>
         </table>
-            <div className="new" id="t7">
-              <input name="questionText" type="text" placeholder="Question Title (i.e. The sky is blue) " style={{ width: '100%' }}  defaultValue={this.props.defaultQuestion} ></input>
-              <input name="answerText" value="True,False" readOnly hidden />
-            </div>
-            <hr />
+        <div className="new" id="t7">
+          <input name="questionText" type="text" placeholder="Question Title (i.e. The sky is blue) " style={{ width: '100%' }} value={this.state.question} onChange={this.handleChange}></input>
+          <input name="answerText" value="True,False" readOnly hidden />
+        </div>
+        <hr />
       </div>
 
     );
