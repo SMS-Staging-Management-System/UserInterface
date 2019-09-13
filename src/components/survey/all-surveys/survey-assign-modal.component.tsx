@@ -458,7 +458,13 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
             }
         }
     }
-
+    clickRow = (e, id) => {
+        const checkBox = document.getElementById(id);
+        if(checkBox) {
+            checkBox.click();
+        }
+        
+    }
     // toggles the modal and clears the emailsToAssign
     toggle = () => {
         this.setState(prevState => ({
@@ -550,11 +556,11 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                     </thead>
                                     <tbody>
                                         {sortCohorts && sortCohorts.map(cohort => (
-                                            <tr key={`modal${cohort.cohortId}`} className="rev-table-row">
+                                            <tr key={`modal${cohort.cohortId}`} className="rev-table-row" onClick={e => this.clickRow(e, `checkFunc${cohort.cohortId}`)}>
                                                 <td>All: <input id={`checkFunc${cohort.cohortId}`} type="checkbox" onChange={e => this.checkFunc(e, cohort.cohortId)} />
                                                 </td>
-                                                <td colSpan={5}><Label for={`checkFunc${cohort.cohortId}`}>{cohort.cohortName}</Label></td>
-                                                <td><Label for={`checkFunc${cohort.cohortId}`}>{cohort.address.alias}</Label></td>
+                                                <td colSpan={5}>{cohort.cohortName}</td>
+                                                <td>{cohort.address.alias}</td>
                                             </tr>
                                         ))}
                                     </tbody>
