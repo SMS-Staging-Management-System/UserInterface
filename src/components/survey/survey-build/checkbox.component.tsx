@@ -10,10 +10,25 @@ interface PropsPlease{
   defaultAnswer?: string
 }
 
-export class CheckBox extends React.Component<PropsPlease, any> {
+interface ComponentState {
+  question: string,
+  answer: string
+}
+
+export class CheckBox extends React.Component<PropsPlease, ComponentState> {
   constructor(props) {
     super(props);
+    this.state = {
+      question: this.props.defaultQuestion ? this.props.defaultQuestion : '',
+      answer: this.props.defaultAnswer ? this.props.defaultAnswer : ''
+    }
+  }
 
+  handleChange = (event: any) => {
+    this.setState({
+      ...this.state,
+      [event.target.id]: event.target.value
+    })
   }
 
   render() {
@@ -32,9 +47,9 @@ export class CheckBox extends React.Component<PropsPlease, any> {
         </table>
         <div className="new" id="t6">
 
-          <input name="questionText" type="text" placeholder="Question Title (i.e. Choose one or more response: Which of these objects is white? )" style={{ marginLeft: "0px%", width: '100%' }}  defaultValue={this.props.defaultQuestion} ></input>
+          <input name="questionText" id='question' type="text" placeholder="Question Title (i.e. Choose one or more response: Which of these objects is white? )" style={{ marginLeft: "0px%", width: '100%' }}  value={this.state.question} onChange={this.handleChange} ></input>
           <br></br>
-          <input name="answerText" type="text" placeholder="answerText (i.e. the moon, rice, cotton, blueberries, lemons )" style={{ marginLeft: "0px", width: '100%' }}  defaultValue={this.props.defaultAnswer} ></input>
+          <input name="answerText" id="answer" type="text" placeholder="answerText (i.e. the moon, rice, cotton, blueberries, lemons )" style={{ marginLeft: "0px", width: '100%' }}  value={this.state.answer} onChange={this.handleChange}></input>
 
         </div>
         <hr />

@@ -354,7 +354,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         </tr>
                     </thead>
                     <tbody>
-                        {
+                        {this.props.cohorts &&
                             this.props.cohorts.map((cohort) =>
                                 <tr key={cohort.cohortToken} className="rev-table-row"
                                     onClick={() => this.displaySingleCohort(cohort)}
@@ -370,13 +370,19 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         }
                     </tbody>
                 </Table>
-                {(this.props.totalPages > 0) &&
+                {(this.props.totalPages !== 1) &&
                     (<div className='row horizontal-centering vertical-centering'>
-                        <Button variant="button-color" className="rev-background-color div-child" onClick={this.decrementPage}>Prev</Button>
+                        <Button variant="secondary" 
+                        className="rev-background-color div-child" 
+                        onClick={this.decrementPage}
+                        disabled={this.props.currentPage === 0}>Prev</Button>
                         <h6 className="div-child text-style" >
                             Page {this.props.currentPage + 1} of {this.props.totalPages}
                         </h6>
-                        <Button variant="button-color" className="rev-background-color div-child" onClick={this.incrementPage}>Next</Button>
+                        <Button variant="secondary" 
+                        className="rev-background-color div-child" 
+                        onClick={this.incrementPage}
+                        disabled={(this.props.currentPage + 1) === this.props.totalPages}>Next</Button>
                     </div>)
                 }
             </>

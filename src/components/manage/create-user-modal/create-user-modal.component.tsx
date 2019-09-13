@@ -232,15 +232,15 @@ export class CreateUserModal extends React.Component<ICreateUserModal, any> {
                     {createUser.newUser.cohort.cohortName || 'Cohort'}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {
-                      cohorts.cohorts.length === 0
+                    {cohorts.cohorts &&
+                      (cohorts.cohorts.length === 0
                         ? <>
                           <DropdownItem>Unable To Find Any Cohorts</DropdownItem>
                           <DropdownItem divider />
                         </>
                         : cohorts.cohorts.map(cohort =>
                           <DropdownItem key={cohort.cohortId} onClick={() => this.props.updateNewUserCohort(cohort)}>{cohort.cohortName}</DropdownItem>
-                        )
+                        ))
                     }
                   </DropdownMenu>
                 </Dropdown>

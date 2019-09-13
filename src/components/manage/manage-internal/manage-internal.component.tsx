@@ -165,33 +165,6 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         }
     }
 
-    updateShowColOneImage = (colNumber: number) => {
-        switch (colNumber) {
-            case 1:
-                if (this.state.colOneSortImage === 'show') {
-                    return 'd-none pointer-table'
-                } else {
-                    return 'd-inline pointer-table'
-                }
-            case 2:
-                if (this.state.colTwoSortImage === 'show') {
-                    return 'd-none pointer-table'
-                } else {
-                    return 'd-inline pointer-table'
-                }
-            case 3:
-                if (this.state.colThreeSortImage === 'show') {
-                    return 'd-none pointer-table'
-                } else {
-                    return 'd-inline pointer-table'
-                }
-            default:
-                return '';
-        }
-
-    }
-
-
     // returns active if the role provided in the route is the routeName provided
     isActive = (routeName: string) => ((this.props.manageUsers.option === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
 

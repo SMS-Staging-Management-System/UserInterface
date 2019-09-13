@@ -207,11 +207,6 @@ export const manageGetUsersByGroup = (groupName: string, email: string, page?: n
             listOfUsers.push(altenateUser);
         }
 
-        console.log('areMore')
-        console.log(areMore)
-        console.log('emailList')
-        console.log(emailList)
-
         // send email list to the redux store to be called the next time this funciton runs
         updateEmailList(emailList)(dispatch);
 
