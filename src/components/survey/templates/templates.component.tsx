@@ -386,7 +386,7 @@ class TemplatesComponent extends Component<TemplatesProps, IComponentState> {
                                 this.state.survey.questionJunctions.map(questionJunction => (
                                     <div key={questionJunction.question.questionId}>
 
-                                        <strong>{questionJunction.question.question}:</strong>
+                                        <strong>{questionJunction.question.question}</strong>
 
                                         {
                                             questionJunction.question.typeId === 5 ?

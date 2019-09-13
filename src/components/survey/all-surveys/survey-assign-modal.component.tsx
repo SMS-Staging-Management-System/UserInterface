@@ -80,9 +80,11 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
     }
     // pagination
     async componentDidMount() {
-        const data = await this.getAllCohorts(this.state.currentPage);
-        this.getAllGeneralStatus();
+        this.loadAllCohorts();
         this.loadAllUsersSinglePage();
+        this.getAllCohorts(this.state.currentPage);
+        this.getAllGeneralStatus();
+        
     }
     // componentWillUpdate(nextProps, nextState){
     //     console.log("Hi")
@@ -134,11 +136,13 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
 
     getAllCohorts = async (newPage: number) => {
         let resp = await cohortClient.findAllByPage(newPage);
-        this.setState({
+        await this.setState({
             sortCohorts: resp.data.content,
             currentPage: newPage,
             totalPages: resp.data.totalPages,
         });
+        console.log('get all cohorts');
+        console.log(resp.data);
         this.loadAllUserEmails();
     }
     // save all general status to allGeneralStatus state
@@ -181,24 +185,31 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         // get all cohorts
         const cohorts = await cohortClient.findAll();
         if (cohorts) {
-            this.setState({
-                sortCohorts: cohorts.data,
+            console.log('cohorts data');
+            console.log(cohorts.data);
+            await this.setState({
+                sortCohorts: cohorts.data.content,
                 cohortsLoaded: true
             },
                 // then, only AFTER state is changed, load user emails according from cohort data
                 () => {
+                    console.log('loadAllCohorts');
                     this.loadAllUserEmails();
                 });
         }
     }
     
     loadAllUserEmails = async () => {
-        const { sortCohorts } = this.state;
+        const sortCohorts = this.state.sortCohorts;
+        console.log('loadAllEmails');
+        console.log(sortCohorts);
         // set up array to dump into state 
         const idAndEmailArray: IUserCohortIdAndEmail[] = [];
 
         // for each cohort, get users
         for (const cohort of sortCohorts) {
+            console.log('cohort')
+            console.log(cohort)
             const users = await userClient.findAllByCohortId(cohort.cohortId);
             // for each array of users, load into array
             for (const user of users.data) {
@@ -343,6 +354,8 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                 })
             });
         }
+        console.log('all specificstateusers');
+        console.log(this.state.allSpecificStatusUsers);
     }
     // if virtual is clicked set virtual to true and only set virtual
     checkVirtualFunc = (e) => {
@@ -360,38 +373,40 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }
     }
     // only assign users by statuses that are checked when submit is clicked
-    loadCheckedStatus = () => {
+    loadCheckedStatus = async () => {
+        let emails: Set<string> = new Set<string>();
+        let newEmails: string[] = [];
+        let emailState: string[] = [];
         if(this.state.bothVirtual) { 
             this.state.allGeneralStatusUsers.map(user => {
-                this.setState({
-                    emailsToAssign: this.state.emailsToAssign.filter(email => {
-                        return user.email !== email;
-                    })
-                });
+               emails.add(user.email);
             });
             this.state.allSpecificStatusUsers.map(user => {
-                this.setState({
-                    emailsToAssign: this.state.emailsToAssign.filter(email => {
-                        return user.email !== email;
-                    })
-                });
+                emails.add(user.email);
+            });
+            newEmails = Array.from(emails);
+            emailState = this.state.emailsToAssign.concat(newEmails);
+            await this.setState({
+                emailsToAssign: ['doesnt set state']
             });
         } else { // if virtual has been clicked only assign people based off virtual status
             this.state.allGeneralStatusUsers.map(user => {
-                this.setState({
-                    emailsToAssign: this.state.emailsToAssign.filter(email => {
-                        return (user.email !== email) && (user.virtual == this.state.virtual);
-                    })
-                });
+                emails.add(user.email);
             });
             this.state.allSpecificStatusUsers.map(user => {
-                this.setState({
-                    emailsToAssign: this.state.emailsToAssign.filter(email => {
-                        return (user.email !== email) && (user.virtual == this.state.virtual);
-                    })
-                });
+                emails.add(user.email);
+            });
+            newEmails = Array.from(emails);
+            emailState = this.state.emailsToAssign.concat(newEmails);
+            await this.setState({
+                emailsToAssign: ['doesnt set state']
             });
         }
+        this.setState({
+            emailsToAssign: emailState
+        });
+        console.log('emailstoassign');
+        console.log(this.state.emailsToAssign);
     }
     // not using but might bring back implementation
     checkUserFunc = (e) => {
@@ -431,10 +446,12 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
         }
     }
 
-    postSurveyToCohort = () => {
-        this.loadCheckedStatus(); // load checked status users into list to be assigned survey
+    postSurveyToCohort = async () => {
+        await this.loadCheckedStatus(); // load checked status users into list to be assigned survey
         // loop through each chosen survey from parent component and for each email,
         //   assign the survey to the history table
+        console.log('emails to assign after postsurvery and loadcheckedstatus');
+        console.log(this.state.emailsToAssign);
         for (const surveyId of this.props.surveysToAssign) {
             for (const email of this.state.emailsToAssign) {
                 surveyClient.assignSurveyByIdAndEmail(surveyId, email);
@@ -542,13 +559,21 @@ class SurveyModal extends React.Component<IComponentProps, IComponentState> {
                                         ))}
                                     </tbody>
                                 </Table>
-                                {(this.state.totalPages > 0) &&
+                                {(this.state.totalPages > 1 ) &&
                                     (<div className='row horizontal-centering vertical-centering'>
-                                        <Button id='prev-btn' variant="button-color" className="rev-background-color div-child" onClick={() => this.decrementPage()}>Prev</Button>
+                                        <Button id='prev-btn' 
+                                        variant="secondary" 
+                                        className="rev-background-color div-child" 
+                                        onClick={() => this.decrementPage()}
+                                        disabled={this.state.currentPage === 0}>Prev</Button>
                                         <h6 className="div-child text-style" >
                                             Page {this.state.currentPage + 1} of {this.state.totalPages}
                                         </h6>
-                                        <Button id='next-btn' variant="button-color" className="rev-background-color div-child" onClick={() => this.incrementPage()}>Next</Button>
+                                        <Button id='next-btn' 
+                                        variant="secondary" 
+                                        className="rev-background-color div-child" 
+                                        onClick={() => this.incrementPage()}
+                                        disabled={(this.state.currentPage + 1) === this.state.totalPages}>Next</Button>
                                     </div>)
                                 }
                                 <div className="buttonDiv">
