@@ -356,7 +356,7 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
                         </tr>
                     </thead>
                     <tbody>
-                        {
+                        {this.props.cohorts &&
                             this.props.cohorts.map((cohort) =>
                                 <tr key={cohort.cohortToken} className="rev-table-row"
                                     onClick={() => this.displaySingleCohort(cohort)}
