@@ -228,7 +228,6 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
 
     showFilterTypeDropdown = () => {
         const instructer = this.state.trainers;
-        console.log(instructer);
         let trainers: string[] = [];
 
         for (let i = 0; i < instructer.length; i++) {
@@ -271,7 +270,6 @@ export class ManageCohortsComponenent extends React.Component<IManageCohortsComp
             )
         }
         else if (this.state.showFilterSelection === 'Location') {
-            console.log(this.state.locations);
             return (
                 <ButtonDropdown color="success" className="responsive-modal-row-item rev-btn"
                     isOpen={this.state.locationDropdown.isOpen} toggle={this.toggleLocationDropdown} >

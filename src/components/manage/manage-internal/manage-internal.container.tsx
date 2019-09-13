@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ManageInternalComponenet } from './manage-internal.component';
 import { IState } from '../../../reducers';
 import { toggleViewUserModal, selectUserForDisplay } from "../../../actions/view-user/view-user.actions";
-import { updateSearchEmail, updateSearchOption } from '../../../actions/manage-users/manage-users.actions';
+import { updateSearchEmail, updateSearchOption, resetData } from '../../../actions/manage-users/manage-users.actions';
 import { IManageUsersState } from '../../../reducers/management';
 import { sortUsers } from '../../../actions/manage-users/manage-users.actions';
 
@@ -17,6 +17,7 @@ export interface IManageInternalComponentProps {
     updateSearchEmail: (newEmailSearch: string) => void;
     updateSearchOption: (newSearchOption: string) => void;
     sortUsers: (userArray: ICognitoUser[], sortKey:string) => void;
+    resetData: () => void;
 }
 
 const mapStateToProps = (state: IState) => {
@@ -32,7 +33,8 @@ const mapDispatchToProps = {
     selectUserForDisplay: selectUserForDisplay,
     updateSearchEmail: updateSearchEmail,
     updateSearchOption: updateSearchOption,
-    sortUsers: sortUsers
+    sortUsers: sortUsers,
+    resetData: resetData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageInternalComponenet)

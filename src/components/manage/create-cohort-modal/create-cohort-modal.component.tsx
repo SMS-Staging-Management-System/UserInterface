@@ -130,8 +130,6 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
 
         const { createCohort, addresses } = this.props;
 
-        console.log(this.state.trainers);
-
         return (
             <Modal isOpen={createCohort.enabled}>
                 <form onSubmit={this.saveNewCohort}>
