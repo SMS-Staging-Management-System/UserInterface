@@ -87,25 +87,39 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
   }
 
   deleteRow = (index) => {
-    let temp = this.state.completedTasks;
-    temp.splice(index, 1);
+    const temp = this.state.completedTasks.filter((task, indexArr) => index!==indexArr)
+    const questions = this.state.displaySurvey.questionJunctions.filter((question, indexArr) => index!==indexArr);
     this.setState({
       ...this.state,
-      completedTasks: temp
-    })
-    this.deleteQuestion(index);
-  }
-
-  deleteQuestion = (index) => {
-    let questions = this.state.displaySurvey.questionJunctions;
-    console.log(questions);
-    questions.splice(index, 1);
-    this.setState({
-      ...this.state,
+      completedTasks: temp,
       displaySurvey: {
         ...this.state.displaySurvey,
         questionJunctions: questions
       },
+    })
+  }
+
+  changeField = (index, value, name) => {
+    const {displaySurvey} = this.state;
+    const newQuestion = displaySurvey.questionJunctions.map((questionJunction, indexArr)=>{
+      if(indexArr === index) {
+        return {
+          ...questionJunction,
+          question: {
+            ...questionJunction.question,
+            [name]:value
+          }
+        }
+      } else  {
+       return questionJunction 
+      }
+    })
+    this.setState({
+      ...this.state,
+      displaySurvey: {
+        ...this.state.displaySurvey,
+        questionJunctions: newQuestion
+      }
     })
   }
 
@@ -133,7 +147,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
   componentDidMount() {
 
     this.setState({
-      notRenderedFirstTime: false
+      notRenderedFirstTime: true
     })
 
   }
@@ -176,10 +190,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
   // adds specific question of a specific type to the the render array
   toAddFunction = (type: string, index?: number) => {
     if (index !== undefined) {
-      this.setState({ displayChoice: false });
       let { completedTasks, todos, displaySurvey } = this.state;
-      console.log('completeTasks: ', completedTasks)
-      console.log('questions are : ', displaySurvey.questionJunctions)
       const dummyQuestion = {
         id: 0,
         question: {
@@ -286,9 +297,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
           console.log("No matching option for type: " + type);
       }
     } else {
-      this.setState({ displayChoice: false });
       let { completedTasks, todos, displaySurvey } = this.state;
-      console.log('Select new : ', displaySurvey);
       if (displaySurvey.surveyId === undefined) {
         displaySurvey = {
           closingDate: new Date(),
@@ -321,7 +330,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...this.state.displaySurvey,
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            }            
+            },
+            displayChoice: false 
           });
           break;
         case "Multiple Choice":
@@ -333,7 +343,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...this.state.displaySurvey,
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            }
+            },
+            displayChoice: false 
           });
           break;
         case "Checkbox Multiple Answer":
@@ -345,7 +356,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...this.state.displaySurvey,
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            }            
+            },
+            displayChoice: false        
           });
           break;
         case "Rating":
@@ -357,7 +369,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...this.state.displaySurvey,
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            }            
+            },
+            displayChoice: false             
           });
           break;
         case "Feedback":
@@ -369,7 +382,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...this.state.displaySurvey,
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            }            
+            },
+            displayChoice: false             
           });
           break;
         case "Yes/No":
@@ -381,7 +395,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...this.state.displaySurvey,
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            }            
+            },
+            displayChoice: false             
           });
           break;
         case "Strongly Agree/Disagree":
@@ -393,7 +408,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...this.state.displaySurvey,
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            }            
+            },
+            displayChoice: false             
           });
           break;
         default:
@@ -411,7 +427,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
         const question = survey.questionJunctions[index].question.question;
         switch (type) {
           case 1://"True/False":
-            showme = <TrueFalse selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
+            showme = <TrueFalse changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
             break;
           case 2://"Multiple Choice":
             let answers1 = "";
@@ -421,7 +437,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
                 answers1 += ", ";
               }
             }
-            showme = <MultipleChoice selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer={answers1} />;
+            showme = <MultipleChoice changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer={answers1} />;
             break;
           case 3://"Checkbox Multiple Answer":
             let answers = "";
@@ -432,19 +448,19 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               }
             }
             //console.log(answers);
-            showme = <CheckBox selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer={answers} />;
+            showme = <CheckBox changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer={answers} />;
             break;
           case 4://"Rating":
-            showme = <Rating selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
+            showme = <Rating changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
             break;
           case 5://"Feedback":
-            showme = <FeedBack selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
+            showme = <FeedBack changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
             break;
           case 6://"Yes/No":
-            showme = <YesNoMaybe selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
+            showme = <YesNoMaybe changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
             break;
           case 7://"Strongly Agree/Disagree":
-            showme = <StronglyAgree selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
+            showme = <StronglyAgree changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} />;
             break;
           default:
             break;
@@ -453,25 +469,25 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
       else {
         switch (type) {
           case 1://"True/False":
-            showme = <TrueFalse selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+            showme = <TrueFalse changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
             break;
           case 2://"Multiple Choice":
-            showme = <MultipleChoice selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+            showme = <MultipleChoice changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
             break;
           case 3://"Checkbox Multiple Answer":
-            showme = <CheckBox selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+            showme = <CheckBox changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
             break;
           case 4://"Rating":
-            showme = <Rating selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+            showme = <Rating changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
             break;
           case 5://"Feedback":
-            showme = <FeedBack selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+            showme = <FeedBack changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
             break;
           case 6://"Yes/No":
-            showme = <YesNoMaybe selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+            showme = <YesNoMaybe changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
             break;
           case 7://"Strongly Agree/Disagree":
-            showme = <StronglyAgree selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+            showme = <StronglyAgree changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
             break;
           default:
             break;
@@ -481,25 +497,25 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
     else {
       switch (type) {
         case 1://"True/False":
-          showme = <TrueFalse selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+          showme = <TrueFalse changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
           break;
         case 2://"Multiple Choice":
-          showme = <MultipleChoice selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+          showme = <MultipleChoice changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
           break;
         case 3://"Checkbox Multiple Answer":
-          showme = <CheckBox selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+          showme = <CheckBox changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
           break;
         case 4://"Rating":
-          showme = <Rating selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+          showme = <Rating changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
           break;
         case 5://"Feedback":
-          showme = <FeedBack selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+          showme = <FeedBack changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
           break;
         case 6://"Yes/No":
-          showme = <YesNoMaybe selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+          showme = <YesNoMaybe changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
           break;
         case 7://"Strongly Agree/Disagree":
-          showme = <StronglyAgree selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
+          showme = <StronglyAgree changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} />;
           break;
         default:
           break;
@@ -541,11 +557,10 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
                 {/* Used for dropping from a drag */}
                 <div className="App">
                   <div data-required className="done" >
-                    {completedTasks.map((task, index) =>
-                      <div key={index}>
+                    {completedTasks.map((task, indexArr) =>
+                      <div key={indexArr}>
                         <br />
-                        {task.task = this.renderComponent(task.questionID, index)}
-
+                        {task.task = this.renderComponent(task.questionID, indexArr)}
                       </div>
                     )
 

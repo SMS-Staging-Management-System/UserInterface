@@ -3,6 +3,7 @@ import { DeleteButton } from './delete.component';
 import AddOther from './add.other.component';
 
 interface PropsPlease {
+  changeField?:any,
   parentFunction?: any,
   selfDestruct?: any,
   index?: number,
@@ -19,7 +20,7 @@ export class TrueFalse extends React.Component<PropsPlease, ComponentState> {
     this.state = {
       question: this.props.defaultQuestion ? this.props.defaultQuestion : ''
     }
-
+    this.props.changeField(this.props.index, this.props.defaultQuestion ? this.props.defaultQuestion : '', 'question');
   }
 
   handleChange = (event: any) => {
@@ -27,6 +28,7 @@ export class TrueFalse extends React.Component<PropsPlease, ComponentState> {
       ...this.state,
       question: event.target.value
     })
+    this.props.changeField(this.props.index, event.target.value, 'question');
   }
 
   render() {
