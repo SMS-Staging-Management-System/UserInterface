@@ -3,6 +3,7 @@ import { DeleteButton } from './delete.component';
 import AddOther from './add.other.component';
 
 interface PropsPlease{
+  changeField?: any
   parentFunction?: any,
   selfDestruct?: any,
   index?: number,
@@ -19,6 +20,7 @@ export class FeedBack extends React.Component<PropsPlease, ComponentState> {
     this.state = {
       question: this.props.defaultQuestion ? this.props.defaultQuestion : ''
     }
+    this.props.changeField(this.props.index, this.props.defaultQuestion ? this.props.defaultQuestion : '', 'question');
   }
 
   handleChange = (event: any) => {
@@ -26,6 +28,7 @@ export class FeedBack extends React.Component<PropsPlease, ComponentState> {
       ...this.state,
       question: event.target.value
     })
+    this.props.changeField(this.props.index, event.target.value, 'question');
   }
 
   render() {
@@ -44,7 +47,7 @@ export class FeedBack extends React.Component<PropsPlease, ComponentState> {
         </table>
           <div className="new" id="t5">
 
-            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }} value={this.state.question} onChange={this.handleChange} >
+            <input name="questionText" type="text" placeholder="Question Title (i.e. Please give your feedback)" style={{ width: '100%' }} value={this.props.defaultQuestion} onChange={this.handleChange} >
             </input>
 
           </div>

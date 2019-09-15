@@ -8,11 +8,12 @@ interface PropsPlease{
   index?: number,
   defaultQuestion?: string,
   defaultAnswer?: string
+  changeField?: any
 }
 
 interface ComponentState {
-  question: string,
-  answer: string
+  question: any,
+  answers: any
 }
 
 export class CheckBox extends React.Component<PropsPlease, ComponentState> {
@@ -20,8 +21,10 @@ export class CheckBox extends React.Component<PropsPlease, ComponentState> {
     super(props);
     this.state = {
       question: this.props.defaultQuestion ? this.props.defaultQuestion : '',
-      answer: this.props.defaultAnswer ? this.props.defaultAnswer : ''
+      answers: this.props.defaultAnswer ? this.props.defaultAnswer : ''
     }
+    this.props.changeField(this.props.index, this.props.defaultQuestion ? this.props.defaultQuestion : '', 'question');
+    this.props.changeField(this.props.index, this.props.defaultAnswer ? this.props.defaultAnswer : '', 'answers');
   }
 
   handleChange = (event: any) => {
@@ -29,6 +32,17 @@ export class CheckBox extends React.Component<PropsPlease, ComponentState> {
       ...this.state,
       [event.target.id]: event.target.value
     })
+    this.props.changeField(this.props.index, event.target.value, event.target.id);
+  }
+
+  componentDidUpdate(prevProps, prevStates){
+    if(prevProps.defaultQuestion !== this.props.defaultQuestion){
+      this.setState({
+        ...this.state,
+        question: this.props.defaultQuestion,
+        answers: this.props.defaultAnswer
+      })
+    }
   }
 
   render() {
@@ -49,7 +63,7 @@ export class CheckBox extends React.Component<PropsPlease, ComponentState> {
 
           <input name="questionText" id='question' type="text" placeholder="Question Title (i.e. Choose one or more response: Which of these objects is white? )" style={{ marginLeft: "0px%", width: '100%' }}  value={this.state.question} onChange={this.handleChange} ></input>
           <br></br>
-          <input name="answerText" id="answer" type="text" placeholder="answerText (i.e. the moon, rice, cotton, blueberries, lemons )" style={{ marginLeft: "0px", width: '100%' }}  value={this.state.answer} onChange={this.handleChange}></input>
+          <input name="answerText" id="answers" type="text" placeholder="answerText (i.e. the moon, rice, cotton, blueberries, lemons )" style={{ marginLeft: "0px", width: '100%' }}  value={this.state.answers} onChange={this.handleChange}></input>
 
         </div>
         <hr />

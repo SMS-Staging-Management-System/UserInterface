@@ -3,6 +3,7 @@ import { DeleteButton } from './delete.component';
 import AddOther from './add.other.component';
 
 interface PropsPlease {
+  changeField?: any
   parentFunction?: any,
   selfDestruct?: any,
   index?: number,
@@ -12,7 +13,7 @@ interface PropsPlease {
 
 interface ComponentState {
   question: string,
-  answer: string
+  answers: string
 }
 
 export class MultipleChoice extends React.Component<PropsPlease, ComponentState> {
@@ -20,10 +21,12 @@ export class MultipleChoice extends React.Component<PropsPlease, ComponentState>
     super(props);
     this.state = {
       question: this.props.defaultQuestion ? this.props.defaultQuestion : '',
-      answer: this.props.defaultAnswer ? this.props.defaultAnswer : ''
+      answers: this.props.defaultAnswer ? this.props.defaultAnswer : ''
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.props.changeField(this.props.index, this.props.defaultQuestion ? this.props.defaultQuestion : '', 'question');
+    this.props.changeField(this.props.index, this.props.defaultAnswer ? this.props.defaultAnswer : '', 'answers');
   }
 
   handleChange = (event: any) => {
@@ -31,6 +34,7 @@ export class MultipleChoice extends React.Component<PropsPlease, ComponentState>
       ...this.state,
       [event.target.id]: event.target.value
     })
+    this.props.changeField(this.props.index, event.target.value, event.target.id);
   }
 
   render() {
@@ -59,11 +63,11 @@ export class MultipleChoice extends React.Component<PropsPlease, ComponentState>
           <br />
           <input
             name="answerText"
-            id="answer"
+            id="answers"
             type="text"
             placeholder="answerText (i.e. apples, pie, chicken, ... )"
             style={{ marginLeft: "0px", width: '100%' }}
-            value={this.state.answer}
+            value={this.state.answers}
             onChange={this.handleChange}></input>
         </div>
 
