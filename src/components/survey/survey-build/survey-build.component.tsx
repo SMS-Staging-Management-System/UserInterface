@@ -43,7 +43,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
   constructor(props) {
     super(props);
     this.state = {
-      displaySurvey: this.props.history.location.state ? this.props.history.location.state.displaySurvey : {questionJunctions:[]},
+      displaySurvey: this.props.history.location.state ? this.props.history.location.state.displaySurvey : { questionJunctions: [] },
       displayChoice: false,
       isSuccessfullySubmitted: false,
       showModal: false,
@@ -87,8 +87,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
   }
 
   deleteRow = (index) => {
-    const temp = this.state.completedTasks.filter((task, indexArr) => index!==indexArr)
-    const questions = this.state.displaySurvey.questionJunctions.filter((question, indexArr) => index!==indexArr);
+    const temp = this.state.completedTasks.filter((task, indexArr) => index !== indexArr)
+    const questions = this.state.displaySurvey.questionJunctions.filter((question, indexArr) => index !== indexArr);
     this.setState({
       ...this.state,
       completedTasks: temp,
@@ -100,18 +100,18 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
   }
 
   changeField = (index, value, name) => {
-    const {displaySurvey} = this.state;
-    const newQuestion = displaySurvey.questionJunctions.map((questionJunction, indexArr)=>{
-      if(indexArr === index) {
+    const { displaySurvey } = this.state;
+    const newQuestion = displaySurvey.questionJunctions.map((questionJunction, indexArr) => {
+      if (indexArr === index) {
         return {
           ...questionJunction,
           question: {
             ...questionJunction.question,
-            [name]:value
+            [name]: value
           }
         }
-      } else  {
-       return questionJunction 
+      } else {
+        return questionJunction
       }
     })
     this.setState({
@@ -204,8 +204,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
       switch (type) {
         case "True/False":
           dummyQuestion.question.typeId = todos[0].questionID;
-          const trueFalseTasks = completedTasks.map((task, indexArr)=> indexArr === index ? todos[0] : task);
-          const trueFalse = displaySurvey.questionJunctions.map((question, indexArr)=> indexArr === index ? dummyQuestion : question)
+          const trueFalseTasks = completedTasks.map((task, indexArr) => indexArr === index ? todos[0] : task);
+          const trueFalse = displaySurvey.questionJunctions.map((question, indexArr) => indexArr === index ? dummyQuestion : question)
           this.setState({
             ...this.state,
             completedTasks: trueFalseTasks,
@@ -217,8 +217,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
           break;
         case "Multiple Choice":
           dummyQuestion.question.typeId = todos[1].questionID;
-          const muitipleTasks = completedTasks.map((task, indexArr)=> indexArr === index ? todos[1] : task);
-          const multiple = displaySurvey.questionJunctions.map((question, indexArr)=> indexArr === index ? dummyQuestion : question)
+          const muitipleTasks = completedTasks.map((task, indexArr) => indexArr === index ? todos[1] : task);
+          const multiple = displaySurvey.questionJunctions.map((question, indexArr) => indexArr === index ? dummyQuestion : question)
           this.setState({
             ...this.state,
             completedTasks: muitipleTasks,
@@ -230,8 +230,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
           break;
         case "Checkbox Multiple Answer":
           dummyQuestion.question.typeId = todos[2].questionID;
-          const checkboxTasks = completedTasks.map((task, indexArr)=> indexArr === index ? todos[2] : task);
-          const checkbox = displaySurvey.questionJunctions.map((question, indexArr)=> indexArr === index ? dummyQuestion : question)
+          const checkboxTasks = completedTasks.map((task, indexArr) => indexArr === index ? todos[2] : task);
+          const checkbox = displaySurvey.questionJunctions.map((question, indexArr) => indexArr === index ? dummyQuestion : question)
           this.setState({
             ...this.state,
             completedTasks: checkboxTasks,
@@ -243,8 +243,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
           break;
         case "Rating":
           dummyQuestion.question.typeId = todos[3].questionID;
-          const ratingTasks = completedTasks.map((task, indexArr)=> indexArr === index ? todos[3] : task);
-          const rating = displaySurvey.questionJunctions.map((question, indexArr)=> indexArr === index ? dummyQuestion : question)
+          const ratingTasks = completedTasks.map((task, indexArr) => indexArr === index ? todos[3] : task);
+          const rating = displaySurvey.questionJunctions.map((question, indexArr) => indexArr === index ? dummyQuestion : question)
           this.setState({
             ...this.state,
             completedTasks: ratingTasks,
@@ -256,8 +256,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
           break;
         case "Feedback":
           dummyQuestion.question.typeId = todos[4].questionID;
-          const feedBackTasks = completedTasks.map((task, indexArr)=> indexArr === index ? todos[4] : task);
-          const feedBack = displaySurvey.questionJunctions.map((question, indexArr)=> indexArr === index ? dummyQuestion : question)
+          const feedBackTasks = completedTasks.map((task, indexArr) => indexArr === index ? todos[4] : task);
+          const feedBack = displaySurvey.questionJunctions.map((question, indexArr) => indexArr === index ? dummyQuestion : question)
           this.setState({
             ...this.state,
             completedTasks: feedBackTasks,
@@ -269,8 +269,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
           break;
         case "Yes/No":
           dummyQuestion.question.typeId = todos[5].questionID;
-          const yesNoTasks = completedTasks.map((task, indexArr)=> indexArr === index ? todos[5] : task);
-          const yesNo = displaySurvey.questionJunctions.map((question, indexArr)=> indexArr === index ? dummyQuestion : question)
+          const yesNoTasks = completedTasks.map((task, indexArr) => indexArr === index ? todos[5] : task);
+          const yesNo = displaySurvey.questionJunctions.map((question, indexArr) => indexArr === index ? dummyQuestion : question)
           this.setState({
             ...this.state,
             completedTasks: yesNoTasks,
@@ -282,8 +282,8 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
           break;
         case "Strongly Agree/Disagree":
           dummyQuestion.question.typeId = todos[6].questionID;
-          const agreeTasks = completedTasks.map((task, indexArr)=> indexArr === index ? todos[6] : task);
-          const agreeDisagree = displaySurvey.questionJunctions.map((question, indexArr)=> indexArr === index ? dummyQuestion : question)
+          const agreeTasks = completedTasks.map((task, indexArr) => indexArr === index ? todos[6] : task);
+          const agreeDisagree = displaySurvey.questionJunctions.map((question, indexArr) => indexArr === index ? dummyQuestion : question)
           this.setState({
             ...this.state,
             completedTasks: agreeTasks,
@@ -331,7 +331,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
             },
-            displayChoice: false 
+            displayChoice: false
           });
           break;
         case "Multiple Choice":
@@ -344,7 +344,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
             },
-            displayChoice: false 
+            displayChoice: false
           });
           break;
         case "Checkbox Multiple Answer":
@@ -357,7 +357,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
             },
-            displayChoice: false        
+            displayChoice: false
           });
           break;
         case "Rating":
@@ -370,7 +370,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
             },
-            displayChoice: false             
+            displayChoice: false
           });
           break;
         case "Feedback":
@@ -383,7 +383,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
             },
-            displayChoice: false             
+            displayChoice: false
           });
           break;
         case "Yes/No":
@@ -396,7 +396,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
             },
-            displayChoice: false             
+            displayChoice: false
           });
           break;
         case "Strongly Agree/Disagree":
@@ -409,7 +409,7 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
               ...displaySurvey,
               questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
             },
-            displayChoice: false             
+            displayChoice: false
           });
           break;
         default:
@@ -431,20 +431,29 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
             break;
           case 2://"Multiple Choice":
             let answers1 = "";
-            for (let i = 0; i < (survey.questionJunctions[index].question.answers).length; i++) {
-              answers1 += survey.questionJunctions[index].question.answers[i].answer;
-              if (i !== ((survey.questionJunctions[index].question.answers).length - 1)) {
-                answers1 += ", ";
+            if (!Array.isArray(survey.questionJunctions[index].question.answers)) {
+              answers1 = survey.questionJunctions[index].question.answers
+            } else {
+              for (let i = 0; i < (survey.questionJunctions[index].question.answers).length; i++) {
+                answers1 += survey.questionJunctions[index].question.answers[i].answer;
+                if (i !== ((survey.questionJunctions[index].question.answers).length - 1)) {
+                  answers1 += ", ";
+                }
               }
             }
+
             showme = <MultipleChoice changeField={this.changeField} selfDestruct={this.deleteRow} index={index} parentFunction={this.toAddFunction} defaultQuestion={question} defaultAnswer={answers1} />;
             break;
           case 3://"Checkbox Multiple Answer":
             let answers = "";
-            for (let i = 0; i < (survey.questionJunctions[index].question.answers).length; i++) {
-              answers += survey.questionJunctions[index].question.answers[i].answer;
-              if (i !== ((survey.questionJunctions[index].question.answers).length - 1)) {
-                answers += ", ";
+            if (!Array.isArray(survey.questionJunctions[index].question.answers)) {
+              answers = survey.questionJunctions[index].question.answers
+            } else {
+              for (let i = 0; i < (survey.questionJunctions[index].question.answers).length; i++) {
+                answers += survey.questionJunctions[index].question.answers[i].answer;
+                if (i !== ((survey.questionJunctions[index].question.answers).length - 1)) {
+                  answers += ", ";
+                }
               }
             }
             //console.log(answers);
