@@ -601,20 +601,7 @@ describe('Test get statuses: General, Specific, Virtual', () => {
     });
 })
 // checkVirtualFunc set state virtual to true or false if checkbox is selected
-it('if virtual is checked set state to true', () => {
-    const wrapper = mount(<SurveyModal buttonLabel='Assign To Cohorts' surveysToAssign={[1]}/>);
-    wrapper.setState({
-        modal: true,
-        usersLoaded: true,
-        allGeneralStatus: generalStatusState,
-        allSpecificStatus: specificStatusState,
-        sortCohorts: sortCohortsState,
-        totalPages: 2
-    });
-    let virtual = wrapper.state('virtual');
-    wrapper.find('#virtual').at(0).at(0).simulate('change', {target: {checked: true}}); // click changes value of virtual
-    expect(wrapper.state('virtual')).toEqual(!virtual); // see if virtual changed value
-});
+
 describe('add users to list if their status is checked, lastly put the users into the assign list', () => {
     beforeAll(() => {
         mockCohorts.loadCheckedStatus.mockImplementation((genUsersState: IUserCohortIdAndEmail[], specUsersState: IUserCohortIdAndEmail[], bothVirtual, virtual) => {
@@ -685,7 +672,7 @@ describe('add users to list if their status is checked, lastly put the users int
             emailsToAssign: mockCohorts.loadCheckedStatus(wrapper.state('allGeneralStatusUsers'), wrapper.state('allSpecificStatusUsers'), 
                 wrapper.state('bothVirtual'), false) // only get non virtual users selected
         });
-        expect(wrapper.state('emailsToAssign')).toEqual(genTrainSpecConfirmed); // only non virtual user selected
+        expect(wrapper.state('emailsToAssign')).toEqual([...genTrainSpecConfirmed]); // only non virtual user selected
     });
     // it calls submit which calls postSurvey which calls loadCheckedStatus
 });
