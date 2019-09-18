@@ -672,7 +672,7 @@ describe('add users to list if their status is checked, lastly put the users int
             emailsToAssign: mockCohorts.loadCheckedStatus(wrapper.state('allGeneralStatusUsers'), wrapper.state('allSpecificStatusUsers'), 
                 wrapper.state('bothVirtual'), false) // only get non virtual users selected
         });
-        expect(wrapper.state('emailsToAssign')).toEqual(["userone@gmail.com"]); // only non virtual user selected
+        expect(wrapper.state('emailsToAssign')).toEqual([...genTrainSpecConfirmed]); // only non virtual user selected
     });
     // it calls submit which calls postSurvey which calls loadCheckedStatus
 });
