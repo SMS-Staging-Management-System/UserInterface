@@ -639,22 +639,7 @@ describe('add users to list if their status is checked, lastly put the users int
         totalPages: 2,
         allUsers: allUsersState
     });
-    test('see if it loads general status users', () => {
-        wrapper.find('#Training').at(0).at(0).simulate('change', {target: {checked: true}});
-        expect(wrapper.state('allGeneralStatusUsers')).toEqual(generalTraining);
-    });
-    // checkSpecificFunc load users by selected specific status
-    test('see if it loads specific status users virtual not clicked', () => {
-        wrapper.find('#specificConfirmed').at(0).at(0).simulate('change', {target: {checked: true}});
-        expect(wrapper.state('allSpecificStatusUsers')).toEqual(specificConfirmed);
-    });
-    // if virtual is true only virtual users are assigned surveys
-    test('see if it loads specific status users virtual clicked ane only virtual', () => {
-       
-        // need to uncheck it first to remove previous users cant check and recheck a checkbox so must uncheck it first
-        wrapper.find('#specificConfirmed').at(0).at(0).simulate('change', {target: {checked: false}});
-        expect(wrapper.state('allSpecificStatusUsers')).toEqual([]); // uncheck and remove
-    });
+    
     // loadCheckedStatus puts users in the assign to survey list based off checked statuses
     test('put users in emailAssign state to be posted only virtual users selected', () => {
         wrapper.setState({
