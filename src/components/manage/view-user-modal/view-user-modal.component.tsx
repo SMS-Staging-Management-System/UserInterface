@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { IViewUserModal } from './view-user-modal.container';
-import Profile from '../../profile/profile.container';
 import { cognitoRoles } from '../../../model/cognito-user.model';
+import Profile from '../../profile/profile.component';
 
 
 
@@ -35,14 +35,15 @@ export class ViewUserModal extends React.Component<IViewUserModal, any> {
             </div></>);
 
         return (
-            <Modal isOpen={this.props.viewUser.enabled}>
-                <ModalHeader className="rev-background-color">User Info
-                <Button color="$revature-orange-light" className="close-sign" onClick={this.props.toggleViewUserModal}>x</Button>
+            <Modal isOpen={this.props.viewUser.enabled} toggle={this.props.toggleViewUserModal}>
+                <ModalHeader className="rev-background-color"  
+                toggle={this.props.toggleViewUserModal}>
+                    <p>User Info</p>
                 </ModalHeader>
                 <ModalBody>
 
                     {this.props.user.roles.some(role => (role === cognitoRoles.ADMIN))
-                        ? <Profile manageGetUsersByGroup={this.props.manageGetUsersByGroup}/> : currentModalDisplay}
+                        ? <Profile userToUpdate={this.props.profileBeingViewed.user} /> : currentModalDisplay}
 
                 </ModalBody>
             </Modal>

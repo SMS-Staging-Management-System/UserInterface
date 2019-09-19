@@ -42,7 +42,7 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
     // This function will call the cognito and database to get the trainer info.
     async getTrainers() {
         try {
-            const trainerResponse = await cognitoClient.findUsersByGroup(cognitoRoles.TRAINER);
+            const trainerResponse = await cognitoClient.findUsersByGroup(cognitoRoles.TRAINER, '');
             const userMap = new Map<string, ICognitoUser>();
             for (let i = 0; i < trainerResponse.data.Users.length; i++) {
                 const currentCognitoUser = trainerResponse.data.Users[i];
@@ -129,8 +129,6 @@ export class CreateCohortModal extends React.Component<ICreateCohortModal, ICrea
     render() {
 
         const { createCohort, addresses } = this.props;
-
-        console.log(this.state.trainers);
 
         return (
             <Modal isOpen={createCohort.enabled}>

@@ -30,7 +30,6 @@ export interface IManageCohortsComponentProps {
 }
 
 const mapStateToProps= ( state: IState) => {
-    console.log(state.managementState.manageCohorts);
     return {
         cohorts: state.managementState.manageCohorts.cohorts,
         currentPage: state.managementState.manageCohorts.currentPage,

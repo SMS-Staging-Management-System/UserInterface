@@ -5,10 +5,11 @@ import { Dropdown, DropdownMenu, DropdownToggle, Table, Input, Button } from 're
 import { ICognitoUser, cognitoRoles } from '../../../model/cognito-user.model';
 import ViewUserModal from '../view-user-modal/view-user-modal.container';
 import { IManageInternalComponentProps } from './manage-internal.container';
+import SortImage from './sort-image/sort-image.component';
 //import Label from 'reactstrap/lib/Label';
 
 
- //Track this components individual state
+//Track this components individual state
 export interface ManageInternalState {
     roleDropdownList: boolean;
     trackProps: string;
@@ -28,9 +29,9 @@ export const sortTypes = {
 
 //Store the sort images
 const sortImages = {
-    SORT_IMAGE: 'https://img.icons8.com/android/24/000000/sort-down.png',
-    SORT_IMAGE_REVERSE: 'https://img.icons8.com/android/24/000000/sort-up.png',
-    DEFAULT_SORT_IMAGE: 'https://img.icons8.com/android/24/000000/sort.png'
+    SORT_IMAGE: 'sort-up',
+    SORT_IMAGE_REVERSE: 'sort-down',
+    DEFAULT_SORT_IMAGE: 'sort'
 }
 
 export class ManageInternalComponenet extends React.Component<IManageInternalComponentProps, ManageInternalState> {
@@ -68,8 +69,18 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         });
     }
     updateDropdown = (option: string, page: number) => {
+        let emailSearch = this.props.manageUsers.emailSearch;
+        if (this.props.manageUsers.option !== option) {
+            this.props.resetData();
+            page = 0;
+            emailSearch = '';
+        } if (emailSearch) {
+            if (this.props.manageUsers.option === cognitoRoles.ADMIN || this.props.manageUsers.option === cognitoRoles.TRAINER || this.props.manageUsers.option === cognitoRoles.STAGING_MANAGER) {
+                option = 'All';
+            }
+        }
         this.props.updateSearchOption(option);
-        this.props.updateManageUsersTable(option, this.props.manageUsers.emailSearch, page);
+        this.props.updateManageUsersTable(option, emailSearch, page);
         //reset sorting 
         this.sort('sorted');
     }
@@ -129,27 +140,30 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
     }
 
     incrementPage = () => {
-        if (this.props.manageUsers.manageUsersCurrentPage < this.props.manageUsers.manageUsersPageTotal - 1) {
+        if ((this.props.manageUsers.manageUsersCurrentPage < this.props.manageUsers.manageUsersPageTotal - 1) || this.props.manageUsers.areMore) {
             const newPage = this.props.manageUsers.manageUsersCurrentPage + 1;
-            if (this.props.manageUsers.emailSearch) {
-                this.getUserByEmail(newPage);
-            } else {
-                this.updateDropdown(this.props.manageUsers.option, newPage);
-            }
+            // if (this.props.manageUsers.emailSearch) {
+            //     this.getUserByEmail(newPage);
+            //     this.render();
+            // } else {
+            //     this.updateDropdown(this.props.manageUsers.option, newPage);
+            // }
+            this.updateDropdown(this.props.manageUsers.option, newPage);
         }
     }
 
     decrementPage = () => {
         if (this.props.manageUsers.manageUsersCurrentPage > 0) {
             const newPage = this.props.manageUsers.manageUsersCurrentPage - 1;
-            if (this.props.manageUsers.emailSearch) {
-                this.getUserByEmail(newPage);
-            } else {
-                this.updateDropdown(this.props.manageUsers.option, newPage);
-            }
+            // if (this.props.manageUsers.emailSearch) {
+            //     this.getUserByEmail(newPage);
+            //     this.render();
+            // } else {
+            //     this.updateDropdown(this.props.manageUsers.option, newPage);
+            // }
+            this.updateDropdown(this.props.manageUsers.option, newPage);
         }
     }
-
 
     // returns active if the role provided in the route is the routeName provided
     isActive = (routeName: string) => ((this.props.manageUsers.option === routeName) ? 'manage-user-nav-item-active' : 'manage-user-nav-item')
@@ -170,28 +184,28 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                             <DropdownMenu>
                                 <DropdownItem >
                                     <Link to={path + "/manage/all"}
-                                        className={`nav-link ${this.isActive('all')}`}
-                                        onClick={() => this.updateDropdown('all', searchPage)}>All</Link></DropdownItem>
+                                        className={`nav-link ${this.isActive('All')}`}
+                                        onClick={() => this.updateDropdown('All', searchPage)}>All</Link></DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
                                     <Link to={path + "/manage/admin"}
                                         className={`nav-link ${this.isActive(cognitoRoles.ADMIN)}`}
-                                        onClick={() => this.updateDropdown(cognitoRoles.ADMIN, searchPage)}>Admin</Link></DropdownItem>
+                                        onClick={() => this.updateDropdown(cognitoRoles.CAP_ADMIN, searchPage)}>Admin</Link></DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
                                     <Link to={path + "/manage/trainer"}
                                         className={`nav-link ${this.isActive(cognitoRoles.TRAINER)}`}
-                                        onClick={() => this.updateDropdown(cognitoRoles.TRAINER, searchPage)}>Trainer</Link></DropdownItem>
+                                        onClick={() => this.updateDropdown(cognitoRoles.CAP_TRAINER, searchPage)}>Trainer</Link></DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem>
                                     <Link to={path + "/manage/staging-manager"}
                                         className={`nav-link ${this.isActive(cognitoRoles.STAGING_MANAGER)}`}
-                                        onClick={() => this.updateDropdown(cognitoRoles.STAGING_MANAGER, searchPage)}>Staging Manager</Link></DropdownItem>
+                                        onClick={() => this.updateDropdown(cognitoRoles.CAP_STAGING_MANAGER, searchPage)}>Staging Manager</Link></DropdownItem>
                                 <DropdownItem divider />
                             </DropdownMenu>
                         </Dropdown>
                     </div>
-                    
+
                     {/* The following input box and search botton is added
                         for sending the search by partial email request to the
                         @PostMapping(path = "email/partial")
@@ -206,7 +220,7 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                             value={this.props.manageUsers.emailSearch}
                         />
                     </div>
-                    <Button color="secondary" onClick={() => this.getUserByEmail(0)}>
+                    <Button color="secondary" onClick={() => this.updateDropdown(this.props.manageUsers.option, 0)}>
                         Search
                     </Button>
                 </div>
@@ -217,9 +231,21 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                     <ViewUserModal manageGetUsersByGroup={this.props.updateManageUsersTable} />
                     <thead className="rev-background-color">
                         <tr>
-                            <th className="pointer-table" onClick={() => this.sort(sortTypes.FIRST_NAME)}>First Name<img src={this.state.colOneSortImage} /> </th>
-                            <th className="pointer-table" onClick={() => this.sort(sortTypes.LAST_NAME)}>Last Name <img src={this.state.colTwoSortImage} /></th>
-                            <th className="pointer-table" onClick={() => this.sort(sortTypes.EMAIL)}>Email<img src={this.state.colThreeSortImage} /></th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.FIRST_NAME)}>First Name
+                                <SortImage
+                                    colOneSortImage={this.state.colOneSortImage}
+                                />
+                            </th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.LAST_NAME)}>Last Name
+                                <SortImage
+                                    colTwoSortImage={this.state.colTwoSortImage}
+                                />
+                            </th>
+                            <th className="pointer-table" onClick={() => this.sort(sortTypes.EMAIL)}>Email
+                                <SortImage
+                                    colThreeSortImage={this.state.colThreeSortImage}
+                                />
+                            </th>
                             <th className="pointer-table" >Roles</th>
                         </tr>
                     </thead>
@@ -238,11 +264,11 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                     </tbody>
                 </Table>
                 <div className='row horizontal-centering vertical-centering'>
-                    <Button variant="button-color" className="rev-background-color div-child" onClick={this.decrementPage}>Prev</Button>
+                    <Button variant="button-color" className="rev-background-color div-child" onClick={() => this.decrementPage()}>Prev</Button>
                     <h6 className="div-child text-style" >
-                        Page {this.props.manageUsers.manageUsersCurrentPage + 1} of {this.props.manageUsers.manageUsersPageTotal}
+                        Page {this.props.manageUsers.manageUsersCurrentPage + 1} of {this.props.manageUsers.manageUsersPageTotal} {this.props.manageUsers.areMore ? '+' : ''}
                     </h6>
-                    <Button variant="button-color" className="rev-background-color div-child" onClick={this.incrementPage}>Next</Button>
+                    <Button variant="button-color" className="rev-background-color div-child" onClick={() => this.incrementPage()}>Next</Button>
                 </div>
             </>
         )

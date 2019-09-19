@@ -39,6 +39,9 @@ $screen-xl-min: 1200px;
 // Small devices
 @mixin sm {
   @media (min-width: #{$screen-sm-min}) {
+    .assignToCohorts {
+      width: 200px;
+    } 
     @content;
   }
 }
@@ -46,6 +49,9 @@ $screen-xl-min: 1200px;
 // Medium devices
 @mixin md {
   @media (min-width: #{$screen-md-min}) {
+    .assignToCohorts {
+      width: 200px;
+    } 
     @content;
   }
 }
@@ -152,6 +158,12 @@ li > a.rev-btn-tab {
   -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
   cursor: pointer;
+}
+
+.rev-table-row-active {
+  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
 }
 
 .rev-background-color {
@@ -592,8 +604,19 @@ Survey Component
   background-color: $revature-orange-light;
   font-weight: bold;
   height: 40px;
-  width: 100%;
+  width: 85%;
   border: none;
+  // float: left;
+}
+
+#dropdownMenu2 {
+  float: right;
+  // margin-top: 40px;
+}
+
+#allSurveysDropdownMenu {
+  float: right;
+  margin-top: 40px;
 }
 
 .assignSurveyBtn:hover,
@@ -610,6 +633,18 @@ Survey Component
   width: 100%;
 }
 
+.assignToCohorts {
+  background-color: none;
+  border-color: none;
+  width: 20%;
+  float: left;
+  margin: 2.5em 0 -.5em 0;
+}
+
+.assignToCohorts:hover {
+  color: white !important;
+}
+
 .modal-content {
   min-height: 300px;
 }
@@ -621,6 +656,7 @@ User Dropdown
 .userDropdown {
   // background-color: $revature-orange-light;
   float: right;
+  width: 100%;
 }
 
 .userDropdownBtn {
@@ -629,6 +665,15 @@ User Dropdown
   background-color: $revature-orange-light;
   height: 40px;
   width: 100%;
+  border: none;
+}
+
+.userDropdownBtn2 {
+  color: black;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  height: 40px;
+  width: 14%;
   border: none;
 }
 
@@ -641,12 +686,21 @@ User Dropdown
 .userDropInput {
   margin-left: 10px;
   margin-right: 10px;
+  // width: 1em;
+  // height: 1em;  
+}
+
+.sortedByText {
+  padding-right: 5px;
 }
 
 #userDropdownWidth {
   width: 335px;
 }
 
+#bookdropdown {
+  width: 30%;
+}
 /*****************
 Drag and Drop
 *****************/
@@ -737,12 +791,18 @@ Drag and Drop
 .myTr{	
     width: 100%;	
   }	
-  .trashCan{	
+  
+  .trashCan{
     align-content: right;	
     width: 50px;	
+  }
+
+  .trashCan:hover{	
     border-color: $revature-orange;	
     border-style: solid;	
-    border-width: thick;	
+    border-width: thick;
+    cursor: pointer;
+
   }
 // .labelTitle{
 //   font-family: Helvetica;
@@ -770,6 +830,7 @@ Drag and Drop
       box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;	
     }	
   }
+
 /***************
 TEMPLATE MODAL
 ***************/
@@ -934,6 +995,9 @@ Info Circle
 }
 .pointer-table:hover {
     cursor: pointer;
+}
+.rev-background-color th div {
+    display: inline
 }
   
 /***********************************
@@ -1279,4 +1343,14 @@ body {
   color: black;
 }
 
+#template-search-bar{
+  height: 3.5em;
+  
+}
+
+#back-butt{
+  width: 400px;
+  height: 2.0em;
+  margin: 0 auto;
+}
 

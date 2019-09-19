@@ -107,7 +107,7 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
                                         ))}
                                     </tbody>
                                 </Table>
-                                <ul>
+                                {this.state.totalPage !== 0 && <ul>
                                     <div className="div-fixed">
                                         <tr className= "row-border">
                                             <td><Button variant="button-color" className="rev-background-color div-child" onClick={this.decrementCounter}>Prev</Button></td>
@@ -115,7 +115,7 @@ class SurveyRespondentsComponent extends React.Component<IComponentProps, ICompo
                                             <td><Button variant="button-color" className="rev-background-color div-child" onClick={this.incrementCounter}>Next</Button></td>
                                         </tr>
                                     </div>
-                                </ul>
+                                </ul>}
                             </>
                         ) : (
                                 <div>No Respondents to Display</div>

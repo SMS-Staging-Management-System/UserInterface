@@ -8,8 +8,8 @@ const cognitoContext = '/cognito'
 // }
 
 export const cognitoClient = {
-  findUsersByGroup(groupName: string) {
-    return smsClient.get(cognitoContext + `/users/groups/${groupName}`);
+  findUsersByGroup(groupName: string, nextToken: string) {
+    return smsClient.get(cognitoContext + `/users/groups/${groupName}${nextToken ? `?nextToken=${encodeURIComponent(nextToken)}` : ''}`);
   },
   addUserToGroup(body: ICognitoUserAddGroup) {
     return smsClient.put(cognitoContext + '/users/groups', body);

@@ -13,38 +13,35 @@ export const cohortClient = {
   findByToken(token: string) {
     return smsClient.get(cohortContext + `/token/${token}`)
   },
-  joinCohort(user:IUser, token:string){
-    return smsClient.post(cohortContext + `/token/${token}`, user)
+  joinCohort(user: IUser, token: string) {
+    return smsClient.post(cohortContext + `/token/${token.toString()}`, user)
   },
   findAllByPage(page: number) {
-    return smsClient.get(cohortContext+`/page/${page}`)
+    return smsClient.get(`${cohortContext}?page=${page}`)
   },
-  findAll() {
-    return smsClient.get(cohortContext)
+
+  findAllByAddressPage( addressId: number, page: number) {
+    return smsClient.get(`${cohortContext}/address/id/${addressId}?page=${page}`)
+  },
+
+  findAllByTrainerPage(email: String, page: number) {
+    return smsClient.get(cohortContext+`/trainer/${email}/email?page=${page}`)
+  },
+
+  findAll() { 
+    return smsClient.get(`${cohortContext}?page=0`)
   },
   async getUsers(id: number) {
-    let cohortUsers: IUser[] = [];
-    await smsClient.get(`${cohortContext}/users/id/${id}`)
-      .then(response => {
-        cohortUsers = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+     const resp = await smsClient.get(`${cohortContext}/users/id/${id}`);
+     const cohortUsers = resp.data;
     return cohortUsers;
   },
   async getName(cohortName: string){
     if(!cohortName){
       return [];
     }
-    let cohortNames;
-    await smsClient.get(`${cohortNameSort}/${cohortName}`)
-      .then(response => {
-        cohortNames = response.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    const resp = await smsClient.get(`${cohortNameSort}/${cohortName}`);
+    const cohortNames = resp.data;
     return cohortNames;
   },
   async getAlias(alias: string){
@@ -65,6 +62,3 @@ export const cohortClient = {
       return await smsClient.get(`${cohortContext}/prestaging/${epochDate}`);
   }
 }
-
-
-

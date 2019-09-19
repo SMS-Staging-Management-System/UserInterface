@@ -7,9 +7,15 @@ const initialState: IManageUsersState = {
     manageUsersCurrentPage: 0,
     manageUsersPageTotal: 0,
     emailSearch: '',
-    option: 'all',
+    option: 'All',
     componentLoaded: false,
-    userTableSort: 'sorted'
+    userTableSort: 'sorted',
+    emailList: [],
+    adminResponse: 0,
+    trainerResponse: 0,
+    stagingManagerResponse: 0,
+    maxPage: 0 ,
+    areMore: false
 }
 
 export const manageUsersReducer = (state = initialState, action: any) => {
@@ -20,12 +26,18 @@ export const manageUsersReducer = (state = initialState, action: any) => {
                 manageUsers: action.payload.manageUsers,
                 manageUsersCurrentPage: action.payload.manageUsersCurrentPage,
                 manageUsersPageTotal: action.payload.manageUsersPageTotal,
+                areMore: action.payload.areMore,
                 componentLoaded: true
             }
         case manageUsersTypes.UPDATE_SEARCH_EMAIL:
             return {
                 ...state,
                 emailSearch: action.payload.emailSearch
+            }
+        case manageUsersTypes.UPDATE_EMAIL_LIST:
+            return {
+                ...state,
+                emailList: action.payload.emailList
             }
         case manageUsersTypes.GET_USERS_SORTED:
             return {
@@ -38,6 +50,26 @@ export const manageUsersReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 option: action.payload.option
+            }
+        case manageUsersTypes.UPDATE_ADMIN_RESPONSE:
+            return {
+                ...state,
+                adminResponse: action.payload.adminResponse
+            }
+        case manageUsersTypes.UPDATE_TRAINER_RESPONSE:
+            return {
+                ...state,
+                trainerResponse: action.payload.trainerResponse
+            }
+        case manageUsersTypes.UPDATE_STAGING_MANAGER_RESPONSE:
+            return {
+                ...state,
+                stagingManagerResponse: action.payload.stagingManagerResponse
+            }
+        case manageUsersTypes.UPDATE_MAX_PAGE:
+            return {
+                ...state,
+                maxPage: action.payload.maxPage
             }
         case authTypes.LOGOUT:
             return initialState;
