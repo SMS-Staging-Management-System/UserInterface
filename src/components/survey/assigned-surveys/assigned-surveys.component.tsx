@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
-import { ISurvey } from '../../../model/surveys/survey.model';
+import { ISurvey } from '../../../model/surveys/ISurvey';
 import { connect } from 'react-redux';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';

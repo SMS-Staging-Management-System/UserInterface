@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Table, Button } from 'reactstrap';
-import { ISurvey } from '../../../model/surveys/survey.model';
+import { ISurvey } from '../../../model/surveys/ISurvey';
 import SurveyModal from './survey-assign-modal.component';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { IAuthState } from '../../../reducers/management';

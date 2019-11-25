@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { ISurvey } from "../../model/surveys/survey.model";
-import { IQuestion } from "../../model/surveys/question.model";
-import { IAnswer } from "../../model/surveys/answer.model";
-import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
+import { ISurvey } from "../../model/surveys/ISurvey";
+import { IQuestion } from "../../model/surveys/IQuestion";
+import { IAnswer } from "../../model/surveys/IAnswer";
+import { IJunctionSurveyQuestion } from "../../model/surveys/IJunctionSurveyQuestion";
 import { surveyBuildReducer } from "./SurveyBuild.reducer";
 //import { templateModalReducer } from "./template-modal-reducer";
 

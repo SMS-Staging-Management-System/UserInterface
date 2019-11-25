@@ -21,7 +21,7 @@ const mockCohorts = {
 const mockComp = {
 }
 import { shallow, mount, render } from 'enzyme';
-import { ISurvey } from '../../../model/surveys/survey.model';
+import { ISurvey } from '../../../model/surveys/ISurvey';
 import SurveyModal, { IUserCohortIdAndEmail } from './survey-assign-modal.component';
 import React, { Fragment, Component } from 'react';
 import { IStatus } from '../../../model/status.model';

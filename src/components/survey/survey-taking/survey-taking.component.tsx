@@ -4,10 +4,10 @@ import { Redirect, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
-import { IAnswer } from '../../../model/surveys/answer.model';
-import { IResponse } from '../../../model/surveys/response.model';
+import { IAnswer } from '../../../model/surveys/IAnswer';
+import { IResponse } from '../../../model/surveys/IResponse';
 import Loader from '../Loader/Loader';
-import { IHistory } from '../../../model/surveys/history.model';
+import { IHistory } from '../../../model/surveys/IHistory';
 
 interface IComponentProps extends RouteComponentProps<{}> {
     auth: IAuthState,

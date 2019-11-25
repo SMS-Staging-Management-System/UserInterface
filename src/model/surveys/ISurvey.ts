@@ -1,4 +1,5 @@
-import { IJunctionSurveyQuestion } from "./junction-survey-question.model";
+/** @prettier */
+import { IJunctionSurveyQuestion } from './IJunctionSurveyQuestion';
 
 export interface ISurvey {
   surveyId: number;

@@ -5,9 +5,9 @@ import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import { RouteComponentProps, Redirect } from 'react-router';
 import { Modal, Button } from 'react-bootstrap';
 import { FaInfoCircle, FaHandPointRight, FaSearch } from 'react-icons/fa'
-import { IJunctionSurveyQuestion } from '../../../model/surveys/junction-survey-question.model';
-import { IAnswer } from '../../../model/surveys/answer.model';
-import { ISurvey } from '../../../model/surveys/survey.model';
+import { IJunctionSurveyQuestion } from '../../../model/surveys/IJunctionSurveyQuestion';
+import { IAnswer } from '../../../model/surveys/IAnswer';
+import { ISurvey } from '../../../model/surveys/ISurvey';
 import Loader from '../Loader/Loader';
 import { IState } from '../../../reducers';
 import { toast } from 'react-toastify';

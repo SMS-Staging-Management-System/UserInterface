@@ -1,5 +1,5 @@
 import { shallow, mount, render } from 'enzyme';
-import { ISurvey } from '../../../model/surveys/survey.model';
+import { ISurvey } from '../../../model/surveys/ISurvey';
 import { AllSurveysComponent } from './all-surveys.component';
 import { RouteComponentProps } from 'react-router';
 import { IAuthState } from '../../../reducers/management';

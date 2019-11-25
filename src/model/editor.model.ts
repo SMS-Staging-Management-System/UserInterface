@@ -1,4 +1,4 @@
-import { ISurvey } from "./surveys/survey.model";
+import { ISurvey } from "./surveys/ISurvey";
 
 export interface IEditor {
     email:string,
