@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IState } from '../../../../reducers';
-import { InterviewPerAssociate } from '../../../../model/dashboard/interviewPerAssociate';
+import { IInterviewPerAssociate } from '../../../../model/dashboard/IInterviewPerAssociate';
 import { interviewClient } from '../../../../axios/sms-clients/interview-client';
 import ReactPaginate from 'react-paginate';
 import { ClipLoader } from 'react-spinners';
@@ -12,7 +12,7 @@ interface myProps extends RouteComponentProps<{}> {
     WrappedComponent: any;
 }
 interface myState {
-    listAssocFiveOrMore:InterviewPerAssociate[] ,
+    listAssocFiveOrMore:IInterviewPerAssociate[] ,
     totalPages:number,
     currentPage:number,
     pageSize: number
