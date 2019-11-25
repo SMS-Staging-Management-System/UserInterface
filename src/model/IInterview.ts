@@ -1,8 +1,9 @@
-import { InterviewFeedback } from "./Interview.feedback";
-import { IAssociateInput } from "./Associateinput.model";
-import { IClient } from "./Client.model";
+/** @prettier */
+import { IInterviewFeedback } from './IInterviewFeedback';
+import { IAssociateInput } from './IAssociateInput';
+import { IClient } from './IClient';
 
-export interface Interview {
+export interface IInterview {
   interviewId: number;
   managerId: number;
   associateId: number;
@@ -10,8 +11,8 @@ export interface Interview {
   notified: Date;
   reviewed: Date;
   place: string;
-  feedback : InterviewFeedback;
-  associateInput : IAssociateInput;
+  feedback: IInterviewFeedback;
+  associateInput: IAssociateInput;
   client: IClient;
 }
 

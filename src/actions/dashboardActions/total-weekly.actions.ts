@@ -1,5 +1,5 @@
 import { interviewClient } from "../../axios/sms-clients/interview-client";
-import { Interview } from "../../model/Interview.model";
+import { IInterview } from "../../model/IInterview";
 
 export const TOTAL_WEEKLY_TYPES = {
   SET_INTERVIEW_LIST: 'T.W.T_SET_INTERVIEW_LIST'
@@ -9,7 +9,7 @@ export const getInterviews = (date: number | Date) => async (dispatch) => {
   try {
     let response = await interviewClient.getCalendarWeek(date);
     if (response.status === 200) {
-      let interviewList: Interview[] = response.data;
+      let interviewList: IInterview[] = response.data;
       let totalScheduled = 0;
       let totalNotified = 0;
       let totalReviewed = 0;

@@ -1,6 +1,6 @@
 import { ICreateInterviewComponentState } from "../../reducers/interview";
 import { interviewClient } from "../../axios/sms-clients/interview-client";
-import { Client } from "../../model/Client.model";
+import { Client } from "../../model/Client";
 
 
 export const createInterviewTypes = {

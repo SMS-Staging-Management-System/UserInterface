@@ -4,7 +4,6 @@ import React from "react";
 // import { connect } from "react-redux";
 // import { InterviewFeedback } from "../../model/Interview.feedback";
 import Button from "reactstrap/lib/Button";
-import { InterviewFormat } from "../../model/Interview.format.model";
 import { RouteComponentProps, withRouter } from "react-router";
 import { setState } from "../../actions/interviewFeedback/interviewFeedback.actions";
 import { connect } from "react-redux";

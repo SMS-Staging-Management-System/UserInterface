@@ -1,7 +1,7 @@
 import { IUser } from "../../model/users/IUser";
 import { byStagingReducer } from "./byStaging.reducer";
 import { combineReducers } from "redux";
-import { Interview } from "../../model/Interview.model";
+import { IInterview } from "../../model/IInterview";
 import { totalWeeklyReducer } from "./total-weekly.reducer";
 import { ICohort } from "../../model/users/ICohort";
 import { toStagingReducer } from "./to-staging.reducer";
@@ -9,7 +9,7 @@ import { toStagingReducer } from "./to-staging.reducer";
 //global state of dashboard
 
 export interface ITotalWeeklyState {
-    interviewList: Interview[];
+    interviewList: IInterview[];
     totalScheduled: number;
     totalNotified: number;
     totalReviewed: number;

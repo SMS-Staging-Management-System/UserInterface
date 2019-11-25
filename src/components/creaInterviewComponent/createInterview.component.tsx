@@ -14,7 +14,7 @@ import { cohortClient } from '../../axios/sms-clients/cohort-client';
 import { userClient } from '../../axios/sms-clients/user-client';
 import { IState } from '../../reducers';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
-import { Client } from '../../model/Client.model';
+import { Client } from '../../model/Client';
 import { ICohort } from '../../model/users/ICohort';
 import { IUser } from '../../model/users/IUser';
 import { smsClient } from '../../axios/sms-clients';
