@@ -1,4 +1,4 @@
-import { ICohort } from '../../../model/ICohort';
+import { ICohort } from '../../../model/users/ICohort';
 import { IState } from '../../../reducers';
 import { ICohortModalState } from '../../../reducers/management';
 import { ManageCohortsModal } from './manage-cohorts-modal.component';
@@ -9,7 +9,7 @@ import { toggleViewCohortModal, getCohortUsers, selectOneUser,
          toggleStatusDropdown, saveCohort,
          updateCohort,
          closeViewCohortModal} from '../../../actions/view-cohort/view-cohort.actions';
-import { IUser } from '../../../model/IUser';
+import { IUser } from '../../../model/users/IUser';
 
 
 export interface IManageCohortsModalProps {

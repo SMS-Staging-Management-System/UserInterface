@@ -1,7 +1,7 @@
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
 import { ICognitoUser } from "../../model/cognito-user.model";
 import { userClient } from "../../axios/sms-clients/user-client";
-import { IUser } from "../../model/IUser";
+import { IUser } from "../../model/users/IUser";
 import { toast } from "react-toastify";
 import { History } from "history";
 

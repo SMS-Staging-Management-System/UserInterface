@@ -2,7 +2,7 @@ import { shallow } from "enzyme";
 import React from 'react';
 import { Input } from "reactstrap";
 import { cognitoRoles } from "../../model/cognito-user.model";
-import { IUser } from "../../model/IUser";
+import { IUser } from "../../model/users/IUser";
 import { IRoleSelectorProps, RoleSelector } from "./role.selector";
 import { inputNames } from "./profile.component";
 

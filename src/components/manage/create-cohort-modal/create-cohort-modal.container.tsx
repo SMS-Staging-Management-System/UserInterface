@@ -5,8 +5,8 @@ import { IState,} from '../../../reducers';
 import { IAddressState, ICreateCohortState, IManageUsersState, /*IManageUsersState*/ } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { CreateCohortModal } from './create-cohort-modal.component';
-import { ICohort } from '../../../model/ICohort';
-import { IAddress } from '../../../model/IAddress';
+import { ICohort } from '../../../model/users/ICohort';
+import { IAddress } from '../../../model/users/IAddress';
 import { ICognitoUser } from '../../../model/cognito-user.model';
 
 export interface ICreateCohortModal {

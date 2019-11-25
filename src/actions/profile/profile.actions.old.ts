@@ -1,10 +1,10 @@
 /* tslint:disable */
-import { IAddress } from "../../model/IAddress";
-import { IUser } from "../../model/IUser";
+import { IAddress } from "../../model/users/IAddress";
+import { IUser } from "../../model/users/IUser";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { toast } from "react-toastify";
 
-import { IStatus } from "../../model/IStatus";
+import { IStatus } from "../../model/users/IStatus";
 
 import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";

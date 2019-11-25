@@ -1,5 +1,5 @@
-import { IUser } from "../../model/IUser";
-import { ICohort } from "../../model/ICohort";
+import { IUser } from "../../model/users/IUser";
+import { ICohort } from "../../model/users/ICohort";
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
 import { toast } from "react-toastify";
 

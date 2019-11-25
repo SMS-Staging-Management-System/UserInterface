@@ -1,13 +1,13 @@
 import React from 'react';
 import { Table, Button, Modal, ModalHeader, ModalBody, Label } from 'reactstrap';
-import { ICohort } from '../../../model/ICohort';
+import { ICohort } from '../../../model/users/ICohort';
 import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { userClient } from '../../../axios/sms-clients/user-client';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
 import Loader from '../Loader/Loader';
-import { IUser } from '../../../model/IUser';
+import { IUser } from '../../../model/users/IUser';
 import { statusClient } from '../../../axios/sms-clients/status-client';
-import { IStatus } from '../../../model/IStatus';
+import { IStatus } from '../../../model/users/IStatus';
 import Input from 'reactstrap/lib/Input';
 
 

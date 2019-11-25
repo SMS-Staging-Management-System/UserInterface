@@ -5,7 +5,7 @@ import { IState } from '../../../../reducers';
 import { userClient } from '../../../../axios/sms-clients/user-client';
 import ReactPaginate from 'react-paginate';
 import { ClipLoader } from 'react-spinners';
-import { IUser } from '../../../../model/IUser';
+import { IUser } from '../../../../model/users/IUser';
 
 interface myProps extends RouteComponentProps<{}> {
     WrappedComponent: any;

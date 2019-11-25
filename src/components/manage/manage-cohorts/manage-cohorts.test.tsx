@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from "enzyme";
 import { ManageCohortsComponenent } from "./manage-cohorts.component";
-import { ICohort } from "../../../model/ICohort";
-import { IAddress } from "../../../model/IAddress";
-import { IUser } from "../../../model/IUser";
-import { IStatus } from "../../../model/IStatus";
+import { ICohort } from "../../../model/users/ICohort";
+import { IAddress } from "../../../model/users/IAddress";
+import { IUser } from "../../../model/users/IUser";
+import { IStatus } from "../../../model/users/IStatus";
 import { IManageCohortsComponentProps } from './manage-cohorts.container';
 import { Button, Dropdown } from 'reactstrap';
 

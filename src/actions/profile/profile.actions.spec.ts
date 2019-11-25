@@ -1,4 +1,4 @@
-import { IUser } from "../../model/IUser"
+import { IUser } from "../../model/users/IUser"
 import { updateUser, profileTypes } from "./profile.actions"
 import { userClient } from "../../axios/sms-clients/user-client"
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
