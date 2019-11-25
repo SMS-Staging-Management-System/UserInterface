@@ -1,4 +1,4 @@
-import { ICognitoUser } from "../../model/cognito-user.model";
+import { ICognitoUser } from "../../model/ICognitoUser";
 import { IAddress } from "../../model/users/IAddress";
 import { IUser } from "../../model/users/IUser";
 import { addressReducer } from "./address.reducer";

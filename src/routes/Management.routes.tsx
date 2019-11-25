@@ -6,7 +6,7 @@ import LoginComponent from '../components/login/login.container';
 import JoinCohortComponent from '../components/join-cohort/join-cohort.component';
 import resetPasswordContainer from '../components/resetPassword/reset-password.container';
 import resetPasswordUsernameContainer from '../components/resetPasswordUsername/reset-password-username.container'
-import { cognitoRoles } from '../model/cognito-user.model';
+import { cognitoRoles } from '../model/ICognitoUser';
 import Profile from '../components/profile/profile.component';
 
 export class ManagementRoutes extends React.Component<any, any> {

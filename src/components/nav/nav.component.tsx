@@ -8,7 +8,7 @@ import { setup, logout } from '../../actions/auth/auth.actions';
 import { toast } from 'react-toastify';
 import { withRouter } from "react-router";
 import { FaUserAlt, FaDatabase } from 'react-icons/fa';
-import { cognitoRoles } from '../../model/cognito-user.model';
+import { cognitoRoles } from '../../model/ICognitoUser';
 
 interface IProps extends RouteComponentProps<{}> {
   logout: () => void;

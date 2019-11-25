@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Col, FormGroup, Input, Row } from 'reactstrap';
-import { cognitoRoles } from '../../model/cognito-user.model';
+import { cognitoRoles } from '../../model/ICognitoUser';
 import { IUser } from '../../model/users/IUser';
 import { IState } from '../../reducers';
 import { inputNames } from './profile.component';

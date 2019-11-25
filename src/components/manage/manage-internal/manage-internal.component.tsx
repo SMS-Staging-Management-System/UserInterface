@@ -2,7 +2,7 @@ import * as React from 'react';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import { Link } from 'react-router-dom';
 import { Dropdown, DropdownMenu, DropdownToggle, Table, Input, Button } from 'reactstrap';
-import { ICognitoUser, cognitoRoles } from '../../../model/cognito-user.model';
+import { ICognitoUser, cognitoRoles } from '../../../model/ICognitoUser';
 import ViewUserModal from '../view-user-modal/view-user-modal.container';
 import { IManageInternalComponentProps } from './manage-internal.container';
 import SortImage from './sort-image/sort-image.component';

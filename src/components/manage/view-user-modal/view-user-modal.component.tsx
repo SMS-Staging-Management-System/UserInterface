@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { IViewUserModal } from './view-user-modal.container';
-import { cognitoRoles } from '../../../model/cognito-user.model';
+import { cognitoRoles } from '../../../model/ICognitoUser';
 import Profile from '../../profile/profile.component';
 
 

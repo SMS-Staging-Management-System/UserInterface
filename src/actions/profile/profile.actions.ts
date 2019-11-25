@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { userClient } from "../../axios/sms-clients/user-client";
-import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
-import { cognitoRoles } from "../../model/cognito-user.model";
+import { ICognitoUserAddGroup } from "../../model/ICognitoUserAddGroup";
+import { cognitoRoles } from "../../model/ICognitoUser";
 import { IUser } from "../../model/users/IUser";
 import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
 

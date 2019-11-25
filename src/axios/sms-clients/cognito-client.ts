@@ -1,5 +1,5 @@
 import { smsClient } from ".";
-import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
+import { ICognitoUserAddGroup } from "../../model/ICognitoUserAddGroup";
 
 const cognitoContext = '/cognito'
 // const urls = {

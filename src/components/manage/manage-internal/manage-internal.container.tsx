@@ -1,4 +1,4 @@
-import { ICognitoUser } from '../../../model/cognito-user.model';
+import { ICognitoUser } from '../../../model/ICognitoUser';
 import { connect } from 'react-redux';
 import { ManageInternalComponenet } from './manage-internal.component';
 import { IState } from '../../../reducers';

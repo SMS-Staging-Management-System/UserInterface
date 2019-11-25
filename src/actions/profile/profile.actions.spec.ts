@@ -2,7 +2,7 @@ import { IUser } from "../../model/users/IUser"
 import { updateUser, profileTypes } from "./profile.actions"
 import { userClient } from "../../axios/sms-clients/user-client"
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
-import { cognitoRoles } from "../../model/cognito-user.model";
+import { cognitoRoles } from "../../model/ICognitoUser";
 import { toast } from "react-toastify";
 import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
 

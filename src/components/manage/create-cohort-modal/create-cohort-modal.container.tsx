@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { CreateCohortModal } from './create-cohort-modal.component';
 import { ICohort } from '../../../model/users/ICohort';
 import { IAddress } from '../../../model/users/IAddress';
-import { ICognitoUser } from '../../../model/cognito-user.model';
+import { ICognitoUser } from '../../../model/ICognitoUser';
 
 export interface ICreateCohortModal {
   toggleModal: () => void,

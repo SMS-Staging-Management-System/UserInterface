@@ -12,7 +12,7 @@ import ThreeInterviews from './modules/threeInterviews/ThreeInterviews';
 import Home from './modules/home/Home';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
-import { cognitoRoles } from '../../model/cognito-user.model';
+import { cognitoRoles } from '../../model/ICognitoUser';
 
 class Dashboard extends React.Component<any, any> {
   constructor(props: any) {

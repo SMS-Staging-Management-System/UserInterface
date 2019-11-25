@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { IState } from '../../reducers';
 import { joinCohort, findLoggedInUser, findCohortByToken } from '../../actions/join-cohort/join-cohort.actions';
 import { IAuthState, IJoinCohortState } from "../../reducers/management";
-import { ICognitoUser } from "../../model/cognito-user.model";
+import { ICognitoUser } from "../../model/ICognitoUser";
 import { IUser } from "../../model/users/IUser";
 import { updateLocations } from '../../actions/address/address.actions';
 import { History } from "history";

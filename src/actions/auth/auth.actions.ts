@@ -2,7 +2,7 @@
 // import * as AWS from 'aws-sdk';
 import { environment } from '../../environment';
 import { History } from 'history';
-import { ICognitoUser } from '../../model/cognito-user.model';
+import { ICognitoUser } from '../../model/ICognitoUser';
 // import { toast } from 'react-toastify';
 import Amplify, { Auth } from 'aws-amplify';
 import { refreshJwt } from '../../axios/sms-clients';

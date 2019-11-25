@@ -2,7 +2,7 @@ import { IAddress } from "../../model/users/IAddress";
 import { IUser } from "../../model/users/IUser";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { toast } from "react-toastify";
-import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
+import { ICognitoUserAddGroup } from "../../model/ICognitoUserAddGroup";
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
 import { ICohort } from "../../model/users/ICohort";

@@ -5,7 +5,7 @@ import { cohortClient } from '../../../axios/sms-clients/cohort-client';
 import { cognitoClient } from "../../../axios/sms-clients/cognito-client";
 import { addressesClient } from '../../../axios/sms-clients/address-client';
 import { ICohort } from '../../../model/users/ICohort';
-import { cognitoRoles } from '../../../model/cognito-user.model';
+import { cognitoRoles } from '../../../model/ICognitoUser';
 
 interface IManageCohortsState {
     locations: any[]
