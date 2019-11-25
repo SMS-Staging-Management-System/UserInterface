@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { IStatus } from '../../model/status.model';
-import { IUser } from '../../model/user.model';
+import { IStatus } from '../../model/IStatus';
+import { IUser } from '../../model/IUser';
 import { IState } from '../../reducers';
 import { inputNames } from './profile.component';
 import { DropdownItem, Button, UncontrolledDropdown, DropdownToggle, DropdownMenu } from 'reactstrap';

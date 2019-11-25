@@ -1,6 +1,6 @@
-import { IAddress } from "../../model/address.model";
+import { IAddress } from "../../model/IAddress";
 import { toast } from "react-toastify";
-import { ICohort } from "../../model/cohort";
+import { ICohort } from "../../model/ICohort";
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { ICognitoUser } from "../../model/cognito-user.model";

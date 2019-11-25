@@ -1,5 +1,5 @@
 import { userClient } from "../../axios/sms-clients/user-client";
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/IUser";
 import { toast } from "react-toastify";
 
 export const currentSMSUserTypes = {

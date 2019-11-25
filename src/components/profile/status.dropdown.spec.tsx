@@ -2,8 +2,8 @@ import { shallow } from "enzyme";
 import React from 'react';
 import { Button, DropdownItem, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 import { cognitoRoles } from "../../model/cognito-user.model";
-import { IStatus } from "../../model/status.model";
-import { IUser } from "../../model/user.model";
+import { IStatus } from "../../model/IStatus";
+import { IUser } from "../../model/IUser";
 import { inputNames } from "./profile.component";
 import { IStatusDropdownProps, StatusDropdown } from "./status.dropdown";
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IState } from '../../../../reducers';
-import { ICohort } from '../../../../model/cohort';
+import { ICohort } from '../../../../model/ICohort';
 import { getCohorts } from '../../../../actions/dashboardActions/to-staging.actions'
 import { Table } from 'react-bootstrap';
 import './ToStaging.scss'

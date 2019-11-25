@@ -3,7 +3,7 @@ import { IState } from '../../../reducers';
 import { IViewUserState, IAddressState, IProfileViewState } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { ViewUserModal } from './view-user-modal.component';
-import { IUser } from '../../../model/user.model';
+import { IUser } from '../../../model/IUser';
 
 export interface IViewUserModal {
     manageGetUsersByGroup: (groupName: string, email: string, page?: number) => void,

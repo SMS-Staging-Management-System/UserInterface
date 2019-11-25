@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { IState } from '../../../../reducers';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IUser } from '../../../../model/user.model';
+import { IUser } from '../../../../model/IUser';
 import {getUserListStaging} from '../../../../actions/dashboardActions/byStaging.actions'
 import { Bar } from 'react-chartjs-2';
 import './ByStaging.scss'

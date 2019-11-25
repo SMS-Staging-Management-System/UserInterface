@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ICreateCohortModal } from './create-cohort-modal.container';
 import { CreateCohortModal } from './create-cohort-modal.component';
-import { IAddress } from '../../../model/address.model';
+import { IAddress } from '../../../model/IAddress';
 import { Button, InputGroup, Dropdown, Modal } from 'reactstrap';
 
 describe('CreateCohortModal', () => {

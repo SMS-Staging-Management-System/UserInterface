@@ -1,6 +1,6 @@
 
 import * as types from './../../actions/dashboardActions/all.dashboard.actions'
-import { IUser } from '../../model/user.model';
+import { IUser } from '../../model/IUser';
 
 const initalState:IUser[] = [];
 

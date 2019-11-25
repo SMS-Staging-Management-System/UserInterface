@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
-import { IUser } from '../../../model/user.model';
+import { IUser } from '../../../model/IUser';
 import { interviewClient } from '../../../axios/sms-clients/interview-client';
 
 export interface associatesFeedbackRequestProps {

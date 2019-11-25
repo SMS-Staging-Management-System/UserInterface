@@ -6,7 +6,7 @@ import { IState } from '../../reducers';
 import { joinCohort, findLoggedInUser, findCohortByToken } from '../../actions/join-cohort/join-cohort.actions';
 import { IAuthState, IJoinCohortState } from "../../reducers/management";
 import { ICognitoUser } from "../../model/cognito-user.model";
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/IUser";
 import { updateLocations } from '../../actions/address/address.actions';
 import { History } from "history";
 import { toast } from 'react-toastify';

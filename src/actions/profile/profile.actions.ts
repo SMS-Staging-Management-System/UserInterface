@@ -3,7 +3,7 @@ import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
 import { cognitoRoles } from "../../model/cognito-user.model";
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/IUser";
 import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
 
 export const profileTypes = {

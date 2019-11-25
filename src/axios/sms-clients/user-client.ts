@@ -1,5 +1,5 @@
 import { smsClient } from ".";
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/IUser";
 
 
 const usersContext = '/user-service/users'

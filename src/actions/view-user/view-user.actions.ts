@@ -1,4 +1,4 @@
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/IUser";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { ICognitoUser } from "../../model/cognito-user.model";
 

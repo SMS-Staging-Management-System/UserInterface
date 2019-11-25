@@ -1,6 +1,6 @@
 import * as types from './all.dashboard.actions'
 import { userClient } from "../../axios/sms-clients/user-client";
-import { IUser } from '../../model/user.model';
+import { IUser } from '../../model/IUser';
 
 export const getUserListStaging = () => async dispatch => {
     try{

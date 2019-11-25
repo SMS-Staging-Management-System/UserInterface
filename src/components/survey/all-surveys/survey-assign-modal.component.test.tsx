@@ -24,10 +24,10 @@ import { shallow, mount, render } from 'enzyme';
 import { ISurvey } from '../../../model/surveys/ISurvey';
 import SurveyModal, { IUserCohortIdAndEmail } from './survey-assign-modal.component';
 import React, { Fragment, Component } from 'react';
-import { IStatus } from '../../../model/status.model';
-import { ICohort } from '../../../model/cohort';
-import { IUser } from '../../../model/user.model';
-import { IAddress } from '../../../model/address.model';
+import { IStatus } from '../../../model/IStatus';
+import { ICohort } from '../../../model/ICohort';
+import { IUser } from '../../../model/IUser';
+import { IAddress } from '../../../model/IAddress';
 // mock assign survey
 let assignSurveys:ISurvey[] = [
     {

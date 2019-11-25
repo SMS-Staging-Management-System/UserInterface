@@ -1,9 +1,9 @@
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/IUser";
 import { byStagingReducer } from "./byStaging.reducer";
 import { combineReducers } from "redux";
 import { Interview } from "../../model/Interview.model";
 import { totalWeeklyReducer } from "./total-weekly.reducer";
-import { ICohort } from "../../model/cohort";
+import { ICohort } from "../../model/ICohort";
 import { toStagingReducer } from "./to-staging.reducer";
 
 //global state of dashboard

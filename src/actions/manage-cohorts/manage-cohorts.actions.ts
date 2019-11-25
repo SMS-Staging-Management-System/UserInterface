@@ -1,4 +1,4 @@
-import { ICohort } from '../../model/cohort';
+import { ICohort } from '../../model/ICohort';
 
 export const manageCohortsTypes = {
     UPDATE_COHORTS: 'MANAGE_COHORTS_UPDATE_COHORT_LIST'

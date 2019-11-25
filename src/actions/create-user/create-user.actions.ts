@@ -1,11 +1,11 @@
-import { IAddress } from "../../model/address.model";
-import { IUser } from "../../model/user.model";
+import { IAddress } from "../../model/IAddress";
+import { IUser } from "../../model/IUser";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { toast } from "react-toastify";
 import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
-import { ICohort } from "../../model/cohort";
+import { ICohort } from "../../model/ICohort";
 
 export const createUserTypes = {
     TOGGLE: 'TOGGLE_CREATE_USER_MODAL',

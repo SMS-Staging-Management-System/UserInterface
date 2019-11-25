@@ -1,6 +1,6 @@
 import { ICognitoUser } from "../../model/cognito-user.model";
-import { IAddress } from "../../model/address.model";
-import { IUser } from "../../model/user.model";
+import { IAddress } from "../../model/IAddress";
+import { IUser } from "../../model/IUser";
 import { addressReducer } from "./address.reducer";
 import { statusReducer } from "./status.reducer";
 import { authReducer } from "./auth.reducer";
@@ -12,14 +12,14 @@ import { loginReducer } from "./login.reducer";
 import { viewUserReducer } from "./view-user.reducer";
 import { currentSMSUserReducer } from "./current-sms-user.reducer";
 import { manageCohortsReducer } from './manage-cohorts.reducer'
-import { ICohort } from "../../model/cohort";
+import { ICohort } from "../../model/ICohort";
 import { profileViewReducer } from "./profile-view.reducer";
 import { resetPasswordReducer } from "./reset-password.reducer";
 import { resetPasswordUsernameReducer } from "./reset-password-username.reducer";
 import  joinCohortReducer  from "./join-cohort.reducer";
-import { IStatus } from "../../model/status.model";
+import { IStatus } from "../../model/IStatus";
 import { viewCohortReducer } from "./view-cohort.reducer";
-import { ICreateUser } from "../../model/create-user.model";
+import { ICreateUser } from "../../model/ICreateUser";
 import { profileUpdateReducer } from "./profile.reducer";
 
 

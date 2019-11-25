@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
-import { IAddress } from '../../model/address.model';
-import { IUser } from '../../model/user.model';
+import { IAddress } from '../../model/IAddress';
+import { IUser } from '../../model/IUser';
 import { IState } from '../../reducers';
 import { inputNames } from './profile.component';
 
