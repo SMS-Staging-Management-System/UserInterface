@@ -1,7 +1,8 @@
-
+/** @prettier */
 export interface INewInterviewData {
   associateEmail: number;
-	date: number;
-	location: string;
-	client: string;
+  managerEmail: string;
+  date: number;
+  location: string;
+  client: string;
 }

@@ -1,4 +1,4 @@
-import { ICohort } from '../../../model/cohort';
+import { ICohort } from '../../../model/users/ICohort';
 import { IState } from '../../../reducers';
 import { ICohortModalState } from '../../../reducers/management';
 import { ManageCohortsModal } from './manage-cohorts-modal.component';
@@ -7,18 +7,19 @@ import { toggleViewCohortModal, getCohortUsers, selectOneUser,
          deselectOneUser, selectAllUsers,
          deselectAllUsers, removeSelectedUsers,
          toggleStatusDropdown, saveCohort,
-         updateCohort} from '../../../actions/view-cohort/view-cohort.actions';
-import { IUser } from '../../../model/user.model';
+         updateCohort,
+         closeViewCohortModal} from '../../../actions/view-cohort/view-cohort.actions';
+import { IUser } from '../../../model/users/IUser';
 
 
 export interface IManageCohortsModalProps {
     viewCohort: ICohortModalState,
-    toggleModal: () => void,
+    toggleModal: (cohort: ICohort) => void,
+    closeViewCohortModal: () => void,
     save: (cohort: ICohort) => void,
     getUsers: () => void,
     selectOneUser: (user: IUser) => void,
     deselectOneUser: (user: IUser) => void,
-
 }
 
 const mapStateToProps = (state: IState) => {
@@ -30,6 +31,7 @@ const mapStateToProps = (state: IState) => {
 // add this stuff to the reducer
 const mapDispatchToProps = {
     toggleModal: toggleViewCohortModal,
+    closeViewCohortModal: closeViewCohortModal,
     save: saveCohort,
     getUsers: getCohortUsers,
     selectOneUser,

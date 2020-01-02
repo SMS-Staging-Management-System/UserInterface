@@ -2,12 +2,12 @@ import { toggleModal, toggleLocationDropdown, updateNewCohortLocation, updateNew
 import { manageGetUsersByGroup } from '../../../actions/manage-users/manage-users.actions'
 import { updateLocations } from '../../../actions/address/address.actions';
 import { IState,} from '../../../reducers';
-import { IAddressState, ICreateCohortState, IManageUsersState } from '../../../reducers/management'
+import { IAddressState, ICreateCohortState, IManageUsersState, /*IManageUsersState*/ } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { CreateCohortModal } from './create-cohort-modal.component';
-import { ICohort } from '../../../model/cohort';
-import { IAddress } from '../../../model/address.model';
-import { ICognitoUser } from '../../../model/cognito-user.model';
+import { ICohort } from '../../../model/users/ICohort';
+import { IAddress } from '../../../model/users/IAddress';
+import { ICognitoUser } from '../../../model/ICognitoUser';
 
 export interface ICreateCohortModal {
   toggleModal: () => void,
@@ -18,8 +18,7 @@ export interface ICreateCohortModal {
   updateNewCohort: (cohort: ICohort) => void,
   updateLocations: () => void,
   updateNewCohortTrainer: (trainer: ICognitoUser) => void,
-  manageGetUsersByGroup: (group: string) => void,
-
+  manageGetUsersByGroup: (group: string,email: string, page?: number) => void,
   manageUsers: IManageUsersState,
   createCohort: ICreateCohortState,
   addresses: IAddressState,

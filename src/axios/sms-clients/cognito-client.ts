@@ -1,5 +1,5 @@
 import { smsClient } from ".";
-import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
+import { ICognitoUserAddGroup } from "../../model/ICognitoUserAddGroup";
 
 const cognitoContext = '/cognito'
 // const urls = {
@@ -8,11 +8,16 @@ const cognitoContext = '/cognito'
 // }
 
 export const cognitoClient = {
-  findUsersByGroup(groupName: string) {
-    return smsClient.get(cognitoContext + `/users/groups/${groupName}`);
+  findUsersByGroup(groupName: string, nextToken: string) {
+    return smsClient.get(cognitoContext + `/users/groups/${groupName}${nextToken ? `?nextToken=${encodeURIComponent(nextToken)}` : ''}`);
   },
   addUserToGroup(body: ICognitoUserAddGroup) {
     return smsClient.put(cognitoContext + '/users/groups', body);
+  },
+  removeUserFromGroup(body: ICognitoUserAddGroup) {
+    return smsClient.delete(cognitoContext + `/users/groups`, {
+      data: body
+    });
   },
   auth() {
     return smsClient.get(cognitoContext + '/auth');

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';;
 import { Redirect } from 'react-router-dom'
 import { Question, MultipleChoice, Dropdown } from './choices.component';
-import { IAssociateInput } from '../../model/Associateinput.model';
+import { IAssociateInput } from '../../model/IAssociateInput';
 import * as actions from '../../actions/assoc-input/assoc-input.action';
 import { connect } from 'react-redux';
 import { getFormatNames } from './temp.util';
@@ -92,9 +92,8 @@ export class AssociateInput extends Component<IProps, IInputState> {
 
         return (
             <form style={{
-                padding: '1rem',
-                backgroundColor: 'rgb(255,194,137)'
-            }}>
+                padding: '1rem'
+            }}className = 'rev-background-color'>
                 <Question value='When did you recieve a notification?' >
                     <input className='tab-once' type="date" onChange={updateDayNotified} />
                 </Question>

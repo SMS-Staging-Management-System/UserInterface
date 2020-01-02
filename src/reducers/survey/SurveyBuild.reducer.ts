@@ -6,45 +6,43 @@ const initialState: ISurveyBuildState = {
         surveyId: 1,
         title: 'not filled',
         description: 'Example Survey 1 Description',
+        creator: '',
         dateCreated: new Date(),
         closingDate: null,
         template: false,
-        published: true
+        questionJunctions: []
     },
     dummyQuestionArray: [],
     dummyAnswerArray: [],
     parsedAnswers: [],
     junctionTable: {
         id: 0,
-        questionId: {
+        question: {
             questionId: 0,
             question: 'not filled',
             typeId: 0,
+            answers: []
         },
         questionOrder: 0,
-
-        surveyId: {
+        survey: {
             surveyId: 0,
             title: 'not fileld',
             description: 'not filled',
+            creator: '',
             dateCreated: new Date(),
             closingDate: null,
             template: false,
-            published: false,
+            questionJunctions: []
         }
     }
 }
 
 export const surveyBuildReducer = (state = initialState, action: any): ISurveyBuildState => {
     switch (action.type) {
-        case surveyBuildTypes.CreatSurvey:
+        case surveyBuildTypes.CreateSurvey:
             return {
                 ...state,
-                dummySurvey: action.payload.actionSurvey,
-                dummyQuestionArray: action.payload.actionQuestion,
-                dummyAnswerArray: action.payload.actionAnswer,
-                parsedAnswers: action.payload.actionParsedAnswers,
-                junctionTable: action.payload.actionJunctionTable,
+                dummySurvey: action.payload
             }
     }
     return state;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Table } from 'reactstrap';
 import { surveyClient } from '../../../axios/sms-clients/survey-client';
-import { ISurvey } from '../../../model/surveys/survey.model';
+import { ISurvey } from '../../../model/surveys/ISurvey';
 import { connect } from 'react-redux';
 import { IAuthState } from '../../../reducers/management';
 import { IState } from '../../../reducers';
@@ -39,7 +39,7 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
     }
 
     loadMyAssignedSurveys = async () => {
-        
+
         if (this.props.auth.currentUser.email) {
             const myAssignedSurveys = await surveyClient.findSurveysAssignedToUser(this.props.auth.currentUser.email);
             this.setState({
@@ -62,32 +62,36 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
         return (
             <>
                 {this.state.surveysLoaded ? (
-                    this.state.surveys.length ? (
-                        <Table striped id="manage-users-table" className="tableUsers">
-                            <thead className="rev-background-color">
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Date Created</th>
-                                    <th>Closing Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.surveys.map((survey, index) => (
+                    <Table striped id="manage-users-table" className="tableUsers">
+                        <thead className="rev-background-color">
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Date Created</th>
+                                <th>Closing Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.surveys.length ?
+                                (this.state.surveys.map((survey, index) => (
                                     <tr key={index} className="rev-table-row" onClick={() => this.handleTakeSurvey(survey.surveyId)}>
                                         <td>{survey.title}</td>
                                         <td>{survey.description}</td>
                                         <td>{survey.dateCreated && new Date(survey.dateCreated).toDateString()}</td>
                                         <td>{survey.closingDate && new Date(survey.closingDate).toDateString()}</td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
-                    ) : (
-                            <div>No Surveys to Display</div>
-                        )
+                                ))
+                                ) :
+                                (
+                                    <tr className="rev-table-row">
+                                        <td colSpan={4} ><div className='div-center fadeInUp'>You have no surveys assigned.</div></td>
+                                    </tr>
+                                    
+                                    )}
+                        </tbody>
+                    </Table>
                 ) : (
-                        <Loader/>
+                        <Loader />
                     )}
             </>
         );

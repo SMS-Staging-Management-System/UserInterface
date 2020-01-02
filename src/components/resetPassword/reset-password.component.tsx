@@ -6,7 +6,7 @@ import Popover from "reactstrap/lib/Popover";
 import { RouteComponentProps, } from 'react-router';
 import React from "react";
 import { IResetPasswordState, IResetPasswordUsernameState, ILoginState } from "../../reducers/management";
-import { ICognitoUser } from "../../model/cognito-user.model";
+import { ICognitoUser } from "../../model/ICognitoUser";
 
 
 interface IResetPasswordProps extends RouteComponentProps<{}> {

@@ -1,31 +1,14 @@
 import { interviewClient } from "../../axios/sms-clients/interview-client";
 
 export const associateChartTypes = {
-    GET_INFO: 'GET_INFO',
-    SET_CANVAS: 'SET_CANVAS',
+    SET_ASSOC_NOTICE_DATA: 'SET_ASSOC_NOTICE_DATA'
 }
 
-
-export const setCanvasAssociate = (canvasRef) => async (dispatch) => {
+export const setNoticeDataAssoc = () => async dispatch => {
+    const response = await interviewClient.fetchAssoc24()
+    const { data } = response
     dispatch({
-        payload: {
-            canvas: canvasRef
-        },
-        type: associateChartTypes.SET_CANVAS
-    })
-}
-
-
-export const getInfoAssociate = (chartRef) => async (dispatch) => {
-    const resp = await interviewClient.fetchAssoc24();
-
-    console.log(resp.data);
-
-    dispatch({
-        payload: {
-            chartInfo: resp.data,
-            canvas: chartRef
-        },
-        type: associateChartTypes.GET_INFO
+        type: associateChartTypes.SET_ASSOC_NOTICE_DATA,
+        payload: [data[0] - data[1], data[1]]
     })
 }

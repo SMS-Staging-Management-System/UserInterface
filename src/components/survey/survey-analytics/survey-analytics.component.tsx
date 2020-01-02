@@ -43,8 +43,8 @@ class SurveyAnalyticsComponent extends React.Component<IComponentProps, ICompone
         // loop through each of the questions
         for (let questionKey in survey.questionJunctions) {
             surveyData.questions[questionKey] = {
-                questionText: survey.questionJunctions[questionKey].questionId.question,
-                questionType: survey.questionJunctions[questionKey].questionId.typeId,
+                questionText: survey.questionJunctions[questionKey].question.question,
+                questionType: survey.questionJunctions[questionKey].question.typeId,
                 questionData: {
                     labels: [],
                     datasets: [{
@@ -58,15 +58,15 @@ class SurveyAnalyticsComponent extends React.Component<IComponentProps, ICompone
             };
 
             // If it's a feedback question, just grab the answer choices
-            if (survey.questionJunctions[questionKey].questionId.typeId === 5) {
-                surveyData.questions[questionKey].answerChoices = survey.questionJunctions[questionKey].questionId.answerChoices;
+            if (survey.questionJunctions[questionKey].question.typeId === 5) {
+                surveyData.questions[questionKey].answers = survey.questionJunctions[questionKey].question.answers;
             } else {
                 // Loop through all of the question choices for this question and get the data
-                for (let choiceKey in survey.questionJunctions[questionKey].questionId.answerChoices) {
+                for (let choiceKey in survey.questionJunctions[questionKey].question.answers) {
                     // Save the data for each answer choice
-                    surveyData.questions[questionKey].questionData.datasets[0].data.push(survey.questionJunctions[questionKey].questionId.answerChoices[choiceKey].responseCount);
+                    surveyData.questions[questionKey].questionData.datasets[0].data.push(survey.questionJunctions[questionKey].question.answers[choiceKey].responseCount);
                     // Save the labels for each answer choice
-                    surveyData.questions[questionKey].questionData.labels.push(survey.questionJunctions[questionKey].questionId.answerChoices[choiceKey].answer);
+                    surveyData.questions[questionKey].questionData.labels.push(survey.questionJunctions[questionKey].question.answers[choiceKey].answer);
                     // Generate a color and save it in the data
                     const color = this.random_rgba();
                     surveyData.questions[questionKey].questionData.datasets[0].backgroundColor.push(color);
@@ -122,8 +122,8 @@ class SurveyAnalyticsComponent extends React.Component<IComponentProps, ICompone
                                                 <>
                                                     <div className="card-title">Feedback submitted by survey-takers:</div>
                                                     <ul className="list-group list-group-flush">
-                                                        {question.answerChoices.map(choice => (
-                                                            <li key={choice.id} className="list-group-item">{choice.answer}</li>
+                                                        {question.answers.map(choice => (
+                                                            <li key={choice.answerId} className="list-group-item">{choice.answer}</li>
                                                         ))}
                                                     </ul>
                                                 </>

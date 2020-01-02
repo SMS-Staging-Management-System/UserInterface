@@ -1,6 +1,7 @@
+/* tslint:disable */
 import { IProfileViewState } from ".";
 import { viewUserTypes } from "../../actions/view-user/view-user.actions";
-import { profileTypes } from "../../actions/profile/profile.actions";
+import { profileTypes } from "../../actions/profile/profile.actions.old";
 
 const initialState: IProfileViewState = {
     user: {
@@ -31,13 +32,14 @@ const initialState: IProfileViewState = {
             statusId: 0,
             generalStatus: '',
             specificStatus: '',
-            virtual: false     
+            virtual: false
         },
         roles: []
     },
     bUserInfoChanged: false,
     locationDropdownActive: false,
     statusDropdownActive: false,
+    cohortDropdownActive: false,
     virtual: false
 }
 
@@ -86,20 +88,25 @@ export const profileViewReducer = (state = initialState, action: any) => {
                 statusDropdownActive: !state.statusDropdownActive,
                 bUserInfoChanged: true
             }
+        case profileTypes.TOGGLE_COHORT_DROPDOWN:
+            return {
+                ...state,
+                cohortDropdownActive: !state.cohortDropdownActive,
+                bUserInfoChanged: true
+            }
         case profileTypes.UPDATE_USER_STATUS:
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    userStatus: action.payload.status}
+                    userStatus: action.payload.status
+                }
             }
         case profileTypes.UPDATE_VIRTUAL_STATUS_CHECKBOX:
             return {
                 ...state,
                 virtual: !state.virtual
             }
-    
-    
     }
     return state;
 }

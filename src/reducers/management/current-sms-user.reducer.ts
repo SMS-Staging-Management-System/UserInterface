@@ -3,24 +3,24 @@ import { authTypes } from "../../actions/auth/auth.actions";
 import { currentSMSUserTypes } from "../../actions/current-sms-user/current-sms-user.actions";
 
 const initialState: ICurrentSMSUserState = {
-    currentSMSUser:  {
+    currentSMSUser: {
         trainingAddress: {
-          addressId: 0,
-          street: '',
-          alias: '',
-          city: '',
-          country: '',
-          state: '',
-          zip: '',
+            addressId: 0,
+            street: '',
+            alias: '',
+            city: '',
+            country: '',
+            state: '',
+            zip: '',
         },
         personalAddress: {
-          addressId: 0,
-          street: '',
-          alias: '',
-          city: '',
-          country: '',
-          state: '',
-          zip: '',
+            addressId: 0,
+            street: '',
+            alias: '',
+            city: '',
+            country: '',
+            state: '',
+            zip: '',
         },
         email: '',
         firstName: '',
@@ -29,12 +29,12 @@ const initialState: ICurrentSMSUserState = {
         userId: 0,
         roles: [],
         userStatus: {
-          statusId: 0,
-          generalStatus: '',
-          specificStatus: '',
-          virtual: false
+            statusId: 0,
+            generalStatus: '',
+            specificStatus: '',
+            virtual: false
         }
-      }
+    }
 }
 
 export const currentSMSUserReducer = (state = initialState, action: any) => {
@@ -50,11 +50,11 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
 
             }
 
-        case (currentSMSUserTypes.GET_USER_INFO): 
+        case (currentSMSUserTypes.GET_USER_INFO):
             return {
                 ...state,
                 currentSMSUser: {
-                    ...state.currentSMSUser,
+                    //...state.currentSMSUser,
                     ...action.payload.user,
                     roles: state.currentSMSUser.roles
                 }
@@ -72,7 +72,7 @@ export const currentSMSUserReducer = (state = initialState, action: any) => {
 
         case (authTypes.LOGOUT):
             return initialState;
-        
+
     }
     return state;
 }

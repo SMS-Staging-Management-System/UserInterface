@@ -1,4 +1,4 @@
-import { Store, createStore, compose, applyMiddleware } from 'redux';
+import { Store, createStore, compose, applyMiddleware, AnyAction } from 'redux';
 import reduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { state } from './reducers';
@@ -6,8 +6,10 @@ import { state } from './reducers';
 const a: any = window;
 const composeEnhancers = a.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+// TODO: Re-enable logging
 const enhancer = composeEnhancers(
-  applyMiddleware(reduxThunk, logger),
+  applyMiddleware(reduxThunk),
+  // applyMiddleware(reduxThunk, logger),
   // other store enhancers if any
 );
 

@@ -1,4 +1,4 @@
-import { IAssociateInput } from '../../model/Associateinput.model';
+import { IAssociateInput } from '../../model/IAssociateInput';
 import { getFormatById } from '../../components/associate-input/temp.util';
 import { interviewClient } from '../../axios/sms-clients/interview-client';
 
