@@ -1,4 +1,4 @@
-import { IAssociateInput } from '../../model/Associateinput.model';
+import { IAssociateInput } from '../../model/IAssociateInput';
 import { AssocInputActions } from '../../actions/assoc-input/assoc-input.action';
 
 const initalState: IAssociateInput = {

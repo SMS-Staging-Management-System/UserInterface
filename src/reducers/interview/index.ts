@@ -7,11 +7,11 @@ import { interviewFeedbackReducer } from './interviewFeedback.reducer';
 import { managerChartReducer } from './managerchart.reducer';
 import { associateChartReducer } from './associatechart.reducer';
 import { assocInputReducer } from './assoc-input.reducer';
-import { IAssociateInput } from '../../model/Associateinput.model';
+import { IAssociateInput } from '../../model/IAssociateInput';
 import { feedbackRequestedChartReducer } from './feedbackrequested';
 import { jobDescriptionChartReducer } from './jobdesc.reducer';
-import { Client } from '../../model/Client.model';
-import { Interview } from '../../model/Interview.model';
+import { Client } from '../../model/Client';
+import { IInterview } from '../../model/IInterview';
 import { interviewsCountReducer } from './interviewscount.reducer';
 
 // the reportform reducer seems to do nothing. remove later
@@ -49,14 +49,14 @@ export interface ICreateInterviewComponentState {
 }
 
 export interface IInterviewListState {
-    listOfInterviews : Interview[],
+    listOfInterviews : IInterview[],
     numberOfPages : number,
     orderBy : string,
     direction : string,
     pageSize : number,
     currentPage : number,
     assocInput: any,
-    dropdowns: Interview[]
+    dropdowns: IInterview[]
 }
     
 export interface IInterviewState {

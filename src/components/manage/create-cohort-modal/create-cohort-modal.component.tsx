@@ -6,7 +6,7 @@ import {
 } from 'reactstrap';
 import { ICreateCohortModal } from './create-cohort-modal.container';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { ICognitoUser, cognitoRoles } from '../../../model/cognito-user.model';
+import { ICognitoUser, cognitoRoles } from '../../../model/ICognitoUser';
 import { cognitoClient } from '../../../axios/sms-clients/cognito-client';
 import { userClient } from '../../../axios/sms-clients/user-client';
 import { toast } from "react-toastify";

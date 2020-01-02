@@ -1,6 +1,6 @@
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
 import { toast } from "react-toastify";
-import { ICognitoUser, cognitoRoles } from "../../model/cognito-user.model";
+import { ICognitoUser, cognitoRoles } from "../../model/ICognitoUser";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { sortTypes } from "../../components/manage/manage-internal/manage-internal.component";
 import { store } from "../../Store"

@@ -2,7 +2,7 @@ import { loginRequest } from "../login/login.action";
 import { Auth } from "aws-amplify";
 import { setup } from "../auth/auth.actions";
 import { toast } from "react-toastify";
-import { ICognitoUser } from "../../model/cognito-user.model";
+import { ICognitoUser } from "../../model/ICognitoUser";
 
 export const resetPasswordTypes = {
     UPDATE_CONFIRMATION_PASSWORD: "R_UPDATE_CONFIRMATION_PASSWORD",

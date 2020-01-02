@@ -1,8 +1,8 @@
-import { ISurvey } from "../../model/surveys/survey.model";
-import { IQuestion } from "../../model/surveys/question.model";
-import { IAnswer } from "../../model/surveys/answer.model";
-import { IResponse } from "../../model/surveys/response.model";
-import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
+import { ISurvey } from "../../model/surveys/ISurvey";
+import { IQuestion } from "../../model/surveys/IQuestion";
+import { IAnswer } from "../../model/surveys/IAnswer";
+import { IResponse } from "../../model/surveys/IResponse";
+import { IJunctionSurveyQuestion } from "../../model/surveys/IJunctionSurveyQuestion";
 import { smsClient } from ".";
 const surveyBaseRoute = '/survey-service/surveys';
 const templateRoute = '/survey-service/surveys/template/true'

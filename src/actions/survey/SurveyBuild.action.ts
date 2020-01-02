@@ -1,6 +1,6 @@
-import { ISurvey } from "../../model/surveys/survey.model";
-import { IAnswer } from "../../model/surveys/answer.model";
-import { IJunctionSurveyQuestion } from "../../model/surveys/junction-survey-question.model";
+import { ISurvey } from "../../model/surveys/ISurvey";
+import { IAnswer } from "../../model/surveys/IAnswer";
+import { IJunctionSurveyQuestion } from "../../model/surveys/IJunctionSurveyQuestion";
 import { surveyClient } from "../../axios/sms-clients/survey-client";
 
 // import { surveyClient } from "../../axios/sms-clients/survey-client";

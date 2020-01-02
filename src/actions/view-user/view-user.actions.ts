@@ -1,6 +1,6 @@
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/users/IUser";
 import { userClient } from "../../axios/sms-clients/user-client";
-import { ICognitoUser } from "../../model/cognito-user.model";
+import { ICognitoUser } from "../../model/ICognitoUser";
 
 export const viewUserTypes = {
     TOGGLE: 'TOGGLE_VIEW_USER_MODAL',

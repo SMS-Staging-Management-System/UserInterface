@@ -1,11 +1,11 @@
 import { shallow } from "enzyme";
 import React from "react";
-import { IUser } from "../../model/user.model";
+import { IUser } from "../../model/users/IUser";
 import { LocationDropdown, ILocationDropdownProps } from "./location.dropdown";
 import { Button, UncontrolledDropdown, DropdownToggle, DropdownItem } from "reactstrap";
-import { cognitoRoles } from "../../model/cognito-user.model";
+import { cognitoRoles } from "../../model/ICognitoUser";
 import { inputNames } from "./profile.component";
-import { IAddress } from "../../model/address.model";
+import { IAddress } from "../../model/users/IAddress";
 
 // tslint:disable-next-line: no-big-function
 describe('<SCLocationDropdown />', () => {

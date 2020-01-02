@@ -5,7 +5,7 @@ import { ModalFooter, ModalBody } from 'react-bootstrap';
 import { Table, Input, Button } from 'reactstrap';
 import { IManageCohortsModalProps } from './manage-cohorts-modal.container';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { IUser } from '../../../model/user.model';
+import { IUser } from '../../../model/users/IUser';
 
 /**
  * `

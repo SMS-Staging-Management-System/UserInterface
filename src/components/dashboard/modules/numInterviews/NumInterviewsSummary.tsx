@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from "react-router";
-import { Interview } from "../../../../model/Interview.model";
+import { IInterview } from "../../../../model/IInterview";
 import { IState } from '../../../../reducers';
 import { getInterviews } from '../../../../actions/dashboardActions/total-weekly.actions';
 import { connect } from 'react-redux';
 import NumInterviewsChart from './NumInterviewsChart';
 
 interface INumInterviewsSummaryProps extends RouteComponentProps<{}> {
-  interviewList: Interview[];
+  interviewList: IInterview[];
   totalScheduled: number;
   totalNotified: number;
   totalReviewed: number;

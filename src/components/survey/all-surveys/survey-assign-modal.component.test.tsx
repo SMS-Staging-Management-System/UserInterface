@@ -21,13 +21,13 @@ const mockCohorts = {
 const mockComp = {
 }
 import { shallow, mount, render } from 'enzyme';
-import { ISurvey } from '../../../model/surveys/survey.model';
+import { ISurvey } from '../../../model/surveys/ISurvey';
 import SurveyModal, { IUserCohortIdAndEmail } from './survey-assign-modal.component';
 import React, { Fragment, Component } from 'react';
-import { IStatus } from '../../../model/status.model';
-import { ICohort } from '../../../model/cohort';
-import { IUser } from '../../../model/user.model';
-import { IAddress } from '../../../model/address.model';
+import { IStatus } from '../../../model/users/IStatus';
+import { ICohort } from '../../../model/users/ICohort';
+import { IUser } from '../../../model/users/IUser';
+import { IAddress } from '../../../model/users/IAddress';
 // mock assign survey
 let assignSurveys:ISurvey[] = [
     {

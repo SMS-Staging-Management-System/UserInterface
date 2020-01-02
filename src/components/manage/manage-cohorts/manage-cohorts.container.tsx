@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { IState } from '../../../reducers';
 import { ManageCohortsComponenent } from './manage-cohorts.component';
-import { ICohort } from '../../../model/cohort';
+import { ICohort } from '../../../model/users/ICohort';
 import { updateCohorts, updateCohortsByPage} from '../../../actions/manage-cohorts/manage-cohorts.actions'
 
 import * as createCohortActions from '../../../actions/create-cohort/create-cohort.actions';

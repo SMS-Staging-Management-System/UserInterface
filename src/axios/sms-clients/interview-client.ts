@@ -1,7 +1,7 @@
 import { INewInterviewData } from "../../model/INewInterviewData";
 import { store } from "../../Store";
 import { smsClient } from ".";
-import { cognitoRoles } from "../../model/cognito-user.model";
+import { cognitoRoles } from "../../model/ICognitoUser";
 
 const interviewContext = '/interview-service/interview';
 

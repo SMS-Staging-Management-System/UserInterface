@@ -1,15 +1,15 @@
 /* tslint:disable */
-import { IAddress } from "../../model/address.model";
-import { IUser } from "../../model/user.model";
+import { IAddress } from "../../model/users/IAddress";
+import { IUser } from "../../model/users/IUser";
 import { userClient } from "../../axios/sms-clients/user-client";
 import { toast } from "react-toastify";
 
-import { IStatus } from "../../model/status.model";
+import { IStatus } from "../../model/users/IStatus";
 
 import { updateCurrentSMSUser } from "../current-sms-user/current-sms-user.actions";
 import { cognitoClient } from "../../axios/sms-clients/cognito-client";
-import { ICognitoUserAddGroup } from "../../model/cognito-user-add-group.model";
-import { cognitoRoles } from "../../model/cognito-user.model";
+import { ICognitoUserAddGroup } from "../../model/ICognitoUserAddGroup";
+import { cognitoRoles } from "../../model/ICognitoUser";
 
 
 export const profileTypes = {

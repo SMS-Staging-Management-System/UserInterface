@@ -1,4 +1,4 @@
-import { IInterviewFormat } from '../../model/Interview.format.model';
+import { IInterviewFormat } from '../../model/IInterviewFormat';
 
 const FORMATS: IInterviewFormat[] = [
     {

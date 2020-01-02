@@ -4,9 +4,9 @@ import { IState,} from '../../../reducers';
 import { ICreateUserState, IAddressState, IManageCohortsState } from '../../../reducers/management'
 import { connect } from 'react-redux';
 import { CreateUserModal } from './create-user-modal.component';
-import { IAddress } from '../../../model/address.model';
-import { IUser } from '../../../model/user.model';
-import { ICohort } from '../../../model/cohort';
+import { IAddress } from '../../../model/users/IAddress';
+import { IUser } from '../../../model/users/IUser';
+import { ICohort } from '../../../model/users/ICohort';
 
 export interface ICreateUserModal {
   toggleModal: () => void,

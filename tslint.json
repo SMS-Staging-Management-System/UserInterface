@@ -1,5 +1,11 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier", "tslint-sonarts"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-sonarts",
+    "tslint-plugin-prettier",
+    "tslint-config-prettier"
+  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -16,6 +22,7 @@
     "no-console": false,
     "jsx-no-bind": false,
     "jsx-boolean-value": false,
-    "member-access": false
+    "member-access": false,
+    "prettier": true
   }
 }

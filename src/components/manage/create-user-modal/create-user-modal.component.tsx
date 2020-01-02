@@ -4,9 +4,9 @@ import {
   Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import { ICreateUserModal } from './create-user-modal.container';
-import { IUser } from '../../../model/user.model';
+import { IUser } from '../../../model/users/IUser';
 import Label from 'reactstrap/lib/Label';
-import { cognitoRoles } from '../../../model/cognito-user.model';
+import { cognitoRoles } from '../../../model/ICognitoUser';
 
 
 const inputNames = {

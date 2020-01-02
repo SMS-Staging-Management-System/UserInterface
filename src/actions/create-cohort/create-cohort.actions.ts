@@ -1,9 +1,9 @@
-import { IAddress } from "../../model/address.model";
+import { IAddress } from "../../model/users/IAddress";
 import { toast } from "react-toastify";
-import { ICohort } from "../../model/cohort";
+import { ICohort } from "../../model/users/ICohort";
 import { cohortClient } from "../../axios/sms-clients/cohort-client";
 import { userClient } from "../../axios/sms-clients/user-client";
-import { ICognitoUser } from "../../model/cognito-user.model";
+import { ICognitoUser } from "../../model/ICognitoUser";
 
 export const createCohortTypes = {  
   TOGGLE: 'TOGGLE_CREATE_COHORT_MODAL',

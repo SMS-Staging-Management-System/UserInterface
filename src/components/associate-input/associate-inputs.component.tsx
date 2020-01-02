@@ -1,7 +1,7 @@
 import React, { Component } from 'react';;
 import { Redirect } from 'react-router-dom'
 import { Question, MultipleChoice, Dropdown } from './choices.component';
-import { IAssociateInput } from '../../model/Associateinput.model';
+import { IAssociateInput } from '../../model/IAssociateInput';
 import * as actions from '../../actions/assoc-input/assoc-input.action';
 import { connect } from 'react-redux';
 import { getFormatNames } from './temp.util';

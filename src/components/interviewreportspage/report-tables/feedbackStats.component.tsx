@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { FeedbackStat } from '../../../model/feedbackstats.model';
+import { IFeedbackStat } from '../../../model/IFeedbackStat';
 import './report-table.scss'
 import ReactPaginate from 'react-paginate';
 import { interviewClient } from '../../../axios/sms-clients/interview-client';
 
 interface IFeedbackStatsTableState {
-  feedback: FeedbackStat[]
+  feedback: IFeedbackStat[]
   totalPages: number
   currentPage: number
   pageSize: number
@@ -60,7 +60,7 @@ export class FeedbackStatsTable extends Component<any, IFeedbackStatsTableState>
               </tr>
             </thead>
             <tbody>
-              {this.state.feedback.map((report: FeedbackStat) => <tr key={report.id}>
+              {this.state.feedback.map((report: IFeedbackStat) => <tr key={report.id}>
                 <td>{report.managerName || '/'}</td>
                 <td>{report.managerEmail}</td>
                 <td>{report.associateName || '/'}</td>

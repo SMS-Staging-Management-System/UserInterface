@@ -1,6 +1,6 @@
 import { smsClient } from ".";
-import { ICohort } from "../../model/cohort";
-import { IUser } from "../../model/user.model";
+import { ICohort } from "../../model/users/ICohort";
+import { IUser } from "../../model/users/IUser";
 
 const cohortContext = '/user-service/cohorts'
 const cohortNameSort = '/user-service/page';
