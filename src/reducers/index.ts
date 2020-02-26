@@ -3,7 +3,6 @@ import { IManagementState, managementState } from './management';
 import { IInterviewState, interviewState } from './interview';
 import { ISurveyState, surveyState } from './survey';
 import { IDashboardState, dashboardState } from './dashboard';
-import {SurveyFuncState} from './survey/SurveyFunc.reducer'
 
 export interface IState {
     managementState: IManagementState,
@@ -17,5 +16,5 @@ export const state = combineReducers<IState>({
     // tslint:disable-next-line: object-literal-sort-keys
     interviewState,
     surveyState,
-    dashboardState,
+    dashboardState
 })

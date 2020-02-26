@@ -9,7 +9,6 @@ import { IState } from '../../reducers';
 import LocationDropdown from './location.dropdown';
 import RoleSelector from './role.selector';
 import SCProfileStatusDropdown from './status.dropdown';
-import { Link } from 'react-router-dom';
 
 
 
@@ -34,7 +33,6 @@ export interface IProfileProps {
     trainingAddresses: IAddress[],
     userStatus: IStatus[],
     userToUpdate?: IUser, // This prop tells the component to look at a user other than the current user
-    // tslint:disable-next-line: bool-param-default
     updateUser: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
 }
 
@@ -88,11 +86,15 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
         }
     }
 
+    
+    
+
     handleInputChange = (event: any) => {
         const user = this.state.updateUser;
         const target = event.target.value;
         const name = event.target.name;
         const address = !user[name];
+
 
         if (address) {
             this.setState({
@@ -250,17 +252,7 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
                             type="email"
                             name={inputNames.EMAIL}
                             value={this.state.updateUser && this.state.updateUser.email} readOnly />
-                            {/* <Button href="management/send-email">Change Password</Button> */}
-
-                            <Link to="/management/send-email">
-                             <button style={{marginTop: "12px"}} type="button">
-                                 Change Password
-                            </button>
-                            </Link>
-                          
                     </Col>
-                           
-                            
                     <Col md={4}>
                         <Label>Training Location</Label>
                         <LocationDropdown
