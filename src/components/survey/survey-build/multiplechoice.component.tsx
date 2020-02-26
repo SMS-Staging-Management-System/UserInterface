@@ -46,7 +46,7 @@ export class MultipleChoice extends React.Component<PropsPlease, ComponentState>
           <tbody>
             <tr>
               <td className="myTr"><label htmlFor="" style={{ marginBottom: 0, textAlign: 'center' }} id="multi" className="form-control" > Multiple Choice </label></td>
-              {this.props.parentFunction && <td><AddOther name="Change Question Type" parentFunction={this.props.parentFunction} index={this.props.index} selfDestruct={this.props.selfDestruct}></AddOther></td>}
+              {/* {this.props.parentFunction && <td><AddOther name="Change Question Type" parentFunction={this.props.parentFunction} index={this.props.index} selfDestruct={this.props.selfDestruct}></AddOther></td>} */}
               {this.props.selfDestruct && <td><DeleteButton selfDestruct={this.props.selfDestruct} index={this.props.index}></DeleteButton></td>}
             </tr>
           </tbody>

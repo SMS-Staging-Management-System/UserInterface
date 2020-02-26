@@ -7,6 +7,7 @@ const cognitoContext = '/cognito'
 //   removeUserFromGroup: cognitoContext + '/users/groups'
 // }
 
+// rather than using HTTP requests, should actually use Amplify/Cognito here
 export const cognitoClient = {
   findUsersByGroup(groupName: string, nextToken: string) {
     return smsClient.get(cognitoContext + `/users/groups/${groupName}${nextToken ? `?nextToken=${encodeURIComponent(nextToken)}` : ''}`);
