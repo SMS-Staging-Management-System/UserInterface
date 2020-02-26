@@ -46,6 +46,11 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
     this.props.loginRequest(username, password, this.props.history);
   }
 
+  clearForm = ()=>{
+    
+    
+  }
+
   render() {
     const username = this.props.login.username;
     const password = this.props.login.password;
@@ -69,9 +74,10 @@ export class LoginComponent extends React.Component<ILoginProps, any> {
               </Link>
             </div>
             {this.props.login.incorrectUserPass &&
-              <h6 id="invalidCredHead">Invalid Credentials</h6>
+              <h6 id="invalidCredHead" >Invalid Credentials</h6> 
+              
             }
-
+            
           </>
       </div>
     );
