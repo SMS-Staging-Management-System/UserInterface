@@ -187,10 +187,38 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
     this.setState({ displayChoice: true });
   }
 
+  addQuestionArray = (todos) => {
+    
+    let {completedTasks, displaySurvey} = this.state;
+
+    const dummyQuestion = {
+      id: 0,
+      question: {
+        questionId: 0,
+        question: '',
+        typeId: 0,
+        answers: ''
+      },
+      survey: displaySurvey
+    }
+
+    this.setState({
+      ...this.state,
+      completedTasks: [...completedTasks, todos],
+      displaySurvey: {
+        ...this.state.displaySurvey,
+        ...displaySurvey,
+        questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
+      },
+      displayChoice: false
+    });
+  }
+
+
   // adds specific question of a specific type to the the render array
-  toAddFunction = (type: string, item?: any) => {
+  toAddFunction = (type: string, index?: any) => {
     {
-      let { completedTasks, todos, displaySurvey } = this.state;
+      let { todos, displaySurvey } = this.state;
       if (displaySurvey.surveyId === undefined) {
         displaySurvey = {
           closingDate: new Date(),
@@ -216,94 +244,31 @@ export class SurveyBuild extends React.Component<IComponentProps, IComponentStat
       switch (type) {
         case "True/False":
           dummyQuestion.question.typeId = todos[0].questionID
-          this.setState({
-            ...this.state,
-            completedTasks: [...completedTasks, todos[0]],
-            displaySurvey: {
-              ...this.state.displaySurvey,
-              ...displaySurvey,
-              questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            },
-            displayChoice: false
-          });
+          this.addQuestionArray(todos[0]);
           break;
         case "Multiple Choice":
           dummyQuestion.question.typeId = todos[1].questionID
-          this.setState({
-            ...this.state,
-            completedTasks: [...completedTasks, todos[1]],
-            displaySurvey: {
-              ...this.state.displaySurvey,
-              ...displaySurvey,
-              questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            },
-            displayChoice: false
-          });
+          this.addQuestionArray(todos[1]);
           break;
         case "Checkbox Multiple Answer":
           dummyQuestion.question.typeId = todos[2].questionID
-          this.setState({
-            ...this.state,
-            completedTasks: [...completedTasks, todos[2]],
-            displaySurvey: {
-              ...this.state.displaySurvey,
-              ...displaySurvey,
-              questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            },
-            displayChoice: false
-          });
+          this.addQuestionArray(todos[2]);
           break;
         case "Rating":
           dummyQuestion.question.typeId = todos[3].questionID
-          this.setState({
-            ...this.state,
-            completedTasks: [...completedTasks, todos[3]],
-            displaySurvey: {
-              ...this.state.displaySurvey,
-              ...displaySurvey,
-              questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            },
-            displayChoice: false
-          });
+          this.addQuestionArray(todos[3]);
           break;
         case "Feedback":
           dummyQuestion.question.typeId = todos[4].questionID
-          this.setState({
-            ...this.state,
-            completedTasks: [...completedTasks, todos[4]],
-            displaySurvey: {
-              ...this.state.displaySurvey,
-              ...displaySurvey,
-              questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            },
-            displayChoice: false
-          });
+          this.addQuestionArray(todos[4]);
           break;
         case "Yes/No":
           dummyQuestion.question.typeId = todos[5].questionID
-          this.setState({
-            ...this.state,
-            completedTasks: [...completedTasks, todos[5]],
-            displaySurvey: {
-              ...this.state.displaySurvey,
-              ...displaySurvey,
-              questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            },
-            displayChoice: false
-          });
+          this.addQuestionArray(todos[5]);
           break;
         case "Strongly Agree/Disagree":
           dummyQuestion.question.typeId = todos[6].questionID
-          this.setState({
-            ...this.state,
-            completedTasks: [...completedTasks, todos[6]],
-            displaySurvey: {
-              ...this.state.displaySurvey,
-              ...displaySurvey,
-              questionJunctions: [...this.state.displaySurvey.questionJunctions, dummyQuestion]
-            },
-            displayChoice: false
-          });
+          this.addQuestionArray(todos[6]);
           break;
         default:
           console.log("No matching option for type: " + type);
