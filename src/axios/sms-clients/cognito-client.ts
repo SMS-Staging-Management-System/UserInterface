@@ -1,5 +1,6 @@
 import { smsClient } from ".";
 import { ICognitoUserAddGroup } from "../../model/ICognitoUserAddGroup";
+import { Auth } from 'aws-amplify';
 
 const cognitoContext = '/cognito'
 // const urls = {
@@ -23,6 +24,14 @@ export const cognitoClient = {
     return smsClient.get(cognitoContext + '/auth');
   },
   resetPassword(email: string) {
+
     return smsClient.delete(cognitoContext + `/users/${email}/password`);
+
+    // Auth.forgotPassword(email)
+    // .then((response) => {
+    //   console.log(response);
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
   }
 }
