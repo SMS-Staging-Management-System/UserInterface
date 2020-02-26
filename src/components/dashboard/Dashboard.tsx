@@ -1,6 +1,6 @@
 /** @prettier */
 import * as React from 'react';
-import { Switch } from 'react-router';
+import { Switch, Redirect } from 'react-router';
 import ProtectedRoute from '../protected-route.component/protected-route.component';
 import ByStaging from './modules/byStaging/ByStaging';
 import Dropped from './modules/dropped/Dropped';
@@ -26,7 +26,7 @@ class Dashboard extends React.Component<any, any> {
           role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN,
       )
     ) {
-      if (this.props.match.path === '/') {
+      if ((this.props.match.path === '/') && (this.props.auth.currentUser.roles.some)) {
         this.props.history.push(`dashboard/home`);
       }
       if (
@@ -49,6 +49,7 @@ class Dashboard extends React.Component<any, any> {
   render() {
     if (this.props.auth.currentUser.roles == null) {
       return <>user not set</>;
+      
     }
     let { path } = this.props.match;
     return (
