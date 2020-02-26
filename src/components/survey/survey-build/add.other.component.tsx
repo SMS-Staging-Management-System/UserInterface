@@ -29,37 +29,13 @@ export class AddOther extends React.Component<AddProps, any> {
       <div>
         <button type="button" className="btn rev-btn dropdown-toggle typeSelect" data-toggle="dropdown" >{this.props.name}</button>
         <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-          <Button type="button" 
-            onClick={this.selectType} 
-            value="True/False" className=" dropdown-item nav-dropdown"
-          >True/False</Button>
-          <Button 
-            type="button" onClick={this.selectType} 
-            value="Multiple Choice" 
-            className=" dropdown-item nav-dropdown"
-          >Multiple Choice</Button>
-          <Button 
-            type="button" onClick={this.selectType} 
-            value="Checkbox Multiple Answer" 
-            className=" dropdown-item nav-dropdown"
-          >Checkbox Multiple Answers</Button>
-          <Button 
-            type="button" 
-            onClick={this.selectType} 
-            value="Rating" 
-            className=" dropdown-item nav-dropdown">Rating</Button>
-          <Button type="button" 
-          onClick={this.selectType} 
-          value="Feedback" className=" 
-          dropdown-item nav-dropdown">Feedback</Button>
-          <Button type="button" 
-          onClick={this.selectType} 
-          value="Yes/No" className=
-          " dropdown-item nav-dropdown">Yes/No</Button>
-          <Button type="button" 
-          onClick={this.selectType} 
-          value="Strongly Agree/Disagree" 
-          className=" dropdown-item nav-dropdown">Strongly Agree/Disagree</Button>
+          <Button type="button" onClick={this.selectType} value="True/False" className=" dropdown-item nav-dropdown">True/False</Button>
+          <Button type="button" onClick={this.selectType} value="Multiple Choice" className=" dropdown-item nav-dropdown">Multiple Choice</Button>
+          <Button type="button" onClick={this.selectType} value="Checkbox Multiple Answer" className=" dropdown-item nav-dropdown">Checkbox Multiple Answers</Button>
+          <Button type="button" onClick={this.selectType} value="Rating" className=" dropdown-item nav-dropdown">Rating</Button>
+          <Button type="button" onClick={this.selectType} value="Feedback" className=" dropdown-item nav-dropdown">Feedback</Button>
+          <Button type="button" onClick={this.selectType} value="Yes/No" className=" dropdown-item nav-dropdown">Yes/No</Button>
+          <Button type="button" onClick={this.selectType} value="Strongly Agree/Disagree" className=" dropdown-item nav-dropdown">Strongly Agree/Disagree</Button>
         </div>
       </div>
 
