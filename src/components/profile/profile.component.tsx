@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 
 
 
+
 export const inputNames = {
     CITY: 'city',
     COUNTRY: 'country',
@@ -34,7 +35,6 @@ export interface IProfileProps {
     trainingAddresses: IAddress[],
     userStatus: IStatus[],
     userToUpdate?: IUser, // This prop tells the component to look at a user other than the current user
-    // tslint:disable-next-line: bool-param-default
     updateUser: (userToUpdate: IUser, prevUser: IUser, isCurrentUser?: boolean) => any
 }
 
@@ -88,11 +88,15 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
         }
     }
 
+    
+    
+
     handleInputChange = (event: any) => {
         const user = this.state.updateUser;
         const target = event.target.value;
         const name = event.target.name;
         const address = !user[name];
+
 
         if (address) {
             this.setState({

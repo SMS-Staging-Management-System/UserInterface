@@ -1,12 +1,20 @@
 import { smsClient } from ".";
 import { IUser } from "../../model/users/IUser";
-
+import { Auth } from "aws-amplify";
 
 const usersContext = '/user-service/users'
 
 export const userClient = {
     saveUser(newUser: IUser) {
         return smsClient.post(usersContext, newUser);
+
+        // Auth.signUp(...newUser)
+        // .then((response) => {
+        //     return response;
+        // }).catch((error) => {
+        //     return error;
+        // });
+
     },
     findAllByCohortId: (cohortId: number) => {
         return smsClient.get(`${usersContext}/cohorts/${cohortId}`)
