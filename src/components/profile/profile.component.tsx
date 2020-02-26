@@ -9,6 +9,8 @@ import { IState } from '../../reducers';
 import LocationDropdown from './location.dropdown';
 import RoleSelector from './role.selector';
 import SCProfileStatusDropdown from './status.dropdown';
+import { Link } from 'react-router-dom';
+
 
 
 export const inputNames = {
@@ -248,7 +250,17 @@ export class Profile extends React.Component<IProfileProps, IProfileState> {
                             type="email"
                             name={inputNames.EMAIL}
                             value={this.state.updateUser && this.state.updateUser.email} readOnly />
+                            {/* <Button href="management/send-email">Change Password</Button> */}
+
+                            <Link to="/management/send-email">
+                             <button style={{marginTop: "12px"}} type="button">
+                                 Change Password
+                            </button>
+                            </Link>
+                          
                     </Col>
+                           
+                            
                     <Col md={4}>
                         <Label>Training Location</Label>
                         <LocationDropdown
