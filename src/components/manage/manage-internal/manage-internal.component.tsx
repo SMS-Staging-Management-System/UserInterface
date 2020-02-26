@@ -47,6 +47,8 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
         };
     }
 
+
+
     componentDidMount() {
         //If component is loading for the first time, load all users
         if (this.props.componentLoaded === false) {
@@ -220,9 +222,18 @@ export class ManageInternalComponenet extends React.Component<IManageInternalCom
                             value={this.props.manageUsers.emailSearch}
                         />
                     </div>
+                    
                     <Button color="secondary" onClick={() => this.updateDropdown(this.props.manageUsers.option, 0)}>
                         Search
                     </Button>
+                    <div>
+                    <Button 
+
+                    id = "internal-create-user-btn"
+                    className = "responsive-modal-row-item rev-btn" onClick={this.props.toggleCreateUserModal}>
+                        Create User
+                    </Button>
+                    </div>
                 </div>
 
 
