@@ -46,10 +46,6 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
                 surveys: myAssignedSurveys,
                 surveysLoaded: true
             })
-        } else {
-            this.setState({
-                redirectTo: `/management/login`
-            })
         }
     }
 
@@ -95,7 +91,7 @@ class AssignedSurveysComponent extends Component<IComponentProps, IComponentStat
                         </tbody>
                     </Table>
                 ) : (
-                        <Loader/>
+                        <Loader />
                     )}
             </>
         );

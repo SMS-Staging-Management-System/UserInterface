@@ -1,1156 +1,1112 @@
 // variables can be declared and later reused
-$revature-orange-light: #f78215;
-$revature-orange: #f76014;
-$drew-orange: #f78215;
+$revature-orange-light: #f3a55d;
+$revature-orange: #f26925;
+$drew-orange: #f3a55d;
 $rounded-amount: 0.5em;
+
 // Small tablets and large smartphones (landscape view)
 $screen-sm-min: 576px;
+
 // Small tablets (portrait view)
 $screen-md-min: 768px;
+
 // Tablets and small desktops
 $screen-lg-min: 992px;
+
 // Large tablets and desktops
 $screen-xl-min: 1200px;
+
 // mixins are reusable styles that can be included in other places
 @mixin flex-col {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin rounded-top {
-    border-top-left-radius: $rounded-amount;
-    border-top-right-radius: $rounded-amount;
+  border-top-left-radius: $rounded-amount;
+  border-top-right-radius: $rounded-amount;
 }
 
-
 /* @include transition(all,2s,ease-out); */
-
 @mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
-    -webkit-transition: $what $time $how;
-    -moz-transition: $what $time $how;
-    -ms-transition: $what $time $how;
-    -o-transition: $what $time $how;
-    transition: $what $time $how;
+  -webkit-transition: $what $time $how;
+  -moz-transition: $what $time $how;
+  -ms-transition: $what $time $how;
+  -o-transition: $what $time $how;
+  transition: $what $time $how;
 }
 
 // Small devices
 @mixin sm {
-    @media (min-width: #{$screen-sm-min}) {
-        .assignToCohorts {
-            width: 200px;
-        }
-        @content;
-    }
+  @media (min-width: #{$screen-sm-min}) {
+    .assignToCohorts {
+      width: 200px;
+    } 
+    @content;
+  }
 }
 
 // Medium devices
 @mixin md {
-    @media (min-width: #{$screen-md-min}) {
-        .assignToCohorts {
-            width: 200px;
-        }
-        @content;
-    }
+  @media (min-width: #{$screen-md-min}) {
+    .assignToCohorts {
+      width: 200px;
+    } 
+    @content;
+  }
 }
 
 // Large devices
 @mixin lg {
-    @media (min-width: #{$screen-lg-min}) {
-        @content;
-    }
+  @media (min-width: #{$screen-lg-min}) {
+    @content;
+  }
 }
 
 // Extra large devices
 @mixin xl {
-    @media (min-width: #{$screen-xl-min}) {
-        @content;
-    }
+  @media (min-width: #{$screen-xl-min}) {
+    @content;
+  }
 }
-
 
 /*******************************************
   Positioning
 *******************************************/
-
 .align-start {
-    align-self: flex-start;
+  align-self: flex-start;
 }
-
-.horizontal-centering {
+.horizontal-centering{
     justify-content: center;
 }
-
-.vertical-centering {
+.vertical-centering{
     align-items: center;
 }
-
-.text-vertical-centering {
+.text-vertical-centering{
     text-align: center;
 }
-
-
 /********************************************
   Shared
 ********************************************/
-
 input:invalid:not(:valid) {
-    border-color: salmon;
-    box-shadow: 0 0 0.2rem 0.1rem salmon;
+  border-color: salmon;
+  box-shadow: 0 0 0.2rem 0.1rem salmon;
 }
-
 .cursor-hover:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .no-link:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .flex-package {
-    display: flex;
-    flex-shrink: 0;
+  display: flex;
+  flex-shrink: 0;
 }
 
 .rev-btn:not(.dropdown),
-.rev-btn>button.dropdown-toggle {
+.rev-btn > button.dropdown-toggle {
+  background-color: $revature-orange-light;
+  border-color: $revature-orange;
+  color: black !important;
+  &:hover {
+    background-color: $revature-orange;
+  }
+  &:active {
     background-color: $revature-orange-light;
-    border-color: $revature-orange;
-    color: black !important;
-    &:hover {
-        background-color: $revature-orange;
-    }
-    &:active {
-        background-color: $revature-orange-light;
-        color: #565d61;
-        box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
-    }
-    &:active,
-    &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
-    }
+    color: #565d61;
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
+  }
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
+  }
 }
 
 .rev-btn-2 {
-    background-color: white;
-    border: 1px solid #ced4da;
-    color: #495057;
-    &:active,
-    &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
-    }
+  background-color: white;
+  border: 1px solid #ced4da;
+  color: #495057;
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5) !important;
+  }
 }
 
-li>a.rev-btn-tab {
+li > a.rev-btn-tab {
+  background-color: white;
+  border-color: $revature-orange-light;
+  color: black;
+  &:hover {
     background-color: white;
     border-color: $revature-orange-light;
+    color: $revature-orange-light;
+  }
+  &:active {
     color: black;
-    &:hover {
-        background-color: white;
-        border-color: $revature-orange-light;
-        color: $revature-orange-light;
-    }
-    &:active {
-        color: black;
-        box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
-        border-color: $revature-orange-light;
-    }
-    &:active,
-    &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
-    }
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
+    border-color: $revature-orange-light;
+  }
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
+  }
 }
-
 .rev-table-row:hover {
-    -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-    -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-    box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-    cursor: pointer;
+  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  cursor: pointer;
 }
 
 .rev-table-row-active {
-    -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-    -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
-    box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  -webkit-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  -moz-box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
+  box-shadow: inset 0px 0px 15px 5px $revature-orange-light;
 }
 
 .rev-background-color {
-    background-color: $revature-orange-light;
+  background-color: $revature-orange-light;
 }
 
 .rev-color {
-    color: $revature-orange;
+  color: $revature-orange;
 }
 
 .responsive-modal-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @include md {
-        flex-direction: row;
-    }
-    .responsive-modal-row-item {
-        margin-right: 0.3em;
-        margin-bottom: 0.7em;
-    }
-    textarea {
-        width: 100%;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include md {
+    flex-direction: row;
+  }
+
+  .responsive-modal-row-item {
+    margin-right: 0.3em;
+    margin-bottom: 0.7em;
+  }
+
+  textarea {
+    width: 100%;
+  }
 }
 
 .dropdown-item {
-    &:active {
-        background-color: $revature-orange-light;
-    }
-    &:focus {
-        outline-color: $revature-orange;
-    }
-    &:hover {
-        cursor: pointer;
-        background-color: $revature-orange-light;
-    }
+  &:active {
+    background-color: $revature-orange-light;
+  }
+  &:focus {
+    outline-color: $revature-orange;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: $revature-orange-light;
+  }
 }
 
 .form-control {
-    &:focus {
-        border-color: $revature-orange-light;
-        box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;
-    }
+  &:focus {
+    border-color: $revature-orange-light;
+    box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;
+  }
 }
 
 .modal-dialog {
-    width: 100%;
-    max-width: none;
-    margin: 0 auto;
-    @include sm {
-        max-width: 90%;
-        margin: 1em auto;
-    }
-    @include md {
-        max-width: 70%;
-        margin: 2em auto;
-    }
-    @include lg {
-        max-width: 900px;
-    }
-}
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
 
+  @include sm {
+    max-width: 90%;
+    margin: 1em auto;
+  }
+
+  @include md {
+    max-width: 70%;
+    margin: 2em auto;
+  }
+
+  @include lg {
+    max-width: 900px;
+  }
+}
 
 /****************************************
   App
 ****************************************/
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
 }
 
 .App-header {
-    background-color: #222;
-    height: 150px;
-    padding: 20px;
-    color: white;
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
 }
 
 .App-title {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .App-intro {
-    font-size: large;
+  font-size: large;
 }
 
 @keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 #main-content-container {
-    @include flex-col;
-    width: 100%;
-    align-items: center;
-    margin: auto;
-    @include md {
-        max-width: 80%;
-    }
+  @include flex-col;
+  width: 100%;
+  align-items: center;
+  margin: auto;
+  @include md {
+    max-width: 80%;
+  }
 }
 
 .loader {
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-    padding-top: 100px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 100px;
 }
-
 
 /*****************************
   NAV
 *****************************/
 
 .nav-dropdown {
-    background-color: unset;
-    border: unset;
+  background-color: unset;
+  border: unset;
+  color: black;
+  text-decoration: none;
+  &:hover,
+  &:focus {
     color: black;
     text-decoration: none;
-    &:hover,
-    &:focus {
-        color: black;
-        text-decoration: none;
-    }
-    &:hover {
-        background-color: unset;
-        border: unset;
-        color: $revature-orange;
-        cursor: pointer;
-    }
-    &:active {
-        background-color: unset !important;
-        border: unset !important;
-        color: black !important;
-    }
-    &:active,
-    &:focus {
-        box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
-    }
+  }
+  &:hover {
+    background-color: unset;
+    border: unset;
+    color: $revature-orange;
+    cursor: pointer;
+  }
+  &:active {
+    background-color: unset !important;
+    border: unset !important;
+    color: black !important;
+  }
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba($revature-orange-light, 0.5);
+  }
 }
 
 .rev-logo {
-    width: auto;
-    height: 2em;
-    margin-right: 2em;
+  width: auto;
+  height: 2em;
+  margin-right: 2em;
 }
 
 .margin-nav {
-    margin-right: 2em;
+  margin-right: 2em;
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
 .navbar-light .navbar-nav .nav-link:hover {
-    color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .navbar-expand-md .navbar-nav .nav-link {
-    padding-right: 0.75rem !important;
-    padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+  padding-left: 0.75rem !important;
 }
 
 .bg-light {
-    background-color: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 .app-nav {
-    border-bottom: 1px solid #ffffff !important;
-    margin-bottom: 20px;
-    -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
-    -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
-    box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
-    background: -webkit-linear-gradient(right, #f8d6b6, #acc5c9);
-    background: -webkit-linear-gradient(right, #e7d6c7, #8bdde7);
-    background: -moz-linear-gradient(right, #e6c8aa, #eaf1f1);
-    background: -o-linear-gradient(right, #f3af74, #e1e9eb);
-    background: linear-gradient(to left, #f38117, #e1e7e7);
+  border-bottom: 1px solid #ffffff !important;
+  margin-bottom: 20px;
+  -webkit-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
+  -moz-box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
+  box-shadow: 1px -12px 28px -1px rgba(0, 0, 0, 0.87);
+  background: -webkit-linear-gradient(right, #f8d6b6, #acc5c9);
+  background: -webkit-linear-gradient(right, #e7d6c7, #8bdde7);
+  background: -moz-linear-gradient(right, #e2d0be, #eaf1f1);
+  background: -o-linear-gradient(right, #eec5a0, #e1e9eb);
+  background: linear-gradient(to left, #f3a55d, #e1e7e7);
 }
 
 #examples-dropdown {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .blue {
-    color: blue;
+  color: blue;
 }
 
 .red {
-    color: red;
+  color: red;
 }
-
 
 /************************************
           login.component.tsx
 ************************************/
-
 #login-pass {
-    margin: 0.3em;
+  margin: 0.3em;
 }
 
 #login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (min-width: 1200px) {
-    .top-lev-div {
-        margin-top: 50px;
-        zoom: 1.5;
-        -moz-transform: scale(1.5);
-    }
+  .top-lev-div {
+    margin-top: 50px;
+    zoom: 1.5;
+    -moz-transform: scale(1.5);
+  }
 }
 
 @media (max-width: 1199.99px) {
-    .top-lev-div {
-        margin-top: 50px;
-        zoom: 1;
-        -moz-transform: scale(1);
-    }
+  .top-lev-div {
+    margin-top: 50px;
+    zoom: 1;
+    -moz-transform: scale(1);
+  }
 }
 
 .frontDiv {
-    z-index: 3;
-    position: absolute;
+  z-index: 3;
+  position: absolute;
 }
 
 .behindDiv {
-    z-index: 2;
+  z-index: 2;
 }
 
 .box input {
-    margin-left: 0;
-    -webkit-transition: 1s;
-    transition: 1s;
+  margin-left: 0;
+  -webkit-transition: 1s;
+  transition: 1s;
 }
 
 .txt-bx {
-    width: 250px;
+  width: 250px;
 }
 
 .rememberDiv {
-    display: flex;
-    justify-content: center;
-    margin-top: 0.5em;
-    border-bottom: solid rgb(245, 139, 0) 4px;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+  border-bottom: solid rgb(245, 139, 0) 4px;
 }
 
 .resetDiv {
-    margin: auto;
-    display: flex;
-    justify-content: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .rememberSpan {
-    display: inline;
-    float: none;
+  display: inline;
+  float: none;
 }
 
 #rememberCheck {
-    display: inline;
+  display: inline;
 }
 
 #titleHead {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    padding-bottom: 10px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 
 #forgot-pass-btn {
-    color: blue;
-    margin-top: 0.5em;
-    border: none;
-    text-align: center;
-    background-color: transparent;
-    -webkit-transition: 1s;
-    transition: 1s;
-    &:hover {
-        text-decoration: underline;
-    }
+  color: blue;
+  margin-top: 0.5em;
+  border: none;
+  text-align: center;
+  background-color: transparent;
+  -webkit-transition: 1s;
+  transition: 1s;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 #invalidCredHead {
-    color: red;
-    text-align: center;
-    padding-top: 10px;
+  color: red;
+  text-align: center;
+  padding-top: 10px;
 }
-
 
 /***********************************
   Manage
 ***********************************/
 
 #manage-users-container {
-    width: 100%;
+  width: 100%;
 }
-
 .manage-users-nav {
-    padding-left: 0;
-    padding-bottom: 0;
-    .nav-tabs {
-        border: none;
-    }
+  padding-left: 0;
+  padding-bottom: 0;
+  .nav-tabs {
+    border: none;
+  }
 }
 
 .manage-user-nav-item {
-    color: gray;
-    &:hover {
-        color: $revature-orange;
-    }
+  color: gray;
+  &:hover {
+    color: $revature-orange;
+  }
 }
 
 .nav-tabs .manage-user-nav-item-active {
-    border: 2px solid;
-    border-color: #d6dce2;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-    border-bottom: none;
+  border: 2px solid;
+  border-color: #d6dce2;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  border-bottom: none;
+  color: $revature-orange-light;
+  &:hover {
     color: $revature-orange-light;
-    &:hover {
-        color: $revature-orange-light;
-    }
-    &:focus {
-        border-color: #d6dce2;
-    }
+  }
+  &:focus {
+    border-color: #d6dce2;
+  }
 }
 
 #create-user-modal-footer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 #manage-cohorts-nav {
-    display: flex;
-    padding: 0.25em 0.75rem;
-    align-items: center;
-    justify-content: space-between;
-    @include rounded-top();
+  display: flex;
+  padding: 0.25em 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  @include rounded-top();
 }
 
 #manage-cohorts-view-selection-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 #manage-users-table {
-    margin-top: 1px;
+  margin-top: 1px;
+  @include rounded-top();
+  thead {
+    @include rounded-top();
+    tr {
+      @include rounded-top();
+      th {
+        border: none;
+      }
+      :first-child {
+        border-top-left-radius: $rounded-amount;
+        border: none;
+      }
+      :last-child {
+        border-top-right-radius: $rounded-amount;
+        border: none;
+      }
+    }
+  }
 }
 
 .create-user-buttons {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .create-user-margin {
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 #create-user-modal {
-    @include md() {
-        max-width: 580px;
-    }
+  @include md() {
+    max-width: 580px;
+  }
 }
 
 .manage-user-nav {
     display: flex;
     padding: 0.25em 0.75rem;
     align-items: center;
+    justify-content: initial;
     @include rounded-top();
-}
-
+  }
+  
 .no-backround-image {
-    background-image: ''
+    background-image:''
 }
-
-
+  
+  
 /*****************
 Survey Component
 *****************/
 
 .inputWrapper {
-    display: flex;
-    justify-content: flex-start;
-}
+  display:flex;
+  justify-content: flex-start;
 
-.tableUsers {
-    text-align: center;
-    margin-top: 4em;
+}
+.tableUsers{
+  text-align: center;
+  margin-top: 4em;
 }
 
 .buttonDiv {
-    float: right;
+  float: right;
 }
 
 .assignButtonDiv {
-    width: 100%;
+  width: 100%;
 }
 
 .assignSurveyBtn {
-    color: black;
-    border-radius: 10px;
-    background-color: $revature-orange-light;
-    font-weight: bold;
-    height: 40px;
-    width: 85%;
-    border: none;
-    // float: left;
+  color: black;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 40px;
+  width: 85%;
+  border: none;
+  // float: left;
 }
 
 #dropdownMenu2 {
-    float: right;
-    // margin-top: 40px;
+  float: right;
+  // margin-top: 40px;
 }
 
 #allSurveysDropdownMenu {
-    float: right;
-    margin-top: 40px;
+  float: right;
+  margin-top: 40px;
 }
 
 .assignSurveyBtn:hover,
 .assignSurveyBtn:active {
-    background-color: $revature-orange-light;
-    color: #565d61;
+  background-color: $revature-orange-light;
+  color: #565d61;
 }
 
 .assignSurveyModalHeader {
-    text-align: center;
-    background-color: $revature-orange-light;
-    font-weight: bold;
-    height: 100%;
-    width: 100%;
+  text-align: center;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 100%;
+  width: 100%;
 }
 
 .assignToCohorts {
-    background-color: none;
-    border-color: none;
-    width: 20%;
-    float: left;
-    margin: 2.5em 0 -.5em 0;
+  background-color: none;
+  border-color: none;
+  width: 20%;
+  float: left;
+  margin: 2.5em 0 -.5em 0;
 }
 
 .assignToCohorts:hover {
-    color: white !important;
+  color: white !important;
 }
 
 .modal-content {
-    min-height: 300px;
+  min-height: 300px;
 }
-
 
 /*****************
 User Dropdown
 *****************/
 
 .userDropdown {
-    // background-color: $revature-orange-light;
-    float: right;
-    width: 100%;
+  // background-color: $revature-orange-light;
+  float: right;
+  width: 100%;
 }
 
 .userDropdownBtn {
-    color: black;
-    border-radius: 10px;
-    background-color: $revature-orange-light;
-    height: 40px;
-    width: 100%;
-    border: none;
+  color: black;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  height: 40px;
+  width: 100%;
+  border: none;
 }
 
 .userDropdownBtn2 {
-    color: black;
-    border-radius: 10px;
-    background-color: $revature-orange-light;
-    height: 40px;
-    width: 14%;
-    border: none;
+  color: black;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  height: 40px;
+  width: 14%;
+  border: none;
 }
 
 .userDropdownBtn:hover,
 .userDropdownBtn:active {
-    background-color: $revature-orange-light;
-    color: #565d61;
+  background-color: $revature-orange-light;
+  color: #565d61;
 }
 
 .userDropInput {
-    margin-left: 10px;
-    margin-right: 10px;
-    // width: 1em;
-    // height: 1em;  
+  margin-left: 10px;
+  margin-right: 10px;
+  // width: 1em;
+  // height: 1em;  
 }
 
 .sortedByText {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 
 #userDropdownWidth {
-    width: 335px;
+  width: 335px;
 }
 
 #bookdropdown {
-    width: 30%;
+  width: 30%;
 }
-
-
 /*****************
 Drag and Drop
 *****************/
-
 .todos {
-    float: top;
-    background: #f3a55d;
-    height: auto;
-    width: 300px;
-    margin-top: 3em;
+  float: top;
+  background: #f3a55d;
+  height: auto;
+  width: 300px;
+  margin-top: 3em;
 }
-
 .test {
-    //margin-right: 100%;
-    float: left;
+  //margin-right: 100%;
+  float: left;
 }
-
 .questionbutton {
-    display: inline-block;
+  display: inline-block;
 }
-
 .done {
-    background: #e9ecef;
-    height: auto;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    border-style: dashed;
-    border-color: grey;
-    width: auto;
-    margin: 10px;
+  background: #e9ecef;
+  height: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-style: dashed;
+  border-color: grey;
+  width: auto;
+  margin: 10px;
 }
-
 #jumbotronSurveyBuild {
-    height: auto;
-    margin-top: 3em;
-    border: 3px solid grey;
-    letter-spacing: 0.2pc;
-    font-weight: bold;
-    background-color: #eee;
+  height: auto;
+  margin-top: 3em;
+  border: 3px solid grey;
+  letter-spacing: 0.2pc;
+  font-weight: bold;
+  background-color: #eee;
 }
-
 .survey-build-jumbotron {
-    margin: 1em;
+  margin: 1em;
 }
-
 #multi {
-    background-color: $revature-orange;
-    color: black;
-    letter-spacing: 0.1pc;
-    display: inline-block;
-    font-size: 14.9px;
+  background-color: $revature-orange;
+  color: black;
+  letter-spacing: 0.1pc;
+  display: inline-block;
+  font-size: 14.9px;
 }
-
 #yn {
-    background-color: $revature-orange;
-    color: black;
-    letter-spacing: 0.1pc;
-    font-size: 14.9px;
+  background-color: $revature-orange;
+  color: black;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
-
 #agree {
-    background-color: $revature-orange;
-    color: black;
-    letter-spacing: 0.1pc;
-    font-size: 14.9px;
+  background-color: $revature-orange;
+  color: black;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
-
 #rating {
-    background-color: $revature-orange;
-    color: black;
-    letter-spacing: 0.1pc;
-    font-size: 14.9px;
+  background-color: $revature-orange;
+  color: black;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
-
 #feedback {
     background-color: $revature-orange;
     color: black;
-    letter-spacing: 0.1pc;
-    font-size: 14.9px;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
-
 #checkbox {
     background-color: $revature-orange;
     color: black;
-    letter-spacing: 0.1pc;
-    font-size: 14.9px;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
-
 #tf {
     background-color: $revature-orange;
     color: black;
-    letter-spacing: 0.1pc;
-    font-size: 14.9px;
+  letter-spacing: 0.1pc;
+  font-size: 14.9px;
 }
-
-.typeSelect {
+.typeSelect{
     margin: 0.5em;
 }
-
-.questionTableRow {
+.questionTableRow{
     width: 100%;
-}
+}	
+.myTr{	
+    width: 100%;	
+  }	
+  
+  .trashCan{
+    align-content: right;	
+    width: 50px;	
+  }
 
-.myTr {
-    width: 100%;
-}
-
-.trashCan {
-    align-content: right;
-    width: 50px;
-}
-
-.trashCan:hover {
-    border-color: $revature-orange;
-    border-style: solid;
+  .trashCan:hover{	
+    border-color: $revature-orange;	
+    border-style: solid;	
     border-width: thick;
     cursor: pointer;
-}
 
+  }
 // .labelTitle{
 //   font-family: Helvetica;
 //   font-weight: bold;
 //   text-shadow: 0 16px 16px black;
 // }
 .surveyCreateBtn {
-    border-radius: 10px;
-    float: right;
-    background: rgb(44, 90, 117);
-    color: white;
-    width: 150px;
-    height: 40px;
-    font-weight: bold;
+  border-radius: 10px;
+  float: right;
+  background: rgb(44, 90, 117);
+  color: white;
+  width: 150px;
+  height: 40px;
+  font-weight: bold;
 }
-
 .surveyCreateBtn:hover,
 .surveyCreateBtn:active {
-    background: black;
-    color: white;
+  background: black;
+  color: white;
 }
 
-.form-control2 {
-    &:focus {
-        border-color: $revature-orange-light;
-        box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;
-    }
-}
-
+.form-control2 {	
+    &:focus {	
+      border-color: $revature-orange-light;	
+      box-shadow: 0 0 0.2rem 0.1rem $revature-orange-light;	
+    }	
+  }
 
 /***************
 TEMPLATE MODAL
 ***************/
-
 .buttonCreate {
-    border-radius: 10px;
-    background-color: $revature-orange-light;
-    font-weight: bold;
-    height: 40px;
-    border: none;
-    color: black;
-    width: 50%;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 40px;
+  border: none;
+  color: black;
+  width: 50%;
 }
-
 .buttonBack {
-    border-radius: 10px;
-    background-color: $revature-orange-light;
-    font-weight: bold;
-    height: 40px;
-    border: none;
-    color: black;
-    width: 50%;
+  border-radius: 10px;
+  background-color: $revature-orange-light;
+  font-weight: bold;
+  height: 40px;
+  border: none;
+  color: black;
+  width: 50%;
 }
-
 .buttonBack:hover,
 .buttonBack:active {
-    background-color: $revature-orange-light;
-    color: #565d61;
-    border: 1px solid black;
+  background-color: $revature-orange-light;
+  color: #565d61;
+  border: 1px solid black;
 }
-
 .buttonCreate:hover,
 .buttonCreate:active {
-    background-color: $revature-orange-light;
-    color: #565d61;
-    border: 1px solid black;
+  background-color: $revature-orange-light;
+  color: #565d61;
+  border: 1px solid black;
 }
-
 .createSurveyButton {
-    background-color: $revature-orange-light;
-    color: black;
-    border: 1px solid black;
-    width: 100%;
-    border-radius: 10px;
-    font-weight: bold;
-    height: 40px;
+  background-color: $revature-orange-light;
+  color: black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
 }
-
 .createSurveyButton:hover,
 .createSurveyButton:active {
-    background-color: $revature-orange-light;
-    color: #565d61;
-    border: 1px solid black;
+  background-color: $revature-orange-light;
+  color: #565d61;
+  border: 1px solid black;
 }
-
 .submitSurveyButton {
-    background-color: $revature-orange-light;
-    color: black;
-    border: 1px solid black;
-    width: 100%;
-    border-radius: 10px;
-    font-weight: bold;
-    height: 40px;
+  background-color: $revature-orange-light;
+  color: black;
+  border: 1px solid black;
+  width: 100%;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 40px;
 }
-
 .submitSurveyButton:hover,
 .submitSurveyButton:active {
-    background-color: $revature-orange-light;
-    color: #565d61;
-    border: 1px solid black;
+  background-color: $revature-orange-light;
+  color: #565d61;
+  border: 1px solid black;
 }
-
 .buttonEdit {
-    border-radius: 10px;
-    background-color: white;
-    font-weight: bold;
-    height: 40px;
-    border: 1px solid $revature-orange-light;
-    color: $revature-orange;
+  border-radius: 10px;
+  background-color: white;
+  font-weight: bold;
+  height: 40px;
+  border: 1px solid $revature-orange-light;
+  color: $revature-orange;
 }
-
 .horizontal-scroll {
-    overflow: scroll;
-    direction: ltr;
-    width: 200px;
-    flex-wrap: nowarp;
-    white-space: nowarp;
+  overflow: scroll;
+  direction: ltr;
+  width: 200px;
+  flex-wrap: nowarp;
+  white-space: nowarp;
 }
-
 .buttonEdit:hover,
 .buttonEdit:active {
-    background-color: $revature-orange-light;
-    color: black;
-    border: none;
+  background-color: $revature-orange-light;
+  color: black;
+  border: none;
 }
 
 .modalHeading {
-    width: 100%;
-    text-align: left;
-    height: 60px;
-    background-color: $revature-orange-light;
-    color: black;
-    padding: 10px;
-    text-align: center;
-    font-size: 22px;
-    font-family: Helvetica;
-    border-radius: 10px 10px 0px 0px;
-}
+  width: 100%;
+  text-align: left;
+  height: 60px;
+  background-color: $revature-orange-light;
+  color: black;
+  padding: 10px;
 
+  text-align: center;
+  font-size: 22px;
+  font-family: Helvetica;
+  border-radius: 10px 10px 0px 0px;
+}
 #jumbotronTemplate {
-    margin: auto;
+  margin: auto;
 }
-
 .surveyName {
-    width: 20%;
-    border: 1px solid black;
-    padding: 5px;
+  width: 20%;
+  border: 1px solid black;
+  padding: 5px;
 }
-
 .surveyDescription {
-    width: 45%;
-    border: 1px solid black;
-    padding: 5px;
+  width: 45%;
+  border: 1px solid black;
+  padding: 5px;
 }
-
 .noteDiv {
-    color: green;
-    font-weight: bold;
+  color: green;
+  font-weight: bold;
 }
-
-
 /*******************
 Info Circle
 *******************/
-
 .surveyInfoCircle {
-    font-size: 17px;
-    text-align: center;
-    width: 100%;
+  font-size: 17px;
+  text-align: center;
+  width: 100%;
 }
-
 .modalSuccessHeading {
-    height: 40px;
-    width: 100%;
-    background-color: $revature-orange-light;
-    color: white;
-    border-radius: 10px 10px 0 0;
-    text-align: center;
+  height: 40px;
+  width: 100%;
+  background-color: $revature-orange-light;
+  color: white;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
 }
-
 
 /***********************************
   tabular data
 ***********************************/
 
 .tableholder {
-    background-color: #ffc289;
-    padding: 1rem;
-    form {
-        width: max-content;
-    }
-    table {
-        background: #ffffff;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100%;
-        tr {
-            border-bottom: #333333 solid 1px;
-            td,
-            th {
-                padding: 5px;
-                text-align: center;
-                word-wrap: break-word;
-            }
-        }
-    }
-}
+  background-color: #ffc289;
+  padding: 1rem;
 
+  form {
+    width: max-content;
+  }
+
+  table {
+    background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+
+    tr {
+      border-bottom: #333333 solid 1px;
+
+      td,
+      th {
+        padding: 5px;
+        text-align: center;
+        word-wrap: break-word;
+      }
+    }
+  }
+}
 .pointer-table:hover {
     cursor: pointer;
 }
-
 .rev-background-color th div {
     display: inline
 }
-
-
+  
 /***********************************
   Chart
 ***********************************/
-
 #ManagerChart,
 #AssociateChart,
 #FeedbackRequestedChart,
 #FeedbackReceivedChart,
 #JDChartComponent {
-    width: 40vw;
-    height: 60vh;
-    display: inline-block;
-    top: 180px;
-    position: fixed;
-    text-align: center;
-    z-index: 10;
+  width: 40vw;
+  height: 60vh;
+  display: inline-block;
+  top: 180px;
+  position: fixed;
+  text-align: center;
+  z-index: 10;
 }
 
 #ManagerChart,
 #FeedbackRequestedChart {
-    left: 10vw;
+  left: 10vw;
 }
 
 #AssociateChart,
 #FeedbackReceivedChart {
-    left: 50vw;
+  left: 50vw;
 }
 
 #JDChartComponent {
-    left: 30vw;
+  left: 30vw;
 }
 
 .no-select {
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Safari */
-    -khtml-user-select: none;
-    /* Konqueror HTML */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Non-prefixed version, currently
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
 }
-
 .editButton {
-    background-color: #f26925;
-    color: white;
-    border: 2px solid #f26925;
+  background-color: #f26925;
+  color: white;
+  border: 2px solid #f26925;
 }
 
 .editButton:hover {
-    background-color: white;
-    color: #f26925;
+  background-color: white;
+  color: #f26925;
 }
-
 
 /***********
 Container
 ***********/
-
 #containerTemplate {
-    background: #f8f9fa;
-    border-radius: 0 0 10px 10px;
-    padding: 15px;
+  background: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+  padding: 15px;
 }
-
-
 /**************
 Alert
 **************/
-
 #alertSubmission {
-    width: auto;
-    text-align: center;
-    display: none;
-    border: 1px solid black;
-    color: black;
+  width: auto;
+  text-align: center;
+  display: none;
+  border: 1px solid black;
+  color: black;
 }
-
-
 /****************
 Fa Circle
 ****************/
-
 .faCircle {
-    color: $revature-orange-light;
+  color: $revature-orange-light;
 }
 
 #FeedbackRequestedChart {
-    width: 50vw;
-    height: 100vh;
-    display: inline-block;
-    top: 180px;
-    left: 0%;
-    position: fixed;
-    z-index: 12;
-    text-align: center;
+  width: 50vw;
+  height: 100vh;
+  display: inline-block;
+  top: 180px;
+  left: 0%;
+  position: fixed;
+  z-index: 12;
+  text-align: center;
 }
 
 #FeedbackReceivedChart {
-    width: 50vw;
-    height: 100vh;
-    display: inline-block;
-    top: 180px;
-    left: 50vw;
-    position: fixed;
-    z-index: 10;
-    text-align: center;
+  width: 50vw;
+  height: 100vh;
+  display: inline-block;
+  top: 180px;
+  left: 50vw;
+  position: fixed;
+  z-index: 10;
+  text-align: center;
 }
 
 #JDChartComponent {
-    width: 50vw;
-    height: 100vh;
-    display: inline-block;
-    top: 180px;
-    left: 25vw;
-    position: fixed;
-    z-index: 10;
-    text-align: center;
+  width: 50vw;
+  height: 100vh;
+  display: inline-block;
+  top: 180px;
+  left: 25vw;
+  position: fixed;
+  z-index: 10;
+  text-align: center;
 }
 
 /////////////////////////////////////////////////
@@ -1179,6 +1135,7 @@ Fa Circle
 //    z-index:12;
 //    text-align:center;
 //    }
+  
 //     #FeedbackReceivedChart{
 //      width:50vw;
 //      height:100vh;
@@ -1189,6 +1146,7 @@ Fa Circle
 //      z-index:10;
 //      text-align:center;
 //    }
+  
 //     #JDChartComponent{
 //      width:50vw;
 //      height:100vh;
@@ -1204,199 +1162,195 @@ Fa Circle
 /****************
 Charts ~ Interview Team V  V V
 ****************/
-
-.AssociateChart,
-.ManagerChart,
-.JDChartComponent,
-.FeedbackReceivedChart,
-.FeedbackRequestedChart {
-    position: relative;
-    margin: 5px;
-    border-radius: 7px;
-    box-shadow: 3px 3px 8px grey;
+.AssociateChart, .ManagerChart, .JDChartComponent, .FeedbackReceivedChart, .FeedbackRequestedChart{
+  position: relative;
+  margin: 5px;
+  border-radius: 7px;
+  box-shadow: 3px 3px 8px grey;
 }
-
-.chart-title {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    background-color: #f3a55d;
-    text-align: center;
+.chart-title{
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  background-color: #f3a55d;
+  text-align: center;
 }
+ .paginateddata, .visualdata{
+  //background-color: #f26925; 
+  background-color: #f26925;
+  color: white; 
+  border: 2px solid #f26925;
+  position:absolute;
+  width:20%;
+  bottom:5%;
+  display:block;
+  text-align:center;
+  z-index: 100;
+  box-shadow: 3px 3px 8px grey;
+  border-radius: 25px;
 
-.paginateddata,
-.visualdata {
-    //background-color: #f26925; 
-    background-color: #f26925;
-    color: white;
-    border: 2px solid #f26925;
-    position: absolute;
-    width: 20%;
-    bottom: 5%;
-    display: block;
-    text-align: center;
-    z-index: 100;
-    box-shadow: 3px 3px 8px grey;
-    border-radius: 25px;
-    a {
-        color: #000000;
-        text-decoration: underline;
-        font-size: 2em;
-        font-family: Futura-Std-Book;
-    }
+  a {
+    color: #000000;
+    text-decoration: underline;
+    font-size: 2em;
+    font-family: Futura-Std-Book;
+  }
 }
-
-
 /*****************
  Chart ~ Interview's Team ^ ^ ^
 *****************/
-
-.paginateddata {
-    position: relative;
-    // top: 80%;
-    bottom: -102.7px;
-    width: 50%;
-    left: -30px;
+.paginateddata{
+  position:relative;
+ // top: 80%;
+ bottom: -102.7px;
+  width: 50%;
+  left: -30px;
 }
 
-.visualdata {
-    position: relative;
-    //left:55%;
-    width: 50%;
-    left: 300px;
-    bottom: -50px;
-    // top: 80%;
-    //bottom: 50%;
+ .visualdata{
+  position:relative;
+  //left:55%;
+  width: 50%;
+  left: 300px;
+  bottom: -50px;
+ // top: 80%;
+  //bottom: 50%;
 }
 
 .option-box:hover {
-    background-color: $revature-orange-light;
-    cursor: pointer;
+  background-color: $revature-orange-light;
+  cursor: pointer;
 }
 
-.pagination-button {
-    position: absolute;
-    right: 0;
-    width: 120px;
-    transform: translateY(-50%);
+.pagination-button{
+  position: absolute;
+  right: 0;
+  width: 120px;
+  transform: translateY(-50%);
 }
 
-.div-fixed {
-    height: 500px;
-    width: 300px;
-    top: 55vh;
-    right: 40vw;
-    margin-left: 40%;
-    margin-top: 120px;
+.div-fixed{
+  height:500px;
+  width:300px;
+  top: 55vh;
+  right: 40vw; 
+  margin-left: 40%;
+  margin-top : 120px;
 }
 
 .div-child {
-    border-radius: 10%;
-    display: inline-block;
-    border: orange
+  border-radius: 10%;
+  display: inline-block;
+  border:orange
 }
 
-.text-style {
-    background-color: white;
-    color: gray;
-    padding: 1rem;
-    border: white 1px solid;
-}
+.text-style{
+  background-color:white;
+  color:  gray; 
+  padding: 1rem;
+  border: white 1px solid;
+}   
 
 .div-center {
-    display: flex;
-    justify-content: center;
-    color: #f26925;
-    font-size: 1.5rem
+  display: flex;
+  justify-content: center;
+  color: #f26925;
+  font-size: 1.5rem
 }
 
 @keyframes lightSpeedIn {
-    from {
-        transform: translate3d(100%, 0, 0) skewX(-30deg);
-        opacity: 0;
-    }
-    60% {
-        transform: skewX(20deg);
-        opacity: 1;
-    }
-    80% {
-        transform: skewX(-5deg);
-    }
-    to {
-        transform: translate3d(0, 0, 0);
-    }
+  from {
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+  }
+
+  60% {
+    transform: skewX(20deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: skewX(-5deg);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .lightSpeedIn {
-    animation: lightSpeedIn 3s normal;
-    animation-timing-function: ease-out;
+  animation: lightSpeedIn 3s normal;
+  animation-timing-function: ease-out;
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 100%, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .fadeInUp {
-    animation: fadeInUp 2s normal;
+  animation: fadeInUp 2s normal;
 }
 
 //////////////////////////////
 //////////   FONT   //////////
 //////////////////////////////
+
 @font-face {
-    font-family: "FuturaSTDBook";
-    src: url("assets/FuturaStdBook.otf");
+  font-family: "FuturaSTDBook";
+  src: url("assets/FuturaStdBook.otf");
 }
 
 body {
-    font-family: "FuturaSTDBook";
+  font-family: "FuturaSTDBook";
 }
 
 .futurafont {
-    font-family: "FuturaSTDBook";
+  font-family: "FuturaSTDBook";
 }
 
 .close-sign {
-    margin-left: 740px;
-    border: 2px solid black;
+  margin-left: 740px;
+  border: 2px solid black;
 }
 
 .close-sign:hover {
-    background-color: grey;
-    color: white;
+  background-color:grey;
+  color: white;
 }
-
 .update-model {
-    float: right
+  float: right
 }
 
 .list-group-item.active {
-    background-color: $revature-orange-light;
-    border-color: grey;
-    border: 1px solid grey
+  background-color: $revature-orange-light;
+  border-color: grey;
+  border: 1px solid grey
 }
 
 .page-item.active .page-link {
-    background-color: $revature-orange-light;
-    border-color: $revature-orange-light;
+  background-color: $revature-orange-light;
+  border-color: $revature-orange-light;
 }
 
 .page-link {
-    color: black;
+  color: black;
 }
 
-#template-search-bar {
-    height: 3.5em;
+#template-search-bar{
+  height: 3.5em;
+  
 }
 
-#back-butt {
-    width: 400px;
-    height: 2.0em;
-    margin: 0 auto;
+#back-butt{
+  width: 400px;
+  height: 2.0em;
+  margin: 0 auto;
 }
+

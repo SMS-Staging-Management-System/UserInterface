@@ -135,7 +135,6 @@ export const saveUserAssociate = (newUser: IUser, token: string, history:History
                 });
                 history.push('/');
                 toast.success('Joined Cohort');
-                toast.success('Temporary password sent, please check your inbox');
             }
       if (joinResponse.status === 404) {
                 dispatch({
