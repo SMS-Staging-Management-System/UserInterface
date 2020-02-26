@@ -338,7 +338,6 @@ export class AllSurveysComponent extends Component<
                     <td colSpan={8}>
                       <div className='div-center fadeInUp'>
                         You don't have any surveys.{' '}
-                        <>{console.log('I HAPPEN')}</>
                       </div>
                     </td>
                   </tr>
