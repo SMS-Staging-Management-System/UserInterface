@@ -15,6 +15,8 @@ interface myProps extends RouteComponentProps<{}> {
 class Home extends Component<myProps,any> {
     render() {
         return (
+            <div>
+                <h4>STUFF</h4>
             <div className='wrapper'>
                 <div className='byStaging'>
                     <ByStaging {...this.props} />
@@ -32,7 +34,7 @@ class Home extends Component<myProps,any> {
                     <Dropped {...this.props} />
                 </div>
             </div>
-            
+            </div>
         )
     }
 }

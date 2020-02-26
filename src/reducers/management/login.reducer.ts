@@ -49,6 +49,8 @@ export const loginReducer = (state = initialState, action: any) => {
         return{
             ...state,
             incorrectUserPass: true,
+            username: '',
+            password: ''
         }
         
 

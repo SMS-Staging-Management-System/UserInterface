@@ -23,7 +23,7 @@ class Dashboard extends React.Component<any, any> {
     if (
       this.props.auth.currentUser.roles.some(
         (role) =>
-          role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN,
+          role === cognitoRoles.STAGING_MANAGER || role === cognitoRoles.ADMIN
       )
     ) {
       if (this.props.match.path === '/') {
@@ -41,9 +41,7 @@ class Dashboard extends React.Component<any, any> {
       )
     ) {
       this.props.history.push(`management/manage/cohorts`);
-    } else {
-      this.props.history.push(`surveys`);
-    }
+    } 
   }
 
   render() {
