@@ -51,6 +51,11 @@ export class ManageNavComponent extends React.Component<IManageNavComponentProps
               className={`nav-link ${this.isActive('associates')}`}>Cohorts</Link>
           </NavItem>
         </Nav>
+        <Nav tabs>
+          <NavItem>
+            <NavLink className="cursor-hover" onClick={this.props.toggleCreateUserModal}><FaUserPlus className="rev-color" /></NavLink>
+          </NavItem>
+        </Nav>
       </Navbar>
     );
   }

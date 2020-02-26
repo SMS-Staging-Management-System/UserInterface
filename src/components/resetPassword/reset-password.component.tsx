@@ -103,7 +103,7 @@ export class ResetPasswordComponent extends React.Component<IResetPasswordProps,
 
                         <Popover placement="bottom" isOpen={this.props.resetPasswordProps.showPasswordTip} target="new-password-input" toggle={this.togglePasswordTip}>
                             <PopoverHeader>Password Requirements</PopoverHeader>
-                            <PopoverBody>Password must be at least 8 characters, have 1 special character, 1 number, 1 uppercase letter, and 1 lower case letter</PopoverBody>
+                            <PopoverBody>Password must be at least 8 characters, have 1 special character, 1 number, 1 uppercase letter, and 1 lower case number</PopoverBody>
                         </Popover>
 
 
