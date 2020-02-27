@@ -92,4 +92,14 @@ There is a new workflow for creating a new interview.
 3. Select a time
 4. Select a location
 
+## SignUp, SignIn, and Authentication
+Matt Austin, Revature Java Full Stack React, 2/27/20
+
+After working on this app for our P3, we would recommend replacing all current SignUp, SignIn, and Authentication functionality with AWS's Amplify library.
+
+The current SignUp, SignIn, and Authentication is hard to follow and not fully functional, so rather than completely refactor it all, we think AWS Amplify can do the job better.
+
+Here is the Amplify documentation: https://aws-amplify.github.io/docs/js/authentication
+
+
 
